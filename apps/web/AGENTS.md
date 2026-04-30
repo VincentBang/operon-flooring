@@ -35,6 +35,13 @@ Build a high-conversion flooring quote system that ranks in Sydney and generates
 - no generic AI writing
 - practical and clear
 
+## Product Catalogue Rules
+- when editing product pages, do not duplicate product pricing in multiple files
+- update central product data only
+- preserve quote integration
+- preserve SEO content
+- preserve clean mobile UI
+
 ## Workflow
 Always:
 1. analyze
