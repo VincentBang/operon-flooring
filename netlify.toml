@@ -1,2 +1,79 @@
+# Deployment system:
+# dev branch -> preview deploy
+# main branch -> production
+# never deploy directly to production
+
 [build]
   publish = "apps/web"
+
+[functions]
+  directory = "netlify/functions"
+
+[context.production]
+  publish = "apps/web"
+
+[context.deploy-preview]
+  publish = "apps/web"
+
+[context.branch-deploy]
+  publish = "apps/web"
+
+[[redirects]]
+  from = "/quote"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/quote.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/index2.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/floorplan"
+  to = "/floorplan.html"
+  status = 301
+
+# Visualiser is intentionally hidden until production backend image generation is available.
+[[redirects]]
+  from = "/visualiser"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/visualiser.html"
+  to = "/"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
