@@ -97,6 +97,10 @@ Source-of-truth status: active project memory for current business direction, pa
   - `apps/web/OPERON_SUPABASE_PRICING_SETUP.md`
   - `apps/web/OPERON_PRIVATE_QUOTE_RUNTIME_PLAN.md`
 - homepage quote wizard now tries the private Netlify quote runtime first and falls back to the local calculator if the runtime is unavailable
+- customer-facing catalogue pricing now has a Netlify-backed Supabase source for:
+  - `categoryMeta`
+  - `products`
+- this keeps product sell prices updateable in Supabase without exposing private install-rate tables in the browser
 
 ## Floor Care & Maintenance Content Pillar
 

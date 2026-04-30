@@ -1,8 +1,13 @@
 (function () {
   // Source of truth for pricing data source configuration.
-  // Default mode is local files. Switch to google_sheets after publishing the sheet tabs.
+  // Default mode now uses the Netlify public catalogue function so customer-facing
+  // product prices can come from Supabase without exposing private rate tables.
   window.OPERON_PRICING_SOURCE_CONFIG = window.OPERON_PRICING_SOURCE_CONFIG || {
-    mode: "local",
+    mode: "netlify_catalogue",
+    netlifyCatalogue: {
+      endpoint: "/.netlify/functions/public-catalogue-pricing",
+      sourceLabel: "Supabase Catalogue"
+    },
     googleSheets: {
       spreadsheetId: "",
       sourceLabel: "Google Sheets",

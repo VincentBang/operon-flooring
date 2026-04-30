@@ -602,5 +602,6 @@ async function calculatePrivateQuote(input) {
 
 module.exports = {
   jsonResponse: jsonResponse,
-  calculatePrivateQuote: calculatePrivateQuote
+  calculatePrivateQuote: calculatePrivateQuote,
+  loadPricingLibrary: loadPricingLibrary
 };

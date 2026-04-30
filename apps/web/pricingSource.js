@@ -260,11 +260,13 @@
     pricingRules: normalisePricingRules
   };
 
-  const config = window.OPERON_PRICING_SOURCE_CONFIG || { mode: "local", googleSheets: {} };
+  const config = window.OPERON_PRICING_SOURCE_CONFIG || { mode: "local", googleSheets: {}, netlifyCatalogue: {} };
   const state = {
     mode: config.mode || "local",
-    ready: config.mode !== "google_sheets",
-    sourceLabel: config.mode === "google_sheets" ? "Google Sheets" : "Local JS files",
+    ready: config.mode === "local",
+    sourceLabel: config.mode === "google_sheets"
+      ? "Google Sheets"
+      : (config.mode === "netlify_catalogue" ? "Supabase Catalogue" : "Local JS files"),
     tables: {},
     error: "",
     loadedAt: ""
@@ -337,10 +339,48 @@
     return state;
   }
 
+  async function loadNetlifyCatalogueData() {
+    const netlifyConfig = config.netlifyCatalogue || {};
+    const endpoint = netlifyConfig.endpoint || "/.netlify/functions/public-catalogue-pricing";
+
+    const response = await fetch(endpoint, {
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json"
+      }
+    });
+
+    const payload = await response.json().catch(function () {
+      return null;
+    });
+
+    if (!response.ok || !payload || !payload.ok) {
+      throw new Error(payload && payload.error ? payload.error : "Public catalogue pricing load failed.");
+    }
+
+    state.tables = {
+      categoryMeta: payload.categoryMeta || {},
+      products: payload.products || {}
+    };
+    state.ready = true;
+    state.error = "";
+    state.sourceLabel = netlifyConfig.sourceLabel || "Supabase Catalogue";
+    state.loadedAt = new Date().toISOString();
+    dispatch("operon-pricing-source-ready", getStatus());
+    return state;
+  }
+
   if (config.mode === "google_sheets") {
     loadPromise = loadGoogleSheetsData().catch(function (error) {
       state.ready = false;
       state.error = error && error.message ? error.message : "Google Sheets pricing load failed.";
+      dispatch("operon-pricing-source-error", getStatus());
+      return state;
+    });
+  } else if (config.mode === "netlify_catalogue") {
+    loadPromise = loadNetlifyCatalogueData().catch(function (error) {
+      state.ready = false;
+      state.error = error && error.message ? error.message : "Supabase catalogue pricing load failed.";
       dispatch("operon-pricing-source-error", getStatus());
       return state;
     });

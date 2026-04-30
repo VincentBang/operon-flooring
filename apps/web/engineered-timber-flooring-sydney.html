@@ -344,7 +344,7 @@
         window.addEventListener("operon-pricing-source-ready", renderEngineeredSelection);
         if (window.OperonPricingSource) {
           const pricingSourceStatus = window.OperonPricingSource.getStatus();
-          if (pricingSourceStatus.ready && pricingSourceStatus.mode === "google_sheets") {
+          if (pricingSourceStatus.ready) {
             renderEngineeredSelection();
           }
         }
