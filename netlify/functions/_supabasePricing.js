@@ -331,6 +331,8 @@ function getSelectedUnderlay(library, underlayId) {
 function getWarnings(input, measurement, product, pricePending, accessState) {
   const warnings = [].concat(measurement.warnings || [], accessState.warnings || []);
   let manualReviewRequired = false;
+  const furnitureRoomCount = Math.max(0, Math.round(parsePositiveNumber(input.furnitureRoomCount)));
+  const isEngineered = product && product.category === "engineered";
 
   if (!measurement.realArea) {
     warnings.push("Real flooring area is missing.");
@@ -363,16 +365,20 @@ function getWarnings(input, measurement, product, pricePending, accessState) {
     warnings.push("Floor prep needs site confirmation.");
     manualReviewRequired = true;
   }
-  if (input.furnitureType === "heavy") {
-    warnings.push("Heavy furniture handling needs manual review.");
-    manualReviewRequired = true;
-  }
-  if ((input.furnitureType === "light" || input.furnitureType === "heavy") && measurement.roomCount <= 0) {
-    warnings.push("Room count is missing for furniture handling.");
+  if (input.furnitureType === "yes" && furnitureRoomCount <= 0) {
+    warnings.push("Furniture room count is missing. Count each furnished space separately.");
     manualReviewRequired = true;
   }
   if (input.pattern === "herringbone" || input.pattern === "chevron") {
     warnings.push("Pattern wastage is applied at 20%. Confirm install premium if required.");
+  }
+  if (!isEngineered && (input.pattern === "herringbone" || input.pattern === "chevron")) {
+    warnings.push("Herringbone and chevron are only available for engineered timber.");
+    manualReviewRequired = true;
+  }
+  if ((input.pattern === "herringbone" || input.pattern === "chevron") && input.installMethod && input.installMethod !== "direct_glue") {
+    warnings.push("Herringbone and chevron are quoted as direct glue installation.");
+    manualReviewRequired = true;
   }
   if ((input.jobType || input.quoteMode) === "supply_install" && product && !product.isEstimate && pricePending) {
     warnings.push("Selected product price is not confirmed. Standard " + product.category + " estimate used until review.");
@@ -455,7 +461,18 @@ async function calculatePrivateQuote(input) {
   const requestedProduct = input.productId ? getProductById(library, input.productId) : null;
   const product = requestedProduct || getEstimateProduct(library, input.category || "hybrid");
   const categoryEstimate = getEstimateProduct(library, product.category);
-  const wastagePercent = (input.pattern === "herringbone" || input.pattern === "chevron")
+  const isEngineered = product.category === "engineered";
+  const requestedPattern = input.pattern || "standard";
+  const resolvedPattern = isEngineered ? requestedPattern : "standard";
+  const requestedInstallMethod = input.installMethod || "floating";
+  const resolvedInstallMethod = !isEngineered
+    ? "floating"
+    : ((resolvedPattern === "herringbone" || resolvedPattern === "chevron") ? "direct_glue" : requestedInstallMethod);
+  const normalizedInput = Object.assign({}, input, {
+    pattern: resolvedPattern,
+    installMethod: resolvedInstallMethod
+  });
+  const wastagePercent = (resolvedPattern === "herringbone" || resolvedPattern === "chevron")
     ? parseNumber(rules.herringboneWastagePercent)
     : parseNumber(rules.standardWastagePercent);
   const chargeableArea = measurement.realArea * (1 + (wastagePercent / 100));
@@ -474,7 +491,7 @@ async function calculatePrivateQuote(input) {
   const materialRate = parseNumber(product.pricePerM2) > 0 ? parseNumber(product.pricePerM2) : parseNumber(categoryEstimate.pricePerM2);
   const installRateConfig = getInstallRateConfig(library, {
     category: product.category,
-    pattern: input.pattern,
+    pattern: resolvedPattern,
     jobType: quoteMode
   }) || {};
   const installRate = parseNumber(product.installRate) > 0 ? parseNumber(product.installRate) : parseNumber(installRateConfig.rate_per_m2);
@@ -497,8 +514,9 @@ async function calculatePrivateQuote(input) {
   const scotiaBaseTotal = scotia && scotia.pricing_method === "allowance_per_m2"
     ? chargeableArea * parseNumber(scotia.price)
     : 0;
-  const furnitureBaseTotal = (input.furnitureType === "light" || input.furnitureType === "heavy")
-    ? measurement.roomCount * parseNumber(rules.furnitureRatePerRoom)
+  const furnitureRoomCount = Math.max(0, Math.round(parsePositiveNumber(input.furnitureRoomCount)));
+  const furnitureBaseTotal = input.furnitureType === "yes"
+    ? furnitureRoomCount * parseNumber(rules.furnitureRatePerRoom)
     : 0;
   const doorCount = input.doorTrimming === "yes" ? Math.max(0, Math.round(parsePositiveNumber(input.doorCount))) : 0;
   const doorTrimmingBaseTotal = doorCount * parseNumber(rules.doorTrimmingRate);
@@ -530,7 +548,7 @@ async function calculatePrivateQuote(input) {
   const roundingAdjustment = subtotalWithMinimum > 0 ? subtotalExGst - subtotalWithMinimum : 0;
   const gst = subtotalExGst * 0.10;
   const totalIncGst = subtotalExGst + gst;
-  const reviewState = getWarnings(input, measurement, product, productPricePending, accessState);
+  const reviewState = getWarnings(normalizedInput, measurement, product, productPricePending, accessState);
 
   if (doorCount === 0 && input.doorTrimming === "yes") {
     reviewState.warnings.push("Door trimming selected without quantity.");
@@ -549,6 +567,8 @@ async function calculatePrivateQuote(input) {
     category: product.category,
     categoryEstimateLabel: "standard " + categoryMeta.label.toLowerCase() + " estimate",
     zoneName: locationState.zoneName,
+    pattern: resolvedPattern,
+    installMethod: resolvedInstallMethod,
     realArea: roundTo(measurement.realArea, 2),
     chargeableArea: roundTo(chargeableArea, 2),
     materialTotal: roundTo(materialTotal, 2),
@@ -577,12 +597,15 @@ async function calculatePrivateQuote(input) {
     zoneMultiplier: roundTo(1 + (parseNumber(locationState.surchargePercent) / 100), 4),
     locationSurchargePercent: roundTo(locationState.surchargePercent, 2),
     roomCount: measurement.roomCount,
+    furnitureRoomCount: furnitureRoomCount,
     doorCount: doorCount,
     removalLabel: input.removalOption ? String(input.removalOption).replace(/_/g, " ") : "none",
     floorPrepLabel: input.floorPrepType ? String(input.floorPrepType).replace(/_/g, " ") : "none",
     skirtingLabel: input.skirtingOption ? String(input.skirtingOption).replace(/_/g, " ") : "none",
     scotiaLabel: input.scotiaOption ? String(input.scotiaOption).replace(/_/g, " ") : "none",
-    furnitureLabel: input.furnitureType ? String(input.furnitureType).replace(/_/g, " ") : "none",
+    furnitureLabel: input.furnitureType === "yes"
+      ? "furnished room move" + (furnitureRoomCount > 0 ? " · " + furnitureRoomCount + " rooms" : "")
+      : "none",
     underlayLabel: underlay ? underlay.name : "",
     warnings: Array.from(new Set(reviewState.warnings)),
     manualReviewRequired: reviewState.manualReviewRequired,

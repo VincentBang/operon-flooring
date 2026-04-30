@@ -941,9 +941,9 @@
 
     .selected-product-banner {
       display: grid;
-      gap: 8px;
-      margin-top: 16px;
-      padding: 18px;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 16px;
       border-radius: 18px;
       background: rgba(30, 58, 138, 0.06);
       border: 1px solid rgba(30, 58, 138, 0.12);
@@ -959,11 +959,15 @@
       color: var(--muted);
     }
 
+    .selected-product-banner.compact strong {
+      display: none;
+    }
+
     .selected-product-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 12px;
+      margin-top: 2px;
     }
 
     .selected-product-actions .button-quiet,
@@ -1507,21 +1511,23 @@
                   <option value="commercial_other">Commercial / Other</option>
                 </select>
               </div>
-              <div class="field">
+              <div class="field" id="propertyLevelField">
                 <label for="level">Level</label>
                 <select id="level" name="level">
+                  <option value="">Select level</option>
                   <option value="ground">Ground</option>
                   <option value="level_1">Level 1</option>
                   <option value="level_2_plus">Level 2+</option>
                   <option value="other_unsure">Other / Unsure</option>
                 </select>
               </div>
-              <div class="field">
+              <div class="field" id="hasLiftField">
                 <label for="hasLift">Lift access</label>
                 <select id="hasLift" name="hasLift">
-                  <option value="na">Not applicable</option>
+                  <option value="">Select lift access</option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
+                  <option value="na">Not applicable</option>
                 </select>
               </div>
               <div class="field">
@@ -1569,23 +1575,30 @@
 
             <div class="product-choice-panel">
               <div class="field" style="margin-bottom: 0;">
-                <label for="productOptionSelect">Specific product option</label>
+                <label for="productOptionSelect">Selected flooring product</label>
                 <select id="productOptionSelect" name="productOptionSelect"></select>
-                <p class="helper" id="productOptionHelper">Keep the standard category estimate, or use a specific product if you already chose one.</p>
+                <p class="helper" id="productOptionHelper">If you selected a product from the catalogue, it appears here. Otherwise, keep the category estimate for a faster quote.</p>
               </div>
 
-              <div class="selected-product-banner">
+              <div class="selected-product-banner compact">
                 <strong id="selectedProductHeadline">Using hybrid flooring estimate</strong>
-                <p id="selectedProductSummary">No specific product selected yet. The estimate will use the standard category rate until you choose a range.</p>
+                <p id="selectedProductSummary">No product attached yet. The quote will use the standard category estimate unless you choose a specific range.</p>
                 <div class="selected-product-actions">
-                  <a class="button-quiet" id="browseCategoryLink" href="hybrid-flooring-sydney.html">Browse hybrid products</a>
+                  <a class="button-quiet" id="browseCategoryLink" href="hybrid-flooring-sydney.html">View hybrid products</a>
                   <button class="button-secondary" id="clearSelectedProductButton" type="button">Use category estimate</button>
                 </div>
               </div>
             </div>
 
             <div class="grid-2">
-              <div class="field">
+              <div class="field" id="installMethodField" hidden>
+                <label for="installMethod">Installation method</label>
+                <select id="installMethod" name="installMethod">
+                  <option value="floating">Floating</option>
+                  <option value="direct_glue">Direct glue</option>
+                </select>
+              </div>
+              <div class="field" id="patternTypeField">
                 <label for="patternType">Pattern / wastage type</label>
                 <select id="patternType" name="patternType">
                   <option value="standard">Standard plank</option>
@@ -1593,11 +1606,8 @@
                   <option value="chevron">Chevron</option>
                 </select>
               </div>
-              <div class="field">
-                <label for="projectNotesShort">Job notes</label>
-                <input id="projectNotesShort" name="projectNotesShort" type="text" placeholder="Optional short note for quoting context">
-              </div>
             </div>
+            <p class="helper" id="installationPathHelper" style="margin-top: 12px;">Laminate and hybrid are quoted as standard floating-floor installation only. Engineered timber can be floating or direct glue, with herringbone and chevron quoted as glue-down only.</p>
           </section>
 
           <section class="step-card quote-step" data-quote-step="3">
@@ -1639,7 +1649,7 @@
                   <label for="totalAreaM2">Total area (m²)</label>
                   <input id="totalAreaM2" name="totalAreaM2" type="number" min="0" step="0.1" placeholder="e.g. 54">
                 </div>
-                <div class="field">
+                <div class="field" id="manualRoomCountField" hidden>
                   <label for="manualRoomCount">Rooms included</label>
                   <input id="manualRoomCount" name="manualRoomCount" type="number" min="0" step="1" placeholder="Optional">
                 </div>
@@ -1647,7 +1657,7 @@
             </div>
 
             <div class="measure-panel" id="room_by_room_panel">
-              <p class="helper">Add each room below. Estimate is enough to start.</p>
+              <p class="helper">Add each flooring space separately: living room, dining room, hallway, bedroom. Estimate is enough to start.</p>
               <div class="room-list" id="roomList"></div>
               <div class="action-row" style="margin-top: 14px;">
                 <button class="button-secondary" id="addRoomButton" type="button">Add room</button>
@@ -1680,7 +1690,7 @@
                 </div>
               </div>
               <div class="status" id="floorplanStatus">No floor plan uploaded yet.</div>
-              <div class="field" style="margin-top: 16px;">
+              <div class="field" id="floorplanRoomCountField" style="margin-top: 16px;" hidden>
                 <label for="floorplanRoomCount">Rooms included</label>
                 <input id="floorplanRoomCount" name="floorplanRoomCount" type="number" min="0" step="1" placeholder="Optional">
               </div>
@@ -1708,7 +1718,7 @@
                 <span class="step-badge">5</span>
                 <div>
                   <h3>Add-ons and site conditions</h3>
-                  <p class="helper">Add any extras if needed.</p>
+                  <p class="helper">Only choose the extras that apply. Follow-up counts appear only when needed.</p>
                 </div>
               </div>
             </div>
@@ -1772,8 +1782,7 @@
                   <label for="furnitureType">Furniture handling</label>
                   <select id="furnitureType" name="furnitureType">
                     <option value="no">No</option>
-                    <option value="light">Light furniture</option>
-                    <option value="heavy">Heavy furniture / manual review</option>
+                    <option value="yes">Yes</option>
                   </select>
                 </div>
                 <div class="field">
@@ -1784,23 +1793,28 @@
                   </select>
                 </div>
                 <div class="field">
-                  <label for="doorCount">Door quantity</label>
-                  <input id="doorCount" name="doorCount" type="number" min="0" step="1" placeholder="0">
-                </div>
-              </div>
-
-              <div class="grid-2">
-                <div class="field">
                   <label for="stairs">Stairs</label>
                   <select id="stairs" name="stairs">
                     <option value="no">No</option>
                     <option value="yes">Yes, manual quote required</option>
                   </select>
                 </div>
-                <div class="field">
-                  <label for="siteNotes">Site notes</label>
-                  <input id="siteNotes" name="siteNotes" type="text" placeholder="Access, prep, removal, parking or timing notes">
-                </div>
+              </div>
+
+              <div class="field" id="furnitureRoomCountField" hidden>
+                <label for="furnitureRoomCount">Furnished rooms to move</label>
+                <input id="furnitureRoomCount" name="furnitureRoomCount" type="number" min="0" step="1" placeholder="e.g. 3">
+                <p class="helper">Count each furnished space separately: living room, dining room, study, bedroom.</p>
+              </div>
+
+              <div class="field" id="doorCountField" hidden>
+                <label for="doorCount">Door quantity</label>
+                <input id="doorCount" name="doorCount" type="number" min="0" step="1" placeholder="0">
+              </div>
+
+              <div class="field">
+                <label for="siteNotes">Job notes</label>
+                <input id="siteNotes" name="siteNotes" type="text" placeholder="Access, prep, removal, parking or timing notes">
               </div>
             </div>
           </section>
@@ -1811,9 +1825,14 @@
                 <span class="step-badge">6</span>
                 <div>
                   <h3>Review your estimate</h3>
-                  <p class="helper">This is an estimate based on the details provided. Final quote confirmed before work starts.</p>
+                  <p class="helper">Review the estimate, then email it through. Final quote confirmed before work starts.</p>
                 </div>
               </div>
+            </div>
+            <div class="field" id="quoteDeliveryEmailField" hidden>
+              <label for="quoteDeliveryEmail">Email to send the quote</label>
+              <input id="quoteDeliveryEmail" name="quoteDeliveryEmail" type="email" autocomplete="email" placeholder="name@example.com">
+              <p class="helper">Add the email address here if you did not enter one at the start.</p>
             </div>
             <div class="field">
               <label for="customerNotes">Anything else we should know?</label>
@@ -1832,9 +1851,8 @@
               <button class="button-secondary" id="wizardBackButton" type="button">Back</button>
             </div>
             <div class="wizard-nav-group">
-              <button class="button-quiet" id="wizardSkipExtrasButton" type="button">No extras / Continue</button>
-              <button class="button-secondary" id="wizardNextButton" type="button">Next</button>
-              <button class="button" id="wizardSubmitButton" type="submit">Get quote</button>
+              <button class="button" id="wizardNextButton" type="button">Next</button>
+              <button class="button" id="wizardSubmitButton" type="submit">Email quote</button>
             </div>
           </div>
         </form>
@@ -1884,7 +1902,7 @@
 
           <div class="summary-box">
             <h3 style="font-size: 1.06rem;">Request status</h3>
-            <div class="status" id="requestStatus">Draft quote request ready to complete.</div>
+            <div class="status" id="requestStatus">Review the estimate, then email the quote when you are ready.</div>
           </div>
 
           <details class="summary-box admin-panel" id="debugPanel" hidden>
@@ -2129,12 +2147,12 @@
 
     const operonSupabase = (function () {
       if (!window.supabase || typeof window.supabase.createClient !== "function") {
-        console.warn("Operon Supabase: client library not loaded. Quote calculator will still work.");
+        console.warn("Operon Supabase: client library not loaded. Quote save still works through Netlify, but browser-side file upload is disabled.");
         return null;
       }
 
       if (isSupabasePlaceholder(OPERON_SUPABASE_CONFIG.url) || isSupabasePlaceholder(OPERON_SUPABASE_CONFIG.anonKey)) {
-        console.warn("Operon Supabase: config is incomplete. Add the anon key to enable quote submission.");
+        console.warn("Operon Supabase: public config is incomplete. Quote save still works through Netlify, but browser-side file upload is disabled.");
         return null;
       }
 
@@ -2159,7 +2177,6 @@
     const wizardBackButton = document.getElementById("wizardBackButton");
     const wizardNextButton = document.getElementById("wizardNextButton");
     const wizardSubmitButton = document.getElementById("wizardSubmitButton");
-    const wizardSkipExtrasButton = document.getElementById("wizardSkipExtrasButton");
     const headerQuoteButton = document.getElementById("headerQuoteButton");
     const stickyQuoteBar = document.getElementById("stickyQuoteBar");
     const stickyQuoteButton = document.getElementById("stickyQuoteButton");
@@ -2181,12 +2198,14 @@
     const measurementHelperTitle = document.getElementById("measurementHelperTitle");
     const measurementHelperText = document.getElementById("measurementHelperText");
     const measurementSnapshot = document.getElementById("measurementSnapshot");
+    const installationPathHelper = document.getElementById("installationPathHelper");
 
     const state = {
       rooms: [],
       floorplanFileName: "",
       submitState: "idle",
       lastQuoteId: "",
+      lastSavedDraftSignature: "",
       floorplanSource: "",
       floorplanRooms: [],
       pendingHandoffMessage: "",
@@ -2198,7 +2217,8 @@
       currentQuoteResult: null,
       quoteRefreshToken: 0,
       privateQuoteRuntimeAvailable: true,
-      privateQuoteFallbackLogged: false
+      privateQuoteFallbackLogged: false,
+      lastPropertyType: ""
     };
 
     let currentQuoteStep = 0;
@@ -2209,6 +2229,7 @@
     const LOCATION_ZONE_LIBRARY = window.OperonLocationZones;
     const PRICING_RULES = window.OperonPricingRules;
     const PRIVATE_QUOTE_ENDPOINT = "/.netlify/functions/calculate-private-quote";
+    const QUOTE_SAVE_ENDPOINT = "/.netlify/functions/save-quote-request";
 
     function createId() {
       return Math.random().toString(36).slice(2, 9);
@@ -2361,12 +2382,12 @@
           text: "Name, phone, and the job location are enough to get started."
         },
         {
-          title: "Access details matter",
-          text: "Property type, level, lift and parking help make the estimate more realistic."
+          title: "Only relevant access questions stay visible",
+          text: "We hide level and lift questions unless the property type makes them relevant."
         },
         {
           title: "Choose the closest flooring path",
-          text: "Choose the flooring category first. If you came from the product catalogue, your selected product is already loaded below."
+          text: "Choose the flooring category first. Engineered timber unlocks the extra install and pattern options. If you came from the product catalogue, your selected product is already loaded below."
         },
         {
           title: "No exact measurement needed",
@@ -2374,7 +2395,7 @@
         },
         {
           title: "Extras can stay simple",
-          text: "If you are unsure about prep or removal, choose unsure and keep the quote moving."
+          text: "Only add what applies. Follow-up counts only appear when an extra actually needs them."
         },
         {
           title: "Review before you send",
@@ -2447,9 +2468,10 @@
       const focusTargets = {
         0: ["fullName", "phone", "siteAddress", "suburb", "postcode"],
         1: ["propertyType", "level", "hasLift", "parkingAccess"],
-        2: ["patternType"],
+        2: ["installMethod", "patternType"],
         3: ["totalAreaM2", "confirmedFloorplanArea", "room-name-" + (state.rooms[0] && state.rooms[0].id ? state.rooms[0].id : "")],
-        5: ["email", "customerNotes"]
+        4: ["furnitureRoomCount", "doorCount", "siteNotes"],
+        5: ["quoteDeliveryEmail", "email", "customerNotes"]
       };
 
       const targets = focusTargets[stepIndex] || [];
@@ -2480,9 +2502,10 @@
       });
 
       wizardBackButton.disabled = currentQuoteStep === 0;
+      wizardNextButton.disabled = false;
+      wizardSubmitButton.disabled = false;
       wizardNextButton.hidden = currentQuoteStep === steps.length - 1;
       wizardSubmitButton.hidden = currentQuoteStep !== steps.length - 1;
-      wizardSkipExtrasButton.hidden = currentQuoteStep !== 4;
       quoteSummaryCard.hidden = currentQuoteStep !== steps.length - 1;
       quoteLayout.classList.toggle("layout-single", currentQuoteStep !== steps.length - 1);
       const nextLabels = {
@@ -2518,7 +2541,7 @@
       }
     }
 
-    function goToNextQuoteStep() {
+    async function goToNextQuoteStep() {
       const validation = validateCurrentQuoteStep();
       if (!validation.valid) {
         showWizardValidationMessage(validation.message);
@@ -2532,6 +2555,22 @@
           activeMeta ? activeMeta.trackingName : "step_" + (currentQuoteStep + 1)
         );
       }
+
+      if (currentQuoteStep === 4) {
+        clearQuoteSubmitMessage();
+        wizardNextButton.disabled = true;
+        wizardNextButton.textContent = "Saving estimate...";
+        try {
+          await saveQuoteDraftToSystem({ showMessage: true });
+        } catch (error) {
+          console.error(error);
+          showWizardValidationMessage("We could not save the estimate right now. Please try again.");
+          showQuoteSubmitError("We could not save the estimate right now. Please try again.");
+          updateStepProgress();
+          return;
+        }
+      }
+
       showQuoteStep(currentQuoteStep + 1, { scroll: true });
     }
 
@@ -2574,6 +2613,99 @@
       }).join("");
     }
 
+    function setConditionalFieldVisibility(fieldId, visible) {
+      const field = document.getElementById(fieldId);
+      if (!field) {
+        return;
+      }
+      field.hidden = !visible;
+      field.setAttribute("aria-hidden", visible ? "false" : "true");
+      field.querySelectorAll("input, select, textarea").forEach(function (element) {
+        element.disabled = !visible;
+      });
+    }
+
+    function updateConditionalQuoteFields() {
+      const propertyType = getInputValue("propertyType");
+      const level = getInputValue("level");
+      const furnitureType = getInputValue("furnitureType");
+      const doorTrimming = getInputValue("doorTrimming");
+      const previousPropertyType = state.lastPropertyType;
+      const previousShowLevelField = previousPropertyType === "unit_apartment" || previousPropertyType === "commercial_other";
+      const propertyTypeChanged = previousPropertyType !== propertyType;
+
+      const showLevelField = propertyType === "unit_apartment" || propertyType === "commercial_other";
+      if (!showLevelField) {
+        setInputValue("level", "ground");
+      } else if (propertyTypeChanged && !previousShowLevelField) {
+        setInputValue("level", "");
+      }
+      setConditionalFieldVisibility("propertyLevelField", showLevelField);
+
+      const activeLevel = getInputValue("level");
+      const showLiftField = showLevelField && activeLevel !== "ground" && activeLevel !== "";
+      if (!showLiftField) {
+        setInputValue("hasLift", "na");
+      } else if (propertyTypeChanged || !getInputValue("hasLift") || getInputValue("hasLift") === "na") {
+        setInputValue("hasLift", "");
+      }
+      setConditionalFieldVisibility("hasLiftField", showLiftField);
+      state.lastPropertyType = propertyType;
+
+      setInputValue("manualRoomCount", "");
+      setInputValue("floorplanRoomCount", "");
+      setConditionalFieldVisibility("manualRoomCountField", false);
+      setConditionalFieldVisibility("floorplanRoomCountField", false);
+
+      const normalizedFurnitureType = furnitureType === "light" || furnitureType === "heavy" ? "yes" : furnitureType;
+      if (normalizedFurnitureType !== furnitureType) {
+        setInputValue("furnitureType", normalizedFurnitureType);
+      }
+      const activeFurnitureType = getInputValue("furnitureType");
+      const showFurnitureRoomCount = activeFurnitureType === "yes";
+      if (!showFurnitureRoomCount) {
+        setInputValue("furnitureRoomCount", "");
+      }
+      setConditionalFieldVisibility("furnitureRoomCountField", showFurnitureRoomCount);
+
+      const showDoorCount = doorTrimming === "yes";
+      if (!showDoorCount) {
+        setInputValue("doorCount", "");
+      }
+      setConditionalFieldVisibility("doorCountField", showDoorCount);
+
+      const showQuoteDeliveryEmail = !getInputValue("email").trim();
+      if (!showQuoteDeliveryEmail) {
+        setInputValue("quoteDeliveryEmail", "");
+      }
+      setConditionalFieldVisibility("quoteDeliveryEmailField", showQuoteDeliveryEmail);
+
+      const selectedCategory = getSelectedProductCategory();
+      const currentPatternType = getInputValue("patternType") || "standard";
+      const isEngineered = selectedCategory === "engineered";
+      const installMethodFieldVisible = isEngineered && currentPatternType === "standard";
+      const patternFieldVisible = isEngineered;
+
+      if (!isEngineered) {
+        setInputValue("patternType", "standard");
+        setInputValue("installMethod", "floating");
+        installationPathHelper.textContent = selectedCategory === "hybrid"
+          ? "Hybrid flooring is quoted as standard floating-floor installation only."
+          : "Laminate flooring is quoted as standard floating-floor installation only.";
+      } else if (currentPatternType === "herringbone" || currentPatternType === "chevron") {
+        setInputValue("installMethod", "direct_glue");
+        installationPathHelper.textContent = "Herringbone and chevron engineered timber are quoted as direct glue installation only.";
+      } else {
+        if (!getInputValue("installMethod")) {
+          setInputValue("installMethod", "floating");
+        }
+        installationPathHelper.textContent = "Engineered timber standard planks can be quoted as floating or direct glue installation.";
+      }
+
+      setConditionalFieldVisibility("installMethodField", installMethodFieldVisible);
+      setConditionalFieldVisibility("patternTypeField", patternFieldVisible);
+    }
+
     function setActiveCards(selector, value, attributeName) {
       document.querySelectorAll(selector).forEach(function (button) {
         button.classList.toggle("active", button.getAttribute(attributeName) === value);
@@ -2606,7 +2738,7 @@
         return room.id !== roomId;
       });
       if (!state.rooms.length) {
-        state.rooms = [createEmptyRoom("Room 1")];
+        state.rooms = [createEmptyRoom("Living room")];
       }
       buildRooms();
       renderAll();
@@ -2721,23 +2853,22 @@
 
       selectedProductHeadline.textContent = isEstimate
         ? "Using " + (categoryMeta ? categoryMeta.label.toLowerCase() : "category") + " estimate"
-        : (pricePending ? "Selected product saved for this quote" : "Selected product loaded for this quote");
+        : "Selected product";
 
       selectedProductSummary.textContent = isEstimate
-        ? "No specific product selected yet. The estimate uses the " + categoryEstimateLabel + " until you choose a range."
+        ? "No product attached yet. The estimate uses the " + categoryEstimateLabel + " unless you choose a specific range."
         : product.brand + " — " + product.range + " — " + product.colour + (pricePending
-          ? " · Price to be confirmed. The quote uses the " + categoryEstimateLabel + " until review."
+          ? " · Price to be confirmed. The estimate uses the " + categoryEstimateLabel + " until final review."
           : " · " + PRODUCT_LIBRARY.formatProductRate(product) + ". This product price will feed the flooring package estimate.");
 
       productOptionHelper.textContent = isEstimate
-        ? "Keep the category estimate, or choose a specific product if you already picked one from the catalogue."
-        : (pricePending
-          ? "This product is saved to the quote. Because the exact product price is still pending, the current estimate uses the " + categoryEstimateLabel + " until we confirm the final sell price."
-          : "This specific product is already loaded into the quote. You can keep it, change product, or switch back to the category estimate.");
+        ? "Choose a product if you already know it, or leave it on the category estimate."
+        : "This product is attached to the quote. Change it here if needed, or switch back to the category estimate.";
 
       browseCategoryLink.setAttribute("href", getCategoryPageUrl(product.category || getSelectedProductCategory()));
-      browseCategoryLink.textContent = "Browse " + ((categoryMeta ? categoryMeta.label : "products").toLowerCase());
-      clearSelectedProductButton.textContent = isEstimate ? "Keep category estimate" : "Use category estimate instead";
+      browseCategoryLink.textContent = "View " + ((categoryMeta ? categoryMeta.label : "products").toLowerCase());
+      clearSelectedProductButton.textContent = isEstimate ? "Using category estimate" : "Use category estimate instead";
+      clearSelectedProductButton.hidden = isEstimate;
     }
 
     function renderMeasurementHelper() {
@@ -2752,9 +2883,6 @@
           measurementHelperTitle.textContent = "Current area is ready to use";
           measurementHelperText.textContent = "You can continue now with the current estimate, or switch methods if you want a more detailed measurement.";
           pills.push('<span class="pill good">' + formatArea(measurement.realArea) + " entered</span>");
-          if (measurement.roomCount > 0) {
-            pills.push('<span class="pill muted">' + measurement.roomCount + " rooms noted</span>");
-          }
         } else {
           measurementHelperTitle.textContent = "Fastest way to keep the quote moving";
           measurementHelperText.textContent = "Enter the approximate flooring area if you know it. You can still confirm the final measurement from rooms or a floor plan later.";
@@ -2776,9 +2904,6 @@
           measurementHelperTitle.textContent = "Floor plan area is ready to use";
           measurementHelperText.textContent = "Your confirmed floor plan area is loaded. Review it and continue when the number looks right.";
           pills.push('<span class="pill good">' + formatArea(measurement.realArea) + " confirmed</span>");
-          if (measurement.roomCount > 0) {
-            pills.push('<span class="pill muted">' + measurement.roomCount + " rooms included</span>");
-          }
         } else if (savedFloorplanArea > 0) {
           measurementHelperTitle.textContent = "Saved floor plan area found";
           measurementHelperText.textContent = "Use the saved floor plan area now, or re-open the floor plan tool if you want to refine the tracing first.";
@@ -2837,7 +2962,7 @@
 
       if (method === "manual_total") {
         realArea = parsePositiveNumber(getInputValue("totalAreaM2"));
-        roomCount = Math.max(0, Math.round(parsePositiveNumber(getInputValue("manualRoomCount"))));
+        roomCount = 0;
         sourceLabel = "Manual total";
         if (!realArea) {
           warnings.push("Total area is missing.");
@@ -2853,7 +2978,7 @@
         }
       } else {
         realArea = parsePositiveNumber(getInputValue("confirmedFloorplanArea"));
-        roomCount = Math.max(0, Math.round(parsePositiveNumber(getInputValue("floorplanRoomCount"))));
+        roomCount = 0;
         sourceLabel = "Floor plan upload";
         if (state.floorplanFileName && !realArea) {
           warnings.push("Confirmed floor plan area is still missing.");
@@ -2878,12 +3003,19 @@
       return PRICING_RULES ? PRICING_RULES.getWastageMultiplier(getInputValue("patternType")) : 1.10;
     }
 
-    function validateQuoteInput(input) {
+    function getDeliveryEmailAddress(input) {
+      const source = input || getFormInput();
+      return String(source.email || source.quoteDeliveryEmail || "").trim();
+    }
+
+    function validateQuoteInput(input, options) {
+      const settings = Object.assign({ requireDeliveryEmail: false }, options || {});
       const errors = [];
       if (!getInputValue("fullName").trim()) errors.push("Full name is required.");
       if (!getInputValue("phone").trim()) errors.push("Phone is required.");
-      const emailValue = getInputValue("email").trim();
+      const emailValue = getDeliveryEmailAddress(input);
       if (emailValue && !/.+@.+\..+/.test(emailValue)) errors.push("Email format looks invalid.");
+      if (settings.requireDeliveryEmail && !emailValue) errors.push("Please enter an email address to send the quote.");
       if (!getInputValue("siteAddress").trim() && !(getInputValue("suburb").trim() && getInputValue("postcode").trim())) {
         errors.push("Please enter the site address, or provide suburb and postcode.");
       }
@@ -2892,6 +3024,10 @@
       const measurement = getMeasurementState();
       if (!measurement.realArea) {
         errors.push("Area is required before sending the quote request.");
+      }
+
+      if (input.furnitureType === "yes" && !Math.max(0, Math.round(parsePositiveNumber(input.furnitureRoomCount)))) {
+        errors.push("Please enter how many furnished rooms need to be moved.");
       }
 
       if (input.doorTrimming === "yes" && !Math.max(0, Math.round(parsePositiveNumber(input.doorCount)))) {
@@ -2928,10 +3064,10 @@
         if (!getInputValue("propertyType")) {
           return { valid: false, message: "Please choose the property type." };
         }
-        if (!getInputValue("level")) {
+        if (!document.getElementById("propertyLevelField").hidden && !getInputValue("level")) {
           return { valid: false, message: "Please choose the property level." };
         }
-        if (!getInputValue("hasLift")) {
+        if (!document.getElementById("hasLiftField").hidden && !getInputValue("hasLift")) {
           return { valid: false, message: "Please choose the lift access option." };
         }
         return { valid: true, message: "" };
@@ -2944,8 +3080,13 @@
         if (!getInputValue("selectedProductCategory")) {
           return { valid: false, message: "Please choose a flooring category." };
         }
-        if (!getInputValue("patternType")) {
+        if (getSelectedProductCategory() === "engineered" && !getInputValue("patternType")) {
           return { valid: false, message: "Please choose a flooring pattern." };
+        }
+        if (getSelectedProductCategory() === "engineered"
+          && getInputValue("patternType") === "standard"
+          && !getInputValue("installMethod")) {
+          return { valid: false, message: "Please choose the engineered timber installation method." };
         }
         return { valid: true, message: "" };
       }
@@ -2964,6 +3105,12 @@
       }
 
       if (currentQuoteStep === 4) {
+        if (input.furnitureType === "yes" && !Math.max(0, Math.round(parsePositiveNumber(input.furnitureRoomCount)))) {
+          return { valid: false, message: "Please enter how many furnished rooms need to be moved." };
+        }
+        if (input.doorTrimming === "yes" && !Math.max(0, Math.round(parsePositiveNumber(input.doorCount)))) {
+          return { valid: false, message: "Please enter the door quantity." };
+        }
         return { valid: true, message: "" };
       }
 
@@ -2988,6 +3135,7 @@
         productId: getInputValue("selectedProduct"),
         category: getSelectedProductCategory(),
         pattern: input.patternType,
+        installMethod: input.installMethod,
         underlayId: getInputValue("underlayId"),
         skirtingOption: input.skirtingType,
         scotiaOption: input.scotiaType,
@@ -2999,6 +3147,7 @@
         hasLift: input.hasLift,
         parkingAccess: input.parkingAccess,
         stairs: input.stairs,
+        furnitureRoomCount: input.furnitureRoomCount,
         floorPrepType: input.floorPrepType,
         moistureBarrier: input.moistureBarrier,
         furnitureType: input.furnitureType,
@@ -3046,6 +3195,7 @@
           zoneMultiplier: 1,
           locationSurchargePercent: 0,
           roomCount: measurement.roomCount,
+          furnitureRoomCount: Math.max(0, Math.round(parsePositiveNumber(input.furnitureRoomCount))),
           doorCount: 0,
           quoteLines: [],
           manualReviewRequired: true,
@@ -3144,12 +3294,21 @@
 
     function getFormInput() {
       return {
+        fullName: getInputValue("fullName"),
+        phone: getInputValue("phone"),
+        email: getInputValue("email"),
+        quoteDeliveryEmail: getInputValue("quoteDeliveryEmail"),
+        siteAddress: getInputValue("siteAddress"),
+        suburb: getInputValue("suburb"),
         quoteMode: getInputValue("quoteMode"),
         selectedProductCategory: getSelectedProductCategory(),
         selectedProduct: getInputValue("selectedProduct"),
         patternType: getInputValue("patternType"),
+        installMethod: getInputValue("installMethod"),
         measurementMethod: getInputValue("measurementMethod"),
         floorplanFileName: state.floorplanFileName,
+        totalAreaM2: getInputValue("totalAreaM2"),
+        confirmedFloorplanArea: getInputValue("confirmedFloorplanArea"),
         postcode: String(getInputValue("postcode") || "").trim(),
         propertyType: getInputValue("propertyType"),
         level: getInputValue("level"),
@@ -3161,6 +3320,7 @@
         skirtingType: getInputValue("skirtingType"),
         scotiaType: getInputValue("scotiaType"),
         furnitureType: getInputValue("furnitureType"),
+        furnitureRoomCount: getInputValue("furnitureRoomCount"),
         doorTrimming: getInputValue("doorTrimming"),
         doorCount: getInputValue("doorCount"),
         stairs: getInputValue("stairs")
@@ -3304,6 +3464,8 @@
       return {
         rooms: state.rooms,
         floorplanFileName: state.floorplanFileName,
+        lastQuoteId: state.lastQuoteId,
+        lastSavedDraftSignature: state.lastSavedDraftSignature,
         currentQuoteStep: currentQuoteStep,
         fields: Array.from(quoteForm.elements).reduce(function (accumulator, element) {
           if (!element.id || element.type === "file") {
@@ -3336,6 +3498,14 @@
 
         if (draft.floorplanFileName) {
           state.floorplanFileName = draft.floorplanFileName;
+        }
+
+        if (draft.lastQuoteId) {
+          state.lastQuoteId = draft.lastQuoteId;
+        }
+
+        if (draft.lastSavedDraftSignature) {
+          state.lastSavedDraftSignature = draft.lastSavedDraftSignature;
         }
 
         if (Number.isInteger(draft.currentQuoteStep)) {
@@ -3378,6 +3548,7 @@
       buildProductOptionSelect();
       renderSelectedProductBanner();
       buildRooms();
+      updateConditionalQuoteFields();
       renderMeasurementHelper();
       refreshQuoteEstimate({ render: true, track: true });
       renderFloorplanHandoff();
@@ -3402,7 +3573,7 @@
 
     function resetQuote() {
       quoteForm.reset();
-      state.rooms = [createEmptyRoom("Living room"), createEmptyRoom("Bedroom")];
+      state.rooms = [createEmptyRoom("Living room")];
       state.floorplanFileName = "";
       setInputValue("quoteMode", "supply_install");
       setInputValue("selectedProductCategory", "hybrid");
@@ -3415,6 +3586,8 @@
       state.pendingHandoffMessage = "";
       state.floorplanHandoffDismissed = false;
       state.currentQuoteResult = null;
+      state.lastQuoteId = "";
+      state.lastSavedDraftSignature = "";
       renderAll();
       showQuoteStep(0, { scroll: true });
     }
@@ -3632,6 +3805,7 @@
         },
         furniture: {
           type: getInputValue("furnitureType"),
+          roomCount: result.furnitureRoomCount,
           amountExGst: result.furnitureTotal
         },
         doorTrimming: {
@@ -3709,7 +3883,7 @@
         items.push({ type: "scotia", label: "Scotia package", quantity: pricing.chargeableArea, unit: "m2", unitBasis: "chargeable_area", amountExGst: pricing.scotiaTotal });
       }
       if (pricing.furnitureTotal > 0) {
-        items.push({ type: "furniture", label: "Furniture handling", quantity: pricing.roomCount, unit: "room", unitBasis: "room_count", amountExGst: pricing.furnitureTotal });
+        items.push({ type: "furniture", label: "Furniture handling", quantity: pricing.furnitureRoomCount || 0, unit: "room", unitBasis: "room_count", amountExGst: pricing.furnitureTotal });
       }
       if (pricing.doorTrimmingTotal > 0) {
         items.push({ type: "door_trimming", label: "Door trimming", quantity: pricing.doorCount, unit: "each", unitBasis: "each", amountExGst: pricing.doorTrimmingTotal });
@@ -3744,7 +3918,7 @@
         customer: {
           name: getInputValue("fullName").trim(),
           phone: getInputValue("phone").trim(),
-          email: getInputValue("email").trim(),
+          email: getDeliveryEmailAddress(input),
           siteAddress: getInputValue("siteAddress").trim(),
           suburb: getInputValue("suburb").trim(),
           postcode: getInputValue("postcode").trim()
@@ -3763,7 +3937,8 @@
           productBrand: product.brand,
           productRange: product.range,
           productColour: product.colour,
-          flooringPattern: input.patternType
+          flooringPattern: input.patternType,
+          installationMethod: input.installMethod || (product.category === "engineered" ? "floating" : "floating")
         },
         measurement: {
           method: measurementMethod,
@@ -3781,12 +3956,89 @@
         }),
         files: getUploadedFilesForPayload(),
         notes: {
-          short: getInputValue("projectNotesShort").trim(),
+          short: "",
           site: getInputValue("siteNotes").trim(),
           customer: getInputValue("customerNotes").trim()
         },
         manualReviewRequired: pricing.manualReviewRequired,
         warnings: pricing.warnings || []
+      };
+    }
+
+    function canUseQuoteSaveRuntime() {
+      return typeof window.fetch === "function" && window.location.protocol !== "file:";
+    }
+
+    async function persistQuoteRequest(options) {
+      const settings = Object.assign({
+        mode: "draft",
+        payload: null,
+        emailTo: "",
+        quoteId: state.lastQuoteId || ""
+      }, options || {});
+
+      if (!canUseQuoteSaveRuntime()) {
+        throw new Error("Quote save runtime is unavailable in local file mode.");
+      }
+
+      const response = await window.fetch(QUOTE_SAVE_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          mode: settings.mode,
+          quoteId: settings.quoteId || "",
+          emailTo: settings.emailTo || "",
+          payload: settings.payload
+        })
+      });
+
+      const result = await response.json().catch(function () {
+        return null;
+      });
+
+      if (!response.ok || !result || !result.ok || !result.quoteId) {
+        throw new Error(result && result.error ? result.error : "Quote save failed.");
+      }
+
+      return result;
+    }
+
+    async function saveQuoteDraftToSystem(options) {
+      const settings = Object.assign({ force: false, showMessage: true }, options || {});
+      const payload = await buildQuotePayload();
+      const signature = JSON.stringify(payload);
+
+      if (!settings.force && state.lastQuoteId && state.lastSavedDraftSignature === signature) {
+        if (settings.showMessage) {
+          showQuoteSubmitMessage("draft_saved", "Estimate saved. Review the summary, then email the quote when you are ready.");
+        }
+        return {
+          quoteId: state.lastQuoteId,
+          payload: payload,
+          reused: true
+        };
+      }
+
+      const result = await persistQuoteRequest({
+        mode: "draft",
+        payload: payload,
+        quoteId: state.lastQuoteId || ""
+      });
+
+      state.lastQuoteId = result.quoteId;
+      state.lastSavedDraftSignature = signature;
+      localStorage.setItem("operon_last_quote_id", result.quoteId);
+
+      if (settings.showMessage) {
+        showQuoteSubmitMessage("draft_saved", "Estimate saved. Review the summary, then email the quote when you are ready.");
+      }
+
+      return {
+        quoteId: result.quoteId,
+        payload: payload,
+        reused: false
       };
     }
 
@@ -3949,13 +4201,16 @@
       return metadata;
     }
 
-    function setQuoteSubmitLoading(isLoading) {
-      state.submitState = isLoading ? "saving" : "idle";
+    function setQuoteSubmitLoading(isLoading, actionLabel) {
+      if (isLoading) {
+        state.submitState = "saving";
+      } else if (state.submitState === "saving") {
+        state.submitState = "idle";
+      }
       wizardSubmitButton.disabled = isLoading;
       wizardBackButton.disabled = isLoading || currentQuoteStep === 0;
       wizardNextButton.disabled = isLoading;
-      wizardSkipExtrasButton.disabled = isLoading;
-      wizardSubmitButton.textContent = isLoading ? "Submitting..." : "Get quote";
+      wizardSubmitButton.textContent = isLoading ? (actionLabel || "Working...") : "Email quote";
       updateQuoteCtaSystem();
     }
 
@@ -3968,7 +4223,7 @@
 
     function clearQuoteSubmitMessage() {
       state.submitState = "idle";
-      requestStatus.textContent = "Draft quote request ready to complete.";
+      requestStatus.textContent = "Review the estimate, then email the quote when you are ready.";
       delete requestStatus.dataset.state;
       updateQuoteCtaSystem();
     }
@@ -3987,15 +4242,11 @@
       }
 
       clearQuoteSubmitMessage();
-      setQuoteSubmitLoading(true);
+      setQuoteSubmitLoading(true, "Emailing quote...");
 
       try {
-        if (!operonSupabase) {
-          throw new Error("Supabase is not configured. Add the public anon key to enable submissions.");
-        }
-
         const input = getFormInput();
-        const errors = validateQuoteInput(input);
+        const errors = validateQuoteInput(input, { requireDeliveryEmail: true });
         if (errors.length) {
           showWizardValidationMessage(errors[0]);
           focusFirstInvalidField(currentQuoteStep);
@@ -4003,34 +4254,35 @@
           return;
         }
 
+        const deliveryEmail = getDeliveryEmailAddress(input);
         const payload = await buildQuotePayload();
+        let quoteId = state.lastQuoteId || "";
+        if (!quoteId) {
+          const draftResult = await saveQuoteDraftToSystem({ showMessage: false });
+          quoteId = draftResult.quoteId || "";
+        }
+        if (!quoteId) {
+          throw new Error("Quote draft has not been saved yet.");
+        }
         console.log("quote_submitted");
         window.__operonSuppressAbandon = true;
         localStorage.setItem("operon_last_quote_value", String(payload.pricing.totalIncGst || 0));
         localStorage.setItem("operon_last_quote_type", payload.job.quoteMode || "");
-        const quote = await saveQuoteRequest(payload);
-        const quoteId = quote.id;
+        const emailResult = await persistQuoteRequest({
+          mode: "email_quote",
+          payload: payload,
+          quoteId: quoteId,
+          emailTo: deliveryEmail
+        });
+        quoteId = emailResult.quoteId;
         state.lastQuoteId = quoteId;
+        state.lastSavedDraftSignature = JSON.stringify(payload);
         if (window.OperonTracking) {
           window.OperonTracking.trackQuoteStepCompleted(6, "summary");
           window.OperonTracking.trackQuoteSubmit(quoteId, payload.pricing.totalIncGst, payload.job.quoteMode, payload.measurement.realArea);
         }
 
         const partialFailures = [];
-
-        try {
-          await saveQuoteRooms(quoteId, payload.measurement.rooms || []);
-        } catch (error) {
-          partialFailures.push("room details");
-          console.error(error);
-        }
-
-        try {
-          await saveQuoteItems(quoteId, payload.pricing.lineItems || buildQuoteItemsFromPricing(payload.pricing));
-        } catch (error) {
-          partialFailures.push("quote items");
-          console.error(error);
-        }
 
         const uploadedFiles = getSelectedQuoteFiles();
         for (let index = 0; index < uploadedFiles.length; index += 1) {
@@ -4046,24 +4298,18 @@
         if (partialFailures.length) {
           showQuoteSubmitMessage(
             "partial_success_file_failed",
-            "Your quote request has been received. Reference: " + quoteId.slice(0, 8) + ". We saved the main quote, but there was a problem with " + partialFailures.join(", ") + ". We can still review your request and follow up if anything else is needed."
+            "Your quote has been emailed. Reference: " + quoteId.slice(0, 8) + ". We saved the quote, but there was a problem with " + partialFailures.join(", ") + "."
           );
         } else {
           showQuoteSubmitSuccess(
-            "Your quote request has been received. Reference: " + quoteId.slice(0, 8) + ". We will review the details and confirm the final quote."
+            "Your quote has been emailed to " + deliveryEmail + ". Reference: " + quoteId.slice(0, 8) + "."
           );
         }
       } catch (error) {
         console.error(error);
-        if (error && error.stage === "quote_request") {
-          showQuoteSubmitError(
-            "We could not submit your quote request. Please call or try again."
-          );
-        } else {
-          showQuoteSubmitError(
-            "We could not complete the quote submission. Please call or try again."
-          );
-        }
+        showQuoteSubmitError(
+          "We could not email the quote right now. Please check the email address and try again."
+        );
       } finally {
         setQuoteSubmitLoading(false);
       }
@@ -4175,12 +4421,6 @@
       document.getElementById("resetQuoteButton").addEventListener("click", resetQuote);
       wizardBackButton.addEventListener("click", goToPreviousQuoteStep);
       wizardNextButton.addEventListener("click", goToNextQuoteStep);
-      wizardSkipExtrasButton.addEventListener("click", function () {
-        if (window.OperonTracking) {
-          window.OperonTracking.trackQuoteStepCompleted(5, "extras");
-        }
-        showQuoteStep(5, { scroll: true });
-      });
 
       quoteForm.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -4211,11 +4451,11 @@
         window.OperonTracking.trackQuoteStart();
       }
 
-      state.rooms = [createEmptyRoom("Living room"), createEmptyRoom("Bedroom")];
+      state.rooms = [createEmptyRoom("Living room")];
       loadDraft();
 
       if (!state.rooms.length) {
-        state.rooms = [createEmptyRoom("Living room"), createEmptyRoom("Bedroom")];
+        state.rooms = [createEmptyRoom("Living room")];
       }
 
       const storedProduct = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getStoredProduct() : null;

@@ -4,13 +4,9 @@
   const INSTALL_RATES = [
     { id: "laminate-standard-supply-install", category: "laminate", installType: "standard", jobType: "supply_install", ratePerM2: 27, minimumCharge: 1500, active: true },
     { id: "laminate-standard-install-only", category: "laminate", installType: "standard", jobType: "install_only", ratePerM2: 45, minimumCharge: 1500, active: true },
-    { id: "laminate-herringbone-supply-install", category: "laminate", installType: "herringbone", jobType: "supply_install", ratePerM2: 36, minimumCharge: 1800, active: true },
-    { id: "laminate-herringbone-install-only", category: "laminate", installType: "herringbone", jobType: "install_only", ratePerM2: 52, minimumCharge: 1800, active: true },
 
     { id: "hybrid-standard-supply-install", category: "hybrid", installType: "standard", jobType: "supply_install", ratePerM2: 31, minimumCharge: 1500, active: true },
     { id: "hybrid-standard-install-only", category: "hybrid", installType: "standard", jobType: "install_only", ratePerM2: 45, minimumCharge: 1500, active: true },
-    { id: "hybrid-herringbone-supply-install", category: "hybrid", installType: "herringbone", jobType: "supply_install", ratePerM2: 42, minimumCharge: 1800, active: true },
-    { id: "hybrid-herringbone-install-only", category: "hybrid", installType: "herringbone", jobType: "install_only", ratePerM2: 56, minimumCharge: 1800, active: true },
 
     { id: "engineered-standard-supply-install", category: "engineered", installType: "standard", jobType: "supply_install", ratePerM2: 39, minimumCharge: 1500, active: true },
     { id: "engineered-standard-install-only", category: "engineered", installType: "standard", jobType: "install_only", ratePerM2: 45, minimumCharge: 1500, active: true },

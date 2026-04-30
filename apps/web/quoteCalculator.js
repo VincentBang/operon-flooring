@@ -125,9 +125,10 @@
     }
 
     const quoteMode = input.jobType || input.quoteMode || "supply_install";
+    const installType = libraries.installRates.normaliseInstallType(input.pattern || "standard");
     return libraries.installRates.getInstallRate({
       category: product.category,
-      installType: input.pattern,
+      installType: installType,
       jobType: quoteMode
     });
   }
@@ -167,6 +168,8 @@
   function getWarnings(input, measurement, product, pricePending, accessState) {
     const warnings = [].concat(measurement.warnings || [], accessState.warnings || []);
     let manualReviewRequired = false;
+    const furnitureRoomCount = Math.max(0, Math.round(parsePositiveNumber(input.furnitureRoomCount)));
+    const isEngineered = product && product.category === "engineered";
 
     if (!measurement.realArea) {
       warnings.push("Real flooring area is missing.");
@@ -207,18 +210,23 @@
       manualReviewRequired = true;
     }
 
-    if (input.furnitureType === "heavy") {
-      warnings.push("Heavy furniture handling needs manual review.");
-      manualReviewRequired = true;
-    }
-
-    if ((input.furnitureType === "light" || input.furnitureType === "heavy") && measurement.roomCount <= 0) {
-      warnings.push("Room count is missing for furniture handling.");
+    if (input.furnitureType === "yes" && furnitureRoomCount <= 0) {
+      warnings.push("Furniture room count is missing. Count each furnished space separately.");
       manualReviewRequired = true;
     }
 
     if (input.pattern === "herringbone" || input.pattern === "chevron") {
       warnings.push("Pattern wastage is applied at 20%. Confirm install premium if required.");
+    }
+
+    if (!isEngineered && (input.pattern === "herringbone" || input.pattern === "chevron")) {
+      warnings.push("Herringbone and chevron are only available for engineered timber.");
+      manualReviewRequired = true;
+    }
+
+    if ((input.pattern === "herringbone" || input.pattern === "chevron") && input.installMethod && input.installMethod !== "direct_glue") {
+      warnings.push("Herringbone and chevron are quoted as direct glue installation.");
+      manualReviewRequired = true;
     }
 
     if ((input.jobType || input.quoteMode) === "supply_install" && product && !product.isEstimate && pricePending) {
@@ -290,7 +298,19 @@
     const product = getActiveProduct(input, libraries);
     const categoryEstimate = libraries.products ? libraries.products.getEstimateProduct(product.category) : null;
     const quoteMode = input.jobType || input.quoteMode || "supply_install";
-    const chargeableArea = measurement.realArea * (libraries.pricingRules ? libraries.pricingRules.getWastageMultiplier(input.pattern) : 1.10);
+    const furnitureRoomCount = Math.max(0, Math.round(parsePositiveNumber(input.furnitureRoomCount)));
+    const isEngineered = product.category === "engineered";
+    const requestedPattern = input.pattern || "standard";
+    const resolvedPattern = isEngineered ? requestedPattern : "standard";
+    const requestedInstallMethod = input.installMethod || "floating";
+    const resolvedInstallMethod = !isEngineered
+      ? "floating"
+      : ((resolvedPattern === "herringbone" || resolvedPattern === "chevron") ? "direct_glue" : requestedInstallMethod);
+    const normalizedInput = Object.assign({}, input, {
+      pattern: resolvedPattern,
+      installMethod: resolvedInstallMethod
+    });
+    const chargeableArea = measurement.realArea * (libraries.pricingRules ? libraries.pricingRules.getWastageMultiplier(resolvedPattern) : 1.10);
     const accessState = getAccessState(input);
     const locationState = getLocationState(input, libraries, rules);
     const smallJobFactor = getSmallJobFactor(measurement.realArea, rules);
@@ -298,7 +318,7 @@
     const materialRate = product.pricePerM2 > 0
       ? product.pricePerM2
       : ((categoryEstimate && categoryEstimate.pricePerM2 > 0) ? categoryEstimate.pricePerM2 : 0);
-    const installRateConfig = getInstallRateConfig(input, product, libraries) || {};
+    const installRateConfig = getInstallRateConfig(normalizedInput, product, libraries) || {};
     const installRate = product.installRate || Number(installRateConfig.ratePerM2 || 0);
     const underlay = getSelectedUnderlay(input, libraries);
     const underlayArea = rules.underlayAreaBasis === "real_area" ? measurement.realArea : chargeableArea;
@@ -311,8 +331,8 @@
       ? measurement.realArea * Number((rules.floorPrepRates || {})[input.floorPrepType] || 0)
       : 0;
     const trimTotals = getTrimTotals(input, chargeableArea, libraries);
-    const furnitureBaseTotal = (input.furnitureType === "light" || input.furnitureType === "heavy")
-      ? measurement.roomCount * Number(rules.furnitureRatePerRoom || 0)
+    const furnitureBaseTotal = input.furnitureType === "yes"
+      ? furnitureRoomCount * Number(rules.furnitureRatePerRoom || 0)
       : 0;
     const doorCount = input.doorTrimming === "yes" ? Math.max(0, Math.round(parsePositiveNumber(input.doorCount))) : 0;
     const doorTrimmingBaseTotal = doorCount * Number(rules.doorTrimmingRate || 0);
@@ -371,7 +391,7 @@
     const gst = subtotalExGst * 0.10;
     const totalIncGst = subtotalExGst + gst;
 
-    const reviewState = getWarnings(input, measurement, product, productPricePending, accessState);
+    const reviewState = getWarnings(normalizedInput, measurement, product, productPricePending, accessState);
     if (doorCount === 0 && input.doorTrimming === "yes") {
       reviewState.warnings.push("Door trimming selected without quantity.");
       reviewState.manualReviewRequired = true;
@@ -388,6 +408,8 @@
       category: product.category,
       categoryEstimateLabel: libraries.products ? ("standard " + (libraries.products.getCategoryMeta(product.category || input.category || "hybrid").label.toLowerCase()) + " estimate") : "standard flooring estimate",
       zoneName: locationState.zoneName,
+      pattern: resolvedPattern,
+      installMethod: resolvedInstallMethod,
       realArea: roundTo(measurement.realArea, 2),
       chargeableArea: roundTo(chargeableArea, 2),
       materialTotal: roundTo(materialTotal, 2),
@@ -416,12 +438,15 @@
       zoneMultiplier: roundTo(1 + (Number(locationState.surchargePercent || 0) / 100), 4),
       locationSurchargePercent: roundTo(locationState.surchargePercent, 2),
       roomCount: measurement.roomCount,
+      furnitureRoomCount: furnitureRoomCount,
       doorCount: doorCount,
       removalLabel: input.removalOption ? input.removalOption.replace(/_/g, " ") : "none",
       floorPrepLabel: input.floorPrepType ? input.floorPrepType.replace(/_/g, " ") : "none",
       skirtingLabel: input.skirtingOption ? input.skirtingOption.replace(/_/g, " ") : "none",
       scotiaLabel: input.scotiaOption ? input.scotiaOption.replace(/_/g, " ") : "none",
-      furnitureLabel: input.furnitureType ? input.furnitureType.replace(/_/g, " ") : "none",
+      furnitureLabel: input.furnitureType
+        ? "furnished room move" + (furnitureRoomCount > 0 ? " · " + furnitureRoomCount + " rooms" : "")
+        : "none",
       underlayLabel: underlay ? underlay.name : "",
       warnings: Array.from(new Set(reviewState.warnings)),
       manualReviewRequired: reviewState.manualReviewRequired,

@@ -41,6 +41,9 @@ Source-of-truth status: active project memory for current business direction, pa
 - material supply uses `chargeable_area`
 - installation labour uses `real_area`
 - skirting and scotia use `chargeable_area` allowance, not perimeter
+- laminate and hybrid are quoted as standard floating-floor installation only
+- engineered timber standard planks can be quoted as floating or direct glue
+- engineered herringbone and chevron are quoted as direct glue only
 - customer-facing quotes must not expose internal rates or multipliers
 - central pricing runtime now lives in:
   - `apps/web/products.js`
@@ -105,7 +108,7 @@ Source-of-truth status: active project memory for current business direction, pa
 ## Floor Care & Maintenance Content Pillar
 
 - pillar page planned and created
-- first five maintenance and problem guides created
+- first eight maintenance and problem guides created
 - remaining blog topics defined in a central strategy file
 - internal linking strategy added
 - maintenance content supports SEO, trust, and quote conversion
@@ -163,9 +166,12 @@ Reason:
 
 ## Last Iteration
 
-- Task completed: created a central flooring catalogue page and moved the category pages to a featured-products model
-- Changes made: added `products.html`, wired it to `products.js`, added category and attribute filters, added product selection and quote CTAs, updated the category landing pages to show featured products only, and linked the homepage plus sitemap to the new central catalogue
-- Next improvement idea: add confirmed supplier prices to more product rows, then expand the catalogue filters with richer product metadata where real ranges support it
+- Task completed: streamlined the quote wizard so irrelevant access and extras fields now stay hidden until they are needed
+- Changes made: hid level/lift for house and townhouse paths, made lift conditional on upper-level apartment/commercial access, moved furniture room counting into the extras step, hid door quantity until door trimming is selected, and removed room-count dependency from manual/floorplan measurement paths
+- Latest quote flow update: `Review estimate` now saves the quote draft into the system before the final summary step, and `Email quote` is the only final CTA
+- Delivery rule: use the Step 1 email when provided, otherwise show a final-step delivery email field before sending
+- Email runtime note: final quote email now depends on the Netlify function `save-quote-request.js` plus `RESEND_API_KEY` and `OPERON_QUOTE_FROM_EMAIL`
+- Next improvement idea: tighten the final summary wording further once live usage shows whether customers need more reassurance before emailing the quote
 
 ## Central Pricing Foundation
 
