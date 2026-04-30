@@ -35,6 +35,14 @@
 - task queue added
 - ranking tracker added
 
+## Product Catalogue System
+- product data now stored centrally
+- product pages can show brand/range/colour/price
+- customer can select product from product page
+- selected product feeds quote engine
+- laminate implemented first
+- hybrid and engineered follow the same system
+
 ## Completed
 - homepage redesign
 - floorplan tool
@@ -73,9 +81,9 @@ Reason:
 - prioritises traffic → quote → job → margin → next action
 
 ## Last Iteration
-- Task completed: hardened the repo-side Netlify setup before the first clean push
-- Changes made: added `netlify/functions/.gitkeep`, tightened the root `.gitignore` to keep unrelated local folders out of the website repo, and expanded the deployment workflow doc with a Netlify failure checklist
-- Next improvement idea: finish the first clean commit by removing staged unrelated files, set the Git author identity, then push `main` and create `dev`
+- Task completed: added the first product catalogue layer across product pages and the quote wizard
+- Changes made: created a central `products.js` data source, added catalogue sections to laminate, hybrid and engineered product pages, and wired selected products into the quote pricing flow with localStorage handoff
+- Next improvement idea: replace the sample catalogue rows with confirmed supplier ranges and add product images once the final supplier list is available
 
 ## Execution Queue
 

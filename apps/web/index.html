@@ -31,6 +31,7 @@
     gtag('config', 'G-XXXXXXXXXX');
   </script>
   <script src="tracking.js"></script>
+  <script src="products.js"></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -889,6 +890,46 @@
       line-height: 1.55;
     }
 
+    .product-choice-panel {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(248, 250, 252, 0.84);
+      border: 1px solid rgba(16, 24, 40, 0.06);
+    }
+
+    .selected-product-banner {
+      display: grid;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(30, 58, 138, 0.06);
+      border: 1px solid rgba(30, 58, 138, 0.12);
+    }
+
+    .selected-product-banner strong {
+      color: var(--text);
+      font-size: 0.98rem;
+    }
+
+    .selected-product-banner p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .selected-product-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .selected-product-actions .button-quiet,
+    .selected-product-actions .button-secondary {
+      min-height: 44px;
+    }
+
     .measure-panel {
       display: none;
       margin-top: 18px;
@@ -1480,7 +1521,25 @@
             <div class="field" style="margin-top: 18px;">
               <label>Flooring product</label>
               <div class="choice-grid three" id="productGrid"></div>
-              <input id="selectedProduct" name="selectedProduct" type="hidden" value="hybrid">
+              <input id="selectedProductCategory" name="selectedProductCategory" type="hidden" value="hybrid">
+              <input id="selectedProduct" name="selectedProduct" type="hidden" value="">
+            </div>
+
+            <div class="product-choice-panel">
+              <div class="field" style="margin-bottom: 0;">
+                <label for="productOptionSelect">Selected product option</label>
+                <select id="productOptionSelect" name="productOptionSelect"></select>
+                <p class="helper">Select a specific product now, or keep the category estimate and confirm the final range later.</p>
+              </div>
+
+              <div class="selected-product-banner">
+                <strong id="selectedProductHeadline">Using hybrid flooring estimate</strong>
+                <p id="selectedProductSummary">No specific product selected yet. The estimate will use the standard category rate until you choose a range.</p>
+                <div class="selected-product-actions">
+                  <a class="button-quiet" id="browseCategoryLink" href="hybrid-flooring-sydney.html">Browse hybrid products</a>
+                  <button class="button-secondary" id="clearSelectedProductButton" type="button">Use category estimate</button>
+                </div>
+              </div>
             </div>
 
             <div class="grid-2">
@@ -1744,7 +1803,8 @@
           </div>
 
           <div class="summary-box">
-            <div class="summary-grid">
+              <div class="summary-grid">
+              <div class="summary-row"><span>Selected product</span><strong id="summarySelectedProduct">Category estimate</strong></div>
               <div class="summary-row"><span>Real area</span><strong id="summaryRealArea">0.0 m²</strong></div>
               <div class="summary-row"><span>Chargeable area</span><strong id="summaryChargeableArea">0.0 m²</strong></div>
               <div class="summary-row"><span>Subtotal ex GST</span><strong id="summarySubtotal">$0</strong></div>
@@ -2059,6 +2119,11 @@
     const floorplanHandoffText = document.getElementById("floorplanHandoffText");
     const confirmFloorplanHandoffButton = document.getElementById("confirmFloorplanHandoffButton");
     const dismissFloorplanHandoffButton = document.getElementById("dismissFloorplanHandoffButton");
+    const productOptionSelect = document.getElementById("productOptionSelect");
+    const selectedProductHeadline = document.getElementById("selectedProductHeadline");
+    const selectedProductSummary = document.getElementById("selectedProductSummary");
+    const browseCategoryLink = document.getElementById("browseCategoryLink");
+    const clearSelectedProductButton = document.getElementById("clearSelectedProductButton");
 
     const state = {
       rooms: [],
@@ -2068,41 +2133,20 @@
       floorplanSource: "",
       floorplanRooms: [],
       pendingHandoffMessage: "",
-      floorplanHandoffDismissed: false
+      floorplanHandoffDismissed: false,
+      productSelectionLoadedFromCatalogue: false
     };
 
     let currentQuoteStep = 0;
 
-    const PRODUCTS = {
-      // Preserved from the legacy quote page so current package pricing behaviour is not lost.
-      hybrid: {
-        id: "hybrid",
-        label: "Hybrid Flooring",
-        description: "Water-friendly plank flooring for broad residential use.",
-        materialRate: 52,
-        installationRate: 31
-      },
-      laminate: {
-        id: "laminate",
-        label: "Laminate Flooring",
-        description: "Cost-conscious flooring with straightforward installation.",
-        materialRate: 38,
-        installationRate: 27
-      },
-      timber: {
-        id: "timber",
-        label: "Engineered Timber",
-        description: "Premium timber look with a stronger material allowance.",
-        materialRate: 88,
-        installationRate: 39
-      }
-    };
+    const PRODUCT_LIBRARY = window.OperonProducts;
+    const PRODUCT_CATEGORIES = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryList() : [];
 
     const INSTALL_ONLY_RATES = {
       // TODO: Confirm install-only rates by product family if the commercial schedule differs.
       hybrid: 45,
       laminate: 45,
-      timber: 45
+      engineered: 45
     };
 
     const RATE_CARD = {
@@ -2210,6 +2254,15 @@
       if (element) {
         element.value = value;
       }
+    }
+
+    function getSelectedProductCategory() {
+      return getInputValue("selectedProductCategory") || "hybrid";
+    }
+
+    function getCategoryPageUrl(category) {
+      const meta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(category) : null;
+      return meta && meta.pageUrl ? meta.pageUrl : "index.html#quoteForm";
     }
 
     // Quote Wizard Navigation
@@ -2447,12 +2500,13 @@
     }
 
     function buildProducts() {
-      productGrid.innerHTML = Object.values(PRODUCTS).map(function (product) {
-        const active = getInputValue("selectedProduct") === product.id ? "active" : "";
+      const selectedCategory = getSelectedProductCategory();
+      productGrid.innerHTML = PRODUCT_CATEGORIES.map(function (category) {
+        const active = selectedCategory === category.id ? "active" : "";
         return `
-          <button class="product-card ${active}" type="button" data-product="${product.id}">
-            <strong>${product.label}</strong>
-            <small>${product.description}</small>
+          <button class="product-card ${active}" type="button" data-product-category="${category.id}">
+            <strong>${category.label}</strong>
+            <small>${category.shortDescription}</small>
           </button>
         `;
       }).join("");
@@ -2530,8 +2584,126 @@
       renderAll();
     }
 
+    function syncSelectedProductFields(product) {
+      if (!product) {
+        return;
+      }
+
+      setInputValue("selectedProductCategory", product.category || getSelectedProductCategory());
+      setInputValue("selectedProduct", product.isEstimate ? "" : product.id);
+    }
+
+    function setSelectedCategory(category, options) {
+      const settings = Object.assign({ preserveProduct: false, trackStartFromProduct: false }, options || {});
+      const meta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(category) : null;
+      const normalisedCategory = meta ? meta.id : "hybrid";
+      setInputValue("selectedProductCategory", normalisedCategory);
+
+      const currentProduct = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getProductById(getInputValue("selectedProduct")) : null;
+      if (!settings.preserveProduct || !currentProduct || currentProduct.category !== normalisedCategory) {
+        setInputValue("selectedProduct", "");
+      }
+
+      if (PRODUCT_LIBRARY) {
+        PRODUCT_LIBRARY.saveSelectedCategory(normalisedCategory);
+      }
+
+      if (settings.trackStartFromProduct && window.OperonTracking) {
+        window.OperonTracking.trackEvent("quote_started_from_product", {
+          category: normalisedCategory
+        });
+      }
+    }
+
+    function setSelectedProductById(productId, options) {
+      const settings = Object.assign({ persist: true, track: false }, options || {});
+      const product = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getProductById(productId) : null;
+      if (!product) {
+        return;
+      }
+
+      syncSelectedProductFields(product);
+      if (PRODUCT_LIBRARY) {
+        PRODUCT_LIBRARY.saveSelectedCategory(product.category);
+        if (settings.persist) {
+          PRODUCT_LIBRARY.saveSelectedProduct(product);
+        }
+      }
+
+      if (settings.track && window.OperonTracking) {
+        window.OperonTracking.trackEvent("product_selected", {
+          category: product.category,
+          brand: product.brand,
+          range: product.range,
+          colour: product.colour,
+          pricePerM2: product.pricePerM2,
+          source: "quote_wizard"
+        });
+      }
+    }
+
+    function clearSpecificProductSelection() {
+      setInputValue("selectedProduct", "");
+      if (PRODUCT_LIBRARY) {
+        PRODUCT_LIBRARY.clearSelectedProduct();
+        PRODUCT_LIBRARY.saveSelectedCategory(getSelectedProductCategory());
+      }
+    }
+
+    function buildProductOptionSelect() {
+      const category = getSelectedProductCategory();
+      const products = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getProductsByCategory(category) : [];
+      const selectedId = getInputValue("selectedProduct");
+      const options = [
+        '<option value="">Use ' + escapeHtml((PRODUCT_LIBRARY.getCategoryMeta(category) || {}).label || "category") + ' estimate</option>'
+      ].concat(products.map(function (product) {
+        const label = PRODUCT_LIBRARY.getProductLabel(product) + " · $" + product.pricePerM2.toFixed(0) + "/m²";
+        return '<option value="' + escapeHtml(product.id) + '"' + (selectedId === product.id ? " selected" : "") + '>' + escapeHtml(label) + "</option>";
+      }));
+
+      productOptionSelect.innerHTML = options.join("");
+    }
+
+    function renderSelectedProductBanner() {
+      const product = getSelectedProduct();
+      const categoryMeta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(product.category || getSelectedProductCategory()) : null;
+      const isEstimate = !!product.isEstimate;
+      const productLabel = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getProductLabel(product) : "";
+
+      selectedProductHeadline.textContent = isEstimate
+        ? "Using " + (categoryMeta ? categoryMeta.label.toLowerCase() : "category") + " estimate"
+        : "Selected product: " + productLabel;
+
+      selectedProductSummary.textContent = isEstimate
+        ? "No specific product selected yet. The estimate uses the standard " + (categoryMeta ? categoryMeta.label.toLowerCase() : "flooring") + " rate until you choose a range."
+        : product.brand + " / " + product.range + " / " + product.colour + " · $" + product.pricePerM2.toFixed(0) + "/m²";
+
+      browseCategoryLink.setAttribute("href", getCategoryPageUrl(product.category || getSelectedProductCategory()));
+      browseCategoryLink.textContent = "Browse " + ((categoryMeta ? categoryMeta.label : "products").toLowerCase());
+      clearSelectedProductButton.textContent = isEstimate ? "Keep category estimate" : "Use category estimate";
+    }
+
     function getSelectedProduct() {
-      return PRODUCTS[getInputValue("selectedProduct")] || PRODUCTS.hybrid;
+      const selectedId = getInputValue("selectedProduct");
+      if (PRODUCT_LIBRARY && selectedId) {
+        const exact = PRODUCT_LIBRARY.getProductById(selectedId);
+        if (exact) {
+          return Object.assign({ label: PRODUCT_LIBRARY.getProductLabel(exact) }, exact);
+        }
+      }
+
+      const estimate = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getEstimateProduct(getSelectedProductCategory()) : null;
+      return estimate || {
+        id: "hybrid-estimate",
+        category: "hybrid",
+        brand: "Operon Estimate",
+        range: "Hybrid Flooring",
+        colour: "Standard estimate",
+        pricePerM2: 52,
+        installRate: 31,
+        isEstimate: true,
+        label: "Hybrid Flooring Estimate"
+      };
     }
 
     // Measurement logic.
@@ -2890,8 +3062,8 @@
         if (!getInputValue("quoteMode")) {
           return { valid: false, message: "Please choose a quote mode." };
         }
-        if (!getInputValue("selectedProduct")) {
-          return { valid: false, message: "Please choose a flooring product." };
+        if (!getInputValue("selectedProductCategory")) {
+          return { valid: false, message: "Please choose a flooring category." };
         }
         if (!getInputValue("patternType")) {
           return { valid: false, message: "Please choose a flooring pattern." };
@@ -2945,12 +3117,13 @@
       };
 
       const materialTotal = input.quoteMode === "supply_install"
-        ? chargeableArea * product.materialRate
+        ? chargeableArea * product.pricePerM2
         : 0;
 
+      const installRate = product.installRate || INSTALL_ONLY_RATES[product.category] || 45;
       const installationBaseTotal = input.quoteMode === "supply_install"
-        ? measurement.realArea * product.installationRate
-        : measurement.realArea * (INSTALL_ONLY_RATES[product.id] || 45);
+        ? measurement.realArea * installRate
+        : measurement.realArea * (product.installRate || INSTALL_ONLY_RATES[product.category] || 45);
 
       const removalQty = input.removalType === "none" || input.removalType === "other" || input.removalType === "unsure"
         ? 0
@@ -3077,7 +3250,7 @@
         }),
         manualReviewRequired: reviewState.manualReviewRequired,
         warnings: Array.from(new Set(reviewState.warnings)),
-        productLabel: product.label,
+        productLabel: PRODUCT_LIBRARY.getProductLabel(product),
         measurementSource: measurement.sourceLabel
       };
     }
@@ -3085,6 +3258,7 @@
     function getFormInput() {
       return {
         quoteMode: getInputValue("quoteMode"),
+        selectedProductCategory: getSelectedProductCategory(),
         selectedProduct: getInputValue("selectedProduct"),
         patternType: getInputValue("patternType"),
         measurementMethod: getInputValue("measurementMethod"),
@@ -3129,6 +3303,7 @@
       document.getElementById("summaryTotalSecondary").textContent = formatCurrency(result.totalIncGst);
       document.getElementById("summarySubtotal").textContent = formatCurrency(result.subtotalExGst);
       document.getElementById("summaryGst").textContent = formatCurrency(result.gst);
+      document.getElementById("summarySelectedProduct").textContent = result.productLabel;
       document.getElementById("summaryRealArea").textContent = formatArea(result.realArea);
       document.getElementById("summaryChargeableArea").textContent = result.quoteMode === "supply_install"
         ? formatArea(result.chargeableArea)
@@ -3259,6 +3434,8 @@
 
     function renderAll() {
       buildProducts();
+      buildProductOptionSelect();
+      renderSelectedProductBanner();
       buildRooms();
       renderQuoteSummary(calculateQuote(getFormInput()));
       renderFloorplanHandoff();
@@ -3280,7 +3457,8 @@
       state.rooms = [createEmptyRoom("Living room"), createEmptyRoom("Bedroom")];
       state.floorplanFileName = "";
       setInputValue("quoteMode", "supply_install");
-      setInputValue("selectedProduct", "hybrid");
+      setInputValue("selectedProductCategory", "hybrid");
+      setInputValue("selectedProduct", "");
       setMeasurementMethod("manual_total");
       setQuoteMode("supply_install");
       floorplanStatus.textContent = "No floor plan uploaded yet.";
@@ -3589,8 +3767,12 @@
         },
         job: {
           quoteMode: input.quoteMode,
-          productCategory: product.id,
-          productName: product.label,
+          productCategory: product.category,
+          productId: product.isEstimate ? null : product.id,
+          productName: PRODUCT_LIBRARY.getProductLabel(product),
+          productBrand: product.brand,
+          productRange: product.range,
+          productColour: product.colour,
           flooringPattern: input.patternType
         },
         measurement: {
@@ -3899,11 +4081,26 @@
 
     function wireEvents() {
       productGrid.addEventListener("click", function (event) {
-        const button = event.target.closest("[data-product]");
+        const button = event.target.closest("[data-product-category]");
         if (!button) {
           return;
         }
-        setInputValue("selectedProduct", button.getAttribute("data-product"));
+        setSelectedCategory(button.getAttribute("data-product-category"));
+        renderAll();
+      });
+
+      productOptionSelect.addEventListener("change", function (event) {
+        if (!event.target.value) {
+          clearSpecificProductSelection();
+          renderAll();
+          return;
+        }
+        setSelectedProductById(event.target.value, { persist: true, track: true });
+        renderAll();
+      });
+
+      clearSelectedProductButton.addEventListener("click", function () {
+        clearSpecificProductSelection();
         renderAll();
       });
 
@@ -4031,6 +4228,15 @@
         state.rooms = [createEmptyRoom("Living room"), createEmptyRoom("Bedroom")];
       }
 
+      const storedProduct = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getStoredProduct() : null;
+      const storedCategory = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getStoredCategory() : "";
+      if (storedProduct) {
+        setSelectedProductById(storedProduct.id, { persist: false });
+        state.productSelectionLoadedFromCatalogue = true;
+      } else if (storedCategory) {
+        setSelectedCategory(storedCategory, { preserveProduct: false });
+      }
+
       buildRooms();
       buildProducts();
       wireEvents();
@@ -4038,16 +4244,30 @@
 
       const measurementMethod = getInputValue("measurementMethod") || "manual_total";
       const quoteMode = getInputValue("quoteMode") || "supply_install";
-      const selectedProduct = getInputValue("selectedProduct") || "hybrid";
+      const selectedProductCategory = getInputValue("selectedProductCategory") || "hybrid";
+      const selectedProduct = (PRODUCT_LIBRARY && PRODUCT_LIBRARY.getProductById(getInputValue("selectedProduct")))
+        ? getInputValue("selectedProduct")
+        : "";
 
       setInputValue("measurementMethod", measurementMethod);
       setInputValue("quoteMode", quoteMode);
+      setInputValue("selectedProductCategory", selectedProductCategory);
       setInputValue("selectedProduct", selectedProduct);
 
       applyQuotePageHandoffState();
       setMeasurementMethod(measurementMethod);
       setQuoteMode(quoteMode);
+      setSelectedCategory(selectedProductCategory, { preserveProduct: true });
+      if (selectedProduct) {
+        setSelectedProductById(selectedProduct, { persist: false });
+      }
       renderAll();
+      if (state.productSelectionLoadedFromCatalogue && window.OperonTracking) {
+        window.OperonTracking.trackEvent("quote_started_from_product", {
+          category: getSelectedProductCategory(),
+          product: getInputValue("selectedProduct") || "estimate"
+        });
+      }
       showQuoteStep(currentQuoteStep || 0, { scroll: window.location.hash === "#quoteForm" });
       window.addEventListener("beforeunload", function () {
         if (window.__operonSuppressAbandon) {

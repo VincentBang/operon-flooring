@@ -18,6 +18,8 @@
   <meta name="twitter:description" content="Get an engineered timber flooring quote in Sydney. Compare options and estimate your project cost.">
   <meta name="twitter:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <link rel="stylesheet" href="seo-pages.css">
+  <script src="tracking.js"></script>
+  <script src="products.js"></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -109,6 +111,18 @@
               </div>
             </div>
           </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <article class="section-card">
+          <span class="eyebrow">Product Catalogue</span>
+          <h2 style="margin-top: 18px;">Engineered Timber Flooring Products</h2>
+          <p>Choose an engineered timber colour and range, then use it in your quote.</p>
+          <div class="catalogue-grid" id="engineeredCatalogueGrid"></div>
+          <div class="catalogue-status" id="engineeredCatalogueStatus">Browse product options, then select one for your quote.</div>
         </article>
       </div>
     </section>
@@ -282,5 +296,26 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      if (window.OperonTracking) {
+        window.OperonTracking.trackEvent("product_page_view", {
+          category: "engineered",
+          page: "engineered-timber-flooring-sydney.html"
+        });
+      }
+
+      if (window.OperonProducts) {
+        window.OperonProducts.renderCategoryCatalogue({
+          category: "engineered",
+          targetId: "engineeredCatalogueGrid",
+          statusId: "engineeredCatalogueStatus",
+          quoteUrl: "index.html#quoteForm",
+          successMessage: "Product selected. Continue to quote."
+        });
+      }
+    }());
+  </script>
 </body>
 </html>

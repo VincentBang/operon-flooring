@@ -18,6 +18,8 @@
   <meta name="twitter:description" content="Get a hybrid flooring quote in Sydney. Compare options and estimate your project cost.">
   <meta name="twitter:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <link rel="stylesheet" href="seo-pages.css">
+  <script src="tracking.js"></script>
+  <script src="products.js"></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -109,6 +111,18 @@
               </div>
             </div>
           </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <article class="section-card">
+          <span class="eyebrow">Product Catalogue</span>
+          <h2 style="margin-top: 18px;">Hybrid Flooring Products</h2>
+          <p>Choose a hybrid flooring colour and range, then use it in your quote.</p>
+          <div class="catalogue-grid" id="hybridCatalogueGrid"></div>
+          <div class="catalogue-status" id="hybridCatalogueStatus">Browse product options, then select one for your quote.</div>
         </article>
       </div>
     </section>
@@ -282,5 +296,26 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      if (window.OperonTracking) {
+        window.OperonTracking.trackEvent("product_page_view", {
+          category: "hybrid",
+          page: "hybrid-flooring-sydney.html"
+        });
+      }
+
+      if (window.OperonProducts) {
+        window.OperonProducts.renderCategoryCatalogue({
+          category: "hybrid",
+          targetId: "hybridCatalogueGrid",
+          statusId: "hybridCatalogueStatus",
+          quoteUrl: "index.html#quoteForm",
+          successMessage: "Product selected. Continue to quote."
+        });
+      }
+    }());
+  </script>
 </body>
 </html>
