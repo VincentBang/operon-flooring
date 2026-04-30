@@ -81,9 +81,9 @@ Reason:
 - prioritises traffic → quote → job → margin → next action
 
 ## Last Iteration
-- Task completed: added the first product catalogue layer across product pages and the quote wizard
-- Changes made: created a central `products.js` data source, added catalogue sections to laminate, hybrid and engineered product pages, and wired selected products into the quote pricing flow with localStorage handoff
-- Next improvement idea: replace the sample catalogue rows with confirmed supplier ranges and add product images once the final supplier list is available
+- Task completed: improved measurement clarity, product-page conversion cues, and product-to-suburb linking
+- Changes made: added a Step 4 measurement helper in the quote wizard, added shared selected-product banners on product pages, and linked laminate, hybrid, and engineered pages more directly into relevant suburb landing pages
+- Next improvement idea: add real supplier ranges and images to the catalogue, then deepen blog-to-suburb internal links around the strongest money pages
 
 ## Execution Queue
 

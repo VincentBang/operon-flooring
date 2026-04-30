@@ -121,6 +121,14 @@
           <span class="eyebrow">Product Catalogue</span>
           <h2 style="margin-top: 18px;">Laminate Flooring Products</h2>
           <p>Choose a laminate flooring colour and range, then use it in your quote.</p>
+          <div class="catalogue-selection-banner">
+            <strong id="laminateSelectionTitle">No specific laminate flooring selected yet</strong>
+            <p id="laminateSelectionText">Select a product to carry its price into the quote, or continue with the standard laminate estimate first.</p>
+            <div class="hero-actions" style="margin-top: 6px;">
+              <a class="button-secondary" href="index.html#quoteForm">Continue to quote</a>
+              <button class="button-quiet" id="laminateSelectionClearButton" type="button">Continue with laminate estimate</button>
+            </div>
+          </div>
           <div class="catalogue-grid" id="laminateCatalogueGrid"></div>
           <div class="catalogue-status" id="laminateCatalogueStatus">Browse product options, then select one for your quote.</div>
         </article>
@@ -246,6 +254,8 @@
             <a class="link-card" href="engineered-timber-flooring-sydney.html"><strong>Engineered Timber Flooring Sydney</strong><span>See when engineered timber suits the project better than laminate.</span></a>
             <a class="link-card" href="flooring-installation-cost-sydney.html"><strong>Flooring Installation Cost Sydney</strong><span>Review the main cost factors before you submit the quote.</span></a>
             <a class="link-card" href="blog/laminate-vs-hybrid.html"><strong>Laminate vs Hybrid Guide</strong><span>Read the practical difference between laminate and hybrid flooring in Sydney homes.</span></a>
+            <a class="link-card" href="flooring-liverpool.html"><strong>Laminate Flooring Liverpool</strong><span>See the local flooring page for Liverpool projects before you request the quote.</span></a>
+            <a class="link-card" href="flooring-parramatta.html"><strong>Laminate Flooring Parramatta</strong><span>Compare laminate flooring quote pathways for Parramatta homes and apartments.</span></a>
           </div>
         </article>
       </div>
@@ -313,6 +323,13 @@
           statusId: "laminateCatalogueStatus",
           quoteUrl: "index.html#quoteForm",
           successMessage: "Product selected. Continue to quote."
+        });
+        window.OperonProducts.renderSelectionBanner({
+          category: "laminate",
+          titleId: "laminateSelectionTitle",
+          textId: "laminateSelectionText",
+          clearButtonId: "laminateSelectionClearButton",
+          quoteUrl: "index.html#quoteForm"
         });
       }
     }());

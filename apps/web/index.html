@@ -707,6 +707,38 @@
       color: var(--muted);
     }
 
+    .measurement-helper-card {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(30, 58, 138, 0.05);
+      border: 1px solid rgba(30, 58, 138, 0.1);
+      display: grid;
+      gap: 8px;
+    }
+
+    .measurement-helper-card strong {
+      color: var(--text);
+      font-size: 0.98rem;
+    }
+
+    .measurement-helper-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .measurement-snapshot {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .measurement-snapshot .pill {
+      min-height: 32px;
+      font-size: 0.84rem;
+    }
+
     .wizard-progress-label {
       color: var(--brand);
       font-size: 0.95rem;
@@ -1585,6 +1617,12 @@
             </div>
             <input id="measurementMethod" name="measurementMethod" type="hidden" value="manual_total">
 
+            <div class="measurement-helper-card" id="measurementHelperCard">
+              <strong id="measurementHelperTitle">Start with the quickest area you know</strong>
+              <p id="measurementHelperText">If you already know the approximate flooring area, enter it now and refine it later if needed.</p>
+              <div class="measurement-snapshot" id="measurementSnapshot"></div>
+            </div>
+
             <div class="measure-panel active" id="manual_total_panel">
               <div class="grid-2">
                 <div class="field">
@@ -2124,6 +2162,9 @@
     const selectedProductSummary = document.getElementById("selectedProductSummary");
     const browseCategoryLink = document.getElementById("browseCategoryLink");
     const clearSelectedProductButton = document.getElementById("clearSelectedProductButton");
+    const measurementHelperTitle = document.getElementById("measurementHelperTitle");
+    const measurementHelperText = document.getElementById("measurementHelperText");
+    const measurementSnapshot = document.getElementById("measurementSnapshot");
 
     const state = {
       rooms: [],
@@ -2681,6 +2722,59 @@
       browseCategoryLink.setAttribute("href", getCategoryPageUrl(product.category || getSelectedProductCategory()));
       browseCategoryLink.textContent = "Browse " + ((categoryMeta ? categoryMeta.label : "products").toLowerCase());
       clearSelectedProductButton.textContent = isEstimate ? "Keep category estimate" : "Use category estimate";
+    }
+
+    function renderMeasurementHelper() {
+      const measurement = getMeasurementState();
+      const savedFloorplanArea = parsePositiveNumber(
+        localStorage.getItem(FLOORPLAN_CONFIRMED_AREA_KEY) || localStorage.getItem(FLOORPLAN_AREA_KEY)
+      );
+      const pills = [];
+
+      if (measurement.method === "manual_total") {
+        if (measurement.realArea > 0) {
+          measurementHelperTitle.textContent = "Current area is ready to use";
+          measurementHelperText.textContent = "You can continue now with the current estimate, or switch methods if you want a more detailed measurement.";
+          pills.push('<span class="pill good">' + formatArea(measurement.realArea) + " entered</span>");
+          if (measurement.roomCount > 0) {
+            pills.push('<span class="pill muted">' + measurement.roomCount + " rooms noted</span>");
+          }
+        } else {
+          measurementHelperTitle.textContent = "Fastest way to keep the quote moving";
+          measurementHelperText.textContent = "Enter the approximate flooring area if you know it. You can still confirm the final measurement from rooms or a floor plan later.";
+          pills.push('<span class="pill">Quick estimate path</span>');
+        }
+      } else if (measurement.method === "room_by_room") {
+        if (measurement.realArea > 0) {
+          measurementHelperTitle.textContent = "Room-by-room total updates live";
+          measurementHelperText.textContent = "Add each flooring room you know now. Once the running total looks right, continue to extras.";
+          pills.push('<span class="pill good">' + measurement.validRoomCount + " valid rooms</span>");
+          pills.push('<span class="pill good">' + formatArea(measurement.realArea) + " total</span>");
+        } else {
+          measurementHelperTitle.textContent = "Add one room to start the running total";
+          measurementHelperText.textContent = "Room-by-room is best when you know approximate lengths and widths but not the final full area yet.";
+          pills.push('<span class="pill">Best for partial measurements</span>');
+        }
+      } else {
+        if (measurement.realArea > 0) {
+          measurementHelperTitle.textContent = "Floor plan area is ready to use";
+          measurementHelperText.textContent = "Your confirmed floor plan area is loaded. Review it and continue when the number looks right.";
+          pills.push('<span class="pill good">' + formatArea(measurement.realArea) + " confirmed</span>");
+          if (measurement.roomCount > 0) {
+            pills.push('<span class="pill muted">' + measurement.roomCount + " rooms included</span>");
+          }
+        } else if (savedFloorplanArea > 0) {
+          measurementHelperTitle.textContent = "Saved floor plan area found";
+          measurementHelperText.textContent = "Use the saved floor plan area now, or re-open the floor plan tool if you want to refine the tracing first.";
+          pills.push('<span class="pill warn">' + formatArea(savedFloorplanArea) + " available</span>");
+        } else {
+          measurementHelperTitle.textContent = "Use the floor plan tool when exact area is harder";
+          measurementHelperText.textContent = "Upload the plan, set scale, trace the flooring rooms, and send the measured area back into this quote.";
+          pills.push('<span class="pill">Best for plans and complex layouts</span>');
+        }
+      }
+
+      measurementSnapshot.innerHTML = pills.join("");
     }
 
     function getSelectedProduct() {
@@ -3437,6 +3531,7 @@
       buildProductOptionSelect();
       renderSelectedProductBanner();
       buildRooms();
+      renderMeasurementHelper();
       renderQuoteSummary(calculateQuote(getFormInput()));
       renderFloorplanHandoff();
       updateStepProgress();

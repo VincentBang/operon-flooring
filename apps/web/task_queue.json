@@ -1,5 +1,26 @@
 [
   {
+    "title": "Improve Step 4 measurement completion rate",
+    "category": "conversion",
+    "priority_score": 28.8,
+    "impact": "More quote starts progress from measurement into extras and submission.",
+    "status": "completed"
+  },
+  {
+    "title": "Strengthen support-page conversion cues for product catalogue pages",
+    "category": "conversion",
+    "priority_score": 22.4,
+    "impact": "More catalogue-page visitors continue into the quote funnel with clearer product selection context.",
+    "status": "completed"
+  },
+  {
+    "title": "Strengthen product-to-suburb internal linking",
+    "category": "seo",
+    "priority_score": 21.6,
+    "impact": "Better topical clustering between product money pages and local suburb pages.",
+    "status": "completed"
+  },
+  {
     "title": "Strengthen blog-to-suburb and suburb-to-product internal linking",
     "category": "seo",
     "priority_score": 22.4,
@@ -7,17 +28,17 @@
     "status": "next_batch"
   },
   {
-    "title": "Add backlink target: TrueLocal",
-    "category": "backlink",
-    "priority_score": 21.42,
-    "impact": "Better local trust signals and citation coverage.",
+    "title": "Replace sample catalogue rows with confirmed supplier products",
+    "category": "content",
+    "priority_score": 20.8,
+    "impact": "Makes the product catalogue commercially real and more persuasive for quote-ready visitors.",
     "status": "next_batch"
   },
   {
-    "title": "Track quote abandonment at the area step",
-    "category": "analytics",
-    "priority_score": 20.4,
-    "impact": "Better visibility into where leads are leaking.",
+    "title": "Add real product imagery to the catalogue cards",
+    "category": "conversion",
+    "priority_score": 18.4,
+    "impact": "Improves product confidence and makes the catalogue feel more premium.",
     "status": "next_batch"
   },
   {
@@ -28,10 +49,10 @@
     "status": "pending"
   },
   {
-    "title": "Deepen local differentiation on remaining suburb pages",
-    "category": "content",
-    "priority_score": 15.4,
-    "impact": "Stronger local rankings and better suburb relevance.",
+    "title": "Add backlink target: TrueLocal",
+    "category": "backlink",
+    "priority_score": 21.42,
+    "impact": "Better local trust signals and citation coverage.",
     "status": "pending"
   },
   {
@@ -42,31 +63,10 @@
     "status": "pending"
   },
   {
-    "title": "Audit mobile quote summary visibility",
-    "category": "technical",
-    "priority_score": 12.25,
-    "impact": "Better mobile completion and more confident submissions.",
-    "status": "pending"
-  },
-  {
     "title": "Add revenue status update workflow to admin page",
     "category": "pricing",
     "priority_score": 10.08,
     "impact": "Clearer view of win rate, revenue and margin.",
-    "status": "pending"
-  },
-  {
-    "title": "Improve Step 4 measurement completion rate",
-    "category": "conversion",
-    "priority_score": 28.8,
-    "impact": "More quote starts progress from area selection into extras and submission.",
-    "status": "pending"
-  },
-  {
-    "title": "Strengthen footer and support-page conversion cues",
-    "category": "conversion",
-    "priority_score": 22.4,
-    "impact": "More supporting-page visitors return to the main quote funnel.",
     "status": "pending"
   }
 ]

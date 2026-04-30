@@ -121,6 +121,14 @@
           <span class="eyebrow">Product Catalogue</span>
           <h2 style="margin-top: 18px;">Engineered Timber Flooring Products</h2>
           <p>Choose an engineered timber colour and range, then use it in your quote.</p>
+          <div class="catalogue-selection-banner">
+            <strong id="engineeredSelectionTitle">No specific engineered timber selected yet</strong>
+            <p id="engineeredSelectionText">Select a product to carry its price into the quote, or continue with the standard engineered timber estimate first.</p>
+            <div class="hero-actions" style="margin-top: 6px;">
+              <a class="button-secondary" href="index.html#quoteForm">Continue to quote</a>
+              <button class="button-quiet" id="engineeredSelectionClearButton" type="button">Continue with engineered timber estimate</button>
+            </div>
+          </div>
           <div class="catalogue-grid" id="engineeredCatalogueGrid"></div>
           <div class="catalogue-status" id="engineeredCatalogueStatus">Browse product options, then select one for your quote.</div>
         </article>
@@ -246,6 +254,8 @@
             <a class="link-card" href="hybrid-flooring-sydney.html"><strong>Hybrid Flooring Sydney</strong><span>Review the practical everyday flooring option many Sydney customers compare first.</span></a>
             <a class="link-card" href="flooring-installation-cost-sydney.html"><strong>Flooring Installation Cost Sydney</strong><span>Review the main cost factors that shape premium flooring jobs.</span></a>
             <a class="link-card" href="blog/engineered-timber-vs-laminate.html"><strong>Engineered Timber vs Laminate</strong><span>Read the cost and performance difference before choosing the product path.</span></a>
+            <a class="link-card" href="flooring-eastern-suburbs.html"><strong>Engineered Timber Eastern Suburbs</strong><span>See the local flooring page for premium Eastern Suburbs residential projects.</span></a>
+            <a class="link-card" href="flooring-miranda.html"><strong>Engineered Timber Miranda</strong><span>Compare premium timber-style quoting paths for Miranda and nearby projects.</span></a>
           </div>
         </article>
       </div>
@@ -313,6 +323,13 @@
           statusId: "engineeredCatalogueStatus",
           quoteUrl: "index.html#quoteForm",
           successMessage: "Product selected. Continue to quote."
+        });
+        window.OperonProducts.renderSelectionBanner({
+          category: "engineered",
+          titleId: "engineeredSelectionTitle",
+          textId: "engineeredSelectionText",
+          clearButtonId: "engineeredSelectionClearButton",
+          quoteUrl: "index.html#quoteForm"
         });
       }
     }());

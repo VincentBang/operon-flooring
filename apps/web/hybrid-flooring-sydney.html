@@ -121,6 +121,14 @@
           <span class="eyebrow">Product Catalogue</span>
           <h2 style="margin-top: 18px;">Hybrid Flooring Products</h2>
           <p>Choose a hybrid flooring colour and range, then use it in your quote.</p>
+          <div class="catalogue-selection-banner">
+            <strong id="hybridSelectionTitle">No specific hybrid flooring selected yet</strong>
+            <p id="hybridSelectionText">Select a product to carry its price into the quote, or continue with the standard hybrid estimate first.</p>
+            <div class="hero-actions" style="margin-top: 6px;">
+              <a class="button-secondary" href="index.html#quoteForm">Continue to quote</a>
+              <button class="button-quiet" id="hybridSelectionClearButton" type="button">Continue with hybrid estimate</button>
+            </div>
+          </div>
           <div class="catalogue-grid" id="hybridCatalogueGrid"></div>
           <div class="catalogue-status" id="hybridCatalogueStatus">Browse product options, then select one for your quote.</div>
         </article>
@@ -246,6 +254,8 @@
             <a class="link-card" href="engineered-timber-flooring-sydney.html"><strong>Engineered Timber Flooring Sydney</strong><span>Review the premium real-timber option before you quote.</span></a>
             <a class="link-card" href="flooring-installation-cost-sydney.html"><strong>Flooring Installation Cost Sydney</strong><span>Understand the main cost drivers before you request the estimate.</span></a>
             <a class="link-card" href="blog/laminate-vs-hybrid.html"><strong>Laminate vs Hybrid</strong><span>Read the practical difference between these two common flooring categories.</span></a>
+            <a class="link-card" href="flooring-parramatta.html"><strong>Hybrid Flooring Parramatta</strong><span>See the local flooring page for Parramatta projects with apartment and access conditions.</span></a>
+            <a class="link-card" href="flooring-miranda.html"><strong>Hybrid Flooring Miranda</strong><span>Review the local flooring pathway for Miranda and nearby Sutherland Shire projects.</span></a>
           </div>
         </article>
       </div>
@@ -313,6 +323,13 @@
           statusId: "hybridCatalogueStatus",
           quoteUrl: "index.html#quoteForm",
           successMessage: "Product selected. Continue to quote."
+        });
+        window.OperonProducts.renderSelectionBanner({
+          category: "hybrid",
+          titleId: "hybridSelectionTitle",
+          textId: "hybridSelectionText",
+          clearButtonId: "hybridSelectionClearButton",
+          quoteUrl: "index.html#quoteForm"
         });
       }
     }());

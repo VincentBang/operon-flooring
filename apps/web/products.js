@@ -327,9 +327,13 @@
     }
 
     const products = getProductsByCategory(settings.category);
+    const storedProduct = getStoredProduct();
     const status = settings.statusId ? document.getElementById(settings.statusId) : null;
 
-    target.innerHTML = products.map(renderProductCard).join("");
+    target.innerHTML = products.map(function (product) {
+      const selectedClass = storedProduct && storedProduct.id === product.id ? " selected" : "";
+      return renderProductCard(product).replace('class="catalogue-card"', 'class="catalogue-card' + selectedClass + '"');
+    }).join("");
 
     target.addEventListener("click", function (event) {
       const button = event.target.closest("[data-select-product]");
@@ -362,6 +366,47 @@
     });
   }
 
+  function renderSelectionBanner(options) {
+    const settings = Object.assign({
+      category: "",
+      titleId: "",
+      textId: "",
+      clearButtonId: "",
+      quoteUrl: "index.html#quoteForm"
+    }, options || {});
+
+    const title = document.getElementById(settings.titleId);
+    const text = document.getElementById(settings.textId);
+    const clearButton = document.getElementById(settings.clearButtonId);
+    const storedProduct = getStoredProduct();
+    const categoryMeta = getCategoryMeta(settings.category);
+
+    if (!title || !text || !clearButton || !categoryMeta) {
+      return;
+    }
+
+    if (storedProduct && storedProduct.category === settings.category) {
+      title.textContent = "Selected for quote: " + getProductLabel(storedProduct);
+      text.textContent = storedProduct.brand + " / " + storedProduct.range + " / " + storedProduct.colour + " · $" + storedProduct.pricePerM2.toFixed(0) + "/m²";
+      clearButton.textContent = "Use " + categoryMeta.label.toLowerCase() + " estimate instead";
+      clearButton.onclick = function () {
+        clearSelectedProduct();
+        saveSelectedCategory(settings.category);
+        window.location.href = settings.quoteUrl;
+      };
+      return;
+    }
+
+    title.textContent = "No specific " + categoryMeta.label.toLowerCase() + " selected yet";
+    text.textContent = "Select a product to carry its price into the quote, or keep the standard category estimate and confirm the final range later.";
+    clearButton.textContent = "Continue with " + categoryMeta.label.toLowerCase() + " estimate";
+    clearButton.onclick = function () {
+      clearSelectedProduct();
+      saveSelectedCategory(settings.category);
+      window.location.href = settings.quoteUrl;
+    };
+  }
+
   window.OPERON_PRODUCTS = PRODUCTS;
   window.OperonProducts = {
     STORAGE_KEY: STORAGE_KEY,
@@ -379,5 +424,7 @@
     saveSelectedProduct: saveSelectedProduct,
     clearSelectedProduct: clearSelectedProduct,
     renderCategoryCatalogue: renderCategoryCatalogue
+    ,
+    renderSelectionBanner: renderSelectionBanner
   };
 }());
