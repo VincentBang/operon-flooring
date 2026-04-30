@@ -1,72 +1,72 @@
 [
   {
-    "title": "Improve Step 4 measurement completion rate",
-    "category": "conversion",
-    "priority_score": 28.8,
-    "impact": "More quote starts progress from measurement into extras and submission.",
-    "status": "completed"
-  },
-  {
-    "title": "Strengthen support-page conversion cues for product catalogue pages",
-    "category": "conversion",
-    "priority_score": 22.4,
-    "impact": "More catalogue-page visitors continue into the quote funnel with clearer product selection context.",
-    "status": "completed"
-  },
-  {
-    "title": "Strengthen product-to-suburb internal linking",
+    "title": "Publish why is my floor lifting article",
     "category": "seo",
-    "priority_score": 21.6,
-    "impact": "Better topical clustering between product money pages and local suburb pages.",
+    "priority_score": 23.4,
+    "impact": "Captures high-intent flooring problem searches that can convert into replacement quotes.",
     "status": "completed"
   },
   {
-    "title": "Strengthen blog-to-suburb and suburb-to-product internal linking",
+    "title": "Publish laminate floor water damage article",
     "category": "seo",
-    "priority_score": 22.4,
-    "impact": "Better crawl paths and stronger topical clustering around money pages.",
-    "status": "next_batch"
+    "priority_score": 22.6,
+    "impact": "Targets strong damage and replacement intent around laminate failures.",
+    "status": "completed"
   },
   {
-    "title": "Replace sample catalogue rows with confirmed supplier products",
-    "category": "content",
+    "title": "Expand the maintenance pillar with live links to the new problem guides",
+    "category": "seo",
+    "priority_score": 21.2,
+    "impact": "Strengthens the new content cluster and improves crawl paths back into quote pages.",
+    "status": "completed"
+  },
+  {
+    "title": "Publish hybrid flooring problems article",
+    "category": "seo",
     "priority_score": 20.8,
-    "impact": "Makes the product catalogue commercially real and more persuasive for quote-ready visitors.",
+    "impact": "Adds another problem-led guide with clear crossover into hybrid replacement demand.",
     "status": "next_batch"
   },
   {
-    "title": "Add real product imagery to the catalogue cards",
-    "category": "conversion",
-    "priority_score": 18.4,
-    "impact": "Improves product confidence and makes the catalogue feel more premium.",
-    "status": "next_batch"
-  },
-  {
-    "title": "Expand suburb coverage for higher-demand Sydney locations",
+    "title": "Publish engineered timber water damage article",
     "category": "seo",
-    "priority_score": 17.28,
-    "impact": "More high-intent local landing pages and wider Sydney suburb relevance.",
+    "priority_score": 19.8,
+    "impact": "Builds the engineered maintenance cluster and attracts premium replacement research traffic.",
+    "status": "next_batch"
+  },
+  {
+    "title": "Publish flooring gaps and expansion article",
+    "category": "seo",
+    "priority_score": 18.9,
+    "impact": "Targets a common floating-floor problem with practical quote conversion potential.",
+    "status": "next_batch"
+  },
+  {
+    "title": "Publish laminate vs hybrid maintenance comparison",
+    "category": "content",
+    "priority_score": 17.3,
+    "impact": "Supports comparison intent and helps product selection pages convert warmer visitors.",
     "status": "pending"
   },
   {
-    "title": "Add backlink target: TrueLocal",
-    "category": "backlink",
-    "priority_score": 21.42,
-    "impact": "Better local trust signals and citation coverage.",
+    "title": "Publish floor repair or replace article",
+    "category": "conversion",
+    "priority_score": 16.8,
+    "impact": "Bridges maintenance research directly into replacement quote intent.",
     "status": "pending"
   },
   {
-    "title": "Seed supplier backlink outreach list",
-    "category": "backlink",
-    "priority_score": 12.7,
-    "impact": "More relevant backlinks and referral opportunities.",
+    "title": "Publish best flooring for pets Sydney article",
+    "category": "content",
+    "priority_score": 15.9,
+    "impact": "Captures buyer-education traffic that can feed product and quote pages.",
     "status": "pending"
   },
   {
-    "title": "Add revenue status update workflow to admin page",
-    "category": "pricing",
-    "priority_score": 10.08,
-    "impact": "Clearer view of win rate, revenue and margin.",
+    "title": "Publish flooring maintenance checklist article",
+    "category": "content",
+    "priority_score": 14.7,
+    "impact": "Rounds out the pillar with a practical evergreen piece for internal linking support.",
     "status": "pending"
   }
 ]

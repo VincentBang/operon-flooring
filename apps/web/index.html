@@ -31,7 +31,16 @@
     gtag('config', 'G-XXXXXXXXXX');
   </script>
   <script src="tracking.js"></script>
+  <script src="pricingSourceConfig.js"></script>
+  <script src="pricingSource.js"></script>
   <script src="products.js"></script>
+  <script src="installRates.js"></script>
+  <script src="underlay.js"></script>
+  <script src="skirtingScotia.js"></script>
+  <script src="removalRates.js"></script>
+  <script src="locationZones.js"></script>
+  <script src="pricingRules.js"></script>
+  <script src="quoteCalculator.js"></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -1024,7 +1033,7 @@
     .summary-card {
       position: sticky;
       top: 94px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(244, 247, 250, 0.94));
+      background: rgba(255, 255, 255, 0.94);
     }
 
     .summary-total {
@@ -1531,7 +1540,7 @@
                 <span class="step-badge">3</span>
                 <div>
                   <h3>Job type and product</h3>
-                  <p class="helper">Choose your flooring type.</p>
+                  <p class="helper">Choose your flooring type. If you came from the product catalogue, your selection appears below.</p>
                 </div>
               </div>
             </div>
@@ -1551,7 +1560,7 @@
             </div>
 
             <div class="field" style="margin-top: 18px;">
-              <label>Flooring product</label>
+              <label>Flooring category</label>
               <div class="choice-grid three" id="productGrid"></div>
               <input id="selectedProductCategory" name="selectedProductCategory" type="hidden" value="hybrid">
               <input id="selectedProduct" name="selectedProduct" type="hidden" value="">
@@ -1559,9 +1568,9 @@
 
             <div class="product-choice-panel">
               <div class="field" style="margin-bottom: 0;">
-                <label for="productOptionSelect">Selected product option</label>
+                <label for="productOptionSelect">Specific product option</label>
                 <select id="productOptionSelect" name="productOptionSelect"></select>
-                <p class="helper">Select a specific product now, or keep the category estimate and confirm the final range later.</p>
+                <p class="helper" id="productOptionHelper">Keep the standard category estimate, or use a specific product if you already chose one.</p>
               </div>
 
               <div class="selected-product-banner">
@@ -1976,6 +1985,7 @@
             <strong>Product pages</strong>
             <p>Compare the main flooring types before you request a final quote.</p>
             <ul class="inline-link-list">
+              <li><a href="products.html">All flooring products</a></li>
               <li><a href="laminate-flooring-sydney.html">Laminate flooring Sydney</a></li>
               <li><a href="hybrid-flooring-sydney.html">Hybrid flooring Sydney</a></li>
               <li><a href="engineered-timber-flooring-sydney.html">Engineered timber flooring Sydney</a></li>
@@ -1996,6 +2006,7 @@
             <strong>Cost and measurement guides</strong>
             <p>Read practical guides on cost, preparation, comparisons and measuring area before quoting.</p>
             <ul class="inline-link-list">
+              <li><a href="floor-care-maintenance.html">Floor care and maintenance guide</a></li>
               <li><a href="flooring-installation-cost-sydney.html">Flooring installation cost Sydney</a></li>
               <li><a href="blog/flooring-cost-sydney.html">Flooring cost Sydney</a></li>
               <li><a href="blog/flooring-installation-cost-breakdown.html">Flooring installation cost breakdown</a></li>
@@ -2052,6 +2063,7 @@
       <div class="footer-col">
         <h4>Flooring Services</h4>
         <ul>
+          <li><a href="products.html">All Flooring Products</a></li>
           <li><a href="laminate-flooring-sydney.html">Laminate Flooring</a></li>
           <li><a href="hybrid-flooring-sydney.html">Hybrid Flooring</a></li>
           <li><a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring</a></li>
@@ -2073,6 +2085,7 @@
         <ul>
           <li><a href="index.html#quoteForm">Get a Quote</a></li>
           <li><a href="floorplan.html">Measure Floor Plan</a></li>
+          <li><a href="floor-care-maintenance.html">Floor Care Guide</a></li>
           <li><a href="index.html#quoteForm">Contact</a></li>
           <li><a href="index.html#faq">FAQ</a></li>
         </ul>
@@ -2158,6 +2171,7 @@
     const confirmFloorplanHandoffButton = document.getElementById("confirmFloorplanHandoffButton");
     const dismissFloorplanHandoffButton = document.getElementById("dismissFloorplanHandoffButton");
     const productOptionSelect = document.getElementById("productOptionSelect");
+    const productOptionHelper = document.getElementById("productOptionHelper");
     const selectedProductHeadline = document.getElementById("selectedProductHeadline");
     const selectedProductSummary = document.getElementById("selectedProductSummary");
     const browseCategoryLink = document.getElementById("browseCategoryLink");
@@ -2175,59 +2189,24 @@
       floorplanRooms: [],
       pendingHandoffMessage: "",
       floorplanHandoffDismissed: false,
-      productSelectionLoadedFromCatalogue: false
+      productHandoffActive: false,
+      lastQuoteCalculationSignature: "",
+      lastTrackedZoneName: "",
+      productSelectionLoadedFromCatalogue: false,
+      currentQuoteResult: null,
+      quoteRefreshToken: 0,
+      privateQuoteRuntimeAvailable: true,
+      privateQuoteFallbackLogged: false
     };
 
     let currentQuoteStep = 0;
 
     const PRODUCT_LIBRARY = window.OperonProducts;
     const PRODUCT_CATEGORIES = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryList() : [];
-
-    const INSTALL_ONLY_RATES = {
-      // TODO: Confirm install-only rates by product family if the commercial schedule differs.
-      hybrid: 45,
-      laminate: 45,
-      engineered: 45
-    };
-
-    const RATE_CARD = {
-      // TODO: Confirm final production rates against the live Operon pricing schedule.
-      removalRates: {
-        carpet: 10,
-        floating: 10,
-        glue_down: 10,
-        tile: 10,
-        vinyl: 10
-      },
-      floorPrepRates: {
-        basic: 8,
-        levelling: 8
-      },
-      moistureBarrierRate: 5,
-      skirtingRate: 12,
-      scotiaRate: 8,
-      furnitureRatePerRoom: 50,
-      doorTrimmingRate: 40,
-      minimumChargeExGst: 1500,
-      smallJobThresholdM2: 30,
-      smallJobFactor: 1.10,
-      roundingIncrement: 50
-    };
-
-    const ZONE_MAP = {
-      A: [2144, 2140, 2150, 2127],
-      B: [2200, 2170, 2165, 2166, 2112, 2113],
-      C: [2148, 2765, 2040, 2041, 2153],
-      D: [2095, 2026, 2230]
-    };
-
-    const ZONE_MULTIPLIER = {
-      A: 1.00,
-      B: 1.04,
-      C: 1.07,
-      D: 1.10,
-      E: 1.15
-    };
+    const QUOTE_CALCULATOR = window.OperonQuoteCalculator;
+    const LOCATION_ZONE_LIBRARY = window.OperonLocationZones;
+    const PRICING_RULES = window.OperonPricingRules;
+    const PRIVATE_QUOTE_ENDPOINT = "/.netlify/functions/calculate-private-quote";
 
     function createId() {
       return Math.random().toString(36).slice(2, 9);
@@ -2306,6 +2285,24 @@
       return meta && meta.pageUrl ? meta.pageUrl : "index.html#quoteForm";
     }
 
+    function getCategoryEstimateLabel(category) {
+      const meta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(category) : null;
+      return "standard " + (meta ? meta.label.toLowerCase() : "flooring") + " estimate";
+    }
+
+    function getProductHandoffMessage(product) {
+      if (!product || !PRODUCT_LIBRARY) {
+        return "";
+      }
+
+      const productLabel = PRODUCT_LIBRARY.getProductLabel(product);
+      if (product.pricePerM2 > 0) {
+        return "Selected product loaded for this quote: " + productLabel + ". Finish the quote details and we’ll use this product in Step 3.";
+      }
+
+      return "Selected product loaded for this quote: " + productLabel + ". Price is still to be confirmed, so the estimate will use the " + getCategoryEstimateLabel(product.category) + " until review.";
+    }
+
     // Quote Wizard Navigation
     function getQuoteSteps() {
       return Array.from(document.querySelectorAll("[data-quote-step]"));
@@ -2367,7 +2364,7 @@
         },
         {
           title: "Choose the closest flooring path",
-          text: "If you are still comparing products, pick the most likely option and we can confirm it later."
+          text: "Choose the flooring category first. If you came from the product catalogue, your selected product is already loaded below."
         },
         {
           title: "No exact measurement needed",
@@ -2643,6 +2640,10 @@
       const currentProduct = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getProductById(getInputValue("selectedProduct")) : null;
       if (!settings.preserveProduct || !currentProduct || currentProduct.category !== normalisedCategory) {
         setInputValue("selectedProduct", "");
+        if (PRODUCT_LIBRARY) {
+          PRODUCT_LIBRARY.clearSelectedProduct();
+        }
+        state.productHandoffActive = false;
       }
 
       if (PRODUCT_LIBRARY) {
@@ -2650,7 +2651,7 @@
       }
 
       if (settings.trackStartFromProduct && window.OperonTracking) {
-        window.OperonTracking.trackEvent("quote_started_from_product", {
+        window.OperonTracking.trackEvent("quote_start_from_product", {
           category: normalisedCategory
         });
       }
@@ -2672,14 +2673,16 @@
       }
 
       if (settings.track && window.OperonTracking) {
-        window.OperonTracking.trackEvent("product_selected", {
+        const trackingPayload = {
           category: product.category,
           brand: product.brand,
           range: product.range,
           colour: product.colour,
           pricePerM2: product.pricePerM2,
           source: "quote_wizard"
-        });
+        };
+        window.OperonTracking.trackEvent("product_selected", trackingPayload);
+        window.OperonTracking.trackEvent("product_select", trackingPayload);
       }
     }
 
@@ -2689,6 +2692,7 @@
         PRODUCT_LIBRARY.clearSelectedProduct();
         PRODUCT_LIBRARY.saveSelectedCategory(getSelectedProductCategory());
       }
+      state.productHandoffActive = false;
     }
 
     function buildProductOptionSelect() {
@@ -2696,9 +2700,9 @@
       const products = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getProductsByCategory(category) : [];
       const selectedId = getInputValue("selectedProduct");
       const options = [
-        '<option value="">Use ' + escapeHtml((PRODUCT_LIBRARY.getCategoryMeta(category) || {}).label || "category") + ' estimate</option>'
+        '<option value="">Use ' + escapeHtml(getCategoryEstimateLabel(category).replace(/^standard\s/, "").replace(/ estimate$/, "")) + ' estimate</option>'
       ].concat(products.map(function (product) {
-        const label = PRODUCT_LIBRARY.getProductLabel(product) + " · $" + product.pricePerM2.toFixed(0) + "/m²";
+        const label = PRODUCT_LIBRARY.getProductLabel(product) + " · " + PRODUCT_LIBRARY.formatProductRate(product);
         return '<option value="' + escapeHtml(product.id) + '"' + (selectedId === product.id ? " selected" : "") + '>' + escapeHtml(label) + "</option>";
       }));
 
@@ -2710,18 +2714,28 @@
       const categoryMeta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(product.category || getSelectedProductCategory()) : null;
       const isEstimate = !!product.isEstimate;
       const productLabel = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getProductLabel(product) : "";
+      const categoryEstimateLabel = getCategoryEstimateLabel(product.category || getSelectedProductCategory());
+      const pricePending = !isEstimate && !(product.pricePerM2 > 0);
 
       selectedProductHeadline.textContent = isEstimate
         ? "Using " + (categoryMeta ? categoryMeta.label.toLowerCase() : "category") + " estimate"
-        : "Selected product: " + productLabel;
+        : (pricePending ? "Selected product saved for this quote" : "Selected product loaded for this quote");
 
       selectedProductSummary.textContent = isEstimate
-        ? "No specific product selected yet. The estimate uses the standard " + (categoryMeta ? categoryMeta.label.toLowerCase() : "flooring") + " rate until you choose a range."
-        : product.brand + " / " + product.range + " / " + product.colour + " · $" + product.pricePerM2.toFixed(0) + "/m²";
+        ? "No specific product selected yet. The estimate uses the " + categoryEstimateLabel + " until you choose a range."
+        : product.brand + " — " + product.range + " — " + product.colour + (pricePending
+          ? " · Price to be confirmed. The quote uses the " + categoryEstimateLabel + " until review."
+          : " · " + PRODUCT_LIBRARY.formatProductRate(product) + ". This product price will feed the flooring package estimate.");
+
+      productOptionHelper.textContent = isEstimate
+        ? "Keep the category estimate, or choose a specific product if you already picked one from the catalogue."
+        : (pricePending
+          ? "This product is saved to the quote. Because the exact product price is still pending, the current estimate uses the " + categoryEstimateLabel + " until we confirm the final sell price."
+          : "This specific product is already loaded into the quote. You can keep it, change product, or switch back to the category estimate.");
 
       browseCategoryLink.setAttribute("href", getCategoryPageUrl(product.category || getSelectedProductCategory()));
       browseCategoryLink.textContent = "Browse " + ((categoryMeta ? categoryMeta.label : "products").toLowerCase());
-      clearSelectedProductButton.textContent = isEstimate ? "Keep category estimate" : "Use category estimate";
+      clearSelectedProductButton.textContent = isEstimate ? "Keep category estimate" : "Use category estimate instead";
     }
 
     function renderMeasurementHelper() {
@@ -2793,8 +2807,8 @@
         brand: "Operon Estimate",
         range: "Hybrid Flooring",
         colour: "Standard estimate",
-        pricePerM2: 52,
-        installRate: 31,
+        pricePerM2: 0,
+        installRate: null,
         isEstimate: true,
         label: "Hybrid Flooring Estimate"
       };
@@ -2859,238 +2873,7 @@
     }
 
     function getWastageFactor() {
-      const patternType = getInputValue("patternType");
-      if (patternType === "herringbone" || patternType === "chevron") {
-        return 1.20;
-      }
-      return 1.10;
-    }
-
-    // Access logic from OPERON_PRICING_RULES.md.
-    function getAccessFactor() {
-      const propertyType = getInputValue("propertyType");
-      const level = getInputValue("level");
-      const hasLift = getInputValue("hasLift");
-      const warnings = [];
-
-      if (propertyType === "house" || propertyType === "townhouse") {
-        return { factor: 1.00, warnings: warnings };
-      }
-
-      if (hasLift === "yes") {
-        return { factor: 1.00, warnings: warnings };
-      }
-
-      if (propertyType === "unit_apartment") {
-        if (level === "ground") {
-          return { factor: 1.00, warnings: warnings };
-        }
-        if (level === "level_1") {
-          return { factor: 1.05, warnings: warnings };
-        }
-        if (level === "level_2_plus") {
-          return { factor: 1.10, warnings: warnings };
-        }
-      }
-
-      if (propertyType === "commercial_other" || level === "other_unsure") {
-        warnings.push("Property access needs review.");
-      }
-
-      return { factor: 1.00, warnings: warnings };
-    }
-
-    function getZoneFromPostcode(postcodeValue) {
-      const postcode = Number(String(postcodeValue || "").replace(/\D/g, ""));
-      if (!postcode) {
-        return "C";
-      }
-
-      const matchedZone = Object.keys(ZONE_MAP).find(function (zoneKey) {
-        return ZONE_MAP[zoneKey].indexOf(postcode) >= 0;
-      });
-
-      return matchedZone || "C";
-    }
-
-    function getZoneMultiplier(postcodeValue) {
-      const zone = getZoneFromPostcode(postcodeValue);
-      return {
-        zone: zone,
-        multiplier: ZONE_MULTIPLIER[zone] || ZONE_MULTIPLIER.C
-      };
-    }
-
-    function getSmallJobFactor(realArea) {
-      if (realArea > 0 && realArea < RATE_CARD.smallJobThresholdM2) {
-        return RATE_CARD.smallJobFactor;
-      }
-      return 1.00;
-    }
-
-    function roundToIncrement(value, increment) {
-      return Math.round(value / increment) * increment;
-    }
-
-    function getQuantityForItem(quantityBasis, context, manualQty) {
-      if (quantityBasis === "real_area") {
-        return context.realArea;
-      }
-      if (quantityBasis === "chargeable_area") {
-        return context.chargeableArea;
-      }
-      if (quantityBasis === "room_count") {
-        return context.roomCount;
-      }
-      if (quantityBasis === "each") {
-        return manualQty || 0;
-      }
-      return manualQty || 0;
-    }
-
-    function buildCustomerLines(result) {
-      const lines = [];
-      if (result.quoteMode === "supply_install") {
-        lines.push({
-          label: "Flooring package",
-          note: result.productLabel + " · " + formatArea(result.chargeableArea) + " material allowance",
-          amount: result.materialTotal + result.installationAdjustedTotal
-        });
-      } else {
-        lines.push({
-          label: "Installation labour",
-          note: formatArea(result.realArea) + " real install area",
-          amount: result.installationAdjustedTotal
-        });
-      }
-
-      if (result.removalTotal > 0) {
-        lines.push({
-          label: "Removal",
-          note: result.removalLabel,
-          amount: result.removalTotal
-        });
-      }
-
-      if (result.floorPrepTotal > 0) {
-        lines.push({
-          label: "Floor preparation",
-          note: result.floorPrepLabel,
-          amount: result.floorPrepTotal
-        });
-      }
-
-      if (result.moistureBarrierTotal > 0) {
-        lines.push({
-          label: "Moisture barrier",
-          note: formatArea(result.chargeableArea) + " coverage allowance",
-          amount: result.moistureBarrierTotal
-        });
-      }
-
-      if (result.skirtingTotal > 0) {
-        lines.push({
-          label: "Skirting package",
-          note: result.skirtingLabel,
-          amount: result.skirtingTotal
-        });
-      }
-
-      if (result.scotiaTotal > 0) {
-        lines.push({
-          label: "Scotia package",
-          note: formatArea(result.chargeableArea) + " commercial allowance",
-          amount: result.scotiaTotal
-        });
-      }
-
-      if (result.furnitureTotal > 0) {
-        lines.push({
-          label: "Furniture handling",
-          note: result.furnitureLabel,
-          amount: result.furnitureTotal
-        });
-      }
-
-      if (result.doorTrimmingTotal > 0) {
-        lines.push({
-          label: "Door trimming",
-          note: result.doorCount + " doors",
-          amount: result.doorTrimmingTotal
-        });
-      }
-
-      return lines;
-    }
-
-    function getManualReviewFlags(input, measurement, accessState) {
-      const warnings = [].concat(measurement.warnings, accessState.warnings);
-      let manualReviewRequired = false;
-
-      if (!measurement.realArea) {
-        warnings.push("Real flooring area is missing.");
-        manualReviewRequired = true;
-      }
-
-      if (!input.postcode) {
-        warnings.push("Postcode missing. Zone C default applied.");
-        manualReviewRequired = true;
-      }
-
-      if (input.parkingAccess === "limited") {
-        warnings.push("Limited parking noted. Labour access adjustment is not separately configured yet.");
-        // TODO: Add a parking-specific labour adjustment if Operon confirms a rule.
-      }
-
-      if (input.parkingAccess === "unsure") {
-        warnings.push("Parking access is unclear.");
-        manualReviewRequired = true;
-      }
-
-      if (input.propertyType === "commercial_other" || input.level === "other_unsure") {
-        warnings.push("Property access details require confirmation.");
-        manualReviewRequired = true;
-      }
-
-      if (input.stairs === "yes") {
-        warnings.push("Stairs selected. Manual review required.");
-        manualReviewRequired = true;
-      }
-
-      if (input.measurementMethod === "floorplan_upload" && input.floorplanFileName && !measurement.realArea) {
-        warnings.push("Confirmed floor plan area is still missing.");
-        manualReviewRequired = true;
-      }
-
-      if (input.removalType === "other" || input.removalType === "unsure") {
-        warnings.push("Removal type needs manual confirmation.");
-        manualReviewRequired = true;
-      }
-
-      if (input.floorPrepType === "heavy" || input.floorPrepType === "manual" || input.floorPrepType === "unsure") {
-        warnings.push("Floor prep needs site confirmation.");
-        manualReviewRequired = true;
-      }
-
-      if (input.furnitureType === "heavy") {
-        warnings.push("Heavy furniture handling needs manual review.");
-        manualReviewRequired = true;
-      }
-
-      if ((input.furnitureType === "light" || input.furnitureType === "heavy") && measurement.roomCount <= 0) {
-        warnings.push("Room count is missing for furniture handling.");
-        manualReviewRequired = true;
-      }
-
-      if (input.patternType === "herringbone" || input.patternType === "chevron") {
-        warnings.push("Pattern wastage is applied at 20%. Confirm install premium if required.");
-        // TODO: Confirm whether herringbone / chevron installation labour uses a separate rate.
-      }
-
-      return {
-        manualReviewRequired: manualReviewRequired,
-        warnings: Array.from(new Set(warnings))
-      };
+      return PRICING_RULES ? PRICING_RULES.getWastageMultiplier(getInputValue("patternType")) : 1.10;
     }
 
     function validateQuoteInput(input) {
@@ -3193,160 +2976,168 @@
       return { valid: true, message: "" };
     }
 
+    function buildQuoteCalculationInput(input) {
+      const measurement = getMeasurementState();
+      return {
+        quoteMode: input.quoteMode,
+        jobType: input.quoteMode,
+        realArea: measurement.realArea,
+        roomCount: measurement.roomCount,
+        productId: getInputValue("selectedProduct"),
+        category: getSelectedProductCategory(),
+        pattern: input.patternType,
+        underlayId: getInputValue("underlayId"),
+        skirtingOption: input.skirtingType,
+        scotiaOption: input.scotiaType,
+        removalOption: input.removalType,
+        suburb: getInputValue("suburb").trim(),
+        postcode: getInputValue("postcode").trim(),
+        propertyType: input.propertyType,
+        level: input.level,
+        hasLift: input.hasLift,
+        parkingAccess: input.parkingAccess,
+        stairs: input.stairs,
+        floorPrepType: input.floorPrepType,
+        moistureBarrier: input.moistureBarrier,
+        furnitureType: input.furnitureType,
+        doorTrimming: input.doorTrimming,
+        doorCount: input.doorCount,
+        measurementMethod: input.measurementMethod,
+        floorplanFileName: input.floorplanFileName,
+        measurementWarnings: measurement.warnings,
+        measurementSource: measurement.sourceLabel
+      };
+    }
+
     // Pricing engine.
     function calculateQuote(input) {
       const measurement = getMeasurementState();
-      const product = getSelectedProduct();
-      const wastageFactor = getWastageFactor();
-      const chargeableArea = measurement.realArea * wastageFactor;
-      const accessState = getAccessFactor();
-      const zoneState = getZoneMultiplier(input.postcode);
-      const smallJobFactor = getSmallJobFactor(measurement.realArea);
-      const reviewState = getManualReviewFlags(input, measurement, accessState);
-
-      const context = {
-        realArea: measurement.realArea,
-        chargeableArea: chargeableArea,
-        roomCount: measurement.roomCount
-      };
-
-      const materialTotal = input.quoteMode === "supply_install"
-        ? chargeableArea * product.pricePerM2
-        : 0;
-
-      const installRate = product.installRate || INSTALL_ONLY_RATES[product.category] || 45;
-      const installationBaseTotal = input.quoteMode === "supply_install"
-        ? measurement.realArea * installRate
-        : measurement.realArea * (product.installRate || INSTALL_ONLY_RATES[product.category] || 45);
-
-      const removalQty = input.removalType === "none" || input.removalType === "other" || input.removalType === "unsure"
-        ? 0
-        : getQuantityForItem("real_area", context);
-      const removalBaseTotal = removalQty * (RATE_CARD.removalRates[input.removalType] || 0);
-
-      const floorPrepQty = (input.floorPrepType === "none" || input.floorPrepType === "heavy" || input.floorPrepType === "manual" || input.floorPrepType === "unsure")
-        ? 0
-        : getQuantityForItem("real_area", context);
-      const floorPrepBaseTotal = floorPrepQty * (RATE_CARD.floorPrepRates[input.floorPrepType] || 0);
-
-      const skirtingQty = (input.skirtingType === "no" || input.skirtingType === "manual")
-        ? 0
-        : getQuantityForItem("chargeable_area", context);
-      const skirtingBaseTotal = skirtingQty * RATE_CARD.skirtingRate;
-
-      const scotiaQty = input.scotiaType === "yes"
-        ? getQuantityForItem("chargeable_area", context)
-        : 0;
-      const scotiaBaseTotal = scotiaQty * RATE_CARD.scotiaRate;
-
-      const furnitureQty = (input.furnitureType === "light" || input.furnitureType === "heavy")
-        ? getQuantityForItem("room_count", context)
-        : 0;
-      const furnitureBaseTotal = furnitureQty * RATE_CARD.furnitureRatePerRoom;
-
-      const doorCount = input.doorTrimming === "yes" ? Math.max(0, Math.round(parsePositiveNumber(input.doorCount))) : 0;
-      if (input.doorTrimming === "yes" && !doorCount) {
-        reviewState.warnings.push("Door trimming selected without quantity.");
-        reviewState.manualReviewRequired = true;
-      }
-      const doorTrimmingBaseTotal = doorCount * RATE_CARD.doorTrimmingRate;
-
-      const moistureBarrierQty = input.moistureBarrier === "yes"
-        ? getQuantityForItem("chargeable_area", context)
-        : 0;
-      const moistureBarrierTotal = moistureBarrierQty * RATE_CARD.moistureBarrierRate;
-
-      const labourSubtotalBeforeMultipliers = installationBaseTotal
-        + removalBaseTotal
-        + floorPrepBaseTotal
-        + skirtingBaseTotal
-        + scotiaBaseTotal
-        + furnitureBaseTotal;
-
-      const labourFactor = accessState.factor * zoneState.multiplier * smallJobFactor;
-      const labourSubtotalAfterMultipliers = labourSubtotalBeforeMultipliers * labourFactor;
-      const labourAdjustmentRatio = labourSubtotalBeforeMultipliers > 0
-        ? labourSubtotalAfterMultipliers / labourSubtotalBeforeMultipliers
-        : 1;
-
-      const installationAdjustedTotal = installationBaseTotal * labourAdjustmentRatio;
-      const removalTotal = removalBaseTotal * labourAdjustmentRatio;
-      const floorPrepTotal = floorPrepBaseTotal * labourAdjustmentRatio;
-      const skirtingTotal = skirtingBaseTotal * labourAdjustmentRatio;
-      const scotiaTotal = scotiaBaseTotal * labourAdjustmentRatio;
-      const furnitureTotal = furnitureBaseTotal * labourAdjustmentRatio;
-      const doorTrimmingTotal = doorTrimmingBaseTotal;
-
-      const subtotalBeforeMinimum = materialTotal + labourSubtotalAfterMultipliers + moistureBarrierTotal + doorTrimmingTotal;
-      const minimumChargeApplied = subtotalBeforeMinimum > 0 && subtotalBeforeMinimum < RATE_CARD.minimumChargeExGst;
-      const subtotalWithMinimum = subtotalBeforeMinimum > 0
-        ? Math.max(subtotalBeforeMinimum, RATE_CARD.minimumChargeExGst)
-        : 0;
-      const subtotalExGst = subtotalWithMinimum > 0
-        ? roundToIncrement(subtotalWithMinimum, RATE_CARD.roundingIncrement)
-        : 0;
-      const roundingAdjustment = subtotalWithMinimum > 0
-        ? subtotalExGst - subtotalWithMinimum
-        : 0;
-      const gst = subtotalExGst * 0.10;
-      const totalIncGst = subtotalExGst + gst;
-
-      if (minimumChargeApplied) {
-        reviewState.warnings.push("Minimum project charge applied.");
-      }
-
-      return {
-        quoteMode: input.quoteMode,
-        realArea: roundTo(measurement.realArea, 2),
-        chargeableArea: roundTo(chargeableArea, 2),
-        materialTotal: roundTo(materialTotal, 2),
-        installationTotal: roundTo(installationBaseTotal, 2),
-        installationAdjustedTotal: roundTo(installationAdjustedTotal, 2),
-        removalTotal: roundTo(removalTotal, 2),
-        floorPrepTotal: roundTo(floorPrepTotal, 2),
-        moistureBarrierTotal: roundTo(moistureBarrierTotal, 2),
-        skirtingTotal: roundTo(skirtingTotal, 2),
-        scotiaTotal: roundTo(scotiaTotal, 2),
-        furnitureTotal: roundTo(furnitureTotal, 2),
-        doorTrimmingTotal: roundTo(doorTrimmingTotal, 2),
-        labourSubtotalBeforeMultipliers: roundTo(labourSubtotalBeforeMultipliers, 2),
-        labourSubtotalAfterMultipliers: roundTo(labourSubtotalAfterMultipliers, 2),
-        subtotalExGst: roundTo(subtotalExGst, 2),
-        gst: roundTo(gst, 2),
-        totalIncGst: roundTo(totalIncGst, 2),
-        minimumChargeApplied: minimumChargeApplied,
-        roundingAdjustment: roundTo(roundingAdjustment, 2),
-        accessFactor: accessState.factor,
-        zone: zoneState.zone,
-        zoneMultiplier: zoneState.multiplier,
-        smallJobFactor: smallJobFactor,
-        roomCount: measurement.roomCount,
-        doorCount: doorCount,
-        quoteLines: buildCustomerLines({
+      if (!QUOTE_CALCULATOR) {
+        return {
           quoteMode: input.quoteMode,
-          productLabel: product.label,
-          realArea: measurement.realArea,
-          chargeableArea: chargeableArea,
-          materialTotal: materialTotal,
-          installationAdjustedTotal: installationAdjustedTotal,
-          removalTotal: removalTotal,
-          floorPrepTotal: floorPrepTotal,
-          moistureBarrierTotal: moistureBarrierTotal,
-          skirtingTotal: skirtingTotal,
-          scotiaTotal: scotiaTotal,
-          furnitureTotal: furnitureTotal,
-          doorTrimmingTotal: doorTrimmingTotal,
-          doorCount: doorCount,
-          removalLabel: input.removalType.replace(/_/g, " "),
-          floorPrepLabel: input.floorPrepType.replace(/_/g, " "),
-          skirtingLabel: input.skirtingType.replace(/_/g, " "),
-          furnitureLabel: input.furnitureType.replace(/_/g, " ")
-        }),
-        manualReviewRequired: reviewState.manualReviewRequired,
-        warnings: Array.from(new Set(reviewState.warnings)),
-        productLabel: PRODUCT_LIBRARY.getProductLabel(product),
-        measurementSource: measurement.sourceLabel
-      };
+          realArea: roundTo(measurement.realArea, 2),
+          chargeableArea: roundTo(measurement.realArea * getWastageFactor(), 2),
+          materialTotal: 0,
+          installationTotal: 0,
+          installationAdjustedTotal: 0,
+          removalTotal: 0,
+          floorPrepTotal: 0,
+          underlayTotal: 0,
+          moistureBarrierTotal: 0,
+          skirtingTotal: 0,
+          scotiaTotal: 0,
+          furnitureTotal: 0,
+          doorTrimmingTotal: 0,
+          travelFeeTotal: 0,
+          locationTotal: 0,
+          labourSubtotalBeforeMultipliers: 0,
+          labourSubtotalAfterMultipliers: 0,
+          subtotalExGst: 0,
+          gst: 0,
+          totalIncGst: 0,
+          zoneName: "Default Sydney Zone",
+          minimumChargeApplied: false,
+          minimumJobFee: 0,
+          roundingAdjustment: 0,
+          accessFactor: 1,
+          smallJobFactor: 1,
+          zoneMultiplier: 1,
+          locationSurchargePercent: 0,
+          roomCount: measurement.roomCount,
+          doorCount: 0,
+          quoteLines: [],
+          manualReviewRequired: true,
+          warnings: ["Quote calculator is not available."],
+          productCategory: getSelectedProductCategory(),
+          productLabel: "Category estimate",
+          measurementSource: measurement.sourceLabel,
+          pricePending: false,
+          disclaimer: "Estimate only — final quote confirmed after review and site check."
+        };
+      }
+
+      const result = QUOTE_CALCULATOR.calculateQuote(buildQuoteCalculationInput(input));
+      result.calculationSource = "local_quote_calculator";
+      return result;
+    }
+
+    function canUsePrivateQuoteRuntime() {
+      return state.privateQuoteRuntimeAvailable
+        && typeof window.fetch === "function"
+        && window.location.protocol !== "file:";
+    }
+
+    async function fetchPrivateQuote(input) {
+      const response = await window.fetch(PRIVATE_QUOTE_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(buildQuoteCalculationInput(input))
+      });
+
+      const payload = await response.json().catch(function () {
+        return null;
+      });
+
+      if (!response.ok || !payload || !payload.ok || !payload.quote) {
+        throw new Error(payload && payload.error ? payload.error : "Private quote runtime unavailable.");
+      }
+
+      payload.quote.calculationSource = payload.source || "supabase_private_pricing";
+      return payload.quote;
+    }
+
+    async function refreshQuoteEstimate(options) {
+      const config = options || {};
+      const input = config.input || getFormInput();
+      const requestToken = ++state.quoteRefreshToken;
+      const localResult = calculateQuote(input);
+      state.currentQuoteResult = localResult;
+
+      if (config.render !== false) {
+        renderQuoteSummary(localResult);
+      }
+
+      if (!canUsePrivateQuoteRuntime()) {
+        if (config.track !== false) {
+          trackCalculatedQuote(localResult);
+        }
+        return localResult;
+      }
+
+      try {
+        const privateResult = await fetchPrivateQuote(input);
+        if (requestToken !== state.quoteRefreshToken) {
+          return state.currentQuoteResult || privateResult;
+        }
+        state.currentQuoteResult = privateResult;
+        if (config.render !== false) {
+          renderQuoteSummary(privateResult);
+        }
+        if (config.track !== false) {
+          trackCalculatedQuote(privateResult);
+        }
+        return privateResult;
+      } catch (error) {
+        if (requestToken !== state.quoteRefreshToken) {
+          return state.currentQuoteResult || localResult;
+        }
+        state.privateQuoteRuntimeAvailable = false;
+        state.currentQuoteResult = localResult;
+        if (config.track !== false) {
+          trackCalculatedQuote(localResult);
+        }
+        if (!state.privateQuoteFallbackLogged && window.console && typeof window.console.warn === "function") {
+          state.privateQuoteFallbackLogged = true;
+          console.warn("Private quote runtime unavailable. Using local calculator fallback.", error);
+        }
+        return localResult;
+      }
+    }
+
+    function getCurrentQuoteResult() {
+      return state.currentQuoteResult || calculateQuote(getFormInput());
     }
 
     function getFormInput() {
@@ -3385,6 +3176,48 @@
       }).join("");
     }
 
+    function trackCalculatedQuote(result) {
+      if (!window.OperonTracking || !(result && result.realArea > 0)) {
+        return;
+      }
+
+      const suburb = getInputValue("suburb").trim();
+      const postcode = getInputValue("postcode").trim();
+      const signature = [
+        result.quoteMode,
+        result.productId || result.productLabel,
+        result.realArea,
+        result.chargeableArea,
+        result.totalIncGst,
+        result.zoneName,
+        result.pricePending ? "pending" : "priced"
+      ].join("|");
+
+      if (state.lastQuoteCalculationSignature !== signature) {
+        state.lastQuoteCalculationSignature = signature;
+        window.OperonTracking.trackEvent("quote_calculate", {
+          quote_mode: result.quoteMode,
+          product_category: result.productCategory,
+          product: result.productLabel,
+          real_area: result.realArea,
+          chargeable_area: result.chargeableArea,
+          estimated_total: result.totalIncGst,
+          price_pending: !!result.pricePending,
+          zone: result.zoneName
+        });
+      }
+
+      if ((suburb || postcode) && state.lastTrackedZoneName !== result.zoneName) {
+        state.lastTrackedZoneName = result.zoneName;
+        window.OperonTracking.trackEvent("location_zone_applied", {
+          suburb: suburb,
+          postcode: postcode,
+          zone: result.zoneName,
+          total_estimate: result.totalIncGst
+        });
+      }
+    }
+
     // UI rendering.
     function renderQuoteSummary(result) {
       const measurement = getMeasurementState();
@@ -3397,14 +3230,20 @@
       document.getElementById("summaryTotalSecondary").textContent = formatCurrency(result.totalIncGst);
       document.getElementById("summarySubtotal").textContent = formatCurrency(result.subtotalExGst);
       document.getElementById("summaryGst").textContent = formatCurrency(result.gst);
-      document.getElementById("summarySelectedProduct").textContent = result.productLabel;
+      document.getElementById("summarySelectedProduct").textContent = result.pricePending
+        ? result.productLabel + " (price to be confirmed)"
+        : result.productLabel;
       document.getElementById("summaryRealArea").textContent = formatArea(result.realArea);
       document.getElementById("summaryChargeableArea").textContent = result.quoteMode === "supply_install"
         ? formatArea(result.chargeableArea)
         : "Not used";
-      document.getElementById("summaryCaption").textContent = result.productLabel + " · " + measurement.sourceLabel + " · " + formatArea(result.realArea);
-      document.getElementById("summaryZone").textContent = measurement.sourceLabel;
-      document.getElementById("summaryAccess").textContent = "Project conditions included";
+      document.getElementById("summaryCaption").textContent = result.pricePending
+        ? result.productLabel + " · " + getCategoryEstimateLabel(result.productCategory) + " · " + measurement.sourceLabel
+        : result.productLabel + " · " + measurement.sourceLabel + " · " + formatArea(result.realArea);
+      document.getElementById("summaryZone").textContent = result.zoneName || measurement.sourceLabel;
+      document.getElementById("summaryAccess").textContent = result.quoteMode === "install_only"
+        ? "Installation labour based on real area"
+        : "Project conditions included";
       document.getElementById("summaryReview").textContent = result.manualReviewRequired ? "Estimate only" : "Estimate ready";
       document.getElementById("measurementSourceLabel").textContent = measurement.sourceLabel;
       document.getElementById("realAreaMetric").textContent = formatArea(result.realArea);
@@ -3412,6 +3251,12 @@
 
       const manualReviewNotice = document.getElementById("manualReviewNotice");
       manualReviewNotice.hidden = !result.manualReviewRequired;
+      manualReviewNotice.textContent = result.pricePending
+        ? "Selected product saved. This estimate currently uses the " + getCategoryEstimateLabel(result.productCategory) + " until the exact product price is confirmed. Final quote confirmed before work starts."
+        : (result.disclaimer || "Estimate only — final quote subject to site confirmation.");
+      if (result.pricePending) {
+        document.getElementById("summaryReview").textContent = "Estimate pending product price";
+      }
 
       const quoteLines = document.getElementById("quoteLines");
       quoteLines.innerHTML = result.quoteLines.map(function (line) {
@@ -3506,7 +3351,7 @@
     }
 
     function pushSummaryIntoNotes() {
-      const result = calculateQuote(getFormInput());
+      const result = getCurrentQuoteResult();
       const lines = [
         "Quote summary:",
         "- Mode: " + (result.quoteMode === "supply_install" ? "Supply & Install" : "Installation Only"),
@@ -3532,12 +3377,18 @@
       renderSelectedProductBanner();
       buildRooms();
       renderMeasurementHelper();
-      renderQuoteSummary(calculateQuote(getFormInput()));
+      refreshQuoteEstimate({ render: true, track: true });
       renderFloorplanHandoff();
       updateStepProgress();
       saveDraft();
+      const activeProduct = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getProductById(getInputValue("selectedProduct")) : null;
+      const productHandoffMessage = state.productHandoffActive && activeProduct
+        ? getProductHandoffMessage(activeProduct)
+        : "";
       if (state.pendingHandoffMessage) {
         pageStatus.textContent = state.pendingHandoffMessage;
+      } else if (productHandoffMessage) {
+        pageStatus.textContent = productHandoffMessage;
       } else {
         pageStatus.textContent = "Draft quote saved in this browser while you work.";
       }
@@ -3561,6 +3412,7 @@
       currentQuoteStep = 0;
       state.pendingHandoffMessage = "";
       state.floorplanHandoffDismissed = false;
+      state.currentQuoteResult = null;
       renderAll();
       showQuoteStep(0, { scroll: true });
     }
@@ -3656,17 +3508,48 @@
       const params = new URLSearchParams(window.location.search);
       const requestedStep = Number(params.get("quoteStep"));
       const fromFloorplan = params.get("from") === "floorplan";
+      const fromProduct = params.get("from") === "product";
       const floorplanState = readFloorplanHandoffState();
+      const storedProduct = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getStoredProduct() : null;
 
       if (fromFloorplan && floorplanState.savedArea > 0) {
         state.pendingHandoffMessage = "You’re back from the floor plan tool. Step 4 is ready with " + formatArea(floorplanState.savedArea) + ".";
         state.floorplanHandoffDismissed = false;
       }
 
+      if (fromProduct && storedProduct && PRODUCT_LIBRARY.getProductById(storedProduct.id)) {
+        state.productHandoffActive = true;
+        state.productSelectionLoadedFromCatalogue = true;
+      }
+
       if (Number.isInteger(requestedStep) && requestedStep >= 0) {
         currentQuoteStep = Math.min(requestedStep, getQuoteSteps().length - 1);
       } else if (fromFloorplan && floorplanState.savedArea > 0) {
         currentQuoteStep = 3;
+      }
+    }
+
+    function refreshQuoteFromPricingSource() {
+      if (!PRODUCT_LIBRARY) {
+        return;
+      }
+
+      const storedProduct = PRODUCT_LIBRARY.getStoredProduct();
+      const storedCategory = PRODUCT_LIBRARY.getStoredCategory() || getSelectedProductCategory() || "hybrid";
+
+      if (storedProduct) {
+        setSelectedCategory(storedProduct.category, { preserveProduct: true });
+        setSelectedProductById(storedProduct.id, { persist: false });
+      } else {
+        setSelectedCategory(storedCategory, { preserveProduct: false });
+      }
+
+      renderAll();
+      updateQuoteCtaSystem();
+      if (state.pendingHandoffMessage) {
+        pageStatus.textContent = state.pendingHandoffMessage;
+      } else {
+        pageStatus.textContent = "Latest pricing data loaded.";
       }
     }
 
@@ -3811,6 +3694,9 @@
       if (pricing.floorPrepTotal > 0) {
         items.push({ type: "floor_prep", label: "Floor preparation", quantity: pricing.realArea, unit: "m2", unitBasis: "real_area", amountExGst: pricing.floorPrepTotal });
       }
+      if (pricing.underlayTotal > 0) {
+        items.push({ type: "underlay", label: "Underlay", quantity: pricing.chargeableArea, unit: "m2", unitBasis: "chargeable_area", amountExGst: pricing.underlayTotal });
+      }
       if (pricing.moistureBarrierTotal > 0) {
         items.push({ type: "moisture_barrier", label: "Moisture barrier", quantity: pricing.chargeableArea, unit: "m2", unitBasis: "chargeable_area", amountExGst: pricing.moistureBarrierTotal });
       }
@@ -3826,16 +3712,23 @@
       if (pricing.doorTrimmingTotal > 0) {
         items.push({ type: "door_trimming", label: "Door trimming", quantity: pricing.doorCount, unit: "each", unitBasis: "each", amountExGst: pricing.doorTrimmingTotal });
       }
+      if (pricing.travelFeeTotal > 0) {
+        items.push({ type: "travel", label: "Travel and site allowance", quantity: 1, unit: "job", unitBasis: "job", amountExGst: pricing.travelFeeTotal });
+      }
 
       return items.map(function (item) {
         return Object.assign({ rawPayload: item.rawPayload || item }, item);
       });
     }
 
-    function buildQuotePayload() {
+    async function buildQuotePayload() {
       const input = getFormInput();
       const measurement = getMeasurementState();
-      const pricing = calculateQuote(input);
+      const pricing = await refreshQuoteEstimate({
+        input: input,
+        render: false,
+        track: false
+      });
       const product = getSelectedProduct();
       const floorplanState = readFloorplanHandoffState();
       const measurementMethod = input.measurementMethod === "floorplan_upload" && floorplanState.savedArea > 0
@@ -4108,7 +4001,7 @@
           return;
         }
 
-        const payload = buildQuotePayload();
+        const payload = await buildQuotePayload();
         console.log("quote_submitted");
         window.__operonSuppressAbandon = true;
         localStorage.setItem("operon_last_quote_value", String(payload.pricing.totalIncGst || 0));
@@ -4244,7 +4137,7 @@
           window.OperonTracking.trackQuoteStart();
         }
         clearWizardValidationMessage();
-        renderQuoteSummary(calculateQuote(getFormInput()));
+        refreshQuoteEstimate({ render: true, track: true });
         saveDraft();
         updateQuoteCtaSystem();
       });
@@ -4327,7 +4220,6 @@
       const storedCategory = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getStoredCategory() : "";
       if (storedProduct) {
         setSelectedProductById(storedProduct.id, { persist: false });
-        state.productSelectionLoadedFromCatalogue = true;
       } else if (storedCategory) {
         setSelectedCategory(storedCategory, { preserveProduct: false });
       }
@@ -4358,10 +4250,17 @@
       }
       renderAll();
       if (state.productSelectionLoadedFromCatalogue && window.OperonTracking) {
-        window.OperonTracking.trackEvent("quote_started_from_product", {
+        window.OperonTracking.trackEvent("quote_start_from_product", {
           category: getSelectedProductCategory(),
           product: getInputValue("selectedProduct") || "estimate"
         });
+      }
+      window.addEventListener("operon-pricing-source-ready", refreshQuoteFromPricingSource);
+      if (window.OperonPricingSource) {
+        const pricingSourceStatus = window.OperonPricingSource.getStatus();
+        if (pricingSourceStatus.ready && pricingSourceStatus.mode === "google_sheets") {
+          refreshQuoteFromPricingSource();
+        }
       }
       showQuoteStep(currentQuoteStep || 0, { scroll: window.location.hash === "#quoteForm" });
       window.addEventListener("beforeunload", function () {

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flooring Products Sydney | Operon Flooring Catalogue</title>
+  <meta name="description" content="Browse laminate, hybrid and engineered timber flooring products in Sydney. Compare categories, choose a product and continue to the quote tool.">
+  <link rel="icon" href="assets/Operon favicon.png" type="image/png">
+  <link rel="canonical" href="https://operonflooring.com.au/products.html">
+  <meta name="robots" content="index,follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Flooring Products Sydney | Operon Flooring Catalogue">
+  <meta property="og:description" content="Browse laminate, hybrid and engineered timber flooring products in Sydney. Compare categories, choose a product and continue to the quote tool.">
+  <meta property="og:url" content="https://operonflooring.com.au/products.html">
+  <meta property="og:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Flooring Products Sydney | Operon Flooring Catalogue">
+  <meta name="twitter:description" content="Browse laminate, hybrid and engineered timber flooring products in Sydney. Compare categories, choose a product and continue to the quote tool.">
+  <meta name="twitter:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
+  <link rel="stylesheet" href="seo-pages.css">
+  <script src="tracking.js"></script>
+  <script src="pricingSourceConfig.js"></script>
+  <script src="pricingSource.js"></script>
+  <script src="products.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell nav">
+      <a class="brand" href="index.html#top">
+        <span class="brand-mark" aria-hidden="true"></span>
+        Operon Flooring
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#top">Home</a>
+        <a href="index.html?from=product#quoteForm">Quote</a>
+        <a href="floorplan.html">Floor Plan</a>
+      </nav>
+      <a class="button" href="index.html?from=product#quoteForm">Start quote</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="shell">
+        <article class="hero-card">
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <span class="eyebrow">Central Catalogue</span>
+              <h1>Flooring Products Sydney</h1>
+              <p>Browse laminate, hybrid and engineered timber flooring products in one place. Filter the catalogue, choose a product, and continue into the quote wizard with it already saved.</p>
+              <div class="hero-actions" style="margin-top: 24px;">
+                <a class="button" href="index.html?from=product#quoteForm">Go to quote</a>
+                <a class="button-secondary" href="floorplan.html">Measure from floor plan</a>
+              </div>
+              <div class="pill-row" style="margin-top: 24px;">
+                <span class="pill">Selection-first product flow</span>
+                <span class="pill">Laminate, hybrid and engineered</span>
+                <span class="pill">Quote-ready handoff</span>
+              </div>
+            </div>
+            <div class="stat-stack">
+              <div class="stat-card">
+                <strong>How to use it</strong>
+                Filter by category, brand, range or thickness, then choose the floor you want and continue into the quote tool.
+              </div>
+              <div class="stat-card">
+                <strong>What happens next</strong>
+                The quote wizard reads your selected product from localStorage and carries it into Step 3 automatically.
+              </div>
+              <div class="stat-card">
+                <strong>Commercial role</strong>
+                This page is the central product selection surface. The category pages remain the commercial SEO landing pages.
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <article class="section-card">
+          <span class="eyebrow">Product Filters</span>
+          <h2 style="margin-top: 18px;">Choose a product category and narrow the catalogue</h2>
+          <p>Use the category filters first, then narrow the list by brand, range, colour, thickness, price range or waterproof products where available.</p>
+
+          <div class="catalogue-toolbar">
+            <div class="catalogue-category-row" id="catalogueCategoryRow"></div>
+            <div class="catalogue-toolbar-grid">
+              <div class="catalogue-filter">
+                <label for="catalogueBrandFilter">Brand</label>
+                <select id="catalogueBrandFilter"></select>
+              </div>
+              <div class="catalogue-filter">
+                <label for="catalogueRangeFilter">Range</label>
+                <select id="catalogueRangeFilter"></select>
+              </div>
+              <div class="catalogue-filter">
+                <label for="catalogueColourFilter">Colour</label>
+                <select id="catalogueColourFilter"></select>
+              </div>
+              <div class="catalogue-filter">
+                <label for="catalogueThicknessFilter">Thickness</label>
+                <select id="catalogueThicknessFilter"></select>
+              </div>
+              <div class="catalogue-filter">
+                <label for="cataloguePriceFilter">Price range</label>
+                <select id="cataloguePriceFilter">
+                  <option value="all">All price ranges</option>
+                  <option value="under-50">Under $50/m²</option>
+                  <option value="50-80">$50–$80/m²</option>
+                  <option value="80-plus">$80+/m²</option>
+                  <option value="to-confirm">Price to be confirmed</option>
+                </select>
+              </div>
+              <div class="catalogue-filter">
+                <label for="catalogueWaterproofFilter">Waterproof filter</label>
+                <select id="catalogueWaterproofFilter">
+                  <option value="all">All products</option>
+                  <option value="waterproof">Waterproof products</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="catalogue-selection-banner" id="catalogueSelectionBanner">
+            <strong id="catalogueSelectionTitle">No flooring product selected yet</strong>
+            <p id="catalogueSelectionText">Choose a flooring product and continue to the quote tool, or browse the category guides first.</p>
+            <div class="catalogue-selection-actions">
+              <a class="button" id="catalogueContinueQuote" href="index.html?from=product#quoteForm">Continue to quote</a>
+              <button class="button-secondary" id="catalogueClearSelection" type="button">Clear selected product</button>
+            </div>
+            <div class="catalogue-context-links" id="catalogueContextLinks"></div>
+          </div>
+
+          <div class="catalogue-results-head">
+            <div>
+              <h2 style="margin: 0;">Available flooring products</h2>
+              <p id="catalogueResultsSummary">Loading catalogue…</p>
+            </div>
+            <a class="button-quiet" href="index.html?from=product#quoteForm">Start with the quote wizard</a>
+          </div>
+
+          <div class="catalogue-grid" id="catalogueProductsGrid"></div>
+          <div class="catalogue-empty" id="catalogueEmptyState" hidden>No products match the current filters. Adjust the filters or switch category.</div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <h3>Operon Flooring</h3>
+        <p>Flooring quotes for laminate, hybrid and engineered timber flooring in Sydney.</p>
+        <p>Estimate your project cost before booking a site visit.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Flooring Services</h4>
+        <ul>
+          <li><a href="products.html">All Flooring Products</a></li>
+          <li><a href="laminate-flooring-sydney.html">Laminate Flooring</a></li>
+          <li><a href="hybrid-flooring-sydney.html">Hybrid Flooring</a></li>
+          <li><a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Locations</h4>
+        <ul>
+          <li><a href="flooring-parramatta.html">Parramatta</a></li>
+          <li><a href="flooring-liverpool.html">Liverpool</a></li>
+          <li><a href="flooring-auburn.html">Auburn</a></li>
+          <li><a href="flooring-blacktown.html">Blacktown</a></li>
+          <li><a href="flooring-miranda.html">Miranda</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="index.html?from=product#quoteForm">Get a Quote</a></li>
+          <li><a href="floorplan.html">Measure Floor Plan</a></li>
+          <li><a href="floor-care-maintenance.html">Floor Care Guide</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 Operon Flooring. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const PRODUCT_LIBRARY = window.OperonProducts;
+      if (!PRODUCT_LIBRARY) {
+        return;
+      }
+
+      const categoryRow = document.getElementById("catalogueCategoryRow");
+      const productsGrid = document.getElementById("catalogueProductsGrid");
+      const resultsSummary = document.getElementById("catalogueResultsSummary");
+      const emptyState = document.getElementById("catalogueEmptyState");
+      const selectionBanner = document.getElementById("catalogueSelectionBanner");
+      const selectionTitle = document.getElementById("catalogueSelectionTitle");
+      const selectionText = document.getElementById("catalogueSelectionText");
+      const continueQuoteLink = document.getElementById("catalogueContinueQuote");
+      const clearSelectionButton = document.getElementById("catalogueClearSelection");
+      const contextLinks = document.getElementById("catalogueContextLinks");
+
+      const filters = {
+        brand: document.getElementById("catalogueBrandFilter"),
+        range: document.getElementById("catalogueRangeFilter"),
+        colour: document.getElementById("catalogueColourFilter"),
+        thickness: document.getElementById("catalogueThicknessFilter"),
+        price: document.getElementById("cataloguePriceFilter"),
+        waterproof: document.getElementById("catalogueWaterproofFilter")
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      const requestedCategory = params.get("category");
+      function getCategoryMetaList() {
+        return PRODUCT_LIBRARY.getCategoryList();
+      }
+
+      function getValidCategories() {
+        return getCategoryMetaList().map(function (item) {
+          return item.id;
+        });
+      }
+
+      const state = {
+        category: getValidCategories().indexOf(requestedCategory) >= 0 ? requestedCategory : "all",
+        selectedProductId: (PRODUCT_LIBRARY.getStoredProduct() || {}).id || "",
+        filters: {
+          brand: "",
+          range: "",
+          colour: "",
+          thickness: "",
+          price: "all",
+          waterproof: "all"
+        }
+      };
+
+      function track(eventName, payload) {
+        if (window.OperonTracking) {
+          window.OperonTracking.trackEvent(eventName, payload || {});
+        }
+      }
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function getCategoryLabel(category) {
+        const meta = getCategoryMetaList().find(function (item) {
+          return item.id === category;
+        });
+        return meta ? meta.label : "Flooring";
+      }
+
+      function getCategoryPageUrl(category) {
+        const meta = getCategoryMetaList().find(function (item) {
+          return item.id === category;
+        });
+        return meta ? meta.pageUrl : "index.html#quoteForm";
+      }
+
+      function getCatalogueProducts() {
+        return state.category === "all"
+          ? PRODUCT_LIBRARY.getAllProducts()
+          : PRODUCT_LIBRARY.getProductsByCategory(state.category);
+      }
+
+      function isWaterproofProduct(product) {
+        const terms = []
+          .concat(product.features || [])
+          .concat([product.description || "", product.range || "", product.productType || ""])
+          .join(" ")
+          .toLowerCase();
+        return terms.indexOf("waterproof") >= 0;
+      }
+
+      function distinctValues(products, key) {
+        return Array.from(new Set(products.map(function (product) {
+          return product[key] || "";
+        }).filter(Boolean))).sort();
+      }
+
+      function matchesPriceRange(product) {
+        const price = Number(product.pricePerM2) || 0;
+        if (state.filters.price === "all") {
+          return true;
+        }
+        if (state.filters.price === "to-confirm") {
+          return !(price > 0);
+        }
+        if (!(price > 0)) {
+          return false;
+        }
+        if (state.filters.price === "under-50") {
+          return price < 50;
+        }
+        if (state.filters.price === "50-80") {
+          return price >= 50 && price <= 80;
+        }
+        if (state.filters.price === "80-plus") {
+          return price > 80;
+        }
+        return true;
+      }
+
+      function matchesFilters(product) {
+        if (state.filters.brand && product.brand !== state.filters.brand) {
+          return false;
+        }
+        if (state.filters.range && product.range !== state.filters.range) {
+          return false;
+        }
+        if (state.filters.colour && product.colour !== state.filters.colour) {
+          return false;
+        }
+        if (state.filters.thickness && (product.thickness || "") !== state.filters.thickness) {
+          return false;
+        }
+        if (!matchesPriceRange(product)) {
+          return false;
+        }
+        if (state.filters.waterproof === "waterproof" && !isWaterproofProduct(product)) {
+          return false;
+        }
+        return true;
+      }
+
+      function buildImageMarkup(product) {
+        const altText = product.alt || (PRODUCT_LIBRARY.getProductLabel(product) + " colour sample");
+        if (product.image) {
+          return (
+            '<button class="catalogue-image-frame" type="button" data-open-lightbox="' + escapeHtml(product.id) + '" aria-label="Open larger image for ' + escapeHtml(altText) + '">' +
+              '<img class="catalogue-image" src="' + escapeHtml(product.image) + '" alt="' + escapeHtml(altText) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">' +
+              '<div class="catalogue-swatch-fallback" aria-hidden="true">' +
+                '<div class="catalogue-swatch" style="background:' + escapeHtml(product.swatch || "#d1d5db") + ';"></div>' +
+                '<span>' + escapeHtml(product.colour) + "</span>" +
+              "</div>" +
+            "</button>"
+          );
+        }
+
+        return (
+          '<button class="catalogue-image-frame is-fallback" type="button" data-open-lightbox="' + escapeHtml(product.id) + '" aria-label="Open larger image for ' + escapeHtml(altText) + '">' +
+            '<div class="catalogue-swatch-fallback" aria-hidden="true">' +
+              '<div class="catalogue-swatch" style="background:' + escapeHtml(product.swatch || "#d1d5db") + ';"></div>' +
+              '<span>' + escapeHtml(product.colour) + "</span>" +
+            "</div>" +
+          "</button>"
+        );
+      }
+
+      function renderCategoryTabs() {
+        const tabs = [{
+          id: "all",
+          label: "All Flooring"
+        }].concat(getCategoryMetaList());
+
+        categoryRow.innerHTML = tabs.map(function (item) {
+          return '<button class="catalogue-chip' + (state.category === item.id ? " is-active" : "") + '" type="button" data-category-filter="' + item.id + '">' + escapeHtml(item.label) + "</button>";
+        }).join("");
+      }
+
+      function renderFilterOptions() {
+        const available = getCatalogueProducts();
+        const config = [
+          { key: "brand", label: "All brands", values: distinctValues(available, "brand") },
+          { key: "range", label: "All ranges", values: distinctValues(available, "range") },
+          { key: "colour", label: "All colours", values: distinctValues(available, "colour") },
+          { key: "thickness", label: "All thicknesses", values: distinctValues(available, "thickness") }
+        ];
+
+        config.forEach(function (item) {
+          const control = filters[item.key];
+          const currentValue = state.filters[item.key];
+          const options = ['<option value="">' + item.label + "</option>"].concat(item.values.map(function (value) {
+            return '<option value="' + escapeHtml(value) + '"' + (currentValue === value ? " selected" : "") + '>' + escapeHtml(value) + "</option>";
+          }));
+          control.innerHTML = options.join("");
+          control.disabled = item.values.length === 0;
+        });
+      }
+
+      function renderSelectionBanner() {
+        const storedProduct = PRODUCT_LIBRARY.getStoredProduct();
+        const activeProduct = storedProduct && PRODUCT_LIBRARY.getProductById(storedProduct.id) ? PRODUCT_LIBRARY.getProductById(storedProduct.id) : null;
+        selectionBanner.classList.toggle("is-selected", !!activeProduct);
+
+        if (!activeProduct) {
+          selectionTitle.textContent = "No flooring product selected yet";
+          selectionText.textContent = "Choose a flooring product and continue to the quote tool. If a product price is still pending, the quote will use the standard estimate for that flooring type until review.";
+          contextLinks.innerHTML = getCategoryMetaList().map(function (item) {
+            return '<a class="button-quiet" href="' + escapeHtml(item.pageUrl) + '">View ' + escapeHtml(item.label.toLowerCase()) + " guide</a>";
+          }).join("");
+          continueQuoteLink.textContent = "Continue to quote";
+          return;
+        }
+
+        selectionTitle.textContent = "Selected product: " + PRODUCT_LIBRARY.getProductLabel(activeProduct);
+        selectionText.textContent = activeProduct.pricePerM2 > 0
+          ? getCategoryLabel(activeProduct.category) + " · " + PRODUCT_LIBRARY.formatProductRate(activeProduct) + " · saved for the quote wizard."
+          : getCategoryLabel(activeProduct.category) + " · Price to be confirmed · the quote will use the standard " + getCategoryLabel(activeProduct.category).toLowerCase() + " estimate until review.";
+        continueQuoteLink.textContent = "Continue to quote";
+        contextLinks.innerHTML =
+          '<a class="button-quiet" href="' + escapeHtml(getCategoryPageUrl(activeProduct.category)) + '">Back to ' + escapeHtml(getCategoryLabel(activeProduct.category).toLowerCase()) + " guide</a>";
+      }
+
+      function buildProductCard(product) {
+        const categoryLabel = getCategoryLabel(product.category);
+        const specLine = [categoryLabel, product.productType, product.thickness].filter(Boolean).join(" · ");
+        const features = (product.features || []).slice(0, 3).map(function (feature) {
+          return '<span class="catalogue-pill">' + escapeHtml(feature) + "</span>";
+        }).join("");
+        const selectedClass = state.selectedProductId === product.id ? " selected" : "";
+
+        return (
+          '<article class="catalogue-card' + selectedClass + '" data-product-card="' + escapeHtml(product.id) + '">' +
+            buildImageMarkup(product) +
+            '<div class="catalogue-card-top">' +
+              '<div class="catalogue-copy">' +
+                '<span class="catalogue-brand">' + escapeHtml(product.brand) + "</span>" +
+                '<h3>' + escapeHtml(product.range) + "</h3>" +
+                '<p class="catalogue-colour">' + escapeHtml(product.colour) + "</p>" +
+                '<p class="catalogue-spec">' + escapeHtml(specLine) + "</p>" +
+                '<span class="catalogue-card-price">' + escapeHtml(PRODUCT_LIBRARY.formatProductRate(product)) + "</span>" +
+              "</div>" +
+            "</div>" +
+            '<div class="catalogue-pills">' + features + "</div>" +
+            '<div class="catalogue-card-actions">' +
+              '<button class="button" type="button" data-get-quote="' + escapeHtml(product.id) + '">Get quote</button>' +
+            "</div>" +
+          "</article>"
+        );
+      }
+
+      function renderProducts() {
+        const filtered = getCatalogueProducts().filter(matchesFilters);
+        productsGrid.innerHTML = filtered.map(buildProductCard).join("");
+        emptyState.hidden = filtered.length > 0;
+        resultsSummary.textContent = filtered.length + " product" + (filtered.length === 1 ? "" : "s") + " shown" + (state.category !== "all" ? " in " + getCategoryLabel(state.category).toLowerCase() : "") + ".";
+      }
+
+      function syncQueryString() {
+        const nextUrl = new URL(window.location.href);
+        if (state.category === "all") {
+          nextUrl.searchParams.delete("category");
+        } else {
+          nextUrl.searchParams.set("category", state.category);
+        }
+        window.history.replaceState({}, "", nextUrl.toString());
+      }
+
+      function renderAll() {
+        renderCategoryTabs();
+        renderFilterOptions();
+        renderSelectionBanner();
+        renderProducts();
+      }
+
+      function selectProduct(productId, options) {
+        const product = PRODUCT_LIBRARY.getProductById(productId);
+        if (!product) {
+          return;
+        }
+
+        const settings = Object.assign({ redirect: false, source: "catalogue" }, options || {});
+        PRODUCT_LIBRARY.saveSelectedProduct(product);
+        PRODUCT_LIBRARY.saveSelectedCategory(product.category);
+        state.selectedProductId = product.id;
+        renderAll();
+        track("product_select", {
+          category: product.category,
+          brand: product.brand,
+          range: product.range,
+          colour: product.colour,
+          pricePerM2: product.pricePerM2,
+          source: settings.source
+        });
+
+        if (settings.redirect) {
+          window.location.href = "index.html?from=product#quoteForm";
+        }
+      }
+
+      function handleFilterChange(sourceKey) {
+        state.filters.brand = filters.brand.value;
+        state.filters.range = filters.range.value;
+        state.filters.colour = filters.colour.value;
+        state.filters.thickness = filters.thickness.value;
+        state.filters.price = filters.price.value;
+        state.filters.waterproof = filters.waterproof.value;
+        renderProducts();
+        track("product_filter_change", {
+          category: state.category,
+          source_filter: sourceKey,
+          brand: state.filters.brand || "all",
+          range: state.filters.range || "all",
+          colour: state.filters.colour || "all",
+          thickness: state.filters.thickness || "all",
+          price: state.filters.price,
+          waterproof: state.filters.waterproof
+        });
+      }
+
+      categoryRow.addEventListener("click", function (event) {
+        const button = event.target.closest("[data-category-filter]");
+        if (!button) {
+          return;
+        }
+
+        state.category = button.getAttribute("data-category-filter");
+        state.filters.brand = "";
+        state.filters.range = "";
+        state.filters.colour = "";
+        state.filters.thickness = "";
+        state.filters.price = "all";
+        state.filters.waterproof = "all";
+        syncQueryString();
+        renderAll();
+        track("product_filter_change", {
+          category: state.category,
+          source_filter: "category",
+          value: state.category
+        });
+      });
+
+      Object.keys(filters).forEach(function (key) {
+        filters[key].addEventListener("change", function () {
+          handleFilterChange(key);
+        });
+      });
+
+      productsGrid.addEventListener("click", function (event) {
+        const lightboxTrigger = event.target.closest("[data-open-lightbox]");
+        if (lightboxTrigger) {
+          const product = PRODUCT_LIBRARY.getProductById(lightboxTrigger.getAttribute("data-open-lightbox"));
+          PRODUCT_LIBRARY.openCatalogueLightbox(product);
+          return;
+        }
+
+        const quoteButton = event.target.closest("[data-get-quote]");
+        if (quoteButton) {
+          selectProduct(quoteButton.getAttribute("data-get-quote"), {
+            redirect: true,
+            source: "products_page_quote_button"
+          });
+        }
+      });
+
+      clearSelectionButton.addEventListener("click", function () {
+        PRODUCT_LIBRARY.clearSelectedProduct();
+        state.selectedProductId = "";
+        renderAll();
+      });
+
+      window.addEventListener("operon-pricing-source-ready", function () {
+        state.selectedProductId = (PRODUCT_LIBRARY.getStoredProduct() || {}).id || "";
+        renderAll();
+      });
+      if (window.OperonPricingSource) {
+        const pricingSourceStatus = window.OperonPricingSource.getStatus();
+        if (pricingSourceStatus.ready && pricingSourceStatus.mode === "google_sheets") {
+          state.selectedProductId = (PRODUCT_LIBRARY.getStoredProduct() || {}).id || "";
+        }
+      }
+
+      renderAll();
+      track("product_catalogue_view", {
+        category: state.category,
+        product_count: getCatalogueProducts().length,
+        page: "products.html"
+      });
+    }());
+  </script>
+</body>
+</html>

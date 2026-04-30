@@ -1,5 +1,7 @@
 # Operon Flooring SEO Strategy
 
+Source-of-truth status: active SEO strategy for page roles, keyword focus, and internal linking direction.
+
 Last updated: 2026-04-29  
 Primary owner: Operon Flooring website / quote system  
 Primary goal: high-intent flooring quote lead generation in Sydney
@@ -14,7 +16,10 @@ Implemented in the website codebase:
   - `/laminate-flooring-sydney.html`
   - `/hybrid-flooring-sydney.html`
   - `/engineered-timber-flooring-sydney.html`
+  - `/flooring-installation-cost-sydney.html`
 - location pages:
+  - `/flooring-auburn.html`
+  - `/flooring-blacktown.html`
   - `/flooring-liverpool.html`
   - `/flooring-cabramatta.html`
   - `/flooring-parramatta.html`
@@ -29,7 +34,7 @@ Implemented in the website codebase:
   - `/blog/do-you-need-floor-preparation.html`
   - `/blog/how-to-measure-floor-area.html`
 - homepage internal linking sections for product, suburb and guide pages
-- sitemap entries for the SEO page set
+- sitemap support for the active SEO page set
 
 Operational work still required outside code:
 
@@ -65,6 +70,8 @@ This is a lead generation SEO system.
 ### Geography
 
 - Sydney
+- Auburn
+- Blacktown
 - Liverpool
 - Cabramatta
 - Parramatta
@@ -128,21 +135,24 @@ Long-tail and authority content that answers real customer questions and links u
 - `/` → `index.html`
 - `/floorplan.html`
 
-### Product pages to create
+### Active product pages
 
 - `/laminate-flooring-sydney.html`
 - `/hybrid-flooring-sydney.html`
 - `/engineered-timber-flooring-sydney.html`
+- `/flooring-installation-cost-sydney.html`
 
-### Location pages to create
+### Active location pages
 
+- `/flooring-auburn.html`
+- `/flooring-blacktown.html`
 - `/flooring-liverpool.html`
 - `/flooring-cabramatta.html`
 - `/flooring-parramatta.html`
 - `/flooring-miranda.html`
 - `/flooring-eastern-suburbs.html`
 
-### Blog pages to create
+### Active blog pages
 
 - `/blog/flooring-cost-sydney.html`
 - `/blog/laminate-vs-hybrid.html`

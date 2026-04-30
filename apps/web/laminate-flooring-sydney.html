@@ -19,6 +19,8 @@
   <meta name="twitter:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <link rel="stylesheet" href="seo-pages.css">
   <script src="tracking.js"></script>
+  <script src="pricingSourceConfig.js"></script>
+  <script src="pricingSource.js"></script>
   <script src="products.js"></script>
   <script type="application/ld+json">
     {
@@ -118,19 +120,22 @@
     <section class="section">
       <div class="shell">
         <article class="section-card">
-          <span class="eyebrow">Product Catalogue</span>
-          <h2 style="margin-top: 18px;">Laminate Flooring Products</h2>
-          <p>Choose a laminate flooring colour and range, then use it in your quote.</p>
+          <span class="eyebrow">Featured Products</span>
+          <h2 style="margin-top: 18px;">Featured laminate flooring products</h2>
+          <p>Browse a short selection of laminate products here, then open the full catalogue when you want to compare more ranges, colours and product details.</p>
+          <div class="hero-actions" style="margin-top: 18px;">
+            <a class="button-secondary" href="products.html?category=laminate">View all laminate flooring products</a>
+          </div>
           <div class="catalogue-selection-banner">
             <strong id="laminateSelectionTitle">No specific laminate flooring selected yet</strong>
-            <p id="laminateSelectionText">Select a product to carry its price into the quote, or continue with the standard laminate estimate first.</p>
+            <p id="laminateSelectionText">Choose a product to load it into the quote, or continue with the standard laminate estimate first.</p>
             <div class="hero-actions" style="margin-top: 6px;">
-              <a class="button-secondary" href="index.html#quoteForm">Continue to quote</a>
+              <a class="button-secondary" href="index.html?from=product#quoteForm">Continue to quote</a>
               <button class="button-quiet" id="laminateSelectionClearButton" type="button">Continue with laminate estimate</button>
             </div>
           </div>
           <div class="catalogue-grid" id="laminateCatalogueGrid"></div>
-          <div class="catalogue-status" id="laminateCatalogueStatus">Browse product options, then select one for your quote.</div>
+          <div class="catalogue-status" id="laminateCatalogueStatus">Browse product options, then choose one for your quote.</div>
         </article>
       </div>
     </section>
@@ -317,20 +322,32 @@
       }
 
       if (window.OperonProducts) {
-        window.OperonProducts.renderCategoryCatalogue({
-          category: "laminate",
-          targetId: "laminateCatalogueGrid",
-          statusId: "laminateCatalogueStatus",
-          quoteUrl: "index.html#quoteForm",
-          successMessage: "Product selected. Continue to quote."
-        });
-        window.OperonProducts.renderSelectionBanner({
-          category: "laminate",
-          titleId: "laminateSelectionTitle",
-          textId: "laminateSelectionText",
-          clearButtonId: "laminateSelectionClearButton",
-          quoteUrl: "index.html#quoteForm"
-        });
+        function renderLaminateSelection() {
+          window.OperonProducts.renderCategoryCatalogue({
+            category: "laminate",
+            targetId: "laminateCatalogueGrid",
+            statusId: "laminateCatalogueStatus",
+            limit: 3,
+            quoteUrl: "index.html?from=product#quoteForm",
+            successMessage: "Product selected. Continue to quote."
+          });
+          window.OperonProducts.renderSelectionBanner({
+            category: "laminate",
+            titleId: "laminateSelectionTitle",
+            textId: "laminateSelectionText",
+            clearButtonId: "laminateSelectionClearButton",
+            quoteUrl: "index.html?from=product#quoteForm"
+          });
+        }
+
+        renderLaminateSelection();
+        window.addEventListener("operon-pricing-source-ready", renderLaminateSelection);
+        if (window.OperonPricingSource) {
+          const pricingSourceStatus = window.OperonPricingSource.getStatus();
+          if (pricingSourceStatus.ready && pricingSourceStatus.mode === "google_sheets") {
+            renderLaminateSelection();
+          }
+        }
       }
     }());
   </script>

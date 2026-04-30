@@ -1,51 +1,120 @@
 # Operon Flooring Agent System
 
+Source-of-truth status: active execution rules for Codex and future agents.
+
+## Source Of Truth
+
+Before major work, read these files in this order:
+
+1. `apps/web/PROJECT_MEMORY.md`
+2. `apps/web/OPERON_PRICING_RULES.md`
+3. `apps/web/OPERON_BUSINESS_OBJECTIVES_MARKETING_SEO_BRIEF.md`
+4. `apps/web/OPERON_SEO_STRATEGY.md`
+5. `apps/web/OPERON_SUPABASE_DATABASE_IMPLEMENTATION.md`
+
 ## Goal
-Build a high-conversion flooring quote system that ranks in Sydney and generates leads.
+
+Build a high-conversion flooring quote and measurement system that ranks in Sydney and generates qualified leads.
 
 ## Priorities (in order)
-1. Conversion (quote flow)
-2. SEO structure
-3. Content expansion
-4. Backlinks
-5. Optimisation
 
-## Rules
+1. Conversion
+2. Quote accuracy
+3. SEO structure
+4. Product catalogue
+5. Analytics / revenue feedback
+6. Backlinks
+7. Future SaaS infrastructure
+
+## Core Rules
+
 - Keep UI clean and simple
 - Do NOT clutter homepage
 - Do NOT expose internal pricing logic
+- Do NOT reintroduce hardcoded rate cards inside HTML pages
 - Do NOT add visualiser
 - Do NOT break quote logic
+- Do NOT break floorplan handoff
 - Do NOT push directly to `main`
 - Use `dev` for active work and treat `main` as production only
 
+## Page Roles
+
+- Homepage = conversion page
+- Floorplan = measurement assistant
+- Product pages = SEO + product selection
+- Quote form = pricing engine + lead capture
+- Supabase / analytics = tracking layer
+- Agents = execution layer
+
 ## SEO Rules
+
 - 1 H1 per page
 - structured H2 sections
 - internal linking required
 - follow word count limits
 
 ## UX Rules
+
 - mobile-first
 - minimal friction
 - step-by-step flow
 
 ## Content Rules
+
 - no fluff
 - no generic AI writing
 - practical and clear
 
 ## Product Catalogue Rules
-- when editing product pages, do not duplicate product pricing in multiple files
+
+- do not duplicate product pricing across multiple files
 - update central product data only
 - preserve quote integration
 - preserve SEO content
 - preserve clean mobile UI
+- keep placeholder products clearly marked until supplier data is confirmed
+- when adding supplier product ranges, centralise them in `apps/web/products.js`
+- use unique image alt text for every supplier product image
+- connect product selection back into the quote form
+- do not overclaim supplier warranty or bathroom suitability
+
+## Pricing Foundation Rules
+
+- keep runtime pricing data in the central JS modules under `apps/web/`
+- use `quoteCalculator.js` as the only place for instant quote calculation logic
+- use the Netlify private quote runtime for private Supabase-backed pricing when live secrets are involved:
+  - `netlify/functions/_supabasePricing.js`
+  - `netlify/functions/calculate-private-quote.js`
+- keep floorplan measurement separate from wastage and pricing logic
+- store selected product by product id so catalogue, quote form, and future database sync stay aligned
+- customer-facing quote output must stay bundled and must not expose labour rate, material rate, margin, or raw surcharge formulas
+- if Google Sheets pricing is enabled, treat `pricingSourceConfig.js` and the published sheet tabs as the editable source while keeping local JS data as the safe fallback
+- prefer private Supabase pricing tables over public browser-readable sources when privacy matters
+- do not expose Supabase pricing tables to anon select if sell-rate privacy matters
+- never put service-role secrets into frontend HTML or public JS files
+
+## Maintenance Content Rules
+
+- be practical and trade-informed
+- link back to the quote tool
+- avoid warranty or legal overclaims
+- preserve clean UI
+- use FAQs and internal links
+
+## Floorplan Rules
+
+- Trace Room Mode stays customer-visible and primary
+- Quick Room Mode stays hidden and future-only until reliable
+- do not store uploaded image/base64 in localStorage by default
+- only persist measurement results required for quote handoff
 
 ## Workflow
+
 Always:
+
 1. analyze
-2. improve highest-impact area
+2. improve the highest-impact area
 3. implement
 4. validate
 5. repeat
@@ -83,17 +152,29 @@ Do not try to perfect every analytics layer in one run if that increases fragili
 ## Agent Responsibilities
 
 ### Planner
+
 - choose the next task based on priority score
 
 ### Builder
+
 - implement UI and code changes
 - keep deployment safety in mind and prefer `dev -> preview -> main`
 
 ### SEO Agent
+
 - manage pages, keywords, internal links, and ranking tracker work
 
 ### CRO Agent
+
 - monitor funnel drop-off and improve conversion
 
 ### Revenue Agent
-- track lead → job → revenue → margin
+
+- track lead -> job -> revenue -> margin
+
+## TODO / NEXT_ACTIONS
+
+- replace placeholder product rows with confirmed supplier ranges
+- keep sitemap, internal links, and active SEO pages aligned
+- improve suburb page depth before creating more pages
+- keep analytics and revenue layers lightweight and non-blocking

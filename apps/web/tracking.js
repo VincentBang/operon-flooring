@@ -354,9 +354,11 @@
     const trackingState = readTrackingState();
     trackingState.floorplanAreaUses += 1;
     writeTrackingState(trackingState);
-    trackEvent("floorplan_area_used", {
+    const payload = {
       area: Number(area) || 0
-    });
+    };
+    trackEvent("floorplan_area_used", payload);
+    trackEvent("floorplan_usage", payload);
     return updateFunnelState({
       estimated_quote_value: readFunnelState().estimated_quote_value
     });

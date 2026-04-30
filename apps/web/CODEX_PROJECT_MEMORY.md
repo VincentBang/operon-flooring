@@ -1,9 +1,11 @@
 # Operon Quote System Project Memory
 
+Status: quote-system-specific reference memory. Active project direction now lives in `apps/web/PROJECT_MEMORY.md`. Use this file for quote-engine detail, not as the top-level business brief.
+
 Last updated: 2026-04-28  
 Primary page: `/apps/web/index.html`  
-Primary pricing rules source: `/Users/daibang/Downloads/OPERON_PRICING_RULES.md`
-Primary business / SEO brief: `/Users/daibang/Downloads/OPERON_BUSINESS_OBJECTIVES_MARKETING_SEO_BRIEF.md`
+Primary pricing rules source: `apps/web/OPERON_PRICING_RULES.md`
+Primary business / SEO brief: `apps/web/OPERON_BUSINESS_OBJECTIVES_MARKETING_SEO_BRIEF.md`
 
 ## Purpose
 
@@ -14,11 +16,11 @@ Its job is to reduce repeated explanation, preserve pricing decisions, and keep 
 
 Before editing the quote system, always read these first if they exist:
 
-1. `OPERON_PRICING_RULES.md`
-2. `OPERON_BUSINESS_OBJECTIVES_MARKETING_SEO_BRIEF.md`
-3. `apps/web/index.html`
-4. Any pricing / quote / config JavaScript files
-5. Any README or project notes
+1. `apps/web/PROJECT_MEMORY.md`
+2. `apps/web/OPERON_PRICING_RULES.md`
+3. `apps/web/OPERON_BUSINESS_OBJECTIVES_MARKETING_SEO_BRIEF.md`
+4. `apps/web/index.html`
+5. Any pricing / quote / config JavaScript files
 
 If a rule exists in `OPERON_PRICING_RULES.md`, follow it strictly.
 
@@ -233,32 +235,17 @@ Approved default access logic:
 
 ## Zone / Postcode Logic
 
-Use postcode as the main zone input.
+Use suburb or postcode to match the pricing zone.
 
 Default zone behaviour:
 
-- unknown postcode falls back to `Zone C`
-- customer should not see wording like travel fee or distance surcharge
-- zone multiplier applies only to labour-heavy lines
+- unknown suburbs/postcodes fall back to the default Sydney zone
+- customer should not see raw surcharge formulas
+- zone adjustments apply only to labour-heavy lines
 
-Current editable config in `index.html`:
+Current editable config now lives in:
 
-```js
-const ZONE_MAP = {
-  A: [2144, 2140, 2150, 2127],
-  B: [2200, 2170, 2165, 2166, 2112, 2113],
-  C: [2148, 2765, 2040, 2041, 2153],
-  D: [2095, 2026, 2230]
-};
-
-const ZONE_MULTIPLIER = {
-  A: 1.00,
-  B: 1.04,
-  C: 1.07,
-  D: 1.10,
-  E: 1.15
-};
-```
+- `apps/web/locationZones.js`
 
 Base reference location:
 
@@ -298,20 +285,17 @@ Current note shown to customer when triggered:
 
 ## Current Pricing Engine Functions
 
-These currently live inside the `<script>` block in `apps/web/index.html`:
+These now live in the central pricing modules:
 
-- `getMeasurementState()`
-- `getWastageFactor()`
-- `getAccessFactor()`
-- `getZone(postcodeValue)`
-- `getZoneMultiplier(postcodeValue)`
-- `getSmallJobFactor(realArea)`
-- `getQuantityForItem(quantityBasis, context, manualQty)`
-- `calculateQuote(input)`
-- `renderQuoteSummary(result)`
+- `apps/web/pricingRules.js`
+- `apps/web/installRates.js`
+- `apps/web/underlay.js`
+- `apps/web/skirtingScotia.js`
+- `apps/web/removalRates.js`
+- `apps/web/locationZones.js`
+- `apps/web/quoteCalculator.js`
 
-These functions should remain centralised.  
-Do not scatter pricing calculations into event handlers.
+The quote page should call `quoteCalculator.js` rather than embedding new rate cards or formula branches in the HTML.
 
 ## Current Known TODOs
 

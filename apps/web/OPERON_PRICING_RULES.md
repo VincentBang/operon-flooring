@@ -1,9 +1,24 @@
 # OPERON PRICING RULES & ENGINE SPECIFICATION
 
+Source-of-truth status: active pricing logic reference for quote calculations, quantity basis, and customer-facing guardrails.
+
 Version: 1.0  
 Purpose: Codex implementation reference  
 System: Flooring quoting app / future Operon trade pricing engine  
 Business context: Timber / hybrid / laminate / engineered flooring supply, installation, removal, skirting/scotia, floor prep, moisture barrier, furniture handling, door trimming, and related add-ons.
+
+Current frontend runtime implementation:
+
+- `apps/web/products.js`
+- `apps/web/installRates.js`
+- `apps/web/underlay.js`
+- `apps/web/skirtingScotia.js`
+- `apps/web/removalRates.js`
+- `apps/web/locationZones.js`
+- `apps/web/pricingRules.js`
+- `apps/web/quoteCalculator.js`
+
+These files are the maintainable runtime layer for the website. Avoid reintroducing duplicated pricing tables or formula branches inside HTML pages.
 
 ---
 
@@ -1263,4 +1278,3 @@ The objective is not simply to generate a quote. The objective is to create a re
 - AI-assisted pricing recommendations
 
 Therefore, pricing rules must be explicit, configurable, testable, and separated from UI code.
-

@@ -48,6 +48,7 @@ Do not pick random tasks just because they are easy.
 
 - review `AGENTS.md`
 - review `PROJECT_MEMORY.md`
+- refresh source-of-truth files when the task touches pricing, SEO, analytics, or product catalogue logic
 - read `task_queue.json` if available
 - generate the next 10 ranked tasks
 - choose the top task

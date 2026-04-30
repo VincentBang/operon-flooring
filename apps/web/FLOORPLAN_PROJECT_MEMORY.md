@@ -1,5 +1,7 @@
 # Operon Floorplan Tool Project Memory
 
+Source-of-truth status: floorplan-specific execution memory. Primary business direction lives in `apps/web/PROJECT_MEMORY.md`; floorplan work must still follow `apps/web/OPERON_PRICING_RULES.md`.
+
 Last updated: 2026-04-30  
 Primary page: `/apps/web/floorplan.html`
 
@@ -20,10 +22,11 @@ This page is not a visualiser and not an AI room preview tool.
 
 ## Source Files To Read Before Editing
 
-1. `apps/web/CODEX_PROJECT_MEMORY.md`
-2. `/Users/daibang/Downloads/OPERON_PRICING_RULES.md`
-3. `apps/web/index.html`
-4. `apps/web/floorplan.html`
+1. `apps/web/PROJECT_MEMORY.md`
+2. `apps/web/CODEX_PROJECT_MEMORY.md`
+3. `apps/web/OPERON_PRICING_RULES.md`
+4. `apps/web/index.html`
+5. `apps/web/floorplan.html`
 
 ## Primary Design Principle
 
@@ -206,13 +209,9 @@ Navigation rule:
 
 ## Quick Room Mode Position
 
-Quick Room Mode is secondary only.
+Quick Room Mode is future-only and hidden from customer UI.
 
-It should be labelled:
-
-`Assisted room selection — experimental`
-
-It must not be presented as the main or most reliable method.
+It may remain in code and memory as an experimental future workflow, but it must not be presented as a live customer mode.
 
 Current customer-facing rule:
 
@@ -263,7 +262,7 @@ Use wording like:
 - `Upload floor plan`
 - `Set scale`
 - `Trace room`
-- `Add rooms automatically`
+- `Review selected rooms`
 - `Review selected area`
 - `Use area in quote`
 

@@ -1,5 +1,7 @@
 # Operon Flooring SEO Execution Plan
 
+Source-of-truth status: active SEO execution layer aligned to the business brief and current page set.
+
 Last updated: 2026-04-29  
 Primary owner: Operon Flooring website / quote system  
 Primary goal: generate high-intent flooring quote leads in Sydney
@@ -18,7 +20,7 @@ It is a lead generation operating plan.
 This execution plan should stay aligned with:
 
 - `apps/web/OPERON_SEO_STRATEGY.md`
-- `/Users/daibang/Downloads/OPERON_BUSINESS_OBJECTIVES_MARKETING_SEO_BRIEF.md`
+- `apps/web/OPERON_BUSINESS_OBJECTIVES_MARKETING_SEO_BRIEF.md`
 
 ## Core Business Focus
 
@@ -103,10 +105,8 @@ Important:
 
 Note:
 
-- Current live content closest to this topic is `blog/flooring-installation-cost-breakdown.html`
-- Long-term best structure is likely:
-  - keep a dedicated money/supporting page at `/flooring-installation-cost-sydney.html`
-  - keep the blog version only if it supports a distinct educational angle
+- Dedicated page now exists at `/flooring-installation-cost-sydney.html`
+- Keep the blog version only when it serves a clearly different educational purpose
 
 ### Page 6
 
@@ -147,9 +147,7 @@ Note:
 Note:
 
 - Current implemented URL is `/blog/laminate-vs-hybrid.html`
-- Recommended action:
-  - either rename to `/blog/laminate-vs-hybrid-flooring.html`
-  - or 301 redirect the longer keyword version to the existing article
+- Keep the current URL unless a redirect and full internal-link cleanup are planned together
 
 ### Page 10
 
@@ -163,9 +161,7 @@ Note:
 Note:
 
 - Current implemented closest page is `/blog/flooring-cost-sydney.html`
-- Recommended action:
-  - either create `/blog/how-much-does-flooring-cost.html`
-  - or make `/blog/flooring-cost-sydney.html` the canonical cost page and redirect the broader variant if duplication becomes a problem
+- Keep that page as the active cost guide unless a deliberate canonical split is needed later
 
 ---
 

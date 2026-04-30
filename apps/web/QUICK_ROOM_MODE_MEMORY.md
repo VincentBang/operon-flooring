@@ -1,11 +1,13 @@
 # Quick Room Mode Memory
 
+Source-of-truth status: future-only experimental memory. Quick Room Mode stays hidden from customer UI until reliable.
+
 Last updated: 2026-04-28  
 Primary file: `/apps/web/floorplan.html`
 
 ## Purpose
 
-Quick Room Mode is the secondary assisted-measurement workflow inside the Operon floor plan tool.
+Quick Room Mode is a future assisted-measurement workflow inside the Operon floor plan tool.
 
 Its long-term goal is to:
 
@@ -24,7 +26,7 @@ Manual correction must always remain possible.
 ## Guardrails
 
 - Trace Room Mode stays primary and default.
-- Quick Room Mode stays secondary and clearly labelled experimental.
+- Quick Room Mode stays hidden from customer UI until reliable.
 - Do not claim automatic room detection is accurate unless it is.
 - Do not fake OCR or AI segmentation.
 - Do not double-count overlapping regions.
@@ -33,9 +35,9 @@ Manual correction must always remain possible.
 
 ## Current Foundation State
 
-Completed in the current phase:
+Completed in the current experimental phase:
 
-- Quick Room UI cleaned up and positioned as secondary
+- Quick Room foundation UI cleaned up and kept hidden from customers
 - status panel added
 - central `quickRoomState` added
 - image normalisation pipeline added
@@ -95,11 +97,11 @@ const quickRoomState = {
 
 ## Phased Build Plan
 
-### Phase 0 — Clean foundation
+### Phase 0 — Clean hidden foundation
 
 - keep Trace Room Mode primary
-- keep Quick Room Mode secondary
-- label it `Quick Room Mode — assisted area selection`
+- keep Quick Room Mode hidden
+- do not expose it as a customer workflow until reliable
 - add status panel
 - centralise state
 
@@ -238,7 +240,7 @@ Normal customer flow should stay:
 
 1. Upload floor plan
 2. Set scale
-3. Auto-detect rooms
+3. Trace rooms
 4. Select rooms for flooring
 5. Use selected area in quote
 
