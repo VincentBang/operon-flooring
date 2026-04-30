@@ -62,3 +62,20 @@ Before merging `dev` into `main`, confirm:
 - If the repo is newly connected, create both `main` and `dev` in GitHub after the first commit
 - Netlify production should point to `main`
 - Netlify previews should use branch and pull request deploys
+
+## Netlify Failure Checklist
+
+If Netlify fails to deploy, check these first:
+
+1. `main` is the production branch in Netlify
+2. `apps/web` is the publish directory
+3. Netlify UI is not overriding the repo `netlify.toml`
+4. the pushed commit actually contains:
+   - `apps/web/index.html`
+   - `apps/web/floorplan.html`
+   - `apps/web/robots.txt`
+   - `apps/web/sitemap.xml`
+5. `netlify.toml` exists in the repo root
+6. `netlify/functions` exists if Netlify is expecting a functions directory
+
+If a deploy fails after a Git push, compare the failed commit in GitHub with the local workspace before changing Netlify settings.

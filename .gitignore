@@ -1,0 +1,19 @@
+.DS_Store
+.AppleDouble
+.env
+.env.*
+node_modules/
+dist/
+build/
+.tools/
+.pycache/
+__pycache__/
+*.log
+
+# Keep the website repo focused on the Netlify/Supabase app.
+flooring_app/
+ios/
+
+# Local Xcode user data
+xcuserdata/
+*.xcuserstate

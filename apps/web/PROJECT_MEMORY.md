@@ -73,9 +73,9 @@ Reason:
 - prioritises traffic → quote → job → margin → next action
 
 ## Last Iteration
-- Task completed: documented the safe deployment workflow for GitHub and Netlify
-- Changes made: added a deployment workflow document, added the deployment-system comment and preview/branch deploy contexts to netlify.toml, and updated agent/project memory to treat `dev` as development and `main` as production
-- Next improvement idea: create the first repository commit, then create/push the `dev` branch so Netlify branch previews can be used immediately
+- Task completed: hardened the repo-side Netlify setup before the first clean push
+- Changes made: added `netlify/functions/.gitkeep`, tightened the root `.gitignore` to keep unrelated local folders out of the website repo, and expanded the deployment workflow doc with a Netlify failure checklist
+- Next improvement idea: finish the first clean commit by removing staged unrelated files, set the Git author identity, then push `main` and create `dev`
 
 ## Execution Queue
 
