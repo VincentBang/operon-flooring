@@ -85,7 +85,8 @@ Source-of-truth status: active project memory for current business direction, pa
 - customer can select product from product page
 - selected product feeds the quote engine
 - laminate, hybrid, and engineered use the same system
-- current products are placeholders until supplier data is confirmed
+- only confirmed live catalogue products should be shown
+- current live catalogue is the ETF Hybrid 7.0mm range with supplier imagery
 
 ## Supabase Pricing Privacy
 
@@ -171,7 +172,9 @@ Reason:
 - Latest quote flow update: `Review estimate` now saves the quote draft into the system before the final summary step, and `Email quote` is the only final CTA
 - Delivery rule: use the Step 1 email when provided, otherwise show a final-step delivery email field before sending
 - Email runtime note: final quote email now depends on the Netlify function `save-quote-request.js` plus `RESEND_API_KEY` and `OPERON_QUOTE_FROM_EMAIL`
-- Next improvement idea: tighten the final summary wording further once live usage shows whether customers need more reassurance before emailing the quote
+- Responsive update: shared page layouts, product/catalogue screens, quote wizard shell, and floorplan breakpoints were tightened for cleaner desktop, tablet, and mobile behavior
+- Quote UX rule: step changes should return to the top of the quote section so users always land on the heading, progress, and active content in a predictable order
+- Responsive follow-up: shared SEO/product pages now use smoother `desktop -> tablet -> mobile` breakpoints, the floorplan canvas is less aggressive on tablet widths, and the homepage/quote page header and CTA controls collapse more gracefully
 
 ## Central Pricing Foundation
 

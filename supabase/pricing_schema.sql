@@ -42,6 +42,7 @@ create table if not exists pricing_install_rates (
   updated_at timestamptz not null default now(),
   category_id text not null references pricing_categories(id) on delete restrict,
   install_type text not null,
+  install_method text not null default 'floating',
   job_type text not null,
   rate_per_m2 numeric not null default 0,
   minimum_charge numeric not null default 0,
@@ -197,10 +198,6 @@ insert into pricing_products (
   suitable_for, supplier, supplier_url, active, sort_order
 )
 values
-  ('laminate-operon-select-essential-natural-oak', 'laminate', 'Operon Select', 'Essential 8mm', 'Natural Oak', 'natural oak', '#bf9b74', null, null, 38, 27, '', null, 'A balanced laminate option for bedrooms, living rooms and investment updates.', '["AC4 wear layer","Floating installation","Low-maintenance finish"]'::jsonb, '["Budget projects","Apartments","Dry internal rooms"]'::jsonb, null, null, true, 10),
-  ('laminate-operon-select-signature-light-oak', 'laminate', 'Operon Select', 'Signature 8mm', 'Light Oak', 'light oak', '#d4b692', null, null, 42, 27, '', null, 'A lighter timber-look laminate for customers who want a brighter interior finish.', '["AC4 wear layer","Matt texture","Floating installation"]'::jsonb, '["Family homes","Bedrooms","Living areas"]'::jsonb, null, null, true, 20),
-  ('laminate-operon-select-signature-smoked-oak', 'laminate', 'Operon Select', 'Signature 8mm', 'Smoked Oak', 'dark', '#7b634f', null, null, 44, 28, '', null, 'A deeper laminate colour suited to contrast palettes and more defined interior styling.', '["AC4 wear layer","Floating installation","Low sheen finish"]'::jsonb, '["Feature interiors","Living rooms","Dry internal rooms"]'::jsonb, null, null, true, 30),
-
   ('hrt-etf-7mm-hybrid-antique-oak', 'hybrid', 'ETF Hybrid 7.0mm', 'ETF 7.0mm Hybrid Waterproof Flooring', 'Antique Oak', 'natural oak', '#b99572', '7.0mm', 'SPC Hybrid', 0, null, 'images/products/hybrid/hrt-etf-7mm-antique-oak.jpg', 'HRT ETF 7.0mm Hybrid Waterproof Flooring Antique Oak colour sample', 'Antique Oak is a timber-look hybrid flooring colour from the HRT ETF 7.0mm Hybrid Waterproof Flooring range.', '["SPC hybrid core","Waterproof core","Pre-attached acoustic underlay","Scratch and stain resistant surface","Floating click-lock installation"]'::jsonb, '["Living areas","Bedrooms","Apartments","Rental properties","Family homes"]'::jsonb, 'HRT Timber Flooring', 'https://hrttimberflooring.com.au/product-category/hybrid-flooring/7-0mm-etf-hybrid-waterproof-flooring/', true, 10),
   ('hrt-etf-7mm-hybrid-baden-oak', 'hybrid', 'ETF Hybrid 7.0mm', 'ETF 7.0mm Hybrid Waterproof Flooring', 'Baden Oak', 'light oak', '#cab08f', '7.0mm', 'SPC Hybrid', 0, null, 'images/products/hybrid/hrt-etf-7mm-baden-oak.jpg', 'HRT ETF 7.0mm Hybrid Waterproof Flooring Baden Oak colour sample', 'Baden Oak is a timber-look hybrid flooring colour from the HRT ETF 7.0mm Hybrid Waterproof Flooring range.', '["SPC hybrid core","Waterproof core","Pre-attached acoustic underlay","Scratch and stain resistant surface","Floating click-lock installation"]'::jsonb, '["Living areas","Bedrooms","Apartments","Rental properties","Family homes"]'::jsonb, 'HRT Timber Flooring', 'https://hrttimberflooring.com.au/product-category/hybrid-flooring/7-0mm-etf-hybrid-waterproof-flooring/', true, 20),
   ('hrt-etf-7mm-hybrid-blackbutt', 'hybrid', 'ETF Hybrid 7.0mm', 'ETF 7.0mm Hybrid Waterproof Flooring', 'Blackbutt', 'light oak', '#d0b289', '7.0mm', 'SPC Hybrid', 0, null, 'images/products/hybrid/hrt-etf-7mm-blackbutt.jpg', 'HRT ETF 7.0mm Hybrid Waterproof Flooring Blackbutt colour sample', 'Blackbutt is a timber-look hybrid flooring colour from the HRT ETF 7.0mm Hybrid Waterproof Flooring range.', '["SPC hybrid core","Waterproof core","Pre-attached acoustic underlay","Scratch and stain resistant surface","Floating click-lock installation"]'::jsonb, '["Living areas","Bedrooms","Apartments","Rental properties","Family homes"]'::jsonb, 'HRT Timber Flooring', 'https://hrttimberflooring.com.au/product-category/hybrid-flooring/7-0mm-etf-hybrid-waterproof-flooring/', true, 30),
@@ -215,11 +212,7 @@ values
   ('hrt-etf-7mm-hybrid-holly-hills', 'hybrid', 'ETF Hybrid 7.0mm', 'ETF 7.0mm Hybrid Waterproof Flooring', 'Holly Hills', 'natural oak', '#c1a583', '7.0mm', 'SPC Hybrid', 0, null, 'images/products/hybrid/hrt-etf-7mm-holly-hills.jpg', 'HRT ETF 7.0mm Hybrid Waterproof Flooring Holly Hills colour sample', 'Holly Hills is a timber-look hybrid flooring colour from the HRT ETF 7.0mm Hybrid Waterproof Flooring range.', '["SPC hybrid core","Waterproof core","Pre-attached acoustic underlay","Scratch and stain resistant surface","Floating click-lock installation"]'::jsonb, '["Living areas","Bedrooms","Apartments","Rental properties","Family homes"]'::jsonb, 'HRT Timber Flooring', 'https://hrttimberflooring.com.au/product-category/hybrid-flooring/7-0mm-etf-hybrid-waterproof-flooring/', true, 120),
   ('hrt-etf-7mm-hybrid-jarrah', 'hybrid', 'ETF Hybrid 7.0mm', 'ETF 7.0mm Hybrid Waterproof Flooring', 'Jarrah', 'dark', '#744d39', '7.0mm', 'SPC Hybrid', 0, null, 'images/products/hybrid/hrt-etf-7mm-jarrah.jpg', 'HRT ETF 7.0mm Hybrid Waterproof Flooring Jarrah colour sample', 'Jarrah is a timber-look hybrid flooring colour from the HRT ETF 7.0mm Hybrid Waterproof Flooring range.', '["SPC hybrid core","Waterproof core","Pre-attached acoustic underlay","Scratch and stain resistant surface","Floating click-lock installation"]'::jsonb, '["Living areas","Bedrooms","Apartments","Rental properties","Family homes"]'::jsonb, 'HRT Timber Flooring', 'https://hrttimberflooring.com.au/product-category/hybrid-flooring/7-0mm-etf-hybrid-waterproof-flooring/', true, 130),
   ('hrt-etf-7mm-hybrid-julan', 'hybrid', 'ETF Hybrid 7.0mm', 'ETF 7.0mm Hybrid Waterproof Flooring', 'Julan', 'walnut', '#8d6549', '7.0mm', 'SPC Hybrid', 0, null, 'images/products/hybrid/hrt-etf-7mm-julan.jpg', 'HRT ETF 7.0mm Hybrid Waterproof Flooring Julan colour sample', 'Julan is a timber-look hybrid flooring colour from the HRT ETF 7.0mm Hybrid Waterproof Flooring range.', '["SPC hybrid core","Waterproof core","Pre-attached acoustic underlay","Scratch and stain resistant surface","Floating click-lock installation"]'::jsonb, '["Living areas","Bedrooms","Apartments","Rental properties","Family homes"]'::jsonb, 'HRT Timber Flooring', 'https://hrttimberflooring.com.au/product-category/hybrid-flooring/7-0mm-etf-hybrid-waterproof-flooring/', true, 140),
-  ('hrt-etf-7mm-hybrid-lake-oak-light', 'hybrid', 'ETF Hybrid 7.0mm', 'ETF 7.0mm Hybrid Waterproof Flooring', 'Lake Oak Light', 'light oak', '#d7c4a7', '7.0mm', 'SPC Hybrid', 0, null, 'images/products/hybrid/hrt-etf-7mm-lake-oak-light.jpg', 'HRT ETF 7.0mm Hybrid Waterproof Flooring Lake Oak Light colour sample', 'Lake Oak Light is a timber-look hybrid flooring colour from the HRT ETF 7.0mm Hybrid Waterproof Flooring range.', '["SPC hybrid core","Waterproof core","Pre-attached acoustic underlay","Scratch and stain resistant surface","Floating click-lock installation"]'::jsonb, '["Living areas","Bedrooms","Apartments","Rental properties","Family homes"]'::jsonb, 'HRT Timber Flooring', 'https://hrttimberflooring.com.au/product-category/hybrid-flooring/7-0mm-etf-hybrid-waterproof-flooring/', true, 150),
-
-  ('engineered-operon-select-reserve-european-oak', 'engineered', 'Operon Select', 'Timber Reserve', 'European Oak', 'light oak', '#c8a67e', null, null, 88, 39, '', null, 'A clean engineered timber selection for customers prioritising a natural oak finish.', '["Real timber veneer","Multi-layer stability","Premium visual grade"]'::jsonb, '["Premium homes","Living areas","Bedrooms"]'::jsonb, null, null, true, 10),
-  ('engineered-operon-select-reserve-natural-oak', 'engineered', 'Operon Select', 'Timber Reserve', 'Natural Oak', 'natural oak', '#b48961', null, null, 94, 39, '', null, 'A balanced engineered timber option for customers who want a warm timber look without going too dark.', '["Real timber veneer","Multi-layer stability","Refined timber grain"]'::jsonb, '["Premium residential","Hallways","Open-plan living"]'::jsonb, null, null, true, 20),
-  ('engineered-operon-select-reserve-walnut-oak', 'engineered', 'Operon Select', 'Timber Reserve', 'Walnut Oak', 'dark', '#71543f', null, null, 102, 41, '', null, 'A darker engineered timber look for customers wanting a more defined and premium floor finish.', '["Real timber veneer","Multi-layer stability","Deeper character grain"]'::jsonb, '["Premium homes","Feature interiors","High-end renovations"]'::jsonb, null, null, true, 30)
+  ('hrt-etf-7mm-hybrid-lake-oak-light', 'hybrid', 'ETF Hybrid 7.0mm', 'ETF 7.0mm Hybrid Waterproof Flooring', 'Lake Oak Light', 'light oak', '#d7c4a7', '7.0mm', 'SPC Hybrid', 0, null, 'images/products/hybrid/hrt-etf-7mm-lake-oak-light.jpg', 'HRT ETF 7.0mm Hybrid Waterproof Flooring Lake Oak Light colour sample', 'Lake Oak Light is a timber-look hybrid flooring colour from the HRT ETF 7.0mm Hybrid Waterproof Flooring range.', '["SPC hybrid core","Waterproof core","Pre-attached acoustic underlay","Scratch and stain resistant surface","Floating click-lock installation"]'::jsonb, '["Living areas","Bedrooms","Apartments","Rental properties","Family homes"]'::jsonb, 'HRT Timber Flooring', 'https://hrttimberflooring.com.au/product-category/hybrid-flooring/7-0mm-etf-hybrid-waterproof-flooring/', true, 150)
 on conflict (id) do update set
   category_id = excluded.category_id,
   brand = excluded.brand,
@@ -241,23 +234,22 @@ on conflict (id) do update set
   active = excluded.active,
   sort_order = excluded.sort_order;
 
-insert into pricing_install_rates (id, category_id, install_type, job_type, rate_per_m2, minimum_charge, active)
+insert into pricing_install_rates (id, category_id, install_type, install_method, job_type, rate_per_m2, minimum_charge, active)
 values
-  ('laminate-standard-supply-install', 'laminate', 'standard', 'supply_install', 27, 1500, true),
-  ('laminate-standard-install-only', 'laminate', 'standard', 'install_only', 45, 1500, true),
-  ('laminate-herringbone-supply-install', 'laminate', 'herringbone', 'supply_install', 36, 1800, true),
-  ('laminate-herringbone-install-only', 'laminate', 'herringbone', 'install_only', 52, 1800, true),
-  ('hybrid-standard-supply-install', 'hybrid', 'standard', 'supply_install', 31, 1500, true),
-  ('hybrid-standard-install-only', 'hybrid', 'standard', 'install_only', 45, 1500, true),
-  ('hybrid-herringbone-supply-install', 'hybrid', 'herringbone', 'supply_install', 42, 1800, true),
-  ('hybrid-herringbone-install-only', 'hybrid', 'herringbone', 'install_only', 56, 1800, true),
-  ('engineered-standard-supply-install', 'engineered', 'standard', 'supply_install', 39, 1500, true),
-  ('engineered-standard-install-only', 'engineered', 'standard', 'install_only', 45, 1500, true),
-  ('engineered-herringbone-supply-install', 'engineered', 'herringbone', 'supply_install', 52, 1800, true),
-  ('engineered-herringbone-install-only', 'engineered', 'herringbone', 'install_only', 64, 1800, true)
+  ('laminate-standard-supply-install', 'laminate', 'standard', 'floating', 'supply_install', 27, 1500, true),
+  ('laminate-standard-install-only', 'laminate', 'standard', 'floating', 'install_only', 45, 1500, true),
+  ('hybrid-standard-supply-install', 'hybrid', 'standard', 'floating', 'supply_install', 31, 1500, true),
+  ('hybrid-standard-install-only', 'hybrid', 'standard', 'floating', 'install_only', 45, 1500, true),
+  ('engineered-standard-supply-install', 'engineered', 'standard', 'floating', 'supply_install', 39, 1500, true),
+  ('engineered-standard-install-only', 'engineered', 'standard', 'floating', 'install_only', 45, 1500, true),
+  ('engineered-standard-direct-glue-supply-install', 'engineered', 'standard', 'direct_glue', 'supply_install', 39, 1500, true),
+  ('engineered-standard-direct-glue-install-only', 'engineered', 'standard', 'direct_glue', 'install_only', 45, 1500, true),
+  ('engineered-herringbone-supply-install', 'engineered', 'herringbone', 'direct_glue', 'supply_install', 52, 1800, true),
+  ('engineered-herringbone-install-only', 'engineered', 'herringbone', 'direct_glue', 'install_only', 64, 1800, true)
 on conflict (id) do update set
   category_id = excluded.category_id,
   install_type = excluded.install_type,
+  install_method = excluded.install_method,
   job_type = excluded.job_type,
   rate_per_m2 = excluded.rate_per_m2,
   minimum_charge = excluded.minimum_charge,

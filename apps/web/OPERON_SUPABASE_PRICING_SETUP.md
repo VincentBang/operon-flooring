@@ -41,6 +41,16 @@ Run these schema files in order:
 1. `supabase/schema.sql`
 2. `supabase/analytics_schema.sql`
 3. `supabase/pricing_schema.sql`
+4. `supabase/pricing_install_method_migration.sql`
+5. `supabase/pricing_alignment_cleanup.sql`
+
+If you want to keep old rows for reference instead of removing them:
+
+4. `supabase/pricing_alignment_soft_disable.sql`
+
+If you want to audit the current tables before changing anything:
+
+- `supabase/pricing_audit_queries.sql`
 
 ## Pricing Tables Added
 
@@ -62,6 +72,9 @@ Run these schema files in order:
 
 - labour rates by category
 - standard / herringbone
+- install method:
+  - floating
+  - direct_glue
 - supply & install / install only
 - minimum charge
 
@@ -105,8 +118,6 @@ Run these schema files in order:
 
 `supabase/pricing_schema.sql` seeds the current pricing baseline from the local files, including:
 
-- laminate sample products
-- engineered sample products
 - ETF Hybrid 7.0mm colour rows
 - install rates
 - removal rates
@@ -114,6 +125,23 @@ Run these schema files in order:
 - underlay options
 - Sydney zone defaults
 - base pricing rules
+
+`supabase/pricing_alignment_cleanup.sql` then removes rows that are no longer valid for the current customer flow:
+
+- placeholder laminate product rows
+- placeholder engineered product rows
+- laminate herringbone install-rate rows
+- hybrid herringbone install-rate rows
+
+`supabase/pricing_alignment_soft_disable.sql` is the safer alternative when you want to keep those rows in the database for historical reference, but stop them from being used by the live site.
+
+`supabase/pricing_audit_queries.sql` shows:
+
+- which product rows should remain active
+- which product rows should be disabled or deleted
+- which install-rate rows should remain active
+- which install-rate rows should be disabled or deleted
+- current category fallback estimate rows
 
 ## How To Edit Prices
 

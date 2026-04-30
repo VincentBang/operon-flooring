@@ -353,6 +353,34 @@
     engineered: []
   };
 
+  const ETF_GALLERY_SLUGS = [
+    "antique-oak",
+    "baden-oak",
+    "blackbutt",
+    "brushbox",
+    "caramel-oak",
+    "dexter-oak",
+    "downtown-oak",
+    "driftwood",
+    "grey-oak",
+    "hatton-oak",
+    "helena-oak",
+    "holly-hills",
+    "jarrah",
+    "julan",
+    "lake-oak-light"
+  ];
+
+  const PRODUCT_GALLERY_MAP = ETF_GALLERY_SLUGS.reduce(function (accumulator, slug) {
+    const basePath = "images/products/hybrid/hrt-etf-7mm-" + slug;
+    accumulator["hrt-etf-7mm-hybrid-" + slug] = [
+      basePath + "-gallery-1.jpg",
+      basePath + "-gallery-2.jpg",
+      basePath + ".jpg"
+    ];
+    return accumulator;
+  }, {});
+
   function clone(value) {
     return JSON.parse(JSON.stringify(value));
   }
@@ -375,19 +403,37 @@
 
   function normaliseProduct(product, fallbackCategory) {
     const imageUrl = product.imageUrl || product.image || "";
+    const galleryImages = normaliseGalleryImages(product, PRODUCT_GALLERY_MAP[product.id] || []);
     return Object.assign({
       category: fallbackCategory || product.category || "",
       thickness: "",
       imageUrl: imageUrl,
       image: imageUrl,
+      galleryImages: galleryImages,
       features: [],
       active: true
     }, product, {
       category: product.category || fallbackCategory || "",
       imageUrl: imageUrl,
       image: imageUrl,
+      galleryImages: galleryImages,
       active: product.active !== false
     });
+  }
+
+  function normaliseGalleryImages(product, fallbackImages) {
+    const source = []
+      .concat(product.galleryImages || [])
+      .concat(fallbackImages || [])
+      .concat(product.imageUrl || product.image || []);
+
+    return source.reduce(function (accumulator, imageUrl) {
+      if (!imageUrl || accumulator.indexOf(imageUrl) >= 0) {
+        return accumulator;
+      }
+      accumulator.push(imageUrl);
+      return accumulator;
+    }, []);
   }
 
   function listAllProducts() {
@@ -600,13 +646,41 @@
           "</div>" +
         "</div>" +
         '<div id="catalogueLightboxCaption" class="catalogue-lightbox-caption"></div>' +
+        '<div id="catalogueLightboxThumbnails" class="catalogue-lightbox-thumbnails" hidden></div>' +
       "</div>";
 
     document.body.appendChild(modal);
 
-    modal.addEventListener("click", function (event) {
-      if (event.target.closest("[data-close-catalogue-lightbox]")) {
+    const backdrop = modal.querySelector(".catalogue-lightbox-backdrop");
+    const dialog = modal.querySelector(".catalogue-lightbox-dialog");
+    const closeButton = modal.querySelector(".catalogue-lightbox-close");
+
+    if (backdrop) {
+      backdrop.addEventListener("click", function () {
         closeCatalogueLightbox();
+      });
+    }
+
+    if (closeButton) {
+      closeButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        closeCatalogueLightbox();
+      });
+    }
+
+    if (dialog) {
+      dialog.addEventListener("click", function (event) {
+        event.stopPropagation();
+      });
+    }
+
+    modal.addEventListener("click", function (event) {
+      const thumbnailButton = event.target.closest("[data-lightbox-image-index]");
+      if (thumbnailButton) {
+        event.preventDefault();
+        setCatalogueLightboxSlide(modal, Number(thumbnailButton.getAttribute("data-lightbox-image-index")) || 0);
+        return;
       }
     });
 
@@ -625,22 +699,63 @@
     }
 
     const modal = ensureCatalogueLightbox();
+    modal.__product = product;
+    modal.__galleryImages = (product.galleryImages || []).length
+      ? product.galleryImages.slice()
+      : normaliseGalleryImages(product, []);
+    modal.__galleryIndex = 0;
+
+    renderCatalogueLightboxThumbnails(modal, product);
+    setCatalogueLightboxSlide(modal, 0);
+    modal.hidden = false;
+    document.body.classList.add("catalogue-lightbox-open");
+  }
+
+  function renderCatalogueLightboxThumbnails(modal, product) {
+    const thumbnails = modal.querySelector("#catalogueLightboxThumbnails");
+    const galleryImages = modal.__galleryImages || [];
+
+    if (galleryImages.length < 2) {
+      thumbnails.hidden = true;
+      thumbnails.innerHTML = "";
+      return;
+    }
+
+    thumbnails.hidden = false;
+    thumbnails.innerHTML = galleryImages.map(function (imageUrl, index) {
+      return (
+        '<button class="catalogue-lightbox-thumb' + (index === (modal.__galleryIndex || 0) ? " is-active" : "") + '" type="button" data-lightbox-image-index="' + index + '" aria-label="View ' + product.colour + " image " + (index + 1) + '">' +
+          '<img src="' + imageUrl + '" alt="' + (product.alt || (getProductLabel(product) + " colour sample")) + " image " + (index + 1) + '" loading="lazy" onerror="this.parentNode.hidden=true;">' +
+        "</button>"
+      );
+    }).join("");
+  }
+
+  function setCatalogueLightboxSlide(modal, index) {
+    const product = modal.__product;
+    const galleryImages = modal.__galleryImages || [];
     const image = modal.querySelector("#catalogueLightboxImage");
     const fallback = modal.querySelector("#catalogueLightboxFallback");
     const swatch = modal.querySelector("#catalogueLightboxSwatch");
     const caption = modal.querySelector("#catalogueLightboxCaption");
 
+    if (!product) {
+      return;
+    }
+
+    modal.__galleryIndex = index;
+    caption.textContent = product.colour || getProductLabel(product);
+    swatch.style.background = product.swatch || "#d1d5db";
     fallback.hidden = true;
     image.hidden = false;
     image.alt = product.alt || (getProductLabel(product) + " colour sample");
-    caption.textContent = product.colour || getProductLabel(product);
-    image.onload = function () {
-      fallback.hidden = true;
-      image.hidden = false;
-    };
 
-    if (product.image) {
-      image.src = product.imageUrl || product.image;
+    if (galleryImages[index]) {
+      image.src = galleryImages[index];
+      image.onload = function () {
+        fallback.hidden = true;
+        image.hidden = false;
+      };
       image.onerror = function () {
         image.hidden = true;
         fallback.hidden = false;
@@ -651,9 +766,7 @@
       fallback.hidden = false;
     }
 
-    swatch.style.background = product.swatch || "#d1d5db";
-    modal.hidden = false;
-    document.body.classList.add("catalogue-lightbox-open");
+    renderCatalogueLightboxThumbnails(modal, product);
   }
 
   function closeCatalogueLightbox() {

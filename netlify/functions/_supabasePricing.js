@@ -192,6 +192,17 @@ function normaliseInstallType(installType) {
   return installType === "herringbone" || installType === "chevron" ? "herringbone" : "standard";
 }
 
+function normaliseInstallMethod(category, installType, installMethod) {
+  const targetType = normaliseInstallType(installType);
+  if (category !== "engineered") {
+    return "floating";
+  }
+  if (targetType === "herringbone") {
+    return "direct_glue";
+  }
+  return installMethod === "direct_glue" ? "direct_glue" : "floating";
+}
+
 function getCategoryMeta(library, category) {
   return clone(library.categoryMap[category] || library.categoryMap.hybrid || {
     id: category || "hybrid",
@@ -236,15 +247,33 @@ function getProductLabel(product) {
 function getInstallRateConfig(library, input) {
   const category = input.category || "hybrid";
   const installType = normaliseInstallType(input.pattern || "standard");
+  const installMethod = normaliseInstallMethod(category, installType, input.installMethod || "floating");
   const jobType = input.jobType || input.quoteMode || "supply_install";
   const exact = library.installRates.find(function (rate) {
-    return rate.category_id === category && rate.install_type === installType && rate.job_type === jobType;
+    const rateMethod = normaliseInstallMethod(rate.category_id, rate.install_type, rate.install_method);
+    return rate.category_id === category
+      && rate.install_type === installType
+      && rate.job_type === jobType
+      && rateMethod === installMethod;
   });
   if (exact) {
     return exact;
   }
+  const legacyMethodless = library.installRates.find(function (rate) {
+    return rate.category_id === category
+      && rate.install_type === installType
+      && rate.job_type === jobType
+      && !rate.install_method;
+  });
+  if (legacyMethodless) {
+    return legacyMethodless;
+  }
   return library.installRates.find(function (rate) {
-    return rate.category_id === category && rate.install_type === "standard" && rate.job_type === jobType;
+    const rateMethod = normaliseInstallMethod(rate.category_id, rate.install_type, rate.install_method);
+    return rate.category_id === category
+      && rate.install_type === "standard"
+      && rate.job_type === jobType
+      && rateMethod === installMethod;
   }) || null;
 }
 

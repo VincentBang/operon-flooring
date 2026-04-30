@@ -1,72 +1,72 @@
 [
   {
-    "title": "Publish why is my floor lifting article",
-    "category": "seo",
+    "title": "Standardise shared responsive breakpoints across product and SEO pages",
+    "category": "ux",
+    "priority_score": 24.8,
+    "impact": "Improves consistency and readability across the catalogue, product pages, and core marketing sections on desktop, tablet, and mobile.",
+    "status": "completed"
+  },
+  {
+    "title": "Tighten floorplan tool layout for tablet and mobile",
+    "category": "ux",
+    "priority_score": 23.9,
+    "impact": "Reduces overflow risk in the floorplan canvas, control panels, and action areas while keeping the measurement workflow usable on smaller screens.",
+    "status": "completed"
+  },
+  {
+    "title": "Polish homepage and quote wizard responsive flow",
+    "category": "conversion",
     "priority_score": 23.4,
-    "impact": "Captures high-intent flooring problem searches that can convert into replacement quotes.",
+    "impact": "Keeps the quote flow easier to navigate across devices, with clearer top-of-step positioning and less cramped controls.",
     "status": "completed"
   },
   {
-    "title": "Publish laminate floor water damage article",
-    "category": "seo",
-    "priority_score": 22.6,
-    "impact": "Targets strong damage and replacement intent around laminate failures.",
-    "status": "completed"
-  },
-  {
-    "title": "Expand the maintenance pillar with live links to the new problem guides",
-    "category": "seo",
-    "priority_score": 21.2,
-    "impact": "Strengthens the new content cluster and improves crawl paths back into quote pages.",
-    "status": "completed"
-  },
-  {
-    "title": "Publish hybrid flooring problems article",
-    "category": "seo",
-    "priority_score": 20.8,
-    "impact": "Adds another problem-led guide with clear crossover into hybrid replacement demand.",
+    "title": "Run live browser QA across homepage, floorplan, products, and product pages",
+    "category": "qa",
+    "priority_score": 21.6,
+    "impact": "Confirms that the responsive code changes behave well in real desktop and mobile viewports before deployment.",
     "status": "next_batch"
   },
   {
-    "title": "Publish engineered timber water damage article",
-    "category": "seo",
-    "priority_score": 19.8,
-    "impact": "Builds the engineered maintenance cluster and attracts premium replacement research traffic.",
+    "title": "Refine quote wizard spacing and summary density after real viewport testing",
+    "category": "conversion",
+    "priority_score": 20.9,
+    "impact": "Lets the highest-friction conversion screen be tuned using actual viewport checks instead of assumptions.",
     "status": "next_batch"
   },
   {
-    "title": "Publish flooring gaps and expansion article",
+    "title": "Add floor care links from product pages",
     "category": "seo",
-    "priority_score": 18.9,
-    "impact": "Targets a common floating-floor problem with practical quote conversion potential.",
-    "status": "next_batch"
-  },
-  {
-    "title": "Publish laminate vs hybrid maintenance comparison",
-    "category": "content",
-    "priority_score": 17.3,
-    "impact": "Supports comparison intent and helps product selection pages convert warmer visitors.",
+    "priority_score": 16.2,
+    "impact": "Improves product-to-content crossover and helps internal linking support the maintenance pillar.",
     "status": "pending"
   },
   {
     "title": "Publish floor repair or replace article",
     "category": "conversion",
-    "priority_score": 16.8,
-    "impact": "Bridges maintenance research directly into replacement quote intent.",
-    "status": "pending"
-  },
-  {
-    "title": "Publish best flooring for pets Sydney article",
-    "category": "content",
     "priority_score": 15.9,
-    "impact": "Captures buyer-education traffic that can feed product and quote pages.",
+    "impact": "Bridges maintenance traffic into replacement and quote intent.",
     "status": "pending"
   },
   {
-    "title": "Publish flooring maintenance checklist article",
+    "title": "Publish laminate vs hybrid maintenance comparison",
     "category": "content",
+    "priority_score": 15.4,
+    "impact": "Supports comparison searches and helps warmer visitors choose the correct product path.",
+    "status": "pending"
+  },
+  {
+    "title": "Add FAQ schema to remaining suburb pages",
+    "category": "seo",
     "priority_score": 14.7,
-    "impact": "Rounds out the pillar with a practical evergreen piece for internal linking support.",
+    "impact": "Improves structured data consistency across the main local landing pages.",
+    "status": "pending"
+  },
+  {
+    "title": "Validate live Supabase-backed pricing paths on real quote scenarios",
+    "category": "pricing",
+    "priority_score": 14.1,
+    "impact": "Checks that the private quote runtime and catalogue pricing behave correctly with current live data.",
     "status": "pending"
   }
 ]

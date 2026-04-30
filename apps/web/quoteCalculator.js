@@ -126,9 +126,15 @@
 
     const quoteMode = input.jobType || input.quoteMode || "supply_install";
     const installType = libraries.installRates.normaliseInstallType(input.pattern || "standard");
+    const installMethod = libraries.installRates.normaliseInstallMethod(
+      product.category,
+      installType,
+      input.installMethod || "floating"
+    );
     return libraries.installRates.getInstallRate({
       category: product.category,
       installType: installType,
+      installMethod: installMethod,
       jobType: quoteMode
     });
   }
