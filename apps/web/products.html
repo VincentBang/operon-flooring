@@ -224,7 +224,9 @@
       const params = new URLSearchParams(window.location.search);
       const requestedCategory = params.get("category");
       function getCategoryMetaList() {
-        return PRODUCT_LIBRARY.getCategoryList();
+        return PRODUCT_LIBRARY.getCategoryList().filter(function (item) {
+          return PRODUCT_LIBRARY.getProductsByCategory(item.id).length > 0;
+        });
       }
 
       function getValidCategories() {
@@ -453,6 +455,9 @@
         productsGrid.innerHTML = filtered.map(buildProductCard).join("");
         emptyState.hidden = filtered.length > 0;
         resultsSummary.textContent = filtered.length + " product" + (filtered.length === 1 ? "" : "s") + " shown" + (state.category !== "all" ? " in " + getCategoryLabel(state.category).toLowerCase() : "") + ".";
+        if (!filtered.length) {
+          emptyState.textContent = "No live products match the current filters. Clear the filters or continue with the quote tool.";
+        }
       }
 
       function syncQueryString() {

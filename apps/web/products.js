@@ -32,53 +32,7 @@
   };
 
   const PRODUCTS = {
-    laminate: [
-      {
-        id: "laminate-operon-select-essential-natural-oak",
-        category: "laminate",
-        brand: "Operon Select",
-        range: "Essential 8mm",
-        colour: "Natural Oak",
-        tone: "natural oak",
-        swatch: "#bf9b74",
-        pricePerM2: 38,
-        installRate: 27,
-        image: "",
-        description: "A balanced laminate option for bedrooms, living rooms and investment updates.",
-        features: ["AC4 wear layer", "Floating installation", "Low-maintenance finish"],
-        suitableFor: ["Budget projects", "Apartments", "Dry internal rooms"]
-      },
-      {
-        id: "laminate-operon-select-signature-light-oak",
-        category: "laminate",
-        brand: "Operon Select",
-        range: "Signature 8mm",
-        colour: "Light Oak",
-        tone: "light oak",
-        swatch: "#d4b692",
-        pricePerM2: 42,
-        installRate: 27,
-        image: "",
-        description: "A lighter timber-look laminate for customers who want a brighter interior finish.",
-        features: ["AC4 wear layer", "Matt texture", "Floating installation"],
-        suitableFor: ["Family homes", "Bedrooms", "Living areas"]
-      },
-      {
-        id: "laminate-operon-select-signature-smoked-oak",
-        category: "laminate",
-        brand: "Operon Select",
-        range: "Signature 8mm",
-        colour: "Smoked Oak",
-        tone: "dark",
-        swatch: "#7b634f",
-        pricePerM2: 44,
-        installRate: 28,
-        image: "",
-        description: "A deeper laminate colour suited to contrast palettes and more defined interior styling.",
-        features: ["AC4 wear layer", "Floating installation", "Low sheen finish"],
-        suitableFor: ["Feature interiors", "Living rooms", "Dry internal rooms"]
-      }
-    ],
+    laminate: [],
     hybrid: [
       // TODO: Enter actual sell price per m² for this product.
       {
@@ -396,53 +350,7 @@
         supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/7-0mm-etf-hybrid-waterproof-flooring/"
       }
     ],
-    engineered: [
-      {
-        id: "engineered-operon-select-reserve-european-oak",
-        category: "engineered",
-        brand: "Operon Select",
-        range: "Timber Reserve",
-        colour: "European Oak",
-        tone: "light oak",
-        swatch: "#c8a67e",
-        pricePerM2: 88,
-        installRate: 39,
-        image: "",
-        description: "A clean engineered timber selection for customers prioritising a natural oak finish.",
-        features: ["Real timber veneer", "Multi-layer stability", "Premium visual grade"],
-        suitableFor: ["Premium homes", "Living areas", "Bedrooms"]
-      },
-      {
-        id: "engineered-operon-select-reserve-natural-oak",
-        category: "engineered",
-        brand: "Operon Select",
-        range: "Timber Reserve",
-        colour: "Natural Oak",
-        tone: "natural oak",
-        swatch: "#b48961",
-        pricePerM2: 94,
-        installRate: 39,
-        image: "",
-        description: "A balanced engineered timber option for customers who want a warm timber look without going too dark.",
-        features: ["Real timber veneer", "Multi-layer stability", "Refined timber grain"],
-        suitableFor: ["Premium residential", "Hallways", "Open-plan living"]
-      },
-      {
-        id: "engineered-operon-select-reserve-walnut-oak",
-        category: "engineered",
-        brand: "Operon Select",
-        range: "Timber Reserve",
-        colour: "Walnut Oak",
-        tone: "dark",
-        swatch: "#71543f",
-        pricePerM2: 102,
-        installRate: 41,
-        image: "",
-        description: "A darker engineered timber look for customers wanting a more defined and premium floor finish.",
-        features: ["Real timber veneer", "Multi-layer stability", "Deeper character grain"],
-        suitableFor: ["Premium homes", "Feature interiors", "High-end renovations"]
-      }
-    ]
+    engineered: []
   };
 
   function clone(value) {
@@ -778,6 +686,18 @@
     const storedProduct = getStoredProduct();
     const status = settings.statusId ? document.getElementById(settings.statusId) : null;
 
+    if (!limitedProducts.length) {
+      target.innerHTML = "";
+      if (status) {
+        const categoryMeta = getCategoryMeta(settings.category);
+        status.textContent = categoryMeta
+          ? "Live " + categoryMeta.label.toLowerCase() + " products will be added here when confirmed. You can continue with a " + categoryMeta.label.toLowerCase() + " quote now."
+          : "Live product options will appear here when confirmed.";
+        status.dataset.state = "info";
+      }
+      return;
+    }
+
     target.innerHTML = limitedProducts.map(function (product) {
       const selectedClass = storedProduct && storedProduct.id === product.id ? " selected" : "";
       return renderProductCard(product).replace('class="catalogue-card"', 'class="catalogue-card' + selectedClass + '"');
@@ -855,6 +775,18 @@
         ? storedProduct.brand + " / " + storedProduct.range + " / " + storedProduct.colour + " · " + formatProductRate(storedProduct)
         : storedProduct.brand + " / " + storedProduct.range + " / " + storedProduct.colour + " · Price to be confirmed. Standard " + categoryMeta.label.toLowerCase() + " estimate used until review.";
       clearButton.textContent = "Use " + categoryMeta.label.toLowerCase() + " estimate instead";
+      clearButton.onclick = function () {
+        clearSelectedProduct();
+        saveSelectedCategory(settings.category);
+        window.location.href = settings.quoteUrl;
+      };
+      return;
+    }
+
+    if (!getProductsByCategory(settings.category).length) {
+      title.textContent = categoryMeta.label + " quote ready";
+      text.textContent = "Live " + categoryMeta.label.toLowerCase() + " product listings are not published yet. Continue with the " + categoryMeta.label.toLowerCase() + " estimate and we can confirm the final product during review.";
+      clearButton.textContent = "Start " + categoryMeta.label.toLowerCase() + " quote";
       clearButton.onclick = function () {
         clearSelectedProduct();
         saveSelectedCategory(settings.category);
