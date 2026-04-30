@@ -1,19 +1,29 @@
-# Deployment system:
-# dev branch -> preview deploy
-# main branch -> production
-# never deploy directly to production
+# ==================================================
+# Deployment system
+# main branch → production
+# dev branch → preview
+# ==================================================
 
 [build]
+  command = ""
   publish = "apps/web"
 
+# Ensure all contexts use same publish dir
 [context.production]
+  command = ""
   publish = "apps/web"
 
 [context.deploy-preview]
+  command = ""
   publish = "apps/web"
 
 [context.branch-deploy]
+  command = ""
   publish = "apps/web"
+
+# ==================================================
+# Redirects (clean URLs)
+# ==================================================
 
 [[redirects]]
   from = "/quote"
@@ -35,7 +45,7 @@
   to = "/floorplan.html"
   status = 301
 
-# Visualiser is intentionally hidden until production backend image generation is available.
+# Visualiser intentionally hidden
 [[redirects]]
   from = "/visualiser"
   to = "/"
@@ -46,6 +56,10 @@
   to = "/"
   status = 301
 
+# ==================================================
+# Security Headers
+# ==================================================
+
 [[headers]]
   for = "/*"
   [headers.values]
@@ -53,6 +67,10 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# ==================================================
+# Cache Control
+# ==================================================
 
 [[headers]]
   for = "/"
