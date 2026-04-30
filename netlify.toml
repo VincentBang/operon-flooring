@@ -1,2 +1,2 @@
 [build]
-publish = "apps/web"
+  publish = "apps/web"
