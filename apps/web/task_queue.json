@@ -1,0 +1,72 @@
+[
+  {
+    "title": "Strengthen blog-to-suburb and suburb-to-product internal linking",
+    "category": "seo",
+    "priority_score": 22.4,
+    "impact": "Better crawl paths and stronger topical clustering around money pages.",
+    "status": "next_batch"
+  },
+  {
+    "title": "Add backlink target: TrueLocal",
+    "category": "backlink",
+    "priority_score": 21.42,
+    "impact": "Better local trust signals and citation coverage.",
+    "status": "next_batch"
+  },
+  {
+    "title": "Track quote abandonment at the area step",
+    "category": "analytics",
+    "priority_score": 20.4,
+    "impact": "Better visibility into where leads are leaking.",
+    "status": "next_batch"
+  },
+  {
+    "title": "Expand suburb coverage for higher-demand Sydney locations",
+    "category": "seo",
+    "priority_score": 17.28,
+    "impact": "More high-intent local landing pages and wider Sydney suburb relevance.",
+    "status": "pending"
+  },
+  {
+    "title": "Deepen local differentiation on remaining suburb pages",
+    "category": "content",
+    "priority_score": 15.4,
+    "impact": "Stronger local rankings and better suburb relevance.",
+    "status": "pending"
+  },
+  {
+    "title": "Seed supplier backlink outreach list",
+    "category": "backlink",
+    "priority_score": 12.7,
+    "impact": "More relevant backlinks and referral opportunities.",
+    "status": "pending"
+  },
+  {
+    "title": "Audit mobile quote summary visibility",
+    "category": "technical",
+    "priority_score": 12.25,
+    "impact": "Better mobile completion and more confident submissions.",
+    "status": "pending"
+  },
+  {
+    "title": "Add revenue status update workflow to admin page",
+    "category": "pricing",
+    "priority_score": 10.08,
+    "impact": "Clearer view of win rate, revenue and margin.",
+    "status": "pending"
+  },
+  {
+    "title": "Improve Step 4 measurement completion rate",
+    "category": "conversion",
+    "priority_score": 28.8,
+    "impact": "More quote starts progress from area selection into extras and submission.",
+    "status": "pending"
+  },
+  {
+    "title": "Strengthen footer and support-page conversion cues",
+    "category": "conversion",
+    "priority_score": 22.4,
+    "impact": "More supporting-page visitors return to the main quote funnel.",
+    "status": "pending"
+  }
+]
