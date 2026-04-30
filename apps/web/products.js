@@ -524,10 +524,6 @@
   function getEstimateProduct(category) {
     const categoryMeta = getCategoryMetaSource();
     const meta = categoryMeta[category] || categoryMeta.hybrid || CATEGORY_META.hybrid;
-    const installRates = window.OperonInstallRates;
-    const defaultInstall = installRates
-      ? installRates.getInstallRate({ category: meta.id, installType: "standard", jobType: "supply_install" })
-      : null;
     return {
       id: meta.id + "-estimate",
       category: meta.id,
@@ -535,7 +531,7 @@
       range: meta.label,
       colour: "Standard estimate",
       pricePerM2: meta.pricePerM2,
-      installRate: defaultInstall ? defaultInstall.ratePerM2 : null,
+      installRate: null,
       imageUrl: "",
       image: "",
       description: meta.shortDescription,

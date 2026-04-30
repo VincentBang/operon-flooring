@@ -210,11 +210,6 @@ function getProductById(library, productId) {
 
 function getEstimateProduct(library, category) {
   const meta = getCategoryMeta(library, category);
-  const defaultInstall = getInstallRateConfig(library, {
-    category: meta.id,
-    pattern: "standard",
-    jobType: "supply_install"
-  });
 
   return {
     id: meta.id + "-estimate",
@@ -223,7 +218,7 @@ function getEstimateProduct(library, category) {
     range: meta.label,
     colour: "Standard estimate",
     pricePerM2: meta.pricePerM2,
-    installRate: defaultInstall ? parseNumber(defaultInstall.rate_per_m2) : null,
+    installRate: null,
     isEstimate: true
   };
 }
