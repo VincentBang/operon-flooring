@@ -1,72 +1,86 @@
 [
   {
-    "title": "Standardise shared responsive breakpoints across product and SEO pages",
-    "category": "ux",
-    "priority_score": 24.8,
-    "impact": "Improves consistency and readability across the catalogue, product pages, and core marketing sections on desktop, tablet, and mobile.",
-    "status": "completed"
-  },
-  {
-    "title": "Tighten floorplan tool layout for tablet and mobile",
-    "category": "ux",
-    "priority_score": 23.9,
-    "impact": "Reduces overflow risk in the floorplan canvas, control panels, and action areas while keeping the measurement workflow usable on smaller screens.",
-    "status": "completed"
-  },
-  {
-    "title": "Polish homepage and quote wizard responsive flow",
-    "category": "conversion",
-    "priority_score": 23.4,
-    "impact": "Keeps the quote flow easier to navigate across devices, with clearer top-of-step positioning and less cramped controls.",
-    "status": "completed"
+    "title": "Validate live Netlify runtime health and quote save flow after env vars are added",
+    "category": "qa",
+    "priority_score": 25.2,
+    "impact": "Confirms that the new Netlify site can save draft estimates, email quotes and read private pricing from Supabase end to end.",
+    "status": "blocked"
   },
   {
     "title": "Run live browser QA across homepage, floorplan, products, and product pages",
     "category": "qa",
-    "priority_score": 21.6,
-    "impact": "Confirms that the responsive code changes behave well in real desktop and mobile viewports before deployment.",
-    "status": "next_batch"
+    "priority_score": 23.1,
+    "impact": "Checks that the current responsive and workflow improvements behave correctly in real desktop and mobile browsing conditions.",
+    "status": "blocked"
   },
   {
     "title": "Refine quote wizard spacing and summary density after real viewport testing",
     "category": "conversion",
-    "priority_score": 20.9,
-    "impact": "Lets the highest-friction conversion screen be tuned using actual viewport checks instead of assumptions.",
+    "priority_score": 21.8,
+    "impact": "Lets the highest-friction conversion screen be tuned using actual viewport behavior instead of assumptions.",
     "status": "next_batch"
+  },
+  {
+    "title": "Add runtime health endpoint for Netlify quote and email configuration",
+    "category": "platform",
+    "priority_score": 28.4,
+    "impact": "Makes the new Netlify site report whether Supabase quote save and email runtime are configured before users hit a broken save flow.",
+    "status": "completed"
+  },
+  {
+    "title": "Surface specific quote save and email runtime errors in the wizard",
+    "category": "conversion",
+    "priority_score": 27.1,
+    "impact": "Replaces generic failure messages with actionable setup guidance so quote save issues are easier to diagnose and fix on new deployments.",
+    "status": "completed"
+  },
+  {
+    "title": "Improve floorplan resume and re-upload reconnect behavior",
+    "category": "ux",
+    "priority_score": 25.8,
+    "impact": "Lets customers resume measured rooms more naturally by restoring the canvas in-session and reconnecting a re-uploaded floor plan to existing traced work.",
+    "status": "completed"
   },
   {
     "title": "Add floor care links from product pages",
     "category": "seo",
-    "priority_score": 16.2,
-    "impact": "Improves product-to-content crossover and helps internal linking support the maintenance pillar.",
-    "status": "pending"
+    "priority_score": 20.2,
+    "impact": "Improves internal linking between commercial product pages and the maintenance pillar.",
+    "status": "completed"
   },
   {
     "title": "Publish floor repair or replace article",
-    "category": "conversion",
-    "priority_score": 15.9,
-    "impact": "Bridges maintenance traffic into replacement and quote intent.",
-    "status": "pending"
+    "category": "content",
+    "priority_score": 19.8,
+    "impact": "Bridges maintenance-intent traffic into replacement and quote intent.",
+    "status": "completed"
   },
   {
     "title": "Publish laminate vs hybrid maintenance comparison",
     "category": "content",
-    "priority_score": 15.4,
-    "impact": "Supports comparison searches and helps warmer visitors choose the correct product path.",
-    "status": "pending"
+    "priority_score": 19.1,
+    "impact": "Supports comparison searches and helps warmer visitors choose the right product path.",
+    "status": "completed"
   },
   {
     "title": "Add FAQ schema to remaining suburb pages",
     "category": "seo",
-    "priority_score": 14.7,
+    "priority_score": 14.6,
     "impact": "Improves structured data consistency across the main local landing pages.",
     "status": "pending"
   },
   {
-    "title": "Validate live Supabase-backed pricing paths on real quote scenarios",
-    "category": "pricing",
+    "title": "Publish best flooring for pets Sydney article",
+    "category": "content",
     "priority_score": 14.1,
-    "impact": "Checks that the private quote runtime and catalogue pricing behave correctly with current live data.",
+    "impact": "Expands the maintenance pillar into a practical buyer-education topic with strong comparison and replacement crossover.",
+    "status": "pending"
+  },
+  {
+    "title": "Publish flooring maintenance checklist article",
+    "category": "content",
+    "priority_score": 13.7,
+    "impact": "Adds a high-utility evergreen article that can support maintenance intent, internal links and softer quote CTAs.",
     "status": "pending"
   }
 ]

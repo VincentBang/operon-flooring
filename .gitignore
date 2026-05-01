@@ -9,6 +9,7 @@ build/
 .pycache/
 __pycache__/
 *.log
+.netlify-state/
 
 # Keep the website repo focused on the Netlify/Supabase app.
 flooring_app/

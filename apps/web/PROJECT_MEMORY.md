@@ -31,6 +31,7 @@ Source-of-truth status: active project memory for current business direction, pa
 - `dev` = development
 - workflow = `dev -> test preview -> merge -> main -> deploy`
 - never push development work directly to production
+- default execution rule = make changes locally first, validate locally, push to `dev`, and use the `dev` Netlify deploy as the normal review path
 
 ## Pricing Logic
 
@@ -175,6 +176,12 @@ Reason:
 - Responsive update: shared page layouts, product/catalogue screens, quote wizard shell, and floorplan breakpoints were tightened for cleaner desktop, tablet, and mobile behavior
 - Quote UX rule: step changes should return to the top of the quote section so users always land on the heading, progress, and active content in a predictable order
 - Responsive follow-up: shared SEO/product pages now use smoother `desktop -> tablet -> mobile` breakpoints, the floorplan canvas is less aggressive on tablet widths, and the homepage/quote page header and CTA controls collapse more gracefully
+- UX/UI polish update: the shared visual system was warmed and simplified, content density was reduced across the homepage, catalogue, guides hub, and floorplan tool, and CTA/card spacing was rebalanced to feel cleaner on both desktop and mobile
+- Runtime health update: the quote page now has a Netlify runtime health check endpoint at `netlify/functions/runtime-health.js` so the new site can warn when Supabase quote save or email runtime are not configured
+- Quote save diagnostics: the wizard now surfaces specific Netlify/Supabase/email configuration errors instead of only generic save failures
+- Floorplan resume update: same-session floor plan image restore is now preserved during page startup, and re-uploading a plan after restoring measured rooms reconnects to the existing work instead of forcing a destructive reset by default
+- Maintenance pillar update: published `blog/floor-repair-or-replace.html` and `blog/laminate-vs-hybrid-maintenance.html`, added them to the floor care hub and blog index, and added maintenance/internal-link sections to the laminate, hybrid and engineered product pages
+- Execution note: live Netlify runtime validation remains blocked from the repo side until the new site has the required environment variables and a deployed build to test
 
 ## Central Pricing Foundation
 
@@ -199,6 +206,7 @@ Reason:
 - confirm real product ranges, colours, and supplier pricing in `products.js`
 - run `supabase/pricing_schema.sql` and verify private pricing tables in Supabase
 - set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in Netlify for the private quote function
+- set `RESEND_API_KEY` and `OPERON_QUOTE_FROM_EMAIL` in Netlify if `Email quote` should be live
 - wire `index.html` to the private quote function with local calculator fallback
 - keep `sitemap.xml` aligned with the active SEO page set
 - keep Quick Room Mode hidden from customer UI until reliable

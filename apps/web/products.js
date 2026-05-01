@@ -654,6 +654,7 @@
     const backdrop = modal.querySelector(".catalogue-lightbox-backdrop");
     const dialog = modal.querySelector(".catalogue-lightbox-dialog");
     const closeButton = modal.querySelector(".catalogue-lightbox-close");
+    const thumbnails = modal.querySelector("#catalogueLightboxThumbnails");
 
     if (backdrop) {
       backdrop.addEventListener("click", function () {
@@ -675,14 +676,18 @@
       });
     }
 
-    modal.addEventListener("click", function (event) {
-      const thumbnailButton = event.target.closest("[data-lightbox-image-index]");
-      if (thumbnailButton) {
+    if (thumbnails) {
+      thumbnails.addEventListener("click", function (event) {
+        const thumbnailButton = event.target.closest("[data-lightbox-image-index]");
+        if (!thumbnailButton) {
+          return;
+        }
+
         event.preventDefault();
+        event.stopPropagation();
         setCatalogueLightboxSlide(modal, Number(thumbnailButton.getAttribute("data-lightbox-image-index")) || 0);
-        return;
-      }
-    });
+      });
+    }
 
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape" && !modal.hidden) {

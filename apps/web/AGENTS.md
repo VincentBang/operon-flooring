@@ -37,6 +37,7 @@ Build a high-conversion flooring quote and measurement system that ranks in Sydn
 - Do NOT break floorplan handoff
 - Do NOT push directly to `main`
 - Use `dev` for active work and treat `main` as production only
+- Default delivery workflow: make changes locally, validate locally, push to `dev`, and use the `dev` Netlify deploy as the review path before any move to `main`
 
 ## Page Roles
 
@@ -158,7 +159,7 @@ Do not try to perfect every analytics layer in one run if that increases fragili
 ### Builder
 
 - implement UI and code changes
-- keep deployment safety in mind and prefer `dev -> preview -> main`
+- keep deployment safety in mind and prefer `local -> dev -> Netlify dev deploy -> main`
 
 ### SEO Agent
 

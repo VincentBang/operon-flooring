@@ -37,6 +37,11 @@
         <a href="floorplan.html">Floor Plan</a>
         <a href="blog/">Guides</a>
       </nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <a class="button" href="index.html#quoteForm">Start quote</a>
     </div>
   </header>
@@ -49,7 +54,7 @@
             <div class="hero-copy">
               <span class="eyebrow">Central Catalogue</span>
               <h1>Flooring Products Sydney</h1>
-              <p>Browse laminate, hybrid and engineered timber flooring products in one place. Filter the catalogue, choose a product, and continue into the quote wizard with it already saved.</p>
+              <p>Browse laminate, hybrid and engineered timber flooring in one place, save a product, and carry it straight into the quote form.</p>
               <div class="hero-actions" style="margin-top: 24px;">
                 <a class="button" href="index.html?from=product#quoteForm">Go to quote</a>
                 <a class="button-secondary" href="floorplan.html">Measure from floor plan</a>
@@ -63,15 +68,15 @@
             <div class="stat-stack">
               <div class="stat-card">
                 <strong>How to use it</strong>
-                Filter by category, brand, range or thickness, then choose the floor you want and continue into the quote tool.
+                Filter by category first, then narrow by brand, range, colour or thickness.
               </div>
               <div class="stat-card">
                 <strong>What happens next</strong>
-                The quote wizard reads your selected product from localStorage and carries it into Step 3 automatically.
+                Your selected product carries straight into the quote wizard.
               </div>
               <div class="stat-card">
                 <strong>Commercial role</strong>
-                This page is the central product selection surface. The category pages remain the commercial SEO landing pages.
+                This is the selection page. Category pages stay focused on product guidance and quoting intent.
               </div>
             </div>
           </div>
@@ -83,8 +88,8 @@
       <div class="shell">
         <article class="section-card">
           <span class="eyebrow">Product Filters</span>
-          <h2 style="margin-top: 18px;">Choose a product category and narrow the catalogue</h2>
-          <p>Use the category filters first, then narrow the list by brand, range, colour, thickness, price range or waterproof products where available.</p>
+          <h2 style="margin-top: 18px;">Filter the catalogue</h2>
+          <p>Start with category, then narrow the list by brand, range, colour, thickness, price range or waterproof products where available.</p>
 
           <div class="catalogue-toolbar">
             <div class="catalogue-category-row" id="catalogueCategoryRow"></div>
@@ -127,7 +132,7 @@
 
           <div class="catalogue-selection-banner" id="catalogueSelectionBanner">
             <strong id="catalogueSelectionTitle">No flooring product selected yet</strong>
-            <p id="catalogueSelectionText">Choose a flooring product and continue to the quote tool, or browse the category guides first.</p>
+            <p id="catalogueSelectionText">Choose a flooring product and continue to the quote tool, or return to the category guides first.</p>
             <div class="catalogue-selection-actions">
               <a class="button" id="catalogueContinueQuote" href="index.html?from=product#quoteForm">Continue to quote</a>
               <button class="button-secondary" id="catalogueClearSelection" type="button">Clear selected product</button>
@@ -594,5 +599,6 @@
       });
     }());
   </script>
+  <script src="mobile-nav.js"></script>
 </body>
 </html>

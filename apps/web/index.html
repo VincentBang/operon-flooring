@@ -85,23 +85,24 @@
   </script>
   <style>
     :root {
-      --bg: #f8f9fb;
+      --bg: #f6f3ee;
       --surface: rgba(255, 255, 255, 0.94);
-      --surface-strong: #ffffff;
-      --surface-soft: #f2f4f7;
-      --text: #111111;
-      --muted: #555555;
-      --line: rgba(17, 17, 17, 0.08);
+      --surface-strong: #fffdfa;
+      --surface-soft: #efe8dc;
+      --text: #17191f;
+      --muted: #5d6470;
+      --line: rgba(23, 25, 31, 0.09);
       --brand: #1e3a8a;
       --brand-soft: rgba(30, 58, 138, 0.08);
       --accent: #0f766e;
       --warn: #b54708;
       --danger: #b42318;
-      --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
-      --radius-xl: 24px;
-      --radius-lg: 16px;
-      --radius-md: 12px;
+      --shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
       --max-width: 1100px;
+      --font-sans: "Avenir Next", "Segoe UI", BlinkMacSystemFont, -apple-system, sans-serif;
     }
 
     * {
@@ -115,9 +116,11 @@
     body {
       margin: 0;
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f8f9fb;
+      font-family: var(--font-sans);
+      background: linear-gradient(180deg, #fbfaf7 0%, var(--bg) 100%);
       min-height: 100vh;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
 
     a {
@@ -148,9 +151,10 @@
     }
 
     .hero-sub {
-      font-size: 18px;
-      color: #555;
-      max-width: 600px;
+      font-size: 1.07rem;
+      line-height: 1.72;
+      color: var(--muted);
+      max-width: 56ch;
       margin: 0 auto 24px;
     }
 
@@ -163,9 +167,9 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(248, 250, 252, 0.84);
+      background: rgba(251, 250, 247, 0.9);
       backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(16, 24, 40, 0.06);
+      border-bottom: 1px solid var(--line);
     }
 
     .nav {
@@ -201,6 +205,30 @@
       gap: 22px;
       color: var(--muted);
       font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .nav-toggle {
+      display: none;
+      width: 50px;
+      height: 50px;
+      padding: 0;
+      border: 1px solid rgba(16, 24, 40, 0.08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--text);
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex-direction: column;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
     }
 
     .header-quote-button {
@@ -222,9 +250,10 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      min-height: 50px;
-      padding: 14px 22px;
-      border-radius: 10px;
+      min-height: 52px;
+      padding: 14px 24px;
+      border-radius: 14px;
+      font-weight: 650;
       transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
     }
 
@@ -240,20 +269,20 @@
     .btn-primary {
       background: #1e3a8a;
       color: #ffffff;
-      box-shadow: 0 12px 30px rgba(30, 58, 138, 0.16);
+      box-shadow: 0 14px 34px rgba(30, 58, 138, 0.18);
     }
 
     .button-secondary,
     .btn-secondary {
       background: var(--surface-strong);
       color: var(--text);
-      border: 1px solid #dddddd;
+      border: 1px solid rgba(23, 25, 31, 0.08);
     }
 
     .button-quiet {
-      background: transparent;
+      background: rgba(30, 58, 138, 0.03);
       color: var(--brand);
-      border: 1px solid rgba(31, 111, 139, 0.14);
+      border: 1px solid rgba(30, 58, 138, 0.1);
     }
 
     .button:disabled,
@@ -267,7 +296,7 @@
     }
 
     .hero {
-      padding: 80px 0;
+      padding: 56px 0 48px;
       text-align: center;
     }
 
@@ -356,7 +385,7 @@
     .summary-card,
     .mini-card {
       background: var(--surface);
-      border: 0;
+      border: 1px solid var(--line);
       box-shadow: var(--shadow);
       border-radius: var(--radius-xl);
     }
@@ -387,8 +416,8 @@
 
     h1 {
       margin-top: 18px;
-      font-size: 42px;
-      font-weight: 600;
+      font-size: clamp(2.45rem, 4.8vw, 3.8rem);
+      font-weight: 650;
       margin-bottom: 16px;
       max-width: none;
     }
@@ -407,7 +436,8 @@
     .status,
     .tiny {
       color: var(--muted);
-      line-height: 1.65;
+      line-height: 1.72;
+      font-size: 0.98rem;
     }
 
     .hero-actions,
@@ -430,7 +460,7 @@
     }
 
     .hero-copy {
-      max-width: 600px;
+      max-width: 640px;
       margin: 0 auto;
     }
 
@@ -632,9 +662,9 @@
     .wizard-progress {
       margin-top: 22px;
       padding: 18px;
-      border-radius: 22px;
-      background: rgba(248, 250, 252, 0.92);
-      border: 1px solid rgba(16, 24, 40, 0.06);
+      border-radius: 20px;
+      background: rgba(245, 241, 235, 0.72);
+      border: 1px solid var(--line);
     }
 
     #quoteForm.quote-form-compact .wizard-progress {
@@ -648,7 +678,7 @@
       padding: 16px 18px;
       border-radius: 16px;
       background: rgba(30, 58, 138, 0.05);
-      border: 1px solid rgba(30, 58, 138, 0.1);
+      border: 1px solid rgba(30, 58, 138, 0.09);
     }
 
     .wizard-assist strong {
@@ -669,10 +699,10 @@
 
     .step-note {
       margin-top: 18px;
-      padding: 18px;
+      padding: 16px 18px;
       border-radius: 18px;
-      background: rgba(248, 250, 252, 0.92);
-      border: 1px solid rgba(16, 24, 40, 0.08);
+      background: rgba(245, 241, 235, 0.72);
+      border: 1px solid var(--line);
     }
 
     .step-note strong {
@@ -697,7 +727,7 @@
       padding: 18px;
       border-radius: 20px;
       background: rgba(30, 58, 138, 0.05);
-      border: 1px solid rgba(30, 58, 138, 0.1);
+      border: 1px solid rgba(30, 58, 138, 0.09);
     }
 
     .floorplan-handoff-card.active {
@@ -726,9 +756,9 @@
     .quote-kickoff {
       margin-top: 20px;
       padding: 18px;
-      border-radius: 22px;
-      background: rgba(31, 111, 139, 0.06);
-      border: 1px solid rgba(31, 111, 139, 0.1);
+      border-radius: 20px;
+      background: rgba(30, 58, 138, 0.05);
+      border: 1px solid rgba(30, 58, 138, 0.09);
     }
 
     .quote-kickoff strong {
@@ -751,7 +781,7 @@
       padding: 18px;
       border-radius: 20px;
       background: rgba(30, 58, 138, 0.05);
-      border: 1px solid rgba(30, 58, 138, 0.1);
+      border: 1px solid rgba(30, 58, 138, 0.09);
       display: grid;
       gap: 8px;
     }
@@ -844,9 +874,9 @@
       gap: 12px;
       margin-top: 22px;
       padding: 14px 16px;
-      border: 1px solid rgba(16, 24, 40, 0.08);
+      border: 1px solid var(--line);
       border-radius: 18px;
-      background: rgba(255, 255, 255, 0.96);
+      background: rgba(255, 253, 250, 0.96);
       box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
       backdrop-filter: blur(14px);
       position: sticky;
@@ -972,8 +1002,8 @@
       margin-top: 18px;
       padding: 18px;
       border-radius: 20px;
-      background: rgba(248, 250, 252, 0.84);
-      border: 1px solid rgba(16, 24, 40, 0.06);
+      background: rgba(245, 241, 235, 0.64);
+      border: 1px solid var(--line);
     }
 
     .selected-product-banner {
@@ -1017,8 +1047,8 @@
       margin-top: 18px;
       padding: 18px;
       border-radius: 22px;
-      background: rgba(248, 250, 252, 0.84);
-      border: 1px solid rgba(16, 24, 40, 0.06);
+      background: rgba(245, 241, 235, 0.64);
+      border: 1px solid var(--line);
     }
 
     .measure-panel.active {
@@ -1329,7 +1359,8 @@
     @media (max-width: 980px) {
       .nav {
         min-height: 68px;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
         align-items: center;
         padding: 12px 0;
       }
@@ -1339,33 +1370,36 @@
         letter-spacing: 0.06em;
       }
 
-      .nav-links {
-        display: flex;
-        order: 3;
-        width: 100%;
-        gap: 10px;
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        padding-bottom: 2px;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+      .nav-toggle {
+        display: inline-flex;
+        justify-self: end;
+        transform: rotate(90deg);
       }
 
-      .nav-links::-webkit-scrollbar {
+      .nav-links {
         display: none;
+        width: 100%;
+        grid-column: 1 / -1;
+        gap: 8px;
+        padding-top: 12px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .site-header.mobile-nav-open .nav-links {
+        display: flex;
       }
 
       .nav-links a {
-        white-space: nowrap;
-        padding: 10px 12px;
-        border-radius: 999px;
+        white-space: normal;
+        padding: 12px 14px;
+        border-radius: 14px;
         background: rgba(255, 255, 255, 0.92);
         border: 1px solid rgba(16, 24, 40, 0.08);
       }
 
       .header-quote-button {
-        min-width: 0;
-        padding-inline: 16px;
+        display: none;
       }
     }
 
@@ -1561,6 +1595,11 @@
         <a href="floorplan.html">Floor Plan</a>
         <a href="blog/">Guides</a>
       </nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <a class="button header-quote-button" id="headerQuoteButton" href="#quoteForm">Start quote</a>
     </div>
   </header>
@@ -1581,7 +1620,7 @@
         <div class="hero-copy">
           <h1>Get a Flooring Quote in Minutes</h1>
           <p class="hero-sub">
-            Estimate your timber, hybrid, laminate or engineered flooring cost.
+            Estimate your laminate, hybrid or engineered timber flooring cost.
             Enter your area, measure room by room, or upload a floor plan.
           </p>
           <div class="hero-actions">
@@ -1589,7 +1628,7 @@
             <a href="floorplan.html" class="btn-secondary" data-floorplan-link>Measure from Floor Plan</a>
           </div>
           <p class="hero-trust">Takes 2–3 minutes. Final quote confirmed before work starts.</p>
-          <div class="status" id="pageStatus">Draft quote saved in this browser while you work.</div>
+          <div class="status" id="pageStatus">Your progress saves in this browser while you work.</div>
         </div>
       </div>
     </section>
@@ -1598,14 +1637,14 @@
       <div class="shell layout" id="quoteLayout">
         <form id="quoteForm" class="section-card" novalidate>
           <h2 style="margin-top: 18px;">Request a flooring quote</h2>
-          <p class="form-intro">Estimate is enough to start. No exact measurement is needed if you have a floor plan or room sizes.</p>
+          <p class="form-intro">Start with an estimate. You can enter total area, add rooms, or use a floor plan.</p>
 
           <div class="quote-kickoff">
-            <strong>Takes 2–3 minutes</strong>
+            <strong>Fast to finish</strong>
             <ul class="quote-kickoff-list">
-              <li>Tell us where the job is</li>
-              <li>No exact measurement needed</li>
-              <li>Upload a floor plan if available</li>
+              <li>Suburb and postcode are enough to begin</li>
+              <li>Choose the flooring path first, then refine the details</li>
+              <li>Use a floor plan if you want a clearer area before submitting</li>
             </ul>
           </div>
 
@@ -1624,7 +1663,7 @@
 
           <div class="wizard-assist" id="wizardAssist">
             <strong id="wizardAssistTitle">What you need for this step</strong>
-            <p id="wizardAssistText">Name, phone, and the job location are enough to get started.</p>
+            <p id="wizardAssistText">Name, phone, suburb, and postcode are enough to begin.</p>
           </div>
 
           <section class="step-card quote-step" data-quote-step="0" style="margin-top: 24px;">
@@ -1633,17 +1672,9 @@
                 <span class="step-badge">1</span>
                 <div>
                   <h3>Customer details</h3>
-                  <p class="helper">Tell us where the job is.</p>
+                  <p class="helper">Name, phone, suburb and postcode are enough to start.</p>
                 </div>
               </div>
-            </div>
-            <div class="step-note">
-              <strong>Takes less than a minute to get started</strong>
-              <ul class="step-note-list">
-                <li>Phone is enough to begin. Email can be added later.</li>
-                <li>If you do not have the full address yet, suburb and postcode are enough for now.</li>
-                <li>No exact measurements are needed at this stage.</li>
-              </ul>
             </div>
             <div class="form-grid">
               <div class="field">
@@ -1759,7 +1790,7 @@
               <div class="field" style="margin-bottom: 0;">
                 <label for="productOptionSelect">Selected flooring product</label>
                 <select id="productOptionSelect" name="productOptionSelect"></select>
-                <p class="helper" id="productOptionHelper">If you selected a product from the catalogue, it appears here. Otherwise, keep the category estimate for a faster quote.</p>
+                <p class="helper" id="productOptionHelper">Keep the category estimate for the fastest quote, or attach a specific product.</p>
               </div>
 
               <div class="selected-product-banner compact">
@@ -1821,7 +1852,7 @@
 
             <div class="measurement-helper-card" id="measurementHelperCard">
               <strong id="measurementHelperTitle">Start with the quickest area you know</strong>
-              <p id="measurementHelperText">If you already know the approximate flooring area, enter it now and refine it later if needed.</p>
+              <p id="measurementHelperText">Enter the best area you know now. You can refine it with rooms or a floor plan.</p>
               <div class="measurement-snapshot" id="measurementSnapshot"></div>
             </div>
 
@@ -1887,9 +1918,9 @@
                 <strong id="realAreaMetric">0.0 m²</strong>
                 <span class="tiny">Real flooring area</span>
               </div>
-              <div class="metric">
+              <div class="metric" id="chargeableAreaMetricCard">
                 <strong id="chargeableAreaMetric">0.0 m²</strong>
-                <span class="tiny">Chargeable area with wastage</span>
+                <span class="tiny" id="chargeableAreaMetricLabel">Chargeable area with wastage</span>
               </div>
             </div>
           </section>
@@ -2042,7 +2073,7 @@
         <aside class="summary-card" id="quoteSummaryCard" hidden>
           <span class="eyebrow">Step 6 Quote Summary</span>
           <h3 style="margin-top: 18px; font-size: 1.8rem;">Live quote summary</h3>
-          <p>Clear customer-facing totals only. Internal pricing logic stays behind the scenes.</p>
+          <p>Customer-facing totals only. Final quote confirmed before work starts.</p>
 
           <div class="summary-box">
             <div class="summary-subtitle" id="summaryHeadline">Supply &amp; install flooring package</div>
@@ -2050,11 +2081,11 @@
             <div id="summaryCaption" style="color: var(--muted);">Add area and product details to calculate the estimate.</div>
           </div>
 
-          <div class="summary-box">
+            <div class="summary-box">
               <div class="summary-grid">
               <div class="summary-row"><span>Selected product</span><strong id="summarySelectedProduct">Category estimate</strong></div>
               <div class="summary-row"><span>Real area</span><strong id="summaryRealArea">0.0 m²</strong></div>
-              <div class="summary-row"><span>Chargeable area</span><strong id="summaryChargeableArea">0.0 m²</strong></div>
+              <div class="summary-row" id="summaryChargeableAreaRow"><span id="summaryChargeableAreaLabel">Chargeable area</span><strong id="summaryChargeableArea">0.0 m²</strong></div>
               <div class="summary-row"><span>Subtotal ex GST</span><strong id="summarySubtotal">$0</strong></div>
               <div class="summary-row"><span>GST</span><strong id="summaryGst">$0</strong></div>
               <div class="summary-row"><span>Total inc GST</span><strong id="summaryTotalSecondary">$0</strong></div>
@@ -2400,7 +2431,12 @@
       quoteRefreshToken: 0,
       privateQuoteRuntimeAvailable: true,
       privateQuoteFallbackLogged: false,
-      lastPropertyType: ""
+      lastPropertyType: "",
+      quoteRuntimeHealth: {
+        checked: false,
+        quoteSaveReady: true,
+        emailReady: true
+      }
     };
 
     let currentQuoteStep = 0;
@@ -2412,6 +2448,7 @@
     const PRICING_RULES = window.OperonPricingRules;
     const PRIVATE_QUOTE_ENDPOINT = "/.netlify/functions/calculate-private-quote";
     const QUOTE_SAVE_ENDPOINT = "/.netlify/functions/save-quote-request";
+    const QUOTE_RUNTIME_HEALTH_ENDPOINT = "/.netlify/functions/runtime-health";
 
     function createId() {
       return Math.random().toString(36).slice(2, 9);
@@ -2709,6 +2746,10 @@
         4: "Review estimate"
       };
       wizardNextButton.textContent = nextLabels[currentQuoteStep] || "Next";
+      if (state.submitState === "idle") {
+        requestStatus.textContent = getIdleQuoteStatusMessage();
+        delete requestStatus.dataset.state;
+      }
       updateQuoteCtaSystem();
     }
 
@@ -2751,14 +2792,22 @@
 
       if (currentQuoteStep === 4) {
         clearQuoteSubmitMessage();
+        if (state.quoteRuntimeHealth.checked && !state.quoteRuntimeHealth.quoteSaveReady) {
+          const runtimeMessage = getIdleQuoteStatusMessage();
+          showWizardValidationMessage(runtimeMessage);
+          showQuoteSubmitError(runtimeMessage);
+          updateStepProgress();
+          return;
+        }
         wizardNextButton.disabled = true;
         wizardNextButton.textContent = "Saving estimate...";
         try {
           await saveQuoteDraftToSystem({ showMessage: true });
         } catch (error) {
           console.error(error);
-          showWizardValidationMessage("We could not save the estimate right now. Please try again.");
-          showQuoteSubmitError("We could not save the estimate right now. Please try again.");
+          const message = getQuoteSaveErrorMessage(error, "draft");
+          showWizardValidationMessage(message);
+          showQuoteSubmitError(message);
           updateStepProgress();
           return;
         }
@@ -3576,6 +3625,7 @@
     // UI rendering.
     function renderQuoteSummary(result) {
       const measurement = getMeasurementState();
+      const isInstallOnly = result.quoteMode === "install_only";
       const summaryHeadline = document.getElementById("summaryHeadline");
       summaryHeadline.textContent = result.quoteMode === "supply_install"
         ? "Supply & install flooring package"
@@ -3592,6 +3642,7 @@
       document.getElementById("summaryChargeableArea").textContent = result.quoteMode === "supply_install"
         ? formatArea(result.chargeableArea)
         : "Not used";
+      document.getElementById("summaryChargeableAreaRow").hidden = isInstallOnly;
       document.getElementById("summaryCaption").textContent = result.pricePending
         ? result.productLabel + " · " + getCategoryEstimateLabel(result.productCategory) + " · " + measurement.sourceLabel
         : result.productLabel + " · " + measurement.sourceLabel + " · " + formatArea(result.realArea);
@@ -3602,7 +3653,13 @@
       document.getElementById("summaryReview").textContent = result.manualReviewRequired ? "Estimate only" : "Estimate ready";
       document.getElementById("measurementSourceLabel").textContent = measurement.sourceLabel;
       document.getElementById("realAreaMetric").textContent = formatArea(result.realArea);
-      document.getElementById("chargeableAreaMetric").textContent = formatArea(result.chargeableArea);
+      document.getElementById("chargeableAreaMetric").textContent = isInstallOnly
+        ? formatArea(result.realArea)
+        : formatArea(result.chargeableArea);
+      document.getElementById("chargeableAreaMetricLabel").textContent = isInstallOnly
+        ? "Installation area"
+        : "Chargeable area with wastage";
+      document.getElementById("chargeableAreaMetricCard").hidden = isInstallOnly;
 
       const manualReviewNotice = document.getElementById("manualReviewNotice");
       manualReviewNotice.hidden = !result.manualReviewRequired;
@@ -4195,6 +4252,68 @@
       return result;
     }
 
+    async function loadQuoteRuntimeHealth() {
+      try {
+        const response = await window.fetch(QUOTE_RUNTIME_HEALTH_ENDPOINT, {
+          headers: {
+            "Cache-Control": "no-store"
+          }
+        });
+        const result = await response.json().catch(function () {
+          return null;
+        });
+        if (!response.ok || !result || !result.ok || !result.runtime) {
+          return;
+        }
+
+        state.quoteRuntimeHealth = {
+          checked: true,
+          quoteSaveReady: !!result.runtime.quoteSaveReady,
+          emailReady: !!result.runtime.emailReady
+        };
+      } catch (error) {
+        // Leave runtime health as unknown if the endpoint is unavailable.
+      }
+    }
+
+    function getQuoteSaveErrorMessage(error, mode) {
+      const rawMessage = error && error.message ? String(error.message) : "";
+
+      if (/Missing Supabase server credentials/i.test(rawMessage)) {
+        return "This new Netlify site is not connected to Supabase yet. Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Netlify environment variables, then redeploy.";
+      }
+
+      if (/Quote email is not configured/i.test(rawMessage)) {
+        return "Quote email is not configured on this Netlify site yet. Add RESEND_API_KEY and OPERON_QUOTE_FROM_EMAIL, then redeploy.";
+      }
+
+      if (/Supabase write failed/i.test(rawMessage)) {
+        return mode === "email"
+          ? "The quote could not be updated in Supabase right now. Check the new Netlify site connection and Supabase table access."
+          : "The estimate could not be saved in Supabase right now. Check the new Netlify site connection and Supabase table access.";
+      }
+
+      if (/Quote save runtime is unavailable/i.test(rawMessage)) {
+        return "Quote saving is only available on the live site or localhost, not in direct file mode.";
+      }
+
+      return mode === "email"
+        ? "We could not email the quote right now. Please try again."
+        : "We could not save the estimate right now. Please try again.";
+    }
+
+    function getIdleQuoteStatusMessage() {
+      if (state.quoteRuntimeHealth.checked && !state.quoteRuntimeHealth.quoteSaveReady) {
+        return "This Netlify site is not connected to Supabase yet. Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY, then redeploy.";
+      }
+
+      if (state.quoteRuntimeHealth.checked && currentQuoteStep === getQuoteSteps().length - 1 && !state.quoteRuntimeHealth.emailReady) {
+        return "Estimate saving is ready, but Email quote is not configured yet. Add RESEND_API_KEY and OPERON_QUOTE_FROM_EMAIL, then redeploy.";
+      }
+
+      return "Review the estimate, then email the quote when you are ready.";
+    }
+
     async function saveQuoteDraftToSystem(options) {
       const settings = Object.assign({ force: false, showMessage: true }, options || {});
       const payload = await buildQuotePayload();
@@ -4413,7 +4532,7 @@
 
     function clearQuoteSubmitMessage() {
       state.submitState = "idle";
-      requestStatus.textContent = "Review the estimate, then email the quote when you are ready.";
+      requestStatus.textContent = getIdleQuoteStatusMessage();
       delete requestStatus.dataset.state;
       updateQuoteCtaSystem();
     }
@@ -4432,6 +4551,10 @@
       }
 
       clearQuoteSubmitMessage();
+      if (state.quoteRuntimeHealth.checked && !state.quoteRuntimeHealth.emailReady) {
+        showQuoteSubmitError(getIdleQuoteStatusMessage());
+        return;
+      }
       setQuoteSubmitLoading(true, "Emailing quote...");
 
       try {
@@ -4497,9 +4620,7 @@
         }
       } catch (error) {
         console.error(error);
-        showQuoteSubmitError(
-          "We could not email the quote right now. Please check the email address and try again."
-        );
+        showQuoteSubmitError(getQuoteSaveErrorMessage(error, "email"));
       } finally {
         setQuoteSubmitLoading(false);
       }
@@ -4634,12 +4755,14 @@
       window.addEventListener("resize", updateQuoteCtaSystem);
     }
 
-    function initialise() {
+    async function initialise() {
       debugPanel.hidden = !DEBUG_VIEW;
       setFloorplanLinks();
       if (window.OperonTracking && (window.location.hash === "#quoteForm" || window.location.search.indexOf("quoteStep=") >= 0)) {
         window.OperonTracking.trackQuoteStart();
       }
+
+      await loadQuoteRuntimeHealth();
 
       state.rooms = [createEmptyRoom("Living room")];
       loadDraft();
@@ -4711,5 +4834,6 @@
 
     initialise();
   </script>
+  <script src="mobile-nav.js"></script>
 </body>
 </html>

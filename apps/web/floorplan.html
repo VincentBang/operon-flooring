@@ -48,24 +48,25 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.min.js"></script>
   <style>
     :root {
-      --bg: #f8f9fb;
+      --bg: #f6f3ee;
       --surface: rgba(255, 255, 255, 0.94);
-      --surface-strong: #ffffff;
-      --surface-soft: #f2f4f7;
-      --text: #111111;
-      --muted: #555555;
-      --line: rgba(17, 17, 17, 0.08);
+      --surface-strong: #fffdfa;
+      --surface-soft: #efe8dc;
+      --text: #17191f;
+      --muted: #5d6470;
+      --line: rgba(23, 25, 31, 0.09);
       --brand: #1e3a8a;
       --brand-soft: rgba(30, 58, 138, 0.08);
       --accent: #0f766e;
       --warn: #b54708;
       --danger: #b42318;
       --success: #067647;
-      --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
-      --radius-xl: 24px;
-      --radius-lg: 16px;
-      --radius-md: 12px;
+      --shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
       --max-width: 1100px;
+      --font-sans: "Avenir Next", "Segoe UI", BlinkMacSystemFont, -apple-system, sans-serif;
     }
 
     * {
@@ -79,9 +80,11 @@
     body {
       margin: 0;
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
+      font-family: var(--font-sans);
+      background: linear-gradient(180deg, #fbfaf7 0%, var(--bg) 100%);
       min-height: 100vh;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
 
     [hidden] {
@@ -114,9 +117,9 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(248, 250, 252, 0.84);
+      background: rgba(251, 250, 247, 0.9);
       backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(16, 24, 40, 0.06);
+      border-bottom: 1px solid var(--line);
     }
 
     .nav {
@@ -152,6 +155,30 @@
       gap: 22px;
       color: var(--muted);
       font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .nav-toggle {
+      display: none;
+      width: 50px;
+      height: 50px;
+      padding: 0;
+      border: 1px solid rgba(16, 24, 40, 0.08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--text);
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex-direction: column;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
     }
 
     .site-header .button {
@@ -166,34 +193,42 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      min-height: 50px;
-      padding: 14px 22px;
-      border-radius: 10px;
+      min-height: 52px;
+      padding: 14px 24px;
+      border-radius: 14px;
+      font-weight: 650;
       transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
     }
 
     .button {
       background: var(--brand);
       color: #ffffff;
-      box-shadow: 0 12px 30px rgba(30, 58, 138, 0.16);
+      box-shadow: 0 14px 34px rgba(30, 58, 138, 0.18);
     }
 
     .button-secondary {
       background: var(--surface-strong);
       color: var(--text);
-      border: 1px solid #dddddd;
+      border: 1px solid rgba(23, 25, 31, 0.08);
     }
 
     .button-quiet {
-      background: transparent;
+      background: rgba(30, 58, 138, 0.03);
       color: var(--brand);
-      border: 1px solid rgba(30, 58, 138, 0.14);
+      border: 1px solid rgba(30, 58, 138, 0.1);
     }
 
     .button-danger {
       background: rgba(180, 35, 24, 0.08);
       color: var(--danger);
       border: 1px solid rgba(180, 35, 24, 0.14);
+    }
+
+    .button-step-active {
+      background: var(--brand);
+      color: #ffffff;
+      border: 1px solid transparent;
+      box-shadow: 0 12px 30px rgba(30, 58, 138, 0.16);
     }
 
     .button:disabled,
@@ -208,7 +243,7 @@
     }
 
     .hero {
-      padding: 80px 0 32px;
+      padding: 56px 0 30px;
     }
 
     .hero-grid,
@@ -246,7 +281,7 @@
     .summary-card,
     .mini-card {
       background: var(--surface);
-      border: 1px solid rgba(17, 17, 17, 0.06);
+      border: 1px solid var(--line);
       box-shadow: var(--shadow);
       border-radius: var(--radius-xl);
     }
@@ -287,8 +322,8 @@
 
     h1 {
       margin-top: 18px;
-      font-size: clamp(2.25rem, 5vw, 2.625rem);
-      max-width: 14ch;
+      font-size: clamp(2.25rem, 4.8vw, 3.4rem);
+      max-width: 12ch;
     }
 
     h2 {
@@ -305,8 +340,8 @@
     .status,
     .tiny {
       color: var(--muted);
-      line-height: 1.6;
-      font-size: 1rem;
+      line-height: 1.7;
+      font-size: 0.98rem;
     }
 
     .hero-actions,
@@ -400,8 +435,20 @@
     .status {
       margin-top: 14px;
       padding: 12px 14px;
-      border-radius: 12px;
+      border-radius: 14px;
       background: rgba(30, 58, 138, 0.08);
+      color: var(--brand);
+    }
+
+    .status.status-next {
+      background: rgba(30, 58, 138, 0.12);
+      border: 1px solid rgba(30, 58, 138, 0.14);
+      color: var(--text);
+    }
+
+    .status.status-next strong {
+      display: block;
+      margin-bottom: 4px;
       color: var(--brand);
     }
 
@@ -415,10 +462,10 @@
     .process-banner {
       margin-top: 16px;
       padding: 14px 16px;
-      border-radius: 12px;
+      border-radius: 14px;
       background: rgba(30, 58, 138, 0.08);
       color: var(--brand);
-      border: 1px solid rgba(30, 58, 138, 0.08);
+      border: 1px solid rgba(30, 58, 138, 0.1);
     }
 
     .section-card + .section-card {
@@ -502,12 +549,42 @@
       display: block;
     }
 
+    .tool-subsection {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 253, 250, 0.74);
+      border: 1px solid var(--line);
+    }
+
+    .tool-subsection-header {
+      display: grid;
+      gap: 4px;
+    }
+
+    .tool-subsection-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .tool-subsection .status {
+      margin-top: 0;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
     .canvas-shell {
-      margin-top: 18px;
+      margin-top: 0;
       padding: 16px;
       border-radius: 16px;
-      background: rgba(248, 249, 251, 0.84);
-      border: 1px solid rgba(17, 17, 17, 0.06);
+      background: rgba(245, 241, 235, 0.64);
+      border: 1px solid var(--line);
+      width: 100%;
+      min-width: 0;
     }
 
     .canvas-stage {
@@ -516,13 +593,17 @@
       max-height: 860px;
       border-radius: 16px;
       background: #f8f9fb;
-      border: 1px solid rgba(17, 17, 17, 0.08);
+      border: 1px solid var(--line);
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
     }
 
     canvas {
       display: block;
       width: 100%;
-      min-width: 720px;
+      max-width: 100%;
+      min-width: 0;
       height: auto;
       background:
         linear-gradient(90deg, rgba(30, 58, 138, 0.04) 1px, transparent 1px),
@@ -543,7 +624,7 @@
       padding: 18px;
       border-radius: 16px;
       background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(17, 17, 17, 0.06);
+      border: 1px solid var(--line);
     }
 
     .summary-total {
@@ -886,7 +967,7 @@
 
     .workspace-main {
       display: grid;
-      grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+      grid-template-columns: minmax(300px, 340px) minmax(0, 1fr);
       gap: 20px;
       align-items: start;
       min-width: 0;
@@ -895,7 +976,7 @@
 
     .tool-panel-shell {
       display: grid;
-      gap: 16px;
+      gap: 12px;
       min-width: 0;
       align-content: start;
     }
@@ -905,6 +986,10 @@
       gap: 14px;
       min-width: 0;
       align-content: start;
+    }
+
+    .workspace-stage .status {
+      margin-top: 0;
     }
 
     .summary-heading {
@@ -924,7 +1009,7 @@
     .tool-button-row {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
+      gap: 8px;
     }
 
     .tool-button-row.compact {
@@ -989,13 +1074,38 @@
       display: none;
     }
 
+    body.floorplan-workspace-active .tool-subsection {
+      gap: 10px;
+      padding: 14px;
+    }
+
+    body.floorplan-workspace-active .tool-subsection-header .helper,
     body.floorplan-workspace-active .upload-field .helper {
       display: none;
     }
 
+    body.floorplan-workspace-active .field label {
+      margin-bottom: 6px;
+    }
+
+    body.floorplan-workspace-active .field input,
+    body.floorplan-workspace-active .field select {
+      min-height: 46px;
+      padding: 12px 13px;
+    }
+
+    body.floorplan-workspace-active .tool-button-row .button,
+    body.floorplan-workspace-active .tool-button-row .button-secondary,
+    body.floorplan-workspace-active .tool-button-row .button-quiet,
+    body.floorplan-workspace-active .tool-button-row .button-danger {
+      min-height: 44px;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+    }
+
     body.floorplan-workspace-active .canvas-stage {
-      min-height: 560px;
-      max-height: calc(100vh - 250px);
+      min-height: 520px;
+      max-height: calc(100vh - 260px);
     }
 
     body.floorplan-workspace-active .workspace-summary .summary-heading p {
@@ -1060,7 +1170,8 @@
     @media (max-width: 980px) {
       .nav {
         min-height: 68px;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
         align-items: center;
         padding: 12px 0;
       }
@@ -1070,37 +1181,40 @@
         letter-spacing: 0.06em;
       }
 
-      .nav-links {
-        display: flex;
-        order: 3;
-        width: 100%;
-        gap: 10px;
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        padding-bottom: 2px;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+      .nav-toggle {
+        display: inline-flex;
+        justify-self: end;
+        transform: rotate(90deg);
       }
 
-      .nav-links::-webkit-scrollbar {
+      .nav-links {
         display: none;
+        width: 100%;
+        grid-column: 1 / -1;
+        gap: 8px;
+        padding-top: 12px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .site-header.mobile-nav-open .nav-links {
+        display: flex;
       }
 
       .nav-links a {
-        white-space: nowrap;
-        padding: 10px 12px;
-        border-radius: 999px;
+        white-space: normal;
+        padding: 12px 14px;
+        border-radius: 14px;
         background: rgba(255, 255, 255, 0.92);
         border: 1px solid rgba(16, 24, 40, 0.08);
       }
 
       .site-header .button {
-        min-width: 0;
-        padding-inline: 16px;
+        display: none;
       }
 
       canvas {
-        min-width: 560px;
+        min-width: 0;
       }
 
       .tool-button-row {
@@ -1113,6 +1227,10 @@
       .section-card,
       .summary-card {
         padding: 22px;
+      }
+
+      .tool-subsection {
+        padding: 16px;
       }
 
       .hero-actions .button,
@@ -1169,6 +1287,10 @@
       .section-card,
       .summary-card {
         padding: 24px;
+      }
+
+      .tool-subsection {
+        padding: 14px;
       }
 
       h1 {
@@ -1306,6 +1428,11 @@
         <a href="floorplan.html">Floor Plan</a>
         <a href="blog/">Guides</a>
       </nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <a class="button" data-quote-return-link href="index.html#quoteForm">Start quote</a>
     </div>
   </header>
@@ -1318,7 +1445,7 @@
           <div class="hero-content-row">
             <div class="hero-copy-block">
               <h1>Measure your flooring area from a floor plan.</h1>
-              <p>Upload your floor plan, set scale using a known wall length, trace the rooms where flooring will be installed, and send the selected area into the quote page.</p>
+              <p>Upload a floor plan, set scale from a known wall, trace the flooring rooms, and send the selected area straight into your quote.</p>
               <div class="hero-actions" style="margin-top: 24px;">
                 <a class="button" href="#measurementTool">Start measuring</a>
                 <a class="button-secondary" data-quote-return-link href="index.html#quoteForm">Open quote</a>
@@ -1344,7 +1471,7 @@
       <div class="shell">
         <article class="section-card">
           <span class="eyebrow">How To Use It</span>
-          <h2 style="margin-top: 18px;">Simple measurement flow</h2>
+          <h2 style="margin-top: 18px;">How the measurement tool works</h2>
           <div class="step-grid">
             <div class="step-card">
               <strong>1. Upload floor plan</strong>
@@ -1363,7 +1490,7 @@
               <span>Select the flooring rooms only, then send the total area into your quote.</span>
             </div>
           </div>
-          <div class="process-banner" id="globalStatus">Set scale first, then trace each flooring room. When you return near the start point, the room closes automatically.</div>
+          <div class="process-banner" id="globalStatus">Start with Step 1. Set scale, then trace each flooring room and send the selected area into your quote.</div>
         </article>
       </div>
     </section>
@@ -1374,27 +1501,31 @@
           <div class="tool-header">
             <span class="eyebrow">Measurement Tool</span>
             <h2>Upload, set scale and trace rooms</h2>
-            <p>Upload your floor plan, set scale using a known wall length, then trace each room where flooring will be installed.</p>
+            <p>Upload the plan, set scale once, then trace the rooms where flooring will be installed.</p>
+          </div>
+
+          <div class="status hidden" id="resumeMeasurementBanner" style="margin-bottom: 20px;">
+            <strong style="display: block; margin-bottom: 8px; color: var(--text);">Previous floor plan measurement found.</strong>
+            <span>Resume your measured rooms. If this browser session is still open, the previous floor plan image will reopen too.</span>
+            <div class="action-row" style="margin-top: 14px;">
+              <button class="button-secondary" id="resumeMeasurementButton" type="button">Resume measurement</button>
+              <button class="button-quiet" id="startNewMeasurementButton" type="button">Start new</button>
+            </div>
           </div>
 
           <div class="workspace-main">
             <div class="tool-panel-shell">
-              <div class="status hidden" id="resumeMeasurementBanner">
-                <strong style="display: block; margin-bottom: 8px; color: var(--text);">Previous floor plan measurement found.</strong>
-                <span>Resume your measured rooms, or start fresh with a new floor plan.</span>
-                <div class="action-row" style="margin-top: 14px;">
-                  <button class="button-secondary" id="resumeMeasurementButton" type="button">Resume measurement</button>
-                  <button class="button-quiet" id="startNewMeasurementButton" type="button">Start new</button>
+              <div class="tool-subsection">
+                <div class="tool-subsection-header">
+                    <h3 class="tool-subsection-title">1. Upload floor plan</h3>
+                    <p class="helper" style="margin: 0;">Use a PDF, JPG or PNG. Uploading another file replaces the current plan.</p>
                 </div>
-              </div>
-
-              <div class="field upload-field" style="margin-top: 0;">
-                <label for="planUpload">Upload floor plan</label>
-                <input id="planUpload" type="file" accept="image/*,.pdf,application/pdf">
-                <p class="helper">Use a PDF, JPG or PNG. Final measurements can still be reviewed before the quote is confirmed.</p>
+                <div class="field upload-field" style="margin-top: 0;">
+                  <label for="planUpload">Choose plan file</label>
+                  <input id="planUpload" type="file" accept="image/*,.pdf,application/pdf">
+                </div>
                 <div class="status" id="uploadStatus">Upload a PDF, JPG or PNG floor plan to start measuring.</div>
                 <div class="tool-button-row compact hidden" id="planFileActions">
-                  <button class="button-secondary" id="replacePlanButton" type="button">Replace floor plan</button>
                   <button class="button-danger" id="clearPlanButton" type="button">Clear floor plan</button>
                 </div>
               </div>
@@ -1412,34 +1543,26 @@
               </div>
 
               <div class="mode-panel active hidden" id="tracePanel">
-                <div class="grid-2" style="margin-top: 18px;">
+                <div class="tool-subsection">
+                  <div class="tool-subsection-header">
+                    <h3 class="tool-subsection-title">2. Set scale and trace</h3>
+                    <p class="helper" style="margin: 0;">Optional room name. Set scale once, then trace each flooring room.</p>
+                  </div>
                   <div class="field">
                     <label for="traceRoomName">Room name</label>
                     <input id="traceRoomName" type="text" placeholder="Leave blank to auto-name">
                   </div>
-                  <div class="field">
-                    <label for="traceRoomType">Room type</label>
-                    <select id="traceRoomType">
-                      <option value="flooring">Flooring area</option>
-                      <option value="wet">Wet area / exclude</option>
-                      <option value="outdoor">Outdoor / exclude</option>
-                    </select>
+
+                  <div class="tool-button-row compact">
+                    <button class="button-secondary" id="setScaleButton" type="button">Step 1. Set scale</button>
+                    <button class="button-secondary" id="resetScaleButton" type="button">Reset scale</button>
                   </div>
-                </div>
 
-                <div class="tool-button-row compact">
-                  <button class="button-secondary" id="setScaleButton" type="button">Step 1. Set scale</button>
-                  <button class="button-secondary" id="resetScaleButton" type="button">Reset scale</button>
-                </div>
-
-                <div class="tool-button-row" style="margin-top: 10px;">
-                  <button class="button-secondary" id="startTraceButton" type="button">Step 2. Trace room</button>
-                  <button class="button-quiet" id="undoTracePointButton" type="button">Undo point</button>
-                  <button class="button-quiet" id="clearTraceButton" type="button">Clear trace</button>
-                </div>
-
-                <div class="status" id="traceStatus">
-                  Click two points on a known wall length, then enter the real distance.
+                  <div class="tool-button-row" style="margin-top: 2px;">
+                    <button class="button-secondary" id="startTraceButton" type="button">Step 2. Trace room</button>
+                    <button class="button-quiet" id="undoTracePointButton" type="button">Undo point</button>
+                    <button class="button-quiet" id="clearTraceButton" type="button">Clear trace</button>
+                  </div>
                 </div>
               </div>
 
@@ -1514,6 +1637,9 @@
             </div>
 
             <div class="workspace-stage">
+              <div class="status" id="traceStatus">
+                Click two points on a known wall, then enter the real distance.
+              </div>
               <div class="status" id="canvasStatus">Upload a floor plan to start.</div>
               <div class="canvas-shell hidden" id="canvasShell">
                 <div class="canvas-stage">
@@ -1552,11 +1678,13 @@
             </div>
           </div>
 
-          <div class="summary-box">
-            <div class="pill-row">
-              <span class="pill good">Trace workflow active</span>
-            </div>
-          </div>
+          <details class="summary-box room-list-panel" open>
+            <summary>
+              <strong>Measured rooms</strong>
+              <span class="helper">Open room list</span>
+            </summary>
+            <div class="rooms-table" id="roomsTable"></div>
+          </details>
 
           <div class="summary-box">
             <strong>Ready to continue your quote?</strong>
@@ -1566,27 +1694,10 @@
               <button class="button-danger" id="clearRoomsButton" type="button">Clear rooms</button>
             </div>
           </div>
-
-          <details class="summary-box room-list-panel">
-            <summary>
-              <strong>Measured rooms</strong>
-              <span class="helper">Open room list</span>
-            </summary>
-            <div class="rooms-table" id="roomsTable"></div>
-          </details>
         </aside>
       </div>
     </section>
 
-    <section class="support-section" id="floorplanSupportSection">
-      <div class="shell">
-        <article class="section-card support-copy">
-          <span class="eyebrow">Floor Plan Measurement</span>
-          <h2 style="margin-top: 18px;">Measure flooring area from a floor plan</h2>
-          <p>If you have a floor plan, you can use this tool to estimate flooring area before requesting a quote. Set scale using a known wall length, trace the rooms where flooring will be installed, and send the selected area into the quote form.</p>
-        </article>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">
@@ -1656,6 +1767,7 @@
     const FLOORPLAN_SOURCE_KEY = "operon_floorplan_source";
     const FLOORPLAN_STATE_KEY = "operon-floorplan-trace-v2";
     const FLOORPLAN_DRAFT_KEY = "operon-floorplan-draft-v1";
+    const FLOORPLAN_IMAGE_SESSION_KEY = "operon-floorplan-image-session-v1";
     const AUTO_CLOSE_THRESHOLD_PX = 16;
     const HANDLE_HIT_RADIUS = 16;
     const EDGE_HANDLE_HIT_RADIUS = 14;
@@ -1670,7 +1782,6 @@
       planUpload: document.getElementById("planUpload"),
       uploadStatus: document.getElementById("uploadStatus"),
       planFileActions: document.getElementById("planFileActions"),
-      replacePlanButton: document.getElementById("replacePlanButton"),
       clearPlanButton: document.getElementById("clearPlanButton"),
       resumeMeasurementBanner: document.getElementById("resumeMeasurementBanner"),
       resumeMeasurementButton: document.getElementById("resumeMeasurementButton"),
@@ -1680,7 +1791,6 @@
       canvasShell: document.getElementById("canvasShell"),
       traceStatus: document.getElementById("traceStatus"),
       traceRoomName: document.getElementById("traceRoomName"),
-      traceRoomType: document.getElementById("traceRoomType"),
       setScaleButton: document.getElementById("setScaleButton"),
       resetScaleButton: document.getElementById("resetScaleButton"),
       startTraceButton: document.getElementById("startTraceButton"),
@@ -1842,8 +1952,10 @@
       dom.globalStatus.textContent = message;
     }
 
-    function setCanvasStatus(message) {
+    function setCanvasStatus(message, options) {
+      const forceVisible = !!(options && options.forceVisible);
       dom.canvasStatus.textContent = message;
+      dom.canvasStatus.classList.toggle("hidden", !!state.image && !forceVisible);
     }
 
     function setUploadStatus(message) {
@@ -1851,12 +1963,25 @@
     }
 
     function setTraceStatus(message) {
+      if (typeof message === "object" && message) {
+        dom.traceStatus.classList.toggle("status-next", !!message.next);
+        dom.traceStatus.innerHTML = message.next
+          ? '<strong>Next step</strong><span>' + escapeHtml(message.text || "") + "</span>"
+          : escapeHtml(message.text || "");
+        return;
+      }
+
+      dom.traceStatus.classList.remove("status-next");
       dom.traceStatus.textContent = message;
     }
 
-    function clearStoredFloorplanImageState() {
+    function clearStoredFloorplanImageState(options) {
+      const preserveSessionImage = !!(options && options.preserveSessionImage);
       try {
         localStorage.removeItem(FLOORPLAN_STATE_KEY);
+        if (!preserveSessionImage) {
+          sessionStorage.removeItem(FLOORPLAN_IMAGE_SESSION_KEY);
+        }
         [
           "floorplanImage",
           "uploadedFloorplan",
@@ -1867,10 +1992,32 @@
           "base64"
         ].forEach(function (key) {
           localStorage.removeItem(key);
-          sessionStorage.removeItem(key);
+          if (!preserveSessionImage) {
+            sessionStorage.removeItem(key);
+          }
         });
       } catch (error) {
         // Ignore storage cleanup failures.
+      }
+    }
+
+    function saveSessionFloorplanImage(dataUrl) {
+      try {
+        if (dataUrl) {
+          sessionStorage.setItem(FLOORPLAN_IMAGE_SESSION_KEY, dataUrl);
+        } else {
+          sessionStorage.removeItem(FLOORPLAN_IMAGE_SESSION_KEY);
+        }
+      } catch (error) {
+        // Ignore storage failures for temporary image restore.
+      }
+    }
+
+    function getSessionFloorplanImage() {
+      try {
+        return sessionStorage.getItem(FLOORPLAN_IMAGE_SESSION_KEY) || "";
+      } catch (error) {
+        return "";
       }
     }
 
@@ -1883,6 +2030,8 @@
             rooms: draft.rooms,
             roomCounter: draft.roomCounter || (draft.rooms.length + 1),
             selectedRoomId: draft.selectedRoomId || "",
+            pixelsPerMetre: Number(draft.pixelsPerMetre || 0),
+            fileName: draft.fileName || "",
             area: typeof draft.selectedTotalArea === "number" ? draft.selectedTotalArea : draft.rooms.reduce(function (sum, room) {
               return room.includeInQuote ? sum + (room.areaM2 || 0) : sum;
             }, 0)
@@ -1915,6 +2064,7 @@
       try {
         sessionStorage.setItem(FLOORPLAN_DRAFT_KEY, JSON.stringify({
           fileName: state.fileName,
+          pixelsPerMetre: state.pixelsPerMetre,
           rooms: state.rooms,
           roomCounter: state.roomCounter,
           selectedRoomId: state.selectedRoomId,
@@ -1988,8 +2138,8 @@
       dom.planFileActions.classList.add("hidden");
       dom.planUpload.value = "";
       setUploadStatus("Upload a PDF, JPG or PNG floor plan to start measuring.");
-      setCanvasStatus("Upload a floor plan to start.");
-      setTraceStatus("Upload a floor plan first, then set scale.");
+      setCanvasStatus("Upload a floor plan to start.", { forceVisible: true });
+      setTraceStatus({ next: true, text: "Upload a floor plan first, then press Step 1. Set scale." });
       renderCanvas();
       renderRoomsTable();
     }
@@ -1999,11 +2149,16 @@
       dom.canvasShell.classList.remove("hidden");
       dom.modePanels.trace.classList.remove("hidden");
       dom.planFileActions.classList.remove("hidden");
-      setUploadStatus(state.fileName ? "Loaded floor plan: " + state.fileName : "Floor plan loaded.");
+      setUploadStatus(
+        (state.fileName ? "Loaded floor plan: " + state.fileName + ". " : "Floor plan loaded. ") +
+        (state.pixelsPerMetre
+          ? "Scale confirmed. Trace the flooring rooms."
+          : "Plan ready. Set scale, then trace the flooring rooms.")
+      );
       setCanvasStatus("Plan ready. Set scale, then trace the flooring rooms.");
       setTraceStatus(state.pixelsPerMetre
-        ? "Scale confirmed. Press Trace room to start tracing the next room."
-        : "Click two points on a known wall length, then enter the real distance.");
+        ? { next: true, text: "Scale is set. Press Step 2. Trace room to start measuring a room." }
+        : { next: true, text: "Start with Step 1. Press Set scale, then click two points on the plan." });
       renderCanvas();
       renderRoomsTable();
     }
@@ -2016,15 +2171,35 @@
       showUploadedPlanState();
     }
 
-    function restoreSavedMeasurement(snapshot) {
+    async function restoreSavedMeasurement(snapshot) {
       state.rooms = Array.isArray(snapshot.rooms) ? snapshot.rooms.slice() : [];
       state.roomCounter = snapshot.roomCounter || (state.rooms.length + 1);
       state.selectedRoomId = snapshot.selectedRoomId || "";
+      state.pixelsPerMetre = Number(snapshot.pixelsPerMetre || 0);
+      state.fileName = snapshot.fileName || state.fileName || "";
+
+      const sessionImageDataUrl = snapshot.source === "draft" ? getSessionFloorplanImage() : "";
+      if (sessionImageDataUrl) {
+        try {
+          const restoredImage = await loadImageFromDataUrl(sessionImageDataUrl);
+          state.image = restoredImage;
+          state.imageElement = restoredImage;
+          state.imageLoaded = true;
+          renderFloorplanPreview();
+          setGlobalStatus("Previous floor plan measurement resumed.");
+          scrollToWorkspace();
+          return;
+        } catch (error) {
+          // Fall back to measurement-only restore if the temporary image is unavailable.
+        }
+      }
+
       renderRoomsTable();
       setGlobalStatus("Previous measurement loaded. Please re-upload the floor plan to continue editing.");
       setUploadStatus("Please re-upload the floor plan to continue editing.");
-      setCanvasStatus("Measured rooms restored. Re-upload the floor plan to keep tracing or adjusting rooms.");
-      setTraceStatus("Rooms restored. Upload the floor plan again to continue editing.");
+      setCanvasStatus("Measured rooms restored. Re-upload the floor plan to keep tracing or adjusting rooms.", { forceVisible: true });
+      setTraceStatus({ next: true, text: "Rooms restored. Upload the floor plan again to continue editing." });
+      scrollToWorkspace();
     }
 
     function clearUploadedFloorplan(skipRoomPrompt) {
@@ -2643,8 +2818,10 @@
       if (!state.image) {
         dom.setScaleButton.textContent = "Step 1. Set scale";
         dom.setScaleButton.disabled = true;
+        dom.setScaleButton.classList.add("button-step-active");
         dom.resetScaleButton.disabled = true;
         dom.startTraceButton.disabled = true;
+        dom.startTraceButton.classList.remove("button-step-active");
         dom.undoTracePointButton.disabled = true;
         dom.clearTraceButton.disabled = true;
         return;
@@ -2652,11 +2829,14 @@
 
       const scaleReady = !!state.pixelsPerMetre;
       const traceActive = state.activeTool === "trace";
+      const scaleActive = state.activeTool === "scale";
       const hasTracePoints = state.tracePoints.length > 0;
       dom.setScaleButton.textContent = scaleReady ? "Step 1. Scale set" : "Step 1. Set scale";
       dom.setScaleButton.disabled = scaleReady;
+      dom.setScaleButton.classList.toggle("button-step-active", !scaleReady || scaleActive);
       dom.resetScaleButton.disabled = !scaleReady;
       dom.startTraceButton.disabled = !scaleReady;
+      dom.startTraceButton.classList.toggle("button-step-active", scaleReady && !traceActive);
       dom.undoTracePointButton.disabled = !(traceActive && hasTracePoints);
       dom.clearTraceButton.disabled = !(traceActive && hasTracePoints);
     }
@@ -2666,7 +2846,10 @@
         return;
       }
 
-      if (state.rooms.length) {
+      const reconnectingRestoredMeasurement = !state.image && state.rooms.length > 0;
+      const replacingActiveMeasurement = !!state.image && state.rooms.length > 0;
+
+      if (replacingActiveMeasurement) {
         const confirmed = window.confirm("Uploading a new floor plan will remove the current measurements. Continue?");
         if (!confirmed) {
           dom.planUpload.value = "";
@@ -2679,9 +2862,13 @@
       state.fileName = file.name || "Uploaded plan";
       state.imageLoaded = false;
       state.imageElement = null;
-      clearRoomsTable();
+
+      if (replacingActiveMeasurement) {
+        clearRoomsTable();
+      }
 
       let loadedImage = null;
+      let sessionImageDataUrl = "";
       if (file.type === "application/pdf" || /\.pdf$/i.test(file.name)) {
         if (!window.pdfjsLib) {
           setCanvasStatus("PDF support is unavailable. Use a JPG or PNG instead.");
@@ -2700,9 +2887,10 @@
           canvasContext: renderContext,
           viewport: viewport
         }).promise;
-        loadedImage = await loadImageFromDataUrl(renderCanvas.toDataURL("image/png"));
+        sessionImageDataUrl = renderCanvas.toDataURL("image/png");
+        loadedImage = await loadImageFromDataUrl(sessionImageDataUrl);
       } else {
-        const rawDataUrl = await new Promise(function (resolve, reject) {
+        sessionImageDataUrl = await new Promise(function (resolve, reject) {
           const reader = new FileReader();
           reader.onload = function (event) {
             resolve(event.target.result);
@@ -2710,20 +2898,29 @@
           reader.onerror = reject;
           reader.readAsDataURL(file);
         });
-        loadedImage = await loadImageFromDataUrl(rawDataUrl);
+        loadedImage = await loadImageFromDataUrl(sessionImageDataUrl);
       }
 
       state.image = loadedImage;
       state.imageElement = loadedImage;
       state.imageLoaded = !!loadedImage;
-      clearScaleState();
+      if (replacingActiveMeasurement) {
+        clearScaleState();
+      }
       clearTraceState();
-      state.selectedRoomId = "";
+      if (replacingActiveMeasurement) {
+        state.selectedRoomId = "";
+      }
+      saveSessionFloorplanImage(sessionImageDataUrl);
       saveDraftState();
       initQuickRoomMode();
       renderFloorplanPreview();
-      setUploadStatus("Loaded floor plan: " + state.fileName);
-      setGlobalStatus("Plan uploaded. Set scale first, then trace each flooring room.");
+      setUploadStatus(reconnectingRestoredMeasurement
+        ? "Floor plan reconnected: " + state.fileName + ". Existing measured rooms are ready."
+        : "Loaded floor plan: " + state.fileName);
+      setGlobalStatus(reconnectingRestoredMeasurement
+        ? "Previous floor plan reconnected. Existing measured rooms are ready."
+        : "Plan uploaded. Set scale first, then trace each flooring room.");
       scrollToWorkspace();
       if (window.OperonTracking) {
         window.OperonTracking.trackFloorplanUploaded(state.fileName);
@@ -2741,14 +2938,14 @@
       state.tracePoints = [];
       state.dragTarget = null;
       renderCanvas();
-      setTraceStatus("Click the first point on a known wall length.");
+      setTraceStatus({ next: true, text: "Scale mode is on. Click the first point on a known wall." });
       setCanvasStatus("Scale mode is active. Click two points on a known wall length.");
     }
 
     function handleScalePointClick(point) {
       state.scalePoints.push(point);
       if (state.scalePoints.length === 1) {
-        setTraceStatus("Click the second point on the same known wall length.");
+        setTraceStatus({ next: true, text: "Now click the second point on the same wall." });
         renderCanvas();
         return;
       }
@@ -2783,7 +2980,7 @@
       renderCanvas();
       renderRoomsTable();
       initQuickRoomMode();
-      setTraceStatus("Scale confirmed. Press Trace room to start tracing the next room.");
+      setTraceStatus({ next: true, text: "Scale saved. Press Step 2. Trace room to start tracing." });
       setCanvasStatus("Scale confirmed. Trace around a room, then return near the start point to close it.");
       setGlobalStatus("Scale set. You can now trace rooms.");
       if (window.OperonTracking) {
@@ -2798,7 +2995,7 @@
       renderCanvas();
       renderRoomsTable();
       initQuickRoomMode();
-      setTraceStatus("Scale cleared. Click Set scale to start again.");
+      setTraceStatus({ next: true, text: "Scale cleared. Press Step 1. Set scale to start again." });
       setCanvasStatus("Scale cleared. Set scale before tracing rooms.");
     }
 
@@ -2808,14 +3005,15 @@
         return;
       }
       if (!state.pixelsPerMetre) {
-        setCanvasStatus("Set scale before tracing a room.");
+        setCanvasStatus("Press Set scale before tracing a room.");
+        setTraceStatus({ next: true, text: "Start with Step 1. Press Set scale first." });
         return;
       }
       state.activeTool = "trace";
       state.tracePoints = [];
       state.dragTarget = null;
       renderCanvas();
-      setTraceStatus("Trace the room boundary. Return near the first point to close it automatically.");
+      setTraceStatus({ next: true, text: "Trace around the room boundary. Return near the first point to close it." });
       setCanvasStatus("Trace mode is active. Click around the room boundary.");
     }
 
@@ -2828,7 +3026,8 @@
 
     function handleTracePointClick(point) {
       if (!state.pixelsPerMetre) {
-        setCanvasStatus("Set scale before tracing a room.");
+        setCanvasStatus("Press Set scale before tracing a room.");
+        setTraceStatus({ next: true, text: "Start with Step 1. Press Set scale first." });
         return;
       }
 
@@ -2840,9 +3039,9 @@
       state.tracePoints.push(point);
       renderCanvas();
       if (state.tracePoints.length < 3) {
-        setTraceStatus("Keep tracing around the room. Return near the first point to close it.");
+        setTraceStatus({ next: true, text: "Keep tracing around the room. Return near the first point to close it." });
       } else {
-        setTraceStatus("Return near the first point to close the room automatically.");
+        setTraceStatus({ next: true, text: "Return near the first point to close the room automatically." });
       }
     }
 
@@ -2862,7 +3061,7 @@
 
       const preferredName = dom.traceRoomName.value.trim();
       const roomName = preferredName || getNextRoomName();
-      const roomType = dom.traceRoomType.value;
+      const roomType = "flooring";
 
       addMeasuredRoom({
         id: "room-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7),
@@ -2882,7 +3081,7 @@
       renderCanvas();
       renderRoomsTable();
       saveDraftState();
-      setTraceStatus("Room added: " + formatArea(areaM2) + ". Trace the next room when ready.");
+      setTraceStatus({ next: true, text: "Room added: " + formatArea(areaM2) + ". Press Step 2. Trace room for the next room." });
       setCanvasStatus("Room added. Trace the next room or use the area in quote.");
       setGlobalStatus("Room added: " + formatArea(areaM2));
       if (window.OperonTracking) {
@@ -2905,7 +3104,7 @@
     function clearTrace() {
       state.tracePoints = [];
       renderCanvas();
-      setTraceStatus("Trace cleared. Start tracing again when ready.");
+      setTraceStatus({ next: true, text: "Trace cleared. Press Step 2. Trace room to start again." });
     }
 
     function clearRooms() {
@@ -3080,7 +3279,16 @@
 
       if (state.activeTool === "trace") {
         handleTracePointClick(point);
+        return;
       }
+
+      if (!state.pixelsPerMetre) {
+        setCanvasStatus("Press Set scale first to begin measuring.");
+        setTraceStatus({ next: true, text: "Start with Step 1. Press Set scale, then click two points on the plan." });
+        return;
+      }
+
+      setTraceStatus({ next: true, text: "Scale is set. Press Step 2. Trace room to start measuring a room." });
     }
 
     function handleRoomsTableInput(event) {
@@ -3113,6 +3321,11 @@
       if (!row) {
         return;
       }
+
+      if (event.target.closest("[data-room-field=\"include\"]") || event.target.closest("[data-room-field=\"name\"]")) {
+        return;
+      }
+
       const roomId = row.dataset.roomId;
       if (event.target.dataset.roomAction === "delete") {
         state.rooms = state.rooms.filter(function (room) {
@@ -3137,7 +3350,7 @@
       }
       setQuoteReturnLinks();
       refreshWorkspaceMode();
-      clearStoredFloorplanImageState();
+      clearStoredFloorplanImageState({ preserveSessionImage: true });
       initQuickRoomMode();
       renderFloorplanPreview();
 
@@ -3160,20 +3373,17 @@
           await handlePlanUpload(file);
         }
       });
-      dom.replacePlanButton.addEventListener("click", function () {
-        dom.planUpload.click();
-      });
       dom.clearPlanButton.addEventListener("click", function () {
         clearUploadedFloorplan(false);
       });
-      dom.resumeMeasurementButton.addEventListener("click", function () {
+      dom.resumeMeasurementButton.addEventListener("click", async function () {
         const snapshot = getSavedMeasurementSnapshot();
         dom.resumeMeasurementBanner.classList.add("hidden");
         if (!snapshot) {
           setGlobalStatus("No previous measurement is available.");
           return;
         }
-        restoreSavedMeasurement(snapshot);
+        await restoreSavedMeasurement(snapshot);
       });
       dom.startNewMeasurementButton.addEventListener("click", function () {
         dom.resumeMeasurementBanner.classList.add("hidden");
@@ -3250,5 +3460,6 @@
 
     initFloorplanTool();
   </script>
+  <script src="mobile-nav.js"></script>
 </body>
 </html>
