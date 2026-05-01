@@ -1179,13 +1179,17 @@
 
       .nav-toggle {
         display: inline-flex;
+        grid-column: 2;
+        grid-row: 1;
         justify-self: end;
+        align-self: center;
       }
 
       .nav-links {
         display: none;
         width: 100%;
         grid-column: 1 / -1;
+        grid-row: 2;
         gap: 8px;
         padding-top: 12px;
         flex-direction: column;
@@ -1202,6 +1206,32 @@
         border-radius: 14px;
         background: rgba(255, 255, 255, 0.92);
         border: 1px solid rgba(16, 24, 40, 0.08);
+      }
+
+      .nav-toggle[aria-expanded="true"] {
+        background: transparent;
+        position: relative;
+      }
+
+      .nav-toggle[aria-expanded="true"]::before,
+      .nav-toggle[aria-expanded="true"]::after {
+        content: "";
+        position: absolute;
+        width: 28px;
+        height: 2.5px;
+        border-radius: 999px;
+        background: #111820;
+        top: 50%;
+        left: 50%;
+        transform-origin: center;
+      }
+
+      .nav-toggle[aria-expanded="true"]::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+
+      .nav-toggle[aria-expanded="true"]::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
       }
 
       .site-header .button {
