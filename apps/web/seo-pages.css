@@ -998,7 +998,6 @@ li,
   .nav-toggle {
     display: inline-flex;
     justify-self: end;
-    transform: rotate(90deg);
   }
 
   .nav-links {
