@@ -390,6 +390,10 @@ function getWarnings(input, measurement, product, pricePending, accessState) {
     warnings.push("Removal type needs manual confirmation.");
     manualReviewRequired = true;
   }
+  if (input.removalOption && input.removalOption !== "none" && input.removalOption !== "other" && input.removalOption !== "unsure" && !input.removalDisposal) {
+    warnings.push("Disposal preference is missing for removal.");
+    manualReviewRequired = true;
+  }
   if (input.floorPrepType === "heavy" || input.floorPrepType === "manual" || input.floorPrepType === "unsure") {
     warnings.push("Floor prep needs site confirmation.");
     manualReviewRequired = true;
@@ -529,7 +533,8 @@ async function calculatePrivateQuote(input) {
   const underlayTotal = underlay ? underlayArea * parseNumber(underlay.price_per_m2) : 0;
   const removalConfig = getRemovalConfig(library, input.removalOption);
   const removalBaseTotal = removalConfig
-    ? (measurement.realArea * parseNumber(removalConfig.rate_per_m2)) + parseNumber(removalConfig.disposal_fee)
+    ? (measurement.realArea * parseNumber(removalConfig.rate_per_m2))
+      + (input.removalDisposal === "yes" ? parseNumber(removalConfig.disposal_fee) : 0)
     : 0;
   const floorPrepBaseTotal = (input.floorPrepType === "basic" || input.floorPrepType === "levelling")
     ? measurement.realArea * parseNumber((rules.floorPrepRates || {})[input.floorPrepType] || 0)
@@ -628,7 +633,9 @@ async function calculatePrivateQuote(input) {
     roomCount: measurement.roomCount,
     furnitureRoomCount: furnitureRoomCount,
     doorCount: doorCount,
-    removalLabel: input.removalOption ? String(input.removalOption).replace(/_/g, " ") : "none",
+    removalLabel: input.removalOption
+      ? String(input.removalOption).replace(/_/g, " ") + (input.removalDisposal === "yes" ? " + disposal" : " only")
+      : "none",
     floorPrepLabel: input.floorPrepType ? String(input.floorPrepType).replace(/_/g, " ") : "none",
     skirtingLabel: input.skirtingOption ? String(input.skirtingOption).replace(/_/g, " ") : "none",
     scotiaLabel: input.scotiaOption ? String(input.scotiaOption).replace(/_/g, " ") : "none",

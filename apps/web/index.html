@@ -1628,7 +1628,7 @@
             <a href="floorplan.html" class="btn-secondary" data-floorplan-link>Measure from Floor Plan</a>
           </div>
           <p class="hero-trust">Takes 2–3 minutes. Final quote confirmed before work starts.</p>
-          <div class="status" id="pageStatus">Your progress saves in this browser while you work.</div>
+          <div class="status" id="pageStatus" hidden></div>
         </div>
       </div>
     </section>
@@ -1951,6 +1951,14 @@
                     <option value="other">Other / manual</option>
                   </select>
                 </div>
+                <div class="field" id="removalDisposalField" hidden>
+                  <label for="removalDisposal">Disposal of removed flooring</label>
+                  <select id="removalDisposal" name="removalDisposal">
+                    <option value="">Please choose</option>
+                    <option value="no">No, customer handles disposal</option>
+                    <option value="yes">Yes, include disposal</option>
+                  </select>
+                </div>
                 <div class="field">
                   <label for="floorPrepType">Floor preparation</label>
                   <select id="floorPrepType" name="floorPrepType">
@@ -2052,7 +2060,6 @@
               <textarea id="customerNotes" name="customerNotes" placeholder="Preferred date, product preference, access notes, floor condition, or anything else helpful."></textarea>
             </div>
             <div class="action-row">
-              <button class="button-secondary" id="useSummaryInNotes" type="button">Use summary in notes</button>
               <button class="button-quiet" id="resetQuoteButton" type="button">Reset quote</button>
             </div>
           </section>
@@ -2093,10 +2100,10 @@
           </div>
 
           <div class="summary-box">
-            <div class="pill-row">
-              <span class="pill good" id="summaryZone">Manual total</span>
-              <span class="pill muted" id="summaryAccess">Project conditions included</span>
-              <span class="pill warn" id="summaryReview">Estimate ready</span>
+            <div class="summary-grid">
+              <div class="summary-row"><span>Quote type</span><strong id="summaryScope">Installation only</strong></div>
+              <div class="summary-row"><span>Measurement</span><strong id="summaryMeasurement">Manual total</strong></div>
+              <div class="summary-row"><span>Estimate includes</span><strong id="summaryCoverage">Installation labour</strong></div>
             </div>
             <div class="notice" id="manualReviewNotice" hidden>
               Estimate only — final quote subject to site confirmation.
@@ -2109,13 +2116,12 @@
           </div>
 
           <div class="summary-box">
-            <h3 style="font-size: 1.06rem;">Warnings</h3>
+            <h3 style="font-size: 1.06rem;">Review notes</h3>
             <ul class="list" id="warningsList"></ul>
           </div>
 
-          <div class="summary-box">
-            <h3 style="font-size: 1.06rem;">Request status</h3>
-            <div class="status" id="requestStatus">Review the estimate, then email the quote when you are ready.</div>
+          <div class="summary-box" id="requestStatusBox" hidden>
+            <div class="status" id="requestStatus"></div>
           </div>
 
           <details class="summary-box admin-panel" id="debugPanel" hidden>
@@ -2382,6 +2388,7 @@
     const productGrid = document.getElementById("productGrid");
     const pageStatus = document.getElementById("pageStatus");
     const requestStatus = document.getElementById("requestStatus");
+    const requestStatusBox = document.getElementById("requestStatusBox");
     const floorplanStatus = document.getElementById("floorplanStatus");
     const debugPanel = document.getElementById("debugPanel");
     const wizardValidationMessage = document.getElementById("wizardValidationMessage");
@@ -2409,6 +2416,16 @@
     const browseCategoryLink = document.getElementById("browseCategoryLink");
     const clearSelectedProductButton = document.getElementById("clearSelectedProductButton");
     const measurementHelperTitle = document.getElementById("measurementHelperTitle");
+
+    function showPageStatus(message) {
+      if (!message) {
+        pageStatus.textContent = "";
+        pageStatus.hidden = true;
+        return;
+      }
+      pageStatus.textContent = message;
+      pageStatus.hidden = false;
+    }
     const measurementHelperText = document.getElementById("measurementHelperText");
     const measurementSnapshot = document.getElementById("measurementSnapshot");
     const installationPathHelper = document.getElementById("installationPathHelper");
@@ -2476,6 +2493,15 @@
         length: "",
         width: ""
       };
+    }
+
+    function isSimpleLocalPreview() {
+      const host = window.location.hostname;
+      return host === "localhost" || host === "127.0.0.1" || host === "::1";
+    }
+
+    function shouldUseLocalReviewOnlyMode() {
+      return isSimpleLocalPreview() && (!state.quoteRuntimeHealth.checked || !state.quoteRuntimeHealth.quoteSaveReady);
     }
 
     function escapeHtml(value) {
@@ -2732,9 +2758,11 @@
       wizardBackButton.disabled = currentQuoteStep === 0;
       wizardNextButton.disabled = false;
       wizardSubmitButton.disabled = false;
-      wizardNextButton.hidden = currentQuoteStep === steps.length - 1;
-      wizardSubmitButton.hidden = currentQuoteStep !== steps.length - 1;
-      wizardSubmitButton.setAttribute("aria-hidden", currentQuoteStep === steps.length - 1 ? "false" : "true");
+      const isFinalStep = currentQuoteStep === steps.length - 1;
+      const localReviewOnlyMode = isFinalStep && shouldUseLocalReviewOnlyMode();
+      wizardNextButton.hidden = isFinalStep;
+      wizardSubmitButton.hidden = !isFinalStep || localReviewOnlyMode;
+      wizardSubmitButton.setAttribute("aria-hidden", isFinalStep && !localReviewOnlyMode ? "false" : "true");
       quoteSummaryCard.hidden = currentQuoteStep !== steps.length - 1;
       quoteLayout.classList.toggle("layout-single", currentQuoteStep !== steps.length - 1);
       quoteForm.classList.add("quote-form-compact");
@@ -2747,8 +2775,7 @@
       };
       wizardNextButton.textContent = nextLabels[currentQuoteStep] || "Next";
       if (state.submitState === "idle") {
-        requestStatus.textContent = getIdleQuoteStatusMessage();
-        delete requestStatus.dataset.state;
+        clearQuoteSubmitMessage();
       }
       updateQuoteCtaSystem();
     }
@@ -2792,6 +2819,14 @@
 
       if (currentQuoteStep === 4) {
         clearQuoteSubmitMessage();
+        if (shouldUseLocalReviewOnlyMode()) {
+          showQuoteSubmitMessage(
+            "local_preview",
+            "Local preview only. You can review the estimate here. Saving and Email quote work on the Netlify site or full netlify dev."
+          );
+          showQuoteStep(currentQuoteStep + 1, { scrollMode: "top" });
+          return;
+        }
         if (state.quoteRuntimeHealth.checked && !state.quoteRuntimeHealth.quoteSaveReady) {
           const runtimeMessage = getIdleQuoteStatusMessage();
           showWizardValidationMessage(runtimeMessage);
@@ -2870,6 +2905,7 @@
     function updateConditionalQuoteFields() {
       const propertyType = getInputValue("propertyType");
       const level = getInputValue("level");
+      const removalType = getInputValue("removalType");
       const furnitureType = getInputValue("furnitureType");
       const doorTrimming = getInputValue("doorTrimming");
       const previousPropertyType = state.lastPropertyType;
@@ -2898,6 +2934,12 @@
       setInputValue("floorplanRoomCount", "");
       setConditionalFieldVisibility("manualRoomCountField", false);
       setConditionalFieldVisibility("floorplanRoomCountField", false);
+
+      const showRemovalDisposal = !!removalType && removalType !== "none" && removalType !== "other" && removalType !== "unsure";
+      if (!showRemovalDisposal) {
+        setInputValue("removalDisposal", "");
+      }
+      setConditionalFieldVisibility("removalDisposalField", showRemovalDisposal);
 
       const normalizedFurnitureType = furnitureType === "light" || furnitureType === "heavy" ? "yes" : furnitureType;
       if (normalizedFurnitureType !== furnitureType) {
@@ -3347,6 +3389,9 @@
       }
 
       if (currentQuoteStep === 4) {
+        if (input.removalType !== "none" && input.removalType !== "other" && input.removalType !== "unsure" && !input.removalDisposal) {
+          return { valid: false, message: "Please choose whether disposal of removed flooring is included." };
+        }
         if (input.furnitureType === "yes" && !Math.max(0, Math.round(parsePositiveNumber(input.furnitureRoomCount)))) {
           return { valid: false, message: "Please enter how many furnished rooms need to be moved." };
         }
@@ -3382,6 +3427,7 @@
         skirtingOption: input.skirtingType,
         scotiaOption: input.scotiaType,
         removalOption: input.removalType,
+        removalDisposal: input.removalDisposal,
         suburb: getInputValue("suburb").trim(),
         postcode: getInputValue("postcode").trim(),
         propertyType: input.propertyType,
@@ -3557,6 +3603,7 @@
         hasLift: getInputValue("hasLift"),
         parkingAccess: getInputValue("parkingAccess"),
         removalType: getInputValue("removalType"),
+        removalDisposal: getInputValue("removalDisposal"),
         floorPrepType: getInputValue("floorPrepType"),
         moistureBarrier: getInputValue("moistureBarrier"),
         skirtingType: getInputValue("skirtingType"),
@@ -3572,7 +3619,7 @@
     function renderWarnings(warnings) {
       const warningsList = document.getElementById("warningsList");
       if (!warnings.length) {
-        warningsList.innerHTML = "<li>No warnings. This estimate is ready for review.</li>";
+        warningsList.innerHTML = "<li>No extra review notes for this estimate.</li>";
         return;
       }
       warningsList.innerHTML = warnings.map(function (warning) {
@@ -3646,11 +3693,13 @@
       document.getElementById("summaryCaption").textContent = result.pricePending
         ? result.productLabel + " · " + getCategoryEstimateLabel(result.productCategory) + " · " + measurement.sourceLabel
         : result.productLabel + " · " + measurement.sourceLabel + " · " + formatArea(result.realArea);
-      document.getElementById("summaryZone").textContent = result.zoneName || measurement.sourceLabel;
-      document.getElementById("summaryAccess").textContent = result.quoteMode === "install_only"
-        ? "Installation labour based on real area"
-        : "Project conditions included";
-      document.getElementById("summaryReview").textContent = result.manualReviewRequired ? "Estimate only" : "Estimate ready";
+      document.getElementById("summaryScope").textContent = result.quoteMode === "supply_install"
+        ? "Supply & install"
+        : "Installation only";
+      document.getElementById("summaryMeasurement").textContent = measurement.sourceLabel + " · " + formatArea(result.realArea);
+      document.getElementById("summaryCoverage").textContent = result.quoteLines.length
+        ? result.quoteLines.map(function (line) { return line.label; }).join(" · ")
+        : "Estimate items update here";
       document.getElementById("measurementSourceLabel").textContent = measurement.sourceLabel;
       document.getElementById("realAreaMetric").textContent = formatArea(result.realArea);
       document.getElementById("chargeableAreaMetric").textContent = isInstallOnly
@@ -3666,9 +3715,7 @@
       manualReviewNotice.textContent = result.pricePending
         ? "Selected product saved. This estimate currently uses the " + getCategoryEstimateLabel(result.productCategory) + " until the exact product price is confirmed. Final quote confirmed before work starts."
         : (result.disclaimer || "Estimate only — final quote subject to site confirmation.");
-      if (result.pricePending) {
-        document.getElementById("summaryReview").textContent = "Estimate pending product price";
-      }
+      manualReviewNotice.hidden = !(result.manualReviewRequired || result.pricePending);
 
       const quoteLines = document.getElementById("quoteLines");
       quoteLines.innerHTML = result.quoteLines.map(function (line) {
@@ -3767,27 +3814,6 @@
       }
     }
 
-    function pushSummaryIntoNotes() {
-      const result = getCurrentQuoteResult();
-      const lines = [
-        "Quote summary:",
-        "- Mode: " + (result.quoteMode === "supply_install" ? "Supply & Install" : "Installation Only"),
-        "- Product: " + result.productLabel,
-        "- Measurement: " + result.measurementSource,
-        "- Real area: " + formatArea(result.realArea),
-        "- Chargeable area: " + formatArea(result.chargeableArea),
-        "- Subtotal ex GST: " + formatCurrency(result.subtotalExGst),
-        "- GST: " + formatCurrency(result.gst),
-        "- Total inc GST: " + formatCurrency(result.totalIncGst),
-        "- Manual review: " + (result.manualReviewRequired ? "Yes" : "No")
-      ];
-      const existingNotes = getInputValue("customerNotes");
-      setInputValue("customerNotes", lines.join("\n") + "\n\n" + existingNotes.replace(/^Quote summary:[\s\S]*?\n\n/, ""));
-      requestStatus.textContent = "Quote summary copied into notes.";
-      renderAll();
-      document.getElementById("customerNotes").focus();
-    }
-
     function renderAll() {
       buildProducts();
       buildProductOptionSelect();
@@ -3804,11 +3830,11 @@
         ? getProductHandoffMessage(activeProduct)
         : "";
       if (state.pendingHandoffMessage) {
-        pageStatus.textContent = state.pendingHandoffMessage;
+        showPageStatus(state.pendingHandoffMessage);
       } else if (productHandoffMessage) {
-        pageStatus.textContent = productHandoffMessage;
+        showPageStatus(productHandoffMessage);
       } else {
-        pageStatus.textContent = "Draft quote saved in this browser while you work.";
+        showPageStatus("");
       }
 
       if (state.floorplanFileName) {
@@ -3826,7 +3852,6 @@
       setMeasurementMethod("manual_total");
       setQuoteMode("supply_install");
       floorplanStatus.textContent = "No floor plan uploaded yet.";
-      requestStatus.textContent = "Quote reset. Start a new request.";
       currentQuoteStep = 0;
       state.pendingHandoffMessage = "";
       state.floorplanHandoffDismissed = false;
@@ -3859,7 +3884,7 @@
           floorplanStatus.textContent = "Measured floor plan area found: " + formatArea(parsePositiveNumber(savedArea)) + ". Review before final quote.";
           state.pendingHandoffMessage = "Measured floor plan area applied. Review Step 4, then continue with the quote.";
           state.floorplanHandoffDismissed = false;
-          pageStatus.textContent = state.pendingHandoffMessage;
+          showPageStatus(state.pendingHandoffMessage);
         }
       } catch (error) {
         floorplanStatus.textContent = "Saved floorplan area could not be loaded.";
@@ -3969,9 +3994,9 @@
       renderAll();
       updateQuoteCtaSystem();
       if (state.pendingHandoffMessage) {
-        pageStatus.textContent = state.pendingHandoffMessage;
+        showPageStatus(state.pendingHandoffMessage);
       } else {
-        pageStatus.textContent = "Latest pricing data loaded.";
+        showPageStatus("Latest pricing data loaded.");
       }
     }
 
@@ -4032,6 +4057,7 @@
       return {
         removal: {
           type: getInputValue("removalType"),
+          disposalIncluded: getInputValue("removalDisposal") === "yes",
           amountExGst: result.removalTotal
         },
         floorPrep: {
@@ -4527,13 +4553,15 @@
       state.submitState = type;
       requestStatus.textContent = message;
       requestStatus.dataset.state = type;
+      requestStatusBox.hidden = false;
       updateQuoteCtaSystem();
     }
 
     function clearQuoteSubmitMessage() {
       state.submitState = "idle";
-      requestStatus.textContent = getIdleQuoteStatusMessage();
+      requestStatus.textContent = "";
       delete requestStatus.dataset.state;
+      requestStatusBox.hidden = true;
       updateQuoteCtaSystem();
     }
 
@@ -4551,6 +4579,10 @@
       }
 
       clearQuoteSubmitMessage();
+      if (shouldUseLocalReviewOnlyMode()) {
+        showQuoteSubmitError("Email quote is not available in simple localhost preview. Use the Netlify site or run netlify dev for save and email testing.");
+        return;
+      }
       if (state.quoteRuntimeHealth.checked && !state.quoteRuntimeHealth.emailReady) {
         showQuoteSubmitError(getIdleQuoteStatusMessage());
         return;
@@ -4728,7 +4760,6 @@
         floorplanStatus.textContent = "Keep your current measurement, or use the saved floor plan area when ready.";
       });
 
-      document.getElementById("useSummaryInNotes").addEventListener("click", pushSummaryIntoNotes);
       document.getElementById("resetQuoteButton").addEventListener("click", resetQuote);
       wizardBackButton.addEventListener("click", goToPreviousQuoteStep);
       wizardNextButton.addEventListener("click", goToNextQuoteStep);

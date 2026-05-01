@@ -211,6 +211,11 @@
       manualReviewRequired = true;
     }
 
+    if (input.removalOption && input.removalOption !== "none" && input.removalOption !== "other" && input.removalOption !== "unsure" && !input.removalDisposal) {
+      warnings.push("Disposal preference is missing for removal.");
+      manualReviewRequired = true;
+    }
+
     if (input.floorPrepType === "heavy" || input.floorPrepType === "manual" || input.floorPrepType === "unsure") {
       warnings.push("Floor prep needs site confirmation.");
       manualReviewRequired = true;
@@ -331,7 +336,8 @@
     const underlayTotal = underlay ? underlayArea * Number(underlay.pricePerM2 || 0) : 0;
     const removalConfig = getRemovalConfig(input, libraries);
     const removalBaseTotal = removalConfig
-      ? (measurement.realArea * Number(removalConfig.ratePerM2 || 0)) + Number(removalConfig.disposalFee || 0)
+      ? (measurement.realArea * Number(removalConfig.ratePerM2 || 0))
+        + (input.removalDisposal === "yes" ? Number(removalConfig.disposalFee || 0) : 0)
       : 0;
     const floorPrepBaseTotal = (input.floorPrepType === "basic" || input.floorPrepType === "levelling")
       ? measurement.realArea * Number((rules.floorPrepRates || {})[input.floorPrepType] || 0)
@@ -446,7 +452,9 @@
       roomCount: measurement.roomCount,
       furnitureRoomCount: furnitureRoomCount,
       doorCount: doorCount,
-      removalLabel: input.removalOption ? input.removalOption.replace(/_/g, " ") : "none",
+      removalLabel: input.removalOption
+        ? input.removalOption.replace(/_/g, " ") + (input.removalDisposal === "yes" ? " + disposal" : " only")
+        : "none",
       floorPrepLabel: input.floorPrepType ? input.floorPrepType.replace(/_/g, " ") : "none",
       skirtingLabel: input.skirtingOption ? input.skirtingOption.replace(/_/g, " ") : "none",
       scotiaLabel: input.scotiaOption ? input.scotiaOption.replace(/_/g, " ") : "none",

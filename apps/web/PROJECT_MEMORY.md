@@ -29,9 +29,9 @@ Source-of-truth status: active project memory for current business direction, pa
 
 - `main` = production
 - `dev` = development
-- workflow = `dev -> test preview -> merge -> main -> deploy`
+- workflow = `local -> optional dev preview -> optional merge -> main -> deploy`
 - never push development work directly to production
-- default execution rule = make changes locally first, validate locally, push to `dev`, and use the `dev` Netlify deploy as the normal review path
+- default execution rule = make changes locally first and validate locally; only push to GitHub / `dev` / `main` or trigger Netlify review when the user explicitly asks
 
 ## Pricing Logic
 
