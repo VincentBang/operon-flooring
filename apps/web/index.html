@@ -183,20 +183,22 @@
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 14px;
-      font-size: 0.96rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      width: clamp(150px, 16vw, 230px);
+      min-height: 52px;
+      background: left center / auto 100% no-repeat url("assets/operon-logo-final.png");
+      color: transparent;
+      font-size: 0;
+      letter-spacing: 0;
+      text-transform: none;
+      line-height: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      gap: 0;
+      flex: none;
     }
 
     .brand-mark {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: center / cover no-repeat url("assets/Operon favicon.png");
-      box-shadow: none;
-      flex: none;
+      display: none;
     }
 
     .nav-links {
@@ -1366,8 +1368,8 @@
       }
 
       .brand {
-        font-size: 0.9rem;
-        letter-spacing: 0.06em;
+        width: clamp(138px, 30vw, 210px);
+        min-height: 44px;
       }
 
       .nav-toggle {
@@ -1515,14 +1517,8 @@
       }
 
       .brand {
-        gap: 10px;
-        font-size: 0.82rem;
-      }
-
-      .brand-mark {
-        width: 38px;
-        height: 38px;
-        border-radius: 12px;
+        width: clamp(126px, 42vw, 185px);
+        min-height: 38px;
       }
 
       .wizard-nav .button,

@@ -12,8 +12,8 @@
     .shell { width:min(var(--max), calc(100% - 32px)); margin:0 auto; } a { color:inherit; text-decoration:none; }
     .site-header { position:sticky; top:0; z-index:10; background:rgba(248,250,252,.84); backdrop-filter:blur(18px); border-bottom:1px solid rgba(16,24,40,.06); }
     .nav { min-height:74px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
-    .brand { display:inline-flex; align-items:center; gap:14px; font-size:.96rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
-    .brand-mark { width:42px; height:42px; border-radius:14px; background:center / cover no-repeat url("assets/Operon favicon.png"); }
+    .brand { display:inline-flex; align-items:center; width:clamp(150px, 16vw, 230px); min-height:52px; background:left center / auto 100% no-repeat url("assets/operon-logo-final.png"); color:transparent; font-size:0; letter-spacing:0; text-transform:none; line-height:0; overflow:hidden; white-space:nowrap; gap:0; flex:none; }
+    .brand-mark { display:none; }
     .button,.button-secondary { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 22px; border-radius:10px; border:0; cursor:pointer; }
     .button { background:var(--brand); color:#fff; } .button-secondary { background:#fff; color:var(--text); border:1px solid rgba(17,17,17,.1); }
     .hero,.section { padding:0 0 56px; } .hero { padding-top:64px; } .hero h1 { margin:0 0 14px; font-size:clamp(2.25rem,5vw,2.625rem); } .muted { color:var(--muted); line-height:1.6; }

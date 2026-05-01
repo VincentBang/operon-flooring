@@ -14,8 +14,8 @@
     .shell { width:min(var(--max), calc(100% - 32px)); margin:0 auto; }
     .site-header { position:sticky; top:0; z-index:10; background:rgba(248,250,252,.84); backdrop-filter:blur(18px); border-bottom:1px solid rgba(16,24,40,.06); }
     .nav { min-height:74px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
-    .brand { display:inline-flex; align-items:center; gap:14px; font-size:.96rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
-    .brand-mark { width:42px; height:42px; border-radius:14px; background:center / cover no-repeat url("assets/Operon favicon.png"); flex:none; }
+    .brand { display:inline-flex; align-items:center; width:clamp(150px, 16vw, 230px); min-height:52px; background:left center / auto 100% no-repeat url("assets/operon-logo-final.png"); color:transparent; font-size:0; letter-spacing:0; text-transform:none; line-height:0; overflow:hidden; white-space:nowrap; gap:0; flex:none; }
+    .brand-mark { display:none; }
     .button { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 22px; border-radius:10px; background:var(--brand); color:#fff; border:0; cursor:pointer; }
     .button-secondary { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 22px; border-radius:10px; background:#fff; color:var(--text); border:1px solid rgba(17,17,17,.1); cursor:pointer; }
     .hero,.section { padding:0 0 56px; }
