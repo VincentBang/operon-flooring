@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Operon Flooring | Flooring Quote Sydney</title>
+  <title>Flooring Quote Sydney | Operon Flooring</title>
   <meta
     name="description"
-    content="Estimate your timber, hybrid, laminate or engineered flooring cost in Sydney. Enter your area, measure room by room, or upload a floor plan for a clearer flooring quote."
+    content="Get a clearer flooring quote in Sydney for laminate, hybrid and engineered timber projects. Measure by total area, room, or floor plan and review the scope before final confirmation."
   >
   <link rel="icon" href="assets/Operon favicon.png" type="image/png">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://operonflooring.com.au/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Operon Flooring | Flooring Quote Sydney">
-  <meta property="og:description" content="Estimate your timber, hybrid, laminate or engineered flooring cost in Sydney. Enter your area, measure room by room, or upload a floor plan for a clearer flooring quote.">
+  <meta property="og:title" content="Flooring Quote Sydney | Operon Flooring">
+  <meta property="og:description" content="Get a clearer flooring quote in Sydney for laminate, hybrid and engineered timber projects. Measure by total area, room, or floor plan and review the scope before final confirmation.">
   <meta property="og:url" content="https://operonflooring.com.au/">
   <meta property="og:site_name" content="Operon Flooring">
   <meta property="og:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Operon Flooring | Flooring Quote Sydney">
-  <meta name="twitter:description" content="Estimate your timber, hybrid, laminate or engineered flooring cost in Sydney. Enter your area, measure room by room, or upload a floor plan for a clearer flooring quote.">
+  <meta name="twitter:title" content="Flooring Quote Sydney | Operon Flooring">
+  <meta name="twitter:description" content="Get a clearer flooring quote in Sydney for laminate, hybrid and engineered timber projects. Measure by total area, room, or floor plan and review the scope before final confirmation.">
   <meta name="twitter:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -34,6 +34,7 @@
   <script src="pricingSourceConfig.js"></script>
   <script src="pricingSource.js"></script>
   <script src="products.js"></script>
+  <script src="productSelection.js"></script>
   <script src="installRates.js"></script>
   <script src="underlay.js"></script>
   <script src="skirtingScotia.js"></script>
@@ -77,32 +78,38 @@
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        {"@type":"Question","name":"Do I need exact measurements?","acceptedAnswer":{"@type":"Answer","text":"No. An estimate is enough to start. You can enter the area you know, measure room by room, or upload a floor plan. Final measurements can be confirmed before the quote is approved."}},
-        {"@type":"Question","name":"Can I upload a floor plan?","acceptedAnswer":{"@type":"Answer","text":"Yes. Use the floor plan tool to upload a plan, set scale using a known wall length, trace the rooms where flooring will be installed, and send the selected area into the quote form."}},
-        {"@type":"Question","name":"Is the quote final?","acceptedAnswer":{"@type":"Answer","text":"No. The online quote is an estimate based on the information provided. Final pricing is confirmed after checking measurements, floor condition, access and any additional work required."}}
+        {"@type":"Question","name":"Do I need exact measurements to start?","acceptedAnswer":{"@type":"Answer","text":"No. Start with the best area you know now. Final measurements can be checked before the quote is confirmed."}},
+        {"@type":"Question","name":"Can I upload a floor plan instead of measuring manually?","acceptedAnswer":{"@type":"Answer","text":"Yes. Use the floor plan tool to trace rooms, confirm area, and send that measured total into the quote."}},
+        {"@type":"Question","name":"Is the online quote the final price?","acceptedAnswer":{"@type":"Answer","text":"No. The online result is an estimate. Final pricing is confirmed after measurements, access, and any extra scope are checked."}},
+        {"@type":"Question","name":"Can I choose supply and install or installation only?","acceptedAnswer":{"@type":"Answer","text":"Yes. The quote wizard supports both supply and install, and installation-only projects."}},
+        {"@type":"Question","name":"Am I committed when I send the quote?","acceptedAnswer":{"@type":"Answer","text":"No. Sending the estimate does not lock you in. It gives us the project details so we can review and confirm the next step with you."}}
       ]
     }
   </script>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
     :root {
-      --bg: #f6f3ee;
-      --surface: rgba(255, 255, 255, 0.94);
-      --surface-strong: #fffdfa;
-      --surface-soft: #efe8dc;
-      --text: #17191f;
-      --muted: #5d6470;
-      --line: rgba(23, 25, 31, 0.09);
-      --brand: #1e3a8a;
-      --brand-soft: rgba(30, 58, 138, 0.08);
-      --accent: #0f766e;
-      --warn: #b54708;
-      --danger: #b42318;
-      --shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+      --bg: #FAF8F4;
+      --surface: #FFFFFF;
+      --surface-strong: #FFFFFF;
+      --surface-soft: #F6F2EC;
+      --text: #111820;
+      --muted: #6B7280;
+      --line: #E8E2D8;
+      --brand: #111820;
+      --brand-soft: rgba(17, 24, 32, 0.05);
+      --accent: #A67C52;
+      --accent-soft: rgba(166, 124, 82, 0.10);
+      --warn: #8C6640;
+      --danger: #B33A2F;
+      --success: #4C6857;
+      --shadow: 0 6px 20px rgba(17, 24, 32, 0.05);
       --radius-xl: 26px;
       --radius-lg: 18px;
       --radius-md: 14px;
       --max-width: 1100px;
-      --font-sans: "Avenir Next", "Segoe UI", BlinkMacSystemFont, -apple-system, sans-serif;
+      --font-sans: "Inter", "Segoe UI", BlinkMacSystemFont, -apple-system, sans-serif;
     }
 
     * {
@@ -117,7 +124,7 @@
       margin: 0;
       color: var(--text);
       font-family: var(--font-sans);
-      background: linear-gradient(180deg, #fbfaf7 0%, var(--bg) 100%);
+      background: var(--bg);
       min-height: 100vh;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
@@ -151,23 +158,31 @@
     }
 
     .hero-sub {
-      font-size: 1.07rem;
-      line-height: 1.72;
+      font-size: 1.08rem;
+      line-height: 1.75;
       color: var(--muted);
-      max-width: 56ch;
-      margin: 0 auto 24px;
+      max-width: 60ch;
+      margin: 0 auto 28px;
     }
 
     .hero-trust {
-      color: #555;
+      color: var(--text);
       margin: 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    main > .section:nth-of-type(even) {
+      background: rgba(255, 255, 255, 0.52);
+      border-top: 1px solid rgba(232, 226, 216, 0.72);
+      border-bottom: 1px solid rgba(232, 226, 216, 0.72);
     }
 
     .site-header {
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(251, 250, 247, 0.9);
+      background: rgba(250, 248, 244, 0.94);
       backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--line);
     }
@@ -207,7 +222,7 @@
       gap: 22px;
       color: var(--muted);
       font-size: 0.95rem;
-      font-weight: 500;
+      font-weight: 600;
     }
 
     .nav-toggle {
@@ -233,8 +248,7 @@
     }
 
     .header-quote-button.is-complete {
-      background: #0f766e;
-      box-shadow: 0 12px 30px rgba(15, 118, 110, 0.16);
+      background: var(--success);
     }
 
     .button,
@@ -246,11 +260,11 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      min-height: 52px;
-      padding: 14px 24px;
-      border-radius: 14px;
-      font-weight: 650;
-      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+      min-height: 56px;
+      padding: 16px 28px;
+      border-radius: 16px;
+      font-weight: 700;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease;
     }
 
     .button:hover,
@@ -263,22 +277,26 @@
 
     .button,
     .btn-primary {
-      background: #1e3a8a;
+      background: var(--brand);
       color: #ffffff;
-      box-shadow: 0 14px 34px rgba(30, 58, 138, 0.18);
+    }
+
+    .button:hover,
+    .btn-primary:hover {
+      background: #1b2430;
     }
 
     .button-secondary,
     .btn-secondary {
-      background: var(--surface-strong);
+      background: transparent;
       color: var(--text);
-      border: 1px solid rgba(23, 25, 31, 0.08);
+      border: 1px solid var(--line);
     }
 
     .button-quiet {
-      background: rgba(30, 58, 138, 0.03);
-      color: var(--brand);
-      border: 1px solid rgba(30, 58, 138, 0.1);
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--line);
     }
 
     .button:disabled,
@@ -292,7 +310,7 @@
     }
 
     .hero {
-      padding: 56px 0 48px;
+      padding: 68px 0 44px;
       text-align: center;
     }
 
@@ -303,9 +321,10 @@
       bottom: 0;
       z-index: 30;
       padding: 12px 0 calc(12px + env(safe-area-inset-bottom, 0px));
-      background: rgba(17, 17, 17, 0.94);
+      background: rgba(247, 244, 239, 0.96);
       backdrop-filter: blur(18px);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid var(--line);
+      box-shadow: 0 -6px 20px rgba(17, 24, 32, 0.05);
       transform: translateY(100%);
       pointer-events: none;
       transition: transform 180ms ease;
@@ -329,12 +348,12 @@
     }
 
     .sticky-cta-copy strong {
-      color: #ffffff;
+      color: var(--text);
       font-size: 0.95rem;
     }
 
     .sticky-cta-copy span {
-      color: rgba(255, 255, 255, 0.74);
+      color: var(--muted);
       font-size: 0.82rem;
     }
 
@@ -380,6 +399,7 @@
     .section-card,
     .summary-card,
     .mini-card {
+      position: relative;
       background: var(--surface);
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
@@ -390,6 +410,7 @@
     .section-card,
     .summary-card {
       padding: 32px;
+      overflow: hidden;
     }
 
     .mini-card {
@@ -412,18 +433,21 @@
 
     h1 {
       margin-top: 18px;
-      font-size: clamp(2.45rem, 4.8vw, 3.8rem);
-      font-weight: 650;
-      margin-bottom: 16px;
-      max-width: none;
+      font-size: clamp(2.7rem, 5vw, 4.25rem);
+      font-weight: 800;
+      margin-bottom: 18px;
+      max-width: 13ch;
+      margin-inline: auto;
     }
 
     h2 {
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-size: clamp(1.9rem, 3vw, 2.6rem);
+      font-weight: 780;
     }
 
     h3 {
-      font-size: 1.12rem;
+      font-size: 1.14rem;
+      font-weight: 760;
     }
 
     p,
@@ -432,8 +456,8 @@
     .status,
     .tiny {
       color: var(--muted);
-      line-height: 1.72;
-      font-size: 0.98rem;
+      line-height: 1.7;
+      font-size: 1rem;
     }
 
     .hero-actions,
@@ -496,8 +520,8 @@
 
     .faq-toggle {
       border-radius: 22px;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(16, 24, 40, 0.06);
+      background: #ffffff;
+      border: 1px solid var(--line);
       overflow: hidden;
     }
 
@@ -528,8 +552,8 @@
       display: block;
       padding: 20px;
       border-radius: 22px;
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(16, 24, 40, 0.06);
+      background: #ffffff;
+      border: 1px solid var(--line);
     }
 
     .link-card strong {
@@ -540,7 +564,7 @@
     }
 
     .quote-section {
-      padding: 0 0 42px;
+      padding: 0 0 46px;
     }
 
     #quoteForm.quote-form-compact h2 {
@@ -554,28 +578,35 @@
     }
 
     .trust-strip {
-      background: white;
-      padding: 20px 0;
+      padding: 0 0 28px;
     }
 
     .trust-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      text-align: center;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px 20px;
+      align-items: start;
     }
 
-    .trust-grid > div,
+    .trust-grid > div {
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
     .step,
     .faq-item {
-      background: white;
+      background: #ffffff;
       padding: 20px;
       border-radius: 16px;
-      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
     }
 
     .how-it-works,
+    .quote-system-intro,
+    .product-entry,
     .floorplan-cta,
-    .seo-section,
     .faq,
     .final-cta {
       padding: 0 0 56px;
@@ -588,10 +619,29 @@
     }
 
     .floorplan-cta,
-    .seo-section,
     .faq,
     .final-cta {
       text-align: center;
+    }
+
+    .product-entry .link-card,
+    .quote-system-intro .step {
+      text-align: left;
+    }
+
+    .trust-grid strong,
+    .step strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .trust-grid span,
+    .step span {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.96rem;
     }
 
     .inline-link-list {
@@ -608,8 +658,8 @@
     .faq-card {
       padding: 20px;
       border-radius: 22px;
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(16, 24, 40, 0.06);
+      background: #ffffff;
+      border: 1px solid var(--line);
     }
 
     .faq-card h3 {
@@ -619,7 +669,7 @@
     .faq-item + .faq-item {
       margin-top: 14px;
       padding-top: 14px;
-      border-top: 1px solid rgba(16, 24, 40, 0.08);
+      border-top: 1px solid var(--line);
     }
 
     .faq-question {
@@ -633,8 +683,8 @@
       margin-top: 14px;
       padding: 12px 14px;
       border-radius: 16px;
-      background: rgba(31, 111, 139, 0.08);
-      color: var(--brand);
+      background: var(--surface-soft);
+      color: var(--text);
     }
 
     .step-card + .step-card {
@@ -657,10 +707,11 @@
 
     .wizard-progress {
       margin-top: 22px;
-      padding: 18px;
+      padding: 20px;
       border-radius: 20px;
-      background: rgba(245, 241, 235, 0.72);
+      background: #ffffff;
       border: 1px solid var(--line);
+      box-shadow: var(--shadow);
     }
 
     #quoteForm.quote-form-compact .wizard-progress {
@@ -673,8 +724,8 @@
       margin-top: 18px;
       padding: 16px 18px;
       border-radius: 16px;
-      background: rgba(30, 58, 138, 0.05);
-      border: 1px solid rgba(30, 58, 138, 0.09);
+      background: #ffffff;
+      border: 1px solid var(--line);
     }
 
     .wizard-assist strong {
@@ -686,6 +737,7 @@
       margin: 0;
       color: var(--muted);
       font-size: 0.92rem;
+      line-height: 1.55;
     }
 
     #quoteForm.quote-form-compact .wizard-assist {
@@ -693,11 +745,33 @@
       padding: 14px 16px;
     }
 
+    .wizard-recovery {
+      display: grid;
+      gap: 6px;
+      margin-top: 14px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: rgba(166, 124, 82, 0.08);
+      border: 1px solid rgba(166, 124, 82, 0.18);
+    }
+
+    .wizard-recovery strong {
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .wizard-recovery p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
     .step-note {
       margin-top: 18px;
       padding: 16px 18px;
       border-radius: 18px;
-      background: rgba(245, 241, 235, 0.72);
+      background: #ffffff;
       border: 1px solid var(--line);
     }
 
@@ -722,8 +796,8 @@
       margin-top: 16px;
       padding: 18px;
       border-radius: 20px;
-      background: rgba(30, 58, 138, 0.05);
-      border: 1px solid rgba(30, 58, 138, 0.09);
+      background: #ffffff;
+      border: 1px solid var(--line);
     }
 
     .floorplan-handoff-card.active {
@@ -753,8 +827,8 @@
       margin-top: 20px;
       padding: 18px;
       border-radius: 20px;
-      background: rgba(30, 58, 138, 0.05);
-      border: 1px solid rgba(30, 58, 138, 0.09);
+      background: #ffffff;
+      border: 1px solid var(--line);
     }
 
     .quote-kickoff strong {
@@ -776,8 +850,8 @@
       margin-top: 18px;
       padding: 18px;
       border-radius: 20px;
-      background: rgba(30, 58, 138, 0.05);
-      border: 1px solid rgba(30, 58, 138, 0.09);
+      background: #ffffff;
+      border: 1px solid var(--line);
       display: grid;
       gap: 8px;
     }
@@ -805,9 +879,10 @@
     }
 
     .wizard-progress-label {
-      color: var(--brand);
+      color: var(--accent);
       font-size: 0.95rem;
       font-weight: 700;
+      letter-spacing: 0.02em;
     }
 
     .wizard-progress-title {
@@ -830,23 +905,23 @@
       min-height: 34px;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.96);
-      border: 1px solid rgba(16, 24, 40, 0.08);
+      background: #ffffff;
+      border: 1px solid var(--line);
       color: var(--muted);
       font-size: 0.88rem;
       font-weight: 600;
     }
 
     .wizard-step-pill.active {
-      background: rgba(234, 244, 247, 0.96);
-      border-color: rgba(31, 111, 139, 0.24);
-      color: var(--brand);
+      background: rgba(166, 124, 82, 0.08);
+      border-color: rgba(166, 124, 82, 0.28);
+      color: var(--text);
     }
 
     .wizard-step-pill.complete {
-      background: rgba(15, 118, 110, 0.08);
-      border-color: rgba(15, 118, 110, 0.16);
-      color: var(--accent);
+      background: rgba(76, 104, 87, 0.08);
+      border-color: rgba(76, 104, 87, 0.16);
+      color: var(--success);
     }
 
     .wizard-inline-message {
@@ -857,6 +932,7 @@
       background: rgba(180, 35, 24, 0.08);
       border: 1px solid rgba(180, 35, 24, 0.14);
       color: var(--danger);
+      font-weight: 500;
     }
 
     .wizard-inline-message.active {
@@ -872,8 +948,8 @@
       padding: 14px 16px;
       border: 1px solid var(--line);
       border-radius: 18px;
-      background: rgba(255, 253, 250, 0.96);
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: var(--shadow);
       backdrop-filter: blur(14px);
       position: sticky;
       bottom: 12px;
@@ -901,8 +977,8 @@
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      background: rgba(31, 111, 139, 0.12);
-      color: var(--brand);
+      background: rgba(166, 124, 82, 0.12);
+      color: var(--accent);
       font-weight: 700;
       flex: none;
     }
@@ -926,8 +1002,8 @@
       min-height: 50px;
       padding: 14px 15px;
       border-radius: 16px;
-      border: 1px solid rgba(16, 24, 40, 0.1);
-      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid transparent;
+      background: var(--surface-soft);
       color: var(--text);
       outline: none;
       transition: border-color 160ms ease, box-shadow 160ms ease;
@@ -941,8 +1017,9 @@
     .field input:focus,
     .field select:focus,
     .field textarea:focus {
-      border-color: rgba(31, 111, 139, 0.4);
-      box-shadow: 0 0 0 4px rgba(31, 111, 139, 0.12);
+      border-color: var(--accent);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(166, 124, 82, 0.10);
     }
 
     .helper {
@@ -969,16 +1046,33 @@
       padding: 18px;
       text-align: left;
       border-radius: 20px;
-      border: 1px solid rgba(16, 24, 40, 0.08);
-      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+      background: #ffffff;
       color: var(--text);
+      transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
     }
 
     .choice-card.active,
     .product-card.active {
-      border-color: rgba(31, 111, 139, 0.36);
-      background: rgba(234, 244, 247, 0.96);
-      box-shadow: inset 0 0 0 1px rgba(31, 111, 139, 0.12);
+      border-color: rgba(166, 124, 82, 0.52);
+      background: rgba(166, 124, 82, 0.12);
+      box-shadow: inset 0 0 0 1px rgba(166, 124, 82, 0.18), 0 10px 22px rgba(17, 24, 32, 0.06);
+    }
+
+    .choice-card.active strong,
+    .product-card.active strong {
+      color: var(--text);
+    }
+
+    .choice-card.active small,
+    .product-card.active small {
+      color: #4c5562;
+    }
+
+    .choice-card:hover,
+    .product-card:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
     }
 
     .choice-card strong,
@@ -998,7 +1092,7 @@
       margin-top: 18px;
       padding: 18px;
       border-radius: 20px;
-      background: rgba(245, 241, 235, 0.64);
+      background: #ffffff;
       border: 1px solid var(--line);
     }
 
@@ -1008,8 +1102,8 @@
       margin-top: 14px;
       padding: 16px;
       border-radius: 18px;
-      background: rgba(30, 58, 138, 0.06);
-      border: 1px solid rgba(30, 58, 138, 0.12);
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
     }
 
     .selected-product-banner strong {
@@ -1043,7 +1137,7 @@
       margin-top: 18px;
       padding: 18px;
       border-radius: 22px;
-      background: rgba(245, 241, 235, 0.64);
+      background: #ffffff;
       border: 1px solid var(--line);
     }
 
@@ -1060,8 +1154,8 @@
     .room-row {
       padding: 16px;
       border-radius: 20px;
-      background: rgba(255, 255, 255, 0.94);
-      border: 1px solid rgba(16, 24, 40, 0.08);
+      background: #ffffff;
+      border: 1px solid var(--line);
       display: grid;
       grid-template-columns: 1.3fr 1fr 1fr auto;
       gap: 10px;
@@ -1088,8 +1182,8 @@
     .metric {
       padding: 18px;
       border-radius: 20px;
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(16, 24, 40, 0.06);
+      background: #ffffff;
+      border: 1px solid var(--line);
     }
 
     .addon-grid {
@@ -1100,7 +1194,7 @@
     .summary-card {
       position: sticky;
       top: 94px;
-      background: rgba(255, 255, 255, 0.94);
+      background: #ffffff;
     }
 
     .summary-total {
@@ -1111,7 +1205,7 @@
     }
 
     .summary-subtitle {
-      color: var(--brand);
+      color: var(--accent);
       font-size: 0.95rem;
       font-weight: 600;
     }
@@ -1120,8 +1214,8 @@
       margin-top: 16px;
       padding: 18px;
       border-radius: 20px;
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(16, 24, 40, 0.06);
+      background: #ffffff;
+      border: 1px solid var(--line);
     }
 
     .summary-grid {
@@ -1147,23 +1241,23 @@
       min-height: 36px;
       padding: 8px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(16, 24, 40, 0.08);
-      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      background: #ffffff;
       color: var(--muted);
       font-size: 0.9rem;
       font-weight: 600;
     }
 
     .pill.good {
-      background: rgba(15, 118, 110, 0.1);
-      color: var(--accent);
-      border-color: rgba(15, 118, 110, 0.16);
+      background: rgba(76, 104, 87, 0.1);
+      color: var(--success);
+      border-color: rgba(76, 104, 87, 0.16);
     }
 
     .pill.warn {
-      background: rgba(181, 71, 8, 0.1);
+      background: rgba(166, 124, 82, 0.12);
       color: var(--warn);
-      border-color: rgba(181, 71, 8, 0.16);
+      border-color: rgba(166, 124, 82, 0.2);
     }
 
     .pill.muted {
@@ -1197,7 +1291,7 @@
       justify-content: space-between;
       gap: 12px;
       padding: 12px 0;
-      border-bottom: 1px solid rgba(16, 24, 40, 0.06);
+      border-bottom: 1px solid var(--line);
     }
 
     .quote-line:last-child {
@@ -1240,7 +1334,7 @@
     }
 
     .site-footer {
-      background: #111111;
+      background: #111820;
       color: #ffffff;
       padding: 60px 0 20px;
     }
@@ -1612,7 +1706,7 @@
         <a href="#quoteForm">Quote</a>
         <a href="products.html">Flooring Products</a>
         <a href="floorplan.html">Floor Plan</a>
-        <a href="blog/">Guides</a>
+        <a href="blog/index.html">Guides</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
         <span></span>
@@ -1624,48 +1718,99 @@
   </header>
 
   <div class="sticky-cta" id="stickyQuoteBar" aria-hidden="true">
-    <div class="container sticky-cta-inner">
-      <div class="sticky-cta-copy">
-        <strong id="stickyQuoteTitle">Ready to start your quote?</strong>
-        <span id="stickyQuoteText">Takes 2–3 minutes and no exact measurement is needed.</span>
+      <div class="container sticky-cta-inner">
+        <div class="sticky-cta-copy">
+        <strong id="stickyQuoteTitle">Start your flooring quote</strong>
+        <span id="stickyQuoteText">Measured, priced, and reviewed before work is confirmed.</span>
+        </div>
+        <button class="button sticky-cta-button" id="stickyQuoteButton" type="button">Start quote</button>
       </div>
-      <button class="button sticky-cta-button" id="stickyQuoteButton" type="button">Start quote</button>
-    </div>
   </div>
 
   <main>
     <section class="hero">
       <div class="container">
         <div class="hero-copy">
-          <h1>Get a Flooring Quote in Minutes</h1>
+          <h1>Professional Flooring Quotes for Sydney Homes</h1>
           <p class="hero-sub">
-            Estimate your laminate, hybrid or engineered timber flooring cost.
-            Enter your area, measure room by room, or upload a floor plan.
+            Get a clearer laminate, hybrid, or engineered timber flooring estimate with area capture, product selection, and pricing built for real installation work.
           </p>
           <div class="hero-actions">
-            <a href="#quoteForm" class="btn-primary">Start Quote</a>
-            <a href="floorplan.html" class="btn-secondary" data-floorplan-link>Measure from Floor Plan</a>
+            <a href="#quoteForm" class="btn-primary">Start 2-minute quote</a>
+            <a href="products.html" class="btn-secondary">Browse flooring products</a>
           </div>
-          <p class="hero-trust">Takes 2–3 minutes. Final quote confirmed before work starts.</p>
+          <p class="hero-trust">Measured where needed. Priced clearly. Product and site details confirmed before installation starts.</p>
           <div class="status" id="pageStatus" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-strip">
+      <div class="container trust-grid">
+        <div>
+          <strong>Clear pricing</strong>
+          <span>Start with an estimate, then confirm the final scope properly.</span>
+        </div>
+        <div>
+          <strong>Measured area</strong>
+          <span>Use total area, room-by-room entry, or the floor plan tool.</span>
+        </div>
+        <div>
+          <strong>Supply or install</strong>
+          <span>Choose the quote path that matches your project setup.</span>
+        </div>
+        <div>
+          <strong>No obligation</strong>
+          <span>Review first, then confirm the final quote when ready.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-system-intro">
+      <div class="container">
+        <h2>Step-by-step pricing system</h2>
+        <div class="steps">
+          <div class="step">
+            <strong>1. Add your details</strong>
+            <span>Start with the site location and basic contact information.</span>
+          </div>
+          <div class="step">
+            <strong>2. Choose flooring</strong>
+            <span>Select laminate, hybrid, or engineered timber and your quote mode.</span>
+          </div>
+          <div class="step">
+            <strong>3. Confirm area</strong>
+            <span>Use your total area, add rooms, or measure from a floor plan.</span>
+          </div>
+          <div class="step">
+            <strong>4. Review estimate</strong>
+            <span>Check the estimate, then send it through for follow-up and confirmation.</span>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="quote-section">
       <div class="shell layout" id="quoteLayout">
-        <form id="quoteForm" class="section-card" novalidate>
+        <form id="quoteForm" class="section-card" name="quote-request" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="quote-request">
+          <p hidden>
+            <label>Do not fill this out if you are human: <input name="bot-field"></label>
+          </p>
+          <input type="hidden" id="leadCreatedAt" name="created_at" value="">
+          <input type="hidden" id="leadStatus" name="lead_status" value="new">
+          <input type="hidden" id="leadName" name="name" value="">
+          <input type="hidden" id="leadAddress" name="address" value="">
+          <input type="hidden" id="leadSelectedProduct" name="selected_product" value="">
+          <input type="hidden" id="leadCategory" name="category" value="">
+          <input type="hidden" id="leadRealArea" name="real_area" value="">
+          <input type="hidden" id="leadChargeableArea" name="chargeable_area" value="">
+          <input type="hidden" id="leadQuoteTotal" name="quote_total" value="">
+          <input type="hidden" id="leadQuoteLines" name="quote_lines" value="">
+          <input type="hidden" id="leadNotes" name="lead_notes" value="">
+          <input type="hidden" id="leadPayloadJson" name="lead_payload_json" value="">
           <h2 style="margin-top: 18px;">Request a flooring quote</h2>
-          <p class="form-intro">Start with an estimate. You can enter total area, add rooms, or use a floor plan.</p>
-
-          <div class="quote-kickoff">
-            <strong>Fast to finish</strong>
-            <ul class="quote-kickoff-list">
-              <li>Suburb and postcode are enough to begin</li>
-              <li>Choose the flooring path first, then refine the details</li>
-              <li>Use a floor plan if you want a clearer area before submitting</li>
-            </ul>
-          </div>
+          <p class="form-intro">Build a practical estimate first, then confirm the final scope before work is booked.</p>
 
           <div class="wizard-progress">
             <div class="wizard-progress-label" id="quoteStepCounter">Step 1 of 6</div>
@@ -1681,8 +1826,16 @@
           </div>
 
           <div class="wizard-assist" id="wizardAssist">
-            <strong id="wizardAssistTitle">What you need for this step</strong>
+            <strong id="wizardAssistTitle">Start with the essentials</strong>
             <p id="wizardAssistText">Name, phone, suburb, and postcode are enough to begin.</p>
+          </div>
+
+          <div class="wizard-recovery" id="leadRecoveryBanner" hidden>
+            <strong id="leadRecoveryTitle">Saved quote request found</strong>
+            <p id="leadRecoveryText">Your last submission attempt was not sent, but the estimate details are still saved in this browser.</p>
+            <div class="action-row" style="margin-top: 12px;">
+              <button class="button-secondary" id="leadRecoveryButton" type="button">Review saved summary</button>
+            </div>
           </div>
 
           <section class="step-card quote-step" data-quote-step="0" style="margin-top: 24px;">
@@ -1691,7 +1844,7 @@
                 <span class="step-badge">1</span>
                 <div>
                   <h3>Customer details</h3>
-                  <p class="helper">Name, phone, suburb and postcode are enough to start.</p>
+                  <p class="helper">Basic contact and site location are enough to begin.</p>
                 </div>
               </div>
             </div>
@@ -1729,7 +1882,7 @@
                 <span class="step-badge">2</span>
                 <div>
                   <h3>Property and access</h3>
-                  <p class="helper">Property access can affect installation time.</p>
+                  <p class="helper">Access details help us keep the estimate realistic.</p>
                 </div>
               </div>
             </div>
@@ -1779,7 +1932,7 @@
                 <span class="step-badge">3</span>
                 <div>
                   <h3>Job type and product</h3>
-                  <p class="helper">Choose your flooring type. If you came from the product catalogue, your selection appears below.</p>
+                  <p class="helper">Choose the flooring path first. Product selections from the catalogue appear below.</p>
                 </div>
               </div>
             </div>
@@ -1803,21 +1956,51 @@
               <div class="choice-grid three" id="productGrid"></div>
               <input id="selectedProductCategory" name="selectedProductCategory" type="hidden" value="hybrid">
               <input id="selectedProduct" name="selectedProduct" type="hidden" value="">
+              <input id="selectedRangeId" name="selectedRangeId" type="hidden" value="">
+              <input id="selectedColour" name="selectedColour" type="hidden" value="">
+              <input id="productSelectionMode" name="productSelectionMode" type="hidden" value="">
+              <input id="productChoiceMode" name="productChoiceMode" type="hidden" value="recommend">
             </div>
 
             <div class="product-choice-panel">
+              <div class="field">
+                <label>Do you already know which product you want?</label>
+                <div class="choice-grid two" id="productChoiceModeChoices">
+                  <button class="choice-card active" type="button" data-product-choice-mode="recommend">
+                    <strong>Recommend a practical option</strong>
+                    <small>Use a sensible starting range and confirm the final product later.</small>
+                  </button>
+                  <button class="choice-card" type="button" data-product-choice-mode="choose_range">
+                    <strong>Choose a product range</strong>
+                    <small>Select the product family now, then confirm the final finish before installation.</small>
+                  </button>
+                </div>
+              </div>
+
+              <div class="field" id="productRangeField" hidden>
+                <label for="productRangeSelect">Choose range</label>
+                <select id="productRangeSelect" name="productRangeSelect"></select>
+                <p class="helper" id="productRangeHelper">Choose a range first. Colour can be confirmed later unless engineered timber needs a colour selection.</p>
+              </div>
+
+              <div class="field" id="productColourField" hidden>
+                <label for="productColourSelect">Choose colour</label>
+                <select id="productColourSelect" name="productColourSelect"></select>
+                <p class="helper" id="productColourHelper">Colour-level pricing is only required when engineered timber colours are priced separately.</p>
+              </div>
+
               <div class="field" style="margin-bottom: 0;">
-                <label for="productOptionSelect">Selected flooring product</label>
+                <label for="productOptionSelect">Specific product option</label>
                 <select id="productOptionSelect" name="productOptionSelect"></select>
-                <p class="helper" id="productOptionHelper">Keep the category estimate for the fastest quote, or attach a specific product.</p>
+                <p class="helper" id="productOptionHelper">This only appears when a specific product was passed in from the catalogue. The estimate still follows the guided product logic above.</p>
               </div>
 
               <div class="selected-product-banner compact">
-                <strong id="selectedProductHeadline">Using hybrid flooring estimate</strong>
-                <p id="selectedProductSummary">No product attached yet. The quote will use the standard category estimate unless you choose a specific range.</p>
+                <strong id="selectedProductHeadline">Recommended starting option</strong>
+                <p id="selectedProductSummary">We’ll use a practical starting range for this estimate. Final product and colour can be confirmed before installation.</p>
                 <div class="selected-product-actions">
                   <a class="button-quiet" id="browseCategoryLink" href="hybrid-flooring-sydney.html">View hybrid products</a>
-                  <button class="button-secondary" id="clearSelectedProductButton" type="button">Use category estimate</button>
+                  <button class="button-secondary" id="clearSelectedProductButton" type="button">Use category estimate instead</button>
                 </div>
               </div>
             </div>
@@ -1848,7 +2031,7 @@
                 <span class="step-badge">4</span>
                 <div>
                   <h3>Measurement method</h3>
-                  <p class="helper">Enter your area or use the floor plan tool.</p>
+                  <p class="helper">Use the quickest area method that gives you confidence.</p>
                 </div>
               </div>
             </div>
@@ -1950,7 +2133,7 @@
                 <span class="step-badge">5</span>
                 <div>
                   <h3>Add-ons and site conditions</h3>
-                  <p class="helper">Only choose the extras that apply. Follow-up counts appear only when needed.</p>
+                  <p class="helper">Only add items that affect scope or labour.</p>
                 </div>
               </div>
             </div>
@@ -2065,7 +2248,7 @@
                 <span class="step-badge">6</span>
                 <div>
                   <h3>Review your estimate</h3>
-                  <p class="helper">Review the estimate, then email it through. Final quote confirmed before work starts.</p>
+                  <p class="helper">Review the estimate, then send it for follow-up and confirmation.</p>
                 </div>
               </div>
             </div>
@@ -2091,7 +2274,7 @@
             </div>
             <div class="wizard-nav-group">
               <button class="button" id="wizardNextButton" type="button">Next</button>
-              <button class="button" id="wizardSubmitButton" type="submit" hidden aria-hidden="true">Email quote</button>
+              <button class="button" id="wizardSubmitButton" type="submit" hidden aria-hidden="true">Submit quote request</button>
             </div>
           </div>
         </form>
@@ -2130,6 +2313,15 @@
           </div>
 
           <div class="summary-box">
+            <h3 style="font-size: 1.06rem;">Before you send</h3>
+            <div class="summary-grid">
+              <div class="summary-row"><span>Quote path</span><strong id="summaryQuotePath">Supply and install selected</strong></div>
+              <div class="summary-row"><span>Product pricing</span><strong id="summaryProductPricing">Category estimate</strong></div>
+              <div class="summary-row"><span>Next step</span><strong id="summaryNextStep">Submit for confirmation</strong></div>
+            </div>
+          </div>
+
+          <div class="summary-box">
             <h3 style="font-size: 1.06rem;">Quote lines</h3>
             <div class="quote-lines" id="quoteLines"></div>
           </div>
@@ -2144,135 +2336,44 @@
           </div>
 
           <details class="summary-box admin-panel" id="debugPanel" hidden>
-            <summary class="details-summary">Internal pricing breakdown</summary>
+            <summary class="details-summary">Quote diagnostics</summary>
             <div class="debug-grid" id="debugGrid"></div>
           </details>
         </aside>
       </div>
     </section>
 
-    <section class="trust-strip">
-      <div class="container trust-grid">
-        <div>Sydney flooring specialists</div>
-        <div>Timber, hybrid, laminate &amp; engineered</div>
-        <div>Floor plan upload available</div>
-        <div>Final quote confirmed before work</div>
-      </div>
-    </section>
-
-    <section class="how-it-works">
+    <section class="product-entry">
       <div class="container">
-        <h2>How it works</h2>
-        <div class="steps">
-          <div class="step">Enter project details</div>
-          <div class="step">Measure or upload plan</div>
-          <div class="step">Select extras</div>
-          <div class="step">Get estimate &amp; confirm</div>
+        <h2>Choose your flooring type</h2>
+        <div class="link-grid">
+          <a class="link-card" href="products.html?category=hybrid">
+            <strong>Hybrid Flooring</strong>
+            <p>Browse waterproof-core hybrid options and start with a product-led quote.</p>
+          </a>
+          <a class="link-card" href="products.html?category=laminate">
+            <strong>Laminate Flooring</strong>
+            <p>Compare laminate flooring options and move straight into the quote flow.</p>
+          </a>
+          <a class="link-card" href="products.html?category=engineered">
+            <strong>Engineered Timber Flooring</strong>
+            <p>View engineered timber options for standard plank or premium installation paths.</p>
+          </a>
+          <a class="link-card" href="flooring-installation-cost-sydney.html">
+            <strong>Flooring Installation Cost Guide</strong>
+            <p>Understand the main cost drivers before you request the final quote.</p>
+          </a>
         </div>
       </div>
     </section>
 
     <section class="floorplan-cta">
       <div class="container">
-        <h2>Need help measuring your floor area?</h2>
+        <h2>Measure from a floor plan</h2>
         <p>
-          Upload a floor plan, set scale, trace rooms, and send the area into your quote.
+          Use the floor plan tool to trace rooms, confirm measured area, and send that total straight back into your quote.
         </p>
-        <a href="floorplan.html" class="btn-primary" data-floorplan-link>Open Floor Plan Tool</a>
-      </div>
-    </section>
-
-    <section class="seo-section">
-      <div class="container">
-        <h2>Flooring Quote Sydney</h2>
-        <p>
-          Planning new flooring in Sydney? This quote tool helps you estimate the cost of laminate, hybrid or engineered timber flooring before booking a site visit.
-        </p>
-        <p>
-          Enter your area, measure room by room, or upload a floor plan to get a clearer estimate. <a href="#quoteForm">Start your quote here</a>.
-        </p>
-
-        <h2 style="margin-top: 28px;">What affects flooring cost?</h2>
-        <p>
-          Flooring cost depends on total area, room layout, floor preparation, removal of existing flooring, apartment access, stairs, moisture barrier, skirting and product type.
-        </p>
-        <p>
-          Simple open areas are usually easier to install than complex layouts.
-        </p>
-
-        <h2 style="margin-top: 28px;">Laminate, Hybrid and Engineered Timber Flooring</h2>
-        <p>
-          We provide quotes for laminate flooring, hybrid flooring and engineered timber flooring across Sydney.
-        </p>
-        <p>
-          Each option has different cost, durability and installation requirements. Compare <a href="laminate-flooring-sydney.html">laminate flooring Sydney</a>, <a href="hybrid-flooring-sydney.html">hybrid flooring Sydney</a>, and <a href="engineered-timber-flooring-sydney.html">engineered timber flooring Sydney</a>.
-        </p>
-
-        <h2 style="margin-top: 28px;">Measure Your Flooring Area</h2>
-        <p>
-          You can enter your known area, measure room by room, or upload a floor plan.
-        </p>
-        <p>
-          Floor plan measurements can be reviewed and confirmed before final pricing.
-        </p>
-
-        <h2 style="margin-top: 28px;">Apartment and Access Considerations</h2>
-        <p>
-          Apartment level, lift access and parking conditions can affect installation time and cost.
-        </p>
-        <p>
-          The quote tool collects these details to provide a more realistic estimate.
-        </p>
-
-        <h2 style="margin-top: 28px;">Final Quote Confirmation</h2>
-        <p>
-          The online quote is an estimate based on the information provided.
-        </p>
-        <p>
-          Final pricing is confirmed after checking measurements, floor condition, access and any additional work required.
-        </p>
-      </div>
-    </section>
-
-    <section class="seo-section">
-      <div class="container">
-        <h2>Explore flooring options, service areas and cost guides</h2>
-        <div class="link-grid">
-          <article class="link-card" style="text-align: left;">
-            <strong>Product pages</strong>
-            <p>Compare the main flooring types before you request a final quote.</p>
-            <ul class="inline-link-list">
-              <li><a href="products.html">All flooring products</a></li>
-              <li><a href="laminate-flooring-sydney.html">Laminate flooring Sydney</a></li>
-              <li><a href="hybrid-flooring-sydney.html">Hybrid flooring Sydney</a></li>
-              <li><a href="engineered-timber-flooring-sydney.html">Engineered timber flooring Sydney</a></li>
-            </ul>
-          </article>
-          <article class="link-card" style="text-align: left;">
-            <strong>Local service pages</strong>
-            <p>See the Sydney suburb pages where local flooring quote intent is strongest.</p>
-            <ul class="inline-link-list">
-              <li><a href="flooring-liverpool.html">Flooring Liverpool</a></li>
-              <li><a href="flooring-parramatta.html">Flooring Parramatta</a></li>
-              <li><a href="flooring-cabramatta.html">Flooring Cabramatta</a></li>
-              <li><a href="flooring-miranda.html">Flooring Miranda</a></li>
-              <li><a href="flooring-eastern-suburbs.html">Flooring Eastern Suburbs</a></li>
-            </ul>
-          </article>
-          <article class="link-card" style="text-align: left;">
-            <strong>Cost and measurement guides</strong>
-            <p>Read practical guides on cost, preparation, comparisons and measuring area before quoting.</p>
-            <ul class="inline-link-list">
-              <li><a href="floor-care-maintenance.html">Floor care and maintenance guide</a></li>
-              <li><a href="flooring-installation-cost-sydney.html">Flooring installation cost Sydney</a></li>
-              <li><a href="blog/flooring-cost-sydney.html">Flooring cost Sydney</a></li>
-              <li><a href="blog/flooring-installation-cost-breakdown.html">Flooring installation cost breakdown</a></li>
-              <li><a href="blog/laminate-vs-hybrid.html">Laminate vs hybrid flooring</a></li>
-              <li><a href="blog/do-you-need-floor-preparation.html">Do you need floor preparation?</a></li>
-              <li><a href="blog/how-to-measure-floor-area.html">How to measure floor area</a></li>
-            </ul>
-          </article>
-        </div>
+        <a href="floorplan.html" class="btn-primary" data-floorplan-link>Measure from floor plan</a>
       </div>
     </section>
 
@@ -2281,21 +2382,33 @@
         <h2>Common questions</h2>
         <div class="faq-accordion">
           <details class="faq-toggle">
-            <summary>Do I need exact measurements?</summary>
+            <summary>Do I need exact measurements to start?</summary>
             <div class="faq-toggle-body">
-              <p>No. An estimate is enough. Final measurements are confirmed before installation.</p>
+              <p>No. Start with the best area you know now. Final measurements can be checked before the quote is confirmed.</p>
             </div>
           </details>
           <details class="faq-toggle">
-            <summary>Can I upload a floor plan?</summary>
+            <summary>Can I upload a floor plan instead of measuring manually?</summary>
             <div class="faq-toggle-body">
-              <p>Yes. You can upload a floor plan and we can review and confirm it before final pricing.</p>
+              <p>Yes. Use the floor plan tool to trace rooms, confirm area, and send that measured total into the quote.</p>
             </div>
           </details>
           <details class="faq-toggle">
-            <summary>Is the quote final?</summary>
+            <summary>Is the online quote the final price?</summary>
             <div class="faq-toggle-body">
-              <p>No. Final quote is confirmed after inspection or floor plan review.</p>
+              <p>No. The online result is an estimate. Final pricing is confirmed after measurements, access, and any extra scope are checked.</p>
+            </div>
+          </details>
+          <details class="faq-toggle">
+            <summary>Can I choose supply and install or installation only?</summary>
+            <div class="faq-toggle-body">
+              <p>Yes. The quote wizard supports both supply and install, and installation-only projects.</p>
+            </div>
+          </details>
+          <details class="faq-toggle">
+            <summary>Am I committed when I send the quote?</summary>
+            <div class="faq-toggle-body">
+              <p>No. Sending the estimate does not lock you in. It gives us the project details so we can review and confirm the next step with you.</p>
             </div>
           </details>
         </div>
@@ -2304,7 +2417,8 @@
 
     <section class="final-cta">
       <div class="container">
-        <h2>Ready to get your flooring quote?</h2>
+        <h2>Ready to price your flooring project?</h2>
+        <p class="hero-sub" style="margin-bottom: 24px;">Start with the quote wizard now, then refine the area or product selection if needed.</p>
         <a href="#quoteForm" class="btn-primary">Start Quote</a>
       </div>
     </section>
@@ -2314,42 +2428,39 @@
     <div class="container footer-grid">
       <div class="footer-col">
         <h3>Operon Flooring</h3>
-        <p>Flooring quotes for laminate, hybrid and engineered timber flooring in Sydney.</p>
-        <p>Estimate your project cost before booking a site visit.</p>
+        <p>Premium laminate, hybrid and engineered timber flooring quotes for Sydney homes.</p>
+        <p>Clear estimates, measured areas and final pricing confirmed before work begins.</p>
       </div>
       <div class="footer-col">
-        <h4>Flooring Services</h4>
+        <h4>Products</h4>
         <ul>
-          <li><a href="products.html">All Flooring Products</a></li>
-          <li><a href="laminate-flooring-sydney.html">Laminate Flooring</a></li>
-          <li><a href="hybrid-flooring-sydney.html">Hybrid Flooring</a></li>
-          <li><a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring</a></li>
-          <li><a href="index.html#quoteForm">Flooring Quote</a></li>
+          <li><a href="hybrid-flooring-sydney.html">Hybrid Flooring Sydney</a></li>
+          <li><a href="laminate-flooring-sydney.html">Laminate Flooring Sydney</a></li>
+          <li><a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring Sydney</a></li>
+          <li><a href="products.html">Products page</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Locations</h4>
         <ul>
-          <li><a href="flooring-parramatta.html">Parramatta</a></li>
-          <li><a href="flooring-liverpool.html">Liverpool</a></li>
-          <li><a href="flooring-auburn.html">Auburn</a></li>
-          <li><a href="flooring-blacktown.html">Blacktown</a></li>
-          <li><a href="flooring-miranda.html">Miranda</a></li>
+          <li><a href="parramatta-flooring.html">Parramatta</a></li>
+          <li><a href="liverpool-flooring.html">Liverpool</a></li>
+          <li><a href="auburn-flooring.html">Auburn</a></li>
+          <li><a href="blacktown-flooring.html">Blacktown</a></li>
+          <li><a href="miranda-flooring.html">Miranda</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Support</h4>
+        <h4>Actions</h4>
         <ul>
-          <li><a href="index.html#quoteForm">Get a Quote</a></li>
-          <li><a href="floorplan.html">Measure Floor Plan</a></li>
-          <li><a href="floor-care-maintenance.html">Floor Care Guide</a></li>
-          <li><a href="index.html#quoteForm">Contact</a></li>
-          <li><a href="index.html#faq">FAQ</a></li>
+          <li><a href="index.html#quoteForm">Start Quote</a></li>
+          <li><a href="floorplan.html">Upload Floor Plan</a></li>
+          <li><a href="blog/index.html">Guides</a></li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>© 2026 Operon Flooring. All rights reserved.</p>
+      <p>&copy; 2026 Operon Flooring. All rights reserved.</p>
       <div class="footer-legal">
         <a href="privacy-policy.html">Privacy Policy</a>
         <a href="terms.html">Terms</a>
@@ -2364,7 +2475,10 @@
     const FLOORPLAN_CONFIRMED_AREA_KEY = "operon_confirmed_floorplan_area";
     const FLOORPLAN_ROOMS_KEY = "operon_floorplan_rooms";
     const FLOORPLAN_SOURCE_KEY = "operon_floorplan_source";
-    const DEBUG_VIEW = window.location.search.indexOf("debug=1") >= 0;
+    const FLOORPLAN_QUOTE_HANDOFF_KEY = "operon_floorplan_quote_handoff_v1";
+    const DEBUG_HOSTS = ["", "localhost", "127.0.0.1", "::1"];
+    const DEBUG_VIEW = window.location.search.indexOf("debug=1") >= 0
+      && DEBUG_HOSTS.indexOf(window.location.hostname) >= 0;
     const currency = new Intl.NumberFormat("en-AU", {
       style: "currency",
       currency: "AUD",
@@ -2423,18 +2537,42 @@
     const stickyQuoteText = document.getElementById("stickyQuoteText");
     const wizardAssistTitle = document.getElementById("wizardAssistTitle");
     const wizardAssistText = document.getElementById("wizardAssistText");
+    const leadRecoveryBanner = document.getElementById("leadRecoveryBanner");
+    const leadRecoveryTitle = document.getElementById("leadRecoveryTitle");
+    const leadRecoveryText = document.getElementById("leadRecoveryText");
+    const leadRecoveryButton = document.getElementById("leadRecoveryButton");
     const floorplanHandoffCard = document.getElementById("floorplanHandoffCard");
     const floorplanHandoffTitle = document.getElementById("floorplanHandoffTitle");
     const floorplanHandoffText = document.getElementById("floorplanHandoffText");
     const confirmFloorplanHandoffButton = document.getElementById("confirmFloorplanHandoffButton");
     const dismissFloorplanHandoffButton = document.getElementById("dismissFloorplanHandoffButton");
+    const productChoiceModeChoices = document.getElementById("productChoiceModeChoices");
+    const productRangeField = document.getElementById("productRangeField");
+    const productRangeSelect = document.getElementById("productRangeSelect");
+    const productRangeHelper = document.getElementById("productRangeHelper");
+    const productColourField = document.getElementById("productColourField");
+    const productColourSelect = document.getElementById("productColourSelect");
+    const productColourHelper = document.getElementById("productColourHelper");
     const productOptionSelect = document.getElementById("productOptionSelect");
+    const productOptionField = productOptionSelect ? productOptionSelect.closest(".field") : null;
     const productOptionHelper = document.getElementById("productOptionHelper");
     const selectedProductHeadline = document.getElementById("selectedProductHeadline");
     const selectedProductSummary = document.getElementById("selectedProductSummary");
     const browseCategoryLink = document.getElementById("browseCategoryLink");
     const clearSelectedProductButton = document.getElementById("clearSelectedProductButton");
     const measurementHelperTitle = document.getElementById("measurementHelperTitle");
+    const leadCreatedAtInput = document.getElementById("leadCreatedAt");
+    const leadStatusInput = document.getElementById("leadStatus");
+    const leadNameInput = document.getElementById("leadName");
+    const leadAddressInput = document.getElementById("leadAddress");
+    const leadSelectedProductInput = document.getElementById("leadSelectedProduct");
+    const leadCategoryInput = document.getElementById("leadCategory");
+    const leadRealAreaInput = document.getElementById("leadRealArea");
+    const leadChargeableAreaInput = document.getElementById("leadChargeableArea");
+    const leadQuoteTotalInput = document.getElementById("leadQuoteTotal");
+    const leadQuoteLinesInput = document.getElementById("leadQuoteLines");
+    const leadNotesInput = document.getElementById("leadNotes");
+    const leadPayloadJsonInput = document.getElementById("leadPayloadJson");
 
     function showPageStatus(message) {
       if (!message) {
@@ -2478,12 +2616,15 @@
     let currentQuoteStep = 0;
 
     const PRODUCT_LIBRARY = window.OperonProducts;
+    const PRODUCT_SELECTION = window.OperonProductSelection;
     const PRODUCT_CATEGORIES = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryList() : [];
     const QUOTE_CALCULATOR = window.OperonQuoteCalculator;
     const LOCATION_ZONE_LIBRARY = window.OperonLocationZones;
     const PRICING_RULES = window.OperonPricingRules;
+    const LEAD_FORM_NAME = "quote-request";
+    const LAST_SUBMITTED_LEAD_KEY = "operon_last_submitted_lead_v1";
+    const LAST_SUBMITTED_LEAD_RESULT_KEY = "operon_last_submitted_lead_result_v1";
     const PRIVATE_QUOTE_ENDPOINT = "/.netlify/functions/calculate-private-quote";
-    const QUOTE_SAVE_ENDPOINT = "/.netlify/functions/save-quote-request";
     const QUOTE_RUNTIME_HEALTH_ENDPOINT = "/.netlify/functions/runtime-health";
 
     function createId() {
@@ -2520,7 +2661,7 @@
     }
 
     function shouldUseLocalReviewOnlyMode() {
-      return isSimpleLocalPreview() && (!state.quoteRuntimeHealth.checked || !state.quoteRuntimeHealth.quoteSaveReady);
+      return isSimpleLocalPreview();
     }
 
     function escapeHtml(value) {
@@ -2564,7 +2705,7 @@
     }
 
     function getSelectedProductCategory() {
-      return getInputValue("selectedProductCategory") || "hybrid";
+      return getPreferredProductCategory();
     }
 
     function getCategoryPageUrl(category) {
@@ -2572,9 +2713,80 @@
       return meta && meta.pageUrl ? meta.pageUrl : "index.html#quoteForm";
     }
 
+    function isValidProductCategory(category) {
+      return !!(PRODUCT_LIBRARY && PRODUCT_LIBRARY.getCategoryMeta(category));
+    }
+
+    function getPreferredProductCategory() {
+      const selectedCategory = getInputValue("selectedProductCategory");
+      if (isValidProductCategory(selectedCategory)) {
+        return selectedCategory;
+      }
+
+      const storedCategory = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getStoredCategory() : "";
+      if (isValidProductCategory(storedCategory)) {
+        return storedCategory;
+      }
+
+      return "hybrid";
+    }
+
     function getCategoryEstimateLabel(category) {
       const meta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(category) : null;
       return "standard " + (meta ? meta.label.toLowerCase() : "flooring") + " estimate";
+    }
+
+    function getProductChoiceMode() {
+      const mode = getInputValue("productChoiceMode");
+      return ["recommend", "choose_range"].indexOf(mode) >= 0 ? mode : "recommend";
+    }
+
+    function getRangeRecordById(category, rangeId) {
+      if (!PRODUCT_SELECTION || !rangeId) {
+        return null;
+      }
+
+      return PRODUCT_SELECTION.getRangesByCategory(category).find(function (range) {
+        return range.rangeId === rangeId;
+      }) || null;
+    }
+
+    function getSelectionStateInput() {
+      return {
+        category: getPreferredProductCategory(),
+        choiceMode: getProductChoiceMode(),
+        rangeId: getInputValue("selectedRangeId"),
+        productId: getInputValue("selectedProduct"),
+        selectedColour: getInputValue("selectedColour"),
+        selectionMode: getInputValue("productSelectionMode")
+      };
+    }
+
+    function getResolvedQuoteSelection() {
+      if (!PRODUCT_LIBRARY || !PRODUCT_SELECTION) {
+        return {
+          category: getPreferredProductCategory(),
+          product: null,
+          productId: "",
+          rangeId: "",
+          selectedColour: "",
+          choiceMode: "recommend",
+          selectionMode: ""
+        };
+      }
+
+      const resolved = PRODUCT_SELECTION.resolveSelectedProduct(getSelectionStateInput());
+      const category = isValidProductCategory(resolved.category) ? resolved.category : getPreferredProductCategory();
+
+      return {
+        category: category,
+        product: resolved.product || null,
+        productId: resolved.productId || "",
+        rangeId: resolved.rangeId || "",
+        selectedColour: resolved.selectedColour || "",
+        choiceMode: resolved.choiceMode || getProductChoiceMode(),
+        selectionMode: resolved.selectionMode || ""
+      };
     }
 
     function getProductHandoffMessage(product) {
@@ -2583,11 +2795,7 @@
       }
 
       const productLabel = PRODUCT_LIBRARY.getProductLabel(product);
-      if (product.pricePerM2 > 0) {
-        return "Selected product loaded for this quote: " + productLabel + ". Finish the quote details and we’ll use this product in Step 3.";
-      }
-
-      return "Selected product loaded for this quote: " + productLabel + ". Price is still to be confirmed, so the estimate will use the " + getCategoryEstimateLabel(product.category) + " until review.";
+      return "Selected product loaded for this quote: " + productLabel + ". Finish the quote details and we’ll use this range in Step 3.";
     }
 
     // Quote Wizard Navigation
@@ -2629,6 +2837,21 @@
       });
     }
 
+    function scrollActiveQuoteStepIntoView(stepIndex) {
+      const step = getQuoteSteps()[stepIndex];
+      if (!step) {
+        scrollQuoteFormToTop();
+        return;
+      }
+
+      const target = window.innerWidth <= 820 ? step : quoteForm;
+      const top = window.scrollY + target.getBoundingClientRect().top - getHeaderOffset();
+      window.scrollTo({
+        top: Math.max(0, top),
+        behavior: "smooth"
+      });
+    }
+
     function buildFloorplanToolUrl() {
       return "floorplan.html?returnStep=3&returnTo=index.html%23quoteForm";
     }
@@ -2651,28 +2874,28 @@
     function getWizardAssistCopy(stepIndex) {
       const copy = [
         {
-          title: "What you need for this step",
-          text: "Name, phone, and the job location are enough to get started."
+          title: "Start with the job basics",
+          text: "Name, phone and the property suburb are enough to start."
         },
         {
-          title: "Only relevant access questions stay visible",
-          text: "We hide level and lift questions unless the property type makes them relevant."
+          title: "We only ask what matters",
+          text: "Access questions change based on the property type you choose."
         },
         {
-          title: "Choose the closest flooring path",
-          text: "Choose the flooring category first. Engineered timber unlocks the extra install and pattern options. If you came from the product catalogue, your selected product is already loaded below."
+          title: "Choose the flooring path",
+          text: "Pick the category first, then choose whether to use a recommended range, select a range, or keep the category estimate."
         },
         {
-          title: "No exact measurement needed",
-          text: "Use the total area you know, add rooms one by one, or open the floor plan tool."
+          title: "Use the clearest area you have",
+          text: "Enter a total, add rooms, or use the floor plan tool for a measured result."
         },
         {
-          title: "Extras can stay simple",
-          text: "Only add what applies. Follow-up counts only appear when an extra actually needs them."
+          title: "Add only the real extras",
+          text: "Keep it to the items that change preparation, removal or labour."
         },
         {
-          title: "Review before you send",
-          text: "Check the estimate, add any final notes, and submit when you are ready."
+          title: "Review the estimate clearly",
+          text: "Check the scope, total and notes before you send the quote request."
         }
       ];
       return copy[stepIndex] || copy[0];
@@ -2741,7 +2964,7 @@
       const focusTargets = {
         0: ["fullName", "phone", "siteAddress", "suburb", "postcode"],
         1: ["propertyType", "level", "hasLift", "parkingAccess"],
-        2: ["installMethod", "patternType"],
+        2: ["productRangeSelect", "productColourSelect", "installMethod", "patternType"],
         3: ["totalAreaM2", "confirmedFloorplanArea", "room-name-" + (state.rooms[0] && state.rooms[0].id ? state.rooms[0].id : "")],
         4: ["furnitureRoomCount", "doorCount", "siteNotes"],
         5: ["quoteDeliveryEmail", "email", "customerNotes"]
@@ -2778,10 +3001,9 @@
       wizardNextButton.disabled = false;
       wizardSubmitButton.disabled = false;
       const isFinalStep = currentQuoteStep === steps.length - 1;
-      const localReviewOnlyMode = isFinalStep && shouldUseLocalReviewOnlyMode();
       wizardNextButton.hidden = isFinalStep;
-      wizardSubmitButton.hidden = !isFinalStep || localReviewOnlyMode;
-      wizardSubmitButton.setAttribute("aria-hidden", isFinalStep && !localReviewOnlyMode ? "false" : "true");
+      wizardSubmitButton.hidden = !isFinalStep;
+      wizardSubmitButton.setAttribute("aria-hidden", isFinalStep ? "false" : "true");
       quoteSummaryCard.hidden = currentQuoteStep !== steps.length - 1;
       quoteLayout.classList.toggle("layout-single", currentQuoteStep !== steps.length - 1);
       quoteForm.classList.add("quote-form-compact");
@@ -2817,7 +3039,7 @@
         );
       }
       if (settings.scrollMode === "top") {
-        scrollQuoteFormToTop();
+        scrollActiveQuoteStepIntoView(currentQuoteStep);
       }
     }
 
@@ -2826,6 +3048,15 @@
       if (!validation.valid) {
         showWizardValidationMessage(validation.message);
         focusFirstInvalidField(currentQuoteStep);
+        if (window.OperonTracking) {
+          const activeMeta = getQuoteStepMeta()[currentQuoteStep];
+          window.OperonTracking.trackQuoteStepError(
+            currentQuoteStep + 1,
+            activeMeta ? activeMeta.trackingName : "step_" + (currentQuoteStep + 1),
+            validation.message,
+            "step_validation"
+          );
+        }
         return;
       }
       if (window.OperonTracking) {
@@ -2841,29 +3072,10 @@
         if (shouldUseLocalReviewOnlyMode()) {
           showQuoteSubmitMessage(
             "local_preview",
-            "Local preview only. You can review the estimate here. Saving and Email quote work on the Netlify site or full netlify dev."
+            "Local preview only. You can review the estimate here. Submit quote request works on the Netlify site or full netlify dev."
           );
-          showQuoteStep(currentQuoteStep + 1, { scrollMode: "top" });
-          return;
-        }
-        if (state.quoteRuntimeHealth.checked && !state.quoteRuntimeHealth.quoteSaveReady) {
-          const runtimeMessage = getIdleQuoteStatusMessage();
-          showWizardValidationMessage(runtimeMessage);
-          showQuoteSubmitError(runtimeMessage);
-          updateStepProgress();
-          return;
-        }
-        wizardNextButton.disabled = true;
-        wizardNextButton.textContent = "Saving estimate...";
-        try {
-          await saveQuoteDraftToSystem({ showMessage: true });
-        } catch (error) {
-          console.error(error);
-          const message = getQuoteSaveErrorMessage(error, "draft");
-          showWizardValidationMessage(message);
-          showQuoteSubmitError(message);
-          updateStepProgress();
-          return;
+        } else {
+          showQuoteSubmitMessage("review_ready", "Estimate ready. Submit the quote request when you are happy with the details.");
         }
       }
 
@@ -3059,33 +3271,83 @@
       renderAll();
     }
 
-    function syncSelectedProductFields(product) {
-      if (!product) {
+    function syncSelectionFieldsFromResolved(resolvedSelection) {
+      const selection = resolvedSelection || getResolvedQuoteSelection();
+      setInputValue("selectedProductCategory", selection.category || getPreferredProductCategory());
+      setInputValue("selectedProduct", selection.productId || "");
+      setInputValue("selectedRangeId", selection.rangeId || "");
+      setInputValue("selectedColour", selection.selectedColour || "");
+      setInputValue("productSelectionMode", selection.selectionMode || "");
+      return selection;
+    }
+
+    function syncSelectedProductState() {
+      if (!PRODUCT_LIBRARY) {
+        return null;
+      }
+
+      const selection = syncSelectionFieldsFromResolved();
+      PRODUCT_LIBRARY.saveSelectedCategory(selection.category);
+
+      if (!PRODUCT_SELECTION) {
+        return selection.product || null;
+      }
+
+      if (selection.product) {
+        PRODUCT_SELECTION.saveSelection({
+          category: selection.category,
+          choiceMode: selection.choiceMode,
+          rangeId: selection.rangeId,
+          selectedColour: selection.selectedColour,
+          productId: selection.productId,
+          selectionMode: selection.selectionMode
+        });
+        return selection.product;
+      }
+
+      PRODUCT_LIBRARY.saveSelectionState({
+        selectedProductId: "",
+        selectedRangeId: selection.rangeId || "",
+        selectedCategory: selection.category,
+        selectedColour: "",
+        productSelectionMode: selection.selectionMode || ""
+      });
+      return null;
+    }
+
+    function trackProductSelectionMode(eventName, payload) {
+      if (!window.OperonTracking) {
         return;
       }
 
-      setInputValue("selectedProductCategory", product.category || getSelectedProductCategory());
-      setInputValue("selectedProduct", product.isEstimate ? "" : product.id);
+      window.OperonTracking.trackEvent(eventName, Object.assign({
+        category: getSelectedProductCategory(),
+        mode: getProductChoiceMode()
+      }, payload || {}));
+      window.OperonTracking.trackEvent("product_selection_mode", Object.assign({
+        category: getSelectedProductCategory(),
+        mode: getProductChoiceMode()
+      }, payload || {}));
     }
 
     function setSelectedCategory(category, options) {
       const settings = Object.assign({ preserveProduct: false, trackStartFromProduct: false }, options || {});
       const meta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(category) : null;
       const normalisedCategory = meta ? meta.id : "hybrid";
+      const currentRange = getInputValue("selectedRangeId");
+      const currentRangeRecord = getRangeRecordById(normalisedCategory, currentRange);
+
       setInputValue("selectedProductCategory", normalisedCategory);
 
-      const currentProduct = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getProductById(getInputValue("selectedProduct")) : null;
-      if (!settings.preserveProduct || !currentProduct || currentProduct.category !== normalisedCategory) {
+      if (!settings.preserveProduct || !currentRangeRecord) {
         setInputValue("selectedProduct", "");
-        if (PRODUCT_LIBRARY) {
-          PRODUCT_LIBRARY.clearSelectedProduct();
-        }
+        setInputValue("selectedRangeId", "");
+        setInputValue("selectedColour", "");
+        setInputValue("productSelectionMode", "");
         state.productHandoffActive = false;
       }
 
-      if (PRODUCT_LIBRARY) {
-        PRODUCT_LIBRARY.saveSelectedCategory(normalisedCategory);
-      }
+      PRODUCT_LIBRARY.saveSelectedCategory(normalisedCategory);
 
       if (settings.trackStartFromProduct && window.OperonTracking) {
         window.OperonTracking.trackEvent("quote_start_from_product", {
@@ -3094,18 +3356,113 @@
       }
     }
 
+    function setProductChoiceMode(mode, options) {
+      const settings = Object.assign({ track: false }, options || {});
+      const nextMode = ["recommend", "choose_range"].indexOf(mode) >= 0 ? mode : "recommend";
+      setInputValue("productChoiceMode", nextMode);
+      setActiveCards("[data-product-choice-mode]", nextMode, "data-product-choice-mode");
+
+      if (nextMode === "recommend" && PRODUCT_SELECTION) {
+        const recommendation = PRODUCT_SELECTION.getDefaultRecommendation(getSelectedProductCategory());
+        if (recommendation && !recommendation.isEstimate) {
+          setInputValue("selectedRangeId", recommendation.rangeId || "");
+          setInputValue("selectedColour", recommendation.selectionMode === "range_then_colour" ? (recommendation.colour || "") : "");
+          setInputValue("productSelectionMode", recommendation.selectionMode || "");
+          setInputValue("selectedProduct", recommendation.id || "");
+        } else {
+          setInputValue("selectedRangeId", "");
+          setInputValue("selectedColour", "");
+          setInputValue("productSelectionMode", "");
+          setInputValue("selectedProduct", "");
+        }
+      }
+
+      if (settings.track) {
+        const eventName = nextMode === "recommend"
+          ? "product_choice_recommend"
+          : "product_selection_mode";
+        trackProductSelectionMode(eventName, {
+          category: getSelectedProductCategory()
+        });
+      }
+    }
+
+    function setSelectedRange(rangeId, options) {
+      const settings = Object.assign({ persist: false, track: false }, options || {});
+      const category = getSelectedProductCategory();
+      const rangeRecord = getRangeRecordById(category, rangeId);
+
+      setInputValue("selectedRangeId", rangeId || "");
+
+      if (!rangeRecord) {
+        setInputValue("selectedProduct", "");
+        setInputValue("selectedColour", "");
+        setInputValue("productSelectionMode", "");
+        return;
+      }
+
+      setInputValue("productSelectionMode", rangeRecord.selectionMode || "");
+
+      if (rangeRecord.selectionMode === "range_only") {
+        setInputValue("selectedColour", "");
+        const representative = PRODUCT_LIBRARY.getRepresentativeProductByRangeId(rangeId);
+        setInputValue("selectedProduct", representative ? representative.id : "");
+      } else if (!getInputValue("selectedColour")) {
+        setInputValue("selectedProduct", "");
+      }
+
+      if (settings.persist && PRODUCT_SELECTION) {
+        PRODUCT_SELECTION.saveSelection(getSelectionStateInput());
+      }
+
+      if (settings.track) {
+        trackProductSelectionMode("product_range_select", {
+          category: category,
+          range_id: rangeId,
+          range_label: rangeRecord.rangeLabel
+        });
+      }
+    }
+
+    function setSelectedColourValue(colour, options) {
+      const settings = Object.assign({ persist: false, track: false }, options || {});
+      setInputValue("selectedColour", colour || "");
+      const resolved = syncSelectionFieldsFromResolved();
+
+      if (settings.persist && PRODUCT_SELECTION) {
+        PRODUCT_SELECTION.saveSelection(getSelectionStateInput());
+      }
+
+      if (settings.track && resolved.product) {
+        trackProductSelectionMode("product_colour_select", {
+          category: resolved.category,
+          range_id: resolved.rangeId,
+          colour: resolved.selectedColour || ""
+        });
+      }
+    }
+
     function setSelectedProductById(productId, options) {
-      const settings = Object.assign({ persist: true, track: false }, options || {});
+      const settings = Object.assign({ persist: true, track: false, choiceMode: "choose_range" }, options || {});
       const product = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getProductById(productId) : null;
       if (!product) {
         return;
       }
 
-      syncSelectedProductFields(product);
+      setInputValue("selectedProductCategory", product.category || getSelectedProductCategory());
+      setInputValue("selectedRangeId", product.rangeId || "");
+      setInputValue("selectedColour", product.selectionMode === "range_then_colour" ? (product.colour || "") : "");
+      setInputValue("productSelectionMode", product.selectionMode || "");
+      setInputValue("selectedProduct", product.selectionMode === "range_only"
+        ? ((PRODUCT_LIBRARY.getRepresentativeProductByRangeId(product.rangeId) || product).id)
+        : product.id);
+      setProductChoiceMode(settings.choiceMode || "choose_range", { track: false });
+      syncSelectionFieldsFromResolved();
+
       if (PRODUCT_LIBRARY) {
         PRODUCT_LIBRARY.saveSelectedCategory(product.category);
-        if (settings.persist) {
-          PRODUCT_LIBRARY.saveSelectedProduct(product);
+        if (settings.persist && PRODUCT_SELECTION) {
+          PRODUCT_SELECTION.saveSelection(getSelectionStateInput());
         }
       }
 
@@ -3113,65 +3470,159 @@
         const trackingPayload = {
           category: product.category,
           brand: product.brand,
-          range: product.range,
-          colour: product.colour,
+          range: product.rangeLabel || product.range,
+          colour: product.selectionMode === "range_then_colour" ? product.colour : "",
           pricePerM2: product.pricePerM2,
           source: "quote_wizard"
         };
-        window.OperonTracking.trackEvent("product_selected", trackingPayload);
-        window.OperonTracking.trackEvent("product_select", trackingPayload);
+        if (typeof window.OperonTracking.trackProductSelect === "function") {
+          window.OperonTracking.trackProductSelect(trackingPayload);
+        } else {
+          window.OperonTracking.trackEvent("product_selected", trackingPayload);
+          window.OperonTracking.trackEvent("product_select", trackingPayload);
+        }
       }
     }
 
     function clearSpecificProductSelection() {
-      setInputValue("selectedProduct", "");
-      if (PRODUCT_LIBRARY) {
-        PRODUCT_LIBRARY.clearSelectedProduct();
-        PRODUCT_LIBRARY.saveSelectedCategory(getSelectedProductCategory());
-      }
+      setProductChoiceMode("recommend", { track: false });
+      syncSelectionFieldsFromResolved();
+      PRODUCT_LIBRARY.saveSelectedCategory(getSelectedProductCategory());
       state.productHandoffActive = false;
     }
 
-    function buildProductOptionSelect() {
-      const category = getSelectedProductCategory();
-      const products = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getProductsByCategory(category) : [];
-      const selectedId = getInputValue("selectedProduct");
-      const options = [
-        '<option value="">Use ' + escapeHtml(getCategoryEstimateLabel(category).replace(/^standard\s/, "").replace(/ estimate$/, "")) + ' estimate</option>'
-      ].concat(products.map(function (product) {
-        const label = PRODUCT_LIBRARY.getProductLabel(product) + " · " + PRODUCT_LIBRARY.formatProductRate(product);
-        return '<option value="' + escapeHtml(product.id) + '"' + (selectedId === product.id ? " selected" : "") + '>' + escapeHtml(label) + "</option>";
-      }));
+    function buildProductChoiceCards() {
+      setActiveCards("[data-product-choice-mode]", getProductChoiceMode(), "data-product-choice-mode");
+    }
 
-      productOptionSelect.innerHTML = options.join("");
+    function buildProductRangeSelect() {
+      const category = getSelectedProductCategory();
+      const ranges = PRODUCT_SELECTION ? PRODUCT_SELECTION.getRangesByCategory(category) : [];
+      const selectedRangeId = getInputValue("selectedRangeId");
+      const currentChoiceMode = getProductChoiceMode();
+      const showRangeField = currentChoiceMode === "choose_range";
+      productRangeField.hidden = !showRangeField;
+      productRangeField.setAttribute("aria-hidden", showRangeField ? "false" : "true");
+
+      if (!showRangeField) {
+        return;
+      }
+
+      if (!ranges.length) {
+        productRangeSelect.innerHTML = '<option value="">No live ranges available yet</option>';
+        productRangeSelect.disabled = true;
+        productRangeHelper.textContent = "This category is still using the estimate path. We can confirm the exact range later.";
+        return;
+      }
+
+      productRangeSelect.disabled = false;
+      productRangeSelect.innerHTML = ['<option value="">Select range</option>'].concat(ranges.map(function (range) {
+        const label = range.rangeLabel + (range.selectionMode === "range_only" ? " · colour to confirm later" : "");
+        return '<option value="' + escapeHtml(range.rangeId) + '"' + (selectedRangeId === range.rangeId ? " selected" : "") + '>' + escapeHtml(label) + "</option>";
+      })).join("");
+
+      productRangeHelper.textContent = category === "engineered"
+        ? "Choose the engineered timber range first, then choose the colour for pricing."
+        : "Choose the product range now. Colour can be confirmed later.";
+    }
+
+    function buildProductColourSelect() {
+      const category = getSelectedProductCategory();
+      const rangeId = getInputValue("selectedRangeId");
+      const rangeRecord = getRangeRecordById(category, rangeId);
+      const selectedColour = getInputValue("selectedColour");
+      const showColourField = getProductChoiceMode() === "choose_range"
+        && rangeRecord
+        && rangeRecord.selectionMode === "range_then_colour";
+
+      productColourField.hidden = !showColourField;
+      productColourField.setAttribute("aria-hidden", showColourField ? "false" : "true");
+
+      if (!showColourField) {
+        return;
+      }
+
+      const colours = PRODUCT_SELECTION ? PRODUCT_SELECTION.getColoursByRange(rangeId) : [];
+      productColourSelect.innerHTML = ['<option value="">Select colour</option>'].concat(colours.map(function (colourItem) {
+        return '<option value="' + escapeHtml(colourItem.colour) + '"' + (selectedColour === colourItem.colour ? " selected" : "") + '>' + escapeHtml(colourItem.colour) + "</option>";
+      })).join("");
+      productColourSelect.disabled = !colours.length;
+      productColourHelper.textContent = colours.length
+        ? "Engineered timber pricing follows the selected colour when prices vary within a range."
+        : "No live colour-level products are published for this range yet.";
+    }
+
+    function buildProductOptionSelect() {
+      const resolvedSelection = getResolvedQuoteSelection();
+      const handoffProductId = state.productHandoffActive ? getInputValue("selectedProduct") : "";
+      const handoffProduct = handoffProductId ? PRODUCT_LIBRARY.getProductById(handoffProductId) : null;
+      const shouldShowSpecificField = !!(handoffProduct && handoffProduct.selectionMode === "range_then_colour");
+
+      if (productOptionField) {
+        productOptionField.hidden = !shouldShowSpecificField;
+        productOptionField.setAttribute("aria-hidden", shouldShowSpecificField ? "false" : "true");
+      }
+
+      if (!shouldShowSpecificField) {
+        productOptionSelect.innerHTML = '<option value="">No specific product attached</option>';
+        productOptionHelper.textContent = "Use the guided range selection above for this estimate.";
+        return;
+      }
+
+      productOptionSelect.innerHTML = '<option value="' + escapeHtml(handoffProduct.id) + '">' + escapeHtml(PRODUCT_LIBRARY.getProductLabel(handoffProduct)) + "</option>";
+      productOptionSelect.value = resolvedSelection.productId || handoffProduct.id;
+      productOptionHelper.textContent = "A specific engineered timber product was loaded from the catalogue and is still attached to this estimate.";
     }
 
     function renderSelectedProductBanner() {
-      const product = getSelectedProduct();
-      const categoryMeta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(product.category || getSelectedProductCategory()) : null;
-      const isEstimate = !!product.isEstimate;
-      const productLabel = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getProductLabel(product) : "";
-      const categoryEstimateLabel = getCategoryEstimateLabel(product.category || getSelectedProductCategory());
-      const pricePending = !isEstimate && !(product.pricePerM2 > 0);
+      syncSelectedProductState();
+      const selection = getResolvedQuoteSelection();
+      const category = selection.category || getSelectedProductCategory();
+      const categoryMeta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(category) : null;
+      const rangeRecord = getRangeRecordById(category, selection.rangeId);
+      const product = selection.product;
+      const choiceMode = selection.choiceMode;
 
-      selectedProductHeadline.textContent = isEstimate
-        ? "Using " + (categoryMeta ? categoryMeta.label.toLowerCase() : "category") + " estimate"
-        : "Selected product";
-
-      selectedProductSummary.textContent = isEstimate
-        ? "No product attached yet. The estimate uses the " + categoryEstimateLabel + " unless you choose a specific range."
-        : product.brand + " — " + product.range + " — " + product.colour + (pricePending
-          ? " · Price to be confirmed. The estimate uses the " + categoryEstimateLabel + " until final review."
-          : " · " + PRODUCT_LIBRARY.formatProductRate(product) + ". This product price will feed the flooring package estimate.");
-
-      productOptionHelper.textContent = isEstimate
-        ? "Choose a product if you already know it, or leave it on the category estimate."
-        : "This product is attached to the quote. Change it here if needed, or switch back to the category estimate.";
-
-      browseCategoryLink.setAttribute("href", getCategoryPageUrl(product.category || getSelectedProductCategory()));
+      browseCategoryLink.setAttribute("href", getCategoryPageUrl(category));
+      browseCategoryLink.dataset.behavior = "";
       browseCategoryLink.textContent = "View " + ((categoryMeta ? categoryMeta.label : "products").toLowerCase());
-      clearSelectedProductButton.textContent = isEstimate ? "Using category estimate" : "Use category estimate instead";
-      clearSelectedProductButton.hidden = isEstimate;
+
+      if (choiceMode === "recommend") {
+        selectedProductHeadline.textContent = "Recommended starting option";
+        selectedProductSummary.textContent = product
+          ? "Using " + (product.rangeLabel || PRODUCT_LIBRARY.getProductLabel(product)) + " for this estimate. Colour and final product can be confirmed before installation."
+          : "We’ll use the " + getCategoryEstimateLabel(category) + " until a practical range is confirmed before installation.";
+        browseCategoryLink.textContent = "Change range";
+        browseCategoryLink.dataset.behavior = "change-range";
+        clearSelectedProductButton.textContent = "Use category estimate instead";
+        clearSelectedProductButton.hidden = false;
+        return;
+      }
+
+      if (!selection.rangeId) {
+        selectedProductHeadline.textContent = "Category estimate";
+        selectedProductSummary.textContent = "Using the " + getCategoryEstimateLabel(category) + ". Final product and colour can be confirmed later.";
+        clearSelectedProductButton.textContent = "Using category estimate";
+        clearSelectedProductButton.hidden = true;
+        return;
+      }
+
+      if (selection.selectionMode === "range_then_colour" && product) {
+        selectedProductHeadline.textContent = "Selected engineered timber";
+        selectedProductSummary.textContent = "Using " + (product.rangeLabel || product.range || "") + " — " + (product.colour || "") + ".";
+        browseCategoryLink.textContent = "Change range";
+        browseCategoryLink.dataset.behavior = "change-range";
+        clearSelectedProductButton.textContent = "Use category estimate instead";
+        clearSelectedProductButton.hidden = false;
+        return;
+      }
+
+      selectedProductHeadline.textContent = "Selected product range";
+      selectedProductSummary.textContent = "Using " + (rangeRecord ? rangeRecord.rangeLabel : (product ? (product.rangeLabel || product.range) : "selected range")) + ". Colour can be confirmed later.";
+      browseCategoryLink.textContent = "Change range";
+      browseCategoryLink.dataset.behavior = "change-range";
+      clearSelectedProductButton.textContent = "Use category estimate instead";
+      clearSelectedProductButton.hidden = false;
     }
 
     function renderMeasurementHelper() {
@@ -3222,18 +3673,15 @@
     }
 
     function getSelectedProduct() {
-      const selectedId = getInputValue("selectedProduct");
-      if (PRODUCT_LIBRARY && selectedId) {
-        const exact = PRODUCT_LIBRARY.getProductById(selectedId);
-        if (exact) {
-          return Object.assign({ label: PRODUCT_LIBRARY.getProductLabel(exact) }, exact);
-        }
+      const selection = getResolvedQuoteSelection();
+      if (selection.product && PRODUCT_LIBRARY) {
+        return Object.assign({ label: PRODUCT_LIBRARY.getProductLabel(selection.product) }, selection.product);
       }
 
-      const estimate = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getEstimateProduct(getSelectedProductCategory()) : null;
+      const estimate = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getEstimateProduct(selection.category) : null;
       return estimate || {
         id: "hybrid-estimate",
-        category: "hybrid",
+        category: selection.category || "hybrid",
         brand: "Operon Estimate",
         range: "Hybrid Flooring",
         colour: "Standard estimate",
@@ -3340,6 +3788,35 @@
       return errors;
     }
 
+    function getQuoteSummaryConsistencyIssues(input, result) {
+      const issues = [];
+      const selectedCategory = getSelectedProductCategory();
+      const selectedProductId = getInputValue("selectedProduct");
+      const selectedProduct = PRODUCT_LIBRARY && selectedProductId ? PRODUCT_LIBRARY.getProductById(selectedProductId) : null;
+
+      if (!input.quoteMode) {
+        issues.push("Choose whether this quote is supply and install or installation only.");
+      }
+
+      if (!isValidProductCategory(selectedCategory)) {
+        issues.push("Choose the flooring category before continuing.");
+      }
+
+      if (selectedProductId && !selectedProduct) {
+        issues.push("The saved flooring product is no longer available. Re-select the product or use the category estimate.");
+      }
+
+      if (selectedProduct && selectedProduct.category !== selectedCategory) {
+        issues.push("The selected flooring product does not match the current category. Re-select the product or switch the category back.");
+      }
+
+      if (!(result && result.realArea > 0)) {
+        issues.push("Add a valid flooring area before sending the quote request.");
+      }
+
+      return issues;
+    }
+
     // Quote Step Validation
     function validateCurrentQuoteStep() {
       const measurement = getMeasurementState();
@@ -3383,6 +3860,17 @@
         if (!getInputValue("selectedProductCategory")) {
           return { valid: false, message: "Please choose a flooring category." };
         }
+        if (getProductChoiceMode() === "choose_range") {
+          if (productRangeSelect.disabled) {
+            return { valid: false, message: "Live product ranges are not published for this category yet. Use the recommendation or category estimate for now." };
+          }
+          if (!getInputValue("selectedRangeId")) {
+            return { valid: false, message: "Please choose a product range." };
+          }
+          if (getInputValue("productSelectionMode") === "range_then_colour" && !getInputValue("selectedColour")) {
+            return { valid: false, message: "Please choose the engineered timber colour." };
+          }
+        }
         if (getSelectedProductCategory() === "engineered" && !getInputValue("patternType")) {
           return { valid: false, message: "Please choose a flooring pattern." };
         }
@@ -3422,9 +3910,10 @@
 
       if (currentQuoteStep === 5) {
         const errors = validateQuoteInput(input);
+        const summaryIssues = getQuoteSummaryConsistencyIssues(input, getCurrentQuoteResult());
         return {
-          valid: errors.length === 0,
-          message: errors[0] || ""
+          valid: errors.length === 0 && summaryIssues.length === 0,
+          message: errors[0] || summaryIssues[0] || ""
         };
       }
 
@@ -3433,13 +3922,17 @@
 
     function buildQuoteCalculationInput(input) {
       const measurement = getMeasurementState();
+      const selection = getResolvedQuoteSelection();
       return {
         quoteMode: input.quoteMode,
         jobType: input.quoteMode,
         realArea: measurement.realArea,
         roomCount: measurement.roomCount,
-        productId: getInputValue("selectedProduct"),
-        category: getSelectedProductCategory(),
+        productId: selection.productId,
+        selectedRangeId: selection.rangeId,
+        productSelectionMode: selection.selectionMode,
+        selectedColour: selection.selectedColour,
+        category: selection.category,
         pattern: input.patternType,
         installMethod: input.installMethod,
         underlayId: getInputValue("underlayId"),
@@ -3610,6 +4103,10 @@
         quoteMode: getInputValue("quoteMode"),
         selectedProductCategory: getSelectedProductCategory(),
         selectedProduct: getInputValue("selectedProduct"),
+        selectedRangeId: getInputValue("selectedRangeId"),
+        selectedColour: getInputValue("selectedColour"),
+        productSelectionMode: getInputValue("productSelectionMode"),
+        productChoiceMode: getProductChoiceMode(),
         patternType: getInputValue("patternType"),
         installMethod: getInputValue("installMethod"),
         measurementMethod: getInputValue("measurementMethod"),
@@ -3691,7 +4188,12 @@
     // UI rendering.
     function renderQuoteSummary(result) {
       const measurement = getMeasurementState();
+      const input = getFormInput();
+      const selection = getResolvedQuoteSelection();
+      const categoryMeta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(selection.category || result.productCategory) : null;
+      const rangeRecord = getRangeRecordById(selection.category, selection.rangeId);
       const isInstallOnly = result.quoteMode === "install_only";
+      const summaryIssues = getQuoteSummaryConsistencyIssues(input, result);
       const summaryHeadline = document.getElementById("summaryHeadline");
       summaryHeadline.textContent = result.quoteMode === "supply_install"
         ? "Supply & install flooring package"
@@ -3701,9 +4203,11 @@
       document.getElementById("summaryTotalSecondary").textContent = formatCurrency(result.totalIncGst);
       document.getElementById("summarySubtotal").textContent = formatCurrency(result.subtotalExGst);
       document.getElementById("summaryGst").textContent = formatCurrency(result.gst);
-      document.getElementById("summarySelectedProduct").textContent = result.pricePending
-        ? result.productLabel + " (price to be confirmed)"
-        : result.productLabel;
+      document.getElementById("summarySelectedProduct").textContent = !selection.rangeId
+        ? ((categoryMeta ? categoryMeta.label : "Flooring") + " estimate")
+        : (selection.selectionMode === "range_then_colour" && selection.selectedColour
+          ? ((rangeRecord ? rangeRecord.rangeLabel : result.productLabel) + " — " + selection.selectedColour)
+          : ((rangeRecord ? rangeRecord.rangeLabel : result.productLabel) + (selection.selectionMode === "range_only" ? " · colour to confirm" : "")));
       document.getElementById("summaryRealArea").textContent = formatArea(result.realArea);
       document.getElementById("summaryChargeableArea").textContent = result.quoteMode === "supply_install"
         ? formatArea(result.chargeableArea)
@@ -3717,8 +4221,23 @@
         : "Installation only";
       document.getElementById("summaryMeasurement").textContent = measurement.sourceLabel + " · " + formatArea(result.realArea);
       document.getElementById("summaryCoverage").textContent = result.quoteLines.length
-        ? result.quoteLines.map(function (line) { return line.label; }).join(" · ")
+        ? ((categoryMeta ? categoryMeta.label : "Flooring") + " · " + result.quoteLines.map(function (line) { return line.label; }).join(" · "))
         : "Estimate items update here";
+      document.getElementById("summaryQuotePath").textContent = result.quoteMode === "supply_install"
+        ? "Supply and install selected"
+        : "Installation only selected";
+      document.getElementById("summaryProductPricing").textContent = selection.choiceMode === "recommend"
+        ? "Recommended starting range"
+        : (!selection.rangeId
+          ? "Category estimate in use"
+          : (selection.selectionMode === "range_then_colour"
+            ? "Selected colour pricing applied"
+            : "Selected range pricing applied"));
+      document.getElementById("summaryNextStep").textContent = summaryIssues.length
+        ? "Check the quote details first"
+        : (result.pricePending
+          ? "Submit for confirmation of the exact product"
+          : "Submit for final review and confirmation");
       document.getElementById("measurementSourceLabel").textContent = measurement.sourceLabel;
       document.getElementById("realAreaMetric").textContent = formatArea(result.realArea);
       document.getElementById("chargeableAreaMetric").textContent = isInstallOnly
@@ -3730,11 +4249,12 @@
       document.getElementById("chargeableAreaMetricCard").hidden = isInstallOnly;
 
       const manualReviewNotice = document.getElementById("manualReviewNotice");
-      manualReviewNotice.hidden = !result.manualReviewRequired;
-      manualReviewNotice.textContent = result.pricePending
-        ? "Selected product saved. This estimate currently uses the " + getCategoryEstimateLabel(result.productCategory) + " until the exact product price is confirmed. Final quote confirmed before work starts."
-        : (result.disclaimer || "Estimate only — final quote subject to site confirmation.");
-      manualReviewNotice.hidden = !(result.manualReviewRequired || result.pricePending);
+      manualReviewNotice.textContent = summaryIssues.length
+        ? summaryIssues[0]
+        : (result.pricePending
+          ? "Selected product saved. This estimate currently uses the " + getCategoryEstimateLabel(result.productCategory) + " until the exact product price is confirmed. Final quote confirmed before work starts."
+          : (result.disclaimer || "Estimate only — final quote subject to site confirmation."));
+      manualReviewNotice.hidden = !(summaryIssues.length || result.manualReviewRequired || result.pricePending);
 
       const quoteLines = document.getElementById("quoteLines");
       quoteLines.innerHTML = result.quoteLines.map(function (line) {
@@ -3835,6 +4355,9 @@
 
     function renderAll() {
       buildProducts();
+      buildProductChoiceCards();
+      buildProductRangeSelect();
+      buildProductColourSelect();
       buildProductOptionSelect();
       renderSelectedProductBanner();
       buildRooms();
@@ -3868,8 +4391,13 @@
       setInputValue("quoteMode", "supply_install");
       setInputValue("selectedProductCategory", "hybrid");
       setInputValue("selectedProduct", "");
+      setInputValue("selectedRangeId", "");
+      setInputValue("selectedColour", "");
+      setInputValue("productSelectionMode", "");
+      setInputValue("productChoiceMode", "recommend");
       setMeasurementMethod("manual_total");
       setQuoteMode("supply_install");
+      setProductChoiceMode("recommend", { track: false });
       floorplanStatus.textContent = "No floor plan uploaded yet.";
       currentQuoteStep = 0;
       state.pendingHandoffMessage = "";
@@ -3893,14 +4421,14 @@
 
     function applyFloorplanHandoff() {
       try {
-        const savedArea = localStorage.getItem(FLOORPLAN_CONFIRMED_AREA_KEY) || localStorage.getItem(FLOORPLAN_AREA_KEY);
-        if (savedArea) {
+        const handoff = readFloorplanHandoffState();
+        if (handoff.savedArea > 0) {
           setMeasurementMethod("floorplan_upload");
-          setInputValue("confirmedFloorplanArea", savedArea);
+          setInputValue("confirmedFloorplanArea", String(handoff.savedArea));
           if (window.OperonTracking) {
-            window.OperonTracking.trackFloorplanAreaUsed(parsePositiveNumber(savedArea));
+            window.OperonTracking.trackFloorplanAreaUsed(handoff.savedArea);
           }
-          floorplanStatus.textContent = "Measured floor plan area found: " + formatArea(parsePositiveNumber(savedArea)) + ". Review before final quote.";
+          floorplanStatus.textContent = "Measured floor plan area found: " + formatArea(handoff.savedArea) + ". Review before final quote.";
           state.pendingHandoffMessage = "Measured floor plan area applied. Review Step 4, then continue with the quote.";
           state.floorplanHandoffDismissed = false;
           showPageStatus(state.pendingHandoffMessage);
@@ -3913,9 +4441,7 @@
     function renderFloorplanHandoff() {
       const loadFloorplanAreaButton = document.getElementById("loadFloorplanAreaButton");
       try {
-        const savedArea = parsePositiveNumber(
-          localStorage.getItem(FLOORPLAN_CONFIRMED_AREA_KEY) || localStorage.getItem(FLOORPLAN_AREA_KEY)
-        );
+        const savedArea = readFloorplanHandoffState().savedArea;
         if (savedArea > 0) {
           loadFloorplanAreaButton.textContent = "Use measured floor plan area: " + formatArea(savedArea);
           loadFloorplanAreaButton.disabled = false;
@@ -3948,11 +4474,34 @@
       let savedSource = "";
 
       try {
-        savedArea = parsePositiveNumber(
-          localStorage.getItem(FLOORPLAN_CONFIRMED_AREA_KEY) || localStorage.getItem(FLOORPLAN_AREA_KEY)
-        );
-        savedRooms = JSON.parse(localStorage.getItem(FLOORPLAN_ROOMS_KEY) || "[]");
-        savedSource = localStorage.getItem(FLOORPLAN_SOURCE_KEY) || "";
+        const structured = JSON.parse(localStorage.getItem(FLOORPLAN_QUOTE_HANDOFF_KEY) || "null");
+        if (structured && typeof structured === "object") {
+          savedArea = parsePositiveNumber(structured.realArea);
+          savedRooms = Array.isArray(structured.rooms) ? structured.rooms : [];
+          savedSource = structured.source || "";
+        }
+
+        if (!(savedArea > 0)) {
+          savedArea = parsePositiveNumber(
+            localStorage.getItem(FLOORPLAN_CONFIRMED_AREA_KEY) || localStorage.getItem(FLOORPLAN_AREA_KEY)
+          );
+          savedRooms = JSON.parse(localStorage.getItem(FLOORPLAN_ROOMS_KEY) || "[]");
+          savedSource = localStorage.getItem(FLOORPLAN_SOURCE_KEY) || "";
+        }
+
+        if (savedArea > 0) {
+          const payload = {
+            realArea: savedArea,
+            rooms: Array.isArray(savedRooms) ? savedRooms : [],
+            source: savedSource || "",
+            savedAt: new Date().toISOString()
+          };
+          localStorage.setItem(FLOORPLAN_QUOTE_HANDOFF_KEY, JSON.stringify(payload));
+          localStorage.setItem(FLOORPLAN_CONFIRMED_AREA_KEY, String(savedArea));
+          localStorage.setItem(FLOORPLAN_ROOMS_KEY, JSON.stringify(payload.rooms));
+          localStorage.setItem(FLOORPLAN_SOURCE_KEY, payload.source);
+          localStorage.removeItem(FLOORPLAN_AREA_KEY);
+        }
       } catch (error) {
         savedRooms = [];
         savedSource = "";
@@ -3973,6 +4522,7 @@
       const requestedStep = Number(params.get("quoteStep"));
       const fromFloorplan = params.get("from") === "floorplan";
       const fromProduct = params.get("from") === "product";
+      const requestedCategory = params.get("category");
       const floorplanState = readFloorplanHandoffState();
       const storedProduct = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getStoredProduct() : null;
 
@@ -3984,6 +4534,8 @@
       if (fromProduct && storedProduct && PRODUCT_LIBRARY.getProductById(storedProduct.id)) {
         state.productHandoffActive = true;
         state.productSelectionLoadedFromCatalogue = true;
+      } else if (fromProduct && isValidProductCategory(requestedCategory)) {
+        setSelectedCategory(requestedCategory, { preserveProduct: false, trackStartFromProduct: true });
       }
 
       if (fromFloorplan && floorplanState.savedArea > 0) {
@@ -4002,10 +4554,14 @@
 
       const storedProduct = PRODUCT_LIBRARY.getStoredProduct();
       const storedCategory = PRODUCT_LIBRARY.getStoredCategory() || getSelectedProductCategory() || "hybrid";
+      const storedSelectionState = PRODUCT_LIBRARY.getStoredSelectionState();
 
       if (storedProduct) {
         setSelectedCategory(storedProduct.category, { preserveProduct: true });
-        setSelectedProductById(storedProduct.id, { persist: false });
+        setSelectedProductById(storedProduct.id, {
+          persist: false,
+          choiceMode: storedSelectionState && storedSelectionState.selectedRangeId ? "choose_range" : getProductChoiceMode()
+        });
       } else {
         setSelectedCategory(storedCategory, { preserveProduct: false });
       }
@@ -4224,11 +4780,14 @@
         job: {
           quoteMode: input.quoteMode,
           productCategory: product.category,
+          productChoiceMode: input.productChoiceMode,
+          selectedRangeId: input.selectedRangeId || null,
+          selectedColour: input.selectedColour || null,
           productId: product.isEstimate ? null : product.id,
           productName: PRODUCT_LIBRARY.getProductLabel(product),
           productBrand: product.brand,
-          productRange: product.range,
-          productColour: product.colour,
+          productRange: product.rangeLabel || product.range,
+          productColour: input.selectedColour || (product.selectionMode === "range_then_colour" ? product.colour : ""),
           flooringPattern: input.patternType,
           installationMethod: input.installMethod || (product.category === "engineered" ? "floating" : "floating")
         },
@@ -4257,44 +4816,8 @@
       };
     }
 
-    function canUseQuoteSaveRuntime() {
+    function canUseLeadCaptureRuntime() {
       return typeof window.fetch === "function" && window.location.protocol !== "file:";
-    }
-
-    async function persistQuoteRequest(options) {
-      const settings = Object.assign({
-        mode: "draft",
-        payload: null,
-        emailTo: "",
-        quoteId: state.lastQuoteId || ""
-      }, options || {});
-
-      if (!canUseQuoteSaveRuntime()) {
-        throw new Error("Quote save runtime is unavailable in local file mode.");
-      }
-
-      const response = await window.fetch(QUOTE_SAVE_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          mode: settings.mode,
-          quoteId: settings.quoteId || "",
-          emailTo: settings.emailTo || "",
-          payload: settings.payload
-        })
-      });
-
-      const result = await response.json().catch(function () {
-        return null;
-      });
-
-      if (!response.ok || !result || !result.ok || !result.quoteId) {
-        throw new Error(result && result.error ? result.error : "Quote save failed.");
-      }
-
-      return result;
     }
 
     async function loadQuoteRuntimeHealth() {
@@ -4317,83 +4840,169 @@
           emailReady: !!result.runtime.emailReady
         };
       } catch (error) {
-        // Leave runtime health as unknown if the endpoint is unavailable.
+        // Netlify branch previews or local static servers may not expose the runtime health endpoint yet.
       }
     }
 
-    function getQuoteSaveErrorMessage(error, mode) {
+    function buildLeadNotes(payload) {
+      const parts = [];
+      if (payload.notes && payload.notes.site) {
+        parts.push("Job notes: " + payload.notes.site);
+      }
+      if (payload.notes && payload.notes.customer) {
+        parts.push("Customer notes: " + payload.notes.customer);
+      }
+      return parts.join(" | ");
+    }
+
+    function buildLeadQuoteLines(payload) {
+      return (payload.pricing.lineItems || []).map(function (item) {
+        return {
+          label: item.label,
+          quantity: item.quantity || 0,
+          unit: item.unit || "",
+          unitBasis: item.unitBasis || "",
+          amountExGst: item.amountExGst || 0
+        };
+      });
+    }
+
+    function buildLeadPayloadFromQuotePayload(payload) {
+      const createdAt = new Date().toISOString();
+      const quoteLines = buildLeadQuoteLines(payload);
+      const leadPayload = {
+        name: payload.customer.name,
+        phone: payload.customer.phone,
+        email: payload.customer.email,
+        address: payload.customer.siteAddress,
+        suburb: payload.customer.suburb,
+        postcode: payload.customer.postcode,
+        selectedProduct: payload.job.productName,
+        category: payload.job.productCategory,
+        realArea: payload.measurement.realArea,
+        chargeableArea: payload.job.quoteMode === "install_only" ? null : payload.measurement.chargeableArea,
+        quoteTotal: payload.pricing.totalIncGst,
+        quoteLines: quoteLines,
+        notes: buildLeadNotes(payload),
+        createdAt: createdAt,
+        leadStatus: "new",
+        quoteMode: payload.job.quoteMode,
+        measurementMethod: payload.measurement.method
+      };
+
+      return leadPayload;
+    }
+
+    function saveLastSubmittedLeadBackup(leadPayload, resultState) {
+      const snapshot = {
+        result: resultState || "pending",
+        savedAt: new Date().toISOString(),
+        lead: leadPayload
+      };
+      localStorage.setItem(LAST_SUBMITTED_LEAD_KEY, JSON.stringify(leadPayload));
+      localStorage.setItem(LAST_SUBMITTED_LEAD_RESULT_KEY, JSON.stringify(snapshot));
+    }
+
+    function readLastSubmittedLeadBackup() {
+      try {
+        return JSON.parse(localStorage.getItem(LAST_SUBMITTED_LEAD_RESULT_KEY) || "null");
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function renderLeadRecoveryBanner() {
+      const savedResult = readLastSubmittedLeadBackup();
+      if (!savedResult || savedResult.result !== "error" || !savedResult.lead) {
+        leadRecoveryBanner.hidden = true;
+        return;
+      }
+
+      leadRecoveryTitle.textContent = "Saved quote request found";
+      leadRecoveryText.textContent = "The last submit attempt did not go through. The estimate for "
+        + (savedResult.lead.selectedProduct || savedResult.lead.category || "this project")
+        + " is still saved in this browser, so you can review and submit again.";
+      leadRecoveryBanner.hidden = false;
+    }
+
+    function syncLeadFormFields(leadPayload) {
+      leadCreatedAtInput.value = leadPayload.createdAt || "";
+      leadStatusInput.value = leadPayload.leadStatus || "new";
+      leadNameInput.value = leadPayload.name || "";
+      leadAddressInput.value = leadPayload.address || "";
+      leadSelectedProductInput.value = leadPayload.selectedProduct || "";
+      leadCategoryInput.value = leadPayload.category || "";
+      leadRealAreaInput.value = leadPayload.realArea != null ? String(leadPayload.realArea) : "";
+      leadChargeableAreaInput.value = leadPayload.chargeableArea != null ? String(leadPayload.chargeableArea) : "";
+      leadQuoteTotalInput.value = leadPayload.quoteTotal != null ? String(leadPayload.quoteTotal) : "";
+      leadQuoteLinesInput.value = JSON.stringify(leadPayload.quoteLines || []);
+      leadNotesInput.value = leadPayload.notes || "";
+      leadPayloadJsonInput.value = JSON.stringify(leadPayload);
+    }
+
+    async function submitLeadToNetlifyForm(leadPayload) {
+      if (!canUseLeadCaptureRuntime()) {
+        throw new Error("Lead capture is unavailable in local file mode.");
+      }
+
+      syncLeadFormFields(leadPayload);
+
+      const formData = new FormData(quoteForm);
+      const params = new URLSearchParams();
+      params.set("form-name", LEAD_FORM_NAME);
+
+      // Future: this is the same clean lead payload that can be inserted into Supabase later.
+      // Future: this payload can also be passed into a Resend email workflow once outbound email is ready.
+      for (const entry of formData.entries()) {
+        const key = entry[0];
+        const value = entry[1];
+        if (key === "form-name") {
+          continue;
+        }
+        if (value instanceof File) {
+          continue;
+        }
+        params.append(key, value);
+      }
+
+      const uploadedFiles = getSelectedQuoteFiles();
+      if (uploadedFiles.length) {
+        params.set("uploaded_file_names", uploadedFiles.map(function (file) {
+          return file.name;
+        }).join(", "));
+      }
+
+      const response = await window.fetch("/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: params.toString()
+      });
+
+      if (!response.ok) {
+        throw new Error("Netlify form submission failed.");
+      }
+
+      return true;
+    }
+
+    function getLeadCaptureErrorMessage(error) {
       const rawMessage = error && error.message ? String(error.message) : "";
 
-      if (/Missing Supabase server credentials/i.test(rawMessage)) {
-        return "This new Netlify site is not connected to Supabase yet. Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Netlify environment variables, then redeploy.";
+      if (/Lead capture is unavailable/i.test(rawMessage)) {
+        return "Quote request submission is not available in direct file mode. Use the Netlify site or run full netlify dev.";
       }
 
-      if (/Quote email is not configured/i.test(rawMessage)) {
-        return "Quote email is not configured on this Netlify site yet. Add RESEND_API_KEY and OPERON_QUOTE_FROM_EMAIL, then redeploy.";
+      if (/Netlify form submission failed/i.test(rawMessage)) {
+        return "We could not send the quote request right now. Your details are saved in this browser, so you can try again without losing the quote.";
       }
 
-      if (/Supabase write failed/i.test(rawMessage)) {
-        return mode === "email"
-          ? "The quote could not be updated in Supabase right now. Check the new Netlify site connection and Supabase table access."
-          : "The estimate could not be saved in Supabase right now. Check the new Netlify site connection and Supabase table access.";
-      }
-
-      if (/Quote save runtime is unavailable/i.test(rawMessage)) {
-        return "Quote saving is only available on the live site or localhost, not in direct file mode.";
-      }
-
-      return mode === "email"
-        ? "We could not email the quote right now. Please try again."
-        : "We could not save the estimate right now. Please try again.";
+      return "We could not send the quote request right now. Your details are saved in this browser, so you can try again without losing the quote.";
     }
 
     function getIdleQuoteStatusMessage() {
-      if (state.quoteRuntimeHealth.checked && !state.quoteRuntimeHealth.quoteSaveReady) {
-        return "This Netlify site is not connected to Supabase yet. Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY, then redeploy.";
-      }
-
-      if (state.quoteRuntimeHealth.checked && currentQuoteStep === getQuoteSteps().length - 1 && !state.quoteRuntimeHealth.emailReady) {
-        return "Estimate saving is ready, but Email quote is not configured yet. Add RESEND_API_KEY and OPERON_QUOTE_FROM_EMAIL, then redeploy.";
-      }
-
-      return "Review the estimate, then email the quote when you are ready.";
-    }
-
-    async function saveQuoteDraftToSystem(options) {
-      const settings = Object.assign({ force: false, showMessage: true }, options || {});
-      const payload = await buildQuotePayload();
-      const signature = JSON.stringify(payload);
-
-      if (!settings.force && state.lastQuoteId && state.lastSavedDraftSignature === signature) {
-        if (settings.showMessage) {
-          showQuoteSubmitMessage("draft_saved", "Estimate saved. Review the summary, then email the quote when you are ready.");
-        }
-        return {
-          quoteId: state.lastQuoteId,
-          payload: payload,
-          reused: true
-        };
-      }
-
-      const result = await persistQuoteRequest({
-        mode: "draft",
-        payload: payload,
-        quoteId: state.lastQuoteId || ""
-      });
-
-      state.lastQuoteId = result.quoteId;
-      state.lastSavedDraftSignature = signature;
-      localStorage.setItem("operon_last_quote_id", result.quoteId);
-
-      if (settings.showMessage) {
-        showQuoteSubmitMessage("draft_saved", "Estimate saved. Review the summary, then email the quote when you are ready.");
-      }
-
-      return {
-        quoteId: result.quoteId,
-        payload: payload,
-        reused: false
-      };
+      return "Review the estimate, then submit your quote request when you are ready.";
     }
 
     async function saveQuoteRequest(payload) {
@@ -4564,7 +5173,7 @@
       wizardSubmitButton.disabled = isLoading;
       wizardBackButton.disabled = isLoading || currentQuoteStep === 0;
       wizardNextButton.disabled = isLoading;
-      wizardSubmitButton.textContent = isLoading ? (actionLabel || "Working...") : "Email quote";
+      wizardSubmitButton.textContent = isLoading ? (actionLabel || "Working...") : "Submit quote request";
       updateQuoteCtaSystem();
     }
 
@@ -4597,81 +5206,83 @@
         event.preventDefault();
       }
 
+      let leadPayload = null;
       clearQuoteSubmitMessage();
-      if (shouldUseLocalReviewOnlyMode()) {
-        showQuoteSubmitError("Email quote is not available in simple localhost preview. Use the Netlify site or run netlify dev for save and email testing.");
-        return;
-      }
-      if (state.quoteRuntimeHealth.checked && !state.quoteRuntimeHealth.emailReady) {
-        showQuoteSubmitError(getIdleQuoteStatusMessage());
-        return;
-      }
-      setQuoteSubmitLoading(true, "Emailing quote...");
+      setQuoteSubmitLoading(true, "Submitting request...");
 
       try {
         const input = getFormInput();
-        const errors = validateQuoteInput(input, { requireDeliveryEmail: true });
-        if (errors.length) {
-          showWizardValidationMessage(errors[0]);
+        const errors = validateQuoteInput(input, { requireDeliveryEmail: false });
+        const summaryIssues = getQuoteSummaryConsistencyIssues(input, getCurrentQuoteResult());
+        if (errors.length || summaryIssues.length) {
+          const submitValidationMessage = errors[0] || summaryIssues[0] || "Please review the quote details and try again.";
+          showWizardValidationMessage(submitValidationMessage);
           focusFirstInvalidField(currentQuoteStep);
-          showQuoteSubmitError(errors.join(" "));
+          if (window.OperonTracking) {
+            window.OperonTracking.trackQuoteStepError(6, "summary", submitValidationMessage, "submit_validation");
+          }
+          showQuoteSubmitError(submitValidationMessage);
           return;
         }
-
-        const deliveryEmail = getDeliveryEmailAddress(input);
         const payload = await buildQuotePayload();
-        let quoteId = state.lastQuoteId || "";
-        if (!quoteId) {
-          const draftResult = await saveQuoteDraftToSystem({ showMessage: false });
-          quoteId = draftResult.quoteId || "";
+        leadPayload = buildLeadPayloadFromQuotePayload(payload);
+        saveLastSubmittedLeadBackup(leadPayload, "pending");
+        syncLeadFormFields(leadPayload);
+        if (window.OperonTracking) {
+          window.OperonTracking.trackQuoteSubmitAttempt(
+            leadPayload.quoteTotal,
+            payload.job.quoteMode,
+            leadPayload.realArea
+          );
         }
-        if (!quoteId) {
-          throw new Error("Quote draft has not been saved yet.");
-        }
-        console.log("quote_submitted");
         window.__operonSuppressAbandon = true;
         localStorage.setItem("operon_last_quote_value", String(payload.pricing.totalIncGst || 0));
         localStorage.setItem("operon_last_quote_type", payload.job.quoteMode || "");
-        const emailResult = await persistQuoteRequest({
-          mode: "email_quote",
-          payload: payload,
-          quoteId: quoteId,
-          emailTo: deliveryEmail
-        });
-        quoteId = emailResult.quoteId;
-        state.lastQuoteId = quoteId;
-        state.lastSavedDraftSignature = JSON.stringify(payload);
+        if (shouldUseLocalReviewOnlyMode()) {
+          const localPreviewMessage = "Quote request is saved in this browser for local preview. Submit from the Netlify site or run full netlify dev to send it.";
+          saveLastSubmittedLeadBackup(leadPayload, "error");
+          renderLeadRecoveryBanner();
+          if (window.OperonTracking) {
+            window.OperonTracking.trackQuoteStepError(6, "summary", localPreviewMessage, "runtime_blocked");
+            window.OperonTracking.trackQuoteSubmitError(
+              localPreviewMessage,
+              payload.job.quoteMode,
+              leadPayload.realArea
+            );
+          }
+          showQuoteSubmitError(localPreviewMessage);
+          return;
+        }
+        await submitLeadToNetlifyForm(leadPayload);
+        saveLastSubmittedLeadBackup(leadPayload, "success");
+        renderLeadRecoveryBanner();
         if (window.OperonTracking) {
           window.OperonTracking.trackQuoteStepCompleted(6, "summary");
-          window.OperonTracking.trackQuoteSubmit(quoteId, payload.pricing.totalIncGst, payload.job.quoteMode, payload.measurement.realArea);
-        }
-
-        const partialFailures = [];
-
-        const uploadedFiles = getSelectedQuoteFiles();
-        for (let index = 0; index < uploadedFiles.length; index += 1) {
-          try {
-            await uploadQuoteFile(quoteId, uploadedFiles[index], "index.html");
-          } catch (error) {
-            partialFailures.push("file upload");
-            console.error(error);
-          }
-        }
-
-        localStorage.setItem("operon_last_quote_id", quoteId);
-        if (partialFailures.length) {
-          showQuoteSubmitMessage(
-            "partial_success_file_failed",
-            "Your quote has been emailed. Reference: " + quoteId.slice(0, 8) + ". We saved the quote, but there was a problem with " + partialFailures.join(", ") + "."
-          );
-        } else {
-          showQuoteSubmitSuccess(
-            "Your quote has been emailed to " + deliveryEmail + ". Reference: " + quoteId.slice(0, 8) + "."
+          window.OperonTracking.trackQuoteSubmitSuccess(
+            leadPayload.createdAt,
+            leadPayload.quoteTotal,
+            payload.job.quoteMode,
+            leadPayload.realArea
           );
         }
+        showQuoteSubmitSuccess("Quote request received. Redirecting...");
+        window.location.href = "thank-you.html";
       } catch (error) {
         console.error(error);
-        showQuoteSubmitError(getQuoteSaveErrorMessage(error, "email"));
+        const message = getLeadCaptureErrorMessage(error);
+        if (leadPayload) {
+          saveLastSubmittedLeadBackup(leadPayload, "error");
+          renderLeadRecoveryBanner();
+        }
+        if (window.OperonTracking) {
+          window.OperonTracking.trackQuoteStepError(6, "summary", message, "submit_error");
+          window.OperonTracking.trackQuoteSubmitError(
+            message,
+            getInputValue("quoteMode"),
+            state.currentQuoteResult ? Number(state.currentQuoteResult.realArea || 0) : Number(getInputValue("totalAreaM2") || 0)
+          );
+        }
+        showQuoteSubmitError(message);
       } finally {
         setQuoteSubmitLoading(false);
       }
@@ -4684,6 +5295,26 @@
           return;
         }
         setSelectedCategory(button.getAttribute("data-product-category"));
+        renderAll();
+      });
+
+      productChoiceModeChoices.addEventListener("click", function (event) {
+        const button = event.target.closest("[data-product-choice-mode]");
+        if (!button) {
+          return;
+        }
+
+        setProductChoiceMode(button.getAttribute("data-product-choice-mode"), { track: true });
+        renderAll();
+      });
+
+      productRangeSelect.addEventListener("change", function (event) {
+        setSelectedRange(event.target.value, { persist: true, track: true });
+        renderAll();
+      });
+
+      productColourSelect.addEventListener("change", function (event) {
+        setSelectedColourValue(event.target.value, { persist: true, track: true });
         renderAll();
       });
 
@@ -4700,6 +5331,19 @@
       clearSelectedProductButton.addEventListener("click", function () {
         clearSpecificProductSelection();
         renderAll();
+      });
+
+      browseCategoryLink.addEventListener("click", function (event) {
+        if (browseCategoryLink.dataset.behavior !== "change-range") {
+          return;
+        }
+
+        event.preventDefault();
+        setProductChoiceMode("choose_range", { track: true });
+        renderAll();
+        if (productRangeSelect && !productRangeField.hidden) {
+          productRangeSelect.focus();
+        }
       });
 
       document.getElementById("quoteModeChoices").addEventListener("click", function (event) {
@@ -4763,6 +5407,10 @@
         updateQuoteCtaSystem();
       });
 
+      leadRecoveryButton.addEventListener("click", function () {
+        showQuoteStep(5, { scrollMode: "top" });
+      });
+
       document.getElementById("loadFloorplanAreaButton").addEventListener("click", function () {
         applyFloorplanHandoff();
         renderAll();
@@ -4823,8 +5471,12 @@
 
       const storedProduct = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getStoredProduct() : null;
       const storedCategory = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getStoredCategory() : "";
+      const storedSelectionState = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getStoredSelectionState() : null;
       if (storedProduct) {
-        setSelectedProductById(storedProduct.id, { persist: false });
+        setSelectedProductById(storedProduct.id, {
+          persist: false,
+          choiceMode: storedSelectionState && storedSelectionState.selectedRangeId ? "choose_range" : "recommend"
+        });
       } else if (storedCategory) {
         setSelectedCategory(storedCategory, { preserveProduct: false });
       }
@@ -4836,24 +5488,33 @@
 
       const measurementMethod = getInputValue("measurementMethod") || "manual_total";
       const quoteMode = getInputValue("quoteMode") || "supply_install";
-      const selectedProductCategory = getInputValue("selectedProductCategory") || "hybrid";
+      const selectedProductCategory = getPreferredProductCategory();
       const selectedProduct = (PRODUCT_LIBRARY && PRODUCT_LIBRARY.getProductById(getInputValue("selectedProduct")))
         ? getInputValue("selectedProduct")
         : "";
+      const selectedRangeId = getInputValue("selectedRangeId");
+      const productChoiceMode = getProductChoiceMode();
 
       setInputValue("measurementMethod", measurementMethod);
       setInputValue("quoteMode", quoteMode);
       setInputValue("selectedProductCategory", selectedProductCategory);
       setInputValue("selectedProduct", selectedProduct);
+      setInputValue("selectedRangeId", selectedRangeId);
+      setInputValue("productChoiceMode", productChoiceMode);
 
       applyQuotePageHandoffState();
       setMeasurementMethod(measurementMethod);
       setQuoteMode(quoteMode);
       setSelectedCategory(selectedProductCategory, { preserveProduct: true });
+      setProductChoiceMode(productChoiceMode, { track: false });
       if (selectedProduct) {
-        setSelectedProductById(selectedProduct, { persist: false });
+        setSelectedProductById(selectedProduct, {
+          persist: false,
+          choiceMode: selectedRangeId ? "choose_range" : productChoiceMode
+        });
       }
       renderAll();
+      renderLeadRecoveryBanner();
       if (state.productSelectionLoadedFromCatalogue && window.OperonTracking) {
         window.OperonTracking.trackEvent("quote_start_from_product", {
           category: getSelectedProductCategory(),

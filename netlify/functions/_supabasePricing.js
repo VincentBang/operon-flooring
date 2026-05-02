@@ -241,7 +241,13 @@ function getProductLabel(product) {
   if (product.isEstimate) {
     return (product.range || product.category || "Flooring") + " Estimate";
   }
-  return [product.brand, product.range, product.colour].filter(Boolean).join(" / ");
+  if (product.customerLabel) {
+    return product.customerLabel;
+  }
+  if (product.selectionMode === "range_then_colour" || product.category === "engineered") {
+    return [product.rangeLabel || product.range || product.brand, product.colour].filter(Boolean).join(" — ");
+  }
+  return product.rangeLabel || product.range || product.brand || "Flooring product";
 }
 
 function getInstallRateConfig(library, input) {

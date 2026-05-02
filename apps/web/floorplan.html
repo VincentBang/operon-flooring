@@ -47,26 +47,28 @@
   <script src="tracking.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.min.js"></script>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
     :root {
-      --bg: #f6f3ee;
-      --surface: rgba(255, 255, 255, 0.94);
-      --surface-strong: #fffdfa;
-      --surface-soft: #efe8dc;
-      --text: #17191f;
-      --muted: #5d6470;
-      --line: rgba(23, 25, 31, 0.09);
-      --brand: #1e3a8a;
-      --brand-soft: rgba(30, 58, 138, 0.08);
-      --accent: #0f766e;
-      --warn: #b54708;
-      --danger: #b42318;
-      --success: #067647;
-      --shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+      --bg: #FAF8F4;
+      --surface: rgba(255, 255, 255, 0.96);
+      --surface-strong: #FFFFFF;
+      --surface-soft: #F6F2EC;
+      --text: #111820;
+      --muted: #6B7280;
+      --line: #E8E2D8;
+      --brand: #111820;
+      --brand-soft: rgba(17, 24, 32, 0.05);
+      --accent: #A67C52;
+      --warn: #8C6640;
+      --danger: #B33A2F;
+      --success: #4C6857;
+      --shadow: 0 6px 20px rgba(17, 24, 32, 0.05);
       --radius-xl: 26px;
       --radius-lg: 18px;
       --radius-md: 14px;
       --max-width: 1100px;
-      --font-sans: "Avenir Next", "Segoe UI", BlinkMacSystemFont, -apple-system, sans-serif;
+      --font-sans: "Inter", "Segoe UI", BlinkMacSystemFont, -apple-system, sans-serif;
     }
 
     * {
@@ -81,7 +83,7 @@
       margin: 0;
       color: var(--text);
       font-family: var(--font-sans);
-      background: linear-gradient(180deg, #fbfaf7 0%, var(--bg) 100%);
+      background: var(--bg);
       min-height: 100vh;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
@@ -117,7 +119,7 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(251, 250, 247, 0.9);
+      background: rgba(250, 248, 244, 0.94);
       backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--line);
     }
@@ -199,19 +201,18 @@
     .button {
       background: var(--brand);
       color: #ffffff;
-      box-shadow: 0 14px 34px rgba(30, 58, 138, 0.18);
     }
 
     .button-secondary {
       background: var(--surface-strong);
       color: var(--text);
-      border: 1px solid rgba(23, 25, 31, 0.08);
+      border: 1px solid var(--line);
     }
 
     .button-quiet {
-      background: rgba(30, 58, 138, 0.03);
-      color: var(--brand);
-      border: 1px solid rgba(30, 58, 138, 0.1);
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--line);
     }
 
     .button-danger {
@@ -224,7 +225,6 @@
       background: var(--brand);
       color: #ffffff;
       border: 1px solid transparent;
-      box-shadow: 0 12px 30px rgba(30, 58, 138, 0.16);
     }
 
     .button:disabled,
@@ -240,6 +240,12 @@
 
     .hero {
       padding: 56px 0 30px;
+    }
+
+    main > .section:nth-of-type(even) {
+      background: rgba(255, 255, 255, 0.52);
+      border-top: 1px solid rgba(232, 226, 216, 0.72);
+      border-bottom: 1px solid rgba(232, 226, 216, 0.72);
     }
 
     .hero-grid,
@@ -1445,7 +1451,7 @@
         <a data-quote-return-link href="index.html#quoteForm">Quote</a>
         <a href="products.html">Flooring Products</a>
         <a href="floorplan.html">Floor Plan</a>
-        <a href="blog/">Guides</a>
+        <a href="blog/index.html">Guides</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
         <span></span>
@@ -1738,11 +1744,11 @@
       <div class="footer-col">
         <h4>Locations</h4>
         <ul>
-          <li><a href="flooring-parramatta.html">Parramatta</a></li>
-          <li><a href="flooring-liverpool.html">Liverpool</a></li>
-          <li><a href="flooring-auburn.html">Auburn</a></li>
-          <li><a href="flooring-blacktown.html">Blacktown</a></li>
-          <li><a href="flooring-miranda.html">Miranda</a></li>
+          <li><a href="parramatta-flooring.html">Parramatta</a></li>
+          <li><a href="liverpool-flooring.html">Liverpool</a></li>
+          <li><a href="auburn-flooring.html">Auburn</a></li>
+          <li><a href="blacktown-flooring.html">Blacktown</a></li>
+          <li><a href="miranda-flooring.html">Miranda</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1784,6 +1790,7 @@
     const FLOORPLAN_CONFIRMED_AREA_KEY = "operon_confirmed_floorplan_area";
     const FLOORPLAN_ROOMS_KEY = "operon_floorplan_rooms";
     const FLOORPLAN_SOURCE_KEY = "operon_floorplan_source";
+    const FLOORPLAN_QUOTE_HANDOFF_KEY = "operon_floorplan_quote_handoff_v1";
     const FLOORPLAN_STATE_KEY = "operon-floorplan-trace-v2";
     const FLOORPLAN_DRAFT_KEY = "operon-floorplan-draft-v1";
     const FLOORPLAN_IMAGE_SESSION_KEY = "operon-floorplan-image-session-v1";
@@ -1857,6 +1864,22 @@
       document.querySelectorAll("[data-quote-return-link]").forEach(function (link) {
         link.setAttribute("href", buildQuoteReturnUrl());
       });
+    }
+
+    function saveQuoteHandoff(realArea, rooms, source) {
+      const payload = {
+        realArea: Math.max(0, Number(realArea) || 0),
+        rooms: Array.isArray(rooms) ? rooms : [],
+        source: source || "trace_room_mode",
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(FLOORPLAN_QUOTE_HANDOFF_KEY, JSON.stringify(payload));
+      localStorage.setItem(FLOORPLAN_CONFIRMED_AREA_KEY, String(payload.realArea));
+      localStorage.setItem(FLOORPLAN_ROOMS_KEY, JSON.stringify(payload.rooms));
+      localStorage.setItem(FLOORPLAN_SOURCE_KEY, payload.source);
+      localStorage.removeItem(FLOORPLAN_AREA_KEY);
+      return payload;
     }
 
     function refreshWorkspaceMode() {
@@ -3137,10 +3160,7 @@
     function saveAreaForQuote() {
       const totalArea = calculateSelectedTotalArea();
       try {
-        localStorage.setItem(FLOORPLAN_AREA_KEY, String(totalArea));
-        localStorage.setItem(FLOORPLAN_CONFIRMED_AREA_KEY, String(totalArea));
-        localStorage.setItem(FLOORPLAN_ROOMS_KEY, JSON.stringify(state.rooms));
-        localStorage.setItem(FLOORPLAN_SOURCE_KEY, "trace_room_mode");
+        saveQuoteHandoff(totalArea, state.rooms, "trace_room_mode");
       } catch (error) {
         setGlobalStatus("Area could not be saved for quote.");
         return;

@@ -11,49 +11,51 @@
   <link rel="icon" href="assets/Operon favicon.png" type="image/png">
   <!-- Visualiser is intentionally hidden until production backend image generation is available. -->
   <meta name="robots" content="noindex,nofollow">
-  <link rel="canonical" href="https://operonflooring.netlify.app/visualiser.html">
+  <link rel="canonical" href="https://operonflooring.com.au/visualiser.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Operon Visualiser | Preview Flooring Before You Quote">
   <meta property="og:description" content="Preview flooring with sample rooms or your own photo, compare hybrid, laminate, and timber finishes, and send the selected family into the Operon quote page.">
-  <meta property="og:url" content="https://operonflooring.netlify.app/visualiser.html">
+  <meta property="og:url" content="https://operonflooring.com.au/visualiser.html">
   <meta property="og:site_name" content="Operon Flooring">
-  <meta property="og:image" content="https://operonflooring.netlify.app/assets/operon-social-preview.png">
+  <meta property="og:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Operon Visualiser | Preview Flooring Before You Quote">
   <meta name="twitter:description" content="Preview flooring with sample rooms or your own photo, compare hybrid, laminate, and timber finishes, and send the selected family into the Operon quote page.">
-  <meta name="twitter:image" content="https://operonflooring.netlify.app/assets/operon-social-preview.png">
+  <meta name="twitter:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "Operon Flooring Visualiser",
-      "url": "https://operonflooring.netlify.app/visualiser.html",
+      "url": "https://operonflooring.com.au/visualiser.html",
       "description": "Preview flooring with sample rooms or your own photo, compare hybrid, laminate, and timber finishes, and send the selected family into the Operon quote page.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Operon Flooring",
-        "url": "https://operonflooring.netlify.app/"
+        "url": "https://operonflooring.com.au/"
       }
     }
   </script>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
     :root {
-      --bg: #efe6d9;
-      --bg-alt: #f7f1e8;
-      --surface: rgba(255, 250, 244, 0.86);
-      --surface-strong: rgba(255, 251, 246, 0.94);
-      --surface-soft: rgba(255, 247, 239, 0.7);
-      --text: #1f1915;
-      --muted: #62564b;
-      --line: rgba(31, 25, 21, 0.1);
-      --line-strong: rgba(31, 25, 21, 0.18);
-      --brand: #91603c;
-      --brand-dark: #61391d;
-      --accent: #193f38;
-      --accent-soft: #d9e6e2;
-      --signal: #d98a39;
-      --shadow-lg: 0 28px 90px rgba(52, 31, 17, 0.14);
-      --shadow-md: 0 20px 50px rgba(52, 31, 17, 0.1);
+      --bg: #FAF8F4;
+      --bg-alt: #F6F2EC;
+      --surface: rgba(255, 255, 255, 0.88);
+      --surface-strong: rgba(255, 255, 255, 0.96);
+      --surface-soft: rgba(246, 242, 236, 0.92);
+      --text: #111820;
+      --muted: #6B7280;
+      --line: rgba(232, 226, 216, 0.9);
+      --line-strong: rgba(17, 24, 32, 0.12);
+      --brand: #111820;
+      --brand-dark: #111820;
+      --accent: #A67C52;
+      --accent-soft: rgba(166, 124, 82, 0.10);
+      --signal: #A67C52;
+      --shadow-lg: 0 16px 40px rgba(17, 24, 32, 0.06);
+      --shadow-md: 0 6px 20px rgba(17, 24, 32, 0.05);
       --radius-xl: 34px;
       --radius-lg: 24px;
       --radius-md: 18px;
@@ -72,11 +74,8 @@
     body {
       margin: 0;
       color: var(--text);
-      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-      background:
-        radial-gradient(circle at top left, rgba(145, 96, 60, 0.18), transparent 24%),
-        radial-gradient(circle at top right, rgba(25, 63, 56, 0.14), transparent 20%),
-        linear-gradient(180deg, #ecdfcf 0%, #f6f0e7 38%, #efe4d7 100%);
+      font-family: "Inter", "Segoe UI", BlinkMacSystemFont, -apple-system, sans-serif;
+      background: var(--bg);
       min-height: 100vh;
     }
 
@@ -99,9 +98,9 @@
       position: sticky;
       top: 0;
       z-index: 40;
-      background: rgba(244, 236, 225, 0.8);
+      background: rgba(250, 248, 244, 0.94);
       backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(31, 25, 21, 0.08);
+      border-bottom: 1px solid rgba(232, 226, 216, 0.9);
     }
 
     .nav {

@@ -1,6 +1,17 @@
 (function () {
   const TASKS_KEY = "operon_agent_tasks_v1";
   const QUEUE_KEY = "operon_task_queue_v1";
+  const RUN_MODE_LIMITS = {
+    default: 3,
+    long: 10,
+    overnight: 25
+  };
+  const ACTIVE_STATUSES = {
+    pending: true,
+    todo: true,
+    next_batch: true,
+    in_progress: true
+  };
   const CATEGORY_WEIGHTS = {
     conversion: 1.6,
     seo: 1.2,
@@ -50,6 +61,51 @@
 
   function writeQueue(tasks) {
     localStorage.setItem(QUEUE_KEY, JSON.stringify(tasks));
+  }
+
+  function normaliseQueuePayload(payload) {
+    const tasks = Array.isArray(payload) ? payload : ((payload && payload.tasks) || []);
+    return tasks.filter(Boolean);
+  }
+
+  function getRunLimit(modeOrLimit) {
+    if (typeof modeOrLimit === "number") {
+      return Math.max(Math.floor(modeOrLimit), 1);
+    }
+    if (typeof modeOrLimit === "string" && RUN_MODE_LIMITS[modeOrLimit]) {
+      return RUN_MODE_LIMITS[modeOrLimit];
+    }
+    if (modeOrLimit && typeof modeOrLimit === "object") {
+      if (typeof modeOrLimit.limit === "number") {
+        return getRunLimit(modeOrLimit.limit);
+      }
+      if (modeOrLimit.mode) {
+        return getRunLimit(modeOrLimit.mode);
+      }
+    }
+    return RUN_MODE_LIMITS.default;
+  }
+
+  function getRankedPendingTasks(tasks) {
+    return normaliseQueuePayload(tasks).filter(function (task) {
+      return ACTIVE_STATUSES[task.status || "pending"];
+    }).sort(function (first, second) {
+      const firstScore = Number(first.priority_score) || 0;
+      const secondScore = Number(second.priority_score) || 0;
+      return secondScore - firstScore;
+    });
+  }
+
+  async function loadBacklogFromUrl(url) {
+    const response = await fetch(url || "task_queue.json");
+    const payload = await response.json();
+    const queue = normaliseQueuePayload(payload);
+    if (queue.length) {
+      writeQueue(queue.map(function (task) {
+        return Object.assign({ source: "task_queue_json" }, task);
+      }));
+    }
+    return queue;
   }
 
   function getBaseTasks(projectState) {
@@ -176,24 +232,26 @@
       return second.priority_score - first.priority_score;
     }).slice(0, 10);
     writeTasks(tasks);
-    writeQueue(tasks.map(function (task, index) {
-      return {
-        id: task.id,
-        title: task.title,
-        category: task.category,
-        priority_score: task.priority_score,
-        impact: task.expected_impact || "",
-        status: index < 3 ? "next_batch" : "pending"
-      };
-    }));
+    const existingQueue = readQueue();
+    if (!existingQueue.length || existingQueue.every(function (task) { return task.source === "generated"; })) {
+      writeQueue(tasks.map(function (task, index) {
+        return {
+          id: task.id,
+          title: task.title,
+          category: task.category,
+          priority_score: task.priority_score,
+          impact: task.expected_impact || "",
+          status: index < 3 ? "next_batch" : "pending",
+          source: "generated"
+        };
+      }));
+    }
     return tasks;
   }
 
-  function getExecutionBatch(limit) {
+  function getExecutionBatch(modeOrLimit) {
     const queue = readQueue();
-    return queue.filter(function (task) {
-      return task.status === "pending" || task.status === "next_batch";
-    }).slice(0, limit || 3);
+    return getRankedPendingTasks(queue).slice(0, getRunLimit(modeOrLimit));
   }
 
   window.OperonTaskEngine = {
@@ -202,6 +260,9 @@
     readQueue: readQueue,
     writeQueue: writeQueue,
     getExecutionBatch: getExecutionBatch,
+    getRunLimit: getRunLimit,
+    loadBacklogFromUrl: loadBacklogFromUrl,
+    runModeLimits: Object.assign({}, RUN_MODE_LIMITS),
     scoreTask: scoreTask
   };
 }());

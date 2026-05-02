@@ -18,12 +18,12 @@ Implemented in the website codebase:
   - `/engineered-timber-flooring-sydney.html`
   - `/flooring-installation-cost-sydney.html`
 - location pages:
-  - `/flooring-auburn.html`
-  - `/flooring-blacktown.html`
-  - `/flooring-liverpool.html`
+  - `/auburn-flooring.html`
+  - `/blacktown-flooring.html`
+  - `/liverpool-flooring.html`
   - `/flooring-cabramatta.html`
-  - `/flooring-parramatta.html`
-  - `/flooring-miranda.html`
+  - `/parramatta-flooring.html`
+  - `/miranda-flooring.html`
   - `/flooring-eastern-suburbs.html`
 - blog / education pages:
   - `/blog/`
@@ -144,12 +144,12 @@ Long-tail and authority content that answers real customer questions and links u
 
 ### Active location pages
 
-- `/flooring-auburn.html`
-- `/flooring-blacktown.html`
-- `/flooring-liverpool.html`
+- `/auburn-flooring.html`
+- `/blacktown-flooring.html`
+- `/liverpool-flooring.html`
 - `/flooring-cabramatta.html`
-- `/flooring-parramatta.html`
-- `/flooring-miranda.html`
+- `/parramatta-flooring.html`
+- `/miranda-flooring.html`
 - `/flooring-eastern-suburbs.html`
 
 ### Active blog pages
@@ -223,7 +223,7 @@ The same structure should be adapted for:
 
 ### Example
 
-`/flooring-liverpool.html`
+`/liverpool-flooring.html`
 
 ### H1
 
@@ -360,6 +360,52 @@ SEO will need backlinks to perform well.
 
 - 20 to 50 backlinks in phase one
 
+### Backlink asset list
+
+Use only pages that already have clear commercial or educational value.
+
+- Homepage: best destination for general Sydney flooring quote citations, broad business profiles, and directories.
+- `products.html`: best destination for supplier, showroom, manufacturer, and product-selection references.
+- `hybrid-flooring-sydney.html`: best destination for waterproof hybrid flooring suppliers, apartment renovation partners, and hybrid comparison references.
+- `laminate-flooring-sydney.html`: best destination for budget-conscious flooring guides, rental refresh content, and laminate comparison references.
+- `engineered-timber-flooring-sydney.html`: best destination for premium renovation partners and timber-look product references.
+- Priority suburb pages: use Parramatta, Liverpool, Auburn, Blacktown, and Miranda where the directory or citation supports suburb/service-area landing pages.
+- Maintenance guides: use cleaning, water damage, lifting, gaps, and repair-versus-replace guides for useful editorial outreach instead of pure sales pages.
+- Floor plan tool: use as a partner asset for builders, property managers, and renovation advisers who want an easier way for customers to estimate area.
+
+### Local citation checklist
+
+Keep citation work consistent and measurable.
+
+- Use the same business name, phone number, website URL, and short service description across every listing.
+- Start with Google Business Profile, TrueLocal, Yellow Pages, Yelp Australia, Word of Mouth, LocalSearch, Oneflare, and ServiceSeeking.
+- Use the homepage URL for broad business directories.
+- Use suburb pages only where the platform supports service-area or suburb-specific landing pages.
+- Use product pages only where the platform allows a relevant service/category page.
+- Record login notes, contact email, outreach date, follow-up date, and live URL in `backlink-tracker.html`.
+- Do not create citations that point to draft, hidden, noindex, or weak pages.
+
+### Supplier and partner outreach value propositions
+
+Keep outreach specific and useful.
+
+- Supplier/manufacturer listing: Operon can send quote-ready customers to the supplier range and keep product selection clear through the catalogue.
+- Builder partner: Operon can help customers measure, select flooring, and request a quote without slowing the renovation decision.
+- Property manager partner: Operon can support apartment-friendly hybrid and laminate replacement enquiries with simple area capture.
+- Renovation blog/editorial: Operon can provide practical content on flooring costs, floor preparation, water damage, lifting boards, and product comparisons.
+- Local service partner: Operon can provide a Sydney flooring quote path that keeps final site confirmation clear and avoids overpromising.
+
+### Target page map
+
+- Directories and broad citations: `/`
+- Supplier or product references: `/products.html`
+- Hybrid partners: `/hybrid-flooring-sydney.html`
+- Laminate partners: `/laminate-flooring-sydney.html`
+- Premium timber partners: `/engineered-timber-flooring-sydney.html`
+- Measurement/process references: `/floorplan.html`
+- Local citations: `/parramatta-flooring.html`, `/liverpool-flooring.html`, `/auburn-flooring.html`, `/blacktown-flooring.html`, `/miranda-flooring.html`
+- Educational outreach: `/blog/flooring-cost-sydney.html`, `/blog/how-to-measure-floor-area.html`, `/blog/floor-repair-or-replace.html`, `/blog/why-is-my-floor-lifting.html`
+
 ## Execution Plan
 
 ### Phase 1
@@ -417,7 +463,7 @@ Focus on:
 2. `/hybrid-flooring-sydney.html`
 3. `/engineered-timber-flooring-sydney.html`
 4. `/blog/flooring-cost-sydney.html`
-5. `/flooring-liverpool.html`
+5. `/liverpool-flooring.html`
 
 ## Missing Data / Research Needs
 

@@ -147,6 +147,113 @@ Current supporting pages:
 
 These are decision-support tools. They may read localStorage or manual data until fuller Supabase reads are connected.
 
+## Future Lead Sync Contract
+
+Status: planning only. No live browser write is enabled by this note.
+
+The current no-email quote submission flow builds a customer-safe lead payload in `apps/web/index.html`, stores a browser backup, and submits through Netlify Forms when running on a deployed Netlify site. A later Supabase write should use the same payload shape so the form, local backup, and database record stay aligned.
+
+Expected lead payload fields:
+
+- `name`
+- `phone`
+- `email`
+- `address`
+- `suburb`
+- `postcode`
+- `selectedProduct`
+- `category`
+- `realArea`
+- `chargeableArea`
+- `quoteTotal`
+- `quoteLines`
+- `notes`
+- `createdAt`
+- `leadStatus`
+
+Recommended Supabase mapping:
+
+- `quote_requests`: customer/contact fields, project address, suburb, postcode, selected product/category summary, real area, chargeable area, quote total, notes, `lead_status = new`
+- `quote_items`: bundled customer-facing quote lines only, not raw internal rates
+- `quote_rooms`: optional room-level measurements when the floor plan or room-by-room tools provide structured room data
+- `quote_events`: `quote_submit`, `quote_submit_success`, and `quote_submit_error` events with quote/session identifiers where available
+
+Implementation guardrails:
+
+- perform Supabase inserts from a Netlify function, not direct browser service-role access
+- keep `SUPABASE_SERVICE_ROLE_KEY` server-side only
+- insert the lead first, then related rooms/items/events with the returned quote id
+- preserve Netlify Forms and localStorage backup as fallback paths
+- if Supabase insert fails, the customer should still see the normal recovery path and should not lose the quote payload
+- do not enable Resend or outbound email until the email system is explicitly ready
+
+Future function contract:
+
+```json
+{
+  "name": "Customer name",
+  "phone": "Customer phone",
+  "email": "Customer email if supplied",
+  "address": "Project address",
+  "suburb": "Sydney suburb",
+  "postcode": "Postcode",
+  "selectedProduct": "Customer-facing product or range label",
+  "category": "hybrid | laminate | engineered",
+  "realArea": 60,
+  "chargeableArea": 60,
+  "quoteTotal": 1925,
+  "quoteLines": [{"label": "Installation labour", "amount": 1500}],
+  "notes": "Customer-facing notes only",
+  "createdAt": "ISO timestamp",
+  "leadStatus": "new"
+}
+```
+
+The response should return:
+
+```json
+{
+  "ok": true,
+  "quoteId": "database quote id",
+  "leadStatus": "new"
+}
+```
+
+If the insert fails, return a safe error message without exposing Supabase details.
+
+## Future Queue Sync Contract
+
+Status: planning only. The current source of truth remains `apps/web/task_queue.json`.
+
+When task automation moves into Supabase, use `agent_tasks` for queue rows and keep the same task semantics already used by the local 50-task backlog.
+
+Expected queue fields:
+
+- `id`
+- `title`
+- `category`
+- `assigned_agent`
+- `impact_score`
+- `confidence_score`
+- `effort_score`
+- `priority_score`
+- `dependencies`
+- `risk_level`
+- `files_likely_affected`
+- `validation_checklist`
+- `status`
+- `notes`
+- `created_at`
+- `updated_at`
+
+Recommended sync rule:
+
+- local `task_queue.json` remains the readable planning source during local execution
+- Supabase can mirror queue state later for dashboard/reporting
+- writes should be explicit, not automatic on every local preview
+- completed, blocked, and pending tasks must remain separable for unattended run reporting
+- no GitHub push, deploy, or Netlify action should be triggered by queue sync itself
+
 ## Guardrails
 
 - Do not expose service-role secrets in customer-facing pages

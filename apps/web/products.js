@@ -2,6 +2,37 @@
   const STORAGE_KEY = "operon_selected_product";
   const STORAGE_ID_KEY = "operon_selected_product_id";
   const CATEGORY_STORAGE_KEY = "operon_selected_product_category";
+  const RANGE_STORAGE_KEY = "operon_selected_range_id";
+  const COLOUR_STORAGE_KEY = "operon_selected_colour";
+  const SELECTION_MODE_STORAGE_KEY = "operon_selected_product_selection_mode";
+  const RANGE_CONFIG = {
+    hybrid: {
+      "ETF Hybrid 7.0mm": {
+        rangeId: "hybrid-etf-7mm",
+        rangeLabel: "ETF 7.0mm Waterproof Hybrid Flooring",
+        selectionMode: "range_only",
+        representativeProductId: "hrt-etf-7mm-hybrid-antique-oak",
+        isDefaultRecommendation: true,
+        customerLabel: "ETF 7.0mm Waterproof Hybrid Flooring"
+      },
+      "ETF Hybrid 8.0mm": {
+        rangeId: "hybrid-etf-8mm",
+        rangeLabel: "ETF 8.0mm Waterproof Hybrid Flooring",
+        selectionMode: "range_only",
+        representativeProductId: "hrt-etf-8mm-hybrid-alaskan-oak",
+        customerLabel: "ETF 8.0mm Waterproof Hybrid Flooring"
+      },
+      "ETF Hybrid 9.0mm": {
+        rangeId: "hybrid-etf-9mm",
+        rangeLabel: "ETF 9.0mm Waterproof Hybrid Flooring",
+        selectionMode: "range_only",
+        representativeProductId: "hrt-etf-9mm-hybrid-alaskan-oak",
+        customerLabel: "ETF 9.0mm Waterproof Hybrid Flooring"
+      }
+    },
+    laminate: {},
+    engineered: {}
+  };
 
   // Update pricePerM2 here when supplier price changes.
   // Do not hardcode product prices across multiple pages.
@@ -13,21 +44,24 @@
       label: "Laminate Flooring",
       shortDescription: "Cost-conscious flooring with straightforward installation.",
       pricePerM2: 38,
-      pageUrl: "laminate-flooring-sydney.html"
+      pageUrl: "laminate-flooring-sydney.html",
+      catalogueStatus: "estimate_only"
     },
     hybrid: {
       id: "hybrid",
       label: "Hybrid Flooring",
       shortDescription: "Practical SPC hybrid flooring for apartments, houses, and busy family homes.",
       pricePerM2: 52,
-      pageUrl: "hybrid-flooring-sydney.html"
+      pageUrl: "hybrid-flooring-sydney.html",
+      catalogueStatus: "live_products"
     },
     engineered: {
       id: "engineered",
       label: "Engineered Timber",
       shortDescription: "Premium timber look with a stronger material allowance.",
       pricePerM2: 88,
-      pageUrl: "engineered-timber-flooring-sydney.html"
+      pageUrl: "engineered-timber-flooring-sydney.html",
+      catalogueStatus: "estimate_only"
     }
   };
 
@@ -348,41 +382,683 @@
         suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
         supplier: "HRT Timber Flooring",
         supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/7-0mm-etf-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-8mm-hybrid-alaskan-oak",
+        category: "hybrid",
+        brand: "ETF Hybrid 8.0mm",
+        range: "ETF 8.0mm Hybrid Flooring",
+        colour: "Alaskan Oak",
+        tone: "light oak",
+        swatch: "#c9b28e",
+        thickness: "8.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-8mm-alaskan-oak.jpg",
+        alt: "HRT ETF 8.0mm Hybrid Flooring Alaskan Oak colour sample",
+        description: "Alaskan Oak is a timber-look hybrid flooring colour from the HRT ETF 8.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/8-0mm-etf-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-8mm-hybrid-american-oak",
+        category: "hybrid",
+        brand: "ETF Hybrid 8.0mm",
+        range: "ETF 8.0mm Hybrid Flooring",
+        colour: "American Oak",
+        tone: "natural oak",
+        swatch: "#c09a78",
+        thickness: "8.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-8mm-american-oak.jpg",
+        alt: "HRT ETF 8.0mm Hybrid Flooring American Oak colour sample",
+        description: "American Oak is a timber-look hybrid flooring colour from the HRT ETF 8.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/8-0mm-etf-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-8mm-hybrid-coastal-blackbutt",
+        category: "hybrid",
+        brand: "ETF Hybrid 8.0mm",
+        range: "ETF 8.0mm Hybrid Flooring",
+        colour: "Coastal Blackbutt",
+        tone: "light oak",
+        swatch: "#ccb089",
+        thickness: "8.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-8mm-coastal-blackbutt.jpg",
+        alt: "HRT ETF 8.0mm Hybrid Flooring Coastal Blackbutt colour sample",
+        description: "Coastal Blackbutt is a timber-look hybrid flooring colour from the HRT ETF 8.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/8-0mm-etf-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-8mm-hybrid-driftwood",
+        category: "hybrid",
+        brand: "ETF Hybrid 8.0mm",
+        range: "ETF 8.0mm Hybrid Flooring",
+        colour: "Driftwood",
+        tone: "grey",
+        swatch: "#b0a599",
+        thickness: "8.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-8mm-driftwood.jpg",
+        alt: "HRT ETF 8.0mm Hybrid Flooring Driftwood colour sample",
+        description: "Driftwood is a timber-look hybrid flooring colour from the HRT ETF 8.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/8-0mm-etf-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-8mm-hybrid-french-oak",
+        category: "hybrid",
+        brand: "ETF Hybrid 8.0mm",
+        range: "ETF 8.0mm Hybrid Flooring",
+        colour: "French Oak",
+        tone: "natural oak",
+        swatch: "#b99976",
+        thickness: "8.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-8mm-french-oak.jpg",
+        alt: "HRT ETF 8.0mm Hybrid Flooring French Oak colour sample",
+        description: "French Oak is a timber-look hybrid flooring colour from the HRT ETF 8.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/8-0mm-etf-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-8mm-hybrid-grey-oak",
+        category: "hybrid",
+        brand: "ETF Hybrid 8.0mm",
+        range: "ETF 8.0mm Hybrid Flooring",
+        colour: "Grey Oak",
+        tone: "grey",
+        swatch: "#929290",
+        thickness: "8.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-8mm-grey-oak.jpg",
+        alt: "HRT ETF 8.0mm Hybrid Flooring Grey Oak colour sample",
+        description: "Grey Oak is a timber-look hybrid flooring colour from the HRT ETF 8.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/8-0mm-etf-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-8mm-hybrid-helena-oak",
+        category: "hybrid",
+        brand: "ETF Hybrid 8.0mm",
+        range: "ETF 8.0mm Hybrid Flooring",
+        colour: "Helena Oak",
+        tone: "light oak",
+        swatch: "#d4bc99",
+        thickness: "8.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-8mm-helena-oak.jpg",
+        alt: "HRT ETF 8.0mm Hybrid Flooring Helena Oak colour sample",
+        description: "Helena Oak is a timber-look hybrid flooring colour from the HRT ETF 8.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/8-0mm-etf-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-8mm-hybrid-natural-oak",
+        category: "hybrid",
+        brand: "ETF Hybrid 8.0mm",
+        range: "ETF 8.0mm Hybrid Flooring",
+        colour: "Natural Oak",
+        tone: "natural oak",
+        swatch: "#d3b48f",
+        thickness: "8.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-8mm-natural-oak.jpg",
+        alt: "HRT ETF 8.0mm Hybrid Flooring Natural Oak colour sample",
+        description: "Natural Oak is a timber-look hybrid flooring colour from the HRT ETF 8.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/8-0mm-etf-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-8mm-hybrid-new-zealand-blackbutt",
+        category: "hybrid",
+        brand: "ETF Hybrid 8.0mm",
+        range: "ETF 8.0mm Hybrid Flooring",
+        colour: "New Zealand Blackbutt",
+        tone: "natural oak",
+        swatch: "#ba9a73",
+        thickness: "8.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-8mm-new-zealand-blackbutt.jpg",
+        alt: "HRT ETF 8.0mm Hybrid Flooring New Zealand Blackbutt colour sample",
+        description: "New Zealand Blackbutt is a timber-look hybrid flooring colour from the HRT ETF 8.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/8-0mm-etf-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-8mm-hybrid-qld-spotted-gum",
+        category: "hybrid",
+        brand: "ETF Hybrid 8.0mm",
+        range: "ETF 8.0mm Hybrid Flooring",
+        colour: "QLD Spotted Gum",
+        tone: "warm brown",
+        swatch: "#9b7454",
+        thickness: "8.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-8mm-qld-spotted-gum.jpg",
+        alt: "HRT ETF 8.0mm Hybrid Flooring QLD Spotted Gum colour sample",
+        description: "QLD Spotted Gum is a timber-look hybrid flooring colour from the HRT ETF 8.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/8-0mm-etf-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-8mm-hybrid-riverview",
+        category: "hybrid",
+        brand: "ETF Hybrid 8.0mm",
+        range: "ETF 8.0mm Hybrid Flooring",
+        colour: "Riverview",
+        tone: "natural oak",
+        swatch: "#b49b83",
+        thickness: "8.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-8mm-riverview.jpg",
+        alt: "HRT ETF 8.0mm Hybrid Flooring Riverview colour sample",
+        description: "Riverview is a timber-look hybrid flooring colour from the HRT ETF 8.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/8-0mm-etf-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-8mm-hybrid-spotted-gum",
+        category: "hybrid",
+        brand: "ETF Hybrid 8.0mm",
+        range: "ETF 8.0mm Hybrid Flooring",
+        colour: "Spotted Gum",
+        tone: "warm brown",
+        swatch: "#a57d5c",
+        thickness: "8.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-8mm-spotted-gum.jpg",
+        alt: "HRT ETF 8.0mm Hybrid Flooring Spotted Gum colour sample",
+        description: "Spotted Gum is a timber-look hybrid flooring colour from the HRT ETF 8.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/8-0mm-etf-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-alaskan-oak",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "Alaskan Oak",
+        tone: "light oak",
+        swatch: "#c9b28e",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-alaskan-oak.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring Alaskan Oak colour sample",
+        description: "Alaskan Oak is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-american-oak",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "American Oak",
+        tone: "natural oak",
+        swatch: "#c09a78",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-american-oak.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring American Oak colour sample",
+        description: "American Oak is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-coastal-blackbutt",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "Coastal Blackbutt",
+        tone: "light oak",
+        swatch: "#ccb089",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-coastal-blackbutt.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring Coastal Blackbutt colour sample",
+        description: "Coastal Blackbutt is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-dexter-oak",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "Dexter Oak",
+        tone: "grey",
+        swatch: "#a7a29a",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-dexter-oak.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring Dexter Oak colour sample",
+        description: "Dexter Oak is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-driftwood",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "Driftwood",
+        tone: "grey",
+        swatch: "#b0a599",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-driftwood.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring Driftwood colour sample",
+        description: "Driftwood is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-french-oak",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "French Oak",
+        tone: "natural oak",
+        swatch: "#b99976",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-french-oak.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring French Oak colour sample",
+        description: "French Oak is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-grey-oak",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "Grey Oak",
+        tone: "grey",
+        swatch: "#929290",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-grey-oak.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring Grey Oak colour sample",
+        description: "Grey Oak is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-lake-oak-light",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "Lake Oak Light",
+        tone: "light oak",
+        swatch: "#d7c4a7",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-lake-oak-light.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring Lake Oak Light colour sample",
+        description: "Lake Oak Light is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-natural-oak",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "Natural Oak",
+        tone: "natural oak",
+        swatch: "#d3b48f",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-natural-oak.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring Natural Oak colour sample",
+        description: "Natural Oak is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-new-driftwood",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "New Driftwood",
+        tone: "grey",
+        swatch: "#a9a096",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-new-driftwood.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring New Driftwood colour sample",
+        description: "New Driftwood is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-new-zealand-blackbutt",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "New Zealand Blackbutt",
+        tone: "natural oak",
+        swatch: "#ba9a73",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-new-zealand-blackbutt.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring New Zealand Blackbutt colour sample",
+        description: "New Zealand Blackbutt is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-oslo-oak-grey",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "Oslo Oak Grey",
+        tone: "grey",
+        swatch: "#8f8d8b",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-oslo-oak-grey.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring Oslo Oak Grey colour sample",
+        description: "Oslo Oak Grey is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-qld-spotted-gum",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "QLD Spotted Gum",
+        tone: "warm brown",
+        swatch: "#9b7454",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-qld-spotted-gum.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring QLD Spotted Gum colour sample",
+        description: "QLD Spotted Gum is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
+      },
+      // TODO: Enter actual sell price per m² for this product.
+      {
+        id: "hrt-etf-9mm-hybrid-spotted-gum",
+        category: "hybrid",
+        brand: "ETF Hybrid 9.0mm",
+        range: "ETF 9.0mm Hybrid Flooring",
+        colour: "Spotted Gum",
+        tone: "warm brown",
+        swatch: "#a57d5c",
+        thickness: "9.0mm",
+        productType: "SPC Hybrid",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/hybrid/hrt-etf-9mm-spotted-gum.jpg",
+        alt: "HRT ETF 9.0mm Hybrid Flooring Spotted Gum colour sample",
+        description: "Spotted Gum is a timber-look hybrid flooring colour from the HRT ETF 9.0mm Hybrid Flooring range.",
+        features: ["SPC hybrid core", "Waterproof core", "Scratch and stain resistant surface", "Floating click-lock installation"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Rental properties", "Family homes"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
       }
     ],
     engineered: []
   };
 
-  const ETF_GALLERY_SLUGS = [
-    "antique-oak",
-    "baden-oak",
-    "blackbutt",
-    "brushbox",
-    "caramel-oak",
-    "dexter-oak",
-    "downtown-oak",
-    "driftwood",
-    "grey-oak",
-    "hatton-oak",
-    "helena-oak",
-    "holly-hills",
-    "jarrah",
-    "julan",
-    "lake-oak-light"
-  ];
+  const ETF_GALLERY_SLUGS_BY_RANGE = {
+    "7mm": [
+      "antique-oak",
+      "baden-oak",
+      "blackbutt",
+      "brushbox",
+      "caramel-oak",
+      "dexter-oak",
+      "downtown-oak",
+      "driftwood",
+      "grey-oak",
+      "hatton-oak",
+      "helena-oak",
+      "holly-hills",
+      "jarrah",
+      "julan",
+      "lake-oak-light"
+    ],
+    "8mm": [
+      "alaskan-oak",
+      "american-oak",
+      "coastal-blackbutt",
+      "driftwood",
+      "french-oak",
+      "grey-oak",
+      "helena-oak",
+      "natural-oak",
+      "new-zealand-blackbutt",
+      "qld-spotted-gum",
+      "riverview",
+      "spotted-gum"
+    ],
+    "9mm": [
+      "alaskan-oak",
+      "american-oak",
+      "coastal-blackbutt",
+      "dexter-oak",
+      "driftwood",
+      "french-oak",
+      "grey-oak",
+      "lake-oak-light",
+      "natural-oak",
+      "new-driftwood",
+      "new-zealand-blackbutt",
+      "oslo-oak-grey",
+      "qld-spotted-gum",
+      "spotted-gum"
+    ]
+  };
 
-  const PRODUCT_GALLERY_MAP = ETF_GALLERY_SLUGS.reduce(function (accumulator, slug) {
-    const basePath = "images/products/hybrid/hrt-etf-7mm-" + slug;
-    accumulator["hrt-etf-7mm-hybrid-" + slug] = [
-      basePath + "-gallery-1.jpg",
-      basePath + "-gallery-2.jpg",
-      basePath + ".jpg"
-    ];
+  const PRODUCT_GALLERY_MAP = Object.keys(ETF_GALLERY_SLUGS_BY_RANGE).reduce(function (accumulator, rangeKey) {
+    ETF_GALLERY_SLUGS_BY_RANGE[rangeKey].forEach(function (slug) {
+      const basePath = "images/products/hybrid/hrt-etf-" + rangeKey + "-" + slug;
+      accumulator["hrt-etf-" + rangeKey + "-hybrid-" + slug] = [
+        basePath + "-gallery-1.jpg",
+        basePath + "-gallery-2.jpg",
+        basePath + ".jpg"
+      ];
+    });
     return accumulator;
   }, {});
 
   function clone(value) {
     return JSON.parse(JSON.stringify(value));
+  }
+
+  function slugify(value) {
+    return String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  function getRangeConfigEntry(product, category) {
+    const config = RANGE_CONFIG[category || product.category] || {};
+    return config[product.brand] || config[product.range] || null;
+  }
+
+  function inferRangeId(product, category) {
+    const configEntry = getRangeConfigEntry(product, category);
+    if (configEntry && configEntry.rangeId) {
+      return configEntry.rangeId;
+    }
+
+    if (product.rangeId) {
+      return product.rangeId;
+    }
+
+    return [category || product.category, product.brand || product.range || "range"].map(slugify).filter(Boolean).join("-");
+  }
+
+  function inferRangeLabel(product, category) {
+    const configEntry = getRangeConfigEntry(product, category);
+    if (configEntry && configEntry.rangeLabel) {
+      return configEntry.rangeLabel;
+    }
+
+    return product.rangeLabel || product.range || product.brand || "Flooring range";
+  }
+
+  function inferSelectionMode(product, category) {
+    const configEntry = getRangeConfigEntry(product, category);
+    if (configEntry && configEntry.selectionMode) {
+      return configEntry.selectionMode;
+    }
+
+    return product.selectionMode || ((category || product.category) === "engineered" ? "range_then_colour" : "range_only");
+  }
+
+  function inferRepresentativeProductId(product, category) {
+    const configEntry = getRangeConfigEntry(product, category);
+    if (configEntry && configEntry.representativeProductId) {
+      return configEntry.representativeProductId;
+    }
+
+    return product.representativeProductId || product.id;
+  }
+
+  function inferDefaultRecommendation(product, category) {
+    const configEntry = getRangeConfigEntry(product, category);
+    if (configEntry && configEntry.isDefaultRecommendation) {
+      return true;
+    }
+
+    return !!product.isDefaultRecommendation;
   }
 
   function getCategoryMetaSource() {
@@ -403,21 +1079,58 @@
 
   function normaliseProduct(product, fallbackCategory) {
     const imageUrl = product.imageUrl || product.image || "";
+    const imageAlt = product.imageAlt || product.alt || [product.brand, product.range, product.colour, "flooring sample"].filter(Boolean).join(" ");
     const galleryImages = normaliseGalleryImages(product, PRODUCT_GALLERY_MAP[product.id] || []);
+    const category = product.category || fallbackCategory || "";
+    const rangeId = inferRangeId(product, category);
+    const rangeLabel = inferRangeLabel(product, category);
+    const selectionMode = inferSelectionMode(product, category);
+    const internalSkuLabel = product.internalSkuLabel || [product.brand, product.range, product.colour].filter(Boolean).join(" / ");
+    const customerLabel = product.customerLabel || (selectionMode === "range_then_colour"
+      ? [rangeLabel, product.colour].filter(Boolean).join(" — ")
+      : rangeLabel);
+    const pricingStatus = product.pricingStatus || ((Number(product.pricePerM2) || 0) > 0 ? "confirmed" : "pending");
+    const catalogueStatus = product.catalogueStatus || (product.active === false ? "inactive" : "live");
     return Object.assign({
-      category: fallbackCategory || product.category || "",
+      category: category,
+      rangeId: rangeId,
+      rangeLabel: rangeLabel,
+      selectionMode: selectionMode,
+      representativeProductId: inferRepresentativeProductId(product, category),
+      isDefaultRecommendation: inferDefaultRecommendation(product, category),
+      customerLabel: customerLabel,
+      internalSkuLabel: internalSkuLabel,
       thickness: "",
+      imageAlt: imageAlt,
+      alt: imageAlt,
       imageUrl: imageUrl,
       image: imageUrl,
       galleryImages: galleryImages,
       features: [],
-      active: true
+      active: true,
+      pricingStatus: pricingStatus,
+      catalogueStatus: catalogueStatus,
+      isPlaceholderPricing: pricingStatus !== "confirmed",
+      isPublishedProduct: catalogueStatus === "live"
     }, product, {
-      category: product.category || fallbackCategory || "",
+      category: category,
+      rangeId: rangeId,
+      rangeLabel: rangeLabel,
+      selectionMode: selectionMode,
+      representativeProductId: inferRepresentativeProductId(product, category),
+      isDefaultRecommendation: inferDefaultRecommendation(product, category),
+      customerLabel: customerLabel,
+      internalSkuLabel: internalSkuLabel,
+      imageAlt: imageAlt,
+      alt: imageAlt,
       imageUrl: imageUrl,
       image: imageUrl,
       galleryImages: galleryImages,
-      active: product.active !== false
+      active: product.active !== false,
+      pricingStatus: pricingStatus,
+      catalogueStatus: catalogueStatus,
+      isPlaceholderPricing: pricingStatus !== "confirmed",
+      isPublishedProduct: catalogueStatus === "live"
     });
   }
 
@@ -457,6 +1170,102 @@
     }));
   }
 
+  function getProductsByRangeId(rangeId) {
+    return clone(listAllProducts().filter(function (product) {
+      return product.rangeId === rangeId && product.active !== false;
+    }));
+  }
+
+  function getRangesByCategory(category) {
+    const products = getProductsByCategory(category);
+    const grouped = {};
+
+    products.forEach(function (product) {
+      if (!grouped[product.rangeId]) {
+        grouped[product.rangeId] = {
+          category: product.category,
+          rangeId: product.rangeId,
+          rangeLabel: product.rangeLabel,
+          brand: product.brand,
+          thickness: product.thickness,
+          productType: product.productType,
+          selectionMode: product.selectionMode,
+          representativeProductId: product.representativeProductId || product.id,
+          isDefaultRecommendation: !!product.isDefaultRecommendation,
+          feature: (product.features || [])[0] || "",
+          imageUrl: product.imageUrl || product.image || "",
+          image: product.imageUrl || product.image || "",
+          pricePerM2: product.pricePerM2,
+          colours: [],
+          colourCount: 0
+        };
+      }
+
+      grouped[product.rangeId].colours.push(product.colour);
+      grouped[product.rangeId].colourCount += 1;
+      if (!grouped[product.rangeId].pricePerM2 && product.pricePerM2) {
+        grouped[product.rangeId].pricePerM2 = product.pricePerM2;
+      }
+    });
+
+    return clone(Object.keys(grouped).map(function (rangeId) {
+      const item = grouped[rangeId];
+      item.colours = Array.from(new Set(item.colours)).filter(Boolean).sort();
+      return item;
+    }).sort(function (left, right) {
+      if (left.isDefaultRecommendation && !right.isDefaultRecommendation) {
+        return -1;
+      }
+      if (!left.isDefaultRecommendation && right.isDefaultRecommendation) {
+        return 1;
+      }
+      return String(left.rangeLabel).localeCompare(String(right.rangeLabel));
+    }));
+  }
+
+  function getColoursByRange(rangeId) {
+    return getProductsByRangeId(rangeId).map(function (product) {
+      return {
+        id: product.id,
+        colour: product.colour,
+        customerLabel: product.customerLabel,
+        pricePerM2: product.pricePerM2,
+        imageUrl: product.imageUrl || product.image || "",
+        swatch: product.swatch || "#d1d5db"
+      };
+    });
+  }
+
+  function getRepresentativeProductByRangeId(rangeId) {
+    const products = getProductsByRangeId(rangeId);
+    if (!products.length) {
+      return null;
+    }
+
+    const explicitRepresentative = products.find(function (product) {
+      return product.id === product.representativeProductId;
+    });
+
+    return explicitRepresentative || products[0];
+  }
+
+  function getDefaultRecommendation(category) {
+    const products = getProductsByCategory(category);
+    const explicit = products.find(function (product) {
+      return product.isDefaultRecommendation;
+    });
+    if (explicit) {
+      return explicit;
+    }
+
+    const ranges = getRangesByCategory(category);
+    if (ranges.length) {
+      return getRepresentativeProductByRangeId(ranges[0].rangeId);
+    }
+
+    return null;
+  }
+
   function getAllProducts() {
     return clone(listAllProducts().filter(function (product) {
       return product.active !== false;
@@ -473,6 +1282,39 @@
     return Object.keys(categoryMeta).map(function (key) {
       return getCategoryMeta(key);
     });
+  }
+
+  function getCategoryStats(category) {
+    const products = getProductsByCategory(category);
+    const liveProductCount = products.filter(function (product) {
+      return product.isPublishedProduct;
+    }).length;
+    const confirmedPriceCount = products.filter(function (product) {
+      return !product.isPlaceholderPricing;
+    }).length;
+
+    return {
+      liveProductCount: liveProductCount,
+      confirmedPriceCount: confirmedPriceCount,
+      hasLiveProducts: liveProductCount > 0,
+      hasConfirmedPrices: confirmedPriceCount > 0
+    };
+  }
+
+  function isValidCategory(category) {
+    if (!category) {
+      return false;
+    }
+
+    return !!getCategoryMeta(category);
+  }
+
+  function clearStoredSelectionKeys() {
+    localStorage.removeItem(STORAGE_ID_KEY);
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(RANGE_STORAGE_KEY);
+    localStorage.removeItem(COLOUR_STORAGE_KEY);
+    localStorage.removeItem(SELECTION_MODE_STORAGE_KEY);
   }
 
   function getEstimateProduct(category) {
@@ -510,17 +1352,43 @@
       return (product.range || product.category || "Flooring") + " Estimate";
     }
 
-    return [product.brand, product.range, product.colour].filter(Boolean).join(" / ");
+    if (product.customerLabel) {
+      return product.customerLabel;
+    }
+
+    return product.selectionMode === "range_then_colour"
+      ? [product.rangeLabel || product.range, product.colour].filter(Boolean).join(" — ")
+      : (product.rangeLabel || product.range || product.brand || "Flooring product");
+  }
+
+  function getStoredSelectionState() {
+    return {
+      selectedProductId: localStorage.getItem(STORAGE_ID_KEY) || "",
+      selectedRangeId: localStorage.getItem(RANGE_STORAGE_KEY) || "",
+      selectedCategory: localStorage.getItem(CATEGORY_STORAGE_KEY) || "",
+      selectedColour: localStorage.getItem(COLOUR_STORAGE_KEY) || "",
+      productSelectionMode: localStorage.getItem(SELECTION_MODE_STORAGE_KEY) || ""
+    };
   }
 
   function getStoredProduct() {
     try {
-      const storedId = localStorage.getItem(STORAGE_ID_KEY);
+      const storedSelection = getStoredSelectionState();
+      const storedId = storedSelection.selectedProductId;
       if (storedId) {
         const latestFromId = getProductById(storedId);
         if (latestFromId) {
+          if (latestFromId.category) {
+            localStorage.setItem(CATEGORY_STORAGE_KEY, latestFromId.category);
+          }
+          if (latestFromId.rangeId) {
+            localStorage.setItem(RANGE_STORAGE_KEY, latestFromId.rangeId);
+          }
+          localStorage.setItem(SELECTION_MODE_STORAGE_KEY, latestFromId.selectionMode || "");
+          localStorage.setItem(COLOUR_STORAGE_KEY, latestFromId.selectionMode === "range_then_colour" ? (latestFromId.colour || "") : "");
           return Object.assign({}, latestFromId);
         }
+        clearStoredSelectionKeys();
       }
 
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -535,8 +1403,24 @@
       }
 
       const latest = getProductById(productId);
-      return latest ? Object.assign({}, latest) : null;
+      if (!latest) {
+        clearStoredSelectionKeys();
+        return null;
+      }
+
+      localStorage.setItem(STORAGE_ID_KEY, latest.id);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ id: latest.id }));
+      if (latest.category) {
+        localStorage.setItem(CATEGORY_STORAGE_KEY, latest.category);
+      }
+      if (latest.rangeId) {
+        localStorage.setItem(RANGE_STORAGE_KEY, latest.rangeId);
+      }
+      localStorage.setItem(SELECTION_MODE_STORAGE_KEY, latest.selectionMode || "");
+      localStorage.setItem(COLOUR_STORAGE_KEY, latest.selectionMode === "range_then_colour" ? (latest.colour || "") : "");
+      return Object.assign({}, latest);
     } catch (error) {
+      clearStoredSelectionKeys();
       return null;
     }
   }
@@ -552,32 +1436,105 @@
     }
 
     const latest = getProductById(product.id) || product;
-    localStorage.setItem(STORAGE_ID_KEY, latest.id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ id: latest.id }));
+    if (!latest.category || !isValidCategory(latest.category)) {
+      return;
+    }
+    const storedProductId = latest.selectionMode === "range_only" && latest.rangeId
+      ? ((getRepresentativeProductByRangeId(latest.rangeId) || latest).id)
+      : latest.id;
+
+    localStorage.setItem(STORAGE_ID_KEY, storedProductId);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ id: storedProductId }));
     localStorage.setItem(CATEGORY_STORAGE_KEY, latest.category || "");
+    localStorage.setItem(RANGE_STORAGE_KEY, latest.rangeId || "");
+    localStorage.setItem(COLOUR_STORAGE_KEY, latest.selectionMode === "range_then_colour" ? (latest.colour || "") : "");
+    localStorage.setItem(SELECTION_MODE_STORAGE_KEY, latest.selectionMode || "");
+  }
+
+  function saveSelectionState(selection) {
+    const settings = Object.assign({
+      selectedProductId: "",
+      selectedRangeId: "",
+      selectedCategory: "",
+      selectedColour: "",
+      productSelectionMode: ""
+    }, selection || {});
+
+    if (settings.selectedProductId) {
+      localStorage.setItem(STORAGE_ID_KEY, settings.selectedProductId);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ id: settings.selectedProductId }));
+    } else {
+      localStorage.removeItem(STORAGE_ID_KEY);
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
+    if (settings.selectedRangeId) {
+      localStorage.setItem(RANGE_STORAGE_KEY, settings.selectedRangeId);
+    } else {
+      localStorage.removeItem(RANGE_STORAGE_KEY);
+    }
+
+    if (settings.selectedCategory && isValidCategory(settings.selectedCategory)) {
+      localStorage.setItem(CATEGORY_STORAGE_KEY, settings.selectedCategory);
+    } else if (!settings.selectedCategory) {
+      localStorage.removeItem(CATEGORY_STORAGE_KEY);
+    }
+
+    if (settings.selectedColour) {
+      localStorage.setItem(COLOUR_STORAGE_KEY, settings.selectedColour);
+    } else {
+      localStorage.removeItem(COLOUR_STORAGE_KEY);
+    }
+
+    if (settings.productSelectionMode) {
+      localStorage.setItem(SELECTION_MODE_STORAGE_KEY, settings.productSelectionMode);
+    } else {
+      localStorage.removeItem(SELECTION_MODE_STORAGE_KEY);
+    }
   }
 
   function clearSelectedProduct() {
-    localStorage.removeItem(STORAGE_ID_KEY);
-    localStorage.removeItem(STORAGE_KEY);
+    clearStoredSelectionKeys();
   }
 
   function getStoredCategory() {
-    return localStorage.getItem(CATEGORY_STORAGE_KEY) || "";
+    const storedCategory = localStorage.getItem(CATEGORY_STORAGE_KEY) || "";
+    if (!storedCategory) {
+      return "";
+    }
+
+    if (!isValidCategory(storedCategory)) {
+      localStorage.removeItem(CATEGORY_STORAGE_KEY);
+      return "";
+    }
+
+    return storedCategory;
   }
 
   function saveSelectedCategory(category) {
-    if (category) {
+    if (isValidCategory(category)) {
       localStorage.setItem(CATEGORY_STORAGE_KEY, category);
     }
   }
 
   function formatProductRate(product) {
-    if (!product || !(product.pricePerM2 > 0)) {
+    if (!product || product.isPlaceholderPricing || !(product.pricePerM2 > 0)) {
       return "Price to be confirmed";
     }
 
     return "$" + product.pricePerM2.toFixed(0) + "/m²";
+  }
+
+  function getProductStatusLabel(product) {
+    if (!product) {
+      return "";
+    }
+
+    if (product.isPlaceholderPricing) {
+      return "Price pending";
+    }
+
+    return "Price confirmed";
   }
 
   function buildProductImageMarkup(product) {
@@ -847,8 +1804,12 @@
             colour: product.colour,
             pricePerM2: product.pricePerM2
           };
-          window.OperonTracking.trackEvent("product_selected", trackingPayload);
-          window.OperonTracking.trackEvent("product_select", trackingPayload);
+          if (typeof window.OperonTracking.trackProductSelect === "function") {
+            window.OperonTracking.trackProductSelect(trackingPayload);
+          } else {
+            window.OperonTracking.trackEvent("product_selected", trackingPayload);
+            window.OperonTracking.trackEvent("product_select", trackingPayload);
+          }
         }
 
         if (activeStatus) {
@@ -889,9 +1850,11 @@
 
     if (storedProduct && storedProduct.category === settings.category) {
       title.textContent = "Selected for quote: " + getProductLabel(storedProduct);
-      text.textContent = storedProduct.pricePerM2 > 0
-        ? storedProduct.brand + " / " + storedProduct.range + " / " + storedProduct.colour + " · " + formatProductRate(storedProduct)
-        : storedProduct.brand + " / " + storedProduct.range + " / " + storedProduct.colour + " · Price to be confirmed. Standard " + categoryMeta.label.toLowerCase() + " estimate used until review.";
+      text.textContent = storedProduct.selectionMode === "range_only"
+        ? "Using " + getProductLabel(storedProduct) + ". Colour can be confirmed later."
+        : (storedProduct.pricePerM2 > 0
+          ? getProductLabel(storedProduct) + " · " + formatProductRate(storedProduct)
+          : getProductLabel(storedProduct) + " · Price to be confirmed. Standard " + categoryMeta.label.toLowerCase() + " estimate used until review.");
       clearButton.textContent = "Use " + categoryMeta.label.toLowerCase() + " estimate instead";
       clearButton.onclick = function () {
         clearSelectedProduct();
@@ -928,23 +1891,35 @@
     STORAGE_KEY: STORAGE_KEY,
     STORAGE_ID_KEY: STORAGE_ID_KEY,
     CATEGORY_STORAGE_KEY: CATEGORY_STORAGE_KEY,
+    RANGE_STORAGE_KEY: RANGE_STORAGE_KEY,
+    COLOUR_STORAGE_KEY: COLOUR_STORAGE_KEY,
+    SELECTION_MODE_STORAGE_KEY: SELECTION_MODE_STORAGE_KEY,
     get categoryMeta() {
       return clone(getCategoryMetaSource());
     },
     getCategoryList: getCategoryList,
+    getCategoryStats: getCategoryStats,
     getAllProducts: getAllProducts,
     getCategoryMeta: getCategoryMeta,
     getProductsByCategory: getProductsByCategory,
+    getProductsByRangeId: getProductsByRangeId,
+    getRangesByCategory: getRangesByCategory,
+    getColoursByRange: getColoursByRange,
+    getRepresentativeProductByRangeId: getRepresentativeProductByRangeId,
+    getDefaultRecommendation: getDefaultRecommendation,
     getProductById: getProductById,
     getEstimateProduct: getEstimateProduct,
     getProductLabel: getProductLabel,
     getStoredProduct: getStoredProduct,
+    getStoredSelectionState: getStoredSelectionState,
     getStoredProductId: getStoredProductId,
     getStoredCategory: getStoredCategory,
     saveSelectedCategory: saveSelectedCategory,
     saveSelectedProduct: saveSelectedProduct,
+    saveSelectionState: saveSelectionState,
     clearSelectedProduct: clearSelectedProduct,
     formatProductRate: formatProductRate,
+    getProductStatusLabel: getProductStatusLabel,
     openCatalogueLightbox: openCatalogueLightbox,
     renderCategoryCatalogue: renderCategoryCatalogue
     ,

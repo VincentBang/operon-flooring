@@ -3,25 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flooring Products Sydney | Operon Flooring Catalogue</title>
-  <meta name="description" content="Browse laminate, hybrid and engineered timber flooring products in Sydney. Compare categories, choose a product and continue to the quote tool.">
+  <title>Flooring Products | Operon Flooring</title>
+  <meta name="description" content="Choose a flooring type, save a product selection, and continue into the Operon Flooring quote system.">
   <link rel="icon" href="assets/Operon favicon.png" type="image/png">
   <link rel="canonical" href="https://operonflooring.com.au/products.html">
   <meta name="robots" content="index,follow">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Flooring Products Sydney | Operon Flooring Catalogue">
-  <meta property="og:description" content="Browse laminate, hybrid and engineered timber flooring products in Sydney. Compare categories, choose a product and continue to the quote tool.">
+  <meta property="og:title" content="Flooring Products | Operon Flooring">
+  <meta property="og:description" content="Choose a flooring type, save a product selection, and continue into the Operon Flooring quote system.">
   <meta property="og:url" content="https://operonflooring.com.au/products.html">
   <meta property="og:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Flooring Products Sydney | Operon Flooring Catalogue">
-  <meta name="twitter:description" content="Browse laminate, hybrid and engineered timber flooring products in Sydney. Compare categories, choose a product and continue to the quote tool.">
+  <meta name="twitter:title" content="Flooring Products | Operon Flooring">
+  <meta name="twitter:description" content="Choose a flooring type, save a product selection, and continue into the Operon Flooring quote system.">
   <meta name="twitter:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <link rel="stylesheet" href="seo-pages.css">
   <script src="tracking.js"></script>
   <script src="pricingSourceConfig.js"></script>
   <script src="pricingSource.js"></script>
   <script src="products.js"></script>
+  <script src="productSelection.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -35,7 +36,7 @@
         <a href="index.html#quoteForm">Quote</a>
         <a href="products.html">Flooring Products</a>
         <a href="floorplan.html">Floor Plan</a>
-        <a href="blog/">Guides</a>
+        <a href="blog/index.html">Guides</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
         <span></span>
@@ -52,31 +53,31 @@
         <article class="hero-card">
           <div class="hero-grid">
             <div class="hero-copy">
-              <span class="eyebrow">Central Catalogue</span>
-              <h1>Flooring Products Sydney</h1>
-              <p>Browse laminate, hybrid and engineered timber flooring in one place, save a product, and carry it straight into the quote form.</p>
+              <span class="eyebrow">Product Selection</span>
+              <h1>Flooring Products</h1>
+              <p>Choose the flooring type first, save the floor you want, and continue into the quote flow with that selection already attached.</p>
               <div class="hero-actions" style="margin-top: 24px;">
-                <a class="button" href="index.html?from=product#quoteForm">Go to quote</a>
-                <a class="button-secondary" href="floorplan.html">Measure from floor plan</a>
+                <a class="button" href="index.html?from=product#quoteForm">Start Quote</a>
+                <a class="button-secondary" href="floorplan.html">Upload Floor Plan</a>
               </div>
               <div class="pill-row" style="margin-top: 24px;">
-                <span class="pill">Selection-first product flow</span>
-                <span class="pill">Laminate, hybrid and engineered</span>
-                <span class="pill">Quote-ready handoff</span>
+                <span class="pill">Select a floor first</span>
+                <span class="pill">Carry it into the quote</span>
+                <span class="pill">Keep the process simple</span>
               </div>
             </div>
             <div class="stat-stack">
               <div class="stat-card">
-                <strong>How to use it</strong>
-                Filter by category first, then narrow by brand, range, colour or thickness.
+                <strong>How it works</strong>
+                Pick a flooring type, save a product, then continue into the quote with that selection attached.
               </div>
               <div class="stat-card">
-                <strong>What happens next</strong>
-                Your selected product carries straight into the quote wizard.
+                <strong>What stays centralised</strong>
+                Product details, selected product storage, and the quote handoff all run from the same product data system.
               </div>
               <div class="stat-card">
-                <strong>Commercial role</strong>
-                This is the selection page. Category pages stay focused on product guidance and quoting intent.
+                <strong>Best use</strong>
+                Use this page when you already know the flooring type and want the fastest path into a quote-ready product choice.
               </div>
             </div>
           </div>
@@ -87,9 +88,20 @@
     <section class="section">
       <div class="shell">
         <article class="section-card">
+          <span class="eyebrow">Choose Your Flooring Type</span>
+          <h2 style="margin-top: 18px;">Start with the right category</h2>
+          <p>Choose the flooring type first, then filter the live catalogue. If a category does not have live products yet, you can still continue into the quote using that estimate path.</p>
+          <div class="catalogue-category-cards" id="catalogueCategoryCards"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <article class="section-card">
           <span class="eyebrow">Product Filters</span>
           <h2 style="margin-top: 18px;">Filter the catalogue</h2>
-          <p>Start with category, then narrow the list by brand, range, colour, thickness, price range or waterproof products where available.</p>
+          <p>Use the category cards or quick chips first, then narrow by brand, colour and thickness only. The filtering stays intentionally simple so the catalogue remains quick to use.</p>
 
           <div class="catalogue-toolbar">
             <div class="catalogue-category-row" id="catalogueCategoryRow"></div>
@@ -99,10 +111,6 @@
                 <select id="catalogueBrandFilter"></select>
               </div>
               <div class="catalogue-filter">
-                <label for="catalogueRangeFilter">Range</label>
-                <select id="catalogueRangeFilter"></select>
-              </div>
-              <div class="catalogue-filter">
                 <label for="catalogueColourFilter">Colour</label>
                 <select id="catalogueColourFilter"></select>
               </div>
@@ -110,23 +118,9 @@
                 <label for="catalogueThicknessFilter">Thickness</label>
                 <select id="catalogueThicknessFilter"></select>
               </div>
-              <div class="catalogue-filter">
-                <label for="cataloguePriceFilter">Price range</label>
-                <select id="cataloguePriceFilter">
-                  <option value="all">All price ranges</option>
-                  <option value="under-50">Under $50/m²</option>
-                  <option value="50-80">$50–$80/m²</option>
-                  <option value="80-plus">$80+/m²</option>
-                  <option value="to-confirm">Price to be confirmed</option>
-                </select>
-              </div>
-              <div class="catalogue-filter">
-                <label for="catalogueWaterproofFilter">Waterproof filter</label>
-                <select id="catalogueWaterproofFilter">
-                  <option value="all">All products</option>
-                  <option value="waterproof">Waterproof products</option>
-                </select>
-              </div>
+            </div>
+            <div class="catalogue-toolbar-actions">
+              <button class="button-quiet" id="catalogueResetFilters" type="button">Clear filters</button>
             </div>
           </div>
 
@@ -153,46 +147,54 @@
         </article>
       </div>
     </section>
+
+    <section class="section">
+      <div class="shell">
+        <article class="section-card">
+          <h2>Choose the product here, price the project in the quote</h2>
+          <p>This catalogue is built to help you decide quickly. Save a product selection here, then continue into the quote wizard with that floor already attached. Final product confirmation still happens during review if price, stock or installation detail needs checking.</p>
+        </article>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-col">
         <h3>Operon Flooring</h3>
-        <p>Flooring quotes for laminate, hybrid and engineered timber flooring in Sydney.</p>
-        <p>Estimate your project cost before booking a site visit.</p>
+        <p>Premium laminate, hybrid and engineered timber flooring quotes for Sydney homes.</p>
+        <p>Clear estimates, measured areas and final pricing confirmed before work begins.</p>
       </div>
       <div class="footer-col">
-        <h4>Flooring Services</h4>
+        <h4>Products</h4>
         <ul>
-          <li><a href="products.html">All Flooring Products</a></li>
-          <li><a href="laminate-flooring-sydney.html">Laminate Flooring</a></li>
-          <li><a href="hybrid-flooring-sydney.html">Hybrid Flooring</a></li>
-          <li><a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring</a></li>
+          <li><a href="hybrid-flooring-sydney.html">Hybrid Flooring Sydney</a></li>
+          <li><a href="laminate-flooring-sydney.html">Laminate Flooring Sydney</a></li>
+          <li><a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring Sydney</a></li>
+          <li><a href="products.html">Products page</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Locations</h4>
         <ul>
-          <li><a href="flooring-parramatta.html">Parramatta</a></li>
-          <li><a href="flooring-liverpool.html">Liverpool</a></li>
-          <li><a href="flooring-auburn.html">Auburn</a></li>
-          <li><a href="flooring-blacktown.html">Blacktown</a></li>
-          <li><a href="flooring-miranda.html">Miranda</a></li>
+          <li><a href="parramatta-flooring.html">Parramatta</a></li>
+          <li><a href="liverpool-flooring.html">Liverpool</a></li>
+          <li><a href="auburn-flooring.html">Auburn</a></li>
+          <li><a href="blacktown-flooring.html">Blacktown</a></li>
+          <li><a href="miranda-flooring.html">Miranda</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Support</h4>
+        <h4>Actions</h4>
         <ul>
-          <li><a href="index.html?from=product#quoteForm">Get a Quote</a></li>
-          <li><a href="floorplan.html">Measure Floor Plan</a></li>
-          <li><a href="floor-care-maintenance.html">Floor Care Guide</a></li>
-          <li><a href="index.html#faq">FAQ</a></li>
+          <li><a href="index.html#quoteForm">Start Quote</a></li>
+          <li><a href="floorplan.html">Upload Floor Plan</a></li>
+          <li><a href="blog/index.html">Guides</a></li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>© 2026 Operon Flooring. All rights reserved.</p>
+      <p>&copy; 2026 Operon Flooring. All rights reserved.</p>
       <div class="footer-legal">
         <a href="privacy-policy.html">Privacy Policy</a>
         <a href="terms.html">Terms</a>
@@ -203,11 +205,13 @@
   <script>
     (function () {
       const PRODUCT_LIBRARY = window.OperonProducts;
-      if (!PRODUCT_LIBRARY) {
+      const PRODUCT_SELECTION = window.OperonProductSelection;
+      if (!PRODUCT_LIBRARY || !PRODUCT_SELECTION) {
         return;
       }
 
       const categoryRow = document.getElementById("catalogueCategoryRow");
+      const categoryCards = document.getElementById("catalogueCategoryCards");
       const productsGrid = document.getElementById("catalogueProductsGrid");
       const resultsSummary = document.getElementById("catalogueResultsSummary");
       const emptyState = document.getElementById("catalogueEmptyState");
@@ -217,22 +221,18 @@
       const continueQuoteLink = document.getElementById("catalogueContinueQuote");
       const clearSelectionButton = document.getElementById("catalogueClearSelection");
       const contextLinks = document.getElementById("catalogueContextLinks");
+      const resetFiltersButton = document.getElementById("catalogueResetFilters");
 
       const filters = {
         brand: document.getElementById("catalogueBrandFilter"),
-        range: document.getElementById("catalogueRangeFilter"),
         colour: document.getElementById("catalogueColourFilter"),
-        thickness: document.getElementById("catalogueThicknessFilter"),
-        price: document.getElementById("cataloguePriceFilter"),
-        waterproof: document.getElementById("catalogueWaterproofFilter")
+        thickness: document.getElementById("catalogueThicknessFilter")
       };
 
       const params = new URLSearchParams(window.location.search);
       const requestedCategory = params.get("category");
       function getCategoryMetaList() {
-        return PRODUCT_LIBRARY.getCategoryList().filter(function (item) {
-          return PRODUCT_LIBRARY.getProductsByCategory(item.id).length > 0;
-        });
+        return PRODUCT_LIBRARY.getCategoryList();
       }
 
       function getValidCategories() {
@@ -244,13 +244,12 @@
       const state = {
         category: getValidCategories().indexOf(requestedCategory) >= 0 ? requestedCategory : "all",
         selectedProductId: (PRODUCT_LIBRARY.getStoredProduct() || {}).id || "",
+        selectedRangeId: (PRODUCT_LIBRARY.getStoredSelectionState() || {}).selectedRangeId || "",
+        expandedRangeId: "",
         filters: {
           brand: "",
-          range: "",
           colour: "",
-          thickness: "",
-          price: "all",
-          waterproof: "all"
+          thickness: ""
         }
       };
 
@@ -258,6 +257,65 @@
         if (window.OperonTracking) {
           window.OperonTracking.trackEvent(eventName, payload || {});
         }
+      }
+
+      function trackCatalogueView() {
+        if (window.OperonTracking && typeof window.OperonTracking.trackProductCatalogueView === "function") {
+          window.OperonTracking.trackProductCatalogueView({
+            category: state.category,
+            visible_count: getFilteredProducts().length,
+            selected_product: state.selectedProductId || "",
+            page: "products.html"
+          });
+          return;
+        }
+
+        track("product_catalogue_view", {
+          category: state.category,
+          visible_count: getFilteredProducts().length,
+          selected_product: state.selectedProductId || "",
+          page: "products.html"
+        });
+      }
+
+      function trackFilterChange(payload) {
+        const details = Object.assign({
+          category: state.category,
+          brand: state.filters.brand || "all",
+          colour: state.filters.colour || "all",
+          thickness: state.filters.thickness || "all",
+          visible_count: getFilteredProducts().length
+        }, payload || {});
+
+        if (window.OperonTracking && typeof window.OperonTracking.trackProductFilterChange === "function") {
+          window.OperonTracking.trackProductFilterChange(details);
+          return;
+        }
+
+        track("product_filter_change", details);
+      }
+
+      function trackProductSelection(product, source) {
+        if (!product) {
+          return;
+        }
+
+        const details = {
+          category: product.category,
+          brand: product.brand,
+          range: product.range,
+          colour: product.colour,
+          pricePerM2: product.pricePerM2,
+          source: source || "catalogue"
+        };
+
+        if (window.OperonTracking && typeof window.OperonTracking.trackProductSelect === "function") {
+          window.OperonTracking.trackProductSelect(details);
+          return;
+        }
+
+        track("product_selected", details);
+        track("product_select", details);
       }
 
       function escapeHtml(value) {
@@ -283,67 +341,133 @@
         return meta ? meta.pageUrl : "index.html#quoteForm";
       }
 
-      function getCatalogueProducts() {
-        return state.category === "all"
-          ? PRODUCT_LIBRARY.getAllProducts()
-          : PRODUCT_LIBRARY.getProductsByCategory(state.category);
+      function buildRangeDisplayItem(range) {
+        const representativeProduct = PRODUCT_LIBRARY.getRepresentativeProductByRangeId(range.rangeId);
+        return {
+          type: "range",
+          id: representativeProduct ? representativeProduct.id : range.rangeId,
+          category: range.category,
+          brand: range.brand,
+          range: range.rangeLabel,
+          rangeLabel: range.rangeLabel,
+          rangeId: range.rangeId,
+          selectionMode: range.selectionMode,
+          representativeProductId: range.representativeProductId,
+          colour: range.colourCount + " colours available",
+          colours: range.colours || [],
+          thickness: range.thickness || "",
+          productType: range.productType || "",
+          feature: range.feature || "",
+          image: range.image || (representativeProduct ? representativeProduct.image : ""),
+          imageUrl: range.imageUrl || (representativeProduct ? representativeProduct.imageUrl : ""),
+          swatch: representativeProduct ? representativeProduct.swatch : "#d1d5db",
+          alt: representativeProduct ? representativeProduct.alt : (range.rangeLabel + " product image"),
+          pricePerM2: representativeProduct ? representativeProduct.pricePerM2 : 0,
+          statusLabel: representativeProduct ? PRODUCT_LIBRARY.getProductStatusLabel(representativeProduct) : "",
+          cardNote: "Colour can be confirmed later."
+        };
       }
 
-      function isWaterproofProduct(product) {
-        const terms = []
-          .concat(product.features || [])
-          .concat([product.description || "", product.range || "", product.productType || ""])
-          .join(" ")
-          .toLowerCase();
-        return terms.indexOf("waterproof") >= 0;
+      function getCategoryDisplayItems(category) {
+        const products = PRODUCT_LIBRARY.getProductsByCategory(category);
+        if (!products.length) {
+          return [];
+        }
+
+        const usesRangeOnlySelection = products[0].selectionMode === "range_only";
+        if (!usesRangeOnlySelection) {
+          return products.map(function (product) {
+            return Object.assign({ type: "product" }, product);
+          });
+        }
+
+        return PRODUCT_SELECTION.getRangesByCategory(category).map(buildRangeDisplayItem);
+      }
+
+      function getCatalogueProducts() {
+        if (state.category === "all") {
+          return getValidCategories().reduce(function (accumulator, category) {
+            return accumulator.concat(getCategoryDisplayItems(category));
+          }, []);
+        }
+
+        return getCategoryDisplayItems(state.category);
+      }
+
+      function getFilteredProducts() {
+        return getCatalogueProducts().filter(matchesFilters);
+      }
+
+      function getPreferredQuoteCategory() {
+        if (state.selectedRangeId) {
+          const rangeCategory = getValidCategories().find(function (category) {
+            return PRODUCT_SELECTION.getRangesByCategory(category).some(function (range) {
+              return range.rangeId === state.selectedRangeId;
+            });
+          });
+          if (rangeCategory) {
+            return rangeCategory;
+          }
+        }
+
+        if (state.selectedProductId) {
+          const selectedProduct = PRODUCT_LIBRARY.getProductById(state.selectedProductId);
+          if (selectedProduct) {
+            return selectedProduct.category;
+          }
+        }
+
+        if (state.category !== "all") {
+          return state.category;
+        }
+
+        const storedCategory = PRODUCT_LIBRARY.getStoredCategory();
+        return storedCategory || "hybrid";
+      }
+
+      function getContinueQuoteUrl() {
+        return "index.html?from=product&category=" + encodeURIComponent(getPreferredQuoteCategory()) + "#quoteForm";
+      }
+
+      function syncSelectionStateFromStorage() {
+        const storedProduct = PRODUCT_LIBRARY.getStoredProduct();
+        state.selectedProductId = storedProduct ? storedProduct.id : "";
+        state.selectedRangeId = (PRODUCT_LIBRARY.getStoredSelectionState() || {}).selectedRangeId || "";
       }
 
       function distinctValues(products, key) {
-        return Array.from(new Set(products.map(function (product) {
-          return product[key] || "";
-        }).filter(Boolean))).sort();
-      }
+        const values = [];
+        products.forEach(function (product) {
+          const value = product[key];
+          if (Array.isArray(value)) {
+            value.forEach(function (item) {
+              if (item) {
+                values.push(item);
+              }
+            });
+            return;
+          }
+          if (value) {
+            values.push(value);
+          }
+        });
 
-      function matchesPriceRange(product) {
-        const price = Number(product.pricePerM2) || 0;
-        if (state.filters.price === "all") {
-          return true;
-        }
-        if (state.filters.price === "to-confirm") {
-          return !(price > 0);
-        }
-        if (!(price > 0)) {
-          return false;
-        }
-        if (state.filters.price === "under-50") {
-          return price < 50;
-        }
-        if (state.filters.price === "50-80") {
-          return price >= 50 && price <= 80;
-        }
-        if (state.filters.price === "80-plus") {
-          return price > 80;
-        }
-        return true;
+        return Array.from(new Set(values)).sort();
       }
 
       function matchesFilters(product) {
         if (state.filters.brand && product.brand !== state.filters.brand) {
           return false;
         }
-        if (state.filters.range && product.range !== state.filters.range) {
-          return false;
-        }
-        if (state.filters.colour && product.colour !== state.filters.colour) {
-          return false;
+        if (state.filters.colour) {
+          const colourMatches = Array.isArray(product.colours)
+            ? product.colours.indexOf(state.filters.colour) >= 0
+            : product.colour === state.filters.colour;
+          if (!colourMatches) {
+            return false;
+          }
         }
         if (state.filters.thickness && (product.thickness || "") !== state.filters.thickness) {
-          return false;
-        }
-        if (!matchesPriceRange(product)) {
-          return false;
-        }
-        if (state.filters.waterproof === "waterproof" && !isWaterproofProduct(product)) {
           return false;
         }
         return true;
@@ -351,25 +475,29 @@
 
       function buildImageMarkup(product) {
         const altText = product.alt || (PRODUCT_LIBRARY.getProductLabel(product) + " colour sample");
+        const imageFrameTag = product.type === "range" ? "div" : "button";
+        const imageFrameAttrs = product.type === "range"
+          ? ' aria-label="' + escapeHtml(altText) + '"'
+          : ' type="button" data-open-lightbox="' + escapeHtml(product.id) + '" aria-label="Open larger image for ' + escapeHtml(altText) + '"';
         if (product.image) {
           return (
-            '<button class="catalogue-image-frame" type="button" data-open-lightbox="' + escapeHtml(product.id) + '" aria-label="Open larger image for ' + escapeHtml(altText) + '">' +
+            '<' + imageFrameTag + ' class="catalogue-image-frame' + (product.type === "range" ? " is-static" : "") + '"' + imageFrameAttrs + ">" +
               '<img class="catalogue-image" src="' + escapeHtml(product.image) + '" alt="' + escapeHtml(altText) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">' +
               '<div class="catalogue-swatch-fallback" aria-hidden="true">' +
                 '<div class="catalogue-swatch" style="background:' + escapeHtml(product.swatch || "#d1d5db") + ';"></div>' +
                 '<span>' + escapeHtml(product.colour) + "</span>" +
               "</div>" +
-            "</button>"
+            "</" + imageFrameTag + ">"
           );
         }
 
         return (
-          '<button class="catalogue-image-frame is-fallback" type="button" data-open-lightbox="' + escapeHtml(product.id) + '" aria-label="Open larger image for ' + escapeHtml(altText) + '">' +
+          '<' + imageFrameTag + ' class="catalogue-image-frame is-fallback' + (product.type === "range" ? " is-static" : "") + '"' + imageFrameAttrs + ">" +
             '<div class="catalogue-swatch-fallback" aria-hidden="true">' +
               '<div class="catalogue-swatch" style="background:' + escapeHtml(product.swatch || "#d1d5db") + ';"></div>' +
               '<span>' + escapeHtml(product.colour) + "</span>" +
             "</div>" +
-          "</button>"
+          "</" + imageFrameTag + ">"
         );
       }
 
@@ -384,12 +512,47 @@
         }).join("");
       }
 
+      function renderCategoryCards() {
+        const cards = getCategoryMetaList().map(function (item) {
+          const stats = PRODUCT_LIBRARY.getCategoryStats(item.id);
+          const rangeCount = PRODUCT_SELECTION.getRangesByCategory(item.id).length;
+          const visibleCount = rangeCount || stats.liveProductCount;
+          const countText = visibleCount > 0
+            ? visibleCount + " live option" + (visibleCount === 1 ? "" : "s")
+            : "Estimate path ready";
+          const pricingText = stats.liveProductCount > 0
+            ? (stats.hasConfirmedPrices ? "Confirmed pricing published" : "Product pricing still pending review")
+            : "Product confirmed during review";
+
+          return (
+            '<article class="catalogue-category-card' + (state.category === item.id ? " is-active" : "") + '">' +
+              '<span class="catalogue-category-card-label">' + escapeHtml(item.label) + "</span>" +
+              '<h3>' + escapeHtml(item.shortDescription || item.label) + "</h3>" +
+              '<p>' + escapeHtml(stats.liveProductCount > 0
+                ? "Browse live products, save a product selection, and move straight into the quote wizard."
+                : "Use the quote flow for this flooring type now, then confirm the final product during review.") + "</p>" +
+              '<div class="catalogue-category-card-meta">' +
+                '<span class="catalogue-pill">' + escapeHtml(countText) + "</span>" +
+                '<span class="catalogue-pill">' + escapeHtml(pricingText) + "</span>" +
+              "</div>" +
+              '<div class="catalogue-category-card-actions">' +
+                '<button class="button-secondary" type="button" data-category-card-filter="' + escapeHtml(item.id) + '">Browse ' + escapeHtml(item.label.toLowerCase()) + "</button>" +
+                '<a class="button-quiet" href="' + escapeHtml(item.pageUrl) + '">Open guide</a>' +
+              "</div>" +
+            "</article>"
+          );
+        });
+
+        categoryCards.innerHTML = cards.join("");
+      }
+
       function renderFilterOptions() {
         const available = getCatalogueProducts();
         const config = [
           { key: "brand", label: "All brands", values: distinctValues(available, "brand") },
-          { key: "range", label: "All ranges", values: distinctValues(available, "range") },
-          { key: "colour", label: "All colours", values: distinctValues(available, "colour") },
+          { key: "colour", label: "All colours", values: distinctValues(available, "colours").concat(distinctValues(available, "colour")).filter(function (value, index, array) {
+            return array.indexOf(value) === index;
+          }) },
           { key: "thickness", label: "All thicknesses", values: distinctValues(available, "thickness") }
         ];
 
@@ -405,24 +568,30 @@
       }
 
       function renderSelectionBanner() {
+        syncSelectionStateFromStorage();
         const storedProduct = PRODUCT_LIBRARY.getStoredProduct();
         const activeProduct = storedProduct && PRODUCT_LIBRARY.getProductById(storedProduct.id) ? PRODUCT_LIBRARY.getProductById(storedProduct.id) : null;
         selectionBanner.classList.toggle("is-selected", !!activeProduct);
+        continueQuoteLink.setAttribute("href", getContinueQuoteUrl());
 
         if (!activeProduct) {
           selectionTitle.textContent = "No flooring product selected yet";
-          selectionText.textContent = "Choose a flooring product and continue to the quote tool. If a product price is still pending, the quote will use the standard estimate for that flooring type until review.";
+          selectionText.textContent = state.category !== "all"
+            ? "You can keep browsing this category, or continue straight into the quote using the " + getCategoryLabel(getPreferredQuoteCategory()).toLowerCase() + " estimate."
+            : "Choose a flooring product first, or continue straight into the quote and keep the category estimate for now.";
           contextLinks.innerHTML = getCategoryMetaList().map(function (item) {
             return '<a class="button-quiet" href="' + escapeHtml(item.pageUrl) + '">View ' + escapeHtml(item.label.toLowerCase()) + " guide</a>";
           }).join("");
-          continueQuoteLink.textContent = "Continue to quote";
+          continueQuoteLink.textContent = state.category !== "all" ? "Start " + getCategoryLabel(getPreferredQuoteCategory()).toLowerCase() + " quote" : "Continue to quote";
           return;
         }
 
-        selectionTitle.textContent = "Selected product: " + PRODUCT_LIBRARY.getProductLabel(activeProduct);
+        selectionTitle.textContent = activeProduct.selectionMode === "range_only"
+          ? "Selected range: " + PRODUCT_LIBRARY.getProductLabel(activeProduct)
+          : "Selected product: " + PRODUCT_LIBRARY.getProductLabel(activeProduct);
         selectionText.textContent = activeProduct.pricePerM2 > 0
           ? getCategoryLabel(activeProduct.category) + " · " + PRODUCT_LIBRARY.formatProductRate(activeProduct) + " · saved for the quote wizard."
-          : getCategoryLabel(activeProduct.category) + " · Price to be confirmed · the quote will use the standard " + getCategoryLabel(activeProduct.category).toLowerCase() + " estimate until review.";
+          : getCategoryLabel(activeProduct.category) + " · Price pending review · the quote will use the standard " + getCategoryLabel(activeProduct.category).toLowerCase() + " estimate until review.";
         continueQuoteLink.textContent = "Continue to quote";
         contextLinks.innerHTML =
           '<a class="button-quiet" href="' + escapeHtml(getCategoryPageUrl(activeProduct.category)) + '">Back to ' + escapeHtml(getCategoryLabel(activeProduct.category).toLowerCase()) + " guide</a>";
@@ -431,38 +600,86 @@
       function buildProductCard(product) {
         const categoryLabel = getCategoryLabel(product.category);
         const specLine = [categoryLabel, product.productType, product.thickness].filter(Boolean).join(" · ");
-        const features = (product.features || []).slice(0, 3).map(function (feature) {
-          return '<span class="catalogue-pill">' + escapeHtml(feature) + "</span>";
-        }).join("");
-        const selectedClass = state.selectedProductId === product.id ? " selected" : "";
+        const leadFeature = product.feature || (product.features || [])[0] || "";
+        const isSelected = product.selectionMode === "range_only"
+          ? state.selectedRangeId === product.rangeId
+          : state.selectedProductId === product.id;
+        const selectedClass = isSelected ? " selected" : "";
+        const selectId = product.selectionMode === "range_only" ? product.rangeId : product.id;
+        const quoteId = product.selectionMode === "range_only" ? product.rangeId : product.id;
+        const actionLabel = product.selectionMode === "range_only" ? "Select this range" : "Select this floor";
+        const rangeProducts = product.type === "range" ? PRODUCT_LIBRARY.getProductsByRangeId(product.rangeId) : [];
+        const hasColourDrawer = rangeProducts.length > 0;
+        const drawerIsOpen = hasColourDrawer && state.expandedRangeId === product.rangeId;
+        const priceLine = product.pricePerM2 > 0
+          ? '<span class="catalogue-card-price">' + escapeHtml(PRODUCT_LIBRARY.formatProductRate(product)) + "</span>"
+          : "";
+        const colourDrawerButton = hasColourDrawer
+          ? '<button class="button-quiet catalogue-colour-toggle" type="button" data-toggle-range-colours="' + escapeHtml(product.rangeId) + '" aria-expanded="' + (drawerIsOpen ? "true" : "false") + '">' + (drawerIsOpen ? "Hide colours" : "View " + rangeProducts.length + " colours") + "</button>"
+          : "";
+        const colourDrawer = drawerIsOpen ? buildRangeColourDrawer(product, rangeProducts) : "";
 
         return (
-          '<article class="catalogue-card' + selectedClass + '" data-product-card="' + escapeHtml(product.id) + '">' +
+          '<article class="catalogue-card' + selectedClass + '" data-product-card="' + escapeHtml(product.id || product.rangeId) + '">' +
             buildImageMarkup(product) +
             '<div class="catalogue-card-top">' +
               '<div class="catalogue-copy">' +
                 '<span class="catalogue-brand">' + escapeHtml(product.brand) + "</span>" +
-                '<h3>' + escapeHtml(product.range) + "</h3>" +
+                '<h3>' + escapeHtml(product.rangeLabel || product.range) + "</h3>" +
                 '<p class="catalogue-colour">' + escapeHtml(product.colour) + "</p>" +
                 '<p class="catalogue-spec">' + escapeHtml(specLine) + "</p>" +
-                '<span class="catalogue-card-price">' + escapeHtml(PRODUCT_LIBRARY.formatProductRate(product)) + "</span>" +
+                priceLine +
+                (product.cardNote ? '<span class="catalogue-card-status">' + escapeHtml(product.cardNote) + "</span>" : "") +
+                (isSelected ? '<span class="catalogue-card-status">Selected for quote</span>' : "") +
               "</div>" +
             "</div>" +
-            '<div class="catalogue-pills">' + features + "</div>" +
+            (leadFeature ? '<div class="catalogue-single-feature">' + escapeHtml(leadFeature) + "</div>" : "") +
+            colourDrawer +
             '<div class="catalogue-card-actions">' +
-              '<button class="button" type="button" data-get-quote="' + escapeHtml(product.id) + '">Get quote</button>' +
+              colourDrawerButton +
+              '<button class="button-secondary" type="button" data-select-floor="' + escapeHtml(selectId) + '">' + (isSelected ? "Selected" : actionLabel) + "</button>" +
+              '<button class="button" type="button" data-get-quote="' + escapeHtml(quoteId) + '">Continue to quote</button>' +
             "</div>" +
           "</article>"
         );
       }
 
+      function buildRangeColourDrawer(rangeItem, rangeProducts) {
+        return (
+          '<div class="catalogue-colour-drawer" id="range-colours-' + escapeHtml(rangeItem.rangeId) + '">' +
+            '<div class="catalogue-colour-drawer-head">' +
+              '<strong>Available colours</strong>' +
+              '<span>Colour can be confirmed later.</span>' +
+            "</div>" +
+            '<div class="catalogue-colour-grid">' +
+              rangeProducts.map(function (colourProduct) {
+                const altText = colourProduct.alt || (PRODUCT_LIBRARY.getProductLabel(colourProduct) + " colour sample");
+                const imageMarkup = colourProduct.image
+                  ? '<img src="' + escapeHtml(colourProduct.image) + '" alt="' + escapeHtml(altText) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">'
+                  : "";
+                return (
+                  '<button class="catalogue-colour-option" type="button" data-open-lightbox="' + escapeHtml(colourProduct.id) + '">' +
+                    '<span class="catalogue-colour-thumb" style="--swatch:' + escapeHtml(colourProduct.swatch || "#d1d5db") + ';">' +
+                      imageMarkup +
+                    "</span>" +
+                    '<span>' + escapeHtml(colourProduct.colour || "Colour option") + "</span>" +
+                  "</button>"
+                );
+              }).join("") +
+            "</div>" +
+          "</div>"
+        );
+      }
+
       function renderProducts() {
-        const filtered = getCatalogueProducts().filter(matchesFilters);
+        const filtered = getFilteredProducts();
         productsGrid.innerHTML = filtered.map(buildProductCard).join("");
         emptyState.hidden = filtered.length > 0;
-        resultsSummary.textContent = filtered.length + " product" + (filtered.length === 1 ? "" : "s") + " shown" + (state.category !== "all" ? " in " + getCategoryLabel(state.category).toLowerCase() : "") + ".";
+        resultsSummary.textContent = filtered.length + " option" + (filtered.length === 1 ? "" : "s") + " shown" + (state.category !== "all" ? " in " + getCategoryLabel(state.category).toLowerCase() : "") + ".";
         if (!filtered.length) {
-          emptyState.textContent = "No live products match the current filters. Clear the filters or continue with the quote tool.";
+          emptyState.textContent = state.category !== "all"
+            ? "No live products are published in this category yet. Continue with the quote wizard and confirm the final product during review."
+            : "No live products match the current filters. Clear the filters or continue with the quote tool.";
         }
       }
 
@@ -478,53 +695,93 @@
 
       function renderAll() {
         renderCategoryTabs();
+        renderCategoryCards();
         renderFilterOptions();
         renderSelectionBanner();
         renderProducts();
       }
 
-      function selectProduct(productId, options) {
-        const product = PRODUCT_LIBRARY.getProductById(productId);
-        if (!product) {
+      function selectProduct(selectionId, options) {
+        const settings = Object.assign({ redirect: false, source: "catalogue" }, options || {});
+        const product = PRODUCT_LIBRARY.getProductById(selectionId);
+        const rangeRecord = getCatalogueProducts().find(function (item) {
+          return item.type === "range" && item.rangeId === selectionId;
+        });
+        const rangeCategory = rangeRecord ? rangeRecord.category : (state.category !== "all" ? state.category : getPreferredQuoteCategory());
+        const isSameRangeSelection = rangeRecord && state.selectedRangeId === rangeRecord.rangeId;
+        const isSameProductSelection = product && state.selectedProductId === product.id;
+
+        if (!settings.redirect && (isSameRangeSelection || isSameProductSelection)) {
+          PRODUCT_LIBRARY.clearSelectedProduct();
+          state.selectedProductId = "";
+          state.selectedRangeId = "";
+          renderAll();
+          track("product_selection_clear", {
+            category: product ? product.category : rangeCategory,
+            range_id: rangeRecord ? rangeRecord.rangeId : "",
+            product_id: product ? product.id : "",
+            source: settings.source
+          });
           return;
         }
 
-        const settings = Object.assign({ redirect: false, source: "catalogue" }, options || {});
-        PRODUCT_LIBRARY.saveSelectedProduct(product);
-        PRODUCT_LIBRARY.saveSelectedCategory(product.category);
-        state.selectedProductId = product.id;
+        let resolvedSelection = null;
+
+        if (product) {
+          resolvedSelection = PRODUCT_SELECTION.saveSelection({
+            category: product.category,
+            choiceMode: product.selectionMode === "range_only" ? "choose_range" : "choose_range",
+            rangeId: product.rangeId || "",
+            selectedColour: product.selectionMode === "range_then_colour" ? (product.colour || "") : "",
+            productId: product.id,
+            selectionMode: product.selectionMode || ""
+          });
+          state.selectedProductId = resolvedSelection.productId || "";
+          state.selectedRangeId = resolvedSelection.rangeId || "";
+          PRODUCT_LIBRARY.saveSelectedCategory(product.category);
+          trackProductSelection(product, settings.source);
+        } else if (rangeRecord) {
+          resolvedSelection = PRODUCT_SELECTION.saveSelection({
+            category: rangeCategory,
+            choiceMode: "choose_range",
+            rangeId: rangeRecord.rangeId,
+            selectedColour: "",
+            productId: "",
+            selectionMode: rangeRecord.selectionMode
+          });
+          state.selectedProductId = resolvedSelection.productId || "";
+          state.selectedRangeId = resolvedSelection.rangeId || "";
+          PRODUCT_LIBRARY.saveSelectedCategory(rangeCategory);
+          track("product_range_select", {
+            category: rangeCategory,
+            range_id: rangeRecord.rangeId,
+            range_label: rangeRecord.rangeLabel,
+            source: settings.source
+          });
+          track("product_selection_mode", {
+            category: rangeCategory,
+            mode: "choose_range",
+            selection_mode: rangeRecord.selectionMode,
+            source: settings.source
+          });
+        } else {
+          return;
+        }
+
         renderAll();
-        track("product_select", {
-          category: product.category,
-          brand: product.brand,
-          range: product.range,
-          colour: product.colour,
-          pricePerM2: product.pricePerM2,
-          source: settings.source
-        });
 
         if (settings.redirect) {
-          window.location.href = "index.html?from=product#quoteForm";
+          window.location.href = "index.html?from=product&category=" + encodeURIComponent(resolvedSelection.category || rangeCategory) + "#quoteForm";
         }
       }
 
       function handleFilterChange(sourceKey) {
         state.filters.brand = filters.brand.value;
-        state.filters.range = filters.range.value;
         state.filters.colour = filters.colour.value;
         state.filters.thickness = filters.thickness.value;
-        state.filters.price = filters.price.value;
-        state.filters.waterproof = filters.waterproof.value;
         renderProducts();
-        track("product_filter_change", {
-          category: state.category,
-          source_filter: sourceKey,
-          brand: state.filters.brand || "all",
-          range: state.filters.range || "all",
-          colour: state.filters.colour || "all",
-          thickness: state.filters.thickness || "all",
-          price: state.filters.price,
-          waterproof: state.filters.waterproof
+        trackFilterChange({
+          source_filter: sourceKey
         });
       }
 
@@ -536,23 +793,42 @@
 
         state.category = button.getAttribute("data-category-filter");
         state.filters.brand = "";
-        state.filters.range = "";
         state.filters.colour = "";
         state.filters.thickness = "";
-        state.filters.price = "all";
-        state.filters.waterproof = "all";
+        state.expandedRangeId = "";
         syncQueryString();
         renderAll();
-        track("product_filter_change", {
-          category: state.category,
+        trackFilterChange({
           source_filter: "category",
           value: state.category
         });
+        trackCatalogueView();
+      });
+
+      categoryCards.addEventListener("click", function (event) {
+        const button = event.target.closest("[data-category-card-filter]");
+        if (!button) {
+          return;
+        }
+
+        state.category = button.getAttribute("data-category-card-filter");
+        state.filters.brand = "";
+        state.filters.colour = "";
+        state.filters.thickness = "";
+        state.expandedRangeId = "";
+        syncQueryString();
+        renderAll();
+        trackFilterChange({
+          source_filter: "category_card",
+          value: state.category
+        });
+        trackCatalogueView();
       });
 
       Object.keys(filters).forEach(function (key) {
         filters[key].addEventListener("change", function () {
           handleFilterChange(key);
+          trackCatalogueView();
         });
       });
 
@@ -570,33 +846,63 @@
             redirect: true,
             source: "products_page_quote_button"
           });
+          return;
+        }
+
+        const colourToggle = event.target.closest("[data-toggle-range-colours]");
+        if (colourToggle) {
+          const nextRangeId = colourToggle.getAttribute("data-toggle-range-colours");
+          state.expandedRangeId = state.expandedRangeId === nextRangeId ? "" : nextRangeId;
+          renderProducts();
+          track("product_colour_drawer_toggle", {
+            range_id: nextRangeId,
+            expanded: state.expandedRangeId === nextRangeId
+          });
+          return;
+        }
+
+        const selectButton = event.target.closest("[data-select-floor]");
+        if (selectButton) {
+          selectProduct(selectButton.getAttribute("data-select-floor"), {
+            redirect: false,
+            source: "products_page_select_button"
+          });
         }
       });
 
       clearSelectionButton.addEventListener("click", function () {
         PRODUCT_LIBRARY.clearSelectedProduct();
         state.selectedProductId = "";
+        state.selectedRangeId = "";
         renderAll();
       });
 
+      resetFiltersButton.addEventListener("click", function () {
+        state.filters.brand = "";
+        state.filters.colour = "";
+        state.filters.thickness = "";
+        state.expandedRangeId = "";
+        renderAll();
+        trackFilterChange({
+          source_filter: "reset"
+        });
+        trackCatalogueView();
+      });
+
       window.addEventListener("operon-pricing-source-ready", function () {
-        state.selectedProductId = (PRODUCT_LIBRARY.getStoredProduct() || {}).id || "";
+        syncSelectionStateFromStorage();
         renderAll();
       });
       if (window.OperonPricingSource) {
         const pricingSourceStatus = window.OperonPricingSource.getStatus();
         if (pricingSourceStatus.ready) {
-          state.selectedProductId = (PRODUCT_LIBRARY.getStoredProduct() || {}).id || "";
+          syncSelectionStateFromStorage();
           renderAll();
         }
       }
 
       renderAll();
-      track("product_catalogue_view", {
-        category: state.category,
-        product_count: getCatalogueProducts().length,
-        page: "products.html"
-      });
+      trackCatalogueView();
     }());
   </script>
   <script src="mobile-nav.js"></script>

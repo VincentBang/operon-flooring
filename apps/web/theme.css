@@ -1,25 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
-  --bg: #f4f7f8;
-  --bg-alt: #eef7f5;
-  --surface: rgba(255, 255, 255, 0.8);
-  --surface-strong: rgba(255, 255, 255, 0.94);
-  --surface-soft: rgba(255, 255, 255, 0.68);
-  --surface-deep: #e3f4ef;
-  --text: #0f1728;
-  --muted: #627181;
-  --line: rgba(15, 23, 40, 0.08);
-  --line-strong: rgba(15, 23, 40, 0.14);
-  --brand: #18b79b;
-  --brand-dark: #0e8276;
-  --accent: #18b79b;
-  --accent-soft: #d9f7f0;
-  --signal: #0e9d87;
+  --bg: #FAF8F4;
+  --bg-alt: #F6F2EC;
+  --surface: rgba(255, 255, 255, 0.88);
+  --surface-strong: rgba(255, 255, 255, 0.96);
+  --surface-soft: rgba(246, 242, 236, 0.92);
+  --surface-deep: #F6F2EC;
+  --text: #111820;
+  --muted: #6B7280;
+  --line: rgba(232, 226, 216, 0.9);
+  --line-strong: rgba(17, 24, 32, 0.12);
+  --brand: #111820;
+  --brand-dark: #111820;
+  --accent: #A67C52;
+  --accent-soft: rgba(166, 124, 82, 0.10);
+  --signal: #A67C52;
   --danger: #dd5c4f;
-  --success: #0f766e;
-  --shadow-lg: 0 30px 80px rgba(15, 23, 42, 0.08);
-  --shadow-md: 0 18px 44px rgba(15, 23, 42, 0.06);
+  --success: #4C6857;
+  --shadow-lg: 0 16px 40px rgba(17, 24, 32, 0.06);
+  --shadow-md: 0 6px 20px rgba(17, 24, 32, 0.05);
   --radius-xl: 30px;
   --radius-lg: 24px;
   --radius-md: 18px;
@@ -37,16 +37,13 @@ button,
 input,
 select,
 textarea {
-  font-family: "Manrope", "SF Pro Text", "Segoe UI", sans-serif;
+  font-family: "Inter", "SF Pro Text", "Segoe UI", sans-serif;
 }
 
 body {
   color: var(--text);
   -webkit-font-smoothing: antialiased;
-  background:
-    radial-gradient(circle at top left, rgba(24, 183, 155, 0.12), transparent 28%),
-    radial-gradient(circle at top right, rgba(15, 130, 118, 0.08), transparent 24%),
-    linear-gradient(180deg, #f7fbfb 0%, #f1f6f7 34%, #eef4f5 100%);
+  background: var(--bg);
   text-rendering: optimizeLegibility;
 }
 
@@ -63,8 +60,8 @@ a {
 }
 
 .site-header {
-  background: rgba(248, 251, 252, 0.76);
-  border-bottom: 1px solid rgba(15, 23, 40, 0.08);
+  background: rgba(250, 248, 244, 0.94);
+  border-bottom: 1px solid rgba(232, 226, 216, 0.9);
   backdrop-filter: blur(20px);
 }
 
@@ -133,7 +130,7 @@ a {
 }
 
 .nav-links a:hover::after {
-  background: rgba(24, 183, 155, 0.45);
+  background: rgba(166, 124, 82, 0.35);
 }
 
 .button,
@@ -147,22 +144,22 @@ button {
 }
 
 .button-primary {
-  background: linear-gradient(135deg, #17b698 0%, #0f8276 100%);
-  color: #f7fffd;
-  box-shadow: 0 14px 28px rgba(24, 183, 155, 0.2);
+  background: var(--brand);
+  color: #ffffff;
+  box-shadow: none;
 }
 
 .button-secondary {
   background: rgba(255, 255, 255, 0.78);
   color: var(--text);
-  border: 1px solid rgba(15, 23, 40, 0.1);
-  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+  border: 1px solid var(--line);
+  box-shadow: none;
 }
 
 .button-ghost {
-  background: rgba(24, 183, 155, 0.08);
-  color: var(--brand-dark);
-  border: 1px solid rgba(24, 183, 155, 0.16);
+  background: rgba(166, 124, 82, 0.08);
+  color: var(--text);
+  border: 1px solid rgba(166, 124, 82, 0.18);
 }
 
 .button-danger {
