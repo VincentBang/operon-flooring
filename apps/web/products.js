@@ -5,6 +5,59 @@
   const RANGE_STORAGE_KEY = "operon_selected_range_id";
   const COLOUR_STORAGE_KEY = "operon_selected_colour";
   const SELECTION_MODE_STORAGE_KEY = "operon_selected_product_selection_mode";
+  const ETF_HYBRID_RANGE_DESCRIPTION = [
+    "ETF Hybrid Flooring is a premium SPC hybrid range designed for Sydney and NSW homes that want the look of timber with the practicality of a modern waterproof floor.",
+    "Hybrid SPC flooring blends the best of laminate and vinyl flooring into a next-generation, multi-layered floating floor system. It is built to handle moisture, heat, and daily wear while staying suitable for most rooms in the house, including kitchens.",
+    "This range is made for busy households that want a cost-effective flooring solution with realistic timber visuals, a stable rigid core, and a cleaner installation path."
+  ];
+  const ETF_HYBRID_RANGE_FEATURES = [
+    "100% waterproof performance for bedrooms, living spaces, and kitchens.",
+    "Highly resilient against scratches, dents, stains, and everyday family traffic.",
+    "Rigid SPC core for dimensional stability and dependable floating-floor performance.",
+    "Pre-attached acoustic underlay for softer underfoot comfort and reduced noise.",
+    "DIY-friendly click-lock installation with no glue or nails required."
+  ];
+  const ETF_LAMINATE_RANGE_DESCRIPTION = [
+    "ETF Laminate Flooring gives Sydney and NSW projects the look of real timber without the higher maintenance or cost that comes with traditional hardwood.",
+    "Laminate flooring uses a stable HDF core with a photographic decorative layer and a tough UV-protected wear surface, creating a durable floor that works well in modern homes.",
+    "This 1.2 metre laminate range is built for practical renovations that need strong scratch resistance, straightforward floating-floor installation, and easy day-to-day care."
+  ];
+  const ETF_LAMINATE_RANGE_FEATURES = [
+    "Timber-look finish at a more budget-friendly price point.",
+    "Scratch-resistant and fade-resistant surface for busy households.",
+    "UV-protected wear layer to help maintain colour in bright interiors.",
+    "Click-lock floating floor installation for faster and cleaner installs.",
+    "Low-maintenance laminate construction with a stable HDF core."
+  ];
+
+  function createEtfHybridRangeContent(technical) {
+    return {
+      description: ETF_HYBRID_RANGE_DESCRIPTION.slice(),
+      featuresIntro: "Why homeowners love ETF Hybrid SPC flooring",
+      features: ETF_HYBRID_RANGE_FEATURES.slice(),
+      technical: technical.slice()
+    };
+  }
+
+  function createEtfLaminateRangeContent() {
+    return {
+      description: ETF_LAMINATE_RANGE_DESCRIPTION.slice(),
+      featuresIntro: "Why homeowners choose ETF Laminate flooring",
+      features: ETF_LAMINATE_RANGE_FEATURES.slice(),
+      technical: [
+        { label: "Brand", value: "ETF Flooring" },
+        { label: "Total Thickness", value: "12.3 mm" },
+        { label: "Board Size", value: "1215mm x 196mm" },
+        { label: "Water Resistance", value: "24 Hours Water Resistant" },
+        { label: "Wear Resistance", value: "AC4 Heavy Residential" },
+        { label: "Range Format", value: "1.2 meter laminate" },
+        { label: "Warranty", value: "25 Year Residential Wear Warranty" },
+        { label: "Core", value: "HDF core construction" },
+        { label: "Installation", value: "Floating click-lock system" }
+      ]
+    };
+  }
+
   const RANGE_CONFIG = {
     hybrid: {
       "ETF Hybrid 7.0mm": {
@@ -13,30 +66,150 @@
         selectionMode: "range_only",
         representativeProductId: "hrt-etf-7mm-hybrid-antique-oak",
         isDefaultRecommendation: true,
-        customerLabel: "ETF 7.0mm Waterproof Hybrid Flooring"
+        customerLabel: "ETF 7.0mm Waterproof Hybrid Flooring",
+        rangeContent: createEtfHybridRangeContent([
+          { label: "Brand", value: "ETF Flooring" },
+          { label: "Total Thickness", value: "7.0 mm with Underlay" },
+          { label: "Board Size", value: "1500 mm x 228 mm" },
+          { label: "Material", value: "Hybrid SPC (Solid Polymer Core)" },
+          { label: "Wear Layer", value: "0.3 mm Melamine Layer" },
+          { label: "Warranty", value: "25 Year Hybrid Limited Warranty" },
+          { label: "Installation", value: "Floating click-lock system" },
+          { label: "Colour Range", value: "15 colours available" }
+        ])
       },
       "ETF Hybrid 8.0mm": {
         rangeId: "hybrid-etf-8mm",
         rangeLabel: "ETF 8.0mm Waterproof Hybrid Flooring",
         selectionMode: "range_only",
         representativeProductId: "hrt-etf-8mm-hybrid-alaskan-oak",
-        customerLabel: "ETF 8.0mm Waterproof Hybrid Flooring"
+        customerLabel: "ETF 8.0mm Waterproof Hybrid Flooring",
+        rangeContent: createEtfHybridRangeContent([
+          { label: "Brand", value: "ETF Flooring" },
+          { label: "Total Thickness", value: "8.0 mm with Underlay" },
+          { label: "Board Size", value: "1810 mm x 228 mm" },
+          { label: "Material", value: "Hybrid SPC (Solid Polymer Core)" },
+          { label: "Wear Layer", value: "0.3 mm Melamine Layer" },
+          { label: "Warranty", value: "25 Year Hybrid Limited Warranty" },
+          { label: "Installation", value: "Floating click-lock system" },
+          { label: "Colour Range", value: "12 colours available" }
+        ])
       },
       "ETF Hybrid 9.0mm": {
         rangeId: "hybrid-etf-9mm",
         rangeLabel: "ETF 9.0mm Waterproof Hybrid Flooring",
         selectionMode: "range_only",
         representativeProductId: "hrt-etf-9mm-hybrid-alaskan-oak",
-        customerLabel: "ETF 9.0mm Waterproof Hybrid Flooring"
+        customerLabel: "ETF 9.0mm Waterproof Hybrid Flooring",
+        rangeContent: createEtfHybridRangeContent([
+          { label: "Brand", value: "ETF Flooring" },
+          { label: "Total Thickness", value: "9.0 mm with Underlay" },
+          { label: "Board Size", value: "Refer to selected colour brochure" },
+          { label: "Material", value: "Hybrid SPC (Solid Polymer Core)" },
+          { label: "Wear Layer", value: "Melamine wear layer" },
+          { label: "Warranty", value: "25 Year Hybrid Limited Warranty" },
+          { label: "Installation", value: "Floating click-lock system" },
+          { label: "Colour Range", value: "14 colours available" }
+        ])
       }
     },
-    laminate: {},
-    engineered: {}
+    laminate: {
+      "12mm 24hrs Water Resistant Laminate": {
+        rangeId: "laminate-12mm-24hr-water-resistant",
+        rangeLabel: "ETF 12mm 24hrs Water Resistant Laminate",
+        selectionMode: "range_only",
+        representativeProductId: "hrt-12mm-laminate-aspen-oak",
+        isDefaultRecommendation: true,
+        customerLabel: "ETF 12mm 24hrs Water Resistant Laminate",
+        rangeContent: createEtfLaminateRangeContent()
+      }
+    },
+    engineered: {
+      "Swish Oak Natura": {
+        rangeId: "engineered-swish-oak-natura",
+        rangeLabel: "Swish Oak Natura",
+        selectionMode: "range_then_colour",
+        representativeProductId: "eco-swish-oak-natura-ambient-sand",
+        isDefaultRecommendation: true,
+        customerLabel: "Swish Oak Natura",
+        rangeContent: {
+          description: [
+            "Oak has been a traditional flooring material used for centuries throughout the world. Oak flooring is desired for its longevity lasting more than 100 years.",
+            "The Swish Oak Natura Flooring range comprises of multidirectional constructed engineered boards that provide all the benefits of being structurally robust. This assembly increases the boards' resistance to expansion and contraction from changes in humidity and temperature reducing warping or cupping. Hence these engineered boards are superior to solid oak flooring in both durability and stability.",
+            "Fabulous attractive wide 190mm planks create the impression of a more spacious interior, whilst adding a sophisticated, warm and inviting feel to your environment.",
+            "All Swish Oak Flooring come pre-finished thus there is no messy and timely on-site sanding or staining required.",
+            "The top layer, or wear layer, is composed of genuine 3mm French oak. It features a variety of captivating finishes, such as natural, brushed, hand-scraped, or stained, allowing you to choose the aesthetic that best complements your space. The natural finish brings out the inherent warmth and character of the oak, while the brushed finish provide a rustic and textured appearance.",
+            "Beneath the wear layer, multiple layers of high-quality plywood are intricately bonded together. This construction creates a stable and robust foundation for the oak veneer, minimizing the expansion and contraction that can occur with solid wood flooring due to changes in humidity and temperature."
+          ],
+          featuresIntro: "Why choose Swish Oak?",
+          features: [
+            "Swish Oak flooring is a harmonious fusion of nature's elegance and modern engineering. With its exquisite appearance, durability, and versatility, it is a timeless choice that can elevate the aesthetic appeal of any interior while providing the functionality and convenience desired in today's homes and commercial spaces. Swish Oak flooring not only enhances its stability but also makes it compatible with underfloor heating systems, expanding its versatility and comfort.",
+            "A grade commercial quality FSC sustainable raw materials",
+            "UV Matt lacquered / Oiled coatings for tough and longer lasting finishes",
+            "Ultra low VOCs that meet EO international standards for high indoor air quality",
+            "ABCD Genuine French Oak",
+            "Comprehensive quality control systems of 23 inspection checks for guarantee of excellence."
+          ],
+          technical: [
+            { label: "Type", value: "Engineered Oak Floor" },
+            { label: "Thickness", value: "14/3mm" },
+            { label: "Width", value: "190mm" },
+            { label: "Length", value: "1900mm" },
+            { label: "Edging", value: "Micro-Bevelled Edge" },
+            { label: "Profile", value: "Tongue & Groove" },
+            { label: "Installation Method", value: "Glue down / Floating" },
+            { label: "Pack Size", value: "2.90m2" },
+            { label: "Pack Weight", value: "25 kg" },
+            { label: "Boards Per Pack", value: "8" },
+            { label: "VOC Rating", value: "E1 <5ppm" }
+          ]
+        }
+      },
+      "Swish Oak Natura Herringbone": {
+        rangeId: "engineered-swish-oak-natura-herringbone",
+        rangeLabel: "Swish Oak Natura Herringbone",
+        selectionMode: "range_then_colour",
+        representativeProductId: "eco-swish-oak-natura-herringbone-french-natural",
+        customerLabel: "Swish Oak Natura Herringbone",
+        rangeContent: {
+          description: [
+            "French Oak has been a traditional flooring material used for centuries throughout the world. Oak flooring is desired for its longevity lasting more than 100 years.",
+            "The Swish Oak Flooring herringbone range comprises of multidirectional constructed engineered boards that provide all the benefits of being structurally robust. This assembly increases the boards' resistance to expansion and contraction from changes in humidity and temperature reducing warping or cupping.",
+            "Fabulous attractive 888mm herringbone planks create a more detailed statement floor while still adding a sophisticated, warm and inviting feel to your environment.",
+            "All Swish Oak Flooring come pre-finished thus there is no messy and timely on-site sanding or staining required."
+          ],
+          featuresIntro: "Why choose Swish Oak?",
+          features: [
+            "A grade commercial quality FSC sustainable raw materials",
+            "UV Matt lacquered / Oiled coatings for tough and longer lasting finishes",
+            "Ultra low VOCs that meet E1 international standards for high indoor air quality.",
+            "Comprehensive quality control systems of 23 inspection checks for guarantee of excellence."
+          ],
+          technical: [
+            { label: "Type", value: "Engineered Oak Herringbone Floor" },
+            { label: "Thickness", value: "14/3mm" },
+            { label: "Width", value: "148mm" },
+            { label: "Length", value: "888mm" },
+            { label: "Edging", value: "Micro-Bevelled Edge" },
+            { label: "Profile", value: "Tongue and Groove" },
+            { label: "Installation Method", value: "Glue Down" },
+            { label: "Pack Size", value: "1.0514m2" },
+            { label: "Pack Weight", value: "10kg" },
+            { label: "Boards Per Pack", value: "8" },
+            { label: "VOC Rating", value: "E1 <5ppm" }
+          ]
+        }
+      }
+    }
   };
 
   // Update pricePerM2 here when supplier price changes.
   // Do not hardcode product prices across multiple pages.
   // Product pages should read from this central data file.
+  // If a supplier page exposes range-level Description / Features / Technical tabs,
+  // store them in RANGE_CONFIG.<category>.<range>.rangeContent as structured arrays.
+  // If a supplier product page exposes extra colour gallery images, save them locally
+  // and attach them to the product with galleryImages so the product popup can show them.
   // TODO: Replace remaining sample catalogue rows with confirmed supplier ranges and imagery.
   const CATEGORY_META = {
     laminate: {
@@ -45,7 +218,7 @@
       shortDescription: "Cost-conscious flooring with straightforward installation.",
       pricePerM2: 38,
       pageUrl: "laminate-flooring-sydney.html",
-      catalogueStatus: "estimate_only"
+      catalogueStatus: "live_products"
     },
     hybrid: {
       id: "hybrid",
@@ -61,12 +234,313 @@
       shortDescription: "Premium timber look with a stronger material allowance.",
       pricePerM2: 88,
       pageUrl: "engineered-timber-flooring-sydney.html",
-      catalogueStatus: "estimate_only"
+      catalogueStatus: "live_products"
     }
   };
 
   const PRODUCTS = {
-    laminate: [],
+    laminate: [
+      {
+        id: "hrt-12mm-laminate-aspen-oak",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Aspen Oak",
+        tone: "light oak",
+        swatch: "#d7c4a2",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/aspen-oak.jpeg",
+        alt: "12mm 24hrs Water Resistant Laminate Aspen Oak board sample",
+        description: "Aspen Oak is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/aspen-oak/"
+      },
+      {
+        id: "hrt-12mm-laminate-barnwood-oak",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Barnwood Oak",
+        tone: "mid oak",
+        swatch: "#b78e67",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/barnwood-oak.jpeg",
+        alt: "12mm 24hrs Water Resistant Laminate Barnwood Oak board sample",
+        description: "Barnwood Oak is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/barnwood-brown-oak/"
+      },
+      {
+        id: "hrt-12mm-laminate-blackbutt",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Blackbutt",
+        tone: "light oak",
+        swatch: "#cfb084",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/blackbutt.jpeg",
+        alt: "12mm 24hrs Water Resistant Laminate Blackbutt board sample",
+        description: "Blackbutt is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/blackbutt-2/"
+      },
+      {
+        id: "hrt-12mm-laminate-brushbox",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Brushbox",
+        tone: "walnut",
+        swatch: "#9f7756",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/brushbox.jpeg",
+        alt: "12mm 24hrs Water Resistant Laminate Brushbox board sample",
+        description: "Brushbox is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/brushbox-2/"
+      },
+      {
+        id: "hrt-12mm-laminate-citi-oak",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Citi Oak",
+        tone: "mid oak",
+        swatch: "#b69270",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/citi-oak.jpg",
+        alt: "12mm 24hrs Water Resistant Laminate Citi Oak board sample",
+        description: "Citi Oak is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/citi-oak/"
+      },
+      {
+        id: "hrt-12mm-laminate-classical-oak",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Classical Oak",
+        tone: "natural oak",
+        swatch: "#c1a07f",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/classical-oak.jpeg",
+        alt: "12mm 24hrs Water Resistant Laminate Classical Oak board sample",
+        description: "Classical Oak is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/classical-oak/"
+      },
+      {
+        id: "hrt-12mm-laminate-coastal-blackbutt-1-5m",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Coastal Blackbutt 1.5m",
+        tone: "light oak",
+        swatch: "#d1b28d",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/coastal-blackbutt-1-5m.jpg",
+        alt: "12mm 24hrs Water Resistant Laminate Coastal Blackbutt 1.5m board sample",
+        description: "Coastal Blackbutt 1.5m is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/coastal-blackbutt-1-5m/"
+      },
+      {
+        id: "hrt-12mm-laminate-cocoa-oak-matt",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Cocoa Oak (Matt)",
+        tone: "dark oak",
+        swatch: "#7c5d44",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/cocoa-oak-matt.jpeg",
+        alt: "12mm 24hrs Water Resistant Laminate Cocoa Oak Matt board sample",
+        description: "Cocoa Oak (Matt) is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/cocoa-oak-matt/"
+      },
+      {
+        id: "hrt-12mm-laminate-cocoa-oak-semi-gloss",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Cocoa Oak (Semi-gloss)",
+        tone: "dark oak",
+        swatch: "#826148",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/cocoa-oak-semi-gloss.jpeg",
+        alt: "12mm 24hrs Water Resistant Laminate Cocoa Oak Semi-gloss board sample",
+        description: "Cocoa Oak (Semi-gloss) is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/cocoa-oak-semi-gloss/"
+      },
+      {
+        id: "hrt-12mm-laminate-copperwood-pine-matt",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Copperwood Pine (Matt)",
+        tone: "warm brown",
+        swatch: "#a56d49",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/copperwood-pine-matt.jpeg",
+        alt: "12mm 24hrs Water Resistant Laminate Copperwood Pine Matt board sample",
+        description: "Copperwood Pine (Matt) is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/copperwood-pine-matt1/"
+      },
+      {
+        id: "hrt-12mm-laminate-country-oak",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Country Oak",
+        tone: "natural oak",
+        swatch: "#be9d74",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/country-oak.jpeg",
+        alt: "12mm 24hrs Water Resistant Laminate Country Oak board sample",
+        description: "Country Oak is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/country-oak-2/"
+      },
+      {
+        id: "hrt-12mm-laminate-driftwood-ash",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Driftwood Ash",
+        tone: "grey",
+        swatch: "#aaa196",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/driftwood-ash.jpeg",
+        alt: "12mm 24hrs Water Resistant Laminate Driftwood Ash board sample",
+        description: "Driftwood Ash is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/driftwood-ash/"
+      },
+      {
+        id: "hrt-12mm-laminate-earl-grey-1-5m",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Earl Grey 1.5m",
+        tone: "grey",
+        swatch: "#9f9892",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/earl-grey-1-5m.jpg",
+        alt: "12mm 24hrs Water Resistant Laminate Earl Grey 1.5m board sample",
+        description: "Earl Grey 1.5m is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/earl-grey-1-5m/"
+      },
+      {
+        id: "hrt-12mm-laminate-frosty-pine",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Frosty Pine",
+        tone: "light oak",
+        swatch: "#d9d4c8",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/frosty-pine.jpeg",
+        alt: "12mm 24hrs Water Resistant Laminate Frosty Pine board sample",
+        description: "Frosty Pine is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/frosty-pine/"
+      },
+      {
+        id: "hrt-12mm-laminate-grey-dark-oak",
+        category: "laminate",
+        brand: "12mm 24hrs Water Resistant Laminate",
+        range: "12mm 24hrs Water Resistant Laminate",
+        colour: "Grey Dark Oak",
+        tone: "grey",
+        swatch: "#7f736b",
+        thickness: "12.0mm",
+        productType: "Laminate",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/laminate/grey-dark-oak.jpeg",
+        alt: "12mm 24hrs Water Resistant Laminate Grey Dark Oak board sample",
+        description: "Grey Dark Oak is a laminate flooring colour from the 12mm 24hrs Water Resistant Laminate range.",
+        features: ["12mm laminate board", "24-hour water-resistant surface", "AC4 wear rating", "Floating click-lock installation"],
+        suitableFor: ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"],
+        supplier: "HRT Timber Flooring",
+        supplierUrl: "https://hrttimberflooring.com.au/product/grey-dark-oak/"
+      }
+    ],
     hybrid: [
       // TODO: Enter actual sell price per m² for this product.
       {
@@ -930,7 +1404,470 @@
         supplierUrl: "https://hrttimberflooring.com.au/product-category/hybrid-flooring/9-0mm-hybrid-waterproof-flooring/"
       }
     ],
-    engineered: []
+    engineered: [
+      {
+        id: "eco-swish-oak-natura-ambient-sand",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "Ambient Sand",
+        tone: "light beige",
+        swatch: "#d8c2ac",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/ambient-sand.jpg",
+        alt: "Swish Oak Natura Ambient Sand engineered timber swatch",
+        description: "Ambient Sand is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/ambient-sand/"
+      },
+      {
+        id: "eco-swish-oak-natura-belfort-oak",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "Belfort Oak",
+        tone: "warm oak",
+        swatch: "#b18d6b",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/belfort-oak.jpg",
+        alt: "Swish Oak Natura Belfort Oak engineered timber swatch",
+        description: "Belfort Oak is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/belfort-oak/"
+      },
+      {
+        id: "eco-swish-oak-natura-canyon-oak",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "Canyon Oak",
+        tone: "mid oak",
+        swatch: "#a98059",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/canyon-oak.jpg",
+        alt: "Swish Oak Natura Canyon Oak engineered timber swatch",
+        description: "Canyon Oak is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/canyon-oak/"
+      },
+      {
+        id: "eco-swish-oak-natura-danish-white",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "Danish White",
+        tone: "light oak",
+        swatch: "#d9d2c3",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/danish-white.jpg",
+        alt: "Swish Oak Natura Danish White engineered timber swatch",
+        description: "Danish White is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/danish-white/"
+      },
+      {
+        id: "eco-swish-oak-natura-fiano-brown",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "Fiano Brown",
+        tone: "walnut",
+        swatch: "#8b6344",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/fiano-brown.jpg",
+        alt: "Swish Oak Natura Fiano Brown engineered timber swatch",
+        description: "Fiano Brown is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/fiano-brown/"
+      },
+      {
+        id: "eco-swish-oak-natura-french-carbon",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "French Carbon",
+        tone: "charcoal",
+        swatch: "#655e57",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/french-carbon.jpg",
+        alt: "Swish Oak Natura French Carbon engineered timber swatch",
+        description: "French Carbon is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/french-carbon/"
+      },
+      {
+        id: "eco-swish-oak-natura-french-ghost",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "French Ghost",
+        tone: "grey oak",
+        swatch: "#a2988f",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/french-ghost.jpg",
+        alt: "Swish Oak Natura French Ghost engineered timber swatch",
+        description: "French Ghost is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/french-ghost/"
+      },
+      {
+        id: "eco-swish-oak-natura-french-natural",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "French Natural",
+        tone: "natural oak",
+        swatch: "#c4a37e",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/french-natural.jpg",
+        alt: "Swish Oak Natura French Natural engineered timber swatch",
+        description: "French Natural is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/french-natural/"
+      },
+      {
+        id: "eco-swish-oak-natura-nordic-limed",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "Nordic Limed",
+        tone: "limed oak",
+        swatch: "#d7d0c3",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/nordic-limed.jpg",
+        alt: "Swish Oak Natura Nordic Limed engineered timber swatch",
+        description: "Nordic Limed is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/nordic-limed/"
+      },
+      {
+        id: "eco-swish-oak-natura-nordic-spring",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "Nordic Spring",
+        tone: "pale oak",
+        swatch: "#d6c9b7",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/nordic-spring.jpg",
+        alt: "Swish Oak Natura Nordic Spring engineered timber swatch",
+        description: "Nordic Spring is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/nordic-spring/"
+      },
+      {
+        id: "eco-swish-oak-natura-oak-dove-grey",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "Oak Dove Grey",
+        tone: "dove grey",
+        swatch: "#b4ada4",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/oak-dove-grey.jpg",
+        alt: "Swish Oak Natura Oak Dove Grey engineered timber swatch",
+        description: "Oak Dove Grey is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/oak-dove-grey/"
+      },
+      {
+        id: "eco-swish-oak-natura-oak-grey-harmony",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "Oak Grey Harmony",
+        tone: "grey brown",
+        swatch: "#9f8d7e",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/oak-grey-harmony.jpg",
+        alt: "Swish Oak Natura Oak Grey Harmony engineered timber swatch",
+        description: "Oak Grey Harmony is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/oak-grey-harmony/"
+      },
+      {
+        id: "eco-swish-oak-natura-odense-grey",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "Odense Grey",
+        tone: "soft grey",
+        swatch: "#b7aea4",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/odense-grey.jpg",
+        alt: "Swish Oak Natura Odense Grey engineered timber swatch",
+        description: "Odense Grey is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/odense-grey/"
+      },
+      {
+        id: "eco-swish-oak-natura-oyster-grey",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "Oyster Grey",
+        tone: "light grey",
+        swatch: "#c4bdb2",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/oyster-grey.jpg",
+        alt: "Swish Oak Natura Oyster Grey engineered timber swatch",
+        description: "Oyster Grey is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/oyster-grey/"
+      },
+      {
+        id: "eco-swish-oak-natura-raw-caramel",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "Raw Caramel",
+        tone: "caramel oak",
+        swatch: "#b4855f",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/raw-caramel.jpg",
+        alt: "Swish Oak Natura Raw Caramel engineered timber swatch",
+        description: "Raw Caramel is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/raw-caramel/"
+      },
+      {
+        id: "eco-swish-oak-natura-raw-leaf",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura",
+        colour: "Raw Leaf",
+        tone: "muted brown",
+        swatch: "#a28f73",
+        thickness: "14/3mm",
+        productType: "Engineered Timber",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura/raw-leaf.jpg",
+        alt: "Swish Oak Natura Raw Leaf engineered timber swatch",
+        description: "Raw Leaf is an engineered timber colour from the Swish Oak Natura range.",
+        features: ["Multidirectional constructed engineered board", "French oak veneer", "Pre-finished surface", "Compatible with underfloor heating"],
+        suitableFor: ["Living areas", "Bedrooms", "Apartments", "Premium renovations", "Family homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/raw-leaf/"
+      },
+      {
+        id: "eco-swish-oak-natura-herringbone-ambient-sand",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura Herringbone",
+        colour: "Ambient Sand Herringbone",
+        tone: "light beige",
+        swatch: "#d8c2ac",
+        thickness: "14/3mm",
+        productType: "Engineered Timber Herringbone",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura-herringbone/ambient-sand.jpg",
+        galleryImages: [
+          "images/products/engineered-timber/swish-oak-natura-herringbone/ambient-sand.jpg"
+        ],
+        alt: "Swish Oak Natura Herringbone Ambient Sand engineered timber swatch",
+        description: "Ambient Sand Herringbone is an engineered timber colour from the Swish Oak Natura Herringbone range.",
+        features: ["Engineered French oak herringbone construction", "Pre-finished surface", "Glue-down installation", "Premium statement pattern"],
+        suitableFor: ["Living areas", "Bedrooms", "Feature rooms", "Premium renovations", "Designer homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/ambient-sand-herringbone/"
+      },
+      {
+        id: "eco-swish-oak-natura-herringbone-danish-white",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura Herringbone",
+        colour: "Danish White Herringbone",
+        tone: "light oak",
+        swatch: "#d9d2c3",
+        thickness: "14/3mm",
+        productType: "Engineered Timber Herringbone",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura-herringbone/danish-white.jpg",
+        galleryImages: [
+          "images/products/engineered-timber/swish-oak-natura-herringbone/danish-white.jpg",
+          "images/products/engineered-timber/swish-oak-natura-herringbone/danish-white-gallery-2.jpg"
+        ],
+        alt: "Swish Oak Natura Herringbone Danish White engineered timber swatch",
+        description: "Danish White Herringbone is an engineered timber colour from the Swish Oak Natura Herringbone range.",
+        features: ["Engineered French oak herringbone construction", "Pre-finished surface", "Glue-down installation", "Premium statement pattern"],
+        suitableFor: ["Living areas", "Bedrooms", "Feature rooms", "Premium renovations", "Designer homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/danish-white-herringbone/"
+      },
+      {
+        id: "eco-swish-oak-natura-herringbone-fiano-brown",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura Herringbone",
+        colour: "Fiano Brown Herringbone",
+        tone: "walnut",
+        swatch: "#8b6344",
+        thickness: "14/3mm",
+        productType: "Engineered Timber Herringbone",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura-herringbone/fiano-brown.jpg",
+        galleryImages: [
+          "images/products/engineered-timber/swish-oak-natura-herringbone/fiano-brown.jpg"
+        ],
+        alt: "Swish Oak Natura Herringbone Fiano Brown engineered timber swatch",
+        description: "Fiano Brown Herringbone is an engineered timber colour from the Swish Oak Natura Herringbone range.",
+        features: ["Engineered French oak herringbone construction", "Pre-finished surface", "Glue-down installation", "Premium statement pattern"],
+        suitableFor: ["Living areas", "Bedrooms", "Feature rooms", "Premium renovations", "Designer homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/fiano-brown-heringbone/"
+      },
+      {
+        id: "eco-swish-oak-natura-herringbone-french-carbon",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura Herringbone",
+        colour: "French Carbon Herringbone",
+        tone: "charcoal",
+        swatch: "#655e57",
+        thickness: "14/3mm",
+        productType: "Engineered Timber Herringbone",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura-herringbone/french-carbon.jpg",
+        galleryImages: [
+          "images/products/engineered-timber/swish-oak-natura-herringbone/french-carbon.jpg",
+          "images/products/engineered-timber/swish-oak-natura-herringbone/french-carbon-gallery-2.jpg"
+        ],
+        alt: "Swish Oak Natura Herringbone French Carbon engineered timber swatch",
+        description: "French Carbon Herringbone is an engineered timber colour from the Swish Oak Natura Herringbone range.",
+        features: ["Engineered French oak herringbone construction", "Pre-finished surface", "Glue-down installation", "Premium statement pattern"],
+        suitableFor: ["Living areas", "Bedrooms", "Feature rooms", "Premium renovations", "Designer homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/french-carbon-herringbone/"
+      },
+      {
+        id: "eco-swish-oak-natura-herringbone-french-ghost",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura Herringbone",
+        colour: "French Ghost Herringbone",
+        tone: "grey oak",
+        swatch: "#a2988f",
+        thickness: "14/3mm",
+        productType: "Engineered Timber Herringbone",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura-herringbone/french-ghost.jpg",
+        galleryImages: [
+          "images/products/engineered-timber/swish-oak-natura-herringbone/french-ghost.jpg",
+          "images/products/engineered-timber/swish-oak-natura-herringbone/french-ghost-gallery-2.jpg"
+        ],
+        alt: "Swish Oak Natura Herringbone French Ghost engineered timber swatch",
+        description: "French Ghost Herringbone is an engineered timber colour from the Swish Oak Natura Herringbone range.",
+        features: ["Engineered French oak herringbone construction", "Pre-finished surface", "Glue-down installation", "Premium statement pattern"],
+        suitableFor: ["Living areas", "Bedrooms", "Feature rooms", "Premium renovations", "Designer homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/french-ghost-herringbone/"
+      },
+      {
+        id: "eco-swish-oak-natura-herringbone-french-natural",
+        category: "engineered",
+        brand: "Eco Flooring",
+        range: "Swish Oak Natura Herringbone",
+        colour: "French Natural Herringbone",
+        tone: "natural oak",
+        swatch: "#c4a37e",
+        thickness: "14/3mm",
+        productType: "Engineered Timber Herringbone",
+        pricePerM2: 0,
+        installRate: null,
+        image: "images/products/engineered-timber/swish-oak-natura-herringbone/french-natural.jpg",
+        galleryImages: [
+          "images/products/engineered-timber/swish-oak-natura-herringbone/french-natural.jpg",
+          "images/products/engineered-timber/swish-oak-natura-herringbone/french-natural-gallery-2.jpg"
+        ],
+        alt: "Swish Oak Natura Herringbone French Natural engineered timber swatch",
+        description: "French Natural Herringbone is an engineered timber colour from the Swish Oak Natura Herringbone range.",
+        features: ["Engineered French oak herringbone construction", "Pre-finished surface", "Glue-down installation", "Premium statement pattern"],
+        suitableFor: ["Living areas", "Bedrooms", "Feature rooms", "Premium renovations", "Designer homes"],
+        supplier: "Eco Flooring Systems",
+        supplierUrl: "https://ecoflooring.com.au/product/french-natural-heringbone/"
+      }
+    ]
   };
 
   const ETF_GALLERY_SLUGS_BY_RANGE = {
@@ -1061,6 +1998,11 @@
     return !!product.isDefaultRecommendation;
   }
 
+  function inferRangeContent(product, category) {
+    const configEntry = getRangeConfigEntry(product, category);
+    return configEntry && configEntry.rangeContent ? clone(configEntry.rangeContent) : null;
+  }
+
   function getCategoryMetaSource() {
     const source = window.OperonPricingSource ? window.OperonPricingSource.getTable("categoryMeta") : null;
     if (!source || typeof source !== "object" || Array.isArray(source) || !Object.keys(source).length) {
@@ -1078,13 +2020,21 @@
   }
 
   function normaliseProduct(product, fallbackCategory) {
+    const resolvedCategory = product.category || fallbackCategory || "";
+    if (resolvedCategory === "laminate" && product.range === "12mm 24hrs Water Resistant Laminate") {
+      product = Object.assign({}, product, {
+        brand: "ETF Laminate 1.2m"
+      });
+    }
+
     const imageUrl = product.imageUrl || product.image || "";
     const imageAlt = product.imageAlt || product.alt || [product.brand, product.range, product.colour, "flooring sample"].filter(Boolean).join(" ");
     const galleryImages = normaliseGalleryImages(product, PRODUCT_GALLERY_MAP[product.id] || []);
-    const category = product.category || fallbackCategory || "";
+    const category = resolvedCategory;
     const rangeId = inferRangeId(product, category);
     const rangeLabel = inferRangeLabel(product, category);
     const selectionMode = inferSelectionMode(product, category);
+    const rangeContent = inferRangeContent(product, category);
     const internalSkuLabel = product.internalSkuLabel || [product.brand, product.range, product.colour].filter(Boolean).join(" / ");
     const customerLabel = product.customerLabel || (selectionMode === "range_then_colour"
       ? [rangeLabel, product.colour].filter(Boolean).join(" — ")
@@ -1098,6 +2048,7 @@
       selectionMode: selectionMode,
       representativeProductId: inferRepresentativeProductId(product, category),
       isDefaultRecommendation: inferDefaultRecommendation(product, category),
+      rangeContent: rangeContent,
       customerLabel: customerLabel,
       internalSkuLabel: internalSkuLabel,
       thickness: "",
@@ -1119,6 +2070,7 @@
       selectionMode: selectionMode,
       representativeProductId: inferRepresentativeProductId(product, category),
       isDefaultRecommendation: inferDefaultRecommendation(product, category),
+      rangeContent: rangeContent,
       customerLabel: customerLabel,
       internalSkuLabel: internalSkuLabel,
       imageAlt: imageAlt,
@@ -1170,6 +2122,22 @@
     }));
   }
 
+  function getEntryLevelProduct(category) {
+    const products = getProductsByCategory(category).filter(function (product) {
+      return Number(product.pricePerM2 || 0) > 0;
+    });
+
+    products.sort(function (left, right) {
+      const priceDifference = Number(left.pricePerM2 || 0) - Number(right.pricePerM2 || 0);
+      if (priceDifference !== 0) {
+        return priceDifference;
+      }
+      return getProductLabel(left).localeCompare(getProductLabel(right));
+    });
+
+    return products.length ? products[0] : null;
+  }
+
   function getProductsByRangeId(rangeId) {
     return clone(listAllProducts().filter(function (product) {
       return product.rangeId === rangeId && product.active !== false;
@@ -1196,6 +2164,7 @@
           imageUrl: product.imageUrl || product.image || "",
           image: product.imageUrl || product.image || "",
           pricePerM2: product.pricePerM2,
+          rangeContent: product.rangeContent || null,
           colours: [],
           colourCount: 0
         };
@@ -1320,13 +2289,21 @@
   function getEstimateProduct(category) {
     const categoryMeta = getCategoryMetaSource();
     const meta = categoryMeta[category] || categoryMeta.hybrid || CATEGORY_META.hybrid;
+    const entryLevelProduct = getEntryLevelProduct(meta.id);
+    const pricePerM2 = entryLevelProduct && entryLevelProduct.pricePerM2 > 0
+      ? entryLevelProduct.pricePerM2
+      : meta.pricePerM2;
+    const pricingMode = entryLevelProduct && entryLevelProduct.pricePerM2 > 0
+      ? "category"
+      : "fallback";
+
     return {
       id: meta.id + "-estimate",
       category: meta.id,
       brand: "Operon Estimate",
       range: meta.label,
       colour: "Standard estimate",
-      pricePerM2: meta.pricePerM2,
+      pricePerM2: pricePerM2,
       installRate: null,
       imageUrl: "",
       image: "",
@@ -1335,6 +2312,9 @@
       suitableFor: [],
       active: true,
       isEstimate: true,
+      pricingMode: pricingMode,
+      baselineProductId: entryLevelProduct ? entryLevelProduct.id : "",
+      baselineProductLabel: entryLevelProduct ? getProductLabel(entryLevelProduct) : "",
       label: meta.label + " Estimate"
     };
   }
@@ -1595,6 +2575,7 @@
     modal.innerHTML =
       '<div class="catalogue-lightbox-backdrop" data-close-catalogue-lightbox="true"></div>' +
       '<div class="catalogue-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Product image preview">' +
+        '<button class="catalogue-lightbox-back" type="button" aria-label="Back to colour gallery" hidden>← Back</button>' +
         '<button class="catalogue-lightbox-close" type="button" aria-label="Close image preview" data-close-catalogue-lightbox="true">×</button>' +
         '<div class="catalogue-lightbox-media">' +
           '<img id="catalogueLightboxImage" class="catalogue-lightbox-image" alt="">' +
@@ -1610,6 +2591,7 @@
 
     const backdrop = modal.querySelector(".catalogue-lightbox-backdrop");
     const dialog = modal.querySelector(".catalogue-lightbox-dialog");
+    const backButton = modal.querySelector(".catalogue-lightbox-back");
     const closeButton = modal.querySelector(".catalogue-lightbox-close");
     const thumbnails = modal.querySelector("#catalogueLightboxThumbnails");
 
@@ -1624,6 +2606,18 @@
         event.preventDefault();
         event.stopPropagation();
         closeCatalogueLightbox();
+      });
+    }
+
+    if (backButton) {
+      backButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const onBack = typeof modal.__onBack === "function" ? modal.__onBack : null;
+        closeCatalogueLightbox({ preserveBackState: false });
+        if (onBack) {
+          onBack();
+        }
       });
     }
 
@@ -1655,17 +2649,26 @@
     return modal;
   }
 
-  function openCatalogueLightbox(product) {
+  function openCatalogueLightbox(product, options) {
     if (!product) {
       return;
     }
 
+    const settings = Object.assign({
+      onBack: null
+    }, options || {});
     const modal = ensureCatalogueLightbox();
+    const backButton = modal.querySelector(".catalogue-lightbox-back");
     modal.__product = product;
     modal.__galleryImages = (product.galleryImages || []).length
       ? product.galleryImages.slice()
       : normaliseGalleryImages(product, []);
     modal.__galleryIndex = 0;
+    modal.__onBack = typeof settings.onBack === "function" ? settings.onBack : null;
+
+    if (backButton) {
+      backButton.hidden = !modal.__onBack;
+    }
 
     renderCatalogueLightboxThumbnails(modal, product);
     setCatalogueLightboxSlide(modal, 0);
@@ -1731,13 +2734,26 @@
     renderCatalogueLightboxThumbnails(modal, product);
   }
 
-  function closeCatalogueLightbox() {
+  function closeCatalogueLightbox(options) {
     const modal = document.getElementById("catalogueLightbox");
     if (!modal) {
       return;
     }
 
+    const settings = Object.assign({
+      preserveBackState: false
+    }, options || {});
+    const backButton = modal.querySelector(".catalogue-lightbox-back");
     modal.hidden = true;
+    modal.__product = null;
+    modal.__galleryImages = [];
+    modal.__galleryIndex = 0;
+    if (!settings.preserveBackState) {
+      modal.__onBack = null;
+    }
+    if (backButton) {
+      backButton.hidden = true;
+    }
     document.body.classList.remove("catalogue-lightbox-open");
   }
 
@@ -1747,7 +2763,7 @@
       targetId: "",
       statusId: "",
       limit: 0,
-      quoteUrl: "index.html?from=product#quoteForm",
+      quoteUrl: "quote.html?from=product",
       successMessage: "Product selected. Continue to quote."
     }, options || {});
 
@@ -1835,7 +2851,7 @@
       titleId: "",
       textId: "",
       clearButtonId: "",
-      quoteUrl: "index.html?from=product#quoteForm"
+      quoteUrl: "quote.html?from=product"
     }, options || {});
 
     const title = document.getElementById(settings.titleId);
@@ -1854,7 +2870,7 @@
         ? "Using " + getProductLabel(storedProduct) + ". Colour can be confirmed later."
         : (storedProduct.pricePerM2 > 0
           ? getProductLabel(storedProduct) + " · " + formatProductRate(storedProduct)
-          : getProductLabel(storedProduct) + " · Price to be confirmed. Standard " + categoryMeta.label.toLowerCase() + " estimate used until review.");
+          : getProductLabel(storedProduct) + " · Product price needs review before final confirmation.");
       clearButton.textContent = "Use " + categoryMeta.label.toLowerCase() + " estimate instead";
       clearButton.onclick = function () {
         clearSelectedProduct();
@@ -1877,7 +2893,7 @@
     }
 
     title.textContent = "No specific " + categoryMeta.label.toLowerCase() + " selected yet";
-    text.textContent = "Choose a product to load it into the quote. If the exact product price is still pending, the quote will use the standard " + categoryMeta.label.toLowerCase() + " estimate until review.";
+    text.textContent = "Choose a product to load selected product pricing into the quote, or continue with entry-level " + categoryMeta.label.toLowerCase() + " product pricing.";
     clearButton.textContent = "Continue with " + categoryMeta.label.toLowerCase() + " estimate";
     clearButton.onclick = function () {
       clearSelectedProduct();
@@ -1902,6 +2918,7 @@
     getAllProducts: getAllProducts,
     getCategoryMeta: getCategoryMeta,
     getProductsByCategory: getProductsByCategory,
+    getEntryLevelProduct: getEntryLevelProduct,
     getProductsByRangeId: getProductsByRangeId,
     getRangesByCategory: getRangesByCategory,
     getColoursByRange: getColoursByRange,

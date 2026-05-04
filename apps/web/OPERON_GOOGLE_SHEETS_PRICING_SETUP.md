@@ -219,6 +219,27 @@ The website is static on Netlify, so the sheet must be publicly readable in publ
 
 Recommended approach:
 
+## Product Upload Policy
+
+For supplier catalogue uploads, keep commercial pricing and catalogue media separate from richer range information.
+
+- product/range IDs, categories, colours, thickness, pricing, and supplier URLs stay in the structured product data source
+- if a supplier range page or product page exposes shared `Description`, `Features`, and `Technical` content for the whole range, store that as range-level metadata in `apps/web/products.js`
+- use `RANGE_CONFIG.<category>.<range>.rangeContent` for this shared supplier information instead of duplicating it across every colour
+- if a supplier colour page exposes second or third gallery images, download them locally and attach them to that product via `galleryImages` in `apps/web/products.js`
+- the first local image should stay as the main catalogue image and any extra local images should be saved as additional gallery images for the lightbox / popup
+- customer-facing catalogue UI should show this content from the range thumbnail or range information popup, not inside every colour-selection drawer
+- all range cards on `products.html` should use the same colour-preview pattern:
+  - show `View X colours` on the card
+  - open a compact popup preview for colour browsing
+  - do not use long inline colour drawers on the catalogue page
+- if a customer opens a single colour image from the range preview popup, the image lightbox should include a back button that returns to the full `View X colours` popup
+- range selection and colour browsing should stay separate:
+  - `Select this range` and `Continue to quote` save the range
+  - colour preview popup is for browsing only
+  - if a category requires final colour choice later, enforce that in the quote flow rather than the catalogue card
+- keep this content informational only; do not mix it into pricing logic, quote formulas, or hidden lead field behavior
+
 1. In Google Sheets, keep the file owned by the business account
 2. Publish the tabs needed for the website
 3. Use the spreadsheet ID in `pricingSourceConfig.js`

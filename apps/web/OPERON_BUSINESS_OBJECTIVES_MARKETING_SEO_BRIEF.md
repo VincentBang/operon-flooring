@@ -41,9 +41,9 @@ Current operating priorities are:
 
 ## Approved Customer-Facing Positioning
 
-Primary headline:
+Primary homepage headline:
 
-`Get a Flooring Quote in Minutes`
+`Professional Flooring Installation & Quotes in Sydney`
 
 Supporting message:
 
@@ -52,6 +52,18 @@ Supporting message:
 Trust message:
 
 `Final quote confirmed before work starts.`
+
+Brand positioning:
+
+Operon Flooring is not only a quick quote tool. The site must also communicate clear flooring estimates, professional installation, quality workmanship, experienced installers, reliable Sydney service, clean product selection, correct scope, quote transparency, and final site confirmation before work.
+
+Quote validation positioning:
+
+Any quote-validation flow must be framed as quote clarity or scope review, not price comparison.
+
+Homepage direction:
+
+Homepage should stay clean, visual, premium, and not overloaded with tool or form language.
 
 ## Customer Experience Principles
 
@@ -73,8 +85,9 @@ Avoid:
 
 ## Site Role Definitions
 
-- Homepage: conversion page
-- Quote form: pricing engine and lead capture
+- Homepage: clean premium conversion and trust page with concise SEO support, not the full quote wizard
+- Quote page: dedicated `quote.html` pricing engine and lead capture
+- All quote CTAs: navigate to `quote.html`
 - Floorplan page: measurement assistant only
 - Product pages: SEO plus product selection
 - Suburb pages: local SEO support and quote intent capture

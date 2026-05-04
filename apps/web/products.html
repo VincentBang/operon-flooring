@@ -33,7 +33,7 @@
       </a>
       <nav class="nav-links">
         <a href="index.html#top">Home</a>
-        <a href="index.html#quoteForm">Quote</a>
+        <a href="quote.html">Quote</a>
         <a href="products.html">Flooring Products</a>
         <a href="floorplan.html">Floor Plan</a>
         <a href="blog/index.html">Guides</a>
@@ -43,7 +43,7 @@
         <span></span>
         <span></span>
       </button>
-      <a class="button" href="index.html#quoteForm">Start quote</a>
+      <a class="button" href="quote.html">Start quote</a>
     </div>
   </header>
 
@@ -55,29 +55,29 @@
             <div class="hero-copy">
               <span class="eyebrow">Product Selection</span>
               <h1>Flooring Products</h1>
-              <p>Choose the flooring type first, save the floor you want, and continue into the quote flow with that selection already attached.</p>
+              <p>Choose the flooring type, save the range that suits the project, and move straight into the quote flow with that selection already attached.</p>
               <div class="hero-actions" style="margin-top: 24px;">
-                <a class="button" href="index.html?from=product#quoteForm">Start Quote</a>
+                <a class="button" href="quote.html?from=product">Start Quote</a>
                 <a class="button-secondary" href="floorplan.html">Upload Floor Plan</a>
               </div>
               <div class="pill-row" style="margin-top: 24px;">
-                <span class="pill">Select a floor first</span>
-                <span class="pill">Carry it into the quote</span>
-                <span class="pill">Keep the process simple</span>
+                <span class="pill">1 Choose category</span>
+                <span class="pill">2 Select range</span>
+                <span class="pill">3 Continue to quote</span>
               </div>
             </div>
             <div class="stat-stack">
               <div class="stat-card">
-                <strong>How it works</strong>
-                Pick a flooring type, save a product, then continue into the quote with that selection attached.
+                <strong>Fastest path into a quote</strong>
+                Pick a flooring type, save the right range, then continue with that choice already carried into the quote.
               </div>
               <div class="stat-card">
-                <strong>What stays centralised</strong>
-                Product details, selected product storage, and the quote handoff all run from the same product data system.
+                <strong>Built to stay clear</strong>
+                Product selection happens here. Measured area, access, and extras stay inside the quote flow where they belong.
               </div>
               <div class="stat-card">
                 <strong>Best use</strong>
-                Use this page when you already know the flooring type and want the fastest path into a quote-ready product choice.
+                Use this page when you already know the flooring category and want the cleanest handoff into a structured estimate.
               </div>
             </div>
           </div>
@@ -126,9 +126,9 @@
 
           <div class="catalogue-selection-banner" id="catalogueSelectionBanner">
             <strong id="catalogueSelectionTitle">No flooring product selected yet</strong>
-            <p id="catalogueSelectionText">Choose a flooring product and continue to the quote tool, or return to the category guides first.</p>
+            <p id="catalogueSelectionText">Choose a flooring product here, then continue into the quote with that selection already saved.</p>
             <div class="catalogue-selection-actions">
-              <a class="button" id="catalogueContinueQuote" href="index.html?from=product#quoteForm">Continue to quote</a>
+              <a class="button" id="catalogueContinueQuote" href="quote.html?from=product">Continue to quote</a>
               <button class="button-secondary" id="catalogueClearSelection" type="button">Clear selected product</button>
             </div>
             <div class="catalogue-context-links" id="catalogueContextLinks"></div>
@@ -139,7 +139,7 @@
               <h2 style="margin: 0;">Available flooring products</h2>
               <p id="catalogueResultsSummary">Loading catalogue…</p>
             </div>
-            <a class="button-quiet" href="index.html?from=product#quoteForm">Start with the quote wizard</a>
+            <a class="button-quiet" href="quote.html?from=product">Skip to quote</a>
           </div>
 
           <div class="catalogue-grid" id="catalogueProductsGrid"></div>
@@ -151,8 +151,8 @@
     <section class="section">
       <div class="shell">
         <article class="section-card">
-          <h2>Choose the product here, price the project in the quote</h2>
-          <p>This catalogue is built to help you decide quickly. Save a product selection here, then continue into the quote wizard with that floor already attached. Final product confirmation still happens during review if price, stock or installation detail needs checking.</p>
+          <h2>Choose the product here, structure the estimate in the quote</h2>
+          <p>This catalogue is built to keep the decision simple. Save a product selection here, then continue into the quote wizard with that floor already attached. Final product confirmation still happens during review if price, stock, colour, or installation detail still needs checking.</p>
         </article>
       </div>
     </section>
@@ -187,7 +187,7 @@
       <div class="footer-col">
         <h4>Actions</h4>
         <ul>
-          <li><a href="index.html#quoteForm">Start Quote</a></li>
+          <li><a href="quote.html">Start Quote</a></li>
           <li><a href="floorplan.html">Upload Floor Plan</a></li>
           <li><a href="blog/index.html">Guides</a></li>
         </ul>
@@ -338,7 +338,7 @@
         const meta = getCategoryMetaList().find(function (item) {
           return item.id === category;
         });
-        return meta ? meta.pageUrl : "index.html#quoteForm";
+        return meta ? meta.pageUrl : "quote.html";
       }
 
       function buildRangeDisplayItem(range) {
@@ -363,8 +363,11 @@
           swatch: representativeProduct ? representativeProduct.swatch : "#d1d5db",
           alt: representativeProduct ? representativeProduct.alt : (range.rangeLabel + " product image"),
           pricePerM2: representativeProduct ? representativeProduct.pricePerM2 : 0,
+          rangeContent: range.rangeContent || null,
           statusLabel: representativeProduct ? PRODUCT_LIBRARY.getProductStatusLabel(representativeProduct) : "",
-          cardNote: "Colour can be confirmed later."
+          cardNote: range.selectionMode === "range_then_colour"
+            ? "Choose colour in the quote flow."
+            : "Colour can be confirmed later."
         };
       }
 
@@ -374,14 +377,17 @@
           return [];
         }
 
-        const usesRangeOnlySelection = products[0].selectionMode === "range_only";
-        if (!usesRangeOnlySelection) {
+        const ranges = PRODUCT_SELECTION.getRangesByCategory(category);
+        const shouldGroupByRange = ranges.length
+          && (products[0].selectionMode === "range_only" || ranges.length < products.length);
+
+        if (!shouldGroupByRange) {
           return products.map(function (product) {
             return Object.assign({ type: "product" }, product);
           });
         }
 
-        return PRODUCT_SELECTION.getRangesByCategory(category).map(buildRangeDisplayItem);
+        return ranges.map(buildRangeDisplayItem);
       }
 
       function getCatalogueProducts() {
@@ -426,7 +432,7 @@
       }
 
       function getContinueQuoteUrl() {
-        return "index.html?from=product&category=" + encodeURIComponent(getPreferredQuoteCategory()) + "#quoteForm";
+        return "quote.html?from=product&category=" + encodeURIComponent(getPreferredQuoteCategory());
       }
 
       function syncSelectionStateFromStorage() {
@@ -455,6 +461,26 @@
         return Array.from(new Set(values)).sort();
       }
 
+      function distinctColourValues(products) {
+        const values = [];
+        products.forEach(function (product) {
+          if (Array.isArray(product.colours) && product.colours.length) {
+            product.colours.forEach(function (colour) {
+              if (colour) {
+                values.push(colour);
+              }
+            });
+            return;
+          }
+
+          if (product.colour && !/^\d+\s+colou?rs available$/i.test(product.colour)) {
+            values.push(product.colour);
+          }
+        });
+
+        return Array.from(new Set(values)).sort();
+      }
+
       function matchesFilters(product) {
         if (state.filters.brand && product.brand !== state.filters.brand) {
           return false;
@@ -475,14 +501,18 @@
 
       function buildImageMarkup(product) {
         const altText = product.alt || (PRODUCT_LIBRARY.getProductLabel(product) + " colour sample");
-        const imageFrameTag = product.type === "range" ? "div" : "button";
-        const imageFrameAttrs = product.type === "range"
-          ? ' aria-label="' + escapeHtml(altText) + '"'
-          : ' type="button" data-open-lightbox="' + escapeHtml(product.id) + '" aria-label="Open larger image for ' + escapeHtml(altText) + '"';
+        const isRangeInfoCard = product.type === "range" && !!product.rangeContent;
+        const imageFrameTag = "button";
+        const imageFrameAttrs = isRangeInfoCard
+          ? ' type="button" data-open-range-info="' + escapeHtml(product.rangeId) + '" aria-label="Open product information for ' + escapeHtml(product.rangeLabel || product.range || "this range") + '"'
+          : (product.type === "range"
+            ? ' type="button" aria-label="' + escapeHtml(altText) + '"'
+            : ' type="button" data-open-lightbox="' + escapeHtml(product.id) + '" aria-label="Open larger image for ' + escapeHtml(altText) + '"');
         if (product.image) {
           return (
-            '<' + imageFrameTag + ' class="catalogue-image-frame' + (product.type === "range" ? " is-static" : "") + '"' + imageFrameAttrs + ">" +
+            '<' + imageFrameTag + ' class="catalogue-image-frame' + (product.type === "range" ? " is-static" : "") + (isRangeInfoCard ? " has-range-info" : "") + '"' + imageFrameAttrs + ">" +
               '<img class="catalogue-image" src="' + escapeHtml(product.image) + '" alt="' + escapeHtml(altText) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">' +
+              (isRangeInfoCard ? '<span class="catalogue-range-info-hint">Click to see product information</span>' : "") +
               '<div class="catalogue-swatch-fallback" aria-hidden="true">' +
                 '<div class="catalogue-swatch" style="background:' + escapeHtml(product.swatch || "#d1d5db") + ';"></div>' +
                 '<span>' + escapeHtml(product.colour) + "</span>" +
@@ -492,7 +522,8 @@
         }
 
         return (
-          '<' + imageFrameTag + ' class="catalogue-image-frame is-fallback' + (product.type === "range" ? " is-static" : "") + '"' + imageFrameAttrs + ">" +
+          '<' + imageFrameTag + ' class="catalogue-image-frame is-fallback' + (product.type === "range" ? " is-static" : "") + (isRangeInfoCard ? " has-range-info" : "") + '"' + imageFrameAttrs + ">" +
+            (isRangeInfoCard ? '<span class="catalogue-range-info-hint">Click to see product information</span>' : "") +
             '<div class="catalogue-swatch-fallback" aria-hidden="true">' +
               '<div class="catalogue-swatch" style="background:' + escapeHtml(product.swatch || "#d1d5db") + ';"></div>' +
               '<span>' + escapeHtml(product.colour) + "</span>" +
@@ -550,9 +581,7 @@
         const available = getCatalogueProducts();
         const config = [
           { key: "brand", label: "All brands", values: distinctValues(available, "brand") },
-          { key: "colour", label: "All colours", values: distinctValues(available, "colours").concat(distinctValues(available, "colour")).filter(function (value, index, array) {
-            return array.indexOf(value) === index;
-          }) },
+          { key: "colour", label: "All colours", values: distinctColourValues(available) },
           { key: "thickness", label: "All thicknesses", values: distinctValues(available, "thickness") }
         ];
 
@@ -569,12 +598,18 @@
 
       function renderSelectionBanner() {
         syncSelectionStateFromStorage();
+        const storedSelectionState = PRODUCT_LIBRARY.getStoredSelectionState() || {};
         const storedProduct = PRODUCT_LIBRARY.getStoredProduct();
         const activeProduct = storedProduct && PRODUCT_LIBRARY.getProductById(storedProduct.id) ? PRODUCT_LIBRARY.getProductById(storedProduct.id) : null;
+        const activeRange = !activeProduct && storedSelectionState.selectedRangeId
+          ? getCatalogueProducts().find(function (item) {
+              return item.type === "range" && item.rangeId === storedSelectionState.selectedRangeId;
+            })
+          : null;
         selectionBanner.classList.toggle("is-selected", !!activeProduct);
         continueQuoteLink.setAttribute("href", getContinueQuoteUrl());
 
-        if (!activeProduct) {
+        if (!activeProduct && !activeRange) {
           selectionTitle.textContent = "No flooring product selected yet";
           selectionText.textContent = state.category !== "all"
             ? "You can keep browsing this category, or continue straight into the quote using the " + getCategoryLabel(getPreferredQuoteCategory()).toLowerCase() + " estimate."
@@ -583,6 +618,18 @@
             return '<a class="button-quiet" href="' + escapeHtml(item.pageUrl) + '">View ' + escapeHtml(item.label.toLowerCase()) + " guide</a>";
           }).join("");
           continueQuoteLink.textContent = state.category !== "all" ? "Start " + getCategoryLabel(getPreferredQuoteCategory()).toLowerCase() + " quote" : "Continue to quote";
+          return;
+        }
+
+        if (activeRange) {
+          selectionBanner.classList.add("is-selected");
+          selectionTitle.textContent = "Selected range: " + (activeRange.rangeLabel || activeRange.range);
+          selectionText.textContent = activeRange.selectionMode === "range_then_colour"
+            ? getCategoryLabel(activeRange.category) + " · Colour will be chosen in the quote flow."
+            : getCategoryLabel(activeRange.category) + " · Colour can be confirmed later.";
+          continueQuoteLink.textContent = "Continue to quote";
+          contextLinks.innerHTML =
+            '<a class="button-quiet" href="' + escapeHtml(getCategoryPageUrl(activeRange.category)) + '">Back to ' + escapeHtml(getCategoryLabel(activeRange.category).toLowerCase()) + " guide</a>";
           return;
         }
 
@@ -601,23 +648,27 @@
         const categoryLabel = getCategoryLabel(product.category);
         const specLine = [categoryLabel, product.productType, product.thickness].filter(Boolean).join(" · ");
         const leadFeature = product.feature || (product.features || [])[0] || "";
-        const isSelected = product.selectionMode === "range_only"
+        const usesRangeSelection = product.type === "range" || product.selectionMode === "range_only";
+        const isSelected = usesRangeSelection
           ? state.selectedRangeId === product.rangeId
           : state.selectedProductId === product.id;
         const selectedClass = isSelected ? " selected" : "";
-        const selectId = product.selectionMode === "range_only" ? product.rangeId : product.id;
-        const quoteId = product.selectionMode === "range_only" ? product.rangeId : product.id;
-        const actionLabel = product.selectionMode === "range_only" ? "Select this range" : "Select this floor";
+        const selectId = usesRangeSelection ? product.rangeId : product.id;
+        const quoteId = usesRangeSelection ? product.rangeId : product.id;
+        const actionLabel = usesRangeSelection ? "Select this range" : "Select this floor";
         const rangeProducts = product.type === "range" ? PRODUCT_LIBRARY.getProductsByRangeId(product.rangeId) : [];
-        const hasColourDrawer = rangeProducts.length > 0;
-        const drawerIsOpen = hasColourDrawer && state.expandedRangeId === product.rangeId;
+        const hasRangeColourPreview = product.type === "range" && rangeProducts.length > 0;
         const priceLine = product.pricePerM2 > 0
           ? '<span class="catalogue-card-price">' + escapeHtml(PRODUCT_LIBRARY.formatProductRate(product)) + "</span>"
           : "";
-        const colourDrawerButton = hasColourDrawer
-          ? '<button class="button-quiet catalogue-colour-toggle" type="button" data-toggle-range-colours="' + escapeHtml(product.rangeId) + '" aria-expanded="' + (drawerIsOpen ? "true" : "false") + '">' + (drawerIsOpen ? "Hide colours" : "View " + rangeProducts.length + " colours") + "</button>"
+        const colourDrawerButton = hasRangeColourPreview
+          ? '<button class="button-quiet catalogue-colour-toggle" type="button" data-open-range-colours-preview="' + escapeHtml(product.rangeId) + '" aria-label="View ' + escapeHtml(String(rangeProducts.length)) + ' colours in ' + escapeHtml(product.rangeLabel || product.range || "this range") + '">View ' + rangeProducts.length + " colours</button>"
           : "";
-        const colourDrawer = drawerIsOpen ? buildRangeColourDrawer(product, rangeProducts) : "";
+        const cardActions = '<div class="catalogue-card-actions">' +
+            colourDrawerButton +
+            '<button class="button-secondary" type="button" data-select-floor="' + escapeHtml(selectId) + '">' + (isSelected ? "Selected" : actionLabel) + "</button>" +
+            '<button class="button" type="button" data-get-quote="' + escapeHtml(quoteId) + '">Continue to quote</button>' +
+          "</div>";
 
         return (
           '<article class="catalogue-card' + selectedClass + '" data-product-card="' + escapeHtml(product.id || product.rangeId) + '">' +
@@ -634,40 +685,8 @@
               "</div>" +
             "</div>" +
             (leadFeature ? '<div class="catalogue-single-feature">' + escapeHtml(leadFeature) + "</div>" : "") +
-            colourDrawer +
-            '<div class="catalogue-card-actions">' +
-              colourDrawerButton +
-              '<button class="button-secondary" type="button" data-select-floor="' + escapeHtml(selectId) + '">' + (isSelected ? "Selected" : actionLabel) + "</button>" +
-              '<button class="button" type="button" data-get-quote="' + escapeHtml(quoteId) + '">Continue to quote</button>' +
-            "</div>" +
+            cardActions +
           "</article>"
-        );
-      }
-
-      function buildRangeColourDrawer(rangeItem, rangeProducts) {
-        return (
-          '<div class="catalogue-colour-drawer" id="range-colours-' + escapeHtml(rangeItem.rangeId) + '">' +
-            '<div class="catalogue-colour-drawer-head">' +
-              '<strong>Available colours</strong>' +
-              '<span>Colour can be confirmed later.</span>' +
-            "</div>" +
-            '<div class="catalogue-colour-grid">' +
-              rangeProducts.map(function (colourProduct) {
-                const altText = colourProduct.alt || (PRODUCT_LIBRARY.getProductLabel(colourProduct) + " colour sample");
-                const imageMarkup = colourProduct.image
-                  ? '<img src="' + escapeHtml(colourProduct.image) + '" alt="' + escapeHtml(altText) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">'
-                  : "";
-                return (
-                  '<button class="catalogue-colour-option" type="button" data-open-lightbox="' + escapeHtml(colourProduct.id) + '">' +
-                    '<span class="catalogue-colour-thumb" style="--swatch:' + escapeHtml(colourProduct.swatch || "#d1d5db") + ';">' +
-                      imageMarkup +
-                    "</span>" +
-                    '<span>' + escapeHtml(colourProduct.colour || "Colour option") + "</span>" +
-                  "</button>"
-                );
-              }).join("") +
-            "</div>" +
-          "</div>"
         );
       }
 
@@ -771,7 +790,7 @@
         renderAll();
 
         if (settings.redirect) {
-          window.location.href = "index.html?from=product&category=" + encodeURIComponent(resolvedSelection.category || rangeCategory) + "#quoteForm";
+          window.location.href = "quote.html?from=product&category=" + encodeURIComponent(resolvedSelection.category || rangeCategory);
         }
       }
 
@@ -840,23 +859,35 @@
           return;
         }
 
+        const rangeInfoTrigger = event.target.closest("[data-open-range-info]");
+        if (rangeInfoTrigger) {
+          const rangeId = rangeInfoTrigger.getAttribute("data-open-range-info");
+          const rangeItem = getCatalogueProducts().find(function (item) {
+            return item.type === "range" && item.rangeId === rangeId;
+          });
+          if (rangeItem) {
+            openRangeInfoModal(rangeItem);
+          }
+          return;
+        }
+
+        const rangeColourPreviewTrigger = event.target.closest("[data-open-range-colours-preview]");
+        if (rangeColourPreviewTrigger) {
+          const rangeId = rangeColourPreviewTrigger.getAttribute("data-open-range-colours-preview");
+          const rangeItem = getCatalogueProducts().find(function (item) {
+            return item.type === "range" && item.rangeId === rangeId;
+          });
+          if (rangeItem) {
+            openRangeColourPreviewModal(rangeItem);
+          }
+          return;
+        }
+
         const quoteButton = event.target.closest("[data-get-quote]");
         if (quoteButton) {
           selectProduct(quoteButton.getAttribute("data-get-quote"), {
             redirect: true,
             source: "products_page_quote_button"
-          });
-          return;
-        }
-
-        const colourToggle = event.target.closest("[data-toggle-range-colours]");
-        if (colourToggle) {
-          const nextRangeId = colourToggle.getAttribute("data-toggle-range-colours");
-          state.expandedRangeId = state.expandedRangeId === nextRangeId ? "" : nextRangeId;
-          renderProducts();
-          track("product_colour_drawer_toggle", {
-            range_id: nextRangeId,
-            expanded: state.expandedRangeId === nextRangeId
           });
           return;
         }
@@ -889,6 +920,231 @@
         trackCatalogueView();
       });
 
+      function buildRangeInfoModalBody(content, activeTab) {
+        if (activeTab === "description") {
+          return (content.description || []).slice(0, 3).map(function (paragraph) {
+            return "<p>" + escapeHtml(paragraph) + "</p>";
+          }).join("");
+        }
+
+        if (activeTab === "features") {
+          return (
+            (content.featuresIntro ? '<p class="catalogue-range-panel-intro">' + escapeHtml(content.featuresIntro) + "</p>" : "") +
+            '<ul class="catalogue-range-list">' +
+              (content.features || []).slice(0, 5).map(function (feature) {
+                return "<li>" + escapeHtml(feature) + "</li>";
+              }).join("") +
+            "</ul>"
+          );
+        }
+
+        return (
+          '<div class="catalogue-range-specs">' +
+            (content.technical || []).filter(function (item) {
+              return item.label !== "Product Code";
+            }).slice(0, 8).map(function (item) {
+              return '<div class="catalogue-range-spec"><span>' + escapeHtml(item.label) + "</span><strong>" + escapeHtml(item.value) + "</strong></div>";
+            }).join("") +
+          "</div>"
+        );
+      }
+
+      function ensureRangeInfoModal() {
+        let modal = document.getElementById("catalogueRangeInfoModal");
+        if (modal) {
+          return modal;
+        }
+
+        modal = document.createElement("div");
+        modal.className = "catalogue-range-modal";
+        modal.id = "catalogueRangeInfoModal";
+        modal.hidden = true;
+        modal.innerHTML =
+          '<div class="catalogue-range-modal-backdrop" data-close-range-info="true"></div>' +
+          '<div class="catalogue-range-modal-dialog" role="dialog" aria-modal="true" aria-label="Range product information">' +
+            '<button class="catalogue-range-modal-close" type="button" aria-label="Close product information" data-close-range-info="true">×</button>' +
+            '<div class="catalogue-range-modal-head">' +
+              '<strong data-range-info-title></strong>' +
+              '<span data-range-info-subtitle></span>' +
+            "</div>" +
+            '<div class="catalogue-range-modal-tabs" data-range-info-tabs></div>' +
+            '<div class="catalogue-range-modal-body" data-range-info-body></div>' +
+          "</div>";
+        document.body.appendChild(modal);
+
+        modal.addEventListener("click", function (event) {
+          if (event.target.closest("[data-close-range-info]")) {
+            closeRangeInfoModal();
+            return;
+          }
+
+          const tabButton = event.target.closest("[data-range-modal-tab]");
+          if (!tabButton) {
+            return;
+          }
+
+          const rangeId = modal.dataset.rangeId || "";
+          if (!state.rangeInfoTabs) {
+            state.rangeInfoTabs = {};
+          }
+          state.rangeInfoTabs[rangeId] = tabButton.getAttribute("data-range-modal-tab");
+          const rangeItem = getCatalogueProducts().find(function (item) {
+            return item.type === "range" && item.rangeId === rangeId;
+          });
+          if (rangeItem) {
+            openRangeInfoModal(rangeItem);
+          }
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && !modal.hidden) {
+            closeRangeInfoModal();
+          }
+        });
+
+        return modal;
+      }
+
+      function buildRangeColourPreviewBody(rangeProducts) {
+        return '<div class="catalogue-range-preview-grid">' +
+          rangeProducts.map(function (colourProduct) {
+            const altText = colourProduct.alt || (PRODUCT_LIBRARY.getProductLabel(colourProduct) + " colour sample");
+            const imageMarkup = colourProduct.image
+              ? '<img src="' + escapeHtml(colourProduct.image) + '" alt="' + escapeHtml(altText) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">'
+              : "";
+            return (
+              '<button class="catalogue-colour-option catalogue-colour-option-preview" type="button" data-open-lightbox="' + escapeHtml(colourProduct.id) + '">' +
+                '<span class="catalogue-colour-thumb" style="--swatch:' + escapeHtml(colourProduct.swatch || "#d1d5db") + ';">' +
+                  imageMarkup +
+                "</span>" +
+                '<span>' + escapeHtml(colourProduct.colour || "Colour option") + "</span>" +
+              "</button>"
+            );
+          }).join("") +
+        "</div>";
+      }
+
+      function ensureRangeColourPreviewModal() {
+        let modal = document.getElementById("catalogueRangeColourPreviewModal");
+        if (modal) {
+          return modal;
+        }
+
+        modal = document.createElement("div");
+        modal.className = "catalogue-range-modal";
+        modal.id = "catalogueRangeColourPreviewModal";
+        modal.hidden = true;
+        modal.innerHTML =
+          '<div class="catalogue-range-modal-backdrop" data-close-range-colours="true"></div>' +
+          '<div class="catalogue-range-modal-dialog" role="dialog" aria-modal="true" aria-label="Range colour preview">' +
+            '<button class="catalogue-range-modal-close" type="button" aria-label="Close colour preview" data-close-range-colours="true">×</button>' +
+            '<div class="catalogue-range-modal-head">' +
+              '<strong data-range-colour-preview-title></strong>' +
+              '<span data-range-colour-preview-subtitle></span>' +
+            "</div>" +
+            '<div class="catalogue-range-modal-body catalogue-range-modal-body-colours" data-range-colour-preview-body></div>' +
+          "</div>";
+        document.body.appendChild(modal);
+
+        modal.addEventListener("click", function (event) {
+          if (event.target.closest("[data-close-range-colours]")) {
+            closeRangeColourPreviewModal();
+            return;
+          }
+
+          const lightboxButton = event.target.closest("[data-open-lightbox]");
+          if (!lightboxButton) {
+            return;
+          }
+
+          const product = PRODUCT_LIBRARY.getProductById(lightboxButton.getAttribute("data-open-lightbox"));
+          if (product) {
+            const rangeItem = rangeItemFromModal(modal);
+            closeRangeColourPreviewModal();
+            PRODUCT_LIBRARY.openCatalogueLightbox(product, {
+              onBack: function () {
+                if (rangeItem) {
+                  openRangeColourPreviewModal(rangeItem);
+                }
+              }
+            });
+          }
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && !modal.hidden) {
+            closeRangeColourPreviewModal();
+          }
+        });
+
+        return modal;
+      }
+
+      function rangeItemFromModal(modal) {
+        const rangeId = modal && modal.dataset.rangeId ? modal.dataset.rangeId : "";
+        return getCatalogueProducts().find(function (item) {
+          return item.type === "range" && item.rangeId === rangeId;
+        }) || null;
+      }
+
+      function openRangeInfoModal(rangeItem) {
+        const content = rangeItem.rangeContent;
+        if (!content) {
+          return;
+        }
+
+        if (!state.rangeInfoTabs) {
+          state.rangeInfoTabs = {};
+        }
+        const activeTab = state.rangeInfoTabs[rangeItem.rangeId] || "description";
+        const modal = ensureRangeInfoModal();
+        modal.dataset.rangeId = rangeItem.rangeId;
+        modal.querySelector("[data-range-info-title]").textContent = rangeItem.rangeLabel || rangeItem.range || "Product information";
+        modal.querySelector("[data-range-info-subtitle]").textContent = rangeItem.brand + " · " + (rangeItem.colour || (rangeItem.colourCount + " colours available"));
+        modal.querySelector("[data-range-info-tabs]").innerHTML = ["description", "features", "technical"].map(function (key) {
+          const isActive = activeTab === key;
+          const label = key.charAt(0).toUpperCase() + key.slice(1);
+          return '<button class="catalogue-range-modal-tab' + (isActive ? " is-active" : "") + '" type="button" data-range-modal-tab="' + key + '" aria-selected="' + (isActive ? "true" : "false") + '">' + label + "</button>";
+        }).join("");
+        modal.querySelector("[data-range-info-body]").innerHTML = buildRangeInfoModalBody(content, activeTab);
+        modal.hidden = false;
+        document.body.classList.add("catalogue-lightbox-open");
+      }
+
+      function openRangeColourPreviewModal(rangeItem) {
+        const rangeProducts = PRODUCT_LIBRARY.getProductsByRangeId(rangeItem.rangeId);
+        if (!rangeProducts.length) {
+          return;
+        }
+
+        const modal = ensureRangeColourPreviewModal();
+        modal.dataset.rangeId = rangeItem.rangeId;
+        modal.querySelector("[data-range-colour-preview-title]").textContent = rangeItem.rangeLabel || rangeItem.range || "Available colours";
+        modal.querySelector("[data-range-colour-preview-subtitle]").textContent = rangeProducts.length + " colours available · Choose the range here, then confirm the final colour in the quote flow.";
+        modal.querySelector("[data-range-colour-preview-body]").innerHTML = buildRangeColourPreviewBody(rangeProducts);
+        modal.hidden = false;
+        document.body.classList.add("catalogue-lightbox-open");
+      }
+
+      function closeRangeInfoModal() {
+        const modal = document.getElementById("catalogueRangeInfoModal");
+        if (!modal) {
+          return;
+        }
+        modal.hidden = true;
+        document.body.classList.remove("catalogue-lightbox-open");
+      }
+
+      function closeRangeColourPreviewModal() {
+        const modal = document.getElementById("catalogueRangeColourPreviewModal");
+        if (!modal) {
+          return;
+        }
+        modal.hidden = true;
+        modal.dataset.rangeId = "";
+        document.body.classList.remove("catalogue-lightbox-open");
+      }
+
       window.addEventListener("operon-pricing-source-ready", function () {
         syncSelectionStateFromStorage();
         renderAll();
@@ -906,5 +1162,12 @@
     }());
   </script>
   <script src="mobile-nav.js"></script>
+  <script src="chatbot/chatbotBootstrap.js"></script>
+  <script>
+    window.OperonChatbotBootstrap.mount({
+      pageKey: "products",
+      openOnInit: false
+    });
+  </script>
 </body>
 </html>

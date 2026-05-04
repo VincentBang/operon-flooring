@@ -19,7 +19,8 @@
         skirtingScotia: "skirting_scotia",
         removalRates: "removal_rates",
         locationZones: "location_zones",
-        pricingRules: "pricing_rules"
+        pricingRules: "pricing_rules",
+        stairRates: "stair_rates"
       }
     }
   };

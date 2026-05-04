@@ -86,7 +86,7 @@
       </a>
       <nav class="nav-links">
         <a href="index.html#top">Home</a>
-        <a href="index.html?from=product&category=laminate#quoteForm">Quote</a>
+        <a href="quote.html?from=product&category=laminate">Quote</a>
         <a href="products.html">Flooring Products</a>
         <a href="floorplan.html">Floor Plan</a>
         <a href="blog/index.html">Guides</a>
@@ -96,7 +96,7 @@
         <span></span>
         <span></span>
       </button>
-      <a class="button" href="index.html?from=product&category=laminate#quoteForm" data-save-category="laminate">Start quote</a>
+      <a class="button" href="quote.html?from=product&category=laminate" data-save-category="laminate">Start quote</a>
     </div>
   </header>
 
@@ -110,7 +110,7 @@
               <h1>Laminate Flooring Sydney</h1>
               <p>Laminate flooring remains one of the clearest value paths for Sydney customers who want a neat timber-look finish without moving straight into a higher product bracket. If you are comparing rooms, products and budget before committing, this page is designed to help you understand where laminate fits, what affects pricing and when it makes sense to move into a quote.</p>
               <div class="hero-actions" style="margin-top: 24px;">
-                <a class="button" href="index.html?from=product&category=laminate#quoteForm" data-save-category="laminate">Get Laminate Flooring Quote</a>
+                <a class="button" href="quote.html?from=product&category=laminate" data-save-category="laminate">Get Laminate Flooring Quote</a>
                 <a class="button-secondary" href="products.html?category=laminate" data-save-category="laminate">View Laminate Products</a>
               </div>
               <p class="hero-trust" style="margin-top: 18px;">Category-first quote path · Value-led rooms · Clean timber-look finish · Final quote confirmed before work</p>
@@ -139,12 +139,12 @@
         <article class="section-card">
           <span class="eyebrow">Featured Laminate Products</span>
           <h2 style="margin-top: 18px;">Start with the laminate category, then confirm product</h2>
-          <p>The live catalogue remains centered around published hybrid products right now, so the laminate path is set up to help you move commercially instead of holding you up behind placeholder listings. Use the laminate-filtered catalogue if you want to compare category direction first, then continue into the quote flow with laminate saved as your selected flooring type.</p>
+          <p>The laminate catalogue is now live, so you can compare laminate colours directly, keep the category commercially sensible, and move into the quote flow with a clearer product direction from the start. Use the laminate-filtered catalogue if you want to compare options first, then continue into the quote flow with laminate saved as your selected flooring type.</p>
           <div class="catalogue-selection-banner">
             <strong id="laminateSelectionTitle">Laminate quote path ready</strong>
             <p id="laminateSelectionText">We can carry the laminate category into the quote now and confirm the exact product during review once area, access and installation scope are clear.</p>
             <div class="catalogue-selection-actions">
-              <a class="button" id="laminateQuoteLink" href="index.html?from=product&category=laminate#quoteForm" data-save-category="laminate">Continue to quote</a>
+              <a class="button" id="laminateQuoteLink" href="quote.html?from=product&category=laminate" data-save-category="laminate">Continue to quote</a>
               <a class="button-secondary" href="products.html?category=laminate" data-save-category="laminate">View all laminate flooring products</a>
             </div>
           </div>
@@ -264,8 +264,9 @@
           <p>If laminate looks like the right category, move into the quote flow now and price the project with the real area and access conditions in view. If you still need to compare categories, use hybrid or engineered timber as the benchmark before you send the request.</p>
           <p>If the job starts with an older damaged floor, the most useful next reads are <a href="blog/laminate-floor-water-damage.html">laminate floor water damage</a>, <a href="blog/flooring-gaps-and-expansion.html">flooring gaps and expansion</a> and <a href="blog/floor-repair-or-replace.html">repair or replace flooring</a>. Those guides help you decide whether you are pricing a simple refresh or a broader replacement path.</p>
           <div class="hero-actions" style="margin-top: 24px;">
-            <a class="button" href="index.html?from=product&category=laminate#quoteForm" data-save-category="laminate">Start Laminate Quote</a>
+            <a class="button" href="quote.html?from=product&category=laminate" data-save-category="laminate">Start Laminate Quote</a>
             <a class="button-secondary" href="products.html?category=laminate" data-save-category="laminate">Browse Laminate Products</a>
+            <a class="button-secondary" href="quote-review.html">Review existing quote</a>
           </div>
         </article>
       </div>
@@ -301,7 +302,7 @@
       <div class="footer-col">
         <h4>Actions</h4>
         <ul>
-          <li><a href="index.html#quoteForm">Start Quote</a></li>
+          <li><a href="quote.html">Start Quote</a></li>
           <li><a href="floorplan.html">Upload Floor Plan</a></li>
           <li><a href="blog/index.html">Guides</a></li>
         </ul>
@@ -339,7 +340,7 @@
 
       function updateLaminateBridge() {
         const storedProduct = productsApi.getStoredProduct();
-        quoteLink.setAttribute("href", "index.html?from=product&category=laminate#quoteForm");
+        quoteLink.setAttribute("href", "quote.html?from=product&category=laminate");
 
         if (storedProduct && storedProduct.category === "laminate") {
           title.textContent = "Selected for quote: " + productsApi.getProductLabel(storedProduct);
@@ -351,7 +352,7 @@
         }
 
         title.textContent = "Laminate quote path ready";
-        text.textContent = "We can carry the laminate category into the quote now and confirm the exact product during review once area, access and installation scope are clear.";
+        text.textContent = "We can carry the laminate category into the quote now, and you can also browse the live laminate range first if you want a clearer product direction before review.";
         quoteLink.textContent = "Continue to quote";
       }
 

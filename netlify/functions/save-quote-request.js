@@ -17,6 +17,20 @@ function getSupabaseConfig() {
   return { url: url, serviceRoleKey: serviceRoleKey };
 }
 
+function getEmailConfig() {
+  const fromEmail = process.env.OPERON_FROM_EMAIL
+    || process.env.OPERON_QUOTE_FROM_EMAIL
+    || process.env.QUOTE_FROM_EMAIL
+    || "quotes@operonflooring.com.au";
+  return {
+    resendApiKey: process.env.RESEND_API_KEY || "",
+    fromEmail: fromEmail,
+    fromName: process.env.OPERON_FROM_NAME || "Operon Flooring Quotes",
+    replyTo: process.env.OPERON_REPLY_TO || process.env.OPERON_QUOTE_REPLY_TO || fromEmail,
+    internalEmail: process.env.OPERON_INTERNAL_EMAIL || fromEmail
+  };
+}
+
 async function supabaseRequest(path, options) {
   const config = getSupabaseConfig();
   if (!config.url || !config.serviceRoleKey) {
@@ -87,7 +101,85 @@ function createQuoteUuid() {
   return "quote-" + Date.now() + "-" + Math.random().toString(36).slice(2, 10);
 }
 
+function getCloseBand(score) {
+  if (score >= 75) return "high";
+  if (score >= 45) return "medium";
+  if (score >= 20) return "low";
+  return "very_low";
+}
+
+function getCloseProbability(score) {
+  return Number((0.03 + (Math.max(0, Math.min(100, score)) / 100) * 0.82).toFixed(4));
+}
+
+function getInitialCloseScore(payload, status, leadStage) {
+  const measurement = payload.measurement || {};
+  const customer = payload.customer || {};
+  const job = payload.job || {};
+  const extras = payload.extras || {};
+  const area = parseNumber(measurement.realArea);
+  const reasons = {
+    formula: "intent + engagement + completeness - friction",
+    intent: {},
+    engagement: {},
+    completeness: {},
+    friction: {}
+  };
+  let intent = 0;
+  let engagement = status === "emailed" ? 18 : 10;
+  let completeness = 0;
+  let friction = 0;
+
+  if (leadStage === "hot") { intent += 25; reasons.intent.lead_stage = "hot"; }
+  else if (leadStage === "warm") { intent += 16; reasons.intent.lead_stage = "warm"; }
+  else if (leadStage === "cold") { intent += 6; reasons.intent.lead_stage = "cold"; }
+
+  reasons.engagement.quote_status = status;
+
+  if (customer.name) { completeness += 3; reasons.completeness.name = true; }
+  if (customer.phone || customer.email) { completeness += 4; reasons.completeness.contact = true; }
+  if (customer.siteAddress) { completeness += 3; reasons.completeness.address = true; }
+  if (area > 0) { completeness += area >= 30 ? 5 : 3; reasons.completeness.area_m2 = area; }
+  if (measurement.status && measurement.status !== "unknown") { completeness += 4; reasons.completeness.measurement_status = measurement.status; }
+  if (job.productName || job.productCategory) { completeness += 3; reasons.completeness.product = job.productName || job.productCategory; }
+  if (extras && typeof extras === "object") { completeness += 4; reasons.completeness.extras_completion = "captured"; }
+  if (parseNumber(payload.pricing && payload.pricing.totalIncGst) > 0) { completeness += 2; reasons.completeness.estimate_total = true; }
+
+  if (measurement.status === "unknown" || area <= 0) { friction += 8; reasons.friction.measurement_unknown = true; }
+  if (payload.manualReviewRequired) { friction += 5; reasons.friction.manual_review_required = true; }
+  if (Array.isArray(payload.warnings) && payload.warnings.length) { friction += Math.min(6, payload.warnings.length * 2); reasons.friction.warning_count = payload.warnings.length; }
+  if (!customer.phone && !customer.email) { friction += 8; reasons.friction.no_contact = true; }
+
+  const closeScore = Math.max(0, Math.min(100, Math.round(intent + engagement + completeness - friction)));
+  const closeBand = getCloseBand(closeScore);
+  const nextAction = closeBand === "high"
+    ? "immediate_human_contact"
+    : closeBand === "medium"
+      ? "guided_followup"
+      : closeBand === "low"
+        ? "nurture"
+        : "minimal";
+
+  reasons.intent.score = intent;
+  reasons.engagement.score = engagement;
+  reasons.completeness.score = completeness;
+  reasons.friction.score = friction;
+
+  return {
+    closeScore: closeScore,
+    closeBand: closeBand,
+    closeProbability: getCloseProbability(closeScore),
+    closeReasons: reasons,
+    nextAction: measurement.status === "unknown" ? "request_site_assessment_or_floorplan" : nextAction,
+    priorityRank: (closeBand === "high" ? 0 : closeBand === "medium" ? 100 : closeBand === "low" ? 200 : 300) + (100 - closeScore)
+  };
+}
+
 function getQuoteRow(quoteId, payload, status) {
+  const now = new Date().toISOString();
+  const leadStage = payload.leadStage || payload.lead_stage || (payload.leadPriority === "high" ? "hot" : "cold");
+  const engagementScore = Number(payload.engagementScore || payload.engagement_score || (status === "emailed" ? 55 : 30)) || 0;
+  const close = getInitialCloseScore(payload, status, leadStage);
   return {
     id: quoteId,
     customer_name: payload.customer && payload.customer.name || "",
@@ -114,6 +206,16 @@ function getQuoteRow(quoteId, payload, status) {
     manual_review_required: !!payload.manualReviewRequired,
     status: status,
     source_page: payload.sourcePage || "index.html",
+    lead_stage: ["cold", "warm", "hot", "closing", "unknown"].indexOf(leadStage) >= 0 ? leadStage : "cold",
+    engagement_score: Math.max(0, Math.min(100, Math.round(engagementScore))),
+    close_score: close.closeScore,
+    close_probability: close.closeProbability,
+    close_band: close.closeBand,
+    close_reasons: close.closeReasons,
+    next_action: close.nextAction,
+    priority_rank: close.priorityRank,
+    last_activity: now,
+    last_action: status === "emailed" ? "quote_submit" : "summary_view",
     raw_payload: payload
   };
 }
@@ -221,40 +323,136 @@ function formatArea(value) {
   return Number(Number(value || 0).toFixed(1)).toFixed(1) + " m²";
 }
 
-function buildEmailLines(payload) {
+function formatFromAddress(config) {
+  return config.fromName + " <" + config.fromEmail + ">";
+}
+
+function getCustomerName(payload) {
+  return payload.customer && payload.customer.name ? payload.customer.name : "there";
+}
+
+function getProductLabel(payload) {
+  const pricing = payload.pricing || {};
+  const job = payload.job || {};
+  return pricing.productLabel || job.productName || job.productRange || job.productCategory || "Flooring estimate";
+}
+
+function buildCustomerEmailLines(payload) {
   const pricing = payload.pricing || {};
   const lines = Array.isArray(pricing.lineItems) ? pricing.lineItems : [];
   return lines.map(function (item) {
-    return "<tr><td style=\"padding:8px 0;color:#111827;\">" + escapeHtml(item.label || "Item") + "</td><td style=\"padding:8px 0;color:#6b7280;\">" + escapeHtml(item.quantity ? String(item.quantity) + " " + (item.unit || "") : (item.note || "")) + "</td><td style=\"padding:8px 0;text-align:right;color:#111827;\">" + escapeHtml(formatCurrency(item.amountExGst || item.amount || 0)) + "</td></tr>";
+    return "<tr><td style=\"padding:10px 0;color:#111827;border-bottom:1px solid #eef0f3;\">" + escapeHtml(item.label || "Item") + "</td><td style=\"padding:10px 0;text-align:right;color:#111827;border-bottom:1px solid #eef0f3;\"><strong>" + escapeHtml(formatCurrency(item.amountExGst || item.amount || 0)) + "</strong></td></tr>";
   }).join("");
 }
 
-function buildQuoteEmail(payload, quoteId) {
+function buildInternalEmailLines(payload) {
   const pricing = payload.pricing || {};
-  const customerName = payload.customer && payload.customer.name ? payload.customer.name : "Customer";
-  const productName = payload.job && payload.job.productName ? payload.job.productName : "Flooring estimate";
-  const lineRows = buildEmailLines(payload);
+  const lines = Array.isArray(pricing.lineItems) ? pricing.lineItems : [];
+  return lines.map(function (item) {
+    return [
+      "- ",
+      item.label || "Item",
+      ": ",
+      item.quantity ? String(item.quantity) + " " + (item.unit || "") + " - " : "",
+      formatCurrency(item.amountExGst || item.amount || 0),
+      " ex GST"
+    ].join("");
+  }).join("\n");
+}
+
+function buildScopeList(payload) {
+  const extras = payload.extras || {};
+  const job = payload.job || {};
+  const scope = [];
+  scope.push(job.quoteMode === "install_only" ? "Installation only" : "Supply and installation");
+  if (job.productCategory) scope.push("Flooring category: " + job.productCategory);
+  if (job.installationMethod) scope.push("Installation method: " + job.installationMethod);
+  if (extras.removal && extras.removal.type && extras.removal.type !== "none") scope.push("Existing floor removal");
+  if (extras.disposal && extras.disposal.included) scope.push("Take away removed flooring");
+  if (extras.floorPrep && extras.floorPrep.type && extras.floorPrep.type !== "none") scope.push("Floor preparation");
+  if (extras.moistureBarrier && extras.moistureBarrier.selected === "yes") scope.push("Moisture protection");
+  if (extras.skirting && extras.skirting.type && extras.skirting.type !== "no") scope.push("Skirting");
+  if (extras.scotia && extras.scotia.type && extras.scotia.type !== "no") scope.push("Edge trim");
+  if (extras.furniture && extras.furniture.type && extras.furniture.type !== "no") scope.push("Furniture handling");
+  if (extras.doorTrimming && extras.doorTrimming.selected === "yes") scope.push("Door trimming");
+  if (extras.stairs && Number(extras.stairs.count || 0) > 0) scope.push("Stairs require confirmation");
+  return scope;
+}
+
+function buildScopeHtml(payload) {
+  return buildScopeList(payload).map(function (item) {
+    return "<li style=\"margin:0 0 8px;color:#374151;\">" + escapeHtml(item) + "</li>";
+  }).join("");
+}
+
+function buildScopeText(payload) {
+  return buildScopeList(payload).map(function (item) {
+    return "- " + item;
+  }).join("\n");
+}
+
+function getQuoteReviewSummary(payload) {
+  const review = payload.quoteReview || payload.quote_review || null;
+  if (!review) {
+    return "";
+  }
+  try {
+    return JSON.stringify(review, null, 2);
+  } catch (error) {
+    return String(review);
+  }
+}
+
+function getWarningsText(payload) {
+  const warnings = Array.isArray(payload.warnings) ? payload.warnings : [];
+  if (!warnings.length && !payload.manualReviewRequired) {
+    return "No major warning flags.";
+  }
+  const lines = warnings.map(function (warning) {
+    return "- " + String(warning);
+  });
+  if (payload.manualReviewRequired) {
+    lines.unshift("- Manual review required.");
+  }
+  return lines.join("\n");
+}
+
+function buildCustomerQuoteEmail(payload, quoteId) {
+  const pricing = payload.pricing || {};
+  const measurement = payload.measurement || {};
+  const customerName = getCustomerName(payload);
+  const productName = getProductLabel(payload);
+  const lineRows = buildCustomerEmailLines(payload);
+  const chargeableAreaLine = measurement.chargeableArea
+    ? "<div><strong style=\"display:block;font-size:13px;color:#6b7280;\">Estimated area including off-cuts</strong><span style=\"font-size:18px;color:#111827;\">" + escapeHtml(formatArea(measurement.chargeableArea)) + "</span></div>"
+    : "";
   const html = [
-    "<div style=\"font-family:Arial,sans-serif;background:#f5f7fb;padding:32px;color:#111827;\">",
-    "<div style=\"max-width:720px;margin:0 auto;background:#ffffff;border-radius:18px;padding:32px;border:1px solid #e5e7eb;\">",
-    "<p style=\"margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#2563eb;\">Operon Flooring</p>",
-    "<h1 style=\"margin:0 0 12px;font-size:28px;line-height:1.2;\">Your flooring estimate</h1>",
-    "<p style=\"margin:0 0 24px;color:#4b5563;\">Hi " + escapeHtml(customerName) + ", here is your Operon Flooring estimate for " + escapeHtml(productName) + ".</p>",
-    "<div style=\"border:1px solid #e5e7eb;border-radius:16px;padding:20px;margin-bottom:24px;background:#f8fafc;\">",
+    "<div style=\"font-family:Inter,Arial,sans-serif;background:#faf8f4;padding:32px;color:#111820;\">",
+    "<div style=\"max-width:720px;margin:0 auto;background:#ffffff;border-radius:20px;padding:32px;border:1px solid #e8e2d8;\">",
+    "<p style=\"margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#a67c52;\">Operon Flooring</p>",
+    "<h1 style=\"margin:0 0 12px;font-size:28px;line-height:1.2;color:#111820;\">Your flooring estimate</h1>",
+    "<p style=\"margin:0 0 24px;color:#4b5563;line-height:1.6;\">Hi " + escapeHtml(customerName) + ", here is your starting flooring estimate. We will confirm product, area and site details before anything is booked.</p>",
+    "<div style=\"border:1px solid #e8e2d8;border-radius:16px;padding:20px;margin-bottom:24px;background:#f6f2ec;\">",
     "<div style=\"display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;\">",
     "<div><strong style=\"display:block;font-size:13px;color:#6b7280;\">Selected product</strong><span style=\"font-size:18px;color:#111827;\">" + escapeHtml(pricing.productLabel || productName) + "</span></div>",
-    "<div><strong style=\"display:block;font-size:13px;color:#6b7280;\">Real area</strong><span style=\"font-size:18px;color:#111827;\">" + escapeHtml(formatArea(pricing.realArea || 0)) + "</span></div>",
-    "<div><strong style=\"display:block;font-size:13px;color:#6b7280;\">Total inc GST</strong><span style=\"font-size:24px;color:#111827;\">" + escapeHtml(formatCurrency(pricing.totalIncGst || 0)) + "</span></div>",
+    "<div><strong style=\"display:block;font-size:13px;color:#6b7280;\">Measured area</strong><span style=\"font-size:18px;color:#111827;\">" + escapeHtml(formatArea(measurement.realArea || pricing.realArea || 0)) + "</span></div>",
+    chargeableAreaLine,
+    "<div><strong style=\"display:block;font-size:13px;color:#6b7280;\">Estimate total inc GST</strong><span style=\"font-size:24px;color:#111827;\">" + escapeHtml(formatCurrency(pricing.totalIncGst || 0)) + "</span></div>",
     "</div></div>",
     "<table style=\"width:100%;border-collapse:collapse;margin-bottom:20px;\">",
-    "<thead><tr><th style=\"text-align:left;padding-bottom:10px;color:#6b7280;font-size:13px;border-bottom:1px solid #e5e7eb;\">Item</th><th style=\"text-align:left;padding-bottom:10px;color:#6b7280;font-size:13px;border-bottom:1px solid #e5e7eb;\">Details</th><th style=\"text-align:right;padding-bottom:10px;color:#6b7280;font-size:13px;border-bottom:1px solid #e5e7eb;\">Ex GST</th></tr></thead>",
+    "<thead><tr><th style=\"text-align:left;padding-bottom:10px;color:#6b7280;font-size:13px;border-bottom:1px solid #e8e2d8;\">Estimate breakdown</th><th style=\"text-align:right;padding-bottom:10px;color:#6b7280;font-size:13px;border-bottom:1px solid #e8e2d8;\">Total only</th></tr></thead>",
     "<tbody>" + lineRows + "</tbody>",
     "</table>",
-    "<div style=\"border-top:1px solid #e5e7eb;padding-top:16px;margin-top:8px;\">",
+    "<div style=\"border:1px solid #e8e2d8;border-radius:16px;padding:18px;margin:20px 0;\">",
+    "<strong style=\"display:block;margin-bottom:12px;color:#111820;\">Included scope</strong>",
+    "<ul style=\"padding-left:18px;margin:0;\">" + buildScopeHtml(payload) + "</ul>",
+    "</div>",
+    "<div style=\"border-top:1px solid #e8e2d8;padding-top:16px;margin-top:8px;\">",
     "<p style=\"margin:0 0 8px;color:#111827;\">Subtotal ex GST: <strong>" + escapeHtml(formatCurrency(pricing.subtotalExGst || 0)) + "</strong></p>",
     "<p style=\"margin:0 0 8px;color:#111827;\">GST: <strong>" + escapeHtml(formatCurrency(pricing.gst || 0)) + "</strong></p>",
     "<p style=\"margin:0 0 16px;color:#111827;font-size:18px;\">Total inc GST: <strong>" + escapeHtml(formatCurrency(pricing.totalIncGst || 0)) + "</strong></p>",
-    "<p style=\"margin:0;color:#4b5563;\">" + escapeHtml(pricing.disclaimer || "Estimate only — final quote confirmed after review and site check.") + "</p>",
+    "<p style=\"margin:0 0 14px;color:#4b5563;line-height:1.6;\">" + escapeHtml(pricing.disclaimer || "Starting estimate only. Final site scope is confirmed before booking.") + "</p>",
+    "<p style=\"margin:0 0 14px;color:#4b5563;line-height:1.6;\">Reply to this email if you want us to confirm the next step. Already have another quote? Send it through and we can review scope and missing items.</p>",
     "</div>",
     "<p style=\"margin:24px 0 0;color:#6b7280;font-size:13px;\">Reference: " + escapeHtml(String(quoteId).slice(0, 8)) + "</p>",
     "</div></div>"
@@ -265,40 +463,121 @@ function buildQuoteEmail(payload, quoteId) {
     "",
     "Reference: " + String(quoteId).slice(0, 8),
     "Selected product: " + (pricing.productLabel || productName),
-    "Real area: " + formatArea(pricing.realArea || 0),
+    "Measured area: " + formatArea(measurement.realArea || pricing.realArea || 0),
+    measurement.chargeableArea ? "Estimated area including off-cuts: " + formatArea(measurement.chargeableArea) : "",
+    "",
+    "Estimate breakdown:",
+    (payload.pricing && Array.isArray(payload.pricing.lineItems) ? payload.pricing.lineItems : []).map(function (item) {
+      return "- " + (item.label || "Item") + ": " + formatCurrency(item.amountExGst || item.amount || 0);
+    }).join("\n"),
+    "",
+    "Included scope:",
+    buildScopeText(payload),
+    "",
     "Subtotal ex GST: " + formatCurrency(pricing.subtotalExGst || 0),
     "GST: " + formatCurrency(pricing.gst || 0),
     "Total inc GST: " + formatCurrency(pricing.totalIncGst || 0),
     "",
-    pricing.disclaimer || "Estimate only — final quote confirmed after review and site check."
-  ].join("\n");
+    pricing.disclaimer || "Starting estimate only. Final site scope is confirmed before booking.",
+    "",
+    "Reply to this email if you want us to confirm the next step. Already have another quote? Send it through and we can review scope and missing items."
+  ].filter(Boolean).join("\n");
 
   return { html: html, text: text };
 }
 
-async function sendQuoteEmail(emailTo, payload, quoteId) {
-  const apiKey = process.env.RESEND_API_KEY || "";
-  const fromEmail = process.env.OPERON_QUOTE_FROM_EMAIL || process.env.QUOTE_FROM_EMAIL || "";
-  const replyTo = process.env.OPERON_QUOTE_REPLY_TO || "";
+function buildInternalQuoteEmail(payload, quoteId) {
+  const pricing = payload.pricing || {};
+  const customer = payload.customer || {};
+  const property = payload.property || {};
+  const job = payload.job || {};
+  const measurement = payload.measurement || {};
+  const reviewSummary = getQuoteReviewSummary(payload);
+  const subjectParts = [
+    "New Operon quote request",
+    customer.suburb || "Unknown suburb",
+    formatCurrency(pricing.totalIncGst || 0)
+  ];
+  const text = [
+    "New Operon quote request",
+    "",
+    "Reference: " + quoteId,
+    "Submitted: " + (payload.submittedAt || new Date().toISOString()),
+    "Source page: " + (payload.sourcePage || ""),
+    "",
+    "Customer",
+    "Name: " + (customer.name || ""),
+    "Phone: " + (customer.phone || ""),
+    "Email: " + (customer.email || ""),
+    "Address: " + (customer.siteAddress || ""),
+    "Suburb: " + (customer.suburb || ""),
+    "Postcode: " + (customer.postcode || ""),
+    "",
+    "Quote",
+    "Mode: " + (job.quoteMode || ""),
+    "Product/category: " + getProductLabel(payload),
+    "Category: " + (job.productCategory || ""),
+    "Install method: " + (job.installationMethod || ""),
+    "Property type: " + (property.type || ""),
+    "Level/lift/parking: " + [property.level, property.hasLift, property.parking].filter(Boolean).join(" / "),
+    "Quote confidence: " + (measurement.quoteConfidence || ""),
+    "Next step required: " + (measurement.nextStepRequired || ""),
+    "Manual review: " + (payload.manualReviewRequired ? "Yes" : "No"),
+    "",
+    "Areas",
+    "Real area: " + formatArea(measurement.realArea || pricing.realArea || 0),
+    "Chargeable area: " + (measurement.chargeableArea ? formatArea(measurement.chargeableArea) : "Not shown / not applicable"),
+    "",
+    "Totals",
+    "Subtotal ex GST: " + formatCurrency(pricing.subtotalExGst || 0),
+    "GST: " + formatCurrency(pricing.gst || 0),
+    "Total inc GST: " + formatCurrency(pricing.totalIncGst || 0),
+    "",
+    "Line items",
+    buildInternalEmailLines(payload) || "No line items.",
+    "",
+    "Scope",
+    buildScopeText(payload) || "No scope items captured.",
+    "",
+    "Risk flags / warnings",
+    getWarningsText(payload),
+    "",
+    "Notes",
+    "Site notes: " + (payload.notes && payload.notes.site || ""),
+    "Customer notes: " + (payload.notes && payload.notes.customer || ""),
+    "",
+    "Quote review payload",
+    reviewSummary || "No quote review payload."
+  ].join("\n");
 
-  if (!apiKey || !fromEmail) {
-    throw new Error("Quote email is not configured. Add RESEND_API_KEY and OPERON_QUOTE_FROM_EMAIL in Netlify.");
+  const html = "<pre style=\"font-family:Arial,sans-serif;white-space:pre-wrap;line-height:1.5;color:#111827;\">" + escapeHtml(text) + "</pre>";
+  return {
+    subject: subjectParts.join(" - "),
+    html: html,
+    text: text
+  };
+}
+
+async function sendResendEmail(message) {
+  const config = getEmailConfig();
+
+  if (!config.resendApiKey || !config.fromEmail) {
+    throw new Error("Quote email is not configured. Add RESEND_API_KEY and OPERON_FROM_EMAIL in Netlify.");
   }
 
-  const emailContent = buildQuoteEmail(payload, quoteId);
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
-      "Authorization": "Bearer " + apiKey,
+      "Authorization": "Bearer " + config.resendApiKey,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      from: fromEmail,
-      to: [emailTo],
-      reply_to: replyTo ? [replyTo] : undefined,
-      subject: "Your Operon Flooring Quote Estimate",
-      html: emailContent.html,
-      text: emailContent.text
+      from: formatFromAddress(config),
+      to: Array.isArray(message.to) ? message.to : [message.to],
+      reply_to: config.replyTo ? [config.replyTo] : undefined,
+      subject: message.subject,
+      html: message.html,
+      text: message.text
     })
   });
 
@@ -308,6 +587,53 @@ async function sendQuoteEmail(emailTo, payload, quoteId) {
   }
 
   return response.json();
+}
+
+async function sendQuoteEmails(emailTo, payload, quoteId) {
+  const config = getEmailConfig();
+  const result = {
+    customerEmailSent: false,
+    internalNotificationSent: false,
+    internalNotificationError: ""
+  };
+
+  let customerError = null;
+  if (emailTo) {
+    const customerContent = buildCustomerQuoteEmail(payload, quoteId);
+    try {
+      await sendResendEmail({
+        to: emailTo,
+        subject: "Your flooring estimate - Operon Flooring",
+        html: customerContent.html,
+        text: customerContent.text
+      });
+      result.customerEmailSent = true;
+    } catch (error) {
+      customerError = error;
+    }
+  }
+
+  if (config.internalEmail) {
+    const internalContent = buildInternalQuoteEmail(payload, quoteId);
+    try {
+      await sendResendEmail({
+        to: config.internalEmail,
+        subject: internalContent.subject,
+        html: internalContent.html,
+        text: internalContent.text
+      });
+      result.internalNotificationSent = true;
+    } catch (error) {
+      result.internalNotificationError = error && error.message ? error.message : "Internal notification failed.";
+      console.error("Internal quote notification failed", error);
+    }
+  }
+
+  if (customerError) {
+    throw customerError;
+  }
+
+  return result;
 }
 
 exports.handler = async function (event) {
@@ -361,7 +687,14 @@ exports.handler = async function (event) {
         throw new Error("Draft quote reference is missing. Save the estimate first.");
       }
       await updateQuoteRow(quoteId, row);
-      await sendQuoteEmail(emailTo, payload, quoteId);
+      const emailResult = await sendQuoteEmails(emailTo, payload, quoteId);
+      return jsonResponse(200, {
+        ok: true,
+        mode: mode,
+        quoteId: quoteId,
+        customerEmailSent: emailResult.customerEmailSent,
+        internalNotificationSent: emailResult.internalNotificationSent
+      });
     }
 
     return jsonResponse(200, {

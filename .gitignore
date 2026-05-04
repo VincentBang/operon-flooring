@@ -11,6 +11,10 @@ __pycache__/
 *.log
 .netlify-state/
 
+# Local Supabase audit exports can contain customer data.
+apps/web/supabase-audit-exports/**/*.json
+apps/web/supabase-audit-exports/**/*.error.txt
+
 # Keep the website repo focused on the Netlify/Supabase app.
 flooring_app/
 ios/

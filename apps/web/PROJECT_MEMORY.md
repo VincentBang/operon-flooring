@@ -13,17 +13,24 @@ Source-of-truth status: active project memory for current business direction, pa
 - Headline: `Professional Flooring Quotes for Sydney Homes`
 - Supporting message: `Get a clearer laminate, hybrid, or engineered timber flooring estimate with area capture, product selection, and pricing built for real installation work.`
 - Trust message: `Measured where needed. Priced clearly. Product and site details confirmed before installation starts.`
+- Brand position: Operon Flooring is not only a quick quote tool; it presents clear flooring estimates, professional installation, quality workmanship, an experienced installation team, reliable Sydney service, clean product selection, correct scope, quote transparency, and final site confirmation before work.
+- Quote validation must be positioned as quote clarity and scope review, not price comparison.
+- Homepage should stay clean, visual, premium, and not overloaded with tool or form language.
 
 ## Structure
 
-- Homepage = conversion
+- Homepage = clean premium conversion and trust page, not the full quote wizard
+- Quote wizard = dedicated `quote.html` pricing engine and lead capture page
 - Floorplan = measurement assistant
 - Product pages = SEO + product selection
 - Suburb pages = local ranking support
 - Blog = authority and internal-link support
+- All quote CTAs should navigate to `quote.html`
+- Homepage must still support SEO through concise structured sections, internal links, schema, and lower-page/expandable content where appropriate
 - Quote form = pricing engine + lead capture
 - Supabase / analytics = tracking layer
 - Agents = execution layer
+- Chatbot = guided conversion assistant layer; it supports product guidance, quote explanation, missing information collection, and quote scope review without replacing the quote wizard
 
 ## Deployment Workflow
 
@@ -32,6 +39,23 @@ Source-of-truth status: active project memory for current business direction, pa
 - workflow = `local -> optional dev preview -> optional merge -> main -> deploy`
 - never push development work directly to production
 - default execution rule = make changes locally first and validate locally; only push to GitHub / `dev` / `main` or trigger Netlify review when the user explicitly asks
+
+## Agent Priority System
+
+Use this priority order when `continue execution` ranks tasks:
+
+1. Conversion
+2. Quote accuracy
+3. Product catalogue
+4. SEO product pages
+5. Chatbot assistant / guided conversion
+6. Suburb pages
+7. Internal linking
+8. Analytics tracking
+9. Lead capture without email
+10. Blog / maintenance content
+11. Backlinks
+12. Future SaaS infrastructure
 
 ## Pricing Logic
 
@@ -78,6 +102,32 @@ Source-of-truth status: active project memory for current business direction, pa
 - SEO, backlink, and ranking tracker scaffolds exist
 - task queue exists for multi-step execution runs and now stores a ranked 50-task unattended backlog
 
+## Chatbot Assistant System
+
+- chatbot improvement is now part of the main agent loop as a candidate task category
+- chatbot tasks belong to the `Chatbot Agent`
+- chatbot should behave as a guided decision system, not a free-form Q&A assistant or pricing tool
+- chatbot may improve product guidance conversations, quote explanation, missing information collection, quote validation support, routing suggestions, structured JSON output, memory files, and safe UX inside `apps/web/chatbot/`
+- chatbot may route or suggest paths toward `quote.html`, `products.html`, `floorplan.html`, and `quote-review.html`, but current conversion guidance should avoid fragmenting the main quote flow
+- chatbot must not calculate prices, display estimated prices, expose internal rates, replace the quote flow, override product selection, modify `quoteCalculator.js`, modify `pricingRules.js`, modify `products.js`, or change `productSelection.js` unless explicitly approved
+- chatbot must not auto-fill forms unless the user confirms and a future integration task explicitly approves it
+- safe chatbot tasks without approval are limited to files inside `apps/web/chatbot/`, including memory, flow, JSON schema, copy, routing suggestion, safety, test, and documentation improvements
+- chatbot tasks requiring approval include injecting chatbot into new live pages, changing `quote.html`, changing `products.html`, modifying product/pricing files, or enabling quote form auto-fill
+
+Every future 50-task queue should include at least 3 chatbot-related candidate tasks, such as:
+
+- improve chatbot product guidance flow
+- improve chatbot quote explanation flow
+- improve chatbot quote-review support
+- improve chatbot missing information JSON mapping
+- improve chatbot idle/stuck-user prompts
+- improve chatbot routing suggestions
+- improve chatbot memory from latest site changes
+- audit chatbot for accidental pricing claims
+- validate chatbot does not interfere with quote flow
+
+These are candidates only. Execute them only when their `priority_score = (impact × confidence) / effort` ranks high enough and the task is safe.
+
 ## Product Catalogue System
 
 - product data now stored centrally in `apps/web/products.js`
@@ -88,6 +138,11 @@ Source-of-truth status: active project memory for current business direction, pa
 - laminate, hybrid, and engineered use the same system
 - only confirmed live catalogue products should be shown
 - current live catalogue includes ETF Hybrid 7.0mm, 8.0mm, and 9.0mm ranges with supplier imagery
+- if a supplier product page exposes range-level `Description`, `Features`, and `Technical` content, capture it as structured range metadata in `apps/web/products.js` so the range card can show those tabs directly in the catalogue
+- standard catalogue rule: all range cards should use `View X colours` as a compact popup preview, not a long inline drawer
+- standard catalogue rule: selecting a range and browsing colours are separate actions; if final colour must be chosen, enforce it later in `quote.html`
+- standard product-import rule: if a supplier colour page has second or third gallery images, save those extra images locally and attach them through `galleryImages` for that product
+- standard catalogue UX rule: if a colour image opens from a `View X colours` popup, the single-image lightbox must include a back button to return to that full colour popup
 
 ## Supabase Pricing Privacy
 
@@ -101,7 +156,7 @@ Source-of-truth status: active project memory for current business direction, pa
 - rollout notes now live in:
   - `apps/web/OPERON_SUPABASE_PRICING_SETUP.md`
   - `apps/web/OPERON_PRIVATE_QUOTE_RUNTIME_PLAN.md`
-- homepage quote wizard now tries the private Netlify quote runtime first and falls back to the local calculator if the runtime is unavailable
+- `quote.html` quote wizard can use the private Netlify quote runtime path and local calculator fallback; homepage no longer contains the quote wizard
 - customer-facing catalogue pricing now has a Netlify-backed Supabase source for:
   - `categoryMeta`
   - `products`
@@ -210,16 +265,21 @@ Reason:
   - `title`
   - `category`
   - `assigned_agent`
-  - `impact_score`
-  - `confidence_score`
-  - `effort_score`
+  - `impact`
+  - `confidence`
+  - `effort`
   - `priority_score`
+  - `approval_required`
   - `dependencies`
   - `risk_level`
   - `files_likely_affected`
   - `validation_checklist`
   - `status`
   - `notes`
+- chatbot tasks use:
+  - `category`: `chatbot`
+  - `assigned_agent`: `Chatbot Agent`
+  - `approval_required`: `false` only when all likely affected files are inside `apps/web/chatbot/`
 - queue file:
   - `apps/web/task_queue.json`
 - future unattended run history format is documented in `AGENT_LOOP.md`
@@ -231,7 +291,87 @@ Reason:
 - Files changed this continuation: `apps/web/index.html`, `apps/web/dashboard.html`, `apps/web/agent-task-engine.js`, `apps/web/backlink-tracker.html`, `apps/web/OPERON_SEO_STRATEGY.md`, `apps/web/OPERON_SUPABASE_DATABASE_IMPLEMENTATION.md`, `apps/web/AGENT_LOOP.md`, `apps/web/PROJECT_MEMORY.md`, `apps/web/QA_NOTES.md`, `apps/web/task_queue.json`, and the five priority suburb pages
 - Validation performed: product scripts checked, agent task engine checked, inline scripts parsed with JSON-LD excluded, schema coverage audited, suburb internal links resolved, and `git diff --check` passed
 - Known risk: `QA-003` remains pending because it requires browser-render mobile viewport review rather than static validation
-- Current queue state after this continuation: 49 of 50 tasks done, 1 pending
+- Current queue state after chatbot-loop integration: 46 of 50 tasks done, 4 pending, including 3 safe chatbot candidate tasks required for future `continue execution` cycles
+
+## Latest Chatbot Agent Loop Update
+
+- Task completed: added chatbot improvement into the main agent loop and project memory as a standing high-ROI candidate category
+- Files changed this update: `apps/web/AGENTS.md`, `apps/web/AGENT_LOOP.md`, `apps/web/PROJECT_MEMORY.md`, `apps/web/task_queue.json`
+- New agent role: `Chatbot Agent`
+- New queue rule: every future 50-task queue must include at least 3 chatbot-related candidate tasks
+- Current chatbot queue candidates: `CHATBOT-001`, `CHATBOT-002`, `CHATBOT-003`
+- Validation performed: task queue JSON parsed successfully, queue length stayed at 50, queue contains 3 chatbot tasks, queue schema now uses `impact`, `confidence`, `effort`, `priority_score`, and `approval_required`
+- Known risks: chatbot work remains safe only while it stays inside `apps/web/chatbot/`; live page injection, quote/product changes, product selection changes, pricing files, and auto-fill remain approval-gated
+- Next best chatbot tasks: audit chatbot for accidental pricing claims, improve product guidance flow, improve quote-review and missing-information JSON mapping
+
+## Latest Funnel System Update
+
+- Task completed: structured the entry-to-conversion funnel into one system covering homepage entry, product selection, quote flow, summary, submit, thank-you, follow-up, close support, and data feedback
+- Files changed this update: `apps/web/index.html`, `apps/web/tracking.js`, `apps/web/OPERON_FUNNEL_SYSTEM.md`, `apps/web/PROJECT_MEMORY.md`
+- Homepage change: added a three-path intent router for `quote`, `products`, and `review`
+- Analytics change: homepage intent path clicks now emit `funnel_intent_select`; tracking comments now reflect the seven-step quote flow
+- Validation performed: homepage JavaScript and quote inline JavaScript parsed successfully with `new Function`
+- Known risks: follow-up SMS/email remains a playbook only until provider credentials, consent/compliance rules, and backend queue execution are ready
+- Next best funnel task: persist `funnel_intent`, `lead_stage`, `stairsRequiresReview`, and extras decisions through the server-side lead save path
+
+## Latest Close Script System Update
+
+- Task completed: created a structured close-stage script pack for phone, SMS, email, chatbot, and objection handling
+- Files changed this update: `apps/web/OPERON_CLOSE_SCRIPTS.md`, `apps/web/OPERON_FUNNEL_SYSTEM.md`, `apps/web/POST_SUBMIT_CONVERSION_SYSTEM.md`, `apps/web/PROJECT_MEMORY.md`
+- Close framework: acknowledge, clarify details, control risk, guide next step, and offer choice
+- Safety rules: no pressure, no discounting, no fake urgency, no claims that Operon is always cheaper, and no internal rates or pricing formulas exposed
+- Conversion focus: keep close-stage conversations anchored to scope clarity, preparation, access, stairs, removal/disposal, trims, measurement confidence, and final confirmation before work
+- Validation performed: close-script file reviewed and `git diff --check` passed for the touched documentation files
+- Known risks: scripts are playbooks only; SMS/email automation still needs provider credentials, compliance rules, opt-out handling, and backend queue execution before becoming live
+- Next best close task: map submitted quote lead states to the correct phone/SMS/email/chatbot script without enabling outbound sending yet
+
+## Latest Automated Close System Update
+
+- Task completed: built the safe automated close foundation using Supabase lead-stage fields, engagement scoring, event tracking, scheduled processing, and chatbot signals
+- Files changed this update: `supabase/migrations/20260504_automated_close_system.sql`, `supabase/functions/process-leads/index.ts`, `supabase/functions/create-followup-queue/index.ts`, `netlify/functions/save-quote-request.js`, `apps/web/tracking.js`, `apps/web/quote.html`, `apps/web/chatbot/chatbot.js`, `apps/web/AUTOMATED_CLOSE_SYSTEM.md`, `apps/web/OPERON_FUNNEL_SYSTEM.md`, `apps/web/PROJECT_MEMORY.md`
+- Database additions: `lead_stage`, `engagement_score`, `last_activity`, `last_action`, close automation run audit table, and `manual_close_call` queue template
+- Events now supporting close scoring: `quote_submit`, `quote_submit_success`, `CTA_click`, `cta_click`, `chatbot_interaction`, `chatbot_hesitation_detected`, `summary_view`, thank-you CTA and lead-stage events
+- Automation function: `process-leads` scores recent quote requests, updates lead stage, queues safe follow-up/close actions, and skips paused or human-escalated leads
+- Safety rules: no quote/pricing calculation changes, no internal rates exposed, no automatic SMS/email sending enabled, and human escalation stops automation when reply/call/site assessment/final quote/job status is recorded
+- Validation performed: local JS syntax checks and SQL/TypeScript static review were completed; live Supabase migration/function deployment still requires explicit approval and environment access
+- Known risks: real 5-10 minute scheduling, provider sending, consent/opt-out enforcement, and live database verification remain deployment tasks
+- Next best close task: deploy migration/function to Supabase staging, run `process-leads?limit=5` in dry-run mode, then inspect `close_automation_runs` and `followup_messages`
+
+## Latest Close Probability System Update
+
+- Task completed: added an explainable close probability layer for lead prioritisation and action routing
+- Files changed this update: `supabase/migrations/20260504_close_probability_system.sql`, `supabase/functions/calculate-close-score/index.ts`, `supabase/functions/process-leads/index.ts`, `netlify/functions/save-quote-request.js`, `apps/web/CLOSE_PROBABILITY_MODEL.md`, `apps/web/AUTOMATED_CLOSE_SYSTEM.md`, `apps/web/PROJECT_MEMORY.md`
+- Scoring model: `close_score = intent + engagement + completeness - friction`, clamped to `0-100`
+- New outputs: `close_score`, `close_probability`, `close_band`, `close_reasons`, `next_action`, and `priority_rank`
+- Action mapping: high leads route to immediate human contact, medium leads to guided follow-up, low leads to nurture, and very low leads to minimal automation
+- Integration: new quote saves get an initial deterministic close score; `calculate-close-score` can recalculate on lead creation, event update, or scheduled batch; `process-leads` uses `close_band` / `close_score` to adjust follow-up timing and manual close escalation
+- Validation performed: function TypeScript and edited JavaScript syntax checks passed; SQL migration reviewed locally; no pricing or quote calculation logic changed
+- Known risks: live scoring still needs Supabase migration/function deployment, then calibration against real won/lost outcomes
+- Next best close task: deploy `calculate-close-score` in dry-run mode and compare scored leads against actual customer quality before enabling dashboard prioritisation
+
+## Latest Pricing Optimisation Layer Update
+
+- Task completed: added a safe post-calculation pricing optimisation layer using historical quote/outcome buckets and customer-facing price ranges
+- Files changed this update: `apps/web/pricingAdjustment.js`, `apps/web/quote.html`, `apps/web/PRICING_OPTIMIZATION_LAYER.md`, `netlify/functions/pricing-optimization-insight.js`, `supabase/migrations/20260505_pricing_optimization_layer.sql`, `supabase/functions/calculate-pricing-optimization/index.ts`, `supabase/functions/record-pricing-outcome/index.ts`, `apps/web/PROJECT_MEMORY.md`
+- Base pricing rule: `quoteCalculator.js` remains unchanged and remains the base estimate authority
+- Data model: captures suburb/postcode, suburb cluster, flooring type, area band, stairs flag, extras flags, quote total, breakdown totals, confidence level, close status, final price, close time, and lost reason
+- Bucket model: aggregates by `(suburb_cluster, flooring_type, area_band, stairs_flag)` and computes win rate, average/median price, p25/p40/p50/p65/p75, average winning price, median winning price, target range, and target price
+- UI change: quote summary can show a price range with a base estimate note and confidence indicator; measurement-unknown leads still show pending measurement instead of a fake range
+- Safety rules: optimisation adjusts display guidance only, does not expose internal rates or margins, does not silently discount, and final pricing still requires scope/site confirmation
+- Validation performed: JavaScript syntax, quote inline script parsing, TypeScript checks for Supabase functions, and `git diff --check` passed locally
+- Known risks: historical bucket confidence is low until real won/lost outcomes are captured; outcome labelling quality directly affects future pricing guidance
+- Next best pricing task: deploy the schema/functions, record a few real won/lost outcomes with `record-pricing-outcome`, run `calculate-pricing-optimization` in dry-run mode, then compare ranges against actual margins before relying on them
+
+## Latest Stair Pricing System Update
+
+- Task completed: mapped stairs from a simple review flag into a range-based, width-tiered pricing model for quote flow, local fallback, Supabase schema, and Netlify private pricing compatibility
+- Stair scope collected from customers: known stair width yes/no, width in mm if known, straight tread quantity, winder/triangular tread quantity, landing up to 1 m², landing up to 2 m², one-side open tread quantity, and two-side open tread quantity
+- Pricing rule: hybrid and laminate use `1200 mm` as the short/long tier guide; engineered timber uses `plank_length_mm / 2`
+- Patterned engineered rule: herringbone and chevron stair pricing uses the matching straight plank range length, not the shorter herringbone/chevron board length
+- If stair width is unknown, the quote uses the short-width allowance and warns that the final stair price changes if confirmed width is over the guide
+- Files changed this update: `apps/web/stairRates.js`, `apps/web/quote.html`, `apps/web/quoteCalculator.js`, `apps/web/pricingSource.js`, `apps/web/pricingSourceConfig.js`, `netlify/functions/_supabasePricing.js`, `supabase/migrations/20260504_stair_pricing_schema.sql`, `supabase/seed_stair_pricing.sql`, `apps/web/OPERON_SUPABASE_DATABASE_IMPLEMENTATION.md`, `apps/web/OPERON_PRICING_RULES.md`, `apps/web/STAIR_PRICING_SETUP.md`, and `apps/web/tests/quoteCalculator.validation.js`
+- Validation performed: local quote calculator tests pass, edited JavaScript syntax checks pass, Netlify helper syntax check passes, and quote inline scripts parse
+- Known risk: actual stair prices are placeholder `0` values until `price_short` and `price_long` are filled per range/type/tier in Supabase or local fallback
 
 ## TODO / NEXT_ACTIONS
 

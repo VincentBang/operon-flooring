@@ -19,6 +19,104 @@
   <meta name="twitter:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <link rel="stylesheet" href="seo-pages.css">
   <script src="tracking.js"></script>
+  <style>
+    .thank-you-layout {
+      display: grid;
+      gap: 24px;
+    }
+
+    .post-submit-grid,
+    .engagement-grid,
+    .segment-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .post-submit-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .engagement-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .segment-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .next-step-card,
+    .engagement-card,
+    .segment-button {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      padding: 18px;
+    }
+
+    .next-step-card strong,
+    .engagement-card strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .next-step-card span,
+    .engagement-card span {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .segment-button {
+      cursor: pointer;
+      text-align: left;
+      color: var(--text);
+      transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+    }
+
+    .segment-button:hover,
+    .segment-button.active {
+      border-color: rgba(181, 110, 82, 0.42);
+      background: rgba(181, 110, 82, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .segment-button strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .segment-button span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .thank-you-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .reassurance-note {
+      margin: 0;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 820px) {
+      .post-submit-grid,
+      .engagement-grid,
+      .segment-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .thank-you-actions .button,
+      .thank-you-actions .button-secondary {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -29,7 +127,7 @@
       </a>
       <nav class="nav-links">
         <a href="index.html#top">Home</a>
-        <a href="index.html#quoteForm">Quote</a>
+        <a href="quote.html">Quote</a>
         <a href="products.html">Flooring Products</a>
         <a href="floorplan.html">Floor Plan</a>
         <a href="blog/index.html">Guides</a>
@@ -39,7 +137,7 @@
         <span></span>
         <span></span>
       </button>
-      <a class="button" href="index.html#quoteForm">Start quote</a>
+      <a class="button" href="quote.html">Start quote</a>
     </div>
   </header>
 
@@ -47,17 +145,91 @@
     <section class="hero">
       <div class="shell">
         <article class="hero-card">
-          <div class="hero-copy" style="max-width: 760px; margin: 0 auto; text-align: center;">
+          <div class="hero-copy thank-you-layout" style="max-width: 900px; margin: 0 auto;">
             <span class="eyebrow">Quote Request Received</span>
-            <h1 id="thankYouTitle">Thank you</h1>
-            <p id="thankYouText">Your quote request has been received. We will review the project details, check the selected scope, and confirm the final quote before work starts.</p>
-            <p class="hero-trust" style="margin-top: 18px;">Quote request received · Scope reviewed · Final quote confirmed before work</p>
-            <div class="hero-actions" style="margin-top: 28px; justify-content: center;">
-              <a class="button" href="index.html#quoteForm">Start another quote</a>
-              <a class="button-secondary" href="products.html">Return to products</a>
+            <div style="text-align: center;">
+              <h1 id="thankYouTitle" style="max-width: none;">Your estimate has been received</h1>
+              <p id="thankYouText">We will review your details, confirm the scope and assumptions, and provide the final quote before work is booked.</p>
+              <p class="hero-trust" style="margin-top: 18px;">No obligation - Scope reviewed first - Final decision remains with you</p>
             </div>
-            <p class="tiny" id="thankYouMeta" style="margin-top: 16px;">No outbound email setup is required for this confirmation page. We keep the request path simple and review submissions directly.</p>
-            <div class="section-card" style="margin-top: 28px; text-align: left;">
+
+            <div class="section-card" style="text-align: left;">
+              <span class="eyebrow">What happens next</span>
+              <div class="post-submit-grid" style="margin-top: 18px;">
+                <div class="next-step-card">
+                  <strong>1. We review your details</strong>
+                  <span>Product, area, access, removal and extras are checked against the request.</span>
+                </div>
+                <div class="next-step-card">
+                  <strong>2. We confirm scope</strong>
+                  <span>Any unclear assumptions are clarified before final pricing is locked in.</span>
+                </div>
+                <div class="next-step-card">
+                  <strong>3. Final quote before work</strong>
+                  <span>You stay in control. Work is not booked until the final quote is confirmed.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-card" style="text-align: center;">
+              <span class="eyebrow">Want to move faster?</span>
+              <h2 style="margin-top: 14px;">Confirm the next detail now</h2>
+              <p>Confirm your project timing so follow-up matches where you are in the decision process.</p>
+              <div class="thank-you-actions" style="margin-top: 22px;">
+                <a class="button" id="callNowButton" href="#" hidden>Call now</a>
+                <a class="button" id="sendMessageButton" href="#" hidden>Send message</a>
+                <a class="button-secondary" href="#leadStageSection" data-thank-you-cta="confirm_details">Confirm details</a>
+              </div>
+            </div>
+
+            <div class="section-card" id="leadStageSection" style="text-align: left;">
+              <span class="eyebrow">Project timing</span>
+              <h2 style="margin-top: 14px;">When are you planning to proceed?</h2>
+              <p>This helps us follow up with the right timing and tone.</p>
+              <div class="segment-grid" style="margin-top: 18px;" role="group" aria-label="Project timing">
+                <button class="segment-button" type="button" data-lead-stage="hot">
+                  <strong>Ready soon</strong>
+                  <span>I want to move forward soon and confirm the final scope.</span>
+                </button>
+                <button class="segment-button" type="button" data-lead-stage="warm">
+                  <strong>Comparing</strong>
+                  <span>I am checking products, scope or another quote before deciding.</span>
+                </button>
+                <button class="segment-button" type="button" data-lead-stage="cold">
+                  <strong>Planning</strong>
+                  <span>I am preparing for a future flooring project.</span>
+                </button>
+              </div>
+              <p class="tiny" id="leadStageStatus" style="margin-top: 14px;">Timing not selected yet.</p>
+            </div>
+
+            <div class="section-card" style="text-align: left;">
+              <span class="eyebrow">While you're here</span>
+              <div class="engagement-grid" style="margin-top: 18px;">
+                <a class="engagement-card" href="quote.html" data-thank-you-cta="review_estimate">
+                  <strong>Review your estimate</strong>
+                  <span>Go back to the saved quote flow and check the request details.</span>
+                </a>
+                <a class="engagement-card" href="products.html" data-thank-you-cta="browse_products">
+                  <strong>Browse flooring products</strong>
+                  <span>Review hybrid, laminate and engineered timber product paths.</span>
+                </a>
+                <a class="engagement-card" href="quote-review.html" data-thank-you-cta="check_quote_scope">
+                  <strong>Check quote scope</strong>
+                  <span>Use Quote Advisor if you are comparing another written quote.</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="thank-you-actions">
+              <a class="button-secondary" href="products.html">Return to products</a>
+              <a class="button-secondary" href="quote.html">View quote again</a>
+              <a class="button-secondary" href="quote-review.html">Review your quote</a>
+            </div>
+            <p class="reassurance-note">No obligation. Final decision remains with you.</p>
+
+            <p class="tiny" id="thankYouMeta" style="text-align: center;">Your request is saved. We review the scope first, then confirm the next step with you.</p>
+            <div class="section-card" style="text-align: left;">
               <span class="eyebrow">Saved Request Summary</span>
               <div class="summary-grid" style="margin-top: 18px;">
                 <div class="summary-row"><span>Selected product</span><strong id="thankYouProduct">Pending summary</strong></div>
@@ -102,7 +274,8 @@
       <div class="footer-col">
         <h4>Actions</h4>
         <ul>
-          <li><a href="index.html#quoteForm">Start Quote</a></li>
+          <li><a href="quote.html">Start Quote</a></li>
+          <li><a href="quote-review.html">Review Quote</a></li>
           <li><a href="floorplan.html">Upload Floor Plan</a></li>
           <li><a href="blog/index.html">Guides</a></li>
         </ul>
@@ -133,6 +306,10 @@
         return area > 0 ? area.toFixed(1) + " m²" : "To be confirmed";
       }
 
+      const BUSINESS_PHONE_E164 = "";
+      const BUSINESS_PHONE_DISPLAY = "";
+      const POST_SUBMIT_STAGE_KEY = "operon_post_submit_lead_stage_v1";
+
       function titleCase(value) {
         return String(value || "")
           .replace(/_/g, " ")
@@ -155,6 +332,102 @@
       const text = document.getElementById("thankYouText");
       const meta = document.getElementById("thankYouMeta");
       const followup = document.getElementById("thankYouFollowup");
+      const callNowButton = document.getElementById("callNowButton");
+      const sendMessageButton = document.getElementById("sendMessageButton");
+      const leadStageStatus = document.getElementById("leadStageStatus");
+
+      if (BUSINESS_PHONE_E164 && BUSINESS_PHONE_DISPLAY && callNowButton) {
+        callNowButton.href = "tel:" + BUSINESS_PHONE_E164;
+        callNowButton.hidden = false;
+        callNowButton.textContent = "Call now";
+      }
+
+      if (BUSINESS_PHONE_E164 && sendMessageButton) {
+        sendMessageButton.href = "sms:" + BUSINESS_PHONE_E164 + "?&body=" + encodeURIComponent("Hi Operon Flooring, I submitted an estimate and would like to move faster.");
+        sendMessageButton.hidden = false;
+        sendMessageButton.textContent = "Send message";
+      }
+
+      function getStageLabel(stage) {
+        if (stage === "hot") return "Ready soon";
+        if (stage === "warm") return "Comparing";
+        if (stage === "cold") return "Planning";
+        return "Not selected";
+      }
+
+      function getStageFollowup(stage) {
+        if (stage === "hot") return "We will treat this as ready-soon and focus on scope confirmation and next available timing.";
+        if (stage === "warm") return "We will focus follow-up on clarity, product direction, and any items you are comparing.";
+        if (stage === "cold") return "We will keep follow-up lighter and focused on planning support.";
+        return "Choose a timing option if you want us to tailor follow-up.";
+      }
+
+      function setLeadStageVisual(stage) {
+        document.querySelectorAll("[data-lead-stage]").forEach(function (button) {
+          button.classList.toggle("active", button.getAttribute("data-lead-stage") === stage);
+        });
+        if (leadStageStatus) {
+          leadStageStatus.textContent = "Selected: " + getStageLabel(stage) + ". " + getStageFollowup(stage);
+        }
+        if (followup) {
+          followup.textContent = getStageFollowup(stage);
+        }
+      }
+
+      function saveLeadStage(stage) {
+        if (["hot", "warm", "cold"].indexOf(stage) === -1) {
+          return;
+        }
+
+        const savedLead = lead || readJson("operon_last_submitted_lead_v1") || {};
+        const nextLead = Object.assign({}, savedLead, {
+          leadStage: stage,
+          lead_stage: stage,
+          leadStageUpdatedAt: new Date().toISOString()
+        });
+        const savedResult = result || readJson("operon_last_submitted_lead_result_v1") || {};
+        const nextResult = Object.assign({}, savedResult, {
+          lead: nextLead,
+          leadStage: stage,
+          leadStageUpdatedAt: nextLead.leadStageUpdatedAt
+        });
+
+        localStorage.setItem("operon_last_submitted_lead_v1", JSON.stringify(nextLead));
+        localStorage.setItem("operon_last_submitted_lead_result_v1", JSON.stringify(nextResult));
+        localStorage.setItem(POST_SUBMIT_STAGE_KEY, JSON.stringify({
+          leadStage: stage,
+          label: getStageLabel(stage),
+          savedAt: nextLead.leadStageUpdatedAt
+        }));
+
+        setLeadStageVisual(stage);
+
+        if (window.OperonTracking && typeof window.OperonTracking.trackEvent === "function") {
+          window.OperonTracking.trackEvent("thank_you_lead_stage_select", {
+            lead_stage: stage
+          });
+          window.OperonTracking.trackEvent("lead_stage_selected", {
+            lead_stage: stage
+          });
+        }
+      }
+
+      document.querySelectorAll("[data-lead-stage]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          saveLeadStage(button.getAttribute("data-lead-stage"));
+        });
+      });
+
+      document.querySelectorAll("[data-thank-you-cta]").forEach(function (link) {
+        link.addEventListener("click", function () {
+          if (window.OperonTracking && typeof window.OperonTracking.trackEvent === "function") {
+            window.OperonTracking.trackEvent("thank_you_page_cta_click", {
+              cta: link.getAttribute("data-thank-you-cta"),
+              destination: link.getAttribute("href") || ""
+            });
+          }
+        });
+      });
 
       if (lead) {
         document.getElementById("thankYouProduct").textContent = lead.selectedProduct || titleCase(lead.category) || "Category estimate";
@@ -168,6 +441,9 @@
 
         text.textContent = "Your request is saved and ready for review. We will confirm the selected scope, product direction, and any site details before work is booked.";
         followup.textContent = "Next step: review of the saved request" + (lead.category ? " for " + titleCase(lead.category) : "") + ", then confirmation of scope and timing.";
+        if (lead.leadStage || lead.lead_stage) {
+          setLeadStageVisual(lead.leadStage || lead.lead_stage);
+        }
       } else {
         document.getElementById("thankYouProduct").textContent = "Category estimate or selected floor";
         document.getElementById("thankYouQuoteMode").textContent = "Supply and install or installation only";
@@ -176,7 +452,7 @@
       }
 
       if (result && result.savedAt) {
-        meta.textContent = "Saved confirmation timestamp: " + new Date(result.savedAt).toLocaleString("en-AU") + ". No outbound email dependency is required for this confirmation path.";
+        meta.textContent = "Saved confirmation timestamp: " + new Date(result.savedAt).toLocaleString("en-AU") + ". We review the request directly before confirming the final scope.";
       }
 
       if (window.OperonTracking) {
@@ -188,6 +464,13 @@
         });
       }
     }());
+  </script>
+  <script src="chatbot/chatbotBootstrap.js"></script>
+  <script>
+    window.OperonChatbotBootstrap.mount({
+      pageKey: "thank-you",
+      openOnInit: false
+    });
   </script>
 </body>
 </html>

@@ -1,0 +1,265 @@
+:root {
+  color-scheme: light;
+  --ink: #1b2524;
+  --muted: #66736d;
+  --panel: #ffffff;
+  --line: #d9ded8;
+  --field: #f7f8f4;
+  --accent: #245f63;
+  --accent-strong: #18484b;
+  --warning: #9a3412;
+  --surface: #ede8dc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background: var(--surface);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  padding: 0.65rem 0.85rem;
+  color: #fff;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--accent-strong);
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 20px;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.workspace,
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.workspace {
+  display: grid;
+  grid-template-rows: auto minmax(400px, 1fr);
+  gap: 16px;
+  padding: 20px;
+}
+
+.workspace header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1,
+h2 {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+#room-canvas {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  touch-action: none;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow: auto;
+  padding: 18px;
+}
+
+.panel section {
+  display: grid;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.panel section:last-child {
+  border-bottom: 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.room-list {
+  display: grid;
+  gap: 8px;
+}
+
+.room-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  color: var(--ink);
+  background: var(--field);
+  border-color: var(--line);
+}
+
+.room-item.active {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+input,
+textarea,
+.json-output {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.7rem;
+  color: var(--ink);
+  background: var(--field);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.summary-grid div {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  background: var(--field);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.summary-grid span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.summary-grid strong {
+  font-size: 1.1rem;
+}
+
+.validation {
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.92rem;
+  font-weight: 650;
+}
+
+.validation.valid {
+  color: #14532d;
+  background: #dcfce7;
+}
+
+.validation.invalid {
+  color: var(--warning);
+  background: #ffedd5;
+}
+
+.points-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.points-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.points-list button {
+  padding: 0.3rem 0.5rem;
+  color: var(--accent);
+  background: #fff;
+}
+
+.json-output,
+pre {
+  min-height: 150px;
+  overflow: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.82rem;
+}
+
+pre {
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--field);
+  white-space: pre-wrap;
+}
+
+@media (max-width: 980px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    overflow: visible;
+  }
+}

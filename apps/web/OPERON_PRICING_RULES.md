@@ -16,6 +16,7 @@ Current frontend runtime implementation:
 - `apps/web/removalRates.js`
 - `apps/web/locationZones.js`
 - `apps/web/pricingRules.js`
+- `apps/web/stairRates.js`
 - `apps/web/quoteCalculator.js`
 
 These files are the maintainable runtime layer for the website. Avoid reintroducing duplicated pricing tables or formula branches inside HTML pages.
@@ -138,8 +139,42 @@ Use `each` for count-based items.
 Examples:
 
 - door trimming
-- stair nosing pieces
 - trims if selected as individual pieces
+
+---
+
+### 2.6 Stair Quantity And Width Tiers
+
+Stairs are priced as count-based scope, but they are not a simple flat `each` rate.
+
+Customer-facing stair inputs should collect:
+
+- whether the project includes stairs
+- whether the customer knows the stair width
+- stair width in millimetres if known
+- quantities for straight stair treads
+- quantities for winder / triangular stair treads
+- quantities for landings up to 1 m²
+- quantities for landings up to 2 m²
+- quantities for one-side open stair treads
+- quantities for two-side open stair treads
+
+Internal stair pricing is private and range-based. Each product range needs 12 stair price slots:
+
+```text
+6 stair types x short-width price
+6 stair types x long-width price
+```
+
+Width guide:
+
+- hybrid and laminate use `1200 mm`
+- engineered timber uses `plank_length_mm / 2`
+- engineered herringbone or chevron ranges use the matching straight plank range length, not the shorter patterned board length
+
+If the customer does not know the width, the estimate uses the short-width stair price and shows a warning that the final stair price changes if confirmed width is over the guide.
+
+Stair line items must be customer-facing totals only. Do not expose the stair unit prices, range price table, width formulas, or installer/material breakdown.
 
 ---
 

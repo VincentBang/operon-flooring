@@ -64,6 +64,13 @@ Refresh additional files when relevant:
   - `apps/web/locationZones.js`
 - analytics / lead tasks:
   - `apps/web/tracking.js`
+- chatbot tasks:
+  - `apps/web/chatbot/CHATBOT_AGENT.md`
+  - `apps/web/chatbot/CHATBOT_MEMORY.md`
+  - `apps/web/chatbot/CHATBOT_AGENT_LOOP.md`
+  - `apps/web/chatbot/CHATBOT_CONVERSATION_FLOWS.md`
+  - `apps/web/chatbot/CHATBOT_JSON_SCHEMA.md`
+  - `apps/web/chatbot/INTEGRATION.md`
 - page / SEO tasks:
   - affected product pages
   - affected suburb pages
@@ -92,16 +99,19 @@ Each task in `apps/web/task_queue.json` must include:
 - `title`
 - `category`
 - `assigned_agent`
-- `impact_score`
-- `confidence_score`
-- `effort_score`
+- `impact`
+- `confidence`
+- `effort`
 - `priority_score`
+- `approval_required`
 - `dependencies`
 - `risk_level`
 - `files_likely_affected`
 - `validation_checklist`
 - `status`
 - `notes`
+
+Use `category = "chatbot"` for chatbot assistant tasks.
 
 Allowed statuses:
 
@@ -122,12 +132,28 @@ Before execution begins:
    - products page
    - product data
    - hybrid / laminate / engineered pages
+   - chatbot assistant / guided conversion
    - suburb pages
    - maintenance / blog content
    - analytics tracking
    - lead capture without email
    - SEO infrastructure
    - QA / stability
+5. include at least 3 chatbot-related candidate tasks in every 50-task queue
+
+Chatbot task examples:
+
+- improve chatbot product guidance flow
+- improve chatbot quote explanation flow
+- improve chatbot quote-review support
+- improve chatbot missing information JSON mapping
+- improve chatbot idle/stuck-user prompts
+- improve chatbot routing suggestions
+- improve chatbot memory from latest site changes
+- audit chatbot for accidental pricing claims
+- validate chatbot does not interfere with quote flow
+
+Chatbot tasks are candidates, not mandatory execution. Use `priority_score = (impact × confidence) / effort` and only execute chatbot tasks when they rank high enough and are safe.
 
 ## Execution Step
 
@@ -142,6 +168,35 @@ For each task:
 5. move to the next ranked safe task
 
 Do not stop after one small task.
+
+## Safe Chatbot Execution Rules
+
+Allowed chatbot work without approval:
+
+- edit files inside `apps/web/chatbot/`
+- update chatbot memory
+- update chatbot conversation flows
+- update chatbot JSON schemas
+- improve chatbot copy
+- improve chatbot routing suggestions
+- improve chatbot safety rules
+- improve chatbot tests/docs
+
+Require approval before:
+
+- injecting chatbot into new live pages
+- changing `quote.html`
+- changing `products.html`
+- modifying `productSelection.js`
+- modifying any pricing-related file
+- enabling auto-fill into quote form
+
+Forbidden:
+
+- chatbot price calculation
+- chatbot displaying estimated price
+- chatbot modifying `quoteCalculator.js`
+- chatbot overriding product/pricing logic
 
 ## Safety Stop Rule
 
@@ -168,6 +223,17 @@ Minimum checks:
 4. no internal rates surfaced to customers
 5. affected links, storage, analytics, or UI still work
 6. mobile UX still holds if a UI task was touched
+
+For chatbot-related tasks, additionally validate:
+
+1. only allowed files changed
+2. chatbot does not calculate prices
+3. chatbot does not expose internal rates
+4. chatbot routes users to correct pages
+5. chatbot responses are short and conversion-focused
+6. chatbot asks one question at a time
+7. chatbot memory aligns with current site logic
+8. no live quote/product flow is broken
 
 ## Logging Rule
 

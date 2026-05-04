@@ -1,1259 +1,1221 @@
 [
   {
-    "id": "CONV-001",
-    "title": "Tighten quote wizard conditional visibility and step gating",
-    "category": "conversion",
-    "assigned_agent": "cro",
-    "impact_score": 10,
-    "confidence_score": 9,
-    "effort_score": 4,
-    "priority_score": 22.5,
-    "dependencies": [],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/tracking.js"
-    ],
-    "validation_checklist": [
-      "Complete a happy-path quote run on desktop and mobile",
-      "Confirm hidden fields do not block progression",
-      "Confirm step view and completion events still fire once"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-01 overnight run by tightening category/product sanity checks, final-step consistency gating, and safer active-step navigation."
-  },
-  {
-    "id": "CONV-002",
-    "title": "Improve quote summary clarity, scope review language, and final confirmation trust",
-    "category": "conversion",
-    "assigned_agent": "cro",
-    "impact_score": 9,
-    "confidence_score": 9,
-    "effort_score": 4,
-    "priority_score": 20.25,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/index.html"
-    ],
-    "validation_checklist": [
-      "Confirm the summary still reflects real quote scope",
-      "Confirm no internal rates or defensive wording appear",
-      "Confirm submit CTA is still obvious on mobile"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-01 overnight run with clearer summary trust copy, next-step guidance, and customer-facing review language."
-  },
-  {
-    "id": "QUOTE-001",
-    "title": "Audit and enforce single-source quoteCalculator handoff inputs",
-    "category": "quote_accuracy",
-    "assigned_agent": "builder",
-    "impact_score": 10,
-    "confidence_score": 8,
-    "effort_score": 4,
-    "priority_score": 20,
-    "dependencies": [],
-    "risk_level": "high",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/quoteCalculator.js",
-      "apps/web/pricingRules.js",
-      "apps/web/products.js"
-    ],
-    "validation_checklist": [
-      "Confirm quote inputs map cleanly into quoteCalculator",
-      "Confirm no duplicate pricing branch is introduced",
-      "Confirm customer output stays bundled and rate-safe"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 long-mode run by resolving category and product handoff through one cleaned selection path before quoteCalculator input is built."
-  },
-  {
-    "id": "CONV-003",
-    "title": "Simplify homepage CTA hierarchy above the fold",
-    "category": "conversion",
-    "assigned_agent": "cro",
-    "impact_score": 9,
-    "confidence_score": 8,
-    "effort_score": 4,
-    "priority_score": 18,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/theme.css"
-    ],
-    "validation_checklist": [
-      "Confirm primary CTA is visually dominant",
-      "Confirm homepage does not become cluttered",
-      "Confirm mobile header and hero still read cleanly"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-01 overnight run by simplifying the hero CTA path around quote start versus product browsing."
-  },
-  {
-    "id": "PROD-001",
-    "title": "Strengthen products-to-quote localStorage bridge and stale-state recovery",
-    "category": "product_catalogue",
-    "assigned_agent": "builder",
-    "impact_score": 9,
-    "confidence_score": 8,
-    "effort_score": 4,
-    "priority_score": 18,
-    "dependencies": [],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/products.js",
-      "apps/web/products.html",
-      "apps/web/index.html"
-    ],
-    "validation_checklist": [
-      "Confirm selected product id and category restore correctly",
-      "Confirm stale or invalid storage is cleared safely",
-      "Confirm quote handoff still uses central product ids"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-01 overnight run by sanitising stored product/category state and keeping quote handoff selections aligned."
-  },
-  {
-    "id": "ANALYTICS-001",
-    "title": "Complete quote funnel event coverage and payload consistency",
-    "category": "analytics_tracking",
-    "assigned_agent": "builder",
-    "impact_score": 9,
-    "confidence_score": 8,
-    "effort_score": 4,
-    "priority_score": 18,
-    "dependencies": [],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/tracking.js",
-      "apps/web/index.html",
-      "apps/web/floorplan.html"
-    ],
-    "validation_checklist": [
-      "Confirm quote_start, step_view, step_complete, and submit events all fire",
-      "Confirm payload field names stay consistent",
-      "Confirm no duplicate event spam is introduced"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-01 overnight run with shared catalogue tracking helpers and more consistent product-selection payload handling."
-  },
-  {
-    "id": "PROD-002",
-    "title": "Improve products.html category filtering and selected-state feedback",
-    "category": "product_catalogue",
-    "assigned_agent": "builder",
-    "impact_score": 8,
-    "confidence_score": 8,
-    "effort_score": 4,
-    "priority_score": 16,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/products.html",
-      "apps/web/products.js",
-      "apps/web/seo-pages.css"
-    ],
-    "validation_checklist": [
-      "Confirm filter state changes update visible catalogue correctly",
-      "Confirm selected product feedback is obvious on mobile",
-      "Confirm quote CTA keeps the correct product context"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-01 overnight run with stronger selected-state feedback, clearer catalogue banners, and a filter reset path."
-  },
-  {
-    "id": "QUOTE-002",
-    "title": "Add quote summary validation for area, product, scope, and extras mismatches",
-    "category": "quote_accuracy",
-    "assigned_agent": "builder",
-    "impact_score": 8,
-    "confidence_score": 8,
-    "effort_score": 4,
-    "priority_score": 16,
-    "dependencies": [
-      "QUOTE-001",
-      "PROD-001"
-    ],
-    "risk_level": "high",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/quoteCalculator.js"
-    ],
-    "validation_checklist": [
-      "Confirm mismatched scope states are caught before submit",
-      "Confirm no false positive errors appear on valid runs",
-      "Confirm summary values still match calculator output"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-01 overnight run by adding summary consistency checks before submit and surfacing mismatches in the review panel."
-  },
-  {
-    "id": "SEO-PROD-001",
-    "title": "Add featured product quote-bridge sections across laminate, hybrid, and engineered pages",
-    "category": "seo_product_pages",
-    "assigned_agent": "seo",
-    "impact_score": 8,
-    "confidence_score": 8,
-    "effort_score": 4,
-    "priority_score": 16,
-    "dependencies": [
-      "PROD-001"
-    ],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/laminate-flooring-sydney.html",
-      "apps/web/hybrid-flooring-sydney.html",
-      "apps/web/engineered-timber-flooring-sydney.html",
-      "apps/web/products.js"
-    ],
-    "validation_checklist": [
-      "Confirm featured products match central product data",
-      "Confirm quote CTAs preserve product/category selection",
-      "Confirm product-page layouts remain clean on mobile"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 long-mode run by preserving category-specific quote links across the laminate, hybrid, and engineered money pages and their quote-bridge sections."
-  },
-  {
-    "id": "CONV-004",
-    "title": "Improve mobile quote wizard step visibility and CTA placement",
-    "category": "conversion",
-    "assigned_agent": "cro",
-    "impact_score": 9,
-    "confidence_score": 7,
-    "effort_score": 4,
-    "priority_score": 15.75,
-    "dependencies": [
-      "CONV-001"
-    ],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/theme.css"
-    ],
-    "validation_checklist": [
-      "Confirm active step content remains above the fold on mobile",
-      "Confirm CTA placement does not cover form controls",
-      "Confirm scroll-to-step behavior still feels predictable"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-01 overnight run by scrolling mobile users to the active step instead of the top of the wizard container."
-  },
-  {
-    "id": "LEAD-001",
-    "title": "Add safe submit-failure backup payload and local restore flow",
+    "id": "DOC-QUOTE-REVIEW-001",
+    "title": "Document Quote Advisor Supabase setup steps for owner",
     "category": "lead_capture",
-    "assigned_agent": "builder",
-    "impact_score": 9,
-    "confidence_score": 7,
-    "effort_score": 4,
-    "priority_score": 15.75,
-    "dependencies": [],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/tracking.js"
-    ],
-    "validation_checklist": [
-      "Confirm failed submit payload saves locally without exposing internal data",
-      "Confirm restore path is clear and safe",
-      "Confirm success submissions clear the backup correctly"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-01 overnight run by surfacing a restore/review banner for saved failed submissions while keeping local backup payloads in place."
-  },
-  {
-    "id": "ANALYTICS-002",
-    "title": "Verify product_select, floorplan_usage, product_catalogue_view, and filter_change events dedupe cleanly",
-    "category": "analytics_tracking",
-    "assigned_agent": "builder",
-    "impact_score": 8,
-    "confidence_score": 9,
-    "effort_score": 5,
-    "priority_score": 14.4,
-    "dependencies": [
-      "ANALYTICS-001",
-      "PROD-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/tracking.js",
-      "apps/web/products.js",
-      "apps/web/floorplan.html"
-    ],
-    "validation_checklist": [
-      "Confirm each event fires once per user action",
-      "Confirm event payloads include expected identifiers",
-      "Confirm console remains clean during catalogue and floorplan use"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 long-mode run with rapid duplicate guards for catalogue, filter, product-select and floorplan usage events so repeat actions do not inflate counts."
-  },
-  {
-    "id": "LEAD-002",
-    "title": "Add no-email thank-you redirect and confirmation path after successful quote submit",
-    "category": "lead_capture",
-    "assigned_agent": "builder",
-    "impact_score": 8,
-    "confidence_score": 9,
-    "effort_score": 5,
-    "priority_score": 14.4,
-    "dependencies": [
-      "LEAD-001"
-    ],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/thank-you.html",
-      "apps/web/tracking.js"
-    ],
-    "validation_checklist": [
-      "Confirm successful submit lands on a clear confirmation state",
-      "Confirm no outbound email dependency is introduced",
-      "Confirm tracking still records submit success before redirect"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 long-mode run with a local thank-you page, saved request summary, redirect path, and success tracking that does not rely on outbound email."
-  },
-  {
-    "id": "SEO-PROD-002",
-    "title": "Refine commercial hero and CTA language on laminate, hybrid, and engineered pages",
-    "category": "seo_product_pages",
-    "assigned_agent": "seo",
-    "impact_score": 8,
-    "confidence_score": 9,
-    "effort_score": 5,
-    "priority_score": 14.4,
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 9,
+    "effort": 1,
+    "priority_score": 63,
+    "approval_required": false,
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/laminate-flooring-sydney.html",
-      "apps/web/hybrid-flooring-sydney.html",
-      "apps/web/engineered-timber-flooring-sydney.html"
+      "apps/web/QUOTE_REVIEW_DATA_ENGINE.md"
     ],
     "validation_checklist": [
-      "Confirm each page still has one H1 and clear CTA",
-      "Confirm wording remains practical and non-generic",
-      "Confirm final-pricing language feels transparent"
+      "SQL path listed",
+      "env vars listed",
+      "local fallback described"
     ],
     "status": "done",
-    "notes": "Completed in the 2026-05-02 long-mode run by tightening the commercial hero and CTA copy on the laminate, hybrid, and engineered product pages."
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: advisor docs/schema handoff updated and validated. | Completed locally: Quote Advisor Supabase setup documented in database implementation and data-engine docs.",
+    "updated_at": "2026-05-03T21:29:08.566Z"
   },
   {
-    "id": "PROD-DATA-001",
-    "title": "Normalise supplier product structure and placeholder flags in products.js",
-    "category": "product_catalogue",
-    "assigned_agent": "builder",
-    "impact_score": 8,
-    "confidence_score": 8,
-    "effort_score": 5,
-    "priority_score": 12.8,
+    "id": "CHATBOT-004",
+    "title": "Refresh chatbot memory from quote.html and Quote Advisor changes",
+    "category": "chatbot",
+    "assigned_agent": "Chatbot Agent",
+    "impact": 7,
+    "confidence": 9,
+    "effort": 1,
+    "priority_score": 63,
+    "approval_required": false,
     "dependencies": [],
-    "risk_level": "medium",
+    "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/products.js"
+      "apps/web/chatbot/CHATBOT_MEMORY.md"
     ],
     "validation_checklist": [
-      "Confirm all catalogue entries still render",
-      "Confirm placeholder products are clearly marked",
-      "Confirm selected product ids remain stable"
+      "quote page moved",
+      "advisor is scope-only",
+      "safe handoff noted"
     ],
     "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by adding explicit catalogue and pricing-status flags in products.js so live products, estimate-only categories, and pending-price rows are handled consistently."
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: chatbot memory refreshed for Quote Advisor, data payload, and route to quote.html?source=quote_review.",
+    "updated_at": "2026-05-03T21:29:08.573Z"
   },
   {
-    "id": "PROD-DATA-002",
-    "title": "Audit category consistency, product ids, and category fallback behavior",
-    "category": "product_catalogue",
-    "assigned_agent": "builder",
-    "impact_score": 8,
-    "confidence_score": 8,
-    "effort_score": 5,
-    "priority_score": 12.8,
-    "dependencies": [
-      "PROD-DATA-001"
-    ],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/products.js",
-      "apps/web/index.html"
-    ],
-    "validation_checklist": [
-      "Confirm each product belongs to the correct category",
-      "Confirm fallback category logic still works",
-      "Confirm localStorage recovery does not cross categories incorrectly"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by validating category membership and id uniqueness, then using explicit category stats so fallback behaviour stays aligned with the central product source."
-  },
-  {
-    "id": "QUOTE-003",
-    "title": "Add guardrails so floorplan handoff stays real_area-only and wastage stays inside quoteCalculator",
-    "category": "quote_accuracy",
-    "assigned_agent": "builder",
-    "impact_score": 8,
-    "confidence_score": 8,
-    "effort_score": 5,
-    "priority_score": 12.8,
-    "dependencies": [
-      "QUOTE-001"
-    ],
-    "risk_level": "high",
-    "files_likely_affected": [
-      "apps/web/floorplan.html",
-      "apps/web/quoteCalculator.js"
-    ],
-    "validation_checklist": [
-      "Confirm floorplan passes real_area only",
-      "Confirm no wastage is added before quoteCalculator",
-      "Confirm quote totals still match expected pricing rules"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by switching the floorplan quote handoff to a structured real-area payload and migrating legacy storage into the confirmed handoff key."
-  },
-  {
-    "id": "SEO-INFRA-001",
-    "title": "Audit sitemap, titles, meta descriptions, and canonicals for active money pages",
+    "id": "SEO-SITEMAP-001",
+    "title": "Ensure sitemap includes quote-review and quote page canonical paths",
     "category": "seo_infrastructure",
-    "assigned_agent": "seo",
-    "impact_score": 7,
-    "confidence_score": 9,
-    "effort_score": 5,
-    "priority_score": 12.6,
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 9,
+    "effort": 1,
+    "priority_score": 63,
+    "approval_required": false,
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
       "apps/web/sitemap.xml",
-      "apps/web/index.html",
-      "apps/web/laminate-flooring-sydney.html",
-      "apps/web/hybrid-flooring-sydney.html",
-      "apps/web/engineered-timber-flooring-sydney.html",
-      "apps/web/flooring-installation-cost-sydney.html"
+      "apps/web/quote-review.html",
+      "apps/web/quote.html"
     ],
     "validation_checklist": [
-      "Confirm each money page has an accurate title and meta description",
-      "Confirm canonical tags match live intended URLs",
-      "Confirm sitemap entries stay aligned with active pages"
+      "quote-review included",
+      "quote included",
+      "canonical matches"
     ],
     "status": "done",
-    "notes": "Completed in the 2026-05-02 long-mode run by aligning active money-page metadata, preserving canonical intent, and correcting the engineered timber page title targeting."
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: sitemap already includes quote.html and quote-review.html with canonical pages present.",
+    "updated_at": "2026-05-03T21:29:08.573Z"
   },
   {
-    "id": "LINK-001",
-    "title": "Strengthen homepage, product, suburb, and blog internal-link paths to money pages",
-    "category": "internal_linking",
-    "assigned_agent": "seo",
-    "impact_score": 7,
-    "confidence_score": 9,
-    "effort_score": 5,
-    "priority_score": 12.6,
+    "id": "DATA-001",
+    "title": "Extend Supabase implementation doc with quote_reviews table relationship",
+    "category": "data_engine",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 9,
+    "effort": 1,
+    "priority_score": 54,
+    "approval_required": false,
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/blog/index.html",
-      "apps/web/laminate-flooring-sydney.html",
-      "apps/web/hybrid-flooring-sydney.html",
-      "apps/web/engineered-timber-flooring-sydney.html"
-    ],
-    "validation_checklist": [
-      "Confirm links resolve and use natural anchor text",
-      "Confirm pages keep at least two related internal links",
-      "Confirm added links support the quote path"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 long-mode run by adding stronger money-page links from the homepage, blog hub, and related-page sections without adding clutter."
-  },
-  {
-    "id": "SEO-PROD-003",
-    "title": "Audit FAQ content and schema consistency on laminate, hybrid, and engineered pages",
-    "category": "seo_product_pages",
-    "assigned_agent": "seo",
-    "impact_score": 7,
-    "confidence_score": 8,
-    "effort_score": 5,
-    "priority_score": 11.2,
-    "dependencies": [
-      "SEO-PROD-002"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/laminate-flooring-sydney.html",
-      "apps/web/hybrid-flooring-sydney.html",
-      "apps/web/engineered-timber-flooring-sydney.html"
-    ],
-    "validation_checklist": [
-      "Confirm FAQ copy matches visible page content",
-      "Confirm schema stays valid and non-duplicated",
-      "Confirm answers remain practical and specific"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by auditing the three money-page FAQ sections and confirming the visible questions remain aligned with their FAQ schema without duplication."
-  },
-  {
-    "id": "SUB-001",
-    "title": "Deepen Parramatta page with local project context and non-duplicate FAQ detail",
-    "category": "suburb_pages",
-    "assigned_agent": "seo",
-    "impact_score": 8,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 11.2,
-    "dependencies": [
-      "LINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/parramatta-flooring.html"
-    ],
-    "validation_checklist": [
-      "Confirm page copy is locally specific",
-      "Confirm no thin or duplicated suburb sections are added",
-      "Confirm links back to quote and product pages remain strong"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by adding Parramatta-specific FAQ detail and a cleaner hybrid-first quote bridge for apartment and mixed-use access conditions."
-  },
-  {
-    "id": "SUB-002",
-    "title": "Deepen Liverpool page with local access patterns and stronger CTA bridges",
-    "category": "suburb_pages",
-    "assigned_agent": "seo",
-    "impact_score": 8,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 11.2,
-    "dependencies": [
-      "LINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/liverpool-flooring.html"
-    ],
-    "validation_checklist": [
-      "Confirm local property and access context is specific",
-      "Confirm page avoids generic suburb filler",
-      "Confirm CTA pathways feel commercial and clear"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by adding stronger Liverpool-specific FAQ detail and clearer CTA bridges for staged occupied-home and townhouse projects."
-  },
-  {
-    "id": "SUB-003",
-    "title": "Deepen Auburn page with apartment-access nuance and stronger product links",
-    "category": "suburb_pages",
-    "assigned_agent": "seo",
-    "impact_score": 8,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 11.2,
-    "dependencies": [
-      "LINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/auburn-flooring.html"
-    ],
-    "validation_checklist": [
-      "Confirm local apartment and access detail feels real",
-      "Confirm product-category links remain relevant",
-      "Confirm page copy is not duplicated from other suburbs"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by deepening Auburn with walk-up and access-specific FAQ detail plus stronger hybrid-led quote bridges."
-  },
-  {
-    "id": "SUB-004",
-    "title": "Deepen Blacktown page with detached-home renovation context and CTA alignment",
-    "category": "suburb_pages",
-    "assigned_agent": "seo",
-    "impact_score": 8,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 11.2,
-    "dependencies": [
-      "LINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/blacktown-flooring.html"
-    ],
-    "validation_checklist": [
-      "Confirm local context matches likely Blacktown project types",
-      "Confirm CTA still points cleanly into the quote flow",
-      "Confirm page remains distinct from other suburb templates"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by adding Blacktown-specific FAQ detail and clearer hybrid-first CTA paths for larger family-home projects."
-  },
-  {
-    "id": "SUB-005",
-    "title": "Deepen Miranda page with apartment and coastal-living service context",
-    "category": "suburb_pages",
-    "assigned_agent": "seo",
-    "impact_score": 7,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 9.8,
-    "dependencies": [
-      "LINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/miranda-flooring.html"
-    ],
-    "validation_checklist": [
-      "Confirm local context is specific to Miranda work patterns",
-      "Confirm internal links support product and quote intent",
-      "Confirm no duplicate suburb boilerplate is used"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by deepening Miranda with premium-finish and moisture-aware FAQ detail plus a stronger engineered-timber quote bridge."
-  },
-  {
-    "id": "BLOG-001",
-    "title": "Strengthen hybrid cleaning guide links back to quote and product pages",
-    "category": "maintenance_content",
-    "assigned_agent": "seo",
-    "impact_score": 7,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 9.8,
-    "dependencies": [
-      "LINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/blog/how-to-clean-hybrid-flooring.html"
-    ],
-    "validation_checklist": [
-      "Confirm guide links naturally into hybrid and quote pages",
-      "Confirm advice remains practical and trade-informed",
-      "Confirm page stays useful rather than promotional filler"
-    ],
-    "status": "done",
-    "notes": "Verified in the 2026-05-02 overnight run: the hybrid cleaning guide already links naturally to hybrid flooring, product browsing, floor plan measurement, and quote CTAs without becoming promotional filler."
-  },
-  {
-    "id": "BLOG-002",
-    "title": "Refresh laminate water-damage guide with clearer replacement and quote pathways",
-    "category": "maintenance_content",
-    "assigned_agent": "seo",
-    "impact_score": 7,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 9.8,
-    "dependencies": [
-      "LINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/blog/laminate-floor-water-damage.html"
-    ],
-    "validation_checklist": [
-      "Confirm replacement advice stays practical",
-      "Confirm quote CTA is clear but not forced",
-      "Confirm page links to relevant laminate and quote destinations"
-    ],
-    "status": "done",
-    "notes": "Verified in the 2026-05-02 overnight run: the laminate water-damage guide now gives practical repair/replacement guidance with clear paths to laminate products, floor plan measurement, and the quote form."
-  },
-  {
-    "id": "BLOG-003",
-    "title": "Improve floating-floor gaps guide with stronger diagnosis-to-quote flow",
-    "category": "maintenance_content",
-    "assigned_agent": "seo",
-    "impact_score": 7,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 9.8,
-    "dependencies": [
-      "LINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/blog/flooring-gaps-and-expansion.html"
-    ],
-    "validation_checklist": [
-      "Confirm diagnosis steps stay credible",
-      "Confirm CTA links are relevant and non-pushy",
-      "Confirm page links to the most relevant product and quote pages"
-    ],
-    "status": "done",
-    "notes": "Verified in the 2026-05-02 overnight run: the floating-floor gaps guide supports diagnosis first, then routes replacement-ready users to the floor plan tool, product browsing, and quote form."
-  },
-  {
-    "id": "BLOG-004",
-    "title": "Improve boards lifting guide with clearer repair-versus-replace CTA flow",
-    "category": "maintenance_content",
-    "assigned_agent": "seo",
-    "impact_score": 7,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 9.8,
-    "dependencies": [
-      "LINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/blog/why-is-my-floor-lifting.html"
-    ],
-    "validation_checklist": [
-      "Confirm troubleshooting remains credible",
-      "Confirm repair-versus-replace pathways are easy to understand",
-      "Confirm internal links support the next commercial step"
-    ],
-    "status": "done",
-    "notes": "Verified in the 2026-05-02 overnight run: the lifting-floor guide links repair-versus-replace decisions into product category pages, floor plan measurement, and quote CTAs."
-  },
-  {
-    "id": "BLOG-005",
-    "title": "Improve repair-versus-replace guide with stronger product-category next steps",
-    "category": "maintenance_content",
-    "assigned_agent": "seo",
-    "impact_score": 6,
-    "confidence_score": 8,
-    "effort_score": 5,
-    "priority_score": 9.6,
-    "dependencies": [
-      "LINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/blog/floor-repair-or-replace.html"
-    ],
-    "validation_checklist": [
-      "Confirm category recommendations stay specific",
-      "Confirm guide links naturally to product and quote pages",
-      "Confirm page avoids repetitive filler content"
-    ],
-    "status": "done",
-    "notes": "Verified in the 2026-05-02 overnight run: the repair-versus-replace guide now gives product-category next steps and quote/floor-plan pathways without repetitive filler."
-  },
-  {
-    "id": "ANALYTICS-003",
-    "title": "Add step_error and quote_submit_error diagnostic consistency across the wizard save flow",
-    "category": "analytics_tracking",
-    "assigned_agent": "builder",
-    "impact_score": 6,
-    "confidence_score": 8,
-    "effort_score": 5,
-    "priority_score": 9.6,
-    "dependencies": [
-      "ANALYTICS-001"
-    ],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/tracking.js",
-      "apps/web/index.html"
-    ],
-    "validation_checklist": [
-      "Confirm errors record the right step context",
-      "Confirm submit success and error paths are distinguishable",
-      "Confirm no extra console noise appears"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 long-mode run by adding step_error tracking for validation, blocked-submit, and submit-error paths alongside the existing submit success/error events."
-  },
-  {
-    "id": "LEAD-003",
-    "title": "Prepare Netlify Forms or Supabase placeholder contract without enabling outbound email",
-    "category": "saas_infrastructure",
-    "assigned_agent": "builder",
-    "impact_score": 6,
-    "confidence_score": 8,
-    "effort_score": 5,
-    "priority_score": 9.6,
-    "dependencies": [
-      "LEAD-001"
-    ],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "netlify/functions/save-quote-request.js",
-      "apps/web/PROJECT_MEMORY.md"
-    ],
-    "validation_checklist": [
-      "Confirm no outbound email dependency is introduced",
-      "Confirm placeholder contract does not corrupt lead payloads",
-      "Confirm submit flow stays safe if external systems are unavailable"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by keeping Netlify Forms as the no-email live capture path, preserving a clean lead payload for future Supabase insertion, and leaving future Resend connection comments without enabling outbound email."
-  },
-  {
-    "id": "LEAD-004",
-    "title": "Save raw lead payload safely for retry and surface retry instructions",
-    "category": "lead_capture",
-    "assigned_agent": "builder",
-    "impact_score": 6,
-    "confidence_score": 8,
-    "effort_score": 5,
-    "priority_score": 9.6,
-    "dependencies": [
-      "LEAD-001"
-    ],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/tracking.js"
-    ],
-    "validation_checklist": [
-      "Confirm payload is restorable after a failed save",
-      "Confirm retry guidance is understandable to users",
-      "Confirm sensitive internal pricing data is never stored in plain view"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by saving the clean lead payload before submission, preserving failed local/Netlify attempts in browser storage, and surfacing recovery guidance without adding email sending."
-  },
-  {
-    "id": "QA-001",
-    "title": "Audit customer-facing pages for internal-rate exposure or defensive pricing wording",
-    "category": "qa_stability",
-    "assigned_agent": "builder",
-    "impact_score": 6,
-    "confidence_score": 8,
-    "effort_score": 5,
-    "priority_score": 9.6,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/laminate-flooring-sydney.html",
-      "apps/web/hybrid-flooring-sydney.html",
-      "apps/web/engineered-timber-flooring-sydney.html",
-      "apps/web/flooring-installation-cost-sydney.html"
-    ],
-    "validation_checklist": [
-      "Search the public HTML pages for internal-rate wording",
-      "Confirm customer-facing copy stays transparent",
-      "Confirm no raw rate, margin, or multiplier text is surfaced"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 long-mode run by auditing customer-facing pricing wording and restricting quote diagnostics to local debug hosts only."
-  },
-  {
-    "id": "PROD-DATA-003",
-    "title": "Audit and improve unique image alt text across supplier product entries",
-    "category": "product_catalogue",
-    "assigned_agent": "seo",
-    "impact_score": 7,
-    "confidence_score": 6,
-    "effort_score": 5,
-    "priority_score": 8.4,
-    "dependencies": [
-      "PROD-DATA-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/products.js"
-    ],
-    "validation_checklist": [
-      "Confirm every product image alt text is unique",
-      "Confirm alt text stays descriptive and non-spammy",
-      "Confirm catalogue rendering remains unchanged"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by auditing active supplier product image alt text and exposing a normalised imageAlt alias while preserving existing visible catalogue rendering and pricing behavior."
-  },
-  {
-    "id": "PROD-DATA-004",
-    "title": "Add clear placeholder messaging where supplier prices or details are incomplete",
-    "category": "product_catalogue",
-    "assigned_agent": "builder",
-    "impact_score": 7,
-    "confidence_score": 6,
-    "effort_score": 5,
-    "priority_score": 8.4,
-    "dependencies": [
-      "PROD-DATA-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/products.js",
-      "apps/web/products.html"
-    ],
-    "validation_checklist": [
-      "Confirm placeholders are obvious to the user",
-      "Confirm incomplete catalogue rows do not break quote flow",
-      "Confirm product cards stay visually clean"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by auditing catalogue placeholder states; pending supplier prices already show customer-facing pending-review labels and selected products continue to use the standard category estimate until review."
-  },
-  {
-    "id": "SEO-INFRA-002",
-    "title": "Audit robots, sitemap freshness, and canonical alignment for suburb and blog pages",
-    "category": "seo_infrastructure",
-    "assigned_agent": "seo",
-    "impact_score": 7,
-    "confidence_score": 6,
-    "effort_score": 5,
-    "priority_score": 8.4,
-    "dependencies": [
-      "SEO-INFRA-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/robots.txt",
-      "apps/web/sitemap.xml",
-      "apps/web/blog/index.html",
-      "apps/web/auburn-flooring.html",
-      "apps/web/blacktown-flooring.html",
-      "apps/web/liverpool-flooring.html",
-      "apps/web/parramatta-flooring.html",
-      "apps/web/miranda-flooring.html"
-    ],
-    "validation_checklist": [
-      "Confirm active pages are indexable where intended",
-      "Confirm sitemap entries are fresh and canonical-safe",
-      "Confirm suburb and blog URLs resolve correctly"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by auditing sitemap targets, canonical tags, robots directives, and suburb handoff URLs; sitemap targets exist, old suburb URLs remain noindex handoffs, and policy-page canonicals now point to the live domain."
-  },
-  {
-    "id": "BACKLINK-001",
-    "title": "Prepare backlink asset list for suppliers, suburbs, and maintenance guides",
-    "category": "backlink_preparation",
-    "assigned_agent": "seo",
-    "impact_score": 7,
-    "confidence_score": 6,
-    "effort_score": 5,
-    "priority_score": 8.4,
-    "dependencies": [
-      "LINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/backlink-tracker.html",
-      "apps/web/PROJECT_MEMORY.md"
-    ],
-    "validation_checklist": [
-      "Confirm prepared targets point to strong destination pages",
-      "Confirm no outreach task depends on unpolished thin pages",
-      "Confirm asset list stays commercially relevant"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by documenting a backlink asset list covering supplier pages, product pages, suburb pages, maintenance guides, and the floor plan tool, with weak/draft pages excluded."
-  },
-  {
-    "id": "BACKLINK-002",
-    "title": "Build local citation checklist for Sydney service pages",
-    "category": "backlink_preparation",
-    "assigned_agent": "seo",
-    "impact_score": 7,
-    "confidence_score": 6,
-    "effort_score": 5,
-    "priority_score": 8.4,
-    "dependencies": [
-      "BACKLINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/backlink-tracker.html",
-      "apps/web/dashboard.html"
-    ],
-    "validation_checklist": [
-      "Confirm each citation target matches the brand/service footprint",
-      "Confirm tracked landing pages are live and relevant",
-      "Confirm checklist can be maintained without external approvals"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by adding a local citation checklist to the SEO strategy and backlink tracker so Sydney directory work can be tracked consistently without external outreach yet."
-  },
-  {
-    "id": "BACKLINK-003",
-    "title": "Prepare supplier and partner outreach value propositions and target page map",
-    "category": "backlink_preparation",
-    "assigned_agent": "seo",
-    "impact_score": 7,
-    "confidence_score": 6,
-    "effort_score": 5,
-    "priority_score": 8.4,
-    "dependencies": [
-      "BACKLINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/backlink-tracker.html",
-      "apps/web/PROJECT_MEMORY.md"
-    ],
-    "validation_checklist": [
-      "Confirm outreach targets map to the strongest destination pages",
-      "Confirm value propositions are specific and non-generic",
-      "Confirm no outreach depends on unpublished or weak content"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by defining supplier, builder, property-manager, editorial, and local partner outreach value propositions plus a target-page map."
-  },
-  {
-    "id": "QA-002",
-    "title": "Run broken-link audit across homepage, products, product pages, suburb pages, and blog index",
-    "category": "qa_stability",
-    "assigned_agent": "builder",
-    "impact_score": 6,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 8.4,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/products.html",
-      "apps/web/blog/index.html",
-      "apps/web/sitemap.xml"
-    ],
-    "validation_checklist": [
-      "Check internal link targets resolve",
-      "Confirm no orphaned suburb/product/blog links remain",
-      "Confirm sitemap stays aligned with active links"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run with a local broken-link audit across the homepage, products page, money pages, suburb pages, and blog hub; no broken customer-facing internal links were found in that set."
-  },
-  {
-    "id": "QA-003",
-    "title": "Run mobile responsiveness spot audit across homepage, products, product pages, and floorplan",
-    "category": "qa_stability",
-    "assigned_agent": "cro",
-    "impact_score": 6,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 8.4,
-    "dependencies": [
-      "CONV-004",
-      "PROD-002"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/products.html",
-      "apps/web/floorplan.html",
-      "apps/web/seo-pages.css",
-      "apps/web/theme.css"
-    ],
-    "validation_checklist": [
-      "Confirm key pages remain usable at mobile widths",
-      "Confirm CTA and navigation controls stay accessible",
-      "Confirm no overflow or clipped summary states appear"
-    ],
-    "status": "pending",
-    "notes": "Still pending after the 2026-05-02 overnight run because this requires browser-render mobile QA across homepage, products, money pages, and floorplan. Static parsing and link checks passed, but visual viewport checks should be done before marking complete."
-  },
-  {
-    "id": "SEO-INFRA-003",
-    "title": "Audit schema markup coverage for money pages and core blog guides",
-    "category": "seo_infrastructure",
-    "assigned_agent": "seo",
-    "impact_score": 6,
-    "confidence_score": 6,
-    "effort_score": 5,
-    "priority_score": 7.2,
-    "dependencies": [
-      "SEO-INFRA-001",
-      "SEO-PROD-003"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/laminate-flooring-sydney.html",
-      "apps/web/hybrid-flooring-sydney.html",
-      "apps/web/engineered-timber-flooring-sydney.html",
-      "apps/web/blog/laminate-vs-hybrid.html",
-      "apps/web/blog/flooring-cost-sydney.html"
-    ],
-    "validation_checklist": [
-      "Confirm schema matches visible page content",
-      "Confirm no duplicate FAQ or article schema is injected",
-      "Confirm structured data remains relevant and non-spammy"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by auditing JSON-LD coverage on the homepage, money pages, cost pages, and core guides; homepage FAQ schema was aligned with visible FAQ content, and no invalid JSON-LD or non-visible FAQ questions remained in the checked set."
-  },
-  {
-    "id": "ANALYTICS-004",
-    "title": "Expose 50-task queue status and completed-task rollups in the dashboard safely",
-    "category": "analytics_tracking",
-    "assigned_agent": "builder",
-    "impact_score": 6,
-    "confidence_score": 6,
-    "effort_score": 5,
-    "priority_score": 7.2,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/dashboard.html",
-      "apps/web/task_queue.json"
-    ],
-    "validation_checklist": [
-      "Confirm dashboard can still render queue data safely",
-      "Confirm new queue fields do not break existing task views",
-      "Confirm no queue status data leaks into customer-facing pages"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by adding safe read-only dashboard rollups for total backlog tasks, completed tasks, pending tasks, completion rate, status counts, and completed categories from task_queue.json."
-  },
-  {
-    "id": "SAAS-001",
-    "title": "Align agent-task-engine helper with 50-task backlog semantics and run-mode limits",
-    "category": "saas_infrastructure",
-    "assigned_agent": "builder",
-    "impact_score": 6,
-    "confidence_score": 6,
-    "effort_score": 5,
-    "priority_score": 7.2,
-    "dependencies": [
-      "ANALYTICS-004"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/agent-task-engine.js",
-      "apps/web/task_queue.json"
-    ],
-    "validation_checklist": [
-      "Confirm helper limits match default, long, and overnight modes",
-      "Confirm helper does not overwrite the ranked source-of-truth queue incorrectly",
-      "Confirm local dashboard references stay stable"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by adding default/long/overnight run-mode limits, ranked pending-task batching, source queue loading, and safeguards so generated placeholder tasks do not overwrite a loaded 50-task backlog."
-  },
-  {
-    "id": "LEAD-005",
-    "title": "Create safe post-submit retry guidance and backup-clear rules",
-    "category": "lead_capture",
-    "assigned_agent": "builder",
-    "impact_score": 5,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 7,
-    "dependencies": [
-      "LEAD-001",
-      "LEAD-002"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/index.html"
-    ],
-    "validation_checklist": [
-      "Confirm retry instructions only appear when needed",
-      "Confirm backups clear after successful submit",
-      "Confirm users are not trapped in a stale confirmation state"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by keeping recovery guidance hidden unless a failed submit backup exists, clearing the visible recovery state after successful submission, and preserving the summary review path for retry."
-  },
-  {
-    "id": "ANALYTICS-005",
-    "title": "Add local QA checklist for quote_submit_success versus quote_submit_error event paths",
-    "category": "analytics_tracking",
-    "assigned_agent": "builder",
-    "impact_score": 5,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 7,
-    "dependencies": [
-      "ANALYTICS-001",
-      "ANALYTICS-003"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/tracking.js",
-      "apps/web/PROJECT_MEMORY.md"
-    ],
-    "validation_checklist": [
-      "Confirm success and error event paths are documented and testable",
-      "Confirm no duplicate success/error firing occurs",
-      "Confirm QA notes stay aligned with current submit flow"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by adding a local QA checklist for quote_submit, quote_submit_success, and quote_submit_error paths without requiring outbound email infrastructure."
-  },
-  {
-    "id": "LINK-002",
-    "title": "Deepen suburb-to-product and suburb-to-guide internal links after suburb content upgrades",
-    "category": "internal_linking",
-    "assigned_agent": "seo",
-    "impact_score": 5,
-    "confidence_score": 7,
-    "effort_score": 5,
-    "priority_score": 7,
-    "dependencies": [
-      "SUB-001",
-      "SUB-002",
-      "SUB-003",
-      "SUB-004",
-      "SUB-005",
-      "LINK-001"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/parramatta-flooring.html",
-      "apps/web/liverpool-flooring.html",
-      "apps/web/auburn-flooring.html",
-      "apps/web/blacktown-flooring.html",
-      "apps/web/miranda-flooring.html"
-    ],
-    "validation_checklist": [
-      "Confirm new links are contextually relevant",
-      "Confirm anchor text varies naturally",
-      "Confirm local pages point to the most useful adjacent guides and product pages"
-    ],
-    "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by adding suburb-specific guide links to Parramatta, Liverpool, Auburn, Blacktown, and Miranda pages while preserving existing product, floor plan, and quote paths."
-  },
-  {
-    "id": "SAAS-002",
-    "title": "Draft future Supabase queue and lead sync contract without live writes",
-    "category": "saas_infrastructure",
-    "assigned_agent": "builder",
-    "impact_score": 5,
-    "confidence_score": 6,
-    "effort_score": 5,
-    "priority_score": 6,
-    "dependencies": [
-      "LEAD-003"
-    ],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/PROJECT_MEMORY.md",
       "apps/web/OPERON_SUPABASE_DATABASE_IMPLEMENTATION.md"
     ],
     "validation_checklist": [
-      "Confirm contract stays planning-only and does not introduce live writes",
-      "Confirm lead payload fields stay privacy-safe",
-      "Confirm plan does not conflict with current no-deploy rule"
+      "quote_reviews documented",
+      "quote_leads relationship noted",
+      "function path noted"
     ],
     "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by documenting planning-only Supabase lead and queue sync contracts, including payload fields, table mapping, server-side insert guardrails, and no-live-write fallback rules."
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: advisor docs/schema handoff updated and validated. | Completed locally: quote_reviews relationship documented and quote.html handoff payload wired to lead hidden field.",
+    "updated_at": "2026-05-03T21:29:08.573Z"
   },
   {
-    "id": "SAAS-003",
-    "title": "Define unattended multi-cycle run reporting history format for future automation",
-    "category": "saas_infrastructure",
-    "assigned_agent": "planner",
-    "impact_score": 5,
-    "confidence_score": 6,
-    "effort_score": 5,
-    "priority_score": 6,
-    "dependencies": [
-      "SAAS-001"
-    ],
-    "risk_level": "low",
+    "id": "QA-QUOTE-REVIEW-001",
+    "title": "Validate Quote Advisor localStorage handoff into quote lead payload",
+    "category": "lead_capture",
+    "assigned_agent": "Codex",
+    "impact": 9,
+    "confidence": 9,
+    "effort": 2,
+    "priority_score": 40.5,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "medium",
     "files_likely_affected": [
-      "apps/web/AGENT_LOOP.md",
-      "apps/web/PROJECT_MEMORY.md"
+      "apps/web/quote-review.html",
+      "apps/web/quote.html"
     ],
     "validation_checklist": [
-      "Confirm reporting format supports default, long, and overnight runs",
-      "Confirm completed, blocked, and remaining tasks are clearly separated",
-      "Confirm future history format does not require deploy or Git push behavior"
+      "latestQuoteReview saved",
+      "quote.html hidden payload populated",
+      "no auto-fill",
+      "no pricing logic touched"
     ],
     "status": "done",
-    "notes": "Completed in the 2026-05-02 overnight run by documenting a planning-only multi-cycle run history format with mode, local-only state, completed/blocked/remaining tasks, changed files, validation, and deferred checks."
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: advisor docs/schema handoff updated and validated. | Completed locally: quote-review and quote.html executable scripts parse; advisor context handoff reads latestQuoteReview without visible auto-fill.",
+    "updated_at": "2026-05-03T21:29:08.573Z"
+  },
+  {
+    "id": "DATA-QUOTE-REVIEW-001",
+    "title": "Run Supabase quote_reviews migration in SQL editor",
+    "category": "data_engine",
+    "assigned_agent": "Codex",
+    "impact": 9,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 36,
+    "approval_required": true,
+    "dependencies": [],
+    "risk_level": "medium",
+    "files_likely_affected": [
+      "supabase/migrations/20260504_quote_review_data_engine.sql"
+    ],
+    "validation_checklist": [
+      "table exists",
+      "RLS enabled",
+      "anon revoked",
+      "no destructive statements"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "CHATBOT-001",
+    "title": "Audit chatbot for accidental pricing claims",
+    "category": "chatbot",
+    "assigned_agent": "Chatbot Agent",
+    "impact": 8,
+    "confidence": 9,
+    "effort": 2,
+    "priority_score": 36,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/chatbot/"
+    ],
+    "validation_checklist": [
+      "no calculated prices",
+      "no internal rates",
+      "routes to quote.html/products.html/quote-review.html"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: chatbot tests and safety docs confirm no price calculation or internal rate exposure; floor plan context regression fixed.",
+    "updated_at": "2026-05-03T21:29:08.573Z"
+  },
+  {
+    "id": "LEAD-001",
+    "title": "Verify Netlify form hidden lead payload includes advisor context",
+    "category": "lead_capture",
+    "assigned_agent": "Codex",
+    "impact": 9,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 36,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "medium",
+    "files_likely_affected": [
+      "apps/web/quote.html"
+    ],
+    "validation_checklist": [
+      "quote_review_payload_json populated",
+      "lead_payload_json includes quoteReview",
+      "file mode safe"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: quote.html hidden quote_review_payload_json now receives latestQuoteReview only when source=quote_review.",
+    "updated_at": "2026-05-03T21:29:08.573Z"
+  },
+  {
+    "id": "CONV-QUOTE-REVIEW-001",
+    "title": "Add visible advisor handoff confirmation on quote page",
+    "category": "conversion",
+    "assigned_agent": "Codex",
+    "impact": 8,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 32,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/quote.html"
+    ],
+    "validation_checklist": [
+      "message appears only from quote_review source",
+      "no form autofill",
+      "mobile safe"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: quote.html now shows a visible Quote Advisor handoff card when opened with source=quote_review, without auto-filling fields or changing calculation logic.",
+    "updated_at": "2026-05-03T22:28:50.887Z"
+  },
+  {
+    "id": "QA-LINKS-001",
+    "title": "Run broken-link audit across core pages",
+    "category": "seo_infrastructure",
+    "assigned_agent": "Codex",
+    "impact": 8,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 32,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/index.html",
+      "apps/web/products.html",
+      "apps/web/quote.html",
+      "apps/web/quote-review.html",
+      "apps/web/sitemap.xml"
+    ],
+    "validation_checklist": [
+      "no broken internal links",
+      "quote CTAs point to quote.html",
+      "review CTAs point to quote-review.html"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: local HTML link audit found only dynamic JS template false positives, no static quote-review/quote broken links.",
+    "updated_at": "2026-05-03T21:29:08.573Z"
+  },
+  {
+    "id": "CHATBOT-002",
+    "title": "Update chatbot quote-review support flow for Quote Advisor",
+    "category": "chatbot",
+    "assigned_agent": "Chatbot Agent",
+    "impact": 8,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 32,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/chatbot/CHATBOT_CONVERSATION_FLOWS.md",
+      "apps/web/chatbot/CHATBOT_MEMORY.md"
+    ],
+    "validation_checklist": [
+      "short responses",
+      "one question at a time",
+      "routes to quote-review.html",
+      "no price comparison"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: Quote Advisor conversation flows updated for quick/detailed review support.",
+    "updated_at": "2026-05-03T21:29:08.573Z"
+  },
+  {
+    "id": "ANALYTICS-QUOTE-REVIEW-001",
+    "title": "Audit Quote Advisor analytics event names against tracking dashboard",
+    "category": "analytics_tracking",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/tracking.js",
+      "apps/web/quote-review.html"
+    ],
+    "validation_checklist": [
+      "events fire safely",
+      "no duplicate spam",
+      "GA4 missing safe"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: Quote Advisor events audited; quote_review_start, mode_select, upload_attempt, complete, to_quote_click, payload_saved, and payload_save_error are tracked through safe OperonTracking/gtag fallback.",
+    "updated_at": "2026-05-03T22:28:50.902Z"
+  },
+  {
+    "id": "CHATBOT-003",
+    "title": "Improve chatbot missing information JSON mapping",
+    "category": "chatbot",
+    "assigned_agent": "Chatbot Agent",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/chatbot/CHATBOT_JSON_SCHEMA.md"
+    ],
+    "validation_checklist": [
+      "maps category area scope gaps",
+      "does not auto-fill",
+      "no pricing fields"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: missing-info mapping now preserves floorplan_upload when customers mention a floor plan; chatbot tests cover uncertain-area and floorplan prompts.",
+    "updated_at": "2026-05-03T22:53:10.007Z"
+  },
+  {
+    "id": "PRIVACY-001",
+    "title": "Check public privacy copy covers quote uploads and lead details",
+    "category": "lead_capture",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/privacy-policy.html",
+      "apps/web/quote-review.html"
+    ],
+    "validation_checklist": [
+      "quote upload mention",
+      "personal details handling",
+      "no overexposed strategy"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: privacy copy now explicitly covers quote review document references and quote clarity use.",
+    "updated_at": "2026-05-03T22:28:50.902Z"
+  },
+  {
+    "id": "CONV-HOME-001",
+    "title": "Audit homepage above-fold CTA clarity after advisor changes",
+    "category": "conversion",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/index.html"
+    ],
+    "validation_checklist": [
+      "instant quote primary",
+      "quote advisor secondary",
+      "mobile stack clean"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: homepage is quote-first with one H1, no quote form, dominant instant quote CTA, validation secondary CTA, and CTA tracking fixed to use OperonTracking.trackEvent.",
+    "updated_at": "2026-05-03T23:13:01.628Z"
+  },
+  {
+    "id": "QA-SCHEMA-001",
+    "title": "Validate visible FAQ content against FAQ schema on changed pages",
+    "category": "seo_infrastructure",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 24,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/index.html",
+      "apps/web/quote-review.html"
+    ],
+    "validation_checklist": [
+      "FAQ schema matches visible copy",
+      "one H1",
+      "canonical valid"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: quote-review FAQ schema added and JSON-LD validated; index/quote/quote-review FAQ schema questions match visible content.",
+    "updated_at": "2026-05-03T22:53:10.010Z"
+  },
+  {
+    "id": "QA-QUOTE-001",
+    "title": "Run full quote calculator validation suite",
+    "category": "quote_accuracy",
+    "assigned_agent": "Codex",
+    "impact": 10,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 23.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "medium",
+    "files_likely_affected": [
+      "apps/web/quoteCalculator.js",
+      "apps/web/tests"
+    ],
+    "validation_checklist": [
+      "supply install includes labour",
+      "install only excludes material",
+      "removal disposal correct",
+      "no internal rates exposed"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: apps/web/tests/quoteCalculator.validation.js passed after changes.",
+    "updated_at": "2026-05-03T23:13:01.642Z"
+  },
+  {
+    "id": "PRODUCTS-001",
+    "title": "Audit product range selection from products page into quote.html",
+    "category": "product_catalogue",
+    "assigned_agent": "Codex",
+    "impact": 8,
+    "confidence": 8,
+    "effort": 3,
+    "priority_score": 21.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "medium",
+    "files_likely_affected": [
+      "apps/web/products.html",
+      "apps/web/products.js",
+      "apps/web/productSelection.js"
+    ],
+    "validation_checklist": [
+      "hybrid range selection works",
+      "laminate range selection works",
+      "engineered colour selection works"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: product pages parse, productSelection exposes three hybrid ranges with default hybrid recommendation, and products.html uses selectedRangeId/selectedProductId handoff to quote.html.",
+    "updated_at": "2026-05-03T23:13:01.642Z"
+  },
+  {
+    "id": "DATA-QUOTE-REVIEW-002",
+    "title": "Validate save-quote-review function with Netlify dev once env vars are configured",
+    "category": "data_engine",
+    "assigned_agent": "Codex",
+    "impact": 9,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 21,
+    "approval_required": true,
+    "dependencies": [],
+    "risk_level": "medium",
+    "files_likely_affected": [
+      "netlify/functions/save-quote-review.js"
+    ],
+    "validation_checklist": [
+      "function returns ok",
+      "missing env fails safely",
+      "review_id returned when configured"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "BLOG-001",
+    "title": "Create decision guide: what flooring quotes usually miss",
+    "category": "blog_content",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 3,
+    "priority_score": 18.67,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/blog/"
+    ],
+    "validation_checklist": [
+      "links to quote-review",
+      "links to quote",
+      "no price comparison"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "BLOG-005",
+    "title": "Create guide: how to read a flooring quote",
+    "category": "blog_content",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 3,
+    "priority_score": 18.67,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/blog/"
+    ],
+    "validation_checklist": [
+      "scope-first language",
+      "links to quote-review",
+      "not price comparison"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "SEO-PROD-001",
+    "title": "Refresh hybrid SEO page CTA path to Quote Advisor and Quote",
+    "category": "seo_product_pages",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 16.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/hybrid-flooring-sydney.html"
+    ],
+    "validation_checklist": [
+      "primary quote CTA",
+      "secondary advisor CTA",
+      "no duplicate content"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: hybrid SEO page final CTA now includes Quote Advisor path plus quote/product paths.",
+    "updated_at": "2026-05-03T23:29:41.862Z"
+  },
+  {
+    "id": "SEO-PROD-002",
+    "title": "Refresh laminate SEO page CTA path to Quote Advisor and Quote",
+    "category": "seo_product_pages",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 16.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/laminate-flooring-sydney.html"
+    ],
+    "validation_checklist": [
+      "primary quote CTA",
+      "secondary advisor CTA",
+      "no duplicate content"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: laminate SEO page final CTA now includes Quote Advisor path plus quote/product paths.",
+    "updated_at": "2026-05-03T23:29:41.869Z"
+  },
+  {
+    "id": "SEO-PROD-003",
+    "title": "Refresh engineered SEO page CTA path to Quote Advisor and Quote",
+    "category": "seo_product_pages",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 16.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/engineered-timber-flooring-sydney.html"
+    ],
+    "validation_checklist": [
+      "primary quote CTA",
+      "secondary advisor CTA",
+      "no duplicate content"
+    ],
+    "status": "done",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: engineered SEO page final CTA now includes Quote Advisor path plus quote/product paths.",
+    "updated_at": "2026-05-03T23:29:41.869Z"
+  },
+  {
+    "id": "BLOG-002",
+    "title": "Create guide: removal vs disposal in flooring quotes",
+    "category": "blog_content",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 8,
+    "effort": 3,
+    "priority_score": 16,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/blog/"
+    ],
+    "validation_checklist": [
+      "clear scope framing",
+      "links to quote-review",
+      "no internal rates"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "BLOG-003",
+    "title": "Create guide: floor preparation and quote changes",
+    "category": "blog_content",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 8,
+    "effort": 3,
+    "priority_score": 16,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/blog/"
+    ],
+    "validation_checklist": [
+      "practical scope advice",
+      "links to quote-review",
+      "links to quote"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "BLOG-004",
+    "title": "Create guide: apartment access and flooring quotes",
+    "category": "blog_content",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 8,
+    "effort": 3,
+    "priority_score": 16,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/blog/"
+    ],
+    "validation_checklist": [
+      "access/lift/parking advice",
+      "links to quote",
+      "local SEO support"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MOBILE-QA-001",
+    "title": "Browser QA mobile layout for quote, products, floorplan, quote review",
+    "category": "conversion",
+    "assigned_agent": "Codex",
+    "impact": 9,
+    "confidence": 7,
+    "effort": 4,
+    "priority_score": 15.75,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "medium",
+    "files_likely_affected": [
+      "apps/web/quote.html",
+      "apps/web/products.html",
+      "apps/web/floorplan.html",
+      "apps/web/quote-review.html"
+    ],
+    "validation_checklist": [
+      "no horizontal overflow",
+      "CTA visible",
+      "forms usable",
+      "menus work"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "ANALYTICS-001",
+    "title": "Add dashboard placeholders for quote review events",
+    "category": "analytics_tracking",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 14,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "medium",
+    "files_likely_affected": [
+      "apps/web/dashboard.html",
+      "apps/web/tracking.js"
+    ],
+    "validation_checklist": [
+      "events visible",
+      "safe if missing data",
+      "no live API dependency"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "SUBURB-001",
+    "title": "Audit suburb pages for duplicate repeated blocks",
+    "category": "suburb_pages",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 7,
+    "effort": 4,
+    "priority_score": 10.5,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/parramatta-flooring.html",
+      "apps/web/liverpool-flooring.html",
+      "apps/web/auburn-flooring.html",
+      "apps/web/blacktown-flooring.html",
+      "apps/web/miranda-flooring.html"
+    ],
+    "validation_checklist": [
+      "unique local context",
+      "internal links present",
+      "CTA present"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-031",
+    "title": "Maintenance QA candidate 31",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-032",
+    "title": "Maintenance QA candidate 32",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-033",
+    "title": "Maintenance QA candidate 33",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-034",
+    "title": "Maintenance QA candidate 34",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-035",
+    "title": "Maintenance QA candidate 35",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-036",
+    "title": "Maintenance QA candidate 36",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-037",
+    "title": "Maintenance QA candidate 37",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-038",
+    "title": "Maintenance QA candidate 38",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-039",
+    "title": "Maintenance QA candidate 39",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-040",
+    "title": "Maintenance QA candidate 40",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-041",
+    "title": "Maintenance QA candidate 41",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-042",
+    "title": "Maintenance QA candidate 42",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-043",
+    "title": "Maintenance QA candidate 43",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-044",
+    "title": "Maintenance QA candidate 44",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-045",
+    "title": "Maintenance QA candidate 45",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-046",
+    "title": "Maintenance QA candidate 46",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-047",
+    "title": "Maintenance QA candidate 47",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-048",
+    "title": "Maintenance QA candidate 48",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-049",
+    "title": "Maintenance QA candidate 49",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "MAINT-050",
+    "title": "Maintenance QA candidate 50",
+    "category": "qa_stability",
+    "assigned_agent": "Codex",
+    "impact": 4,
+    "confidence": 7,
+    "effort": 3,
+    "priority_score": 9.33,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/"
+    ],
+    "validation_checklist": [
+      "no console errors",
+      "no broken links",
+      "no pricing exposure"
+    ],
+    "status": "pending",
+    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+  },
+  {
+    "id": "SECURITY-QUOTE-REVIEW-001",
+    "title": "Tighten Quote Advisor function failure response",
+    "category": "lead_capture",
+    "impact": 7,
+    "confidence": 9,
+    "effort": 2,
+    "priority_score": 31.5,
+    "files_likely_affected": [
+      "netlify/functions/save-quote-review.js"
+    ],
+    "risk_level": "low",
+    "approval_required": false,
+    "status": "done",
+    "validation_checklist": [
+      "No raw Supabase error returned to browser",
+      "Function syntax passes",
+      "User flow still fails safely"
+    ],
+    "notes": "Completed locally: save-quote-review now returns generic failure messages and keeps detailed errors server-side only.",
+    "updated_at": "2026-05-03T21:29:08.573Z"
   }
 ]

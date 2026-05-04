@@ -34,7 +34,8 @@
       skirtingScotia: window.OperonSkirtingScotia,
       removalRates: window.OperonRemovalRates,
       locationZones: window.OperonLocationZones,
-      pricingRules: window.OperonPricingRules
+      pricingRules: window.OperonPricingRules,
+      stairRates: window.OperonStairRates
     };
   }
 
@@ -131,12 +132,13 @@
       installType,
       input.installMethod || "floating"
     );
-    return libraries.installRates.getInstallRate({
+    const exactOrFallback = libraries.installRates.getInstallRate({
       category: product.category,
       installType: installType,
       installMethod: installMethod,
       jobType: quoteMode
     });
+    return exactOrFallback;
   }
 
   function getRemovalConfig(input, libraries) {
@@ -144,6 +146,172 @@
       return null;
     }
     return libraries.removalRates.getRemovalRate(input.removalOption);
+  }
+
+  function normaliseStairDetails(input) {
+    const legacyMap = {
+      stairStraightTreadCount: "straight_tread",
+      stairWinderTreadCount: "winder_tread",
+      stairLandingSmallCount: "landing_1m2",
+      stairLandingLargeCount: "landing_2m2",
+      stairOneSideOpenCount: "one_side_open",
+      stairTwoSideOpenCount: "two_side_open"
+    };
+    const details = Array.isArray(input.stairDetails) ? input.stairDetails : [];
+    const normalised = details.map(function (item) {
+      const type = legacyMap[item.type] || item.type;
+      return {
+        type: type,
+        label: item.label || type,
+        quantity: Math.max(0, Math.round(parsePositiveNumber(item.quantity)))
+      };
+    }).filter(function (item) {
+      return item.type && item.quantity > 0;
+    });
+
+    if (!normalised.length && input.stairs === "yes") {
+      const fallbackCount = Math.max(0, Math.round(parsePositiveNumber(input.stairsCount)));
+      if (fallbackCount > 0) {
+        normalised.push({
+          type: "straight_tread",
+          label: "Straight stair treads",
+          quantity: fallbackCount
+        });
+      }
+    }
+
+    return normalised;
+  }
+
+  function getStairPricingState(input, product, libraries) {
+    const emptyState = {
+      selected: input.stairs === "yes",
+      total: 0,
+      totalCount: 0,
+      details: [],
+      widthKnown: input.stairWidthKnown === "yes",
+      widthMm: Math.max(0, Math.round(parsePositiveNumber(input.stairWidthMm))),
+      widthTier: "short",
+      widthAssumed: false,
+      guideWidthMm: 1200,
+      rangeId: input.selectedRangeId || product.rangeId || "",
+      warnings: [],
+      manualReviewRequired: false
+    };
+
+    if (input.stairs !== "yes") {
+      return emptyState;
+    }
+
+    const stairDetails = normaliseStairDetails(input);
+    const rangeId = input.selectedRangeId || product.rangeId || "";
+    const rateSet = libraries.stairRates && typeof libraries.stairRates.getRateSet === "function"
+      ? libraries.stairRates.getRateSet(rangeId)
+      : null;
+
+    if (!stairDetails.length) {
+      emptyState.warnings.push("Stairs selected but no stair quantities entered.");
+      emptyState.manualReviewRequired = true;
+      return emptyState;
+    }
+
+    if (!rateSet) {
+      emptyState.details = stairDetails;
+      emptyState.totalCount = stairDetails.reduce(function (total, item) { return total + item.quantity; }, 0);
+      emptyState.warnings.push("Stair pricing for the selected flooring range requires setup.");
+      emptyState.manualReviewRequired = true;
+      return emptyState;
+    }
+
+    const tierState = libraries.stairRates.getTierForWidth(rateSet, emptyState.widthMm, emptyState.widthKnown);
+    const pricedDetails = stairDetails.map(function (item) {
+      const stairType = libraries.stairRates.getStairType(item.type);
+      const label = stairType ? stairType.label : item.label;
+      const unitPrice = libraries.stairRates.getPrice(rateSet, item.type, tierState.tier);
+      return {
+        type: item.type,
+        label: label,
+        quantity: item.quantity,
+        widthTier: tierState.tier,
+        unitPrice: unitPrice,
+        amount: unitPrice * item.quantity,
+        priceConfigured: unitPrice > 0
+      };
+    });
+
+    const missingPrice = pricedDetails.some(function (item) {
+      return item.quantity > 0 && !(item.unitPrice > 0);
+    });
+    const total = pricedDetails.reduce(function (sum, item) {
+      return sum + item.amount;
+    }, 0);
+
+    const warnings = [];
+    let manualReviewRequired = false;
+    if (tierState.assumed) {
+      warnings.push("Stair width not provided. Lower stair allowance used; final stair price changes if confirmed width is over " + tierState.guideWidthMm + " mm.");
+      manualReviewRequired = true;
+    }
+    if (missingPrice) {
+      warnings.push("Stair pricing for the selected flooring range requires setup.");
+      manualReviewRequired = true;
+    }
+
+    return {
+      selected: true,
+      total: total,
+      totalCount: pricedDetails.reduce(function (sum, item) { return sum + item.quantity; }, 0),
+      details: pricedDetails,
+      widthKnown: emptyState.widthKnown,
+      widthMm: emptyState.widthMm,
+      widthTier: tierState.tier,
+      widthAssumed: tierState.assumed,
+      guideWidthMm: tierState.guideWidthMm,
+      rangeId: rangeId,
+      warnings: warnings,
+      manualReviewRequired: manualReviewRequired
+    };
+  }
+
+  function normaliseRemovalFloorType(value) {
+    const floorType = String(value || "").trim().toLowerCase();
+    const map = {
+      "": "none",
+      bare: "none",
+      none: "none",
+      carpet: "carpet",
+      floating: "floating",
+      floating_floor: "floating",
+      laminate: "floating",
+      hybrid: "floating",
+      glue_down: "glue_down",
+      glued_or_nailed_timber: "glue_down",
+      timber: "glue_down",
+      tile: "tile",
+      tiles: "tile",
+      vinyl: "vinyl",
+      unsure: "unsure",
+      not_sure: "unsure",
+      unknown: "unsure",
+      other: "other"
+    };
+    return map[floorType] || "other";
+  }
+
+  function getRemovalFloorLabel(value) {
+    const labels = {
+      carpet: "Carpet",
+      floating: "Floating floor",
+      laminate: "Floating floor",
+      hybrid: "Floating floor",
+      glue_down: "Glue-down timber",
+      timber: "Glue-down timber",
+      tile: "Tile",
+      vinyl: "Vinyl",
+      unsure: "Removal",
+      other: "Removal"
+    };
+    return labels[value] || "Existing floor";
   }
 
   function getTrimTotals(input, chargeableArea, libraries) {
@@ -171,7 +339,7 @@
     return trims;
   }
 
-  function getWarnings(input, measurement, product, pricePending, accessState) {
+  function getWarnings(input, measurement, product, pricePending, accessState, installRateMissing, stairPricingState) {
     const warnings = [].concat(measurement.warnings || [], accessState.warnings || []);
     let manualReviewRequired = false;
     const furnitureRoomCount = Math.max(0, Math.round(parsePositiveNumber(input.furnitureRoomCount)));
@@ -191,13 +359,22 @@
       warnings.push("Limited parking noted. Labour access adjustment is not separately configured yet.");
     }
 
+    if (input.parkingAccess === "difficult") {
+      warnings.push("Access looks more difficult than a standard house install. Review may be needed.");
+    }
+
     if (input.parkingAccess === "unsure") {
       warnings.push("Parking access is unclear.");
       manualReviewRequired = true;
     }
 
-    if (input.stairs === "yes") {
-      warnings.push("Stairs selected. Manual review required.");
+    if (input.stairs === "yes" && stairPricingState) {
+      warnings.push.apply(warnings, stairPricingState.warnings || []);
+      if (stairPricingState.manualReviewRequired) {
+        manualReviewRequired = true;
+      }
+    } else if (input.stairs === "yes") {
+      warnings.push("Stairs selected. Stair pricing requires review.");
       manualReviewRequired = true;
     }
 
@@ -211,7 +388,7 @@
       manualReviewRequired = true;
     }
 
-    if (input.removalOption && input.removalOption !== "none" && input.removalOption !== "other" && input.removalOption !== "unsure" && !input.removalDisposal) {
+    if (input.removalOption && input.removalOption !== "none" && !input.removalDisposal) {
       warnings.push("Disposal preference is missing for removal.");
       manualReviewRequired = true;
     }
@@ -241,7 +418,12 @@
     }
 
     if ((input.jobType || input.quoteMode) === "supply_install" && product && !product.isEstimate && pricePending) {
-      warnings.push("Selected product price is not confirmed. Standard " + product.category + " estimate used until review.");
+      warnings.push("Product selected. Product price needs review before final confirmation.");
+      manualReviewRequired = true;
+    }
+
+    if (installRateMissing) {
+      warnings.push("Installation rate requires review.");
       manualReviewRequired = true;
     }
 
@@ -251,47 +433,92 @@
     };
   }
 
+  function getCategoryLabel(category) {
+    const libraries = getLibraries();
+    const meta = libraries.products && libraries.products.getCategoryMeta(category || "hybrid");
+    return meta ? meta.label : "Flooring";
+  }
+
+  function getSupplyLineContent(result) {
+    const categoryLabel = getCategoryLabel(result.productCategory || result.category).toLowerCase();
+
+    if (result.pricingMode === "product") {
+      return {
+        label: result.productLabel + " supply",
+        note: "Based on selected product pricing."
+      };
+    }
+
+    if (result.pricingMode === "category") {
+      return {
+        label: "Standard " + categoryLabel + " supply",
+        note: "Based on entry-level " + categoryLabel + " product pricing."
+      };
+    }
+
+    return {
+      label: categoryLabel.charAt(0).toUpperCase() + categoryLabel.slice(1) + " supply",
+      note: "Pricing requires review before final confirmation."
+    };
+  }
+
   function buildCustomerLineItems(result) {
     const lines = [];
     if (result.quoteMode === "supply_install") {
+      const supplyLine = getSupplyLineContent(result);
       lines.push({
-        label: "Flooring package",
-        note: result.pricePending
-          ? result.productLabel + " · " + result.categoryEstimateLabel + " used until the exact product price is confirmed"
-          : result.productLabel + " · " + formatArea(result.chargeableArea) + " material allowance",
-        amount: result.materialTotal + result.installationAdjustedTotal
+        label: supplyLine.label,
+        note: supplyLine.note,
+        quantity: formatArea(result.chargeableArea),
+        amount: result.materialTotal
       });
-    } else if (result.installationAdjustedTotal > 0) {
+    }
+
+    if (result.installationAdjustedTotal > 0) {
       lines.push({
-        label: "Installation labour",
+        label: "Installation",
         note: formatArea(result.realArea) + " real install area",
+        quantity: formatArea(result.realArea),
         amount: result.installationAdjustedTotal
       });
     }
 
     if (result.removalTotal > 0) {
-      lines.push({ label: "Removal", note: result.removalLabel, amount: result.removalTotal });
+      lines.push({ label: result.removalLabel + " removal", note: "Removal only", quantity: formatArea(result.realArea), amount: result.removalTotal });
+    }
+    if (result.disposalSelected || result.disposalTotal > 0) {
+      lines.push({ label: "Disposal / take-away", note: "Selected", quantity: formatArea(result.realArea), amount: result.disposalTotal });
     }
     if (result.floorPrepTotal > 0) {
-      lines.push({ label: "Floor preparation", note: result.floorPrepLabel, amount: result.floorPrepTotal });
+      lines.push({ label: "Floor preparation", note: result.floorPrepLabel, quantity: formatArea(result.realArea), amount: result.floorPrepTotal });
     }
     if (result.underlayTotal > 0) {
-      lines.push({ label: "Underlay", note: result.underlayLabel, amount: result.underlayTotal });
+      lines.push({ label: "Underlay", note: result.underlayLabel, quantity: formatArea(result.chargeableArea), amount: result.underlayTotal });
     }
     if (result.moistureBarrierTotal > 0) {
-      lines.push({ label: "Moisture barrier", note: formatArea(result.chargeableArea) + " coverage allowance", amount: result.moistureBarrierTotal });
+      lines.push({ label: "Moisture protection for concrete floors", note: "Coverage allowance", quantity: formatArea(result.chargeableArea), amount: result.moistureBarrierTotal });
     }
     if (result.skirtingTotal > 0) {
-      lines.push({ label: "Skirting package", note: result.skirtingLabel, amount: result.skirtingTotal });
+      lines.push({ label: "Skirting package", note: result.skirtingLabel, quantity: formatArea(result.chargeableArea), amount: result.skirtingTotal });
     }
     if (result.scotiaTotal > 0) {
-      lines.push({ label: "Scotia package", note: formatArea(result.chargeableArea) + " commercial allowance", amount: result.scotiaTotal });
+      lines.push({ label: "Scotia", note: "Allowance", quantity: formatArea(result.chargeableArea), amount: result.scotiaTotal });
     }
     if (result.furnitureTotal > 0) {
-      lines.push({ label: "Furniture handling", note: result.furnitureLabel, amount: result.furnitureTotal });
+      lines.push({ label: "Furniture moving support", note: result.furnitureLabel, quantity: result.furnitureRoomCount + " rooms", amount: result.furnitureTotal });
     }
     if (result.doorTrimmingTotal > 0) {
-      lines.push({ label: "Door trimming", note: result.doorCount + " doors", amount: result.doorTrimmingTotal });
+      lines.push({ label: "Door trimming", note: "Door trimming", quantity: result.doorCount + " doors", amount: result.doorTrimmingTotal });
+    }
+    if (result.stairsSelected && result.stairsTotal > 0) {
+      lines.push({
+        label: "Stairs",
+        note: result.stairWidthAssumed
+          ? "Lower width allowance used until stair width is confirmed"
+          : "Stair width tier: " + result.stairWidthTierLabel,
+        quantity: result.stairCount + " stair item" + (result.stairCount === 1 ? "" : "s"),
+        amount: result.stairsTotal
+      });
     }
     return lines;
   }
@@ -319,25 +546,41 @@
       : ((resolvedPattern === "herringbone" || resolvedPattern === "chevron") ? "direct_glue" : requestedInstallMethod);
     const normalizedInput = Object.assign({}, input, {
       pattern: resolvedPattern,
-      installMethod: resolvedInstallMethod
+      installMethod: resolvedInstallMethod,
+      removalOption: normaliseRemovalFloorType(input.removalOption || input.existingFloorToRemove || input.existingFloorType)
     });
     const chargeableArea = measurement.realArea * (libraries.pricingRules ? libraries.pricingRules.getWastageMultiplier(resolvedPattern) : 1.10);
     const accessState = getAccessState(input);
     const locationState = getLocationState(input, libraries, rules);
     const smallJobFactor = getSmallJobFactor(measurement.realArea, rules);
     const productPricePending = quoteMode === "supply_install" && !product.isEstimate && !(product.pricePerM2 > 0);
+    const categoryEstimateMode = categoryEstimate && categoryEstimate.pricingMode === "category" ? "category" : "fallback";
+    const pricingMode = quoteMode !== "supply_install"
+      ? "category"
+      : (productPricePending
+        ? "fallback"
+        : (!product.isEstimate && product.pricePerM2 > 0
+          ? "product"
+          : categoryEstimateMode));
     const materialRate = product.pricePerM2 > 0
       ? product.pricePerM2
       : ((categoryEstimate && categoryEstimate.pricePerM2 > 0) ? categoryEstimate.pricePerM2 : 0);
-    const installRateConfig = getInstallRateConfig(normalizedInput, product, libraries) || {};
-    const installRate = product.installRate || Number(installRateConfig.ratePerM2 || 0);
+    const installRateConfig = getInstallRateConfig(normalizedInput, product, libraries);
+    const installRateMissing = !installRateConfig && !(product.installRate > 0);
+    const installRate = product.installRate || Number((installRateConfig && installRateConfig.ratePerM2) || 0);
     const underlay = getSelectedUnderlay(input, libraries);
     const underlayArea = rules.underlayAreaBasis === "real_area" ? measurement.realArea : chargeableArea;
     const underlayTotal = underlay ? underlayArea * Number(underlay.pricePerM2 || 0) : 0;
-    const removalConfig = getRemovalConfig(input, libraries);
+    const removalConfig = getRemovalConfig(normalizedInput, libraries);
+    const disposalSelected = !!(removalConfig && input.removalDisposal === "yes");
     const removalBaseTotal = removalConfig
-      ? (measurement.realArea * Number(removalConfig.ratePerM2 || 0))
-        + (input.removalDisposal === "yes" ? Number(removalConfig.disposalFee || 0) : 0)
+      ? measurement.realArea * Number(removalConfig.ratePerM2 || 0)
+      : 0;
+    const disposalRatePerM2 = removalConfig
+      ? Number(removalConfig.disposalRatePerM2 || removalConfig.disposalFee || 0)
+      : 0;
+    const disposalBaseTotal = disposalSelected
+      ? measurement.realArea * disposalRatePerM2
       : 0;
     const floorPrepBaseTotal = (input.floorPrepType === "basic" || input.floorPrepType === "levelling")
       ? measurement.realArea * Number((rules.floorPrepRates || {})[input.floorPrepType] || 0)
@@ -348,6 +591,8 @@
       : 0;
     const doorCount = input.doorTrimming === "yes" ? Math.max(0, Math.round(parsePositiveNumber(input.doorCount))) : 0;
     const doorTrimmingBaseTotal = doorCount * Number(rules.doorTrimmingRate || 0);
+    const stairPricingState = getStairPricingState(normalizedInput, product, libraries);
+    const stairBaseTotal = stairPricingState.total;
     const moistureBarrierTotal = input.moistureBarrier === "yes"
       ? chargeableArea * Number(rules.moistureBarrierRatePerM2 || 0)
       : 0;
@@ -359,10 +604,12 @@
 
     const labourBaseBeforeZone = installationBaseTotal
       + removalBaseTotal
+      + disposalBaseTotal
       + floorPrepBaseTotal
       + trimTotals.skirtingTotal
       + trimTotals.scotiaTotal
-      + furnitureBaseTotal;
+      + furnitureBaseTotal
+      + stairBaseTotal;
 
     const accessAdjustedLabour = labourBaseBeforeZone * accessState.factor * smallJobFactor;
     const zoneSurchargeTotal = accessAdjustedLabour * (Number(locationState.surchargePercent || 0) / 100);
@@ -373,10 +620,12 @@
 
     const installationAdjustedTotal = installationBaseTotal * labourAdjustmentRatio;
     const removalTotal = removalBaseTotal * labourAdjustmentRatio;
+    const disposalTotal = disposalBaseTotal * labourAdjustmentRatio;
     const floorPrepTotal = floorPrepBaseTotal * labourAdjustmentRatio;
     const skirtingTotal = trimTotals.skirtingTotal * labourAdjustmentRatio;
     const scotiaTotal = trimTotals.scotiaTotal * labourAdjustmentRatio;
     const furnitureTotal = furnitureBaseTotal * labourAdjustmentRatio;
+    const stairsTotal = stairBaseTotal * labourAdjustmentRatio;
     const travelFeeTotal = Number(locationState.travelFee || 0);
     const locationTotal = roundTo(zoneSurchargeTotal + travelFeeTotal, 2);
 
@@ -389,7 +638,7 @@
 
     const minimumJobFee = Math.max(
       Number(locationState.minimumJobFee || 0),
-      Number(installRateConfig.minimumCharge || 0),
+      Number((installRateConfig && installRateConfig.minimumCharge) || 0),
       Number(rules.minimumJobFee || 0)
     );
     const minimumChargeApplied = subtotalBeforeMinimum > 0 && subtotalBeforeMinimum < minimumJobFee;
@@ -403,7 +652,7 @@
     const gst = subtotalExGst * 0.10;
     const totalIncGst = subtotalExGst + gst;
 
-    const reviewState = getWarnings(normalizedInput, measurement, product, productPricePending, accessState);
+    const reviewState = getWarnings(normalizedInput, measurement, product, productPricePending, accessState, installRateMissing, stairPricingState);
     if (doorCount === 0 && input.doorTrimming === "yes") {
       reviewState.warnings.push("Door trimming selected without quantity.");
       reviewState.manualReviewRequired = true;
@@ -428,6 +677,7 @@
       installationTotal: roundTo(installationBaseTotal, 2),
       installationAdjustedTotal: roundTo(installationAdjustedTotal, 2),
       removalTotal: roundTo(removalTotal, 2),
+      disposalTotal: roundTo(disposalTotal, 2),
       floorPrepTotal: roundTo(floorPrepTotal, 2),
       underlayTotal: roundTo(underlayTotal, 2),
       moistureBarrierTotal: roundTo(moistureBarrierTotal, 2),
@@ -435,6 +685,7 @@
       scotiaTotal: roundTo(scotiaTotal, 2),
       furnitureTotal: roundTo(furnitureTotal, 2),
       doorTrimmingTotal: roundTo(doorTrimmingBaseTotal, 2),
+      stairsTotal: roundTo(stairsTotal, 2),
       travelFeeTotal: roundTo(travelFeeTotal, 2),
       locationTotal: roundTo(locationTotal, 2),
       labourSubtotalBeforeMultipliers: roundTo(labourBaseBeforeZone, 2),
@@ -452,9 +703,20 @@
       roomCount: measurement.roomCount,
       furnitureRoomCount: furnitureRoomCount,
       doorCount: doorCount,
-      removalLabel: input.removalOption
-        ? input.removalOption.replace(/_/g, " ") + (input.removalDisposal === "yes" ? " + disposal" : " only")
-        : "none",
+      stairsSelected: stairPricingState.selected,
+      stairCount: stairPricingState.totalCount,
+      stairDetails: stairPricingState.details,
+      stairWidthKnown: stairPricingState.widthKnown,
+      stairWidthMm: stairPricingState.widthMm,
+      stairWidthTier: stairPricingState.widthTier,
+      stairWidthTierLabel: stairPricingState.widthTier === "long" ? "over " + stairPricingState.guideWidthMm + " mm" : stairPricingState.guideWidthMm + " mm or less",
+      stairWidthAssumed: stairPricingState.widthAssumed,
+      stairGuideWidthMm: stairPricingState.guideWidthMm,
+      stairRangeId: stairPricingState.rangeId,
+      removalFloorType: normalizedInput.removalOption || "none",
+      removalLabel: getRemovalFloorLabel(normalizedInput.removalOption),
+      disposalSelected: disposalSelected,
+      disposalLabel: input.removalDisposal === "yes" ? "take away / disposal selected" : "none",
       floorPrepLabel: input.floorPrepType ? input.floorPrepType.replace(/_/g, " ") : "none",
       skirtingLabel: input.skirtingOption ? input.skirtingOption.replace(/_/g, " ") : "none",
       scotiaLabel: input.scotiaOption ? input.scotiaOption.replace(/_/g, " ") : "none",
@@ -465,6 +727,13 @@
       warnings: Array.from(new Set(reviewState.warnings)),
       manualReviewRequired: reviewState.manualReviewRequired,
       pricePending: productPricePending,
+      pricingMode: pricingMode,
+      pricingSourceProductId: pricingMode === "product"
+        ? product.id
+        : ((categoryEstimate && categoryEstimate.baselineProductId) || ""),
+      pricingSourceProductLabel: pricingMode === "product"
+        ? (libraries.products ? libraries.products.getProductLabel(product) : product.label)
+        : ((categoryEstimate && categoryEstimate.baselineProductLabel) || ""),
       measurementSource: measurement.sourceLabel,
       disclaimer: "Estimate only — final quote confirmed after review and site check."
     };

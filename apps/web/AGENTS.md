@@ -30,6 +30,13 @@ Then refresh supporting source-of-truth files when relevant:
   - `apps/web/locationZones.js`
 - analytics / lead capture work:
   - `apps/web/tracking.js`
+- chatbot assistant work:
+  - `apps/web/chatbot/CHATBOT_AGENT.md`
+  - `apps/web/chatbot/CHATBOT_MEMORY.md`
+  - `apps/web/chatbot/CHATBOT_AGENT_LOOP.md`
+  - `apps/web/chatbot/CHATBOT_CONVERSATION_FLOWS.md`
+  - `apps/web/chatbot/CHATBOT_JSON_SCHEMA.md`
+  - `apps/web/chatbot/INTEGRATION.md`
 - SEO / page work:
   - active product pages, suburb pages, blog pages, sitemap, and robots files directly affected by the task
 
@@ -41,13 +48,70 @@ Use this order when scores are close or tradeoffs are unclear:
 2. Quote accuracy
 3. Product catalogue
 4. SEO product pages
-5. Suburb pages
-6. Internal linking
-7. Analytics tracking
-8. Lead capture without email
-9. Maintenance / blog content
-10. Backlink preparation
-11. Future SaaS infrastructure
+5. Chatbot assistant / guided conversion
+6. Suburb pages
+7. Internal linking
+8. Analytics tracking
+9. Lead capture without email
+10. Blog / maintenance content
+11. Backlinks
+12. Future SaaS infrastructure
+
+## Agent Roles
+
+### Chatbot Agent
+
+Purpose: improve the chatbot as a conversion assistant layer.
+
+Responsibilities:
+
+- improve product guidance conversations
+- improve quote explanation
+- improve missing information collection
+- improve quote validation support
+- improve routing to `quote.html`, `products.html`, `floorplan.html`, and `quote-review.html`
+- improve structured JSON output
+- improve chatbot memory files
+- improve chatbot UX only when safe
+
+Hard rules:
+
+- chatbot is assistant only
+- chatbot must not calculate prices
+- chatbot must not expose internal rates
+- chatbot must not replace quote flow
+- chatbot must not modify `quoteCalculator.js`
+- chatbot must not modify `pricingRules.js`
+- chatbot must not modify `products.js`
+- chatbot must not change `productSelection.js` unless explicitly approved
+- chatbot must not auto-fill forms unless the user confirms
+
+Safe chatbot task types allowed without approval:
+
+- edit files inside `apps/web/chatbot/`
+- update chatbot memory
+- update chatbot conversation flows
+- update chatbot JSON schemas
+- improve chatbot copy
+- improve chatbot routing suggestions
+- improve chatbot safety rules
+- improve chatbot tests/docs
+
+Chatbot task types requiring approval:
+
+- injecting chatbot into new live pages
+- changing `quote.html`
+- changing `products.html`
+- modifying `productSelection.js`
+- modifying any pricing-related file
+- enabling auto-fill into quote form
+
+Forbidden chatbot task types:
+
+- chatbot price calculation
+- chatbot displaying estimated price
+- chatbot modifying `quoteCalculator.js`
+- chatbot overriding product or pricing logic
 
 ## Hard Rules
 
@@ -55,6 +119,11 @@ Use this order when scores are close or tradeoffs are unclear:
 - Use warm off-white backgrounds, white cards, charcoal CTAs, and bronze only as a subtle accent.
 - Stay mobile-first.
 - Do not clutter the homepage.
+- Position quote validation as quote clarity / scope review, never as cheapest-price comparison.
+- Homepage is not the full quote wizard page. Keep it as a clean premium conversion, trust, and SEO-support page.
+- The full quote wizard lives on `quote.html`; all quote CTAs should navigate to `quote.html`.
+- Preserve homepage SEO with concise sections, internal links, schema, and lower-page/expandable content without reintroducing a heavy form.
+- Keep customer-facing copy plain English wherever possible, without renaming the underlying pricing variables unless needed for code safety.
 - Do not add a visualiser or reintroduce one into customer-facing scope.
 - Do not expose internal labour rate, margin, material rate, surcharge formula, or installer cost.
 - Do not duplicate pricing logic.
@@ -66,6 +135,7 @@ Use this order when scores are close or tradeoffs are unclear:
 - Do not use generic filler copy.
 - Do not push to GitHub, `dev`, Netlify, or `main` unless the user explicitly asks.
 - Do not deploy unless the user explicitly asks.
+- Chatbot improvement is a standing candidate category for future `continue execution` runs, but it is not mandatory execution. Only run chatbot tasks when they rank high enough and stay inside the safe chatbot task rules.
 
 ## Continue Execution Modes
 
@@ -79,6 +149,7 @@ Codex must:
 
 1. read the source-of-truth files
 2. generate a ranked backlog of 50 tasks
+   - include at least 3 chatbot-related candidate tasks
 3. score every task using `priority_score = (impact × confidence) / effort`
 4. save all 50 tasks into `apps/web/task_queue.json`
 5. execute tasks in ranked order
@@ -110,16 +181,23 @@ Every task entry must include:
 - `title`
 - `category`
 - `assigned_agent`
-- `impact_score`
-- `confidence_score`
-- `effort_score`
+- `impact`
+- `confidence`
+- `effort`
 - `priority_score`
+- `approval_required`
 - `dependencies`
 - `risk_level`
 - `files_likely_affected`
 - `validation_checklist`
 - `status`
 - `notes`
+
+For chatbot tasks, use:
+
+- `category`: `chatbot`
+- `assigned_agent`: `Chatbot Agent`
+- `approval_required`: `false` only when all likely affected files are inside `apps/web/chatbot/`
 
 Allowed statuses:
 
@@ -148,6 +226,17 @@ Minimum validation rule:
 3. confirm no internal pricing detail became customer-visible
 4. confirm affected links, storage, or event hooks still work
 5. confirm mobile behavior still makes sense when UI is touched
+
+For chatbot-related tasks, additionally verify:
+
+1. only allowed files changed
+2. chatbot does not calculate prices
+3. chatbot does not expose internal rates
+4. chatbot routes users to correct pages
+5. chatbot responses are short and conversion-focused
+6. chatbot asks one question at a time
+7. chatbot memory aligns with current site logic
+8. no live quote/product flow is broken
 
 ## PROJECT_MEMORY Update Rule
 

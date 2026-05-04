@@ -157,6 +157,7 @@
         id: row.id || "",
         category: row.category || "",
         installType: row.installType || row.install_type || "standard",
+        installMethod: row.installMethod || row.install_method || "floating",
         jobType: row.jobType || row.job_type || "supply_install",
         ratePerM2: parseNumber(row.ratePerM2 || row.rate_per_m2),
         minimumCharge: parseNumber(row.minimumCharge || row.minimum_charge),
@@ -198,6 +199,7 @@
         floorType: row.floorType || row.floor_type || "",
         aliases: splitList(row.aliases),
         ratePerM2: parseNumber(row.ratePerM2 || row.rate_per_m2),
+        disposalRatePerM2: parseNumber(row.disposalRatePerM2 || row.disposal_rate_per_m2 || row.disposalFee || row.disposal_fee),
         disposalFee: parseNumber(row.disposalFee || row.disposal_fee),
         active: row.active === "" ? true : parseBoolean(row.active)
       };
@@ -223,13 +225,13 @@
   function normalisePricingRules(rows) {
     const rules = {};
     rows.forEach(function (row) {
-      const key = row.key || row.name || "";
+      const key = row.key || row.rule_key || row.name || "";
       if (!key) {
         return;
       }
 
       const declaredType = String(row.type || row.value_type || "").trim().toLowerCase();
-      const rawValue = row.value;
+      const rawValue = typeof row.rule_value !== "undefined" ? row.rule_value : row.value;
 
       if (declaredType === "number") {
         rules[key] = parseNumber(rawValue);
@@ -249,6 +251,22 @@
     return rules;
   }
 
+  function normaliseStairRates(rows) {
+    return rows.map(function (row) {
+      return {
+        rangeId: row.rangeId || row.range_id || "",
+        category: row.category || "",
+        rangeLabel: row.rangeLabel || row.range_label || "",
+        stairType: row.stairType || row.stair_type || "",
+        guideWidthMm: parseNumber(row.guideWidthMm || row.guide_width_mm),
+        plankLengthMm: parseNumber(row.plankLengthMm || row.plank_length_mm),
+        shortPrice: parseNumber(row.shortPrice || row.short_price || row.price_short || row.price_leq_threshold),
+        longPrice: parseNumber(row.longPrice || row.long_price || row.price_long || row.price_gt_threshold),
+        active: row.active === "" ? true : parseBoolean(row.active)
+      };
+    });
+  }
+
   const TABLE_NORMALISERS = {
     categoryMeta: normaliseCategoryMeta,
     products: normaliseProducts,
@@ -257,7 +275,8 @@
     skirtingScotia: normaliseSkirtingScotia,
     removalRates: normaliseRemovalRates,
     locationZones: normaliseLocationZones,
-    pricingRules: normalisePricingRules
+    pricingRules: normalisePricingRules,
+    stairRates: normaliseStairRates
   };
 
   const config = window.OPERON_PRICING_SOURCE_CONFIG || { mode: "local", googleSheets: {}, netlifyCatalogue: {} };

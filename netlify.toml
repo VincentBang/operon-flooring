@@ -3,12 +3,7 @@
 
 [[redirects]]
   from = "/quote"
-  to = "/"
-  status = 301
-
-[[redirects]]
-  from = "/quote.html"
-  to = "/"
+  to = "/quote.html"
   status = 301
 
 [[redirects]]

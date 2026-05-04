@@ -26,7 +26,23 @@
   }
 
   function normaliseInstallType(installType) {
-    return installType === "herringbone" || installType === "chevron" ? "herringbone" : "standard";
+    const type = String(installType || "standard").trim();
+    if (type === "herringbone" || type === "chevron") {
+      return "herringbone";
+    }
+    return "standard";
+  }
+
+  function installTypeMatches(rate, targetType, targetMethod) {
+    const rateType = String(rate.installType || "standard").trim();
+    if (normaliseInstallType(rateType) === targetType) {
+      return true;
+    }
+    if (targetType === "standard" && (rateType === "floating" || rateType === "glue_down" || rateType === "direct_glue")) {
+      const rateMethod = normaliseInstallMethod(rate.category, rateType, rate.installMethod || rateType);
+      return rateMethod === targetMethod;
+    }
+    return false;
   }
 
   function normaliseInstallMethod(category, installType, installMethod) {
@@ -37,7 +53,7 @@
     if (targetType === "herringbone") {
       return "direct_glue";
     }
-    return installMethod === "direct_glue" ? "direct_glue" : "floating";
+    return installMethod === "direct_glue" || installMethod === "glue_down" ? "direct_glue" : "floating";
   }
 
   function listActiveRates() {
@@ -63,7 +79,7 @@
     const exact = activeRates.find(function (rate) {
       const rateMethod = normaliseInstallMethod(rate.category, rate.installType, rate.installMethod);
       return rate.category === settings.category
-        && rate.installType === targetType
+        && installTypeMatches(rate, targetType, targetMethod)
         && rate.jobType === settings.jobType
         && rateMethod === targetMethod;
     });
@@ -73,7 +89,7 @@
 
     const legacyMethodless = activeRates.find(function (rate) {
       return rate.category === settings.category
-        && rate.installType === targetType
+        && installTypeMatches(rate, targetType, targetMethod)
         && rate.jobType === settings.jobType
         && !rate.installMethod;
     });
@@ -93,7 +109,9 @@
     }
 
     const globalFallback = activeRates.find(function (rate) {
-      return rate.category === settings.category && rate.installType === "standard";
+      return rate.category === settings.category
+        && rate.installType === "standard"
+        && rate.jobType === settings.jobType;
     });
 
     return globalFallback ? clone(globalFallback) : null;

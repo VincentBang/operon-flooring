@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operon Chatbot Preview</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+    :root {
+      --bg: #f8f6f1;
+      --surface: #ffffff;
+      --surface-soft: #f0ece4;
+      --text: #111820;
+      --muted: #68707a;
+      --line: rgba(17, 24, 32, 0.1);
+      --accent: #8f6a44;
+      --shadow: 0 16px 48px rgba(17, 24, 32, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background: var(--bg);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .preview-shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 120px;
+    }
+
+    .preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 72px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.72);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.46fr);
+      gap: 24px;
+      align-items: start;
+      padding-top: 36px;
+    }
+
+    .mock-page {
+      display: grid;
+      gap: 18px;
+    }
+
+    .mock-hero {
+      min-height: 360px;
+      display: grid;
+      align-content: end;
+      padding: clamp(26px, 5vw, 46px);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(17, 24, 32, 0.02), rgba(17, 24, 32, 0.08)),
+        linear-gradient(135deg, #ffffff, #e8dfd2);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 720px;
+      font-size: clamp(2.5rem, 6vw, 5.2rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 680px;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: clamp(1.02rem, 2vw, 1.22rem);
+    }
+
+    .mock-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .button,
+    .button-secondary,
+    .preset-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border-radius: 999px;
+      padding: 0 16px;
+      font-weight: 800;
+    }
+
+    .button {
+      border: 0;
+      color: #ffffff;
+      background: var(--text);
+    }
+
+    .button-secondary,
+    .preset-button {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .preset-button[aria-pressed="true"] {
+      color: #ffffff;
+      border-color: var(--text);
+      background: var(--text);
+    }
+
+    .mock-band {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .mock-item,
+    .preview-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: 0 8px 24px rgba(17, 24, 32, 0.04);
+    }
+
+    .mock-item {
+      min-height: 142px;
+      padding: 18px;
+    }
+
+    .mock-item strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .mock-item span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .preview-panel {
+      position: sticky;
+      top: 22px;
+      display: grid;
+      gap: 18px;
+      padding: 18px;
+    }
+
+    .panel-section {
+      display: grid;
+      gap: 10px;
+    }
+
+    .panel-section h2 {
+      font-size: 1rem;
+      letter-spacing: 0;
+    }
+
+    .preset-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .snapshot {
+      min-height: 220px;
+      max-height: 380px;
+      overflow: auto;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      color: #26313d;
+      background: #fbfaf8;
+      font: 0.78rem/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space: pre-wrap;
+    }
+
+    .diagnostic-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .diagnostic-card {
+      min-height: 74px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfaf8;
+    }
+
+    .diagnostic-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .diagnostic-card strong {
+      display: block;
+      margin-top: 5px;
+      overflow-wrap: anywhere;
+      font-size: 0.9rem;
+    }
+
+    .matrix-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .matrix-table-wrap {
+      max-height: 360px;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfaf8;
+    }
+
+    .matrix-table {
+      width: 100%;
+      min-width: 640px;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+
+    .matrix-table th,
+    .matrix-table td {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .matrix-table th {
+      position: sticky;
+      top: 0;
+      color: var(--muted);
+      background: #fbfaf8;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .matrix-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .matrix-pass {
+      color: #355f45;
+      font-weight: 800;
+    }
+
+    .matrix-fail {
+      color: #9b342d;
+      font-weight: 800;
+    }
+
+    .status {
+      min-height: 24px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    @media (max-width: 860px) {
+      .preview-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .preview-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .preview-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding-bottom: 18px;
+      }
+
+      .mock-band {
+        grid-template-columns: 1fr;
+      }
+
+      .diagnostic-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-shell">
+    <header class="preview-header">
+      <div class="brand">Operon Flooring</div>
+      <div class="status-pill">Chatbot isolated preview</div>
+    </header>
+
+    <main class="preview-grid">
+      <section class="mock-page" aria-label="Mock page preview">
+        <article class="mock-hero" id="mockHero">
+          <p class="eyebrow" id="mockEyebrow">Homepage preview</p>
+          <h1 id="mockTitle">Flooring guidance before the quote</h1>
+          <p class="lead" id="mockLead">Use the floating assistant to test product guidance, quote explanation, missing-detail collection, and structured JSON output without touching any live Operon page.</p>
+          <div class="mock-actions">
+            <a class="button" href="../quote.html">Start quote</a>
+            <a class="button-secondary" href="../products.html">Browse products</a>
+          </div>
+        </article>
+
+        <div class="mock-band">
+          <article class="mock-item">
+            <strong>Product direction</strong>
+            <span>Compare laminate, hybrid, and engineered timber without selecting a product.</span>
+          </article>
+          <article class="mock-item">
+            <strong>Quote clarity</strong>
+            <span>Explain estimate scope without calculating or changing price.</span>
+          </article>
+          <article class="mock-item">
+            <strong>Draft structure</strong>
+            <span>Prepare future-safe JSON without writing into the quote form.</span>
+          </article>
+        </div>
+      </section>
+
+      <aside class="preview-panel" aria-label="Preview controls">
+        <section class="panel-section">
+          <h2>Page Preset</h2>
+          <div class="preset-grid">
+            <button class="preset-button" type="button" data-page-key="index" aria-pressed="true">Homepage</button>
+            <button class="preset-button" type="button" data-page-key="products" aria-pressed="false">Products</button>
+            <button class="preset-button" type="button" data-page-key="quote" aria-pressed="false">Quote</button>
+            <button class="preset-button" type="button" data-page-key="default" aria-pressed="false">Fallback</button>
+          </div>
+          <p class="status" id="mountStatus">Loading assistant...</p>
+        </section>
+
+        <section class="panel-section">
+          <h2>Structured Snapshot</h2>
+          <pre class="snapshot" id="snapshotOutput">{}</pre>
+        </section>
+
+        <section class="panel-section">
+          <h2>Diagnostics</h2>
+          <div class="diagnostic-grid" id="diagnosticsGrid">
+            <div class="diagnostic-card">
+              <span>Intent</span>
+              <strong id="diagIntent">-</strong>
+            </div>
+            <div class="diagnostic-card">
+              <span>Suggested route</span>
+              <strong id="diagRoute">-</strong>
+            </div>
+            <div class="diagnostic-card">
+              <span>Ready</span>
+              <strong id="diagReady">false</strong>
+            </div>
+            <div class="diagnostic-card">
+              <span>Missing scope</span>
+              <strong id="diagMissing">-</strong>
+            </div>
+            <div class="diagnostic-card">
+              <span>Validation flags</span>
+              <strong id="diagValidation">-</strong>
+            </div>
+            <div class="diagnostic-card">
+              <span>Isolation</span>
+              <strong id="diagIsolation">No write hooks</strong>
+            </div>
+            <div class="diagnostic-card">
+              <span>Handoff</span>
+              <strong id="diagHandoff">blocked</strong>
+            </div>
+            <div class="diagnostic-card">
+              <span>Apply status</span>
+              <strong id="diagApply">safe_to_apply: false</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <h2>Scenario QA Matrix</h2>
+          <div class="matrix-actions">
+            <button class="preset-button" type="button" id="runMatrixButton">Run matrix</button>
+          </div>
+          <p class="status" id="matrixStatus">Not run yet.</p>
+          <div class="matrix-table-wrap">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Prompt</th>
+                  <th>Expected</th>
+                  <th>Actual</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="matrixBody">
+                <tr>
+                  <td colspan="4">Run the matrix to test controlled assistant routing.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <h2>Coverage Report</h2>
+          <div class="matrix-actions">
+            <button class="preset-button" type="button" id="runCoverageButton">Run coverage</button>
+          </div>
+          <p class="status" id="coverageStatus">Not run yet.</p>
+          <div class="matrix-table-wrap">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Area</th>
+                  <th>Prompt</th>
+                  <th>Actual</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="coverageBody">
+                <tr>
+                  <td colspan="4">Run coverage to check the main customer journey.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <h2>Release Readiness</h2>
+          <div class="matrix-actions">
+            <button class="preset-button" type="button" id="runReleaseButton">Run readiness</button>
+          </div>
+          <p class="status" id="releaseStatus">Not run yet.</p>
+          <div class="matrix-table-wrap">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Gate</th>
+                  <th>Expected</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="releaseBody">
+                <tr>
+                  <td colspan="3">Run readiness to check passive mount safety.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <h2>Mobile Audit</h2>
+          <div class="matrix-actions">
+            <button class="preset-button" type="button" id="runMobileAuditButton">Run mobile audit</button>
+          </div>
+          <p class="status" id="mobileAuditStatus">Not run yet.</p>
+          <div class="matrix-table-wrap">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Check</th>
+                  <th>Expected</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="mobileAuditBody">
+                <tr>
+                  <td colspan="3">Run mobile audit to check overlap safeguards.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script src="chatbotBootstrap.js"></script>
+  <script>
+    (function () {
+      const status = document.getElementById("mountStatus");
+      const snapshotOutput = document.getElementById("snapshotOutput");
+      const presetButtons = Array.from(document.querySelectorAll("[data-page-key]"));
+      const mockEyebrow = document.getElementById("mockEyebrow");
+      const mockTitle = document.getElementById("mockTitle");
+      const mockLead = document.getElementById("mockLead");
+      const diagIntent = document.getElementById("diagIntent");
+      const diagRoute = document.getElementById("diagRoute");
+      const diagReady = document.getElementById("diagReady");
+      const diagMissing = document.getElementById("diagMissing");
+      const diagValidation = document.getElementById("diagValidation");
+      const diagIsolation = document.getElementById("diagIsolation");
+      const diagHandoff = document.getElementById("diagHandoff");
+      const diagApply = document.getElementById("diagApply");
+      const runMatrixButton = document.getElementById("runMatrixButton");
+      const matrixStatus = document.getElementById("matrixStatus");
+      const matrixBody = document.getElementById("matrixBody");
+      const runCoverageButton = document.getElementById("runCoverageButton");
+      const coverageStatus = document.getElementById("coverageStatus");
+      const coverageBody = document.getElementById("coverageBody");
+      const runReleaseButton = document.getElementById("runReleaseButton");
+      const releaseStatus = document.getElementById("releaseStatus");
+      const releaseBody = document.getElementById("releaseBody");
+      const runMobileAuditButton = document.getElementById("runMobileAuditButton");
+      const mobileAuditStatus = document.getElementById("mobileAuditStatus");
+      const mobileAuditBody = document.getElementById("mobileAuditBody");
+      const mockCopy = {
+        index: {
+          eyebrow: "Homepage preview",
+          title: "Flooring guidance before the quote",
+          lead: "Use the assistant to decide whether to browse products, start a quote, or collect a few project details first."
+        },
+        products: {
+          eyebrow: "Products preview",
+          title: "Choose the floor direction first",
+          lead: "Test product guidance while keeping product selection and catalogue logic untouched."
+        },
+        quote: {
+          eyebrow: "Quote preview",
+          title: "Check scope before submit",
+          lead: "Review how the assistant explains estimate scope, missing details, and manual review risks without calculating totals."
+        },
+        default: {
+          eyebrow: "Fallback preview",
+          title: "Neutral assistant state",
+          lead: "Use the fallback preset for pages outside the main product and quote funnel."
+        }
+      };
+      const matrixCases = [
+        {
+          prompt: "I want cheapest",
+          expected: "Practical product guidance, no price comparison",
+          intent: "product_guidance",
+          route: "products.html",
+          forbidden: /\$\s*\d|cheaper than|always cheaper/i
+        },
+        {
+          prompt: "I have stairs",
+          expected: "Scope review for stairs",
+          intent: "scope_validation",
+          route: "quote-review.html",
+          forbidden: /\$\s*\d/i
+        },
+        {
+          prompt: "I don't know my area",
+          expected: "Area help routed into quote flow",
+          intent: "missing_info_collection",
+          route: "quote.html",
+          forbidden: /\$\s*\d/i
+        },
+        {
+          prompt: "Can you beat this quote?",
+          expected: "Competitor pricing blocked",
+          intent: "unsupported",
+          route: "quote-review.html",
+          forbidden: /\$\s*\d|yes|we can beat/i
+        }
+      ];
+      const coverageCases = [
+        {
+          area: "Product guidance",
+          prompt: "Should I choose hybrid or laminate?",
+          intent: "product_guidance",
+          route: "products.html"
+        },
+        {
+          area: "Quote explanation",
+          prompt: "How does the quote work?",
+          intent: "quote_explanation",
+          route: "quote.html"
+        },
+        {
+          area: "Missing area",
+          prompt: "I don't know my area",
+          intent: "missing_info_collection",
+          route: "quote.html"
+        },
+        {
+          area: "Stairs/access/furniture",
+          prompt: "I have stairs",
+          intent: "scope_validation",
+          route: "quote-review.html"
+        },
+        {
+          area: "Existing flooring/removal",
+          prompt: "Replacing carpet in bedrooms",
+          scenario: "replacing_carpet",
+          route: "quote.html"
+        },
+        {
+          area: "Hidden costs",
+          prompt: "Are there hidden costs?",
+          intent: "scope_validation",
+          route: "quote.html"
+        },
+        {
+          area: "Final quote changes",
+          prompt: "Can final quote change?",
+          intent: "quote_explanation",
+          route: "quote.html"
+        },
+        {
+          area: "Cheapest option",
+          prompt: "I want cheapest",
+          intent: "product_guidance",
+          route: "products.html"
+        },
+        {
+          area: "Competitor quote",
+          prompt: "Can you beat this quote?",
+          intent: "unsupported",
+          route: "quote-review.html"
+        },
+        {
+          area: "Trust/professionalism",
+          prompt: "Can I trust Operon?",
+          intent: "route_next_step",
+          route: "quote.html"
+        },
+        {
+          area: "Route suggestions",
+          prompt: "I am ready",
+          route: "quote.html"
+        },
+        {
+          area: "JSON schema",
+          prompt: "52",
+          intent: "missing_info_collection",
+          route: "quote.html",
+          requireArea: 52
+        }
+      ];
+      const releaseGates = [
+        {
+          gate: "Passive mount",
+          expected: "openOnInit false on live preset config",
+          check: function () {
+            return ["index", "products", "quote"].every(function (pageKey) {
+              return window.OperonChatbotBootstrap.getConfig({
+                pageKey: pageKey,
+                basePath: "./"
+              }).openOnInit === false;
+            });
+          }
+        },
+        {
+          gate: "Approved routes",
+          expected: "Only approved funnel routes",
+          check: function () {
+            return ["quote.html", "products.html", "quote-review.html"].indexOf(window.OperonChatbot.getRouteSuggestion().href) >= 0;
+          }
+        },
+        {
+          gate: "Structured output",
+          expected: "Snapshot exposes draft JSON",
+          check: function () {
+            const output = window.OperonChatbot.getStructuredOutput();
+            return !!(output && output.version && output.next_step);
+          }
+        },
+        {
+          gate: "Handoff read-only",
+          expected: "safe_to_apply remains false",
+          check: function () {
+            const handoff = window.OperonChatbot.getHandoffReadiness();
+            return !!handoff && handoff.safe_to_apply === false;
+          }
+        },
+        {
+          gate: "Scenario matrix",
+          expected: "Core prompts route without pricing",
+          check: function () {
+            return matrixCases.map(runMatrixCase).every(function (result) {
+              return result.passed;
+            });
+          }
+        },
+        {
+          gate: "Coverage map",
+          expected: "Customer journey prompts covered",
+          check: function () {
+            return coverageCases.map(runCoverageCase).every(function (result) {
+              return result.passed;
+            });
+          }
+        }
+      ];
+      const mobileAuditChecks = [
+        {
+          check: "Fixed bottom corner",
+          expected: "Uses fixed position with a modest z-index",
+          match: function (styleText) {
+            return styleText.indexOf("position: fixed") >= 0 && styleText.indexOf("z-index: 30") >= 0;
+          }
+        },
+        {
+          check: "Pointer safety",
+          expected: "Root ignores clicks; panel/toggle receive them",
+          match: function (styleText) {
+            return styleText.indexOf("pointer-events: none") >= 0 && styleText.indexOf("pointer-events: auto") >= 0;
+          }
+        },
+        {
+          check: "Safe area",
+          expected: "Bottom offset includes safe-area inset",
+          match: function (styleText) {
+            return styleText.indexOf("env(safe-area-inset-bottom, 0px)") >= 0;
+          }
+        },
+        {
+          check: "Mobile constraints",
+          expected: "Mobile width is constrained by left/right offsets",
+          match: function (styleText) {
+            return styleText.indexOf("@media (max-width: 640px)") >= 0 && styleText.indexOf("width: auto") >= 0;
+          }
+        },
+        {
+          check: "Panel height",
+          expected: "Panel remains below viewport height",
+          match: function (styleText) {
+            return styleText.indexOf("max-height: min(68vh, 560px)") >= 0;
+          }
+        },
+        {
+          check: "Route stacking",
+          expected: "Route CTA stacks and fills width on mobile",
+          match: function (styleText) {
+            return styleText.indexOf("flex-direction: column") >= 0 && styleText.indexOf(".operon-chatbot-route-link { width: 100%; }") >= 0;
+          }
+        },
+        {
+          check: "Reduced motion",
+          expected: "Motion disabled when user prefers reduced motion",
+          match: function (styleText) {
+            return styleText.indexOf("@media (prefers-reduced-motion: reduce)") >= 0 && styleText.indexOf("transition: none") >= 0;
+          }
+        },
+        {
+          check: "Closed default",
+          expected: "Panel is hidden until opened",
+          match: function (styleText) {
+            return styleText.indexOf("display: none") >= 0 && styleText.indexOf("[data-open='true']") >= 0;
+          }
+        }
+      ];
+
+      function updateMockPage(pageKey) {
+        const copy = mockCopy[pageKey] || mockCopy.default;
+        mockEyebrow.textContent = copy.eyebrow;
+        mockTitle.textContent = copy.title;
+        mockLead.textContent = copy.lead;
+        presetButtons.forEach(function (button) {
+          button.setAttribute("aria-pressed", button.getAttribute("data-page-key") === pageKey ? "true" : "false");
+        });
+      }
+
+      function renderSnapshot() {
+        if (!window.OperonChatbot || typeof window.OperonChatbot.getSnapshot !== "function") {
+          snapshotOutput.textContent = "{}";
+          renderDiagnostics(null);
+          return;
+        }
+
+        const snapshot = window.OperonChatbot.getSnapshot();
+        snapshotOutput.textContent = JSON.stringify(snapshot, null, 2);
+        renderDiagnostics(snapshot);
+      }
+
+      function formatList(items) {
+        return Array.isArray(items) && items.length ? items.join(", ") : "-";
+      }
+
+      function renderDiagnostics(snapshot) {
+        const structured = snapshot && snapshot.structuredOutput ? snapshot.structuredOutput : {};
+        const route = snapshot && snapshot.routeSuggestion ? snapshot.routeSuggestion : {};
+        const handoff = snapshot && snapshot.handoffReadiness ? snapshot.handoffReadiness : {};
+        const pageKey = document.querySelector("[data-page-key][aria-pressed='true']");
+        const liveConfig = window.OperonChatbotBootstrap && typeof window.OperonChatbotBootstrap.getConfig === "function"
+          ? window.OperonChatbotBootstrap.getConfig({
+            pageKey: pageKey ? pageKey.getAttribute("data-page-key") : "index",
+            basePath: "./"
+          })
+          : { openOnInit: false };
+
+        diagIntent.textContent = structured.intent || "-";
+        diagRoute.textContent = route.href || structured.next_step || "-";
+        diagReady.textContent = structured.ready_for_quote ? "true" : "false";
+        diagMissing.textContent = formatList(structured.missing_items_to_check);
+        diagValidation.textContent = formatList(structured.validation_flags);
+        diagIsolation.textContent = liveConfig.openOnInit === false
+          ? "Live default closed; draft-only getters"
+          : "Preview override active";
+        diagHandoff.textContent = handoff.status ? handoff.status + ": " + handoff.reason : "blocked";
+        diagApply.textContent = "safe_to_apply: " + (handoff.safe_to_apply ? "true" : "false");
+      }
+
+      function mountPreset(pageKey) {
+        updateMockPage(pageKey);
+        status.textContent = "Mounting " + pageKey + " preset...";
+        return window.OperonChatbotBootstrap.mount({
+          basePath: "./",
+          pageKey: pageKey,
+          openOnInit: true
+        }).then(function () {
+          status.textContent = "Mounted " + pageKey + " preset.";
+          renderSnapshot();
+        }).catch(function (error) {
+          status.textContent = error.message || "Unable to mount assistant.";
+        });
+      }
+
+      function getLastAssistantText(snapshot) {
+        const transcript = snapshot && Array.isArray(snapshot.transcript) ? snapshot.transcript : [];
+        const assistantMessages = transcript.filter(function (message) {
+          return message.role === "assistant";
+        });
+        return assistantMessages.length ? assistantMessages[assistantMessages.length - 1].text : "";
+      }
+
+      function runMatrixCase(testCase) {
+        const logic = window.OperonChatbotLogic.createChatbotLogic({
+          onUpdate: function () {}
+        });
+        logic.begin();
+        logic.applyTextInput(testCase.prompt);
+
+        const snapshot = logic.getSnapshot();
+        const structured = snapshot.structuredOutput || {};
+        const route = snapshot.routeSuggestion || {};
+        const assistantText = getLastAssistantText(snapshot);
+        const routeMatch = (route.href || structured.next_step) === testCase.route;
+        const intentMatch = structured.intent === testCase.intent;
+        const forbiddenMatch = testCase.forbidden && testCase.forbidden.test(assistantText);
+        const passed = routeMatch && intentMatch && !forbiddenMatch;
+
+        return {
+          prompt: testCase.prompt,
+          expected: testCase.expected,
+          actual: (structured.intent || "-") + " -> " + (route.href || structured.next_step || "-"),
+          passed: passed
+        };
+      }
+
+      function runCoverageCase(testCase) {
+        const logic = window.OperonChatbotLogic.createChatbotLogic({
+          onUpdate: function () {}
+        });
+        logic.begin();
+        logic.applyTextInput(testCase.prompt);
+
+        const snapshot = logic.getSnapshot();
+        const structured = snapshot.structuredOutput || {};
+        const route = snapshot.routeSuggestion || {};
+        const assistantText = getLastAssistantText(snapshot);
+        const routeMatch = !testCase.route || (route.href || structured.next_step) === testCase.route;
+        const intentMatch = !testCase.intent || structured.intent === testCase.intent;
+        const scenarioMatch = !testCase.scenario || structured.scenario_id === testCase.scenario;
+        const areaMatch = typeof testCase.requireArea === "undefined" || structured.area_m2 === testCase.requireArea;
+        const safeCopy = !/\$\s*\d|per\s*m2|per\s*square|rate|discount/i.test(assistantText);
+        const passed = routeMatch && intentMatch && scenarioMatch && areaMatch && safeCopy;
+
+        return {
+          area: testCase.area,
+          prompt: testCase.prompt,
+          actual: [
+            structured.intent || structured.scenario_id || "-",
+            route.href || structured.next_step || "-",
+            typeof structured.area_m2 === "number" ? structured.area_m2 + " m2" : ""
+          ].filter(Boolean).join(" -> "),
+          passed: passed
+        };
+      }
+
+      function renderMatrix(results) {
+        matrixBody.innerHTML = "";
+        results.forEach(function (result) {
+          const row = document.createElement("tr");
+          const prompt = document.createElement("td");
+          const expected = document.createElement("td");
+          const actual = document.createElement("td");
+          const statusCell = document.createElement("td");
+
+          prompt.textContent = result.prompt;
+          expected.textContent = result.expected;
+          actual.textContent = result.actual;
+          statusCell.textContent = result.passed ? "PASS" : "FAIL";
+          statusCell.className = result.passed ? "matrix-pass" : "matrix-fail";
+
+          row.appendChild(prompt);
+          row.appendChild(expected);
+          row.appendChild(actual);
+          row.appendChild(statusCell);
+          matrixBody.appendChild(row);
+        });
+      }
+
+      function renderCoverage(results) {
+        coverageBody.innerHTML = "";
+        results.forEach(function (result) {
+          const row = document.createElement("tr");
+          const area = document.createElement("td");
+          const prompt = document.createElement("td");
+          const actual = document.createElement("td");
+          const statusCell = document.createElement("td");
+
+          area.textContent = result.area;
+          prompt.textContent = result.prompt;
+          actual.textContent = result.actual;
+          statusCell.textContent = result.passed ? "PASS" : "FAIL";
+          statusCell.className = result.passed ? "matrix-pass" : "matrix-fail";
+
+          row.appendChild(area);
+          row.appendChild(prompt);
+          row.appendChild(actual);
+          row.appendChild(statusCell);
+          coverageBody.appendChild(row);
+        });
+      }
+
+      function renderRelease(results) {
+        releaseBody.innerHTML = "";
+        results.forEach(function (result) {
+          const row = document.createElement("tr");
+          const gate = document.createElement("td");
+          const expected = document.createElement("td");
+          const statusCell = document.createElement("td");
+
+          gate.textContent = result.gate;
+          expected.textContent = result.expected;
+          statusCell.textContent = result.passed ? "PASS" : "FAIL";
+          statusCell.className = result.passed ? "matrix-pass" : "matrix-fail";
+
+          row.appendChild(gate);
+          row.appendChild(expected);
+          row.appendChild(statusCell);
+          releaseBody.appendChild(row);
+        });
+      }
+
+      function renderMobileAudit(results) {
+        mobileAuditBody.innerHTML = "";
+        results.forEach(function (result) {
+          const row = document.createElement("tr");
+          const check = document.createElement("td");
+          const expected = document.createElement("td");
+          const statusCell = document.createElement("td");
+
+          check.textContent = result.check;
+          expected.textContent = result.expected;
+          statusCell.textContent = result.passed ? "PASS" : "FAIL";
+          statusCell.className = result.passed ? "matrix-pass" : "matrix-fail";
+
+          row.appendChild(check);
+          row.appendChild(expected);
+          row.appendChild(statusCell);
+          mobileAuditBody.appendChild(row);
+        });
+      }
+
+      function runScenarioMatrix() {
+        if (!window.OperonChatbotLogic || typeof window.OperonChatbotLogic.createChatbotLogic !== "function") {
+          matrixStatus.textContent = "Chatbot logic is not loaded yet.";
+          return;
+        }
+
+        const results = matrixCases.map(runMatrixCase);
+        const failures = results.filter(function (result) {
+          return !result.passed;
+        });
+        renderMatrix(results);
+        matrixStatus.textContent = failures.length
+          ? failures.length + " matrix case needs review."
+          : "All matrix cases passed without pricing output.";
+      }
+
+      function runCoverageReport() {
+        if (!window.OperonChatbotLogic || typeof window.OperonChatbotLogic.createChatbotLogic !== "function") {
+          coverageStatus.textContent = "Chatbot logic is not loaded yet.";
+          return;
+        }
+
+        const results = coverageCases.map(runCoverageCase);
+        const failures = results.filter(function (result) {
+          return !result.passed;
+        });
+        renderCoverage(results);
+        coverageStatus.textContent = failures.length
+          ? failures.length + " coverage area needs review."
+          : "Coverage passed across the customer journey.";
+      }
+
+      function runReleaseReadiness() {
+        if (!window.OperonChatbot || !window.OperonChatbotBootstrap) {
+          releaseStatus.textContent = "Chatbot is not mounted yet.";
+          return;
+        }
+
+        const results = releaseGates.map(function (gate) {
+          let passed = false;
+          try {
+            passed = !!gate.check();
+          } catch (error) {
+            passed = false;
+          }
+          return {
+            gate: gate.gate,
+            expected: gate.expected,
+            passed: passed
+          };
+        });
+        const failures = results.filter(function (result) {
+          return !result.passed;
+        });
+        renderRelease(results);
+        releaseStatus.textContent = failures.length
+          ? failures.length + " release gate needs review."
+          : "Release readiness passed for passive isolated mount.";
+      }
+
+      function runMobileAudit() {
+        const styleNode = document.getElementById("operon-chatbot-style");
+        const styleText = styleNode ? styleNode.textContent : "";
+        const results = mobileAuditChecks.map(function (item) {
+          return {
+            check: item.check,
+            expected: item.expected,
+            passed: item.match(styleText)
+          };
+        });
+        const failures = results.filter(function (result) {
+          return !result.passed;
+        });
+        renderMobileAudit(results);
+        mobileAuditStatus.textContent = failures.length
+          ? failures.length + " mobile audit check needs review."
+          : "Mobile overlap safeguards passed.";
+      }
+
+      presetButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          mountPreset(button.getAttribute("data-page-key"));
+        });
+      });
+
+      runMatrixButton.addEventListener("click", runScenarioMatrix);
+      runCoverageButton.addEventListener("click", runCoverageReport);
+      runReleaseButton.addEventListener("click", runReleaseReadiness);
+      runMobileAuditButton.addEventListener("click", runMobileAudit);
+      window.setInterval(renderSnapshot, 700);
+      mountPreset("index");
+    }());
+  </script>
+</body>
+</html>

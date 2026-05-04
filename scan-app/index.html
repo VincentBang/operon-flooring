@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Operon Floor Scan App</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <header>
+          <p class="eyebrow">Manual polygon measurement</p>
+          <h1>Operon Floor Scan App</h1>
+        </header>
+
+        <canvas id="room-canvas" width="920" height="620" aria-label="Room polygon editor"></canvas>
+      </section>
+
+      <aside class="panel">
+        <section>
+          <div class="section-header">
+            <h2>Rooms</h2>
+            <button id="new-room" type="button">Add room</button>
+          </div>
+          <div id="room-list" class="room-list"></div>
+        </section>
+
+        <section>
+          <h2>Active room</h2>
+          <label>
+            Room name
+            <input id="room-name" type="text" autocomplete="off">
+          </label>
+          <label>
+            Notes
+            <textarea id="room-notes" rows="3"></textarea>
+          </label>
+          <button id="clear-room" type="button">Clear points</button>
+        </section>
+
+        <section id="summary-output"></section>
+
+        <section>
+          <div class="section-header">
+            <h2>Export</h2>
+            <button id="export-json" type="button">Generate JSON</button>
+          </div>
+          <textarea id="report-output" class="json-output" rows="12" spellcheck="false"></textarea>
+          <button id="mock-read" type="button">Mock quote read</button>
+          <pre id="integration-output"></pre>
+        </section>
+      </aside>
+    </main>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

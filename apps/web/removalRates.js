@@ -1,13 +1,15 @@
 (function () {
   // Source of truth for flooring removal pricing.
+  // disposalFee is treated as a per-m² disposal rate in current quote logic.
+  // Future Supabase migration should rename this to disposalRatePerM2 for clarity.
   // Future Google Sheets / Supabase integration can replace this file with fetched data.
   const REMOVAL_RATES = [
     { id: "remove-carpet", floorType: "carpet", aliases: ["carpet"], ratePerM2: 10, disposalFee: 0, active: true },
-    { id: "remove-floating", floorType: "laminate", aliases: ["floating", "laminate", "hybrid"], ratePerM2: 10, disposalFee: 0, active: true },
-    { id: "remove-glue-down", floorType: "timber", aliases: ["glue_down", "timber"], ratePerM2: 10, disposalFee: 0, active: true },
-    { id: "remove-tile", floorType: "tile", aliases: ["tile"], ratePerM2: 10, disposalFee: 0, active: true },
+    { id: "remove-floating", floorType: "laminate", aliases: ["floating", "floating_floor", "laminate", "hybrid"], ratePerM2: 10, disposalFee: 0, active: true },
+    { id: "remove-glue-down", floorType: "timber", aliases: ["glue_down", "glued_or_nailed_timber", "timber"], ratePerM2: 10, disposalFee: 0, active: true },
+    { id: "remove-tile", floorType: "tile", aliases: ["tile", "tiles"], ratePerM2: 10, disposalFee: 0, active: true },
     { id: "remove-vinyl", floorType: "vinyl", aliases: ["vinyl"], ratePerM2: 10, disposalFee: 0, active: true },
-    { id: "remove-unknown", floorType: "unknown", aliases: ["unknown", "other", "unsure"], ratePerM2: 0, disposalFee: 0, active: true }
+    { id: "remove-unknown", floorType: "unknown", aliases: ["unknown", "other", "unsure", "not_sure"], ratePerM2: 0, disposalFee: 0, active: true }
   ];
 
   function clone(value) {

@@ -1,25 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
-  --bg: #FAF8F4;
-  --bg-alt: #F6F2EC;
-  --surface: rgba(255, 255, 255, 0.88);
-  --surface-strong: rgba(255, 255, 255, 0.96);
-  --surface-soft: rgba(246, 242, 236, 0.92);
-  --surface-deep: #F6F2EC;
-  --text: #111820;
-  --muted: #6B7280;
-  --line: rgba(232, 226, 216, 0.9);
-  --line-strong: rgba(17, 24, 32, 0.12);
-  --brand: #111820;
-  --brand-dark: #111820;
-  --accent: #A67C52;
-  --accent-soft: rgba(166, 124, 82, 0.10);
-  --signal: #A67C52;
+  --bg: #FFFFFF;
+  --bg-alt: #F4F7F6;
+  --surface: rgba(255, 255, 255, 0.94);
+  --surface-strong: rgba(255, 255, 255, 0.98);
+  --surface-soft: rgba(244, 247, 246, 0.94);
+  --surface-deep: #EEF3F1;
+  --text: #17232D;
+  --muted: #5E6A74;
+  --line: rgba(216, 226, 223, 0.92);
+  --line-strong: rgba(23, 35, 45, 0.14);
+  --brand: #17313A;
+  --brand-dark: #17313A;
+  --accent: #B56E52;
+  --accent-soft: rgba(181, 110, 82, 0.10);
+  --signal: #B56E52;
   --danger: #dd5c4f;
-  --success: #4C6857;
-  --shadow-lg: 0 16px 40px rgba(17, 24, 32, 0.06);
-  --shadow-md: 0 6px 20px rgba(17, 24, 32, 0.05);
+  --success: #456B5C;
+  --shadow-lg: 0 18px 44px rgba(23, 35, 45, 0.07);
+  --shadow-md: 0 8px 24px rgba(23, 35, 45, 0.06);
   --radius-xl: 30px;
   --radius-lg: 24px;
   --radius-md: 18px;
@@ -60,8 +60,8 @@ a {
 }
 
 .site-header {
-  background: rgba(250, 248, 244, 0.94);
-  border-bottom: 1px solid rgba(232, 226, 216, 0.9);
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid rgba(216, 226, 223, 0.92);
   backdrop-filter: blur(20px);
 }
 
@@ -130,7 +130,7 @@ a {
 }
 
 .nav-links a:hover::after {
-  background: rgba(166, 124, 82, 0.35);
+  background: rgba(181, 110, 82, 0.34);
 }
 
 .button,
@@ -157,9 +157,9 @@ button {
 }
 
 .button-ghost {
-  background: rgba(166, 124, 82, 0.08);
+  background: rgba(181, 110, 82, 0.08);
   color: var(--text);
-  border: 1px solid rgba(166, 124, 82, 0.18);
+  border: 1px solid rgba(181, 110, 82, 0.18);
 }
 
 .button-danger {
@@ -186,7 +186,7 @@ button:hover {
 }
 
 .eyebrow {
-  background: rgba(24, 183, 155, 0.1);
+  background: rgba(23, 49, 58, 0.08);
   color: var(--brand-dark);
   font-size: 0.76rem;
   font-weight: 700;

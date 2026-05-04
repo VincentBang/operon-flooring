@@ -86,7 +86,7 @@
       </a>
       <nav class="nav-links">
         <a href="index.html#top">Home</a>
-        <a href="index.html?from=product&category=engineered#quoteForm">Quote</a>
+        <a href="quote.html?from=product&category=engineered">Quote</a>
         <a href="products.html">Flooring Products</a>
         <a href="floorplan.html">Floor Plan</a>
         <a href="blog/index.html">Guides</a>
@@ -96,7 +96,7 @@
         <span></span>
         <span></span>
       </button>
-      <a class="button" href="index.html?from=product&category=engineered#quoteForm" data-save-category="engineered">Start quote</a>
+      <a class="button" href="quote.html?from=product&category=engineered" data-save-category="engineered">Start quote</a>
     </div>
   </header>
 
@@ -110,7 +110,7 @@
               <h1>Engineered Timber Flooring Sydney</h1>
               <p>Engineered timber flooring is the premium category for Sydney projects where the floor itself needs to carry finish quality, warmth and presentation. If you are comparing categories because you want something more refined than laminate or hybrid, this page is built to help you understand the commercial side clearly: what affects cost, what changes between floating and direct-glue installation, and when it makes sense to move into a quote.</p>
               <div class="hero-actions" style="margin-top: 24px;">
-                <a class="button" href="index.html?from=product&category=engineered#quoteForm" data-save-category="engineered">Get Engineered Timber Quote</a>
+                <a class="button" href="quote.html?from=product&category=engineered" data-save-category="engineered">Get Engineered Timber Quote</a>
                 <a class="button-secondary" href="products.html?category=engineered" data-save-category="engineered">View Engineered Products</a>
               </div>
               <p class="hero-trust" style="margin-top: 18px;">Premium quote path · Floating or direct glue · Herringbone capable · Final quote confirmed before work</p>
@@ -138,13 +138,13 @@
       <div class="shell">
         <article class="section-card">
           <span class="eyebrow">Featured Engineered Products</span>
-          <h2 style="margin-top: 18px;">Use the engineered timber estimate path first</h2>
-          <p>The live catalogue is currently strongest on published hybrid products, so the engineered timber path is designed to keep the project moving instead of filling the page with placeholder boards. If engineered timber is the right category, save that category direction now, continue into the quote, and confirm the exact product once the installation method, measured area and subfloor conditions are clearer.</p>
+          <h2 style="margin-top: 18px;">Browse live engineered timber colours first</h2>
+          <p>The engineered catalogue now includes live Swish Oak Natura straight-plank and herringbone ranges, so you can browse the available colours first and then carry the selected board into the quote. Installation method, measured area and subfloor conditions are still confirmed during review before anything is locked in.</p>
           <div class="catalogue-selection-banner">
             <strong id="engineeredSelectionTitle">Engineered timber quote path ready</strong>
-            <p id="engineeredSelectionText">We can carry engineered timber into the quote now and confirm the final board once the project scope and installation path are reviewed properly.</p>
+            <p id="engineeredSelectionText">Browse the live Swish Oak Natura ranges or continue straight into the quote and confirm the final board during review.</p>
             <div class="catalogue-selection-actions">
-              <a class="button" id="engineeredQuoteLink" href="index.html?from=product&category=engineered#quoteForm" data-save-category="engineered">Continue to quote</a>
+              <a class="button" id="engineeredQuoteLink" href="quote.html?from=product&category=engineered" data-save-category="engineered">Continue to quote</a>
               <a class="button-secondary" href="products.html?category=engineered" data-save-category="engineered">View all engineered timber products</a>
             </div>
           </div>
@@ -264,8 +264,9 @@
           <p>If engineered timber is the right category for the finish you want, move into the quote flow now and confirm the area, installation path and access conditions properly. If you still need to compare against laminate or hybrid, do that first and then return once the category decision is clearer.</p>
           <p>If the project begins with an older floor that is lifting, swelling or no longer worth repairing, it is worth reading <a href="blog/floor-repair-or-replace.html">repair or replace flooring</a>, <a href="blog/why-is-my-floor-lifting.html">why floors lift</a> and <a href="blog/flooring-installation-cost-breakdown.html">installation cost breakdown</a> before sending the request.</p>
           <div class="hero-actions" style="margin-top: 24px;">
-            <a class="button" href="index.html?from=product&category=engineered#quoteForm" data-save-category="engineered">Start Engineered Quote</a>
+            <a class="button" href="quote.html?from=product&category=engineered" data-save-category="engineered">Start Engineered Quote</a>
             <a class="button-secondary" href="products.html?category=engineered" data-save-category="engineered">Browse Engineered Products</a>
+            <a class="button-secondary" href="quote-review.html">Review existing quote</a>
           </div>
         </article>
       </div>
@@ -301,7 +302,7 @@
       <div class="footer-col">
         <h4>Actions</h4>
         <ul>
-          <li><a href="index.html#quoteForm">Start Quote</a></li>
+          <li><a href="quote.html">Start Quote</a></li>
           <li><a href="floorplan.html">Upload Floor Plan</a></li>
           <li><a href="blog/index.html">Guides</a></li>
         </ul>
@@ -339,7 +340,7 @@
 
       function updateEngineeredBridge() {
         const storedProduct = productsApi.getStoredProduct();
-        quoteLink.setAttribute("href", "index.html?from=product&category=engineered#quoteForm");
+        quoteLink.setAttribute("href", "quote.html?from=product&category=engineered");
 
         if (storedProduct && storedProduct.category === "engineered") {
           title.textContent = "Selected for quote: " + productsApi.getProductLabel(storedProduct);
@@ -351,7 +352,7 @@
         }
 
         title.textContent = "Engineered timber quote path ready";
-        text.textContent = "We can carry engineered timber into the quote now and confirm the final board once the project scope and installation path are reviewed properly.";
+        text.textContent = "Browse the live Swish Oak Natura ranges or continue straight into the quote and confirm the final board during review.";
         quoteLink.textContent = "Continue to quote";
       }
 

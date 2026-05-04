@@ -13,8 +13,9 @@
   // Step 2 drop-off -> confusing property inputs
   // Step 3 drop-off -> product unclear
   // Step 4 drop-off -> measurement confusing
-  // Step 5 drop-off -> too many extras
-  // Step 6 drop-off -> price shock
+  // Step 5 drop-off -> stairs uncertainty
+  // Step 6 drop-off -> too many extras
+  // Step 7 drop-off -> price shock or summary hesitation
 
   function safeParse(value, fallback) {
     try {
@@ -229,6 +230,15 @@
     appendEvent(trackingState, event);
     writeTrackingState(trackingState);
     void sendToSupabase("quote_events", event);
+    if (eventName === "cta_click") {
+      const aliasEvent = Object.assign({}, event, {
+        id: createUuid(),
+        event_name: "CTA_click"
+      });
+      appendEvent(trackingState, aliasEvent);
+      writeTrackingState(trackingState);
+      void sendToSupabase("quote_events", aliasEvent);
+    }
     console.log("TRACK:", eventName, details);
     return { trackingState: trackingState, event: event };
   }
