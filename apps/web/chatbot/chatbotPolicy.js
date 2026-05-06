@@ -5,6 +5,7 @@
     scopeValidation: "scope_validation",
     detailCollection: "detail_collection",
     installOnly: "install_only",
+    operatorHandoff: "operator_handoff",
     routeNextStep: "route_next_step",
     unsupported: "unsupported"
   };
@@ -57,6 +58,9 @@
     }
     if (includesAny(value, ["product", "hybrid", "laminate", "engineered", "timber", "flooring type", "waterproof"])) {
       return INTENTS.productGuidance;
+    }
+    if (includesAny(value, ["operator", "human", "person", "live chat", "online chat", "sales", "consultant", "speak to someone", "talk to someone", "call me"])) {
+      return INTENTS.operatorHandoff;
     }
     if (includesAny(value, ["start", "continue", "browse", "next"])) {
       return INTENTS.routeNextStep;

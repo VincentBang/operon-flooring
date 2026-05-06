@@ -1,4 +1,7 @@
 (function () {
+  const ENABLE_PRICING_RANGE_DISPLAY = false;
+  const MIN_BUCKET_SAMPLE_SIZE_FOR_RANGE = 30;
+
   function clamp(value, min, max) {
     return Math.max(min, Math.min(max, value));
   }
@@ -76,6 +79,16 @@
     const confidence = normaliseConfidence(settings.confidence || result && result.quoteConfidence);
     const complexity = hasComplexity(input, result);
 
+    if (!ENABLE_PRICING_RANGE_DISPLAY) {
+      return {
+        enabled: false,
+        base_total: roundMoney(baseTotal),
+        display_mode: "exact",
+        confidence_level: confidence,
+        reason: "Range display is disabled until enough real outcome data is available."
+      };
+    }
+
     if (!baseTotal || result && result.pricePending) {
       return {
         enabled: false,
@@ -83,6 +96,16 @@
         display_mode: "pending",
         confidence_level: confidence,
         reason: "Price range is not shown until measurement is available."
+      };
+    }
+
+    if (!bucket || Number(bucket.sample_size || 0) < MIN_BUCKET_SAMPLE_SIZE_FOR_RANGE) {
+      return {
+        enabled: false,
+        base_total: roundMoney(baseTotal),
+        display_mode: "exact",
+        confidence_level: confidence,
+        reason: "Range display needs at least " + MIN_BUCKET_SAMPLE_SIZE_FOR_RANGE + " comparable outcome records."
       };
     }
 

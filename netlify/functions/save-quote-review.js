@@ -41,6 +41,79 @@ function toObject(value) {
   return value && typeof value === "object" && !Array.isArray(value) ? value : {};
 }
 
+function truncateText(value, maxLength) {
+  const text = String(value || "");
+  return text.length > maxLength ? text.slice(0, maxLength) : text;
+}
+
+function getJsonSize(value) {
+  try {
+    return JSON.stringify(value || {}).length;
+  } catch (error) {
+    return 0;
+  }
+}
+
+function buildStoredOcr(payload) {
+  const extractedText = String(payload.ocr_extracted_text || "");
+  const maxTextLength = 50000;
+  return {
+    status: toText(payload.ocr_status, 80),
+    confidence: toNumberOrNull(payload.ocr_confidence),
+    engine: toText(payload.ocr_engine, 120),
+    extracted_text: truncateText(extractedText, maxTextLength),
+    extracted_text_truncated: extractedText.length > maxTextLength
+  };
+}
+
+function buildStoredDatabaseComparison(payload) {
+  const comparison = toObject(payload.database_comparison);
+  if (!Object.keys(comparison).length) {
+    return null;
+  }
+
+  const priceGuide = toObject(comparison.priceGuide);
+  return {
+    status: toText(comparison.status, 80),
+    notes: toText(comparison.notes, 1000),
+    comparisonLevel: toText(comparison.comparisonLevel, 120),
+    category: toObject(comparison.category),
+    productMatches: toArray(comparison.productMatches).slice(0, 5),
+    priceGuide: {
+      quoteTotalIncGst: toNumberOrNull(priceGuide.quoteTotalIncGst),
+      quotedAreaM2: toNumberOrNull(priceGuide.quotedAreaM2),
+      quotedRateIncGstPerM2: toNumberOrNull(priceGuide.quotedRateIncGstPerM2),
+      operonGuideRateIncGstPerM2: toNumberOrNull(priceGuide.operonGuideRateIncGstPerM2),
+      operonGuideTotalIncGst: toNumberOrNull(priceGuide.operonGuideTotalIncGst),
+      position: toObject(priceGuide.position)
+    },
+    scopeComparison: toArray(comparison.scopeComparison)
+  };
+}
+
+function buildStoredAdvisorSummary(payload) {
+  const summary = Object.assign({}, toObject(payload.advisor_summary));
+  const documentReview = {
+    uploaded_quote_reference: toText(payload.uploaded_quote_reference, 260),
+    ocr: buildStoredOcr(payload),
+    extracted_quote_fields: toObject(payload.extracted_quote_fields),
+    database_comparison: buildStoredDatabaseComparison(payload),
+    missing_items: toArray(payload.missing_items),
+    unknown_items: toArray(payload.unknown_items),
+    questions_to_ask: toArray(summary.questions_to_ask || payload.questions_to_ask),
+    saved_for_followup: true
+  };
+
+  summary.document_review = documentReview;
+
+  if (getJsonSize(summary) > 900000) {
+    summary.document_review.ocr.extracted_text = truncateText(summary.document_review.ocr.extracted_text, 15000);
+    summary.document_review.ocr.extracted_text_truncated = true;
+  }
+
+  return summary;
+}
+
 function normaliseMode(value) {
   return value === "detailed" ? "detailed" : "quick";
 }
@@ -80,7 +153,7 @@ function buildQuoteReviewRow(payload) {
     clarity_score: toNumberOrNull(payload.clarity_score),
     risk_level: normaliseRiskLevel(payload.risk_level),
     confidence_level: normaliseConfidenceLevel(payload.confidence_level),
-    advisor_summary: toObject(payload.advisor_summary),
+    advisor_summary: buildStoredAdvisorSummary(payload),
     next_step_taken: toText(payload.next_step_taken, 120),
     converted_to_quote: !!payload.converted_to_quote,
     linked_quote_lead_id: payload.linked_quote_lead_id || null

@@ -22,6 +22,7 @@
     let logic = null;
     let snapshot = null;
     let triggerCleanup = null;
+    const OPERATOR_REQUEST_ENDPOINT = "/.netlify/functions/operator-chat-request";
 
     function handleUpdate(nextSnapshot) {
       snapshot = nextSnapshot;
@@ -66,6 +67,9 @@
             });
           }
           logic.applyTextInput(value);
+        },
+        onOperatorSubmit: function (customer) {
+          return submitOperatorRequest(customer);
         }
       });
 
@@ -78,6 +82,76 @@
       installTriggerEngine();
 
       return api;
+    }
+
+    function getOperatorTranscript() {
+      const current = snapshot && Array.isArray(snapshot.transcript) ? snapshot.transcript : [];
+      return current.slice(-12).map(function (message) {
+        return {
+          role: message.role === "user" ? "user" : "assistant",
+          text: String(message.text || "").slice(0, 1200)
+        };
+      });
+    }
+
+    function submitOperatorRequest(customer) {
+      if (typeof window.fetch !== "function" || window.location.protocol === "file:") {
+        return Promise.reject(new Error("Operator request is unavailable in local preview mode."));
+      }
+
+      const payload = {
+        customer: {
+          name: customer.name || "",
+          phone: customer.phone || "",
+          email: customer.email || ""
+        },
+        message: customer.message || "Operator follow-up requested from chatbot.",
+        pageKey: settings.pageKey,
+        pageUrl: window.location.href,
+        transcript: getOperatorTranscript(),
+        structuredOutput: snapshot && snapshot.structuredOutput ? snapshot.structuredOutput : null,
+        routeSuggestion: snapshot && snapshot.routeSuggestion ? snapshot.routeSuggestion : null
+      };
+
+      if (window.OperonTracking && typeof window.OperonTracking.trackEvent === "function") {
+        window.OperonTracking.trackEvent("chatbot_operator_request_attempt", {
+          page_key: settings.pageKey,
+          has_phone: !!payload.customer.phone,
+          has_email: !!payload.customer.email
+        });
+      }
+
+      return window.fetch(OPERATOR_REQUEST_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }).then(function (response) {
+        return response.json().catch(function () {
+          return null;
+        }).then(function (result) {
+          if (!response.ok || !result || !result.ok) {
+            throw new Error(result && result.error ? result.error : "Could not send the operator request.");
+          }
+
+          if (window.OperonTracking && typeof window.OperonTracking.trackEvent === "function") {
+            window.OperonTracking.trackEvent("chatbot_operator_request_success", {
+              page_key: settings.pageKey,
+              customer_email_sent: !!result.customerEmailSent
+            });
+          }
+
+          return result;
+        });
+      }).catch(function (error) {
+        if (window.OperonTracking && typeof window.OperonTracking.trackEvent === "function") {
+          window.OperonTracking.trackEvent("chatbot_operator_request_failed", {
+            page_key: settings.pageKey
+          });
+        }
+        throw error;
+      });
     }
 
     function runTrigger(triggerId) {

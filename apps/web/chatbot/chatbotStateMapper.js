@@ -112,6 +112,7 @@
       "quote_review",
       "scope_validation",
       "route_next_step",
+      "operator_handoff",
       "install_only",
       "unsupported"
     ];

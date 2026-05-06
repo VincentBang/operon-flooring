@@ -1,5 +1,8 @@
 "use strict";
 
+const fs = require("fs");
+const path = require("path");
+const { PDFDocument, StandardFonts, rgb } = require("pdf-lib");
 const { getSupabaseTables } = require("./_supabaseTables");
 
 function jsonResponse(statusCode, payload) {
@@ -254,10 +257,10 @@ function getItemRows(quoteId, items) {
       quote_id: quoteId,
       item_type: item.type || item.itemType || "item",
       label: item.label || item.name || "Quote item",
-      quantity: item.quantity || null,
+      quantity: typeof item.quantity === "undefined" ? null : item.quantity,
       unit: item.unit || null,
       unit_basis: item.unitBasis || null,
-      amount_ex_gst: item.amountExGst || item.amount || null,
+      amount_ex_gst: typeof item.amountExGst !== "undefined" ? item.amountExGst : (typeof item.amount !== "undefined" ? item.amount : null),
       raw_payload: item.rawPayload || item
     };
   });
@@ -508,8 +511,22 @@ function formatArea(value) {
   return Number(Number(value || 0).toFixed(1)).toFixed(1) + " m²";
 }
 
+function formatPdfArea(value) {
+  return Number(Number(value || 0).toFixed(1)).toFixed(1) + " m2";
+}
+
 function formatFromAddress(config) {
   return config.fromName + " <" + config.fromEmail + ">";
+}
+
+function getCompanyDetails() {
+  return {
+    name: "Operon Flooring",
+    website: "operonflooring.com.au",
+    email: "quotes@operonflooring.com.au",
+    abn: "",
+    phone: ""
+  };
 }
 
 function getCustomerName(payload) {
@@ -528,6 +545,46 @@ function buildCustomerEmailLines(payload) {
   return lines.map(function (item) {
     return "<tr><td style=\"padding:10px 0;color:#111827;border-bottom:1px solid #eef0f3;\">" + escapeHtml(item.label || "Item") + "</td><td style=\"padding:10px 0;text-align:right;color:#111827;border-bottom:1px solid #eef0f3;\"><strong>" + escapeHtml(formatCurrency(item.amountExGst || item.amount || 0)) + "</strong></td></tr>";
   }).join("");
+}
+
+function getLineItemAmount(item) {
+  if (!item) {
+    return 0;
+  }
+  if (typeof item.amountExGst !== "undefined") {
+    return Number(item.amountExGst || 0);
+  }
+  return Number(item.amount || 0);
+}
+
+function getLineItemDisplayTotal(item) {
+  if (item && item.type === "stairs" && getLineItemAmount(item) <= 0) {
+    return "To confirm";
+  }
+  return formatCurrency(getLineItemAmount(item));
+}
+
+function getLineItemQuantityLabel(item) {
+  if (!item || typeof item.quantity === "undefined" || item.quantity === null || item.quantity === "") {
+    return "";
+  }
+  return String(item.quantity) + (item.unit ? " " + item.unit : "");
+}
+
+function getStairSubitemsFromLine(item) {
+  const raw = item && (item.rawPayload || item.raw_payload) || {};
+  const summarySubitems = Array.isArray(raw.summarySubitems) ? raw.summarySubitems : [];
+  if (summarySubitems.length) {
+    return summarySubitems.map(function (value) {
+      return String(value);
+    });
+  }
+  const details = Array.isArray(raw.details) ? raw.details : [];
+  return details.filter(function (detail) {
+    return Number(detail.quantity || 0) > 0;
+  }).map(function (detail) {
+    return Math.round(Number(detail.quantity || 0)) + " x " + (detail.label || detail.type || "Stair item");
+  });
 }
 
 function buildInternalEmailLines(payload) {
@@ -574,6 +631,185 @@ function buildScopeText(payload) {
   return buildScopeList(payload).map(function (item) {
     return "- " + item;
   }).join("\n");
+}
+
+function getLogoPath() {
+  const candidates = [
+    path.join(process.cwd(), "apps/web/assets/operon-logo-final.png"),
+    path.join(__dirname, "../../apps/web/assets/operon-logo-final.png"),
+    path.join(__dirname, "../apps/web/assets/operon-logo-final.png")
+  ];
+  return candidates.find(function (candidate) {
+    return fs.existsSync(candidate);
+  }) || "";
+}
+
+function sanitisePdfText(value) {
+  return String(value || "")
+    .replace(/–|—/g, "-")
+    .replace(/’/g, "'")
+    .replace(/“|”/g, "\"")
+    .replace(/㎡/g, "m2")
+    .replace(/²/g, "2");
+}
+
+function wrapPdfText(text, font, fontSize, maxWidth) {
+  const words = sanitisePdfText(text).split(/\s+/).filter(Boolean);
+  const lines = [];
+  let current = "";
+  words.forEach(function (word) {
+    const candidate = current ? current + " " + word : word;
+    if (font.widthOfTextAtSize(candidate, fontSize) <= maxWidth) {
+      current = candidate;
+      return;
+    }
+    if (current) {
+      lines.push(current);
+    }
+    current = word;
+  });
+  if (current) {
+    lines.push(current);
+  }
+  return lines.length ? lines : [""];
+}
+
+async function buildCustomerQuotePdf(payload, quoteId) {
+  const company = getCompanyDetails();
+  const pricing = payload.pricing || {};
+  const measurement = payload.measurement || {};
+  const customer = payload.customer || {};
+  const productName = getProductLabel(payload);
+  const pdfDoc = await PDFDocument.create();
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+  const pageSize = [595.28, 841.89];
+  const margin = 46;
+  const brand = rgb(0.09, 0.19, 0.23);
+  const muted = rgb(0.36, 0.42, 0.46);
+  const line = rgb(0.84, 0.88, 0.87);
+  let page = null;
+  let y = 0;
+
+  function addPage() {
+    page = pdfDoc.addPage();
+    page.setSize(pageSize[0], pageSize[1]);
+    y = pageSize[1] - margin;
+    page.drawText(company.website + "  |  " + company.email, {
+      x: margin,
+      y: 28,
+      size: 9,
+      font: font,
+      color: muted
+    });
+  }
+
+  function ensureSpace(height) {
+    if (y - height < 60) {
+      addPage();
+    }
+  }
+
+  function drawText(text, x, size, selectedFont, color, maxWidth, lineHeight) {
+    const lines = wrapPdfText(text, selectedFont || font, size, maxWidth || (pageSize[0] - margin * 2));
+    lines.forEach(function (lineText) {
+      page.drawText(lineText, {
+        x: x,
+        y: y,
+        size: size,
+        font: selectedFont || font,
+        color: color || brand
+      });
+      y -= lineHeight || (size + 5);
+    });
+  }
+
+  function drawKeyValue(label, value, x, width) {
+    page.drawText(sanitisePdfText(label), { x: x, y: y, size: 9, font: boldFont, color: muted });
+    y -= 15;
+    drawText(value, x, 11, boldFont, brand, width, 14);
+  }
+
+  addPage();
+  const logoPath = getLogoPath();
+  if (logoPath) {
+    try {
+      const logoImage = await pdfDoc.embedPng(fs.readFileSync(logoPath));
+      const logoDims = logoImage.scaleToFit(150, 42);
+      page.drawImage(logoImage, {
+        x: margin,
+        y: y - logoDims.height,
+        width: logoDims.width,
+        height: logoDims.height
+      });
+    } catch (error) {
+      page.drawText(company.name, { x: margin, y: y - 22, size: 18, font: boldFont, color: brand });
+    }
+  } else {
+    page.drawText(company.name, { x: margin, y: y - 22, size: 18, font: boldFont, color: brand });
+  }
+
+  page.drawText("Quote summary", { x: pageSize[0] - margin - 142, y: y - 8, size: 18, font: boldFont, color: brand });
+  page.drawText("Reference: " + String(quoteId).slice(0, 8), { x: pageSize[0] - margin - 142, y: y - 28, size: 10, font: font, color: muted });
+  y -= 72;
+
+  drawText("Your flooring estimate", margin, 24, boldFont, brand, pageSize[0] - margin * 2, 30);
+  drawText("Prepared for " + (customer.name || "customer") + ". This is a starting estimate for review before final confirmation.", margin, 10, font, muted, pageSize[0] - margin * 2, 15);
+  y -= 8;
+
+  ensureSpace(95);
+  page.drawRectangle({ x: margin, y: y - 86, width: pageSize[0] - margin * 2, height: 86, borderColor: line, borderWidth: 1, color: rgb(0.98, 0.98, 0.97) });
+  y -= 22;
+  const colWidth = (pageSize[0] - margin * 2 - 24) / 3;
+  const startY = y;
+  drawKeyValue("Product", pricing.productLabel || productName, margin + 14, colWidth);
+  y = startY;
+  drawKeyValue("Measured area", formatPdfArea(measurement.realArea || pricing.realArea || 0), margin + 14 + colWidth + 12, colWidth);
+  y = startY;
+  drawKeyValue("Total inc GST", formatCurrency(pricing.totalIncGst || 0), margin + 14 + (colWidth + 12) * 2, colWidth);
+  y = startY - 58;
+
+  ensureSpace(210);
+  drawText("Included item totals", margin, 15, boldFont, brand, pageSize[0] - margin * 2, 20);
+  const lines = Array.isArray(pricing.lineItems) ? pricing.lineItems : [];
+  if (!lines.length) {
+    drawText("Estimate items pending.", margin, 10, font, muted, pageSize[0] - margin * 2, 15);
+  }
+  lines.forEach(function (item) {
+    ensureSpace(item.type === "stairs" ? 56 : 34);
+    page.drawLine({ start: { x: margin, y: y + 8 }, end: { x: pageSize[0] - margin, y: y + 8 }, thickness: 0.5, color: line });
+    page.drawText(sanitisePdfText(item.label || "Quote item"), { x: margin, y: y, size: 10.5, font: font, color: brand });
+    page.drawText(getLineItemDisplayTotal(item), { x: pageSize[0] - margin - 88, y: y, size: 10.5, font: boldFont, color: brand });
+    y -= 14;
+    const quantity = getLineItemQuantityLabel(item);
+    if (quantity) {
+      page.drawText(sanitisePdfText(quantity), { x: margin, y: y, size: 8.5, font: font, color: muted });
+      y -= 12;
+    }
+    if (item.type === "stairs") {
+      getStairSubitemsFromLine(item).forEach(function (subitem) {
+        page.drawText("- " + sanitisePdfText(subitem), { x: margin + 12, y: y, size: 8.5, font: font, color: muted });
+        y -= 11;
+      });
+    }
+    y -= 5;
+  });
+
+  ensureSpace(92);
+  page.drawLine({ start: { x: margin, y: y + 8 }, end: { x: pageSize[0] - margin, y: y + 8 }, thickness: 1, color: line });
+  page.drawText("Subtotal ex GST", { x: pageSize[0] - margin - 190, y: y - 10, size: 10, font: font, color: brand });
+  page.drawText(formatCurrency(pricing.subtotalExGst || 0), { x: pageSize[0] - margin - 88, y: y - 10, size: 10, font: boldFont, color: brand });
+  page.drawText("GST", { x: pageSize[0] - margin - 190, y: y - 28, size: 10, font: font, color: brand });
+  page.drawText(formatCurrency(pricing.gst || 0), { x: pageSize[0] - margin - 88, y: y - 28, size: 10, font: boldFont, color: brand });
+  page.drawText("Total inc GST", { x: pageSize[0] - margin - 190, y: y - 50, size: 12, font: boldFont, color: brand });
+  page.drawText(formatCurrency(pricing.totalIncGst || 0), { x: pageSize[0] - margin - 88, y: y - 50, size: 12, font: boldFont, color: brand });
+  y -= 82;
+
+  ensureSpace(90);
+  drawText("Notes", margin, 13, boldFont, brand, pageSize[0] - margin * 2, 18);
+  drawText(pricing.disclaimer || "Starting estimate only. Final site scope is confirmed before booking.", margin, 9.5, font, muted, pageSize[0] - margin * 2, 14);
+
+  return Buffer.from(await pdfDoc.save()).toString("base64");
 }
 
 function getQuoteReviewSummary(payload) {
@@ -762,7 +998,8 @@ async function sendResendEmail(message) {
       reply_to: config.replyTo ? [config.replyTo] : undefined,
       subject: message.subject,
       html: message.html,
-      text: message.text
+      text: message.text,
+      attachments: Array.isArray(message.attachments) && message.attachments.length ? message.attachments : undefined
     })
   });
 
@@ -785,12 +1022,17 @@ async function sendQuoteEmails(emailTo, payload, quoteId) {
   let customerError = null;
   if (emailTo) {
     const customerContent = buildCustomerQuoteEmail(payload, quoteId);
+    const pdfAttachment = await buildCustomerQuotePdf(payload, quoteId);
     try {
       await sendResendEmail({
         to: emailTo,
         subject: "Your flooring estimate - Operon Flooring",
         html: customerContent.html,
-        text: customerContent.text
+        text: customerContent.text,
+        attachments: [{
+          filename: "operon-flooring-quote-" + String(quoteId).slice(0, 8) + ".pdf",
+          content: pdfAttachment
+        }]
       });
       result.customerEmailSent = true;
     } catch (error) {
@@ -821,6 +1063,29 @@ async function sendQuoteEmails(emailTo, payload, quoteId) {
   return result;
 }
 
+async function safelySendQuoteEmails(emailTo, payload, quoteId) {
+  const result = {
+    attempted: !!emailTo,
+    customerEmailSent: false,
+    internalNotificationSent: false,
+    customerEmailError: "",
+    internalNotificationError: ""
+  };
+
+  if (!emailTo) {
+    return result;
+  }
+
+  try {
+    const emailResult = await sendQuoteEmails(emailTo, payload, quoteId);
+    return Object.assign(result, emailResult);
+  } catch (error) {
+    result.customerEmailError = error && error.message ? error.message : "Customer quote email failed.";
+    console.error("Customer quote email failed", error);
+    return result;
+  }
+}
+
 exports.handler = async function (event) {
   if (event.httpMethod !== "POST") {
     return jsonResponse(405, { ok: false, error: "Method not allowed." });
@@ -848,6 +1113,7 @@ exports.handler = async function (event) {
 
   const quoteId = String(body.quoteId || payload.id || "").trim() || createQuoteUuid();
   const status = mode === "email_quote" ? "emailed" : mode === "submit_quote" ? "submitted" : "draft_saved";
+  const shouldSendCustomerCopy = mode === "submit_quote" && body.sendCustomerCopy === true && !!emailTo;
 
   try {
     const row = getQuoteRow(quoteId, payload, status);
@@ -872,11 +1138,25 @@ exports.handler = async function (event) {
       const followupResult = mode === "submit_quote"
         ? await safelyQueueFollowupsForQuote(quoteId, row)
         : { ok: true, queued: 0, skipped: "draft_only", dryRunOnly: true };
+      const emailResult = shouldSendCustomerCopy
+        ? await safelySendQuoteEmails(emailTo, payload, quoteId)
+        : {
+            attempted: false,
+            customerEmailSent: false,
+            internalNotificationSent: false,
+            customerEmailError: "",
+            internalNotificationError: ""
+          };
 
       return jsonResponse(200, {
         ok: true,
         mode: mode,
         quoteId: quoteId,
+        emailAttempted: emailResult.attempted,
+        customerEmailSent: emailResult.customerEmailSent,
+        internalNotificationSent: emailResult.internalNotificationSent,
+        customerEmailError: emailResult.customerEmailError,
+        internalNotificationError: emailResult.internalNotificationError,
         followup: followupResult
       });
     } else {

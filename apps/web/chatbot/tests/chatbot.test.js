@@ -516,6 +516,23 @@ test("uncertain area routes to quote area flow without updating forms", function
   assert.strictEqual(snapshot.routeSuggestion.href, "quote.html");
 });
 
+test("operator requests show human follow-up without pretending live chat", function () {
+  const context = loadCore();
+  const logic = createLogic(context);
+
+  logic.begin();
+  logic.applyTextInput("Can I chat with an online operator?");
+
+  const snapshot = logic.getSnapshot();
+  const text = lastAssistantText(snapshot);
+  assert.strictEqual(snapshot.structuredOutput.intent, "operator_handoff");
+  assert(snapshot.operatorHandoff, "operator handoff section missing");
+  assert.strictEqual(snapshot.operatorHandoff.href, "quote.html?from=chatbot&support=operator");
+  assert.strictEqual(snapshot.routeSuggestion.href, "quote.html?from=chatbot&support=operator");
+  assert.match(text, /automated|human follow-up|contact details/i);
+  assert.doesNotMatch(text, /online now|live operator is available|connected to an operator/i);
+});
+
 test("conversion routes stay inside approved guided funnel", function () {
   [
     "I want cheapest",
@@ -845,6 +862,13 @@ test("chatbot UI hides internal state from customer panel", function () {
     "Details so far",
     "Ask about flooring or quote scope",
     "summary.hidden"
+  ].forEach(function (signal) {
+    assert(source.indexOf(signal) >= 0, signal);
+  });
+
+  [
+    ".operon-chatbot-route[hidden] { display: none; }",
+    "route.hidden = !!operatorHandoff"
   ].forEach(function (signal) {
     assert(source.indexOf(signal) >= 0, signal);
   });

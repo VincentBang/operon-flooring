@@ -504,6 +504,29 @@
       color: rgba(255, 255, 255, 0.78);
     }
 
+    .placeholder-upload.has-file {
+      background: rgba(23, 49, 58, 0.08);
+      color: var(--text);
+      border-color: rgba(23, 49, 58, 0.14);
+    }
+
+    .placeholder-upload.has-file strong,
+    .placeholder-upload.has-file span,
+    .placeholder-upload.has-file .field-help,
+    .placeholder-upload.has-file .field-help a {
+      color: var(--text);
+    }
+
+    .placeholder-upload.has-file span,
+    .placeholder-upload.has-file .field-help {
+      color: var(--muted);
+    }
+
+    .placeholder-upload.has-file .button-secondary {
+      background: var(--primary);
+      color: #fff;
+    }
+
     .detailed-only[hidden] {
       display: none;
     }
@@ -613,6 +636,19 @@
       font-size: .84rem;
       font-style: normal;
       line-height: 1.42;
+    }
+
+    .report-card-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .report-card-grid.two-column {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .risk-card.compact {
+      padding: 10px 11px;
     }
 
     .summary-box {
@@ -866,7 +902,8 @@
 
       .risk-counts,
       .summary-grid,
-      .scope-summary {
+      .scope-summary,
+      .report-card-grid.two-column {
         grid-template-columns: 1fr;
       }
 
@@ -980,7 +1017,7 @@
             <a class="button" href="#reviewForm" data-track-cta="quote_review_start">Start quote review</a>
             <a class="button-secondary quote-review-to-quote" href="quote.html?source=quote_review">Get structured Operon estimate</a>
           </div>
-          <p class="hero-note">Use this as an initial scope scan. It is a high-level scan based on visible details. A detailed review requires the actual quote.</p>
+          <p class="hero-note">Use the quick check to see whether the written scope is clear enough to compare. A document-based review requires the actual quote.</p>
         </div>
         <div class="hero-panel">
           <div class="hero-panel-header">
@@ -1012,8 +1049,8 @@
             <div class="check-item">
               <span class="check-icon" aria-hidden="true">04</span>
               <div>
-                <strong>Removal and access</strong>
-                <span>Disposal, delivery and site details.</span>
+                <strong>Removal and site details</strong>
+                <span>Disposal and final site notes.</span>
               </div>
             </div>
           </div>
@@ -1027,23 +1064,23 @@
           <div class="section-head">
             <p class="eyebrow">Start here</p>
             <h2>Choose review type</h2>
-            <p>Start with a high-level scan, or upload the written quote for a document-based review.</p>
+            <p>Check quote clarity quickly, or upload the written quote for a document-based review.</p>
           </div>
 
           <div class="mode-grid" role="radiogroup" aria-label="Quote review level">
             <label class="mode-card">
               <input type="radio" name="reviewMode" value="quick" checked>
-              <strong>Initial scope scan</strong>
+              <strong>Quick scope clarity check</strong>
               <span>No upload needed. Tick what is clearly written.</span>
               <ul class="mode-points">
                 <li>No upload needed</li>
-                <li>High-level scope scan</li>
+                <li>Checks whether the scope is clear enough to compare</li>
                 <li>Guides the next step</li>
               </ul>
             </label>
             <label class="mode-card">
               <input type="radio" name="reviewMode" value="detailed">
-              <strong>Upload quote</strong>
+              <strong>Document-based quote review</strong>
               <span>Use the actual quote document for a stronger review.</span>
               <ul class="mode-points">
                 <li>Upload your quote</li>
@@ -1159,12 +1196,13 @@
             </div>
           </div>
 
-          <div class="placeholder-upload detailed-only" aria-label="Quote upload" hidden>
-            <strong>Upload your quote to continue</strong>
-            <span>Upload the written quote to continue. Without the document, use the initial scope scan.</span>
+          <div class="placeholder-upload detailed-only" id="detailedReviewUploadPanel" aria-label="Quote upload" hidden>
+            <strong id="detailedReviewUploadTitle">Upload your quote to continue</strong>
+            <span id="detailedReviewUploadCopy">Upload the written quote to continue. Without the document, use the quick scope clarity check.</span>
             <button class="button-secondary" type="button" id="detailedReviewUploadCta">Upload quote to continue</button>
             <input id="reviewQuoteFile" name="reviewQuoteFile" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx">
             <p class="field-help" id="uploadedQuoteReference">No quote file selected.</p>
+            <p class="field-help" id="quoteOcrStatus" hidden>Quote file not checked yet.</p>
             <p class="field-help">We use the file for this review. See our <a href="privacy-policy.html">privacy policy</a>.</p>
           </div>
         </div>
@@ -1172,8 +1210,8 @@
         <aside class="summary-card" id="reviewOutputPanel">
           <div class="section-head">
             <p class="eyebrow">Results</p>
-            <h2 style="font-size: clamp(1.35rem, 2.5vw, 1.75rem);">Initial scope scan</h2>
-            <p>High-level guidance only. Upload the quote for a more precise review.</p>
+            <h2 id="reviewOutputTitle" style="font-size: clamp(1.35rem, 2.5vw, 1.75rem);">Quick scope clarity check</h2>
+            <p id="reviewOutputIntro">High-level guidance only. Upload the quote for a document-based review.</p>
           </div>
 
           <div class="summary-block" id="reviewReportContent">
@@ -1198,12 +1236,42 @@
               </div>
             </div>
 
+            <div class="summary-box" id="extractedQuoteFieldsBox" hidden>
+              <div class="risk-group">
+                <h3>Extracted from uploaded quote</h3>
+                <span class="risk-tag medium" id="extractedQuoteFieldsTag">OCR fields</span>
+                <div id="extractedQuoteFieldsList">
+                  <div class="risk-card"><strong>No extracted fields yet.</strong><span>Upload a quote and generate the document-based review.</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="summary-box" id="databaseComparisonBox" hidden>
+              <div class="risk-group">
+                <h3>Operon database comparison</h3>
+                <span class="risk-tag medium" id="databaseComparisonTag">Database guide</span>
+                <div id="databaseComparisonList">
+                  <div class="risk-card"><strong>No database comparison yet.</strong><span>Upload a quote and generate the document-based review.</span></div>
+                </div>
+              </div>
+            </div>
+
             <div class="summary-box">
               <div class="risk-group">
-                <h3>What cannot be confirmed</h3>
-                <span class="risk-tag medium">Unknown</span>
+                <h3>Missing or unclear items</h3>
+                <span class="risk-tag medium">Scope gaps</span>
                 <div id="mediumRiskList">
                   <div class="risk-card"><strong>Unknown items will appear here.</strong><span>Unticked items are treated as unknown until the written quote is reviewed.</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="summary-box questions">
+              <div class="risk-group">
+                <h3>Questions to ask contractor</h3>
+                <span class="risk-tag medium">Before accepting</span>
+                <div id="questionsToAskList">
+                  <div class="risk-card"><strong>Questions will appear here.</strong><span>They are based on missing or unclear quote items.</span></div>
                 </div>
               </div>
             </div>
@@ -1277,6 +1345,7 @@
         <a href="quote-review.html">Review Quote</a>
         <a href="products.html">Products</a>
         <a href="floorplan.html">Floor Plan</a>
+        <a href="contact.html">Contact</a>
       </div>
     </div>
   </footer>
@@ -1310,11 +1379,26 @@
       { key: "removal", weight: 8 },
       { key: "disposal", weight: 8 },
       { key: "floor_preparation", weight: 12 },
-      { key: "access", weight: 10 },
+      { key: "underlay", weight: 8 },
       { key: "skirting_trims", weight: 8 },
       { key: "stairs", weight: 8 },
       { key: "moisture_protection", weight: 10 }
     ];
+
+    const DATABASE_SCOPE_KEY_TO_SCORE_KEY = {
+      supply: "product_specified",
+      installation: "installation",
+      removal: "removal",
+      disposal: "disposal",
+      floorPreparation: "floor_preparation",
+      underlay: "underlay",
+      moistureProtection: "moisture_protection",
+      skirting: "skirting_trims",
+      scotia: "skirting_trims",
+      stairs: "stairs"
+    };
+
+    const QUOTE_REVIEW_OCR_ENDPOINT = "/.netlify/functions/quote-review-ocr";
 
     function escapeHtml(value) {
       return String(value || "")
@@ -1353,11 +1437,207 @@
         notes: document.getElementById("reviewNotes").value.trim(),
         hasUploadedQuoteFile: hasUploadedQuoteFile,
         uploadedQuoteReference: uploadedQuoteReference,
+        ocrStatus: quoteFile && quoteFile.dataset ? quoteFile.dataset.ocrStatus || "" : "",
+        ocrExtractedText: quoteFile && quoteFile.dataset ? quoteFile.dataset.ocrExtractedText || "" : "",
+        ocrConfidence: quoteFile && quoteFile.dataset ? quoteFile.dataset.ocrConfidence || "" : "",
+        ocrEngine: quoteFile && quoteFile.dataset ? quoteFile.dataset.ocrEngine || "" : "",
+        extractedQuoteFields: quoteFile && quoteFile.dataset && quoteFile.dataset.extractedQuoteFields
+          ? JSON.parse(quoteFile.dataset.extractedQuoteFields)
+          : null,
+        databaseComparison: quoteFile && quoteFile.dataset && quoteFile.dataset.databaseComparison
+          ? JSON.parse(quoteFile.dataset.databaseComparison)
+          : null,
         inclusions: Array.from(document.querySelectorAll("#inclusionGrid input:checked")).map(function (input) {
           return input.value;
         }),
         savedAt: new Date().toISOString()
       };
+    }
+
+    function setQuoteOcrStatus(message, visible) {
+      const status = document.getElementById("quoteOcrStatus");
+      if (!status) {
+        return;
+      }
+      status.hidden = visible === false ? true : !message;
+      status.textContent = message || "";
+    }
+
+    function formatMoneyValue(value) {
+      const number = Number(value || 0);
+      if (!Number.isFinite(number) || number <= 0) {
+        return "";
+      }
+      return new Intl.NumberFormat("en-AU", {
+        style: "currency",
+        currency: "AUD",
+        maximumFractionDigits: 0
+      }).format(number);
+    }
+
+    function humaniseScopeValue(value) {
+      const map = {
+        included: "Included",
+        excluded: "Excluded",
+        subject_to_confirmation: "Subject to confirmation",
+        unknown: "Not clear"
+      };
+      return map[value] || "Not clear";
+    }
+
+    function getExtractedFieldRows(fields) {
+      if (!fields) {
+        return [];
+      }
+      const productParts = [fields.productBrand, fields.productRange, fields.productColour, fields.productThickness].filter(Boolean);
+      const rows = [
+        ["Company", fields.contractorName],
+        ["Quote number", fields.quoteNumber],
+        ["Flooring type", fields.flooringType],
+        ["Product", productParts.join(" · ")],
+        ["Area", fields.quotedAreaM2 ? Number(fields.quotedAreaM2).toFixed(1) + " m²" : ""],
+        ["Total inc GST", formatMoneyValue(fields.quoteTotalIncGst)],
+        ["Install method", fields.installMethod]
+      ].filter(function (row) {
+        return row[1];
+      });
+      const scope = fields.scope || {};
+      ["supply", "installation", "removal", "disposal", "floorPreparation", "underlay", "moistureProtection", "skirting", "scotia", "stairs"].forEach(function (key) {
+        if (scope[key] && scope[key] !== "unknown") {
+          rows.push([key.replace(/([A-Z])/g, " $1").replace(/^./, function (letter) { return letter.toUpperCase(); }), humaniseScopeValue(scope[key])]);
+        }
+      });
+      return rows.slice(0, 12);
+    }
+
+    function renderExtractedQuoteFields(fields) {
+      const box = document.getElementById("extractedQuoteFieldsBox");
+      const list = document.getElementById("extractedQuoteFieldsList");
+      const tag = document.getElementById("extractedQuoteFieldsTag");
+      if (!box || !list) {
+        return;
+      }
+      box.hidden = !fields;
+      if (!fields) {
+        return;
+      }
+      if (tag) {
+        tag.textContent = fields.status === "fields_extracted" ? "AI extracted" : "Rule extracted";
+        tag.className = "risk-tag " + (fields.status === "fields_extracted" ? "low" : "medium");
+      }
+      const rows = getExtractedFieldRows(fields);
+      if (!rows.length) {
+        list.innerHTML = "<div class=\"risk-card\"><strong>No clear fields found.</strong><span>OCR ran, but the quote text did not contain enough readable pricing or scope detail.</span></div>";
+        return;
+      }
+      list.className = "report-card-grid two-column";
+      list.innerHTML = rows.map(function (row) {
+        return "<div class=\"risk-card compact\"><strong>" + escapeHtml(row[0]) + "</strong><span>" + escapeHtml(row[1]) + "</span></div>";
+      }).join("");
+    }
+
+    function getPricePositionClass(status) {
+      if (status === "within_database_guide") {
+        return "low";
+      }
+      if (status === "below_database_guide" || status === "above_database_guide") {
+        return "medium";
+      }
+      return "medium";
+    }
+
+    function renderDatabaseComparison(comparison) {
+      const box = document.getElementById("databaseComparisonBox");
+      const list = document.getElementById("databaseComparisonList");
+      const tag = document.getElementById("databaseComparisonTag");
+      if (!box || !list) {
+        return;
+      }
+      box.hidden = !comparison;
+      if (!comparison) {
+        return;
+      }
+
+      const priceGuide = comparison.priceGuide || {};
+      const position = priceGuide.position || {};
+      if (tag) {
+        tag.textContent = comparison.status === "compared" ? (position.label || "Compared") : "Check needed";
+        tag.className = "risk-tag " + getPricePositionClass(position.status);
+      }
+
+      const rows = [];
+      if (comparison.status !== "compared") {
+        rows.push(["Database status", comparison.notes || "Database comparison is not available yet."]);
+      }
+      if (comparison.productMatches && comparison.productMatches.length) {
+        rows.push(["Likely product match", comparison.productMatches[0].label + " · match " + comparison.productMatches[0].matchScore + "%"]);
+      } else {
+        rows.push(["Product match", "No clear Operon product match found from the uploaded quote text."]);
+      }
+      if (priceGuide.quotedRateIncGstPerM2) {
+        rows.push(["Uploaded quote rate", formatMoneyValue(priceGuide.quotedRateIncGstPerM2) + " / m² inc GST"]);
+      }
+      if (priceGuide.operonGuideRateIncGstPerM2) {
+        rows.push(["Operon guide rate", formatMoneyValue(priceGuide.operonGuideRateIncGstPerM2) + " / m² inc GST"]);
+      }
+      if (priceGuide.operonGuideTotalIncGst) {
+        rows.push(["Operon guide total", formatMoneyValue(priceGuide.operonGuideTotalIncGst) + " inc GST"]);
+      }
+      if (position.label && typeof position.differencePercent === "number") {
+        rows.push(["Price position", position.label + " · " + position.differencePercent + "% vs guide"]);
+      }
+      if (comparison.comparisonLevel) {
+        rows.push(["Comparison level", comparison.comparisonLevel.replace(/_/g, " ")]);
+      }
+      rows.push(["Important", comparison.notes || "Database guide is a comparison aid only. Final price is confirmed after site details are reviewed."]);
+
+      list.className = "report-card-grid";
+      list.innerHTML = rows.map(function (row) {
+        return "<div class=\"risk-card\"><strong>" + escapeHtml(row[0]) + "</strong><span>" + escapeHtml(row[1]) + "</span></div>";
+      }).join("");
+    }
+
+    function getQuoteReviewFile() {
+      const quoteFile = document.getElementById("reviewQuoteFile");
+      return quoteFile && quoteFile.files && quoteFile.files[0] ? quoteFile.files[0] : null;
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise(function (resolve, reject) {
+        const reader = new FileReader();
+        reader.onload = function () {
+          resolve(String(reader.result || ""));
+        };
+        reader.onerror = function () {
+          reject(new Error("Could not read the uploaded quote file."));
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function sendQuoteFileForOcr(file) {
+      const dataUrl = await readFileAsDataUrl(file);
+      const response = await fetch(QUOTE_REVIEW_OCR_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          file: {
+            name: file.name,
+            type: file.type,
+            size: file.size,
+            dataBase64: dataUrl
+          }
+        })
+      });
+      const result = await response.json().catch(function () {
+        return null;
+      });
+      if (!response.ok || !result || !result.ok) {
+        throw new Error(result && result.error ? result.error : "Quote OCR handoff failed.");
+      }
+      return result;
     }
 
     function saveReviewState() {
@@ -1554,22 +1834,13 @@
           "Ask for the exact range, thickness and finish so the quote is comparable."
         ));
       }
-      if (!included.has("access_delivery")) {
-        risks.medium.push(createRisk(
-          "access",
-          "medium",
-          "Site details are unknown",
-          "Site conditions are not clearly stated in the written quote.",
-          "Ask which parts of the quote are still subject to site review."
-        ));
-      }
       if (notesMention(state, [/apartment/, /unit/, /strata/, /body corporate/, /acoustic/]) && !included.has("underlay")) {
         risks.medium.push(createRisk(
           "apartment_acoustic",
           "medium",
           "Apartment acoustic allowance is unknown",
-          "Apartment and strata work often needs acoustic underlay, building rules or delivery limits confirmed.",
-          "Ask whether acoustic requirements and building access are allowed for."
+          "Apartment and strata work often needs acoustic underlay and building rules confirmed.",
+          "Ask whether acoustic requirements and building conditions are allowed for."
         ));
       }
       if (notesMention(state, [/concrete/, /moisture/, /slab/, /ground floor/]) && !included.has("moisture_protection")) {
@@ -1633,7 +1904,7 @@
           "low",
           "Detailed review needs a stronger source",
           "Detailed mode needs an uploaded quote, written notes, or enough structured quote detail.",
-          "Without source detail, the output remains closer to an initial scope scan."
+          "Without source detail, the output remains closer to a quick scope clarity check."
         ));
       }
 
@@ -1790,9 +2061,9 @@
           title: "Floor preparation is unknown",
           consequence: "Levelling, grinding and patching are often assessed after inspection or after existing flooring is removed."
         },
-        access: {
-          title: "Site access is unknown",
-          consequence: "Delivery, parking, lifts, stairs and working conditions can still affect the final job scope."
+        underlay: {
+          title: "Underlay or acoustic layer is unknown",
+          consequence: "Underlay requirements should be clearly listed when they apply to the product, apartment or installation method."
         },
         skirting_trims: {
           title: "Trims and skirting are unknown",
@@ -1811,10 +2082,6 @@
         title: "Scope item is unknown",
         consequence: "This item cannot be confirmed from the current scan."
       };
-    }
-
-    function buildUnknownConfirmations(state) {
-      return getMissingScopeItems(state).map(getUnknownItemMessage).slice(0, 3);
     }
 
     function buildTypicalChanges(state, risks) {
@@ -1849,10 +2116,10 @@
           consequence: "Old flooring type, adhesive, disposal volume and subfloor condition often affect the final allowance."
         });
       }
-      if (notesMention(state, [/apartment|unit|strata|lift|parking|access/]) || !state.inclusions.includes("access_delivery")) {
+      if (notesMention(state, [/apartment|unit|strata|body corporate/])) {
         changes.push({
-          title: "Access can change logistics",
-          consequence: "Parking, lifts, stairs, delivery timing and building rules can affect installation planning."
+          title: "Building details may need confirmation",
+          consequence: "Apartment and strata projects often need building rules, timing and site conditions checked before installation."
         });
       }
 
@@ -1871,19 +2138,42 @@
       return Number.isFinite(number) && number > 0 ? number : null;
     }
 
+    function getExtractedScope(state) {
+      return state && state.extractedQuoteFields && state.extractedQuoteFields.scope
+        ? state.extractedQuoteFields.scope
+        : {};
+    }
+
+    function isScopeClearlyWritten(value) {
+      return value === "included" || value === "excluded";
+    }
+
+    function extractedScopeIsClear(state, key) {
+      return isScopeClearlyWritten(getExtractedScope(state)[key]);
+    }
+
+    function hasExtractedProductSpec(state) {
+      const fields = state.extractedQuoteFields || {};
+      return Boolean(fields.productBrand || fields.productRange || fields.productColour || fields.productThickness || fields.flooringType);
+    }
+
+    function hasExtractedArea(state) {
+      return Boolean(normaliseNumber(state.area) || normaliseNumber((state.extractedQuoteFields || {}).quotedAreaM2));
+    }
+
     function getScopeCompletionMap(state) {
       const included = new Set(state.inclusions);
       return {
-        product_specified: Boolean((state.category && state.category !== "unknown") || included.has("supply")),
-        installation: included.has("installation"),
-        area: Boolean(normaliseNumber(state.area)),
-        removal: included.has("removal"),
-        disposal: included.has("disposal"),
-        floor_preparation: included.has("floor_prep"),
-        access: included.has("access_delivery"),
-        skirting_trims: included.has("skirting"),
-        stairs: included.has("stairs"),
-        moisture_protection: included.has("moisture_protection")
+        product_specified: Boolean((state.category && state.category !== "unknown") || included.has("supply") || hasExtractedProductSpec(state)),
+        installation: included.has("installation") || extractedScopeIsClear(state, "installation"),
+        area: hasExtractedArea(state),
+        removal: included.has("removal") || extractedScopeIsClear(state, "removal"),
+        disposal: included.has("disposal") || extractedScopeIsClear(state, "disposal"),
+        floor_preparation: included.has("floor_prep") || extractedScopeIsClear(state, "floorPreparation"),
+        underlay: included.has("underlay") || extractedScopeIsClear(state, "underlay"),
+        skirting_trims: included.has("skirting") || extractedScopeIsClear(state, "skirting") || extractedScopeIsClear(state, "scotia"),
+        stairs: included.has("stairs") || extractedScopeIsClear(state, "stairs"),
+        moisture_protection: included.has("moisture_protection") || extractedScopeIsClear(state, "moistureProtection")
       };
     }
 
@@ -1909,39 +2199,73 @@
         });
     }
 
-    function buildQuestionsToAsk(state) {
-      const missingItems = getMissingScopeItems(state);
-      const questions = [];
+    function getDatabaseScopeGaps(state) {
+      const comparison = state.databaseComparison || {};
+      const items = Array.isArray(comparison.scopeComparison) ? comparison.scopeComparison : [];
+      return items.filter(function (item) {
+        return item.status === "unknown" || item.status === "subject_to_confirmation" || item.status === "excluded";
+      }).map(function (item) {
+        const statusText = item.status === "excluded"
+          ? "Not included"
+          : (item.status === "subject_to_confirmation" ? "To confirm" : "Not clear");
+        return {
+          key: DATABASE_SCOPE_KEY_TO_SCORE_KEY[item.key] || item.key,
+          sourceKey: item.key,
+          title: item.label + " - " + statusText,
+          consequence: item.note || (item.label + " is not clearly confirmed in the uploaded quote.")
+        };
+      });
+    }
 
-      missingItems.forEach(function (key) {
-        if (key === "product_specified") {
-          questions.push("Is the product range, thickness and colour clearly specified?");
-        } else if (key === "installation") {
-          questions.push("Does this quote clearly include installation labour?");
-        } else if (key === "area") {
-          questions.push("What measured area is this price based on?");
-        } else if (key === "removal") {
-          questions.push("Does this price include removal of the existing flooring?");
-        } else if (key === "disposal") {
-          questions.push("Does this price include removal and take-away disposal?");
-        } else if (key === "floor_preparation") {
-          questions.push("Is floor preparation included, or assessed after inspection?");
-        } else if (key === "skirting_trims") {
-          questions.push("Are trims, scotia or skirting included?");
-        } else if (key === "stairs") {
-          questions.push("Are stairs or stair nosings included, or priced separately?");
-        } else if (key === "moisture_protection") {
-          questions.push("Is moisture protection included where needed, or checked first on site?");
-        } else if (key === "access") {
-          questions.push("Which site details still need to be confirmed before the final price is locked in?");
-        }
+    function buildUnknownConfirmations(state) {
+      const databaseGaps = getDatabaseScopeGaps(state);
+      if (databaseGaps.length) {
+        return databaseGaps.slice(0, 8);
+      }
+      return getMissingScopeItems(state).map(getUnknownItemMessage).slice(0, 8);
+    }
+
+    function getQuestionForScopeKey(key) {
+      const questions = {
+        product_specified: "Is the product range, thickness and colour clearly specified?",
+        supply: "Is flooring supply included, or is this installation only?",
+        installation: "Does this quote clearly include installation labour?",
+        area: "What measured area is this price based on?",
+        removal: "Does this price include removal of the existing flooring?",
+        disposal: "Does this price include removal and take-away disposal?",
+        floor_preparation: "Is floor preparation included, or assessed after inspection?",
+        floorPreparation: "Is floor preparation included, or assessed after inspection?",
+        underlay: "Is underlay or the required acoustic layer included?",
+        skirting_trims: "Are trims, scotia or skirting included?",
+        skirting: "Are skirting boards included, excluded or priced separately?",
+        scotia: "Is scotia included, excluded or priced separately?",
+        stairs: "Are stairs or stair nosings included, or priced separately?",
+        moisture_protection: "Is moisture protection included where needed, or checked first on site?",
+        moistureProtection: "Is moisture protection included where needed, or checked first on site?"
+      };
+      return questions[key] || "Can you confirm whether this item is included, excluded or subject to site confirmation?";
+    }
+
+    function pushUniqueQuestion(questions, question) {
+      if (question && questions.indexOf(question) < 0) {
+        questions.push(question);
+      }
+    }
+
+    function buildQuestionsToAsk(state) {
+      const questions = [];
+      getDatabaseScopeGaps(state).forEach(function (item) {
+        pushUniqueQuestion(questions, getQuestionForScopeKey(item.sourceKey || item.key));
+      });
+      getMissingScopeItems(state).forEach(function (key) {
+        pushUniqueQuestion(questions, getQuestionForScopeKey(key));
       });
 
       if (!questions.length && state.mode === "quick") {
-        questions.push("Can you confirm which items are still subject to site inspection before the final quote is locked in?");
+        pushUniqueQuestion(questions, "Can you confirm which items are still subject to site inspection before the final quote is locked in?");
       }
 
-      return questions.slice(0, 3);
+      return questions.slice(0, 8);
     }
 
     function normaliseRiskLevel(riskLevel) {
@@ -1971,15 +2295,25 @@
     }
 
     function getDecisionGuidanceText(state, risks) {
+      const hasDocumentReview = state.mode === "detailed" && state.hasUploadedQuoteFile;
       if (risks.high.length) {
+        if (hasDocumentReview) {
+          return "Before accepting, ask the contractor to confirm the flagged items in writing. The comparison is strongest when inclusions, exclusions and site-confirmation items are clear.";
+        }
         return state.mode === "quick"
           ? "This scan has enough uncertainty that the next step should be a detailed quote review. For a more precise review, upload your quote."
           : "Use the uploaded quote to confirm the unknown items, then compare scope. For a more precise review, upload your quote."
       }
       if (risks.medium.length || risks.low.length) {
+        if (hasDocumentReview) {
+          return "The quote is partly clear. Use the questions above to confirm missing or unclear items before comparing totals.";
+        }
         return state.mode === "quick"
           ? "The quote is partly clear, but the scan cannot confirm hidden scope. For a more precise review, upload your quote."
           : "The quote is partly clear. Check exclusions, site items and finish details. For a more precise review, upload your quote."
+      }
+      if (hasDocumentReview) {
+        return "The written quote looks clear enough for a practical comparison. Final price still depends on site details being reviewed before installation.";
       }
       return "The visible scope looks reasonably clear, but site details can still change after review. For a more precise review, upload your quote.";
     }
@@ -1997,7 +2331,7 @@
         clarification_notes: risks.low,
         strengths: strengths,
         questions_to_ask: buildQuestionsToAsk(state),
-        professional_insight: "A quote is easier to compare when product, labour, prep and exclusions are clearly written.",
+        professional_insight: "Most quote differences come from what is excluded, not just the headline total. Hidden site conditions cannot be fully confirmed online, but the written quote should clearly state what is included, excluded, and subject to site confirmation.",
         decision_guidance: getDecisionGuidanceText(state, risks),
         price_reframing: "Total price is only meaningful when scope is complete."
       };
@@ -2025,6 +2359,12 @@
         area_m2: normaliseNumber(state.area),
         uploaded_quote_url: null,
         uploaded_quote_reference: state.uploadedQuoteReference || "",
+        ocr_status: state.ocrStatus || "",
+        ocr_extracted_text: state.ocrExtractedText || "",
+        ocr_confidence: state.ocrConfidence ? Number(state.ocrConfidence) : null,
+        ocr_engine: state.ocrEngine || "",
+        extracted_quote_fields: state.extractedQuoteFields || null,
+        database_comparison: state.databaseComparison || null,
         quote_total: normaliseNumber(state.quoteTotal),
         quote_provider_name: state.quoteProviderName || "",
         included_items: state.inclusions.slice(),
@@ -2047,10 +2387,10 @@
     }
 
     function getConfidenceLevel(state) {
-      const hasCategory = Boolean(state.category && state.category !== "unknown");
-      const hasArea = Boolean(normaliseNumber(state.area));
+      const hasCategory = Boolean((state.category && state.category !== "unknown") || hasExtractedProductSpec(state));
+      const hasArea = hasExtractedArea(state);
       const inclusionCount = state.inclusions.length;
-      const hasContext = Boolean(state.quoteTotal || state.notes);
+      const hasContext = Boolean(state.quoteTotal || state.notes || state.extractedQuoteFields || state.databaseComparison);
       if (state.mode === "detailed" && state.uploadedQuoteReference && hasCategory && hasArea && inclusionCount >= 3) {
         return "High confidence";
       }
@@ -2069,7 +2409,7 @@
 
     function getClaritySummary(state, risks) {
       const riskCount = risks.high.length + risks.medium.length + risks.low.length;
-      const hasAnyInput = Boolean(state.category || state.area || state.quoteTotal || state.notes || state.inclusions.length);
+      const hasAnyInput = Boolean(state.category || state.area || state.quoteTotal || state.notes || state.inclusions.length || state.extractedQuoteFields || state.databaseComparison);
       const confidenceLevel = getConfidenceLevel(state);
       const missingItems = getMissingScopeItems(state);
       const completion = getScopeCompletionMap(state);
@@ -2106,7 +2446,7 @@
 
       if (riskCount > 0) {
         return {
-          level: "Partly clear",
+          level: "Partly clear, confirm missing items",
           riskLevel: "Check items",
           confidenceLevel: confidenceLevel,
           tag: "Confirm items",
@@ -2119,10 +2459,10 @@
       }
 
       return {
-        level: "More complete scan",
+        level: "Clear enough to compare",
         riskLevel: "Low risk",
         confidenceLevel: confidenceLevel,
-        tag: "More complete",
+        tag: "Clear enough",
         tagClass: "low",
         counts: [
           { level: "low", text: "Main comparison items are visible in this scan." },
@@ -2133,6 +2473,7 @@
 
     function renderRiskList(id, items, emptyMessage) {
       const element = document.getElementById(id);
+      element.className = "report-card-grid";
       if (!items.length) {
         element.innerHTML = "<div class=\"risk-card\"><strong>" + escapeHtml(emptyMessage.title) + "</strong><span>" + escapeHtml(emptyMessage.body) + "</span></div>";
         return;
@@ -2152,13 +2493,14 @@
 
     function renderQuestionsToAsk(questions) {
       const element = document.getElementById("questionsToAskList");
+      element.className = "report-card-grid";
       if (!questions.length) {
         element.innerHTML = "<div class=\"risk-card\"><strong>No extra questions yet.</strong><span>The written scope looks reasonably clear for comparison.</span></div>";
         return;
       }
 
       element.innerHTML = questions.map(function (question) {
-        return "<div class=\"risk-card\"><strong>" + escapeHtml(question) + "</strong></div>";
+        return "<div class=\"risk-card\"><strong>" + escapeHtml(question) + "</strong><span>Ask for this in writing before comparing or accepting the quote.</span></div>";
       }).join("");
     }
 
@@ -2192,6 +2534,10 @@
       const quickScopeDetails = document.getElementById("quickScopeDetails");
       const outputPanel = document.getElementById("reviewOutputPanel");
       const report = document.getElementById("reviewReportContent");
+      const uploadPanel = document.getElementById("detailedReviewUploadPanel");
+      const uploadTitle = document.getElementById("detailedReviewUploadTitle");
+      const uploadCopy = document.getElementById("detailedReviewUploadCopy");
+      const uploadCta = document.getElementById("detailedReviewUploadCta");
       const shouldGate = detailedReviewNeedsUpload(state);
       const isDetailedMode = state.mode === "detailed";
 
@@ -2201,11 +2547,45 @@
       if (quickScopeDetails) {
         quickScopeDetails.hidden = isDetailedMode;
       }
+      if (uploadPanel) {
+        uploadPanel.hidden = !isDetailedMode;
+        uploadPanel.classList.toggle("has-file", isDetailedMode && state.hasUploadedQuoteFile);
+      }
+      if (uploadTitle) {
+        uploadTitle.textContent = state.hasUploadedQuoteFile
+          ? "Quote file ready"
+          : "Upload your quote to continue";
+      }
+      if (uploadCopy) {
+        uploadCopy.textContent = state.hasUploadedQuoteFile
+          ? "The written quote is attached. Generate the document-based review below."
+          : "Upload the written quote to continue. Without the document, use the quick scope clarity check.";
+      }
+      if (uploadCta) {
+        uploadCta.textContent = state.hasUploadedQuoteFile
+          ? "Generate document-based review"
+          : "Upload quote to continue";
+      }
       if (outputPanel) {
         outputPanel.hidden = shouldGate;
       }
       report.hidden = shouldGate;
       return shouldGate;
+    }
+
+    function renderReportHeader(state) {
+      const title = document.getElementById("reviewOutputTitle");
+      const intro = document.getElementById("reviewOutputIntro");
+      if (!title || !intro) {
+        return;
+      }
+      if (state.mode === "detailed" && state.hasUploadedQuoteFile) {
+        title.textContent = "Document-based quote review";
+        intro.textContent = "Uses the uploaded quote to extract details, compare against Operon data, and flag unclear scope.";
+        return;
+      }
+      title.textContent = "Quick scope clarity check";
+      intro.textContent = "Checks whether the quote is clear enough to compare. It does not diagnose hidden site conditions.";
     }
 
     function trackQuoteReviewEvent(eventName, metadata) {
@@ -2300,6 +2680,7 @@
         saveReviewState();
         return null;
       }
+      renderReportHeader(state);
 
       const risks = buildRiskGroups(state);
       const strengths = buildStrengths(state);
@@ -2322,7 +2703,10 @@
         title: "Common change items will appear here.",
         body: "These are typical flooring quote variables, not confirmed charges."
       });
+      renderQuestionsToAsk(buildQuestionsToAsk(state));
       renderDecisionGuidance(state, risks);
+      renderExtractedQuoteFields(state.extractedQuoteFields);
+      renderDatabaseComparison(state.databaseComparison);
 
       saveReviewState();
       saveQuoteIntelligencePayload(payload);
@@ -2335,9 +2719,14 @@
         if (element.id === "reviewQuoteFile") {
           element.addEventListener("change", function () {
             element.dataset.savedReference = element.files && element.files[0] ? element.files[0].name : "";
+            element.dataset.ocrReference = "";
+            element.dataset.ocrStatus = "";
+            element.dataset.extractedQuoteFields = "";
+            element.dataset.databaseComparison = "";
             document.getElementById("uploadedQuoteReference").textContent = element.dataset.savedReference
               ? "Selected quote reference: " + element.dataset.savedReference
               : "No quote file selected.";
+            setQuoteOcrStatus("", false);
             trackQuoteReviewEvent("quote_review_upload_attempt", {
               has_file: Boolean(element.dataset.savedReference)
             });
@@ -2396,8 +2785,59 @@
 
       const detailedUploadCta = document.getElementById("detailedReviewUploadCta");
       if (detailedUploadCta) {
-        detailedUploadCta.addEventListener("click", function () {
+        detailedUploadCta.addEventListener("click", async function () {
           const quoteFile = document.getElementById("reviewQuoteFile");
+          const file = getQuoteReviewFile();
+          if (file) {
+            detailedUploadCta.disabled = true;
+            detailedUploadCta.textContent = "Checking uploaded quote...";
+            setQuoteOcrStatus("Sending quote file for OCR setup...", true);
+            try {
+              const ocrResult = await sendQuoteFileForOcr(file);
+              quoteFile.dataset.ocrReference = ocrResult.file && ocrResult.file.reference || "";
+              quoteFile.dataset.ocrStatus = ocrResult.ocr && ocrResult.ocr.status || "file_received";
+              quoteFile.dataset.ocrExtractedText = ocrResult.ocr && ocrResult.ocr.extractedText || "";
+              quoteFile.dataset.ocrConfidence = ocrResult.ocr && typeof ocrResult.ocr.confidence !== "undefined" ? String(ocrResult.ocr.confidence) : "";
+              quoteFile.dataset.ocrEngine = ocrResult.ocr && ocrResult.ocr.engine || "";
+              quoteFile.dataset.extractedQuoteFields = ocrResult.extractedFields ? JSON.stringify(ocrResult.extractedFields) : "";
+              quoteFile.dataset.databaseComparison = ocrResult.databaseComparison ? JSON.stringify(ocrResult.databaseComparison) : "";
+              if (quoteFile.dataset.ocrStatus === "text_extracted") {
+                setQuoteOcrStatus("OCR extracted " + quoteFile.dataset.ocrExtractedText.length + " characters from the quote.", true);
+              } else if (quoteFile.dataset.ocrStatus === "engine_not_configured") {
+                setQuoteOcrStatus("OCR engine is installed but OPENAI_API_KEY is not configured yet.", true);
+              } else {
+                setQuoteOcrStatus(ocrResult.ocr && ocrResult.ocr.notes ? ocrResult.ocr.notes : "OCR could not extract readable text yet.", true);
+              }
+            } catch (error) {
+              setQuoteOcrStatus(error && error.message ? error.message : "Could not send the file for OCR.", true);
+            } finally {
+              detailedUploadCta.disabled = false;
+            }
+            const payload = renderReview();
+            let saveResult = null;
+            if (payload) {
+              payload.next_step_taken = "document_review_generated";
+              saveQuoteIntelligencePayload(payload);
+              saveResult = await trySaveQuoteReviewToFunction(payload);
+              if (saveResult && saveResult.ok) {
+                setQuoteOcrStatus("Document-based review saved for follow-up.", true);
+              } else if (quoteFile.dataset.ocrStatus === "text_extracted") {
+                setQuoteOcrStatus("OCR extracted " + quoteFile.dataset.ocrExtractedText.length + " characters. Review kept locally if server save is unavailable.", true);
+              }
+            }
+            trackQuoteReviewEvent("quote_review_document_review_generate", {
+              has_file: true,
+              ocr_status: quoteFile.dataset.ocrStatus || "",
+              review_mode: payload ? payload.review_mode : "detailed",
+              risk_level: payload ? payload.risk_level : "",
+              saved_for_followup: !!(saveResult && saveResult.ok)
+            });
+            const outputPanel = document.getElementById("reviewOutputPanel");
+            if (outputPanel) {
+              outputPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+            return;
+          }
           if (quoteFile) {
             quoteFile.focus();
             quoteFile.click();

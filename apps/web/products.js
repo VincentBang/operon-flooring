@@ -2521,6 +2521,1950 @@
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/legend-wheaton-oak",
         "galleryImages": ["images/products/laminate/topdeck-prime-legend/legend-wheaton-oak.webp", "images/products/laminate/topdeck-prime-legend/legend-wheaton-oak-gallery-2.webp", "images/products/laminate/topdeck-prime-legend/legend-wheaton-oak-gallery-3.webp"]
+      },
+      {
+              "id": "eco-eco-villeroy-boch-heritage-blue-leaf",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Heritage Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-heritage",
+              "rangeLabel": "Villeroy & Boch Heritage Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-heritage-blue-leaf",
+              "customerLabel": "Villeroy & Boch Heritage Laminate",
+              "colour": "Blue Leaf",
+              "tone": "timber look",
+              "swatch": "#b99268",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-heritage/blue-leaf.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-heritage/blue-leaf.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-heritage/blue-leaf.webp"
+              ],
+              "alt": "Blue Leaf Villeroy & Boch Heritage Laminate flooring sample",
+              "description": "Blue Leaf is a laminate flooring colour from the Villeroy & Boch Heritage Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber and stone-look designs",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-blue-leaf/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "Villeroy & Boch Heritage Laminate is a design-focused laminate range from Eco Flooring Systems.",
+                              "Operon quotes this range at product-family level first, then confirms the final colour before installation."
+                      ],
+                      "featuresIntro": "Heritage range highlights",
+                      "features": [
+                              "Laminate product family selection",
+                              "Decorative timber and stone-look options",
+                              "Floating floor installation",
+                              "Colour can be confirmed before final installation"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "Villeroy & Boch Heritage Laminate"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-villeroy-boch-heritage-travertin-hickory",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Heritage Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-heritage",
+              "rangeLabel": "Villeroy & Boch Heritage Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-heritage-blue-leaf",
+              "customerLabel": "Villeroy & Boch Heritage Laminate",
+              "colour": "Travertin Hickory",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-heritage/travertin-hickory.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-heritage/travertin-hickory.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-heritage/travertin-hickory.webp"
+              ],
+              "alt": "Travertin Hickory Villeroy & Boch Heritage Laminate flooring sample",
+              "description": "Travertin Hickory is a laminate flooring colour from the Villeroy & Boch Heritage Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber and stone-look designs",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-travertin-hickory/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-villeroy-boch-heritage-travertin-oak",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Heritage Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-heritage",
+              "rangeLabel": "Villeroy & Boch Heritage Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-heritage-blue-leaf",
+              "customerLabel": "Villeroy & Boch Heritage Laminate",
+              "colour": "Travertin Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-heritage/travertin-oak.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-heritage/travertin-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-heritage/travertin-oak.webp"
+              ],
+              "alt": "Travertin Oak Villeroy & Boch Heritage Laminate flooring sample",
+              "description": "Travertin Oak is a laminate flooring colour from the Villeroy & Boch Heritage Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber and stone-look designs",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-travertin-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-villeroy-boch-country-castle-oak",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Country Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-country",
+              "rangeLabel": "Villeroy & Boch Country Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-country-castle-oak",
+              "customerLabel": "Villeroy & Boch Country Laminate",
+              "colour": "Castle Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-country/castle-oak.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-country/castle-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-country/castle-oak.webp"
+              ],
+              "alt": "Castle Oak Villeroy & Boch Country Laminate flooring sample",
+              "description": "Castle Oak is a laminate flooring colour from the Villeroy & Boch Country Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Warm timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-castle-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "Villeroy & Boch Country Laminate is a warm timber-look laminate range for classic interior flooring selections.",
+                              "The range is selected first to keep quoting simple, with final colour confirmed before work starts."
+                      ],
+                      "featuresIntro": "Country range highlights",
+                      "features": [
+                              "Laminate product family selection",
+                              "Warm timber-look options",
+                              "Floating floor installation",
+                              "Colour can be confirmed before final installation"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "Villeroy & Boch Country Laminate"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-villeroy-boch-country-meadow-teak",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Country Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-country",
+              "rangeLabel": "Villeroy & Boch Country Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-country-castle-oak",
+              "customerLabel": "Villeroy & Boch Country Laminate",
+              "colour": "Meadow Teak",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-country/meadow-teak.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-country/meadow-teak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-country/meadow-teak.webp"
+              ],
+              "alt": "Meadow Teak Villeroy & Boch Country Laminate flooring sample",
+              "description": "Meadow Teak is a laminate flooring colour from the Villeroy & Boch Country Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Warm timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-meadow-teak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-villeroy-boch-country-valley-oak",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Country Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-country",
+              "rangeLabel": "Villeroy & Boch Country Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-country-castle-oak",
+              "customerLabel": "Villeroy & Boch Country Laminate",
+              "colour": "Valley Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-country/valley-oak.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-country/valley-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-country/valley-oak.webp"
+              ],
+              "alt": "Valley Oak Villeroy & Boch Country Laminate flooring sample",
+              "description": "Valley Oak is a laminate flooring colour from the Villeroy & Boch Country Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Warm timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-valley-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-villeroy-boch-cosmopolitan-baltimore-oak",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Cosmopolitan Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-cosmopolitan",
+              "rangeLabel": "Villeroy & Boch Cosmopolitan Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-cosmopolitan-baltimore-oak",
+              "customerLabel": "Villeroy & Boch Cosmopolitan Laminate",
+              "colour": "Baltimore Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-cosmopolitan/baltimore-oak.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-cosmopolitan/baltimore-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-cosmopolitan/baltimore-oak.webp"
+              ],
+              "alt": "Baltimore Oak Villeroy & Boch Cosmopolitan Laminate flooring sample",
+              "description": "Baltimore Oak is a laminate flooring colour from the Villeroy & Boch Cosmopolitan Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Modern design palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-baltimore-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "Villeroy & Boch Cosmopolitan Laminate is a modern laminate range with contemporary timber and design-led finishes.",
+                              "Customers choose the product family for the estimate and confirm final colour before installation."
+                      ],
+                      "featuresIntro": "Cosmopolitan range highlights",
+                      "features": [
+                              "Laminate product family selection",
+                              "Modern design palette",
+                              "Floating floor installation",
+                              "Colour can be confirmed before final installation"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "Villeroy & Boch Cosmopolitan Laminate"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-villeroy-boch-cosmopolitan-dublin-walnut",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Cosmopolitan Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-cosmopolitan",
+              "rangeLabel": "Villeroy & Boch Cosmopolitan Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-cosmopolitan-baltimore-oak",
+              "customerLabel": "Villeroy & Boch Cosmopolitan Laminate",
+              "colour": "Dublin Walnut",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-cosmopolitan/dublin-walnut.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-cosmopolitan/dublin-walnut.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-cosmopolitan/dublin-walnut.webp"
+              ],
+              "alt": "Dublin Walnut Villeroy & Boch Cosmopolitan Laminate flooring sample",
+              "description": "Dublin Walnut is a laminate flooring colour from the Villeroy & Boch Cosmopolitan Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Modern design palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-dublin-walnut/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-villeroy-boch-cosmopolitan-pure-elm",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Cosmopolitan Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-cosmopolitan",
+              "rangeLabel": "Villeroy & Boch Cosmopolitan Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-cosmopolitan-baltimore-oak",
+              "customerLabel": "Villeroy & Boch Cosmopolitan Laminate",
+              "colour": "Pure Elm",
+              "tone": "timber look",
+              "swatch": "#b99268",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-cosmopolitan/pure-elm.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-cosmopolitan/pure-elm.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-cosmopolitan/pure-elm.webp"
+              ],
+              "alt": "Pure Elm Villeroy & Boch Cosmopolitan Laminate flooring sample",
+              "description": "Pure Elm is a laminate flooring colour from the Villeroy & Boch Cosmopolitan Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Modern design palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-pure-elm/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-villeroy-boch-cosmopolitan-royal-teak",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Cosmopolitan Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-cosmopolitan",
+              "rangeLabel": "Villeroy & Boch Cosmopolitan Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-cosmopolitan-baltimore-oak",
+              "customerLabel": "Villeroy & Boch Cosmopolitan Laminate",
+              "colour": "Royal Teak",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-cosmopolitan/royal-teak.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-cosmopolitan/royal-teak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-cosmopolitan/royal-teak.webp"
+              ],
+              "alt": "Royal Teak Villeroy & Boch Cosmopolitan Laminate flooring sample",
+              "description": "Royal Teak is a laminate flooring colour from the Villeroy & Boch Cosmopolitan Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Modern design palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-royal-teak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-villeroy-boch-cosmopolitan-wellness-oak",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Cosmopolitan Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-cosmopolitan",
+              "rangeLabel": "Villeroy & Boch Cosmopolitan Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-cosmopolitan-baltimore-oak",
+              "customerLabel": "Villeroy & Boch Cosmopolitan Laminate",
+              "colour": "Wellness Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-cosmopolitan/wellness-oak.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-cosmopolitan/wellness-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-cosmopolitan/wellness-oak.webp"
+              ],
+              "alt": "Wellness Oak Villeroy & Boch Cosmopolitan Laminate flooring sample",
+              "description": "Wellness Oak is a laminate flooring colour from the Villeroy & Boch Cosmopolitan Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Modern design palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-wellness-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-villeroy-boch-contemporary-brixton-oak",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Contemporary Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-contemporary",
+              "rangeLabel": "Villeroy & Boch Contemporary Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-contemporary-brixton-oak",
+              "customerLabel": "Villeroy & Boch Contemporary Laminate",
+              "colour": "Brixton Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-contemporary/brixton-oak.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-contemporary/brixton-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-contemporary/brixton-oak.webp"
+              ],
+              "alt": "Brixton Oak Villeroy & Boch Contemporary Laminate flooring sample",
+              "description": "Brixton Oak is a laminate flooring colour from the Villeroy & Boch Contemporary Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Contemporary oak-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-brixton-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "Villeroy & Boch Contemporary Laminate is a clean modern laminate range for simple, design-led flooring selections.",
+                              "Operon keeps quoting at range level so customers are not forced to decide every colour before getting started."
+                      ],
+                      "featuresIntro": "Contemporary range highlights",
+                      "features": [
+                              "Laminate product family selection",
+                              "Contemporary oak-look options",
+                              "Floating floor installation",
+                              "Colour can be confirmed before final installation"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "Villeroy & Boch Contemporary Laminate"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-villeroy-boch-contemporary-current-oak",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Contemporary Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-contemporary",
+              "rangeLabel": "Villeroy & Boch Contemporary Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-contemporary-brixton-oak",
+              "customerLabel": "Villeroy & Boch Contemporary Laminate",
+              "colour": "Current Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-contemporary/current-oak.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-contemporary/current-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-contemporary/current-oak.webp"
+              ],
+              "alt": "Current Oak Villeroy & Boch Contemporary Laminate flooring sample",
+              "description": "Current Oak is a laminate flooring colour from the Villeroy & Boch Contemporary Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Contemporary oak-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-current-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-villeroy-boch-contemporary-london-oak",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Contemporary Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-contemporary",
+              "rangeLabel": "Villeroy & Boch Contemporary Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-contemporary-brixton-oak",
+              "customerLabel": "Villeroy & Boch Contemporary Laminate",
+              "colour": "London Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-contemporary/london-oak.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-contemporary/london-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-contemporary/london-oak.webp"
+              ],
+              "alt": "London Oak Villeroy & Boch Contemporary Laminate flooring sample",
+              "description": "London Oak is a laminate flooring colour from the Villeroy & Boch Contemporary Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Contemporary oak-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-london-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-villeroy-boch-contemporary-pearl-oak",
+              "category": "laminate",
+              "brand": "Villeroy & Boch",
+              "range": "Villeroy & Boch Contemporary Laminate",
+              "rangeId": "laminate-eco-villeroy-boch-contemporary",
+              "rangeLabel": "Villeroy & Boch Contemporary Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-villeroy-boch-contemporary-brixton-oak",
+              "customerLabel": "Villeroy & Boch Contemporary Laminate",
+              "colour": "Pearl Oak",
+              "tone": "light oak",
+              "swatch": "#d8c7aa",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-villeroy-boch-contemporary/pearl-oak.webp",
+              "imageUrl": "images/products/laminate/eco-villeroy-boch-contemporary/pearl-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-villeroy-boch-contemporary/pearl-oak.webp"
+              ],
+              "alt": "Pearl Oak Villeroy & Boch Contemporary Laminate flooring sample",
+              "description": "Pearl Oak is a laminate flooring colour from the Villeroy & Boch Contemporary Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Contemporary oak-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/villeroy-boch-pearl-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Blackbutt- Aqua",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/blackbutt-aqua.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/blackbutt-aqua.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/blackbutt-aqua.webp"
+              ],
+              "alt": "Blackbutt- Aqua Swish Laminate Aqua flooring sample",
+              "description": "Blackbutt- Aqua is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/blackbutt-aqua/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "Swish Laminate Aqua is an Eco Flooring laminate range designed for customers who want practical timber-look flooring with improved everyday resilience.",
+                              "The product range is selected first, then colour is confirmed later if needed."
+                      ],
+                      "featuresIntro": "Swish Laminate Aqua highlights",
+                      "features": [
+                              "Water-resistant laminate product family",
+                              "Wide timber-look colour palette",
+                              "Floating floor installation",
+                              "Colour can be confirmed before final installation"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "Swish Laminate Aqua"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-fendi-oak",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Fendi Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/fendi-oak.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/fendi-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/fendi-oak.webp"
+              ],
+              "alt": "Fendi Oak Swish Laminate Aqua flooring sample",
+              "description": "Fendi Oak is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/fendi-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-hawaii-oak",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Hawaii Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/hawaii-oak.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/hawaii-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/hawaii-oak.webp"
+              ],
+              "alt": "Hawaii Oak Swish Laminate Aqua flooring sample",
+              "description": "Hawaii Oak is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/hawaii-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-madrid-oak",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Madrid Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/madrid-oak.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/madrid-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/madrid-oak.webp"
+              ],
+              "alt": "Madrid Oak Swish Laminate Aqua flooring sample",
+              "description": "Madrid Oak is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/madrid-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-manhattan-oak",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Manhattan Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/manhattan-oak.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/manhattan-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/manhattan-oak.webp"
+              ],
+              "alt": "Manhattan Oak Swish Laminate Aqua flooring sample",
+              "description": "Manhattan Oak is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/manhattan-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-miami-oak",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Miami Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/miami-oak.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/miami-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/miami-oak.webp"
+              ],
+              "alt": "Miami Oak Swish Laminate Aqua flooring sample",
+              "description": "Miami Oak is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/miami-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-montreal-oak",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Montreal Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/montreal-oak.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/montreal-oak.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/montreal-oak.webp"
+              ],
+              "alt": "Montreal Oak Swish Laminate Aqua flooring sample",
+              "description": "Montreal Oak is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/montreal-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-nsw-spotted-gum",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "NSW Spotted Gum",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/nsw-spotted-gum.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/nsw-spotted-gum.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/nsw-spotted-gum.webp"
+              ],
+              "alt": "NSW Spotted Gum Swish Laminate Aqua flooring sample",
+              "description": "NSW Spotted Gum is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/nsw-spotted-gum/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-oak-colonial",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Oak Colonial",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/oak-colonial.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/oak-colonial.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-colonial.webp"
+              ],
+              "alt": "Oak Colonial Swish Laminate Aqua flooring sample",
+              "description": "Oak Colonial is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/oak-colonial/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-oak-fremont",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Oak Fremont",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/oak-fremont.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/oak-fremont.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-fremont.webp"
+              ],
+              "alt": "Oak Fremont Swish Laminate Aqua flooring sample",
+              "description": "Oak Fremont is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/oak-fremont/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-oak-georgia",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Oak Georgia",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/oak-georgia.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/oak-georgia.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-georgia.webp"
+              ],
+              "alt": "Oak Georgia Swish Laminate Aqua flooring sample",
+              "description": "Oak Georgia is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/oak-georgia/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-oak-nashville",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Oak Nashville",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/oak-nashville.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/oak-nashville.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-nashville.webp"
+              ],
+              "alt": "Oak Nashville Swish Laminate Aqua flooring sample",
+              "description": "Oak Nashville is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/oak-nashville/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-oak-ostana",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Oak Ostana",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/oak-ostana.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/oak-ostana.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-ostana.webp"
+              ],
+              "alt": "Oak Ostana Swish Laminate Aqua flooring sample",
+              "description": "Oak Ostana is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/oak-ostana/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-oak-vermont",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Oak Vermont",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/oak-vermont.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/oak-vermont.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-vermont.webp"
+              ],
+              "alt": "Oak Vermont Swish Laminate Aqua flooring sample",
+              "description": "Oak Vermont is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/oak-vermont/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-qld-spotted-gum",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "QLD Spotted Gum",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/qld-spotted-gum.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/qld-spotted-gum.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/qld-spotted-gum.webp"
+              ],
+              "alt": "QLD Spotted Gum Swish Laminate Aqua flooring sample",
+              "description": "QLD Spotted Gum is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/qld-spotted-gum/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-aqua-smooth-blackbutt",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate Aqua",
+              "rangeId": "laminate-eco-swish-laminate-aqua",
+              "rangeLabel": "Swish Laminate Aqua",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-aqua-blackbutt-aqua",
+              "customerLabel": "Swish Laminate Aqua",
+              "colour": "Smooth Blackbutt",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate-aqua/smooth-blackbutt.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/smooth-blackbutt.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate-aqua/smooth-blackbutt.webp"
+              ],
+              "alt": "Smooth Blackbutt Swish Laminate Aqua flooring sample",
+              "description": "Smooth Blackbutt is a laminate flooring colour from the Swish Laminate Aqua range.",
+              "features": [
+                      "Water-resistant laminate range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/smooth-blackbutt/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-blackbutt-light",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate",
+              "rangeId": "laminate-eco-swish-laminate",
+              "rangeLabel": "Swish Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-blackbutt-light",
+              "customerLabel": "Swish Laminate",
+              "colour": "Blackbutt Light",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate/blackbutt-light.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate/blackbutt-light.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate/blackbutt-light.webp"
+              ],
+              "alt": "Blackbutt Light Swish Laminate flooring sample",
+              "description": "Blackbutt Light is a laminate flooring colour from the Swish Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/blackbutt-light/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "Swish Laminate is a practical Eco Flooring laminate range with timber-look colours for everyday residential flooring.",
+                              "Operon treats the range as the customer selection and confirms the final colour before installation."
+                      ],
+                      "featuresIntro": "Swish Laminate highlights",
+                      "features": [
+                              "Laminate product family selection",
+                              "Timber-look colour palette",
+                              "Floating floor installation",
+                              "Colour can be confirmed before final installation"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "Swish Laminate"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-swish-laminate-eggshell",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate",
+              "rangeId": "laminate-eco-swish-laminate",
+              "rangeLabel": "Swish Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-blackbutt-light",
+              "customerLabel": "Swish Laminate",
+              "colour": "Eggshell",
+              "tone": "timber look",
+              "swatch": "#b99268",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate/eggshell.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate/eggshell.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate/eggshell.webp"
+              ],
+              "alt": "Eggshell Swish Laminate flooring sample",
+              "description": "Eggshell is a laminate flooring colour from the Swish Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/eggshell/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-fawn",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate",
+              "rangeId": "laminate-eco-swish-laminate",
+              "rangeLabel": "Swish Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-blackbutt-light",
+              "customerLabel": "Swish Laminate",
+              "colour": "Fawn",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate/fawn.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate/fawn.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate/fawn.webp"
+              ],
+              "alt": "Fawn Swish Laminate flooring sample",
+              "description": "Fawn is a laminate flooring colour from the Swish Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/fawn/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-floria",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate",
+              "rangeId": "laminate-eco-swish-laminate",
+              "rangeLabel": "Swish Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-blackbutt-light",
+              "customerLabel": "Swish Laminate",
+              "colour": "Floria",
+              "tone": "timber look",
+              "swatch": "#b99268",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate/floria.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate/floria.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate/floria.webp"
+              ],
+              "alt": "Floria Swish Laminate flooring sample",
+              "description": "Floria is a laminate flooring colour from the Swish Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/floria/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-jarrah",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate",
+              "rangeId": "laminate-eco-swish-laminate",
+              "rangeLabel": "Swish Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-blackbutt-light",
+              "customerLabel": "Swish Laminate",
+              "colour": "Jarrah",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate/jarrah.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate/jarrah.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate/jarrah.webp"
+              ],
+              "alt": "Jarrah Swish Laminate flooring sample",
+              "description": "Jarrah is a laminate flooring colour from the Swish Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/jarrah/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-linden",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate",
+              "rangeId": "laminate-eco-swish-laminate",
+              "rangeLabel": "Swish Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-blackbutt-light",
+              "customerLabel": "Swish Laminate",
+              "colour": "Linden",
+              "tone": "timber look",
+              "swatch": "#b99268",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate/linden.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate/linden.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate/linden.webp"
+              ],
+              "alt": "Linden Swish Laminate flooring sample",
+              "description": "Linden is a laminate flooring colour from the Swish Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/linden/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-magnolia",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate",
+              "rangeId": "laminate-eco-swish-laminate",
+              "rangeLabel": "Swish Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-blackbutt-light",
+              "customerLabel": "Swish Laminate",
+              "colour": "Magnolia",
+              "tone": "timber look",
+              "swatch": "#b99268",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate/magnolia.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate/magnolia.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate/magnolia.webp"
+              ],
+              "alt": "Magnolia Swish Laminate flooring sample",
+              "description": "Magnolia is a laminate flooring colour from the Swish Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/magnolia/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-new-england-blackbutt",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate",
+              "rangeId": "laminate-eco-swish-laminate",
+              "rangeLabel": "Swish Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-blackbutt-light",
+              "customerLabel": "Swish Laminate",
+              "colour": "New England Blackbutt",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate/new-england-blackbutt.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate/new-england-blackbutt.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate/new-england-blackbutt.webp"
+              ],
+              "alt": "New England Blackbutt Swish Laminate flooring sample",
+              "description": "New England Blackbutt is a laminate flooring colour from the Swish Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/new-england-blackbutt/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-nutmeg",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate",
+              "rangeId": "laminate-eco-swish-laminate",
+              "rangeLabel": "Swish Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-blackbutt-light",
+              "customerLabel": "Swish Laminate",
+              "colour": "Nutmeg",
+              "tone": "timber look",
+              "swatch": "#b99268",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate/nutmeg.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate/nutmeg.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate/nutmeg.webp"
+              ],
+              "alt": "Nutmeg Swish Laminate flooring sample",
+              "description": "Nutmeg is a laminate flooring colour from the Swish Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/oak-falaise/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-sydney-gum",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate",
+              "rangeId": "laminate-eco-swish-laminate",
+              "rangeLabel": "Swish Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-blackbutt-light",
+              "customerLabel": "Swish Laminate",
+              "colour": "Sydney Gum",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate/sydney-gum.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate/sydney-gum.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate/sydney-gum.webp"
+              ],
+              "alt": "Sydney Gum Swish Laminate flooring sample",
+              "description": "Sydney Gum is a laminate flooring colour from the Swish Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/sydney-gum/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-velvet",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate",
+              "rangeId": "laminate-eco-swish-laminate",
+              "rangeLabel": "Swish Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-blackbutt-light",
+              "customerLabel": "Swish Laminate",
+              "colour": "Velvet",
+              "tone": "timber look",
+              "swatch": "#b99268",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate/velvet.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate/velvet.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate/velvet.webp"
+              ],
+              "alt": "Velvet Swish Laminate flooring sample",
+              "description": "Velvet is a laminate flooring colour from the Swish Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/velvet/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-laminate-vivid",
+              "category": "laminate",
+              "brand": "Swish Laminate",
+              "range": "Swish Laminate",
+              "rangeId": "laminate-eco-swish-laminate",
+              "rangeLabel": "Swish Laminate",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-swish-laminate-blackbutt-light",
+              "customerLabel": "Swish Laminate",
+              "colour": "Vivid",
+              "tone": "timber look",
+              "swatch": "#b99268",
+              "thickness": "Laminate",
+              "productType": "Laminate Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/laminate/eco-swish-laminate/vivid.webp",
+              "imageUrl": "images/products/laminate/eco-swish-laminate/vivid.webp",
+              "galleryImages": [
+                      "images/products/laminate/eco-swish-laminate/vivid.webp"
+              ],
+              "alt": "Vivid Swish Laminate flooring sample",
+              "description": "Vivid is a laminate flooring colour from the Swish Laminate range.",
+              "features": [
+                      "Laminate flooring range",
+                      "Timber-look colour palette",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Bedrooms",
+                      "Living areas",
+                      "Study rooms",
+                      "Dry internal renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/vivid/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
       }
     ],
     hybrid: [
@@ -4810,6 +6754,2157 @@
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/artisan-volcano",
         "galleryImages": ["images/products/hybrid/topdeck-artisan-tile/artisan-volcano.webp", "images/products/hybrid/topdeck-artisan-tile/artisan-volcano-gallery-2.webp", "images/products/hybrid/topdeck-artisan-tile/artisan-volcano-gallery-3.webp"]
+      },
+      {
+              "id": "eco-eco-xxl-8mm-coastal-blackbutt",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "XXL 8.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-xxl-8mm",
+              "rangeLabel": "XXL 8.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-xxl-8mm-coastal-blackbutt",
+              "customerLabel": "XXL 8.0 Hybrid Flooring",
+              "colour": "Coastal Blackbutt",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "8.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-xxl-8mm/coastal-blackbutt.webp",
+              "imageUrl": "images/products/hybrid/eco-xxl-8mm/coastal-blackbutt.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-xxl-8mm/coastal-blackbutt.webp"
+              ],
+              "alt": "Coastal Blackbutt XXL 8.0 Hybrid Flooring sample",
+              "description": "Coastal Blackbutt is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Large-format timber look",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Family homes"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/coastal-blackbutt/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "XXL 8.0 Hybrid Flooring is an Eco Flooring range for projects that want a larger timber-look board with the practicality of a waterproof floating floor.",
+                              "The range is suitable for Sydney apartments and family homes where durable everyday performance and a clean modern timber look are preferred."
+                      ],
+                      "featuresIntro": "XXL 8.0 range highlights",
+                      "features": [
+                              "Waterproof hybrid construction",
+                              "Wide timber-look colour palette",
+                              "Floating installation system",
+                              "Colour can be confirmed before final installation"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "XXL 8.0 Hybrid Flooring"
+                              },
+                              {
+                                      "label": "Thickness",
+                                      "value": "8.0mm"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-xxl-8mm-cotton-oak",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "XXL 8.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-xxl-8mm",
+              "rangeLabel": "XXL 8.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-xxl-8mm-coastal-blackbutt",
+              "customerLabel": "XXL 8.0 Hybrid Flooring",
+              "colour": "Cotton Oak",
+              "tone": "light oak",
+              "swatch": "#d8c7aa",
+              "thickness": "8.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-xxl-8mm/cotton-oak.webp",
+              "imageUrl": "images/products/hybrid/eco-xxl-8mm/cotton-oak.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-xxl-8mm/cotton-oak.webp"
+              ],
+              "alt": "Cotton Oak XXL 8.0 Hybrid Flooring sample",
+              "description": "Cotton Oak is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Large-format timber look",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Family homes"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/cotton-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-xxl-8mm-ebony",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "XXL 8.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-xxl-8mm",
+              "rangeLabel": "XXL 8.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-xxl-8mm-coastal-blackbutt",
+              "customerLabel": "XXL 8.0 Hybrid Flooring",
+              "colour": "Ebony",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "8.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-xxl-8mm/ebony.webp",
+              "imageUrl": "images/products/hybrid/eco-xxl-8mm/ebony.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-xxl-8mm/ebony.webp"
+              ],
+              "alt": "Ebony XXL 8.0 Hybrid Flooring sample",
+              "description": "Ebony is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Large-format timber look",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Family homes"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/ebony/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-xxl-8mm-oak-atlanta",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "XXL 8.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-xxl-8mm",
+              "rangeLabel": "XXL 8.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-xxl-8mm-coastal-blackbutt",
+              "customerLabel": "XXL 8.0 Hybrid Flooring",
+              "colour": "Oak Atlanta",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "8.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-xxl-8mm/oak-atlanta.webp",
+              "imageUrl": "images/products/hybrid/eco-xxl-8mm/oak-atlanta.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-xxl-8mm/oak-atlanta.webp"
+              ],
+              "alt": "Oak Atlanta XXL 8.0 Hybrid Flooring sample",
+              "description": "Oak Atlanta is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Large-format timber look",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Family homes"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/oak-atlanta/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-xxl-8mm-oak-saffron",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "XXL 8.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-xxl-8mm",
+              "rangeLabel": "XXL 8.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-xxl-8mm-coastal-blackbutt",
+              "customerLabel": "XXL 8.0 Hybrid Flooring",
+              "colour": "Oak Saffron",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "8.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-xxl-8mm/oak-saffron.webp",
+              "imageUrl": "images/products/hybrid/eco-xxl-8mm/oak-saffron.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-xxl-8mm/oak-saffron.webp"
+              ],
+              "alt": "Oak Saffron XXL 8.0 Hybrid Flooring sample",
+              "description": "Oak Saffron is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Large-format timber look",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Family homes"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/oak-saffron/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-xxl-8mm-oak-sofia",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "XXL 8.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-xxl-8mm",
+              "rangeLabel": "XXL 8.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-xxl-8mm-coastal-blackbutt",
+              "customerLabel": "XXL 8.0 Hybrid Flooring",
+              "colour": "Oak Sofia",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "8.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-xxl-8mm/oak-sofia.webp",
+              "imageUrl": "images/products/hybrid/eco-xxl-8mm/oak-sofia.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-xxl-8mm/oak-sofia.webp"
+              ],
+              "alt": "Oak Sofia XXL 8.0 Hybrid Flooring sample",
+              "description": "Oak Sofia is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Large-format timber look",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Family homes"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/oak-sofia/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-xxl-8mm-oak-titanium",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "XXL 8.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-xxl-8mm",
+              "rangeLabel": "XXL 8.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-xxl-8mm-coastal-blackbutt",
+              "customerLabel": "XXL 8.0 Hybrid Flooring",
+              "colour": "Oak Titanium",
+              "tone": "grey oak",
+              "swatch": "#a6a7a1",
+              "thickness": "8.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-xxl-8mm/oak-titanium.webp",
+              "imageUrl": "images/products/hybrid/eco-xxl-8mm/oak-titanium.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-xxl-8mm/oak-titanium.webp"
+              ],
+              "alt": "Oak Titanium XXL 8.0 Hybrid Flooring sample",
+              "description": "Oak Titanium is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Large-format timber look",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Family homes"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/oak-titanium/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-xxl-8mm-pearl-grey",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "XXL 8.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-xxl-8mm",
+              "rangeLabel": "XXL 8.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-xxl-8mm-coastal-blackbutt",
+              "customerLabel": "XXL 8.0 Hybrid Flooring",
+              "colour": "Pearl Grey",
+              "tone": "grey oak",
+              "swatch": "#a6a7a1",
+              "thickness": "8.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-xxl-8mm/pearl-grey.webp",
+              "imageUrl": "images/products/hybrid/eco-xxl-8mm/pearl-grey.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-xxl-8mm/pearl-grey.webp"
+              ],
+              "alt": "Pearl Grey XXL 8.0 Hybrid Flooring sample",
+              "description": "Pearl Grey is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Large-format timber look",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Family homes"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/pearl-grey/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-xxl-8mm-royal-oak",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "XXL 8.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-xxl-8mm",
+              "rangeLabel": "XXL 8.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-xxl-8mm-coastal-blackbutt",
+              "customerLabel": "XXL 8.0 Hybrid Flooring",
+              "colour": "Royal Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "8.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-xxl-8mm/royal-oak.webp",
+              "imageUrl": "images/products/hybrid/eco-xxl-8mm/royal-oak.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-xxl-8mm/royal-oak.webp"
+              ],
+              "alt": "Royal Oak XXL 8.0 Hybrid Flooring sample",
+              "description": "Royal Oak is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Large-format timber look",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Family homes"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/royal-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-xxl-8mm-seashell-white",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "XXL 8.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-xxl-8mm",
+              "rangeLabel": "XXL 8.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-xxl-8mm-coastal-blackbutt",
+              "customerLabel": "XXL 8.0 Hybrid Flooring",
+              "colour": "Seashell White",
+              "tone": "light oak",
+              "swatch": "#d8c7aa",
+              "thickness": "8.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-xxl-8mm/seashell-white.webp",
+              "imageUrl": "images/products/hybrid/eco-xxl-8mm/seashell-white.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-xxl-8mm/seashell-white.webp"
+              ],
+              "alt": "Seashell White XXL 8.0 Hybrid Flooring sample",
+              "description": "Seashell White is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Large-format timber look",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Family homes"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/seashell-white/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-xxl-8mm-spotted-gum-hybrid",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "XXL 8.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-xxl-8mm",
+              "rangeLabel": "XXL 8.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-xxl-8mm-coastal-blackbutt",
+              "customerLabel": "XXL 8.0 Hybrid Flooring",
+              "colour": "Spotted Gum Hybrid",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "8.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-xxl-8mm/spotted-gum-hybrid.webp",
+              "imageUrl": "images/products/hybrid/eco-xxl-8mm/spotted-gum-hybrid.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-xxl-8mm/spotted-gum-hybrid.webp"
+              ],
+              "alt": "Spotted Gum Hybrid XXL 8.0 Hybrid Flooring sample",
+              "description": "Spotted Gum Hybrid is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Large-format timber look",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Family homes"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/spotted-gum-hybrid/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-xxl-8mm-walnut-brown",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "XXL 8.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-xxl-8mm",
+              "rangeLabel": "XXL 8.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-xxl-8mm-coastal-blackbutt",
+              "customerLabel": "XXL 8.0 Hybrid Flooring",
+              "colour": "Walnut Brown",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "8.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-xxl-8mm/walnut-brown.webp",
+              "imageUrl": "images/products/hybrid/eco-xxl-8mm/walnut-brown.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-xxl-8mm/walnut-brown.webp"
+              ],
+              "alt": "Walnut Brown XXL 8.0 Hybrid Flooring sample",
+              "description": "Walnut Brown is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Large-format timber look",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Family homes"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/walnut-brown/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-grande-7-5mm-capri-7-5",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Grande 7.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-grande-7-5mm",
+              "rangeLabel": "Grande 7.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-grande-7-5mm-capri-7-5",
+              "customerLabel": "Grande 7.5 Hybrid Flooring",
+              "colour": "Capri 7.5",
+              "tone": "timber look",
+              "swatch": "#b99268",
+              "thickness": "7.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-grande-7-5mm/capri-7-5.webp",
+              "imageUrl": "images/products/hybrid/eco-grande-7-5mm/capri-7-5.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-grande-7-5mm/capri-7-5.webp"
+              ],
+              "alt": "Capri 7.5 Grande 7.5 Hybrid Flooring sample",
+              "description": "Capri 7.5 is a hybrid flooring colour from the Grande 7.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Timber-look surface",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Rental renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/capri-7-5/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "Grande 7.5 Hybrid Flooring provides a practical waterproof hybrid option for residential flooring projects.",
+                              "It suits customers who want a timber-look floating floor with simple range selection and colour confirmation before installation."
+                      ],
+                      "featuresIntro": "Grande 7.5 range highlights",
+                      "features": [
+                              "Waterproof hybrid construction",
+                              "Floating installation system",
+                              "Practical timber-look colours",
+                              "Colour can be confirmed before final installation"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "Grande 7.5 Hybrid Flooring"
+                              },
+                              {
+                                      "label": "Thickness",
+                                      "value": "7.5mm"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-grande-7-5mm-cream-7-5",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Grande 7.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-grande-7-5mm",
+              "rangeLabel": "Grande 7.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-grande-7-5mm-capri-7-5",
+              "customerLabel": "Grande 7.5 Hybrid Flooring",
+              "colour": "Cream 7.5",
+              "tone": "light oak",
+              "swatch": "#d8c7aa",
+              "thickness": "7.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-grande-7-5mm/cream-7-5.webp",
+              "imageUrl": "images/products/hybrid/eco-grande-7-5mm/cream-7-5.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-grande-7-5mm/cream-7-5.webp"
+              ],
+              "alt": "Cream 7.5 Grande 7.5 Hybrid Flooring sample",
+              "description": "Cream 7.5 is a hybrid flooring colour from the Grande 7.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Timber-look surface",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Rental renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/cream-7-5/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-grande-7-5mm-northen-spotted-gum-7-5",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Grande 7.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-grande-7-5mm",
+              "rangeLabel": "Grande 7.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-grande-7-5mm-capri-7-5",
+              "customerLabel": "Grande 7.5 Hybrid Flooring",
+              "colour": "Northen Spotted Gum 7.5",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "7.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-grande-7-5mm/northen-spotted-gum-7-5.webp",
+              "imageUrl": "images/products/hybrid/eco-grande-7-5mm/northen-spotted-gum-7-5.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-grande-7-5mm/northen-spotted-gum-7-5.webp"
+              ],
+              "alt": "Northen Spotted Gum 7.5 Grande 7.5 Hybrid Flooring sample",
+              "description": "Northen Spotted Gum 7.5 is a hybrid flooring colour from the Grande 7.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Timber-look surface",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Rental renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/northen-spotted-gum-7-5/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-grande-7-5mm-pacific-blackbutt-7-5",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Grande 7.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-grande-7-5mm",
+              "rangeLabel": "Grande 7.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-grande-7-5mm-capri-7-5",
+              "customerLabel": "Grande 7.5 Hybrid Flooring",
+              "colour": "Pacific Blackbutt 7.5",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "7.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-grande-7-5mm/pacific-blackbutt-7-5.webp",
+              "imageUrl": "images/products/hybrid/eco-grande-7-5mm/pacific-blackbutt-7-5.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-grande-7-5mm/pacific-blackbutt-7-5.webp"
+              ],
+              "alt": "Pacific Blackbutt 7.5 Grande 7.5 Hybrid Flooring sample",
+              "description": "Pacific Blackbutt 7.5 is a hybrid flooring colour from the Grande 7.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Timber-look surface",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Rental renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/pacific-blackbutt-7-5/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-grande-7-5mm-raw-spotted-gum-7-5",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Grande 7.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-grande-7-5mm",
+              "rangeLabel": "Grande 7.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-grande-7-5mm-capri-7-5",
+              "customerLabel": "Grande 7.5 Hybrid Flooring",
+              "colour": "Raw Spotted Gum 7.5",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "7.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-grande-7-5mm/raw-spotted-gum-7-5.webp",
+              "imageUrl": "images/products/hybrid/eco-grande-7-5mm/raw-spotted-gum-7-5.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-grande-7-5mm/raw-spotted-gum-7-5.webp"
+              ],
+              "alt": "Raw Spotted Gum 7.5 Grande 7.5 Hybrid Flooring sample",
+              "description": "Raw Spotted Gum 7.5 is a hybrid flooring colour from the Grande 7.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Timber-look surface",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Rental renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/raw-spotted-gum-7-5/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-grande-7-5mm-sand-7-5",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Grande 7.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-grande-7-5mm",
+              "rangeLabel": "Grande 7.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-grande-7-5mm-capri-7-5",
+              "customerLabel": "Grande 7.5 Hybrid Flooring",
+              "colour": "Sand 7.5",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "7.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-grande-7-5mm/sand-7-5.webp",
+              "imageUrl": "images/products/hybrid/eco-grande-7-5mm/sand-7-5.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-grande-7-5mm/sand-7-5.webp"
+              ],
+              "alt": "Sand 7.5 Grande 7.5 Hybrid Flooring sample",
+              "description": "Sand 7.5 is a hybrid flooring colour from the Grande 7.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Timber-look surface",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Living areas",
+                      "Bedrooms",
+                      "Rental renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/sand-7-5/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-herringbone-7mm-clear-water-beach-herringbone",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Herringbone 7.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-herringbone-7mm",
+              "rangeLabel": "Herringbone 7.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-herringbone-7mm-clear-water-beach-herringbone",
+              "customerLabel": "Herringbone 7.0 Hybrid Flooring",
+              "colour": "Clear Water Beach Herringbone",
+              "tone": "light oak",
+              "swatch": "#d8c7aa",
+              "thickness": "7.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-herringbone-7mm/clear-water-beach-herringbone.webp",
+              "imageUrl": "images/products/hybrid/eco-herringbone-7mm/clear-water-beach-herringbone.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-herringbone-7mm/clear-water-beach-herringbone.webp"
+              ],
+              "alt": "Clear Water Beach Herringbone Herringbone 7.0 Hybrid Flooring sample",
+              "description": "Clear Water Beach Herringbone is a hybrid flooring colour from the Herringbone 7.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Herringbone visual style",
+                      "Floating floor product range",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Feature areas",
+                      "Living rooms",
+                      "Apartments",
+                      "Renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/clear-water-beach-herringbone/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "Herringbone 7.0 Hybrid Flooring gives customers a herringbone-look hybrid product option while keeping the quote selection simple at range level.",
+                              "Final installation method and site suitability are confirmed before work starts."
+                      ],
+                      "featuresIntro": "Herringbone 7.0 range highlights",
+                      "features": [
+                              "Waterproof hybrid product range",
+                              "Herringbone-look colour options",
+                              "Designed for feature flooring selections",
+                              "Final details confirmed before installation"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "Herringbone 7.0 Hybrid Flooring"
+                              },
+                              {
+                                      "label": "Thickness",
+                                      "value": "7.0mm"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-herringbone-7mm-fresco-oak-herringbone",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Herringbone 7.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-herringbone-7mm",
+              "rangeLabel": "Herringbone 7.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-herringbone-7mm-clear-water-beach-herringbone",
+              "customerLabel": "Herringbone 7.0 Hybrid Flooring",
+              "colour": "Fresco Oak Herringbone",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "7.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-herringbone-7mm/fresco-oak-herringbone.webp",
+              "imageUrl": "images/products/hybrid/eco-herringbone-7mm/fresco-oak-herringbone.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-herringbone-7mm/fresco-oak-herringbone.webp"
+              ],
+              "alt": "Fresco Oak Herringbone Herringbone 7.0 Hybrid Flooring sample",
+              "description": "Fresco Oak Herringbone is a hybrid flooring colour from the Herringbone 7.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Herringbone visual style",
+                      "Floating floor product range",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Feature areas",
+                      "Living rooms",
+                      "Apartments",
+                      "Renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/fresco-oak-herringbone/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-herringbone-7mm-natural-blackbutt-herringbone",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Herringbone 7.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-herringbone-7mm",
+              "rangeLabel": "Herringbone 7.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-herringbone-7mm-clear-water-beach-herringbone",
+              "customerLabel": "Herringbone 7.0 Hybrid Flooring",
+              "colour": "Natural Blackbutt Herringbone",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "7.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-herringbone-7mm/natural-blackbutt-herringbone.webp",
+              "imageUrl": "images/products/hybrid/eco-herringbone-7mm/natural-blackbutt-herringbone.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-herringbone-7mm/natural-blackbutt-herringbone.webp"
+              ],
+              "alt": "Natural Blackbutt Herringbone Herringbone 7.0 Hybrid Flooring sample",
+              "description": "Natural Blackbutt Herringbone is a hybrid flooring colour from the Herringbone 7.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Herringbone visual style",
+                      "Floating floor product range",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Feature areas",
+                      "Living rooms",
+                      "Apartments",
+                      "Renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/natural-blackbutt-herringbone/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-herringbone-7mm-oak-saffron-herringbone",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Herringbone 7.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-herringbone-7mm",
+              "rangeLabel": "Herringbone 7.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-herringbone-7mm-clear-water-beach-herringbone",
+              "customerLabel": "Herringbone 7.0 Hybrid Flooring",
+              "colour": "Oak Saffron Herringbone",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "7.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-herringbone-7mm/oak-saffron-herringbone.webp",
+              "imageUrl": "images/products/hybrid/eco-herringbone-7mm/oak-saffron-herringbone.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-herringbone-7mm/oak-saffron-herringbone.webp"
+              ],
+              "alt": "Oak Saffron Herringbone Herringbone 7.0 Hybrid Flooring sample",
+              "description": "Oak Saffron Herringbone is a hybrid flooring colour from the Herringbone 7.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Herringbone visual style",
+                      "Floating floor product range",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Feature areas",
+                      "Living rooms",
+                      "Apartments",
+                      "Renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/oak-saffron-herringbone/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-herringbone-7mm-oak-sofia-herringbone",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Herringbone 7.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-herringbone-7mm",
+              "rangeLabel": "Herringbone 7.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-herringbone-7mm-clear-water-beach-herringbone",
+              "customerLabel": "Herringbone 7.0 Hybrid Flooring",
+              "colour": "Oak Sofia Herringbone",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "7.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-herringbone-7mm/oak-sofia-herringbone.webp",
+              "imageUrl": "images/products/hybrid/eco-herringbone-7mm/oak-sofia-herringbone.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-herringbone-7mm/oak-sofia-herringbone.webp"
+              ],
+              "alt": "Oak Sofia Herringbone Herringbone 7.0 Hybrid Flooring sample",
+              "description": "Oak Sofia Herringbone is a hybrid flooring colour from the Herringbone 7.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Herringbone visual style",
+                      "Floating floor product range",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Feature areas",
+                      "Living rooms",
+                      "Apartments",
+                      "Renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/oak-sofia-herringbone/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-herringbone-7mm-select-spotted-gum-herringbone",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Herringbone 7.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-herringbone-7mm",
+              "rangeLabel": "Herringbone 7.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-herringbone-7mm-clear-water-beach-herringbone",
+              "customerLabel": "Herringbone 7.0 Hybrid Flooring",
+              "colour": "Select Spotted Gum Herringbone",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "7.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-herringbone-7mm/select-spotted-gum-herringbone.webp",
+              "imageUrl": "images/products/hybrid/eco-herringbone-7mm/select-spotted-gum-herringbone.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-herringbone-7mm/select-spotted-gum-herringbone.webp"
+              ],
+              "alt": "Select Spotted Gum Herringbone Herringbone 7.0 Hybrid Flooring sample",
+              "description": "Select Spotted Gum Herringbone is a hybrid flooring colour from the Herringbone 7.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Herringbone visual style",
+                      "Floating floor product range",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Feature areas",
+                      "Living rooms",
+                      "Apartments",
+                      "Renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/select-spotted-gum-herringbone/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-urban-6-5mm-alpine-oak",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Urban 6.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-urban-6-5mm",
+              "rangeLabel": "Urban 6.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-urban-6-5mm-alpine-oak",
+              "customerLabel": "Urban 6.5 Hybrid Flooring",
+              "colour": "Alpine Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "6.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-urban-6-5mm/alpine-oak.webp",
+              "imageUrl": "images/products/hybrid/eco-urban-6-5mm/alpine-oak.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-urban-6-5mm/alpine-oak.webp"
+              ],
+              "alt": "Alpine Oak Urban 6.5 Hybrid Flooring sample",
+              "description": "Alpine Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Everyday timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Living areas",
+                      "Budget-conscious renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/alpine-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "Urban 6.5 Hybrid Flooring is a practical Eco Flooring hybrid range for everyday residential renovations.",
+                              "It keeps product choice simple by selecting the range first, with final colour confirmed before installation."
+                      ],
+                      "featuresIntro": "Urban 6.5 range highlights",
+                      "features": [
+                              "Waterproof hybrid construction",
+                              "Practical colour palette",
+                              "Floating installation system",
+                              "Colour can be confirmed before final installation"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "Urban 6.5 Hybrid Flooring"
+                              },
+                              {
+                                      "label": "Thickness",
+                                      "value": "6.5mm"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-urban-6-5mm-black-forest-oak",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Urban 6.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-urban-6-5mm",
+              "rangeLabel": "Urban 6.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-urban-6-5mm-alpine-oak",
+              "customerLabel": "Urban 6.5 Hybrid Flooring",
+              "colour": "Black Forest Oak",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "6.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-urban-6-5mm/black-forest-oak.webp",
+              "imageUrl": "images/products/hybrid/eco-urban-6-5mm/black-forest-oak.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-urban-6-5mm/black-forest-oak.webp"
+              ],
+              "alt": "Black Forest Oak Urban 6.5 Hybrid Flooring sample",
+              "description": "Black Forest Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Everyday timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Living areas",
+                      "Budget-conscious renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/black-forest-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-urban-6-5mm-classic-blackbutt",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Urban 6.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-urban-6-5mm",
+              "rangeLabel": "Urban 6.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-urban-6-5mm-alpine-oak",
+              "customerLabel": "Urban 6.5 Hybrid Flooring",
+              "colour": "Classic Blackbutt",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "6.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-urban-6-5mm/classic-blackbutt.webp",
+              "imageUrl": "images/products/hybrid/eco-urban-6-5mm/classic-blackbutt.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-urban-6-5mm/classic-blackbutt.webp"
+              ],
+              "alt": "Classic Blackbutt Urban 6.5 Hybrid Flooring sample",
+              "description": "Classic Blackbutt is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Everyday timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Living areas",
+                      "Budget-conscious renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/classic-blackbutt/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-urban-6-5mm-cotton-oak",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Urban 6.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-urban-6-5mm",
+              "rangeLabel": "Urban 6.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-urban-6-5mm-alpine-oak",
+              "customerLabel": "Urban 6.5 Hybrid Flooring",
+              "colour": "Cotton Oak",
+              "tone": "light oak",
+              "swatch": "#d8c7aa",
+              "thickness": "6.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-urban-6-5mm/cotton-oak.webp",
+              "imageUrl": "images/products/hybrid/eco-urban-6-5mm/cotton-oak.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-urban-6-5mm/cotton-oak.webp"
+              ],
+              "alt": "Cotton Oak Urban 6.5 Hybrid Flooring sample",
+              "description": "Cotton Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Everyday timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Living areas",
+                      "Budget-conscious renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/cotton-oak-l/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-urban-6-5mm-highland-spotted-gum",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Urban 6.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-urban-6-5mm",
+              "rangeLabel": "Urban 6.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-urban-6-5mm-alpine-oak",
+              "customerLabel": "Urban 6.5 Hybrid Flooring",
+              "colour": "Highland Spotted Gum",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "6.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-urban-6-5mm/highland-spotted-gum.webp",
+              "imageUrl": "images/products/hybrid/eco-urban-6-5mm/highland-spotted-gum.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-urban-6-5mm/highland-spotted-gum.webp"
+              ],
+              "alt": "Highland Spotted Gum Urban 6.5 Hybrid Flooring sample",
+              "description": "Highland Spotted Gum is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Everyday timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Living areas",
+                      "Budget-conscious renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/highland-spotted-gum/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-urban-6-5mm-ice-sandy-oak",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Urban 6.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-urban-6-5mm",
+              "rangeLabel": "Urban 6.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-urban-6-5mm-alpine-oak",
+              "customerLabel": "Urban 6.5 Hybrid Flooring",
+              "colour": "Ice Sandy Oak",
+              "tone": "light oak",
+              "swatch": "#d8c7aa",
+              "thickness": "6.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-urban-6-5mm/ice-sandy-oak.webp",
+              "imageUrl": "images/products/hybrid/eco-urban-6-5mm/ice-sandy-oak.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-urban-6-5mm/ice-sandy-oak.webp"
+              ],
+              "alt": "Ice Sandy Oak Urban 6.5 Hybrid Flooring sample",
+              "description": "Ice Sandy Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Everyday timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Living areas",
+                      "Budget-conscious renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/ice-sandy-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-urban-6-5mm-moonlight-oak",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Urban 6.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-urban-6-5mm",
+              "rangeLabel": "Urban 6.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-urban-6-5mm-alpine-oak",
+              "customerLabel": "Urban 6.5 Hybrid Flooring",
+              "colour": "Moonlight Oak",
+              "tone": "grey oak",
+              "swatch": "#a6a7a1",
+              "thickness": "6.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-urban-6-5mm/moonlight-oak.webp",
+              "imageUrl": "images/products/hybrid/eco-urban-6-5mm/moonlight-oak.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-urban-6-5mm/moonlight-oak.webp"
+              ],
+              "alt": "Moonlight Oak Urban 6.5 Hybrid Flooring sample",
+              "description": "Moonlight Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Everyday timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Living areas",
+                      "Budget-conscious renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/moonlight-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-urban-6-5mm-murray-river-spotted-gum",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Urban 6.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-urban-6-5mm",
+              "rangeLabel": "Urban 6.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-urban-6-5mm-alpine-oak",
+              "customerLabel": "Urban 6.5 Hybrid Flooring",
+              "colour": "Murray River Spotted Gum",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "6.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-urban-6-5mm/murray-river-spotted-gum.webp",
+              "imageUrl": "images/products/hybrid/eco-urban-6-5mm/murray-river-spotted-gum.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-urban-6-5mm/murray-river-spotted-gum.webp"
+              ],
+              "alt": "Murray River Spotted Gum Urban 6.5 Hybrid Flooring sample",
+              "description": "Murray River Spotted Gum is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Everyday timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Living areas",
+                      "Budget-conscious renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/murray-river-spotted-gum/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-urban-6-5mm-natural-blackbutt",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Urban 6.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-urban-6-5mm",
+              "rangeLabel": "Urban 6.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-urban-6-5mm-alpine-oak",
+              "customerLabel": "Urban 6.5 Hybrid Flooring",
+              "colour": "Natural Blackbutt",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "6.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-urban-6-5mm/natural-blackbutt.webp",
+              "imageUrl": "images/products/hybrid/eco-urban-6-5mm/natural-blackbutt.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-urban-6-5mm/natural-blackbutt.webp"
+              ],
+              "alt": "Natural Blackbutt Urban 6.5 Hybrid Flooring sample",
+              "description": "Natural Blackbutt is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Everyday timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Living areas",
+                      "Budget-conscious renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/natural-blackbutt/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-urban-6-5mm-seashell-white",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Urban 6.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-urban-6-5mm",
+              "rangeLabel": "Urban 6.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-urban-6-5mm-alpine-oak",
+              "customerLabel": "Urban 6.5 Hybrid Flooring",
+              "colour": "Seashell White",
+              "tone": "light oak",
+              "swatch": "#d8c7aa",
+              "thickness": "6.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-urban-6-5mm/seashell-white.webp",
+              "imageUrl": "images/products/hybrid/eco-urban-6-5mm/seashell-white.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-urban-6-5mm/seashell-white.webp"
+              ],
+              "alt": "Seashell White Urban 6.5 Hybrid Flooring sample",
+              "description": "Seashell White is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Everyday timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Living areas",
+                      "Budget-conscious renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/seashell-white-l/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-urban-6-5mm-warm-spring-oak",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Urban 6.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-urban-6-5mm",
+              "rangeLabel": "Urban 6.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-urban-6-5mm-alpine-oak",
+              "customerLabel": "Urban 6.5 Hybrid Flooring",
+              "colour": "Warm Spring Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "6.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-urban-6-5mm/warm-spring-oak.webp",
+              "imageUrl": "images/products/hybrid/eco-urban-6-5mm/warm-spring-oak.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-urban-6-5mm/warm-spring-oak.webp"
+              ],
+              "alt": "Warm Spring Oak Urban 6.5 Hybrid Flooring sample",
+              "description": "Warm Spring Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Everyday timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Living areas",
+                      "Budget-conscious renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/warm-spring-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-urban-6-5mm-weathered-oak",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Urban 6.5 Hybrid Flooring",
+              "rangeId": "hybrid-eco-urban-6-5mm",
+              "rangeLabel": "Urban 6.5 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-urban-6-5mm-alpine-oak",
+              "customerLabel": "Urban 6.5 Hybrid Flooring",
+              "colour": "Weathered Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "6.5mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-urban-6-5mm/weathered-oak.webp",
+              "imageUrl": "images/products/hybrid/eco-urban-6-5mm/weathered-oak.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-urban-6-5mm/weathered-oak.webp"
+              ],
+              "alt": "Weathered Oak Urban 6.5 Hybrid Flooring sample",
+              "description": "Weathered Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Everyday timber-look colours",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Living areas",
+                      "Budget-conscious renovations"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/weathered-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-elite-6mm-american-hickory",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Elite 6.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-elite-6mm",
+              "rangeLabel": "Elite 6.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-elite-6mm-american-hickory",
+              "customerLabel": "Elite 6.0 Hybrid Flooring",
+              "colour": "American Hickory",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "6.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-elite-6mm/american-hickory.webp",
+              "imageUrl": "images/products/hybrid/eco-elite-6mm/american-hickory.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-elite-6mm/american-hickory.webp"
+              ],
+              "alt": "American Hickory Elite 6.0 Hybrid Flooring sample",
+              "description": "American Hickory is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Compact board format",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Rental renovations",
+                      "Living areas"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/american-hickory/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "Elite 6.0 Hybrid Flooring is an Eco Flooring hybrid range for practical flooring projects that need a clean timber-look finish.",
+                              "The quote flow treats the range as the customer selection and allows colour confirmation later."
+                      ],
+                      "featuresIntro": "Elite 6.0 range highlights",
+                      "features": [
+                              "Waterproof hybrid construction",
+                              "Practical timber-look palette",
+                              "Floating installation system",
+                              "Colour can be confirmed before final installation"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "Elite 6.0 Hybrid Flooring"
+                              },
+                              {
+                                      "label": "Thickness",
+                                      "value": "6.0mm"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-elite-6mm-clear-water-beach",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Elite 6.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-elite-6mm",
+              "rangeLabel": "Elite 6.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-elite-6mm-american-hickory",
+              "customerLabel": "Elite 6.0 Hybrid Flooring",
+              "colour": "Clear Water Beach",
+              "tone": "light oak",
+              "swatch": "#d8c7aa",
+              "thickness": "6.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-elite-6mm/clear-water-beach.webp",
+              "imageUrl": "images/products/hybrid/eco-elite-6mm/clear-water-beach.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-elite-6mm/clear-water-beach.webp"
+              ],
+              "alt": "Clear Water Beach Elite 6.0 Hybrid Flooring sample",
+              "description": "Clear Water Beach is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Compact board format",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Rental renovations",
+                      "Living areas"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/clear-water-beach/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-elite-6mm-coffee-berry",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Elite 6.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-elite-6mm",
+              "rangeLabel": "Elite 6.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-elite-6mm-american-hickory",
+              "customerLabel": "Elite 6.0 Hybrid Flooring",
+              "colour": "Coffee Berry",
+              "tone": "timber look",
+              "swatch": "#b99268",
+              "thickness": "6.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-elite-6mm/coffee-berry.webp",
+              "imageUrl": "images/products/hybrid/eco-elite-6mm/coffee-berry.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-elite-6mm/coffee-berry.webp"
+              ],
+              "alt": "Coffee Berry Elite 6.0 Hybrid Flooring sample",
+              "description": "Coffee Berry is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Compact board format",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Rental renovations",
+                      "Living areas"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/coffee-berry/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-elite-6mm-french-grey",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Elite 6.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-elite-6mm",
+              "rangeLabel": "Elite 6.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-elite-6mm-american-hickory",
+              "customerLabel": "Elite 6.0 Hybrid Flooring",
+              "colour": "French Grey",
+              "tone": "grey oak",
+              "swatch": "#a6a7a1",
+              "thickness": "6.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-elite-6mm/french-grey.webp",
+              "imageUrl": "images/products/hybrid/eco-elite-6mm/french-grey.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-elite-6mm/french-grey.webp"
+              ],
+              "alt": "French Grey Elite 6.0 Hybrid Flooring sample",
+              "description": "French Grey is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Compact board format",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Rental renovations",
+                      "Living areas"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/french-grey/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-elite-6mm-french-sand",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Elite 6.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-elite-6mm",
+              "rangeLabel": "Elite 6.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-elite-6mm-american-hickory",
+              "customerLabel": "Elite 6.0 Hybrid Flooring",
+              "colour": "French Sand",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "6.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-elite-6mm/french-sand.webp",
+              "imageUrl": "images/products/hybrid/eco-elite-6mm/french-sand.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-elite-6mm/french-sand.webp"
+              ],
+              "alt": "French Sand Elite 6.0 Hybrid Flooring sample",
+              "description": "French Sand is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Compact board format",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Rental renovations",
+                      "Living areas"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/french-sand/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-elite-6mm-fresco-oak",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Elite 6.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-elite-6mm",
+              "rangeLabel": "Elite 6.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-elite-6mm-american-hickory",
+              "customerLabel": "Elite 6.0 Hybrid Flooring",
+              "colour": "Fresco Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "6.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-elite-6mm/fresco-oak.webp",
+              "imageUrl": "images/products/hybrid/eco-elite-6mm/fresco-oak.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-elite-6mm/fresco-oak.webp"
+              ],
+              "alt": "Fresco Oak Elite 6.0 Hybrid Flooring sample",
+              "description": "Fresco Oak is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Compact board format",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Rental renovations",
+                      "Living areas"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/fresco-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-elite-6mm-miranda-beige",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Elite 6.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-elite-6mm",
+              "rangeLabel": "Elite 6.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-elite-6mm-american-hickory",
+              "customerLabel": "Elite 6.0 Hybrid Flooring",
+              "colour": "Miranda Beige",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "6.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-elite-6mm/miranda-beige.webp",
+              "imageUrl": "images/products/hybrid/eco-elite-6mm/miranda-beige.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-elite-6mm/miranda-beige.webp"
+              ],
+              "alt": "Miranda Beige Elite 6.0 Hybrid Flooring sample",
+              "description": "Miranda Beige is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Compact board format",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Rental renovations",
+                      "Living areas"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/miranda-beige/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-elite-6mm-mont-blanc",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Elite 6.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-elite-6mm",
+              "rangeLabel": "Elite 6.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-elite-6mm-american-hickory",
+              "customerLabel": "Elite 6.0 Hybrid Flooring",
+              "colour": "Mont Blanc",
+              "tone": "timber look",
+              "swatch": "#b99268",
+              "thickness": "6.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-elite-6mm/mont-blanc.webp",
+              "imageUrl": "images/products/hybrid/eco-elite-6mm/mont-blanc.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-elite-6mm/mont-blanc.webp"
+              ],
+              "alt": "Mont Blanc Elite 6.0 Hybrid Flooring sample",
+              "description": "Mont Blanc is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Compact board format",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Rental renovations",
+                      "Living areas"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/mont-blanc/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-elite-6mm-select-blackbutt",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Elite 6.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-elite-6mm",
+              "rangeLabel": "Elite 6.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-elite-6mm-american-hickory",
+              "customerLabel": "Elite 6.0 Hybrid Flooring",
+              "colour": "Select Blackbutt",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "6.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-elite-6mm/select-blackbutt.webp",
+              "imageUrl": "images/products/hybrid/eco-elite-6mm/select-blackbutt.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-elite-6mm/select-blackbutt.webp"
+              ],
+              "alt": "Select Blackbutt Elite 6.0 Hybrid Flooring sample",
+              "description": "Select Blackbutt is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Compact board format",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Rental renovations",
+                      "Living areas"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/select-blackbutt/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-elite-6mm-select-spotted-gum",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Elite 6.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-elite-6mm",
+              "rangeLabel": "Elite 6.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-elite-6mm-american-hickory",
+              "customerLabel": "Elite 6.0 Hybrid Flooring",
+              "colour": "Select Spotted Gum",
+              "tone": "australian timber",
+              "swatch": "#c49a67",
+              "thickness": "6.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-elite-6mm/select-spotted-gum.webp",
+              "imageUrl": "images/products/hybrid/eco-elite-6mm/select-spotted-gum.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-elite-6mm/select-spotted-gum.webp"
+              ],
+              "alt": "Select Spotted Gum Elite 6.0 Hybrid Flooring sample",
+              "description": "Select Spotted Gum is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Compact board format",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Rental renovations",
+                      "Living areas"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/select-spotted-gum/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-elite-6mm-silver-lake",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Elite 6.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-elite-6mm",
+              "rangeLabel": "Elite 6.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-elite-6mm-american-hickory",
+              "customerLabel": "Elite 6.0 Hybrid Flooring",
+              "colour": "Silver Lake",
+              "tone": "grey oak",
+              "swatch": "#a6a7a1",
+              "thickness": "6.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-elite-6mm/silver-lake.webp",
+              "imageUrl": "images/products/hybrid/eco-elite-6mm/silver-lake.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-elite-6mm/silver-lake.webp"
+              ],
+              "alt": "Silver Lake Elite 6.0 Hybrid Flooring sample",
+              "description": "Silver Lake is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Compact board format",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Rental renovations",
+                      "Living areas"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/silver-lake/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-elite-6mm-washed-blackbutt",
+              "category": "hybrid",
+              "brand": "Ornato Hybrid",
+              "range": "Elite 6.0 Hybrid Flooring",
+              "rangeId": "hybrid-eco-elite-6mm",
+              "rangeLabel": "Elite 6.0 Hybrid Flooring",
+              "selectionMode": "range_only",
+              "representativeProductId": "eco-eco-elite-6mm-american-hickory",
+              "customerLabel": "Elite 6.0 Hybrid Flooring",
+              "colour": "Washed Blackbutt",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "6.0mm",
+              "productType": "Hybrid Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/hybrid/eco-elite-6mm/washed-blackbutt.webp",
+              "imageUrl": "images/products/hybrid/eco-elite-6mm/washed-blackbutt.webp",
+              "galleryImages": [
+                      "images/products/hybrid/eco-elite-6mm/washed-blackbutt.webp"
+              ],
+              "alt": "Washed Blackbutt Elite 6.0 Hybrid Flooring sample",
+              "description": "Washed Blackbutt is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
+              "features": [
+                      "Waterproof hybrid flooring",
+                      "Compact board format",
+                      "Floating click installation",
+                      "Colour can be confirmed later"
+              ],
+              "suitableFor": [
+                      "Apartments",
+                      "Bedrooms",
+                      "Rental renovations",
+                      "Living areas"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/washed-blackbutt/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
       }
     ],
     engineered: [
@@ -6639,6 +10734,793 @@
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/truffle-oak",
         "galleryImages": ["images/products/engineered-timber/topdeck-cavallo-bianco-chevron/truffle-oak.webp", "images/products/engineered-timber/topdeck-cavallo-bianco-chevron/truffle-oak-gallery-2.webp"]
+      },
+      {
+              "id": "eco-eco-swish-oak-wideboard-country-caramel-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Wideboard",
+              "rangeId": "engineered-eco-swish-oak-wideboard",
+              "rangeLabel": "Swish Oak Wideboard",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-wideboard-country-caramel-oak",
+              "customerLabel": "Swish Oak Wideboard - Country Caramel Oak",
+              "colour": "Country Caramel Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "14/4mm",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-wideboard/country-caramel-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/country-caramel-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/country-caramel-oak.webp"
+              ],
+              "alt": "Country Caramel Oak Swish Oak Wideboard flooring sample",
+              "description": "Country Caramel Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Wideboard timber format",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/country-caramel-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "Swish Oak Wideboard is an engineered oak range from Eco Flooring Systems for customers who want a wider timber board and premium natural timber finish.",
+                              "Because engineered timber colours can affect product pricing, Operon asks customers to choose the range and then the colour."
+                      ],
+                      "featuresIntro": "Swish Oak Wideboard highlights",
+                      "features": [
+                              "Engineered oak construction",
+                              "Wideboard timber appearance",
+                              "Colour-level selection for quote accuracy",
+                              "Final site and product details confirmed before work starts"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "Swish Oak Wideboard"
+                              },
+                              {
+                                      "label": "Thickness",
+                                      "value": "14/4mm"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-swish-oak-wideboard-elegant-sandy-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Wideboard",
+              "rangeId": "engineered-eco-swish-oak-wideboard",
+              "rangeLabel": "Swish Oak Wideboard",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-wideboard-country-caramel-oak",
+              "customerLabel": "Swish Oak Wideboard - Elegant Sandy Oak",
+              "colour": "Elegant Sandy Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "14/4mm",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-sandy-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-sandy-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-sandy-oak.webp"
+              ],
+              "alt": "Elegant Sandy Oak Swish Oak Wideboard flooring sample",
+              "description": "Elegant Sandy Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Wideboard timber format",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/elegant-sandy-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-oak-wideboard-elegant-walnut-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Wideboard",
+              "rangeId": "engineered-eco-swish-oak-wideboard",
+              "rangeLabel": "Swish Oak Wideboard",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-wideboard-country-caramel-oak",
+              "customerLabel": "Swish Oak Wideboard - Elegant Walnut Oak",
+              "colour": "Elegant Walnut Oak",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "14/4mm",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-walnut-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-walnut-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-walnut-oak.webp"
+              ],
+              "alt": "Elegant Walnut Oak Swish Oak Wideboard flooring sample",
+              "description": "Elegant Walnut Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Wideboard timber format",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/elegant-walnut-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-oak-wideboard-elegant-white-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Wideboard",
+              "rangeId": "engineered-eco-swish-oak-wideboard",
+              "rangeLabel": "Swish Oak Wideboard",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-wideboard-country-caramel-oak",
+              "customerLabel": "Swish Oak Wideboard - Elegant White Oak",
+              "colour": "Elegant White Oak",
+              "tone": "light oak",
+              "swatch": "#d8c7aa",
+              "thickness": "14/4mm",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-white-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-white-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-white-oak.webp"
+              ],
+              "alt": "Elegant White Oak Swish Oak Wideboard flooring sample",
+              "description": "Elegant White Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Wideboard timber format",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/elegant-white-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-oak-wideboard-paris-natural-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Wideboard",
+              "rangeId": "engineered-eco-swish-oak-wideboard",
+              "rangeLabel": "Swish Oak Wideboard",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-wideboard-country-caramel-oak",
+              "customerLabel": "Swish Oak Wideboard - Paris Natural Oak",
+              "colour": "Paris Natural Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "14/4mm",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-wideboard/paris-natural-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/paris-natural-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/paris-natural-oak.webp"
+              ],
+              "alt": "Paris Natural Oak Swish Oak Wideboard flooring sample",
+              "description": "Paris Natural Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Wideboard timber format",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/paris-natural-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-oak-wideboard-paris-summer-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Wideboard",
+              "rangeId": "engineered-eco-swish-oak-wideboard",
+              "rangeLabel": "Swish Oak Wideboard",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-wideboard-country-caramel-oak",
+              "customerLabel": "Swish Oak Wideboard - Paris Summer Oak",
+              "colour": "Paris Summer Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "14/4mm",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-wideboard/paris-summer-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/paris-summer-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/paris-summer-oak.webp"
+              ],
+              "alt": "Paris Summer Oak Swish Oak Wideboard flooring sample",
+              "description": "Paris Summer Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Wideboard timber format",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/paris-summer-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-oak-wideboard-urban-antique-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Wideboard",
+              "rangeId": "engineered-eco-swish-oak-wideboard",
+              "rangeLabel": "Swish Oak Wideboard",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-wideboard-country-caramel-oak",
+              "customerLabel": "Swish Oak Wideboard - Urban Antique Oak",
+              "colour": "Urban Antique Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "14/4mm",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-wideboard/urban-antique-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/urban-antique-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/urban-antique-oak.webp"
+              ],
+              "alt": "Urban Antique Oak Swish Oak Wideboard flooring sample",
+              "description": "Urban Antique Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Wideboard timber format",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/urban-antique-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-oak-wideboard-urban-limewash-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Wideboard",
+              "rangeId": "engineered-eco-swish-oak-wideboard",
+              "rangeLabel": "Swish Oak Wideboard",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-wideboard-country-caramel-oak",
+              "customerLabel": "Swish Oak Wideboard - Urban Limewash Oak",
+              "colour": "Urban Limewash Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "14/4mm",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-wideboard/urban-limewash-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/urban-limewash-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/urban-limewash-oak.webp"
+              ],
+              "alt": "Urban Limewash Oak Swish Oak Wideboard flooring sample",
+              "description": "Urban Limewash Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Wideboard timber format",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/urban-limewash-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-oak-contemporary-elegant-milano-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Contemporary",
+              "rangeId": "engineered-eco-swish-oak-contemporary",
+              "rangeLabel": "Swish Oak Contemporary",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-contemporary-elegant-milano-oak",
+              "customerLabel": "Swish Oak Contemporary - Elegant Milano Oak",
+              "colour": "Elegant Milano Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Engineered oak",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-contemporary/elegant-milano-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-contemporary/elegant-milano-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-contemporary/elegant-milano-oak.webp"
+              ],
+              "alt": "Elegant Milano Oak Swish Oak Contemporary flooring sample",
+              "description": "Elegant Milano Oak is a engineered timber flooring colour from the Swish Oak Contemporary range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Contemporary timber colours",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/elegant-milano-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "Swish Oak Contemporary is an engineered oak range with modern timber colour options for premium residential flooring projects.",
+                              "Operon uses range then colour selection so the estimate can reflect the chosen engineered timber product."
+                      ],
+                      "featuresIntro": "Swish Oak Contemporary highlights",
+                      "features": [
+                              "Engineered oak product family",
+                              "Contemporary timber colour palette",
+                              "Colour-level selection for quote accuracy",
+                              "Final site and product details confirmed before work starts"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "Swish Oak Contemporary"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-swish-oak-contemporary-elegant-natural-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Contemporary",
+              "rangeId": "engineered-eco-swish-oak-contemporary",
+              "rangeLabel": "Swish Oak Contemporary",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-contemporary-elegant-milano-oak",
+              "customerLabel": "Swish Oak Contemporary - Elegant Natural Oak",
+              "colour": "Elegant Natural Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Engineered oak",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-contemporary/elegant-natural-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-contemporary/elegant-natural-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-contemporary/elegant-natural-oak.webp"
+              ],
+              "alt": "Elegant Natural Oak Swish Oak Contemporary flooring sample",
+              "description": "Elegant Natural Oak is a engineered timber flooring colour from the Swish Oak Contemporary range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Contemporary timber colours",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/elegant-natural-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-oak-contemporary-espresso-piccolo-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Contemporary",
+              "rangeId": "engineered-eco-swish-oak-contemporary",
+              "rangeLabel": "Swish Oak Contemporary",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-contemporary-elegant-milano-oak",
+              "customerLabel": "Swish Oak Contemporary - Espresso Piccolo Oak",
+              "colour": "Espresso Piccolo Oak",
+              "tone": "dark timber",
+              "swatch": "#4a372b",
+              "thickness": "Engineered oak",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-contemporary/espresso-piccolo-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-contemporary/espresso-piccolo-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-contemporary/espresso-piccolo-oak.webp"
+              ],
+              "alt": "Espresso Piccolo Oak Swish Oak Contemporary flooring sample",
+              "description": "Espresso Piccolo Oak is a engineered timber flooring colour from the Swish Oak Contemporary range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Contemporary timber colours",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/espresso-piccolo-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-oak-contemporary-limed-piccolo-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Contemporary",
+              "rangeId": "engineered-eco-swish-oak-contemporary",
+              "rangeLabel": "Swish Oak Contemporary",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-contemporary-elegant-milano-oak",
+              "customerLabel": "Swish Oak Contemporary - Limed Piccolo Oak",
+              "colour": "Limed Piccolo Oak",
+              "tone": "light oak",
+              "swatch": "#d8c7aa",
+              "thickness": "Engineered oak",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-contemporary/limed-piccolo-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-contemporary/limed-piccolo-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-contemporary/limed-piccolo-oak.webp"
+              ],
+              "alt": "Limed Piccolo Oak Swish Oak Contemporary flooring sample",
+              "description": "Limed Piccolo Oak is a engineered timber flooring colour from the Swish Oak Contemporary range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Contemporary timber colours",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/limed-piccolo-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-oak-contemporary-paris-luteous-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Contemporary",
+              "rangeId": "engineered-eco-swish-oak-contemporary",
+              "rangeLabel": "Swish Oak Contemporary",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-contemporary-elegant-milano-oak",
+              "customerLabel": "Swish Oak Contemporary - Paris Luteous Oak",
+              "colour": "Paris Luteous Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Engineered oak",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-contemporary/paris-luteous-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-contemporary/paris-luteous-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-contemporary/paris-luteous-oak.webp"
+              ],
+              "alt": "Paris Luteous Oak Swish Oak Contemporary flooring sample",
+              "description": "Paris Luteous Oak is a engineered timber flooring colour from the Swish Oak Contemporary range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Contemporary timber colours",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/paris-luteous-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-oak-contemporary-paris-modern-oak",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Contemporary",
+              "rangeId": "engineered-eco-swish-oak-contemporary",
+              "rangeLabel": "Swish Oak Contemporary",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-contemporary-elegant-milano-oak",
+              "customerLabel": "Swish Oak Contemporary - Paris Modern Oak",
+              "colour": "Paris Modern Oak",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Engineered oak",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-contemporary/paris-modern-oak.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-contemporary/paris-modern-oak.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-contemporary/paris-modern-oak.webp"
+              ],
+              "alt": "Paris Modern Oak Swish Oak Contemporary flooring sample",
+              "description": "Paris Modern Oak is a engineered timber flooring colour from the Swish Oak Contemporary range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Contemporary timber colours",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Apartments with suitable subfloor"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/paris-modern-oak/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-oak-natura-handcrafted-misty-quartz",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Natura Handcrafted",
+              "rangeId": "engineered-eco-swish-oak-natura-handcrafted",
+              "rangeLabel": "Swish Oak Natura Handcrafted",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-natura-handcrafted-misty-quartz",
+              "customerLabel": "Swish Oak Natura Handcrafted - Misty Quartz",
+              "colour": "Misty Quartz",
+              "tone": "grey oak",
+              "swatch": "#a6a7a1",
+              "thickness": "Engineered oak",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/misty-quartz.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/misty-quartz.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/misty-quartz.webp"
+              ],
+              "alt": "Misty Quartz Swish Oak Natura Handcrafted flooring sample",
+              "description": "Misty Quartz is a engineered timber flooring colour from the Swish Oak Natura Handcrafted range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Handcrafted timber character",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Feature spaces"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/mistyquartz/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true,
+              "rangeContent": {
+                      "description": [
+                              "Swish Oak Natura Handcrafted is an engineered oak range with a more crafted timber character and premium finish direction.",
+                              "Customers choose the range and then the colour so the quote records the intended engineered timber selection."
+                      ],
+                      "featuresIntro": "Swish Oak Natura Handcrafted highlights",
+                      "features": [
+                              "Engineered oak product family",
+                              "Handcrafted timber character",
+                              "Colour-level selection for quote accuracy",
+                              "Final site and product details confirmed before work starts"
+                      ],
+                      "technical": [
+                              {
+                                      "label": "Supplier",
+                                      "value": "Eco Flooring Systems"
+                              },
+                              {
+                                      "label": "Range",
+                                      "value": "Swish Oak Natura Handcrafted"
+                              }
+                      ]
+              }
+      },
+      {
+              "id": "eco-eco-swish-oak-natura-handcrafted-natural-canvas",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Natura Handcrafted",
+              "rangeId": "engineered-eco-swish-oak-natura-handcrafted",
+              "rangeLabel": "Swish Oak Natura Handcrafted",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-natura-handcrafted-misty-quartz",
+              "customerLabel": "Swish Oak Natura Handcrafted - Natural Canvas",
+              "colour": "Natural Canvas",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Engineered oak",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/natural-canvas.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/natural-canvas.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/natural-canvas.webp"
+              ],
+              "alt": "Natural Canvas Swish Oak Natura Handcrafted flooring sample",
+              "description": "Natural Canvas is a engineered timber flooring colour from the Swish Oak Natura Handcrafted range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Handcrafted timber character",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Feature spaces"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/naturalcanvas/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
+      },
+      {
+              "id": "eco-eco-swish-oak-natura-handcrafted-sunlit-sienna",
+              "category": "engineered",
+              "brand": "Swish Oak",
+              "range": "Swish Oak Natura Handcrafted",
+              "rangeId": "engineered-eco-swish-oak-natura-handcrafted",
+              "rangeLabel": "Swish Oak Natura Handcrafted",
+              "selectionMode": "range_then_colour",
+              "representativeProductId": "eco-eco-swish-oak-natura-handcrafted-misty-quartz",
+              "customerLabel": "Swish Oak Natura Handcrafted - Sunlit Sienna",
+              "colour": "Sunlit Sienna",
+              "tone": "natural oak",
+              "swatch": "#c7a77a",
+              "thickness": "Engineered oak",
+              "productType": "Engineered Timber Flooring",
+              "pricePerM2": 0,
+              "installRate": null,
+              "image": "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/sunlit-sienna.webp",
+              "imageUrl": "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/sunlit-sienna.webp",
+              "galleryImages": [
+                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/sunlit-sienna.webp"
+              ],
+              "alt": "Sunlit Sienna Swish Oak Natura Handcrafted flooring sample",
+              "description": "Sunlit Sienna is a engineered timber flooring colour from the Swish Oak Natura Handcrafted range.",
+              "features": [
+                      "Engineered oak flooring",
+                      "Handcrafted timber character",
+                      "Colour selected for final product",
+                      "Site confirmation before installation"
+              ],
+              "suitableFor": [
+                      "Living areas",
+                      "Bedrooms",
+                      "Premium renovations",
+                      "Feature spaces"
+              ],
+              "supplier": "Eco Flooring Systems",
+              "supplierUrl": "https://ecoflooring.com.au/product/sunlitsienna/",
+              "pricingStatus": "pending",
+              "catalogueStatus": "live",
+              "active": true
       }
     ]
   };

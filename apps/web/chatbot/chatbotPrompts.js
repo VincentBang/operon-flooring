@@ -32,7 +32,8 @@
       { id: "explain_quote", label: "How the quote works" },
       { id: "collect_project_details", label: "Prepare my project details" },
       { id: "set_install_only", label: "I already have flooring" },
-      { id: "review_existing_quote", label: "Review existing quote" }
+      { id: "review_existing_quote", label: "Review existing quote" },
+      { id: "request_operator", label: "Chat with operator" }
     ],
     productGuide: [
       { id: "context_apartment", label: "Apartment" },
@@ -53,7 +54,8 @@
       { id: "set_supply_install", label: "Need supply and install" },
       { id: "set_install_only", label: "Installation only" },
       { id: "route_floorplan", label: "Measure with floor plan" },
-      { id: "ready_for_quote", label: "I am ready to start" }
+      { id: "ready_for_quote", label: "I am ready to start" },
+      { id: "request_operator", label: "Talk to operator" }
     ],
     detailCollection: [
       { id: "existing_floor_carpet", label: "Existing floor: Carpet" },
@@ -89,6 +91,7 @@
       { id: "browse_products", label: "Browse products" },
       { id: "route_floorplan", label: "Measure area" },
       { id: "review_scope", label: "Review quote scope" },
+      { id: "request_operator", label: "Talk to operator" },
       { id: "restart_chatbot", label: "Start over" }
     ],
     postSubmit: [
@@ -125,6 +128,7 @@
     finalQuoteChange: "Yes, the final quote can change after review if product, measurements, or site conditions differ from the estimate. The estimate is there to make that review clearer, not to lock an unconfirmed final price.",
     practicalOption: "Choose by suitability and scope, not by cheapest-price comparison. Laminate can suit simpler dry areas; hybrid is often better when durability or water resistance matters.",
     trustAnswer: "Operon is positioned around professional Sydney flooring installation, clear estimates, product guidance, quality workmanship, and final confirmation before work starts.",
+    operatorHandoff: "A real person can help after your contact details and project note are sent. The fastest path is to submit the quote request and mention that you want operator help.",
     hybridLaminate: "Hybrid is usually the stronger starting point when water resistance and busy-home durability matter. Laminate can be practical for simpler dry areas where the scope is straightforward.",
     engineeredAnswer: "Engineered timber suits a more finish-led project. Select the range first, then confirm colour, installation method, and pattern clearly in the quote flow.",
     areaUnsure: "That is common. Start with a rough total, measure room by room, or use a floor plan if one is available.",

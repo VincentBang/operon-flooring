@@ -16,10 +16,15 @@ drop table if exists public.seo_keywords;
 drop table if exists public.seo_pages;
 drop table if exists public.seo_rank_snapshots;
 
+drop table if exists public.uploaded_files;
+drop table if exists public.quote_items;
+drop table if exists public.quote_rooms;
+drop table if exists public.quote_events;
+drop table if exists public.quote_funnel_sessions;
 drop table if exists public.quote_files;
 drop table if exists public.quote_revenue;
-drop table if exists public.customers;
 drop table if exists public.quotes;
+drop table if exists public.customers;
 
 drop table if exists public.quote_pricing_outcomes;
 drop table if exists public.pricing_optimization_buckets;
@@ -28,11 +33,6 @@ drop table if exists public.followup_messages;
 drop table if exists public.followup_templates;
 drop table if exists public.quote_reviews;
 drop table if exists public.quote_leads;
-drop table if exists public.uploaded_files;
-drop table if exists public.quote_items;
-drop table if exists public.quote_rooms;
-drop table if exists public.quote_events;
-drop table if exists public.quote_funnel_sessions;
 drop table if exists public.quote_requests;
 
 drop table if exists public.pricing_stair_rates;

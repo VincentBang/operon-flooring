@@ -6,6 +6,21 @@ Source-of-truth status: active execution rules for Codex and future agents.
 
 Build and maintain a high-conversion flooring quote and measurement system that ranks in Sydney, protects pricing logic, and can continue making safe progress while the owner is away or sleeping.
 
+Operon is a quote-led acquisition and decision system:
+
+`Traffic -> Trust -> Instant Quote -> Quote Validation -> Data Capture -> System Intelligence`
+
+Current phase: Phase 1 only.
+
+Phase 1 means:
+
+- high-intent SEO traffic
+- conversion to quote
+- structured data capture
+- trust building
+
+Do not build SaaS features, marketplace logic, backend email changes, pricing logic changes, quote calculation changes, or product data logic changes unless the user explicitly asks.
+
 ## Mandatory Read Order
 
 When the user says `continue execution`, always read these files first:
@@ -46,14 +61,14 @@ Use this order when scores are close or tradeoffs are unclear:
 
 1. Conversion
 2. Quote accuracy
-3. Product catalogue
-4. SEO product pages
-5. Chatbot assistant / guided conversion
-6. Suburb pages
+3. Core SEO conversion pages
+4. Product SEO pages
+5. Suburb pages
+6. Blog authority pages
 7. Internal linking
-8. Analytics tracking
-9. Lead capture without email
-10. Blog / maintenance content
+8. Chatbot assistant / guided conversion
+9. Analytics tracking
+10. Lead capture without email
 11. Backlinks
 12. Future SaaS infrastructure
 
@@ -116,12 +131,18 @@ Forbidden chatbot task types:
 ## Hard Rules
 
 - Keep UI clean, premium, and minimal.
+- Build pages as acquisition and decision assets, not generic content pages.
+- Every page must drive quote start, quote validation, or decision clarity.
+- Every SEO/content page must pass the 5-second understanding test: what it is, what to do next, and why Operon is different.
+- Every SEO/content page must include a primary quote CTA and secondary quote validation CTA in hero, mid-page, or end-page positions where natural.
+- Content must educate, clarify scope, reduce uncertainty, and route users toward `quote.html` or `quote-review.html`.
 - Use warm off-white backgrounds, white cards, charcoal CTAs, and bronze only as a subtle accent.
 - Stay mobile-first.
 - Do not clutter the homepage.
 - Position quote validation as quote clarity / scope review, never as cheapest-price comparison.
 - Homepage is not the full quote-flow page. Keep it as a clean premium conversion, trust, and SEO-support page.
 - The full quote flow lives on `quote.html`; all quote CTAs should navigate to `quote.html`.
+- SEO page builds must not modify `quote.html`, `floorplan.html`, pricing logic, quote calculation, product data logic, or backend email. They may only link into `quote.html` and `quote-review.html`.
 - Preserve homepage SEO with concise sections, internal links, schema, and lower-page/expandable content without reintroducing a heavy form.
 - Keep customer-facing copy plain English wherever possible, without renaming the underlying pricing variables unless needed for code safety.
 - Customer-facing UI must be decision-first: short labels, clear selected states, and minimal helper text.
@@ -136,6 +157,8 @@ Forbidden chatbot task types:
 - Wastage only applies inside `apps/web/quoteCalculator.js`.
 - Do not create spammy or thin duplicate suburb pages.
 - Do not use generic filler copy.
+- Do not publish long undifferentiated text blocks, repeated templates, or generic AI SEO content.
+- Do not create suburb pages without local uniqueness, practical flooring recommendations, quote explanation, scope clarity, and CTA.
 - Do not push to GitHub, `dev`, Netlify, or `main` unless the user explicitly asks.
 - Do not deploy unless the user explicitly asks.
 - Chatbot improvement is a standing candidate category for future `continue execution` runs, but it is not mandatory execution. Only run chatbot tasks when they rank high enough and stay inside the safe chatbot task rules.

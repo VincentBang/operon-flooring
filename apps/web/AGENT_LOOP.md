@@ -8,6 +8,12 @@ When the owner says `continue execution`, Codex must behave like a ranked backlo
 
 The system should support longer unattended runs while preserving pricing safety, data integrity, and quote accuracy.
 
+Strategic operating model:
+
+`Traffic -> Trust -> Instant Quote -> Quote Validation -> Data Capture -> System Intelligence`
+
+Current execution phase is Phase 1 only: high-intent SEO traffic, conversion to quote, structured data capture, and trust building. Do not build SaaS, marketplace, pricing-logic, quote-calculation, product-data, or backend-email changes unless explicitly requested.
+
 ## Mode Detection
 
 ### Default Mode
@@ -129,17 +135,27 @@ Before execution begins:
 3. refresh rankings if business priorities, data, or blockers changed
 4. ensure the 50-task backlog spans:
    - homepage / conversion
-   - products page
-   - product data
+   - core SEO conversion pages
    - hybrid / laminate / engineered pages
    - chatbot assistant / guided conversion
-   - suburb pages
-   - maintenance / blog content
+   - premium suburb pages
+   - blog authority pages
    - analytics tracking
    - lead capture without email
    - SEO infrastructure
    - QA / stability
 5. include at least 3 chatbot-related candidate tasks in every 50-task queue
+
+For any SEO, suburb, or blog task, identify before editing:
+
+- layer: core, suburb, or blog
+- goal: traffic, conversion, authority, or decision clarity
+- conversion path: quote start, quote validation, or both
+- affected files
+- confirmation that no pricing, quote calculation, product data, or backend email logic is affected
+- confirmation that `quote.html` and `floorplan.html` are untouched unless the user explicitly requested otherwise
+
+Reject or rewrite tasks that would create generic filler content, duplicated suburb templates, long unstructured copy, weak CTAs, or pages that do not help users decide.
 
 Chatbot task examples:
 

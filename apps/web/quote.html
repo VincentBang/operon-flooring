@@ -1326,6 +1326,10 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
+    .choice-grid.four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
     .choice-card,
     .product-card {
       width: 100%;
@@ -1758,6 +1762,39 @@
       line-height: 1.35;
     }
 
+    .summary-priced-subitems {
+      display: grid;
+      gap: 2px;
+      margin: 6px 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
+    .summary-priced-totals {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .summary-priced-totals div {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: baseline;
+      color: var(--muted);
+    }
+
+    .summary-priced-totals strong {
+      color: var(--text);
+      text-align: right;
+      white-space: nowrap;
+    }
+
     @media (min-width: 1180px) {
       .scope-status-card {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -2167,6 +2204,7 @@
       .form-grid,
       .choice-grid.two,
       .choice-grid.three,
+      .choice-grid.four,
       .metric-grid,
       .quote-review-summary-grid,
       .review-choice-grid {
@@ -2360,8 +2398,42 @@
         width: min(var(--max-width), calc(100% - 20px));
       }
 
+      body {
+        padding-bottom: 112px;
+      }
+
+      body.quote-final-step {
+        padding-bottom: 232px;
+      }
+
       .layout {
         gap: 16px;
+      }
+
+      .layout > .summary-card:not([hidden]) {
+        order: -1;
+      }
+
+      .hero {
+        padding: 10px 0 6px;
+      }
+
+      .hero-card {
+        border-radius: 18px;
+      }
+
+      .hero-sub {
+        margin-bottom: 10px;
+      }
+
+      .trust-strip,
+      .how-it-works,
+      .quote-system-intro,
+      .product-entry,
+      .floorplan-cta,
+      .faq,
+      .final-cta {
+        padding-bottom: 20px;
       }
 
       .quote-section {
@@ -2378,6 +2450,10 @@
       .quote-review-optional {
         padding: 12px;
         border-radius: 14px;
+      }
+
+      .quote-step.active {
+        scroll-margin-top: 128px;
       }
 
       .wizard-progress {
@@ -2398,20 +2474,26 @@
       }
 
       .wizard-nav {
+        position: fixed;
+        left: max(10px, env(safe-area-inset-left, 0px));
+        right: max(10px, env(safe-area-inset-right, 0px));
+        bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+        z-index: 50;
+        width: auto;
+        margin: 0;
         display: grid;
-        grid-template-columns: minmax(76px, 0.35fr) minmax(0, 1fr);
-        align-items: end;
-      }
-
-      .wizard-nav {
-        bottom: 8px;
+        grid-template-columns: minmax(58px, 0.24fr) minmax(0, 1fr);
+        align-items: stretch;
+        gap: 8px;
         padding: 8px;
         border-radius: 12px;
+        box-shadow: 0 -10px 28px rgba(17, 24, 32, 0.13);
       }
 
       .wizard-nav-group {
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
+        min-width: 0;
       }
 
       .wizard-nav .button,
@@ -2427,6 +2509,43 @@
         border-color: transparent;
       }
 
+      .wizard-nav-group.submit-group {
+        min-width: 0;
+        width: 100%;
+      }
+
+      .email-copy-control {
+        gap: 6px;
+        font-size: 0.82rem;
+      }
+
+      .email-copy-check {
+        gap: 8px;
+        align-items: center;
+      }
+
+      .email-copy-check input {
+        width: 16px;
+        height: 16px;
+        margin-top: 0;
+      }
+
+      .email-copy-control .field {
+        margin-bottom: 0;
+      }
+
+      .email-copy-control .field label {
+        font-size: 0.82rem;
+      }
+
+      .email-copy-control .field input {
+        min-height: 40px;
+      }
+
+      .email-copy-control .helper {
+        display: none;
+      }
+
       .stair-quantity-grid,
       .quote-review-summary-grid,
       .review-choice-grid,
@@ -2436,7 +2555,8 @@
 
       .choice-grid,
       .choice-grid.two,
-      .choice-grid.three {
+      .choice-grid.three,
+      .choice-grid.four {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
       }
 
@@ -2456,7 +2576,11 @@
       }
 
       .decision-tier {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .quote-step[data-quote-step="5"] .decision-card:has(.decision-detail:not([hidden])) {
+        grid-column: 1 / -1;
       }
 
       .choice-card {
@@ -2471,8 +2595,8 @@
       }
 
       .decision-detail {
-        margin-top: 10px;
-        padding-top: 10px;
+        margin-top: 8px;
+        padding-top: 8px;
       }
 
       .step-head {
@@ -2606,10 +2730,14 @@
         font-size: 0.92rem;
       }
 
+      .decision-card > strong {
+        margin-bottom: 4px;
+      }
+
       .decision-option {
-        min-height: 38px;
+        min-height: 36px;
         padding: 8px 6px;
-        font-size: 0.84rem;
+        font-size: 0.8rem;
       }
 
       .compact-options,
@@ -2645,6 +2773,15 @@
       .scope-preview-list {
         max-height: 74px;
         overflow: auto;
+      }
+
+      .scope-preview-box h4 {
+        margin-bottom: 6px;
+        font-size: 0.9rem;
+      }
+
+      .scope-preview-list li {
+        font-size: 0.78rem;
       }
 
       #quoteModeChoices .choice-card,
@@ -2700,6 +2837,30 @@
       .header-quote-button {
         padding-inline: 14px;
         font-size: 0.92rem;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .choice-grid,
+      .choice-grid.two,
+      .choice-grid.three,
+      .choice-grid.four,
+      .decision-tier,
+      .quote-step[data-quote-step="0"] .form-grid,
+      .quote-step[data-quote-step="1"] .form-grid,
+      .quote-step[data-quote-step="5"] > .decision-stack > .grid-2 {
+        grid-template-columns: 1fr !important;
+      }
+
+      .wizard-nav {
+        grid-template-columns: minmax(48px, 0.2fr) minmax(0, 1fr);
+        left: max(8px, env(safe-area-inset-left, 0px));
+        right: max(8px, env(safe-area-inset-right, 0px));
+      }
+
+      .wizard-nav .button-secondary {
+        padding-inline: 8px;
+        font-size: 0.86rem;
       }
     }
 
@@ -3660,23 +3821,11 @@
           <div class="summary-box">
             <h3>Included item totals</h3>
             <ul class="summary-priced-list" id="summaryIncludedScopeList"></ul>
-          </div>
-
-          <details class="summary-box estimate-breakdown-card">
-            <summary>Show quantities, subtotal and GST</summary>
-            <div class="estimate-table">
-              <div class="estimate-table-head">
-                <span>Item</span>
-                <span>Qty</span>
-                <span>Total</span>
-              </div>
-              <div id="quoteLines"></div>
-              <div class="estimate-totals">
-                <div><span>Subtotal ex GST</span><strong id="summarySubtotal">$0</strong></div>
-                <div><span>Estimated total inc GST</span><strong id="summaryTotalSecondary">$0</strong></div>
-              </div>
+            <div class="summary-priced-totals">
+              <div><span>Subtotal ex GST</span><strong id="summarySubtotal">$0</strong></div>
+              <div><span>Estimated total inc GST</span><strong id="summaryTotalSecondary">$0</strong></div>
             </div>
-          </details>
+          </div>
 
           <div class="summary-box" id="warningsCard" hidden>
             <h3>Review notes</h3>
@@ -4257,9 +4406,28 @@
       return "standard " + (meta ? meta.label.toLowerCase() : "flooring") + " estimate";
     }
 
+    function shouldUseTimberProductChoiceTiers() {
+      return (getInputValue("quoteMode") || "supply_install") === "supply_install"
+        && getSelectedProductCategory() === "engineered";
+    }
+
+    function getProductChoiceModeOptions() {
+      return shouldUseTimberProductChoiceTiers()
+        ? ["choose_range", "budget", "standard", "premium"]
+        : ["recommend", "choose_range"];
+    }
+
+    function isAutomaticProductChoiceMode(mode) {
+      return ["budget", "standard", "premium"].indexOf(mode) >= 0;
+    }
+
     function getProductChoiceMode() {
       const mode = getInputValue("productChoiceMode");
-      return ["recommend", "choose_range"].indexOf(mode) >= 0 ? mode : "recommend";
+      const options = getProductChoiceModeOptions();
+      if (options.indexOf(mode) >= 0) {
+        return mode;
+      }
+      return shouldUseTimberProductChoiceTiers() ? "standard" : "recommend";
     }
 
     function getRangeRecordById(category, rangeId) {
@@ -4577,6 +4745,7 @@
       wizardNextButton.hidden = isFinalStep;
       wizardSubmitButton.hidden = !isFinalStep;
       wizardSubmitButton.setAttribute("aria-hidden", isFinalStep ? "false" : "true");
+      document.body.classList.toggle("quote-final-step", isFinalStep);
       if (emailQuoteCopyControls) {
         emailQuoteCopyControls.hidden = !isFinalStep;
         emailQuoteCopyControls.setAttribute("aria-hidden", isFinalStep ? "false" : "true");
@@ -4786,6 +4955,14 @@
       }
       const targetCategory = category || getSelectedProductCategory();
       const installMethod = getInputValue("installMethod") || "floating";
+      if (targetCategory === "hybrid") {
+        const rubberUnderlay = window.OperonUnderlay.list().find(function (option) {
+          return option.id === "acoustic-rubber-underlay-5mm";
+        });
+        return rubberUnderlay
+          ? [Object.assign({}, rubberUnderlay, { name: "Rubber Underlay 5mm", suitableCategories: ["hybrid"] })]
+          : [];
+      }
       return window.OperonUnderlay.list().filter(function (option) {
         const isSuitableCategory = Array.isArray(option.suitableCategories) && option.suitableCategories.indexOf(targetCategory) >= 0;
         const isGluedDownUnderlay = option.id === "acoustic-rubber-underlay-5mm-glued-down";
@@ -5161,13 +5338,13 @@
     }
 
     function shouldShowSelectedProductBanner() {
-      return shouldShowProductChoicePanel() && getProductChoiceMode() === "recommend";
+      return shouldShowProductChoicePanel() && getProductChoiceMode() !== "choose_range";
     }
 
     function shouldLockPatternTypeToSelectedRange() {
       return (getInputValue("quoteMode") || "supply_install") === "supply_install"
         && getSelectedProductCategory() === "engineered"
-        && getProductChoiceMode() === "choose_range"
+        && getProductChoiceMode() !== "recommend"
         && !!getInputValue("selectedRangeId");
     }
 
@@ -5619,6 +5796,96 @@
       }, payload || {}));
     }
 
+    function getRangePriceForChoice(range) {
+      const rangePrice = Number(range && range.pricePerM2 ? range.pricePerM2 : 0);
+      if (rangePrice > 0) {
+        return rangePrice;
+      }
+      const representative = PRODUCT_LIBRARY && range && range.rangeId
+        ? PRODUCT_LIBRARY.getRepresentativeProductByRangeId(range.rangeId)
+        : null;
+      return representative && Number(representative.pricePerM2 || 0) > 0
+        ? Number(representative.pricePerM2 || 0)
+        : 0;
+    }
+
+    function getPriceRankedRanges(category) {
+      const ranges = PRODUCT_SELECTION ? PRODUCT_SELECTION.getRangesByCategory(category) : [];
+      const indexedRanges = ranges.map(function (range, index) {
+        return {
+          range: range,
+          index: index,
+          price: getRangePriceForChoice(range)
+        };
+      });
+      const pricedRanges = indexedRanges.filter(function (item) {
+        return item.price > 0;
+      });
+      const source = pricedRanges.length ? pricedRanges : indexedRanges;
+
+      return source.sort(function (left, right) {
+        if (pricedRanges.length && left.price !== right.price) {
+          return left.price - right.price;
+        }
+        return left.index - right.index;
+      }).map(function (item) {
+        return item.range;
+      });
+    }
+
+    function getAutomaticRangeForProductChoiceMode(category, mode) {
+      const rankedRanges = getPriceRankedRanges(category);
+      if (!rankedRanges.length) {
+        return null;
+      }
+      if (mode === "premium") {
+        return rankedRanges[rankedRanges.length - 1];
+      }
+      if (mode === "standard") {
+        return rankedRanges[Math.min(1, rankedRanges.length - 1)];
+      }
+      return rankedRanges[0];
+    }
+
+    function applyAutomaticProductChoiceRange(mode) {
+      const rangeRecord = getAutomaticRangeForProductChoiceMode(getSelectedProductCategory(), mode);
+      if (!rangeRecord) {
+        setInputValue("selectedProduct", "");
+        setInputValue("selectedRangeId", "");
+        setInputValue("selectedColour", "");
+        setInputValue("productSelectionMode", "");
+        return null;
+      }
+
+      setSelectedRange(rangeRecord.rangeId, { persist: false, track: false });
+      const representative = PRODUCT_LIBRARY.getRepresentativeProductByRangeId(rangeRecord.rangeId);
+      if (representative) {
+        setInputValue("productSelectionMode", representative.selectionMode || rangeRecord.selectionMode || "");
+        setInputValue("selectedProduct", representative.id || "");
+        setInputValue("selectedColour", representative.selectionMode === "range_then_colour" ? (representative.colour || "") : "");
+      }
+      if (PRODUCT_SELECTION) {
+        PRODUCT_SELECTION.saveSelection(getSelectionStateInput());
+      }
+      return rangeRecord;
+    }
+
+    function getProductChoiceModeLabel(mode) {
+      if (mode === "budget") {
+        return "Budget range";
+      }
+      if (mode === "standard") {
+        return "Standard range";
+      }
+      if (mode === "premium") {
+        return "Premium range";
+      }
+      if (mode === "choose_range") {
+        return "Choose a range";
+      }
+      return "Recommended starting option";
+    }
+
     function setSelectedCategory(category, options) {
       const settings = Object.assign({ preserveProduct: false, trackStartFromProduct: false }, options || {});
       const meta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(category) : null;
@@ -5647,11 +5914,16 @@
 
     function setProductChoiceMode(mode, options) {
       const settings = Object.assign({ track: false }, options || {});
-      const nextMode = ["recommend", "choose_range"].indexOf(mode) >= 0 ? mode : "recommend";
+      const availableModes = getProductChoiceModeOptions();
+      const nextMode = availableModes.indexOf(mode) >= 0
+        ? mode
+        : (shouldUseTimberProductChoiceTiers() ? "standard" : "recommend");
       setInputValue("productChoiceMode", nextMode);
       setActiveCards("[data-product-choice-mode]", nextMode, "data-product-choice-mode");
 
-      if (nextMode === "recommend" && PRODUCT_SELECTION) {
+      if (isAutomaticProductChoiceMode(nextMode) && PRODUCT_SELECTION && PRODUCT_LIBRARY) {
+        applyAutomaticProductChoiceRange(nextMode);
+      } else if (nextMode === "recommend" && PRODUCT_SELECTION) {
         const recommendation = PRODUCT_SELECTION.getDefaultRecommendation(getSelectedProductCategory());
         if (recommendation && !recommendation.isEstimate) {
           setInputValue("selectedRangeId", recommendation.rangeId || "");
@@ -5804,7 +6076,39 @@
         return;
       }
 
-      setActiveCards("[data-product-choice-mode]", getProductChoiceMode(), "data-product-choice-mode");
+      const currentMode = getProductChoiceMode();
+      setInputValue("productChoiceMode", currentMode);
+      if (isAutomaticProductChoiceMode(currentMode) && PRODUCT_SELECTION && PRODUCT_LIBRARY) {
+        const automaticRange = getAutomaticRangeForProductChoiceMode(getSelectedProductCategory(), currentMode);
+        if (automaticRange && getInputValue("selectedRangeId") !== automaticRange.rangeId) {
+          applyAutomaticProductChoiceRange(currentMode);
+        }
+      }
+
+      if (productChoiceModeChoices) {
+        const useTimberTiers = shouldUseTimberProductChoiceTiers();
+        const choices = useTimberTiers
+          ? [
+            { mode: "choose_range", label: "Choose a range", note: "Pick the exact timber range." },
+            { mode: "budget", label: "Budget range", note: "Uses the lowest priced timber range." },
+            { mode: "standard", label: "Standard range", note: "Uses a mid-priced timber range." },
+            { mode: "premium", label: "Premium range", note: "Uses the highest priced timber range." }
+          ]
+          : [
+            { mode: "recommend", label: "Recommend a practical range", note: "Use a sensible starting option." },
+            { mode: "choose_range", label: "Choose a range", note: "Pick from the live product ranges." }
+          ];
+
+        productChoiceModeChoices.className = "choice-grid " + (useTimberTiers ? "four" : "two");
+        productChoiceModeChoices.innerHTML = choices.map(function (choice) {
+          return '<button class="choice-card' + (currentMode === choice.mode ? " active" : "") + '" type="button" data-product-choice-mode="' + escapeHtml(choice.mode) + '">'
+            + "<strong>" + escapeHtml(choice.label) + "</strong>"
+            + "<small>" + escapeHtml(choice.note) + "</small>"
+            + "</button>";
+        }).join("");
+      }
+
+      setActiveCards("[data-product-choice-mode]", currentMode, "data-product-choice-mode");
     }
 
     function buildProductRangeSelect() {
@@ -5934,6 +6238,16 @@
         selectedProductHeadline.textContent = "Category estimate";
         selectedProductSummary.textContent = "Using the " + getCategoryEstimateLabel(category) + ".";
         clearSelectedProductButton.textContent = "Using category estimate";
+        clearSelectedProductButton.hidden = true;
+        return;
+      }
+
+      if (isAutomaticProductChoiceMode(choiceMode)) {
+        selectedProductHeadline.textContent = getProductChoiceModeLabel(choiceMode) + " selected";
+        selectedProductSummary.textContent = "Using " + (rangeRecord ? rangeRecord.rangeLabel : (product ? (product.rangeLabel || product.range) : "selected timber range")) + ". Final colour can be confirmed before installation.";
+        browseCategoryLink.textContent = "Change range";
+        browseCategoryLink.dataset.behavior = "change-range";
+        clearSelectedProductButton.textContent = "Use category estimate instead";
         clearSelectedProductButton.hidden = true;
         return;
       }
@@ -6164,7 +6478,7 @@
         if (!getInputValue("selectedProductCategory")) {
           return { valid: false, message: "Please choose a flooring category." };
         }
-        if (getProductChoiceMode() === "choose_range") {
+        if (shouldShowProductChoicePanel() && getProductChoiceMode() === "choose_range") {
           if (productRangeSelect.disabled) {
             return { valid: false, message: "Live product ranges are not published for this category yet. Use the recommendation or category estimate for now." };
           }
@@ -6921,8 +7235,28 @@
       return lines;
     }
 
+    function getStairSummarySubitems(result) {
+      const details = result && Array.isArray(result.stairDetails) ? result.stairDetails : [];
+      return details.filter(function (item) {
+        return Number(item.quantity || 0) > 0;
+      }).map(function (item) {
+        const quantity = Math.max(0, Math.round(Number(item.quantity || 0)));
+        return quantity + " x " + (item.label || item.type || "Stair item");
+      });
+    }
+
+    function getQuoteLineSubitems(line, result) {
+      if (!line || String(line.label || "").toLowerCase() !== "stairs") {
+        return [];
+      }
+      return getStairSummarySubitems(result);
+    }
+
     function renderEstimateBreakdown(result) {
       const quoteLines = document.getElementById("quoteLines");
+      if (!quoteLines) {
+        return;
+      }
       const lines = getCustomerVisibleQuoteLines(result);
 
       if (!lines.length) {
@@ -6934,9 +7268,15 @@
         const note = line.note
           ? "<span class=\"quote-line-note\">" + escapeHtml(line.note) + "</span>"
           : "";
+        const subitems = getQuoteLineSubitems(line, result);
+        const subitemsHtml = subitems.length
+          ? "<ul class=\"summary-priced-subitems\">" + subitems.map(function (item) {
+            return "<li>" + escapeHtml(item) + "</li>";
+          }).join("") + "</ul>"
+          : "";
         const quantity = line.quantity || line.qty || "Included";
         return "<div class=\"quote-line\">"
-          + "<div><strong>" + escapeHtml(line.label || "Quote item") + "</strong>" + note + "</div>"
+          + "<div><strong>" + escapeHtml(line.label || "Quote item") + "</strong>" + note + subitemsHtml + "</div>"
           + "<span class=\"quote-line-qty\">" + escapeHtml(quantity) + "</span>"
           + "<strong class=\"quote-line-total\">" + escapeHtml(line.displayTotal || formatCurrency(line.amount || 0)) + "</strong>"
           + "</div>";
@@ -7028,8 +7368,14 @@
         const note = quantity
           ? "<small class=\"summary-priced-note\">" + escapeHtml(quantity) + "</small>"
           : "";
+        const subitems = getQuoteLineSubitems(line, result);
+        const subitemsHtml = subitems.length
+          ? "<ul class=\"summary-priced-subitems\">" + subitems.map(function (item) {
+            return "<li>" + escapeHtml(item) + "</li>";
+          }).join("") + "</ul>"
+          : "";
         return "<li class=\"summary-priced-item\">"
-          + "<span>" + escapeHtml(line.label || "Quote item") + note + "</span>"
+          + "<span>" + escapeHtml(line.label || "Quote item") + note + subitemsHtml + "</span>"
           + "<strong>" + escapeHtml(line.displayTotal || formatCurrency(line.amount || 0)) + "</strong>"
           + "</li>";
       }).join("");
@@ -7670,6 +8016,31 @@
       if (pricing.doorTrimmingTotal > 0) {
         items.push({ type: "door_trimming", label: "Door trimming", quantity: pricing.doorCount, unit: "each", unitBasis: "each", amountExGst: pricing.doorTrimmingTotal });
       }
+      if (pricing.stairsSelected || pricing.stairsTotal > 0 || Number(pricing.stairCount || 0) > 0) {
+        const stairCount = Math.max(0, Math.round(parsePositiveNumber(pricing.stairCount)));
+        items.push({
+          type: "stairs",
+          label: "Stairs",
+          quantity: stairCount || null,
+          unit: stairCount ? "item" : null,
+          unitBasis: "stair_item_count",
+          amountExGst: pricing.stairsTotal || 0,
+          rawPayload: {
+            selected: !!pricing.stairsSelected,
+            count: stairCount,
+            details: Array.isArray(pricing.stairDetails) ? pricing.stairDetails : [],
+            summarySubitems: getStairSummarySubitems(pricing),
+            widthKnown: !!pricing.stairWidthKnown,
+            widthMm: pricing.stairWidthMm || 0,
+            widthTier: pricing.stairWidthTier || "",
+            widthTierLabel: pricing.stairWidthTierLabel || "",
+            widthAssumed: !!pricing.stairWidthAssumed,
+            guideWidthMm: pricing.stairGuideWidthMm || 0,
+            rangeId: pricing.stairRangeId || "",
+            requiresReview: !!pricing.manualReviewRequired
+          }
+        });
+      }
       if (pricing.travelFeeTotal > 0) {
         items.push({ type: "travel", label: "Travel and site allowance", quantity: 1, unit: "job", unitBasis: "job", amountExGst: pricing.travelFeeTotal });
       }
@@ -8081,10 +8452,14 @@
       return result;
     }
 
-    async function markQuoteSubmittedToNetlify(payload) {
+    async function markQuoteSubmittedToNetlify(payload, options) {
       if (!canUseLeadCaptureRuntime()) {
         return null;
       }
+      const settings = Object.assign({
+        emailTo: "",
+        sendCustomerCopy: false
+      }, options || {});
 
       const response = await window.fetch(SAVE_QUOTE_REQUEST_ENDPOINT, {
         method: "POST",
@@ -8094,7 +8469,9 @@
         body: JSON.stringify({
           mode: "submit_quote",
           quoteId: state.lastQuoteId || "",
-          payload: payload
+          payload: payload,
+          emailTo: settings.emailTo || "",
+          sendCustomerCopy: !!settings.sendCustomerCopy
         })
       });
 
@@ -8198,10 +8575,10 @@
           quote_id: quoteId,
           item_type: item.type || item.itemType || "item",
           label: item.label || item.name || "Quote item",
-          quantity: item.quantity || null,
+          quantity: typeof item.quantity === "undefined" ? null : item.quantity,
           unit: item.unit || null,
           unit_basis: item.unitBasis || null,
-          amount_ex_gst: item.amountExGst || item.amount || null,
+          amount_ex_gst: typeof item.amountExGst !== "undefined" ? item.amountExGst : (typeof item.amount !== "undefined" ? item.amount : null),
           raw_payload: item.rawPayload || item
         };
       });
@@ -8372,16 +8749,25 @@
         }
 
         await submitLeadToNetlifyForm(leadPayload);
+        const deliveryEmail = getDeliveryEmailAddress(input);
+        const shouldSendEmailCopy = !!(deliveryEmail && input.emailQuoteCopy && (!state.quoteRuntimeHealth.checked || state.quoteRuntimeHealth.emailReady));
+        let submitUpdateResult = null;
         try {
-          await markQuoteSubmittedToNetlify(submitPayload);
+          submitUpdateResult = await markQuoteSubmittedToNetlify(submitPayload, {
+            emailTo: deliveryEmail,
+            sendCustomerCopy: shouldSendEmailCopy
+          });
         } catch (submitUpdateError) {
           console.error("Quote submit update failed after lead submission", submitUpdateError);
         }
 
-        const deliveryEmail = getDeliveryEmailAddress(input);
         let successMessage = "Quote submitted. We will review the details and contact you shortly.";
         if (deliveryEmail) {
-          if (state.lastQuoteId && (!state.quoteRuntimeHealth.checked || state.quoteRuntimeHealth.emailReady)) {
+          if (submitUpdateResult && submitUpdateResult.customerEmailSent) {
+            successMessage = "Quote submitted. Your estimate has been emailed and our team will review the details shortly.";
+          } else if (submitUpdateResult && submitUpdateResult.emailAttempted) {
+            successMessage = "Your request was saved, but email copy could not be sent. We will follow up directly.";
+          } else if (state.lastQuoteId && shouldSendEmailCopy) {
             try {
               await sendQuoteEmailCopy(submitPayload, deliveryEmail);
               successMessage = "Quote submitted. Your estimate has been emailed and our team will review the details shortly.";

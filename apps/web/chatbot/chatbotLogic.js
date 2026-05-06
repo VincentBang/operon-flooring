@@ -76,7 +76,8 @@
         href: settings.initialRouteHref
       },
       triggerNudge: null,
-      recommendationSignal: ""
+      recommendationSignal: "",
+      operatorHandoff: null
     };
 
     let idleTimer = null;
@@ -108,6 +109,7 @@
         localStorageDraft: mapper.toLocalStorageDraft(structured),
         handoffReadiness: mapper.toHandoffReadiness(structured),
         routeSuggestion: clone(state.routeSuggestion),
+        operatorHandoff: state.operatorHandoff ? clone(state.operatorHandoff) : null,
         triggerNudge: state.triggerNudge ? clone(state.triggerNudge) : null
       });
     }
@@ -215,6 +217,22 @@
       state.draft = mapper.sanitiseDraft(Object.assign({}, state.draft, {
         next_step: href
       }));
+    }
+
+    function setOperatorHandoff() {
+      const href = "quote.html?from=chatbot&support=operator";
+      setIntent("operator_handoff", {
+        readiness: "review",
+        reason: "customer requested human support",
+        missing_items_to_check: ["contact details", "project note"]
+      });
+      setRoute("Request operator follow-up", href, "fullName");
+      state.operatorHandoff = {
+        title: "Need a person?",
+        copy: prompts.copy.operatorHandoff || "Send your contact details and project note so the team can follow up.",
+        primaryLabel: "Request operator follow-up",
+        href: href
+      };
     }
 
     function applySiteRouteSuggestion() {
@@ -595,6 +613,7 @@
       state.transcript = [];
       state.stage = "welcome";
       state.recommendationSignal = "";
+      state.operatorHandoff = null;
       const siteState = applySiteRouteSuggestion();
       if (!siteState || !(siteState.next && siteState.next.href)) {
         setRoute(settings.initialRouteLabel, settings.initialRouteHref);
@@ -861,6 +880,17 @@
           );
           state.stage = "quote_review";
           return;
+        case "request_operator":
+          pushUser(actionLabel(actionId));
+          setOperatorHandoff();
+          pushGuided(
+            "I can route this to a real person.",
+            "This chatbot is not a live operator, so the cleanest path is to send contact details and a short project note.",
+            "Request operator follow-up.",
+            prompts.actions.nextSteps
+          );
+          state.stage = "operator_handoff";
+          return;
         case "post_submit_ready_soon":
         case "post_submit_comparing":
         case "post_submit_planning":
@@ -1024,6 +1054,18 @@
       pushUser(value);
 
       const lowerValue = value.toLowerCase();
+
+      if (includesAny(lowerValue, ["operator", "human", "person", "live chat", "online chat", "sales", "consultant", "speak to someone", "talk to someone", "call me", "can someone call"])) {
+        setOperatorHandoff();
+        pushGuided(
+          "I can help you request human follow-up.",
+          "This chatbot is automated, not a live operator. Send the quote request with your contact details and note what you need help with.",
+          "Request operator follow-up.",
+          prompts.actions.nextSteps
+        );
+        state.stage = "operator_handoff";
+        return;
+      }
 
       if (includesAny(lowerValue, ["stuck", "confused", "what next", "next step", "help me", "not sure what to do"])) {
         setIntent("route_next_step", {
@@ -1398,6 +1440,17 @@
         );
         return;
       }
+      if (intent === "operator_handoff") {
+        setOperatorHandoff();
+        pushGuided(
+          "I can route you to human follow-up.",
+          "Submit your contact details and project note so a person can review it.",
+          "Request operator follow-up.",
+          prompts.actions.nextSteps
+        );
+        state.stage = "operator_handoff";
+        return;
+      }
       if (intent === "unsupported" && policy && typeof policy.getUnsupportedResponse === "function") {
         pushGuided(
           policy.getUnsupportedResponse(),
@@ -1427,6 +1480,7 @@
           localStorageDraft: mapper.toLocalStorageDraft(structured),
           handoffReadiness: mapper.toHandoffReadiness(structured),
           routeSuggestion: clone(state.routeSuggestion),
+          operatorHandoff: state.operatorHandoff ? clone(state.operatorHandoff) : null,
           triggerNudge: state.triggerNudge ? clone(state.triggerNudge) : null
         };
       },

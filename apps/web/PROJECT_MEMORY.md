@@ -7,6 +7,10 @@ Source-of-truth status: active project memory for current business direction, pa
 - Sydney flooring quote and measurement website
 - lead generation focus for laminate, hybrid, and engineered timber flooring
 - long-term direction: trade-focused quoting, measurement, pricing, SEO, and margin operating system
+- strategic model: Operon is a quote-led acquisition and decision system, not a conventional flooring brochure site
+- system flow: `Traffic -> Trust -> Instant Quote -> Quote Validation -> Data Capture -> System Intelligence`
+- current phase: Phase 1 only, focused on high-intent SEO traffic, quote conversion, structured data capture, and trust building
+- long-term path remains Flooring -> Internal System -> SaaS -> Marketplace, but SaaS and marketplace work are out of scope for current execution unless explicitly requested
 
 ## Positioning
 
@@ -99,10 +103,15 @@ Use this priority order when `continue execution` ranks tasks:
 
 ## SEO System
 
-- homepage is conversion-first with SEO content below the quote tool
-- internal linking network supports product, suburb, cost, and blog pages
-- priority suburb pages: Parramatta, Liverpool, Auburn, Blacktown, Miranda
-- content should stay practical, trade-informed, and free of generic filler
+- SEO exists to capture demand and move users into quote start, quote validation, or decision clarity.
+- homepage is conversion-first with SEO support below the hero.
+- core pages are high-intent conversion assets: `/flooring-sydney`, `/hybrid-flooring-sydney`, `/laminate-flooring-sydney`, `/engineered-timber-flooring-sydney`, and `/flooring-quote-sydney`.
+- current active product pages use `.html` URLs; future clean URL work should preserve redirects and canonical consistency.
+- priority premium suburb expansion list: Mosman, Bondi, Double Bay, Vaucluse, Rose Bay, Chatswood, Wahroonga, Pymble, Balmain, Castle Hill.
+- each suburb page must be unique, practical, and locally specific; no repeated template pages.
+- blog content must answer real buyer questions and link users into quote, quote validation, and relevant product pages.
+- every SEO/content page must include primary CTA `Get your flooring quote` and secondary CTA `Validate your quote` where natural.
+- content should stay practical, trade-informed, compact, skim-friendly, and free of generic filler.
 
 ## Analytics System
 

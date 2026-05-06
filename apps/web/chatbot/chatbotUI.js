@@ -20,6 +20,8 @@
       "  --operon-chatbot-surface: #fbfaf8;",
       "  --operon-chatbot-shadow: 0 18px 46px rgba(17, 24, 32, 0.16);",
       "  --operon-chatbot-focus: #a67c52;",
+      "  --operon-chatbot-success: #456b5c;",
+      "  --operon-chatbot-danger: #b33a2f;",
       "}",
       "#" + ROOT_ID + " {",
       "  position: fixed;",
@@ -71,6 +73,10 @@
       ".operon-chatbot-input:focus-visible,",
       ".operon-chatbot-send:focus-visible,",
       ".operon-chatbot-route-link:focus-visible {",
+      "  outline: 2px solid var(--operon-chatbot-focus);",
+      "  outline-offset: 2px;",
+      "}",
+      ".operon-chatbot-operator-link:focus-visible {",
       "  outline: 2px solid var(--operon-chatbot-focus);",
       "  outline-offset: 2px;",
       "}",
@@ -169,6 +175,52 @@
       ".operon-chatbot-summary span { display: block; margin-top: 4px; color: var(--operon-chatbot-muted); font-size: 0.8rem; }",
       ".operon-chatbot-validation { margin-top: 8px; color: var(--operon-chatbot-text); font-size: 0.78rem; }",
       ".operon-chatbot-validation[hidden], .operon-chatbot-summary span[hidden] { display: none; }",
+      ".operon-chatbot-operator {",
+      "  display: grid;",
+      "  gap: 8px;",
+      "  padding: 10px 12px;",
+      "  border-top: 1px solid var(--operon-chatbot-line);",
+      "  background: #ffffff;",
+      "}",
+      ".operon-chatbot-operator[hidden] { display: none; }",
+      ".operon-chatbot-operator strong { font-size: 0.84rem; }",
+      ".operon-chatbot-operator p { margin: 0; color: var(--operon-chatbot-muted); font-size: 0.8rem; line-height: 1.42; }",
+      ".operon-chatbot-operator-form { display: grid; gap: 7px; }",
+      ".operon-chatbot-operator-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }",
+      ".operon-chatbot-operator-field { display: grid; gap: 4px; }",
+      ".operon-chatbot-operator-field[data-wide='true'] { grid-column: 1 / -1; }",
+      ".operon-chatbot-operator-field label { color: var(--operon-chatbot-text); font-size: 0.72rem; font-weight: 750; }",
+      ".operon-chatbot-operator-field input,",
+      ".operon-chatbot-operator-field textarea {",
+      "  width: 100%;",
+      "  min-height: 36px;",
+      "  border: 1px solid rgba(17, 24, 32, 0.12);",
+      "  border-radius: 9px;",
+      "  padding: 8px 9px;",
+      "  color: var(--operon-chatbot-text);",
+      "  background: #ffffff;",
+      "  font: inherit;",
+      "  font-size: 0.82rem;",
+      "}",
+      ".operon-chatbot-operator-field textarea { min-height: 58px; resize: vertical; }",
+      ".operon-chatbot-operator-status { margin: 0; color: var(--operon-chatbot-muted); font-size: 0.78rem; line-height: 1.35; }",
+      ".operon-chatbot-operator-status[data-state='success'] { color: var(--operon-chatbot-success); font-weight: 750; }",
+      ".operon-chatbot-operator-status[data-state='error'] { color: var(--operon-chatbot-danger); font-weight: 750; }",
+      ".operon-chatbot-operator-button {",
+      "  display: inline-flex;",
+      "  align-items: center;",
+      "  justify-content: center;",
+      "  width: 100%;",
+      "  min-height: 38px;",
+      "  padding: 0 12px;",
+      "  border-radius: 10px;",
+      "  background: var(--operon-chatbot-accent);",
+      "  color: #ffffff;",
+      "  text-decoration: none;",
+      "  font-size: 0.82rem;",
+      "  font-weight: 750;",
+      "}",
+      ".operon-chatbot-operator-button:disabled { opacity: 0.62; cursor: not-allowed; }",
       ".operon-chatbot-input-wrap {",
       "  display: grid;",
       "  grid-template-columns: minmax(0, 1fr) auto;",
@@ -204,6 +256,7 @@
       "  border-top: 1px solid var(--operon-chatbot-line);",
       "  background: #ffffff;",
       "}",
+      ".operon-chatbot-route[hidden] { display: none; }",
       ".operon-chatbot-route-copy { font-size: 0.82rem; color: var(--operon-chatbot-muted); }",
       ".operon-chatbot-route-link {",
       "  display: inline-flex;",
@@ -233,6 +286,7 @@
       "    flex-direction: column;",
       "  }",
       "  .operon-chatbot-route-link { width: 100%; }",
+      "  .operon-chatbot-operator-grid { grid-template-columns: 1fr; }",
       "  .operon-chatbot-nudge { max-width: 100%; }",
       "}",
       "@media (prefers-reduced-motion: reduce) {",
@@ -267,7 +321,10 @@
       subtitle: "Product and quote help",
       onToggle: function () {},
       onAction: function () {},
-      onTextSubmit: function () {}
+      onTextSubmit: function () {},
+      onOperatorSubmit: function () {
+        return Promise.reject(new Error("Operator request is unavailable."));
+      }
     }, options || {});
 
     ensureStyles();
@@ -328,6 +385,55 @@
     summary.appendChild(summaryText);
     summary.appendChild(summaryValidation);
 
+    const operatorSection = createElement("div", "operon-chatbot-operator");
+    operatorSection.hidden = true;
+    const operatorTitle = createElement("strong", "", "Need a person?");
+    const operatorCopy = createElement("p", "", "");
+    const operatorForm = createElement("form", "operon-chatbot-operator-form");
+    const operatorGrid = createElement("div", "operon-chatbot-operator-grid");
+    const operatorNameField = createElement("div", "operon-chatbot-operator-field");
+    const operatorNameLabel = createElement("label", "", "Name");
+    const operatorNameInput = createElement("input", "");
+    operatorNameInput.type = "text";
+    operatorNameInput.autocomplete = "name";
+    const operatorPhoneField = createElement("div", "operon-chatbot-operator-field");
+    const operatorPhoneLabel = createElement("label", "", "Phone");
+    const operatorPhoneInput = createElement("input", "");
+    operatorPhoneInput.type = "tel";
+    operatorPhoneInput.autocomplete = "tel";
+    const operatorEmailField = createElement("div", "operon-chatbot-operator-field");
+    operatorEmailField.setAttribute("data-wide", "true");
+    const operatorEmailLabel = createElement("label", "", "Email optional");
+    const operatorEmailInput = createElement("input", "");
+    operatorEmailInput.type = "email";
+    operatorEmailInput.autocomplete = "email";
+    const operatorMessageField = createElement("div", "operon-chatbot-operator-field");
+    operatorMessageField.setAttribute("data-wide", "true");
+    const operatorMessageLabel = createElement("label", "", "What do you need help with?");
+    const operatorMessageInput = createElement("textarea", "");
+    operatorMessageInput.rows = 2;
+    const operatorStatus = createElement("p", "operon-chatbot-operator-status", "");
+    const operatorButton = createElement("button", "operon-chatbot-operator-button", "Send operator request");
+    operatorButton.type = "submit";
+    operatorNameField.appendChild(operatorNameLabel);
+    operatorNameField.appendChild(operatorNameInput);
+    operatorPhoneField.appendChild(operatorPhoneLabel);
+    operatorPhoneField.appendChild(operatorPhoneInput);
+    operatorEmailField.appendChild(operatorEmailLabel);
+    operatorEmailField.appendChild(operatorEmailInput);
+    operatorMessageField.appendChild(operatorMessageLabel);
+    operatorMessageField.appendChild(operatorMessageInput);
+    operatorGrid.appendChild(operatorNameField);
+    operatorGrid.appendChild(operatorPhoneField);
+    operatorGrid.appendChild(operatorEmailField);
+    operatorGrid.appendChild(operatorMessageField);
+    operatorForm.appendChild(operatorGrid);
+    operatorForm.appendChild(operatorStatus);
+    operatorForm.appendChild(operatorButton);
+    operatorSection.appendChild(operatorTitle);
+    operatorSection.appendChild(operatorCopy);
+    operatorSection.appendChild(operatorForm);
+
     const inputWrap = createElement("form", "operon-chatbot-input-wrap");
     const textInput = createElement("input", "operon-chatbot-input");
     textInput.type = "text";
@@ -349,6 +455,7 @@
     panel.appendChild(head);
     panel.appendChild(messages);
     panel.appendChild(summary);
+    panel.appendChild(operatorSection);
     panel.appendChild(inputWrap);
     panel.appendChild(route);
     shell.appendChild(panel);
@@ -392,6 +499,7 @@
       const routeSuggestion = snapshot && snapshot.routeSuggestion ? snapshot.routeSuggestion : null;
       const siteState = snapshot && snapshot.siteState ? snapshot.siteState : null;
       const triggerNudge = snapshot && snapshot.triggerNudge ? snapshot.triggerNudge : null;
+      const operatorHandoff = snapshot && snapshot.operatorHandoff ? snapshot.operatorHandoff : null;
 
       messages.innerHTML = "";
 
@@ -421,6 +529,14 @@
       summaryValidation.hidden = !validationCopy;
       summaryText.textContent = summaryCopy;
       summaryValidation.textContent = validationCopy;
+
+      operatorSection.hidden = !operatorHandoff;
+      route.hidden = !!operatorHandoff;
+      if (operatorHandoff) {
+        operatorTitle.textContent = operatorHandoff.title || "Need a person?";
+        operatorCopy.textContent = operatorHandoff.copy || "Send your contact details and project note so the team can follow up.";
+        operatorButton.textContent = operatorHandoff.primaryLabel || "Send operator request";
+      }
 
       if (routeSuggestion && routeSuggestion.href) {
         routeCopy.textContent = "Next";
@@ -549,6 +665,53 @@
       textInput.value = "";
       settings.onTextSubmit(value);
     });
+
+    operatorForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const name = operatorNameInput.value.trim();
+      const phone = operatorPhoneInput.value.trim();
+      const email = operatorEmailInput.value.trim();
+      const message = operatorMessageInput.value.trim();
+
+      operatorStatus.removeAttribute("data-state");
+      if (!name) {
+        operatorStatus.textContent = "Please enter your name.";
+        operatorStatus.setAttribute("data-state", "error");
+        operatorNameInput.focus();
+        return;
+      }
+      if (!phone && !email) {
+        operatorStatus.textContent = "Please enter a phone number or email so we can contact you.";
+        operatorStatus.setAttribute("data-state", "error");
+        operatorPhoneInput.focus();
+        return;
+      }
+      if (email && !/.+@.+\..+/.test(email)) {
+        operatorStatus.textContent = "Email format looks invalid.";
+        operatorStatus.setAttribute("data-state", "error");
+        operatorEmailInput.focus();
+        return;
+      }
+
+      operatorButton.disabled = true;
+      operatorStatus.textContent = "Sending request...";
+      Promise.resolve(settings.onOperatorSubmit({
+        name: name,
+        phone: phone,
+        email: email,
+        message: message
+      })).then(function () {
+        operatorStatus.textContent = "Request sent. A real person will follow up shortly.";
+        operatorStatus.setAttribute("data-state", "success");
+        operatorMessageInput.value = "";
+      }).catch(function (error) {
+        operatorStatus.textContent = error && error.message ? error.message : "Could not send the request. Please try again.";
+        operatorStatus.setAttribute("data-state", "error");
+      }).finally(function () {
+        operatorButton.disabled = false;
+      });
+    });
+
 
     routeLink.addEventListener("click", function (event) {
       const focusId = routeLink.getAttribute("data-chatbot-focus-id") || "";

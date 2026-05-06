@@ -6,6 +6,34 @@ Last updated: 2026-04-29
 Primary owner: Operon Flooring website / quote system  
 Primary goal: high-intent flooring quote lead generation in Sydney
 
+## Core Vision
+
+Operon is not a conventional flooring website.
+
+Operon is a quote-led acquisition and decision system:
+
+`Traffic -> Trust -> Instant Quote -> Quote Validation -> Data Capture -> System Intelligence`
+
+Current execution phase: Phase 1 only.
+
+Phase 1 focuses on:
+
+- high-intent SEO traffic
+- conversion to quote
+- structured data capture
+- trust building
+
+Do not use SEO work to build SaaS features, marketplace logic, pricing logic, quote calculation changes, product data logic, or backend email changes unless explicitly requested.
+
+Long-term direction:
+
+1. Flooring
+2. Internal System
+3. SaaS
+4. Marketplace
+
+Only the flooring acquisition and quote system is active now.
+
 ## Current Implementation Status
 
 Implemented in the website codebase:
@@ -59,6 +87,14 @@ It exists to keep future SEO, content, internal linking, landing page, and techn
 This is not a generic blog strategy.
 This is a lead generation SEO system.
 
+Every page must drive at least one of:
+
+- quote start
+- quote validation
+- decision clarity
+
+Content is not for traffic only. It must educate, clarify scope, reduce uncertainty, and route the user toward a useful next action.
+
 ## Core Focus
 
 ### Products
@@ -78,6 +114,293 @@ This is a lead generation SEO system.
 - Miranda
 - Eastern Suburbs
 - future expansion into other high-demand suburbs
+
+## SEO Architecture
+
+### Layer 1: Core Pages
+
+Core pages are high-intent conversion pages. They must rank and convert.
+
+Maintain or create:
+
+- `/flooring-sydney`
+- `/hybrid-flooring-sydney`
+- `/laminate-flooring-sydney`
+- `/engineered-timber-flooring-sydney`
+- `/flooring-quote-sydney`
+
+Current implementation may use `.html` equivalents. If clean URLs are introduced, preserve canonical consistency and avoid breaking existing links.
+
+Core page requirements:
+
+- clear H1
+- short subheading
+- primary quote CTA
+- secondary quote validation CTA
+- scope clarity section
+- product/category decision support
+- FAQ schema where FAQs are visible
+- internal links to quote, quote review, product pages, and relevant guides
+
+### Layer 2: Premium Suburb Pages
+
+Priority premium suburbs:
+
+- Mosman
+- Bondi
+- Double Bay
+- Vaucluse
+- Rose Bay
+- Chatswood
+- Wahroonga
+- Pymble
+- Balmain
+- Castle Hill
+
+Each suburb page must be unique. No template duplication.
+
+Each suburb page must include:
+
+- localised intro
+- realistic flooring recommendations
+- quote explanation
+- scope clarity section
+- CTA to quote
+- secondary CTA to quote validation
+- links to relevant product pages
+
+### Layer 3: Blog Authority System
+
+Blog topics to create or maintain:
+
+- flooring cost sydney
+- hybrid flooring cost guide
+- laminate vs hybrid flooring
+- engineered timber vs hybrid
+- why flooring quotes change
+- what is floor preparation
+- hidden costs in flooring
+- best flooring for sydney homes
+
+Every blog must:
+
+- answer real buyer questions
+- include practical trade insight
+- link to quote page
+- link to quote validation
+- link to relevant product pages
+
+Do not publish generic, surface-level, or long filler content.
+
+## SEO Page Template System
+
+Critical boundary:
+
+- Do not modify `quote.html` for SEO page builds.
+- Do not modify `floorplan.html` for SEO page builds.
+- Do not modify pricing logic.
+- SEO pages only link into `quote.html` and `quote-review.html`.
+
+Page purpose:
+
+- capture search intent
+- build trust
+- push users into instant quote or quote validation
+
+### Standard Page Structure
+
+1. SEO head
+
+- unique title tag
+- unique meta description
+- canonical URL
+- Open Graph title and description
+- FAQ schema if FAQs exist
+- breadcrumb schema if supported by the page
+
+2. Header / navigation
+
+- reuse existing site header
+- primary nav CTA: `Get quote`
+
+3. Hero section
+
+Purpose: user understands the page in 5 seconds.
+
+Hero must include:
+
+- eyebrow such as `Flooring Sydney`, `Hybrid Flooring`, or `Local Flooring`
+- one H1 with the target keyword
+- one short paragraph
+- primary CTA: `Get instant quote`
+- secondary CTA: `Validate your quote`
+- trust line: `Starting estimate first. Final site scope confirmed before booking.`
+
+Example:
+
+- H1: `Hybrid Flooring Sydney`
+- subcopy: `Get a clear hybrid flooring estimate for your Sydney home, with product direction, measured area and installation scope captured before final confirmation.`
+
+4. Quick value cards
+
+Use 3 to 4 compact cards:
+
+- Clear estimate
+- Product guidance
+- Scope clarity
+- Final confirmation
+
+5. Main content block
+
+Purpose: rank, educate, and convert.
+
+Use short sections only. No long paragraphs.
+
+Recommended H2s:
+
+- Is [service/product] right for your home?
+- What affects the quote?
+- What should be included?
+- Common mistakes to avoid
+
+Use `site scope confirmation` language rather than scary pricing-factor lists.
+
+6. Comparison / checklist section
+
+Use a responsive table or checklist.
+
+A clear flooring quote should confirm:
+
+- product type and range
+- measured area
+- installation scope
+- removal/disposal if required
+- trims/skirting/scotia
+- floor preparation confirmation process
+- final site scope confirmation
+
+7. Mid-page CTA
+
+Use a simple conversion block:
+
+- headline: `Get a flooring quote in minutes`
+- subcopy: `Choose product type, enter area or upload a floor plan, then send the estimate for review.`
+- primary button: `Start quote`
+- secondary button: `Already have a quote? Validate it`
+
+8. Local or product-specific detail
+
+For suburb pages:
+
+- suburb context
+- property type tendency
+- product suitability
+- local service positioning
+
+For product pages:
+
+- product suitability
+- pros and cons
+- where it works best
+- maintenance notes
+
+Keep this specific and practical, not generic.
+
+9. Internal linking block
+
+Include relative links to:
+
+- `quote.html`
+- `quote-review.html`
+- hybrid page
+- laminate page
+- engineered page
+- relevant blog guides
+
+10. FAQ section
+
+Use 3 to 5 FAQs. Use existing accordion style if available.
+
+Example FAQs:
+
+- Is the online quote final?
+- Can I upload a floor plan?
+- What if I already have another quote?
+- What should be included in a flooring quote?
+- How is final scope confirmed?
+
+11. Final CTA
+
+- headline: `Ready to price your flooring project?`
+- buttons: `Get instant quote` and `Validate existing quote`
+
+### Page Variants
+
+Core Sydney page:
+
+- use for `/flooring-sydney` and `/flooring-quote-sydney`
+- focus on broad service, quote speed, trust, product categories, and quote validation
+
+Product page:
+
+- use for `/hybrid-flooring-sydney`, `/laminate-flooring-sydney`, and `/engineered-timber-flooring-sydney`
+- focus on suitability, who it is right for, installation scope, maintenance, and quote CTA
+
+Suburb page:
+
+- use for premium suburbs such as Mosman, Bondi, Double Bay, Vaucluse, Rose Bay, Chatswood, Wahroonga, Pymble, Balmain, and Castle Hill
+- focus on local intent, premium positioning, product fit for homes/apartments, and quote CTA
+
+Blog page:
+
+- use for `/blog/flooring-cost-sydney` and `/blog/hidden-costs-flooring-quotes`
+- focus on answering the question deeply, practical insight, and links into quote and validation
+- avoid sales-heavy copy
+
+### Design Rules
+
+- clean spacing
+- mobile-first
+- no giant hero on mobile
+- CTA visible early
+- cards stack cleanly
+- no horizontal scroll
+- responsive tables
+- no text walls
+- one H1 only
+- strong H2s
+- short paragraphs
+
+### Copy Rules
+
+Use:
+
+- practical trade language
+- scope clarity
+- measured area
+- product guidance
+- final confirmation
+- starting estimate
+
+Avoid:
+
+- cheap flooring
+- discount framing
+- `AI-powered` hype
+- fake certainty
+- scary pricing explanations
+- keyword stuffing
+
+### Output After Each SEO Build
+
+Report:
+
+- pages created or updated
+- CTA locations
+- internal links added
+- SEO metadata added
+- mobile responsiveness notes
+- confirmation that `quote.html` and `floorplan.html` were untouched
 
 ## SEO System Structure
 
@@ -168,11 +491,21 @@ Every SEO page must:
 - target one primary keyword
 - use one H1 only
 - link to the quote page
+- link to quote validation where natural
 - link to at least two related pages
 - include a clear CTA
+- include a primary CTA: `Get your flooring quote`
+- include a secondary CTA: `Validate your quote`
 - mention the suburb or Sydney context naturally
 - include FAQ content
 - avoid keyword stuffing
+- pass the 5-second understanding test
+
+The 5-second understanding test:
+
+- what the page is about is immediately clear
+- what to do next is immediately clear
+- why Operon is different is immediately clear
 
 ## Index Page Strategy
 
@@ -335,6 +668,9 @@ Every visible FAQ block should be eligible for `FAQPage` schema when appropriate
 - use trade-knowledge tone
 - answer real customer questions
 - discuss cost carefully and honestly
+- use short subheadings, bullets, checklists, comparison tables, and FAQs
+- explain scope clarity: product selection, removal vs disposal, floor preparation, access, and site confirmation
+- keep mobile sections compact and CTA-led
 
 ### Do not
 
@@ -343,6 +679,9 @@ Every visible FAQ block should be eligible for `FAQPage` schema when appropriate
 - exaggerate claims
 - expose internal pricing logic
 - drift into visualiser / AI demo language
+- write long blocks that bury the next action
+- create repeated suburb templates
+- position quote validation as cheapest-price comparison
 
 ## Backlink Strategy
 
@@ -488,9 +827,16 @@ Before creating new SEO pages or blog pages, read this file first, then:
 
 1. choose one keyword focus
 2. confirm the page’s role:
-   - money page
-   - supporting page
+   - core page
+   - suburb page
    - blog page
-3. preserve quote conversion priority
-4. include internal links and CTA
-5. avoid duplication across product and location pages
+3. confirm the goal:
+   - traffic
+   - conversion
+   - authority
+   - decision clarity
+4. confirm no pricing logic, quote calculation, product data, or backend email logic is affected
+5. preserve quote conversion priority
+6. include internal links and CTA
+7. avoid duplication across product and location pages
+8. reject generic output before it ships
