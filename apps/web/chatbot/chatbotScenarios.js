@@ -3,7 +3,7 @@
     apartment_renovation: {
       id: "apartment_renovation",
       label: "Apartment renovation",
-      summary: "Apartment projects need access details early: lift, level, parking, loading rules, and any building constraints.",
+      summary: "Apartment projects need site details early: lift, level, parking, loading rules, and any building constraints.",
       route: "quote",
       keywords: ["apartment", "unit", "strata", "lift", "level", "loading dock"],
       initialPatch: {
@@ -15,7 +15,7 @@
       steps: [
         {
           id: "apartment_lift",
-          question: "First apartment detail: is there lift access?",
+          question: "First apartment detail: is there a lift?",
           actions: [
             { id: "scenario_apartment_lift_yes", label: "Lift available", patch: { has_lift: "yes" } },
             { id: "scenario_apartment_lift_no", label: "No lift", patch: { has_lift: "no" }, flags: ["manual_access_review"] },
@@ -34,11 +34,11 @@
         },
         {
           id: "apartment_parking",
-          question: "How does parking or loading access look?",
+          question: "How do parking or loading details look?",
           actions: [
-            { id: "scenario_access_easy", label: "Easy access", patch: { parking_access: "easy" } },
-            { id: "scenario_access_limited", label: "Limited access", patch: { parking_access: "limited" }, flags: ["parking_access_review"] },
-            { id: "scenario_access_unsure", label: "Access unsure", patch: { parking_access: "unsure" }, flags: ["access_not_confirmed"] }
+            { id: "scenario_access_easy", label: "Easy parking", patch: { parking_access: "easy" } },
+            { id: "scenario_access_limited", label: "Limited parking", patch: { parking_access: "limited" }, flags: ["parking_access_review"] },
+            { id: "scenario_access_unsure", label: "Unsure", patch: { parking_access: "unsure" }, flags: ["access_not_confirmed"] }
           ]
         }
       ]
@@ -87,7 +87,7 @@
     install_only: {
       id: "install_only",
       label: "Installation only",
-      summary: "Installation-only jobs should capture materials, access, trims, and site conditions while leaving pricing to the quote system.",
+      summary: "Installation-only jobs should capture materials, trims, and site conditions while leaving pricing to the quote system.",
       route: "quote",
       keywords: ["install only", "already bought", "already have flooring", "my own flooring", "own materials"],
       initialPatch: {
@@ -118,11 +118,11 @@
         },
         {
           id: "install_only_access",
-          question: "How would you describe access for the installers?",
+          question: "How would you describe the site details for the installers?",
           actions: [
-            { id: "scenario_install_access_easy", label: "Easy access", patch: { access: "easy", parking_access: "easy" } },
-            { id: "scenario_install_access_limited", label: "Limited access", patch: { access: "limited", parking_access: "limited" }, flags: ["access_review_recommended"] },
-            { id: "scenario_install_access_unsure", label: "Access unsure", patch: { access: "unsure", parking_access: "unsure" }, flags: ["access_not_confirmed"] }
+            { id: "scenario_install_access_easy", label: "Straightforward", patch: { access: "easy", parking_access: "easy" } },
+            { id: "scenario_install_access_limited", label: "Needs review", patch: { access: "limited", parking_access: "limited" }, flags: ["access_review_recommended"] },
+            { id: "scenario_install_access_unsure", label: "Unsure", patch: { access: "unsure", parking_access: "unsure" }, flags: ["access_not_confirmed"] }
           ]
         }
       ]
@@ -196,7 +196,7 @@
     ready_to_submit_check: {
       id: "ready_to_submit_check",
       label: "Ready to submit check",
-      summary: "A final check should confirm area, existing floor, subfloor, access, stairs, and furniture before the quote is submitted.",
+      summary: "A final check should confirm area, existing floor, subfloor, stairs, and furniture before the quote is submitted.",
       route: "quoteReview",
       keywords: ["ready to submit", "submit", "final check", "check quote", "ready"],
       initialPatch: {
@@ -214,7 +214,7 @@
         },
         {
           id: "ready_check_risks",
-          question: "Any stairs, difficult access, or uncertain subfloor?",
+          question: "Any stairs, difficult site details, or uncertain subfloor?",
           actions: [
             { id: "scenario_ready_risks_none", label: "No obvious risks", patch: {} },
             { id: "scenario_ready_risks_yes", label: "There are risks", patch: { readiness: "review" }, flags: ["manual_scope_review"] },

@@ -158,6 +158,12 @@
     return config;
   }
 
+  function getSupabaseTableName(tableName) {
+    const config = getSupabaseConfig();
+    const tables = config && config.tables || {};
+    return tables[tableName] || tableName;
+  }
+
   async function sendToSupabase(tableName, payload, options) {
     const config = getSupabaseConfig();
     if (!config) {
@@ -172,7 +178,7 @@
       Prefer: settings.upsert ? "resolution=merge-duplicates" : "return=minimal"
     };
 
-    const url = new URL(config.url.replace(/\/$/, "") + "/rest/v1/" + tableName);
+    const url = new URL(config.url.replace(/\/$/, "") + "/rest/v1/" + getSupabaseTableName(tableName));
     if (settings.upsert && settings.onConflict) {
       url.searchParams.set("on_conflict", settings.onConflict);
     }

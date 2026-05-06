@@ -101,8 +101,10 @@ on conflict (category, install_type, install_method, job_type) do update set
 
 insert into public.underlay_options (underlay_id, name, suitable_categories, price_per_m2, active)
 values
-  ('acoustic-underlay-standard', 'Standard Acoustic Underlay', array['laminate', 'engineered']::text[], 4, true),
-  ('acoustic-underlay-premium', 'Premium Acoustic Underlay', array['laminate', 'engineered']::text[], 6, true)
+  ('acoustic-underlay-standard', 'Standard silver underlay', array['laminate', 'engineered']::text[], 4, true),
+  ('acoustic-underlay-premium', 'Premium acoustic underlay', array['laminate', 'engineered']::text[], 6, true),
+  ('acoustic-rubber-underlay-5mm', 'Acoustic Rubber underlay 5mm', array['laminate', 'engineered']::text[], 12, true),
+  ('acoustic-rubber-underlay-5mm-glued-down', 'Acoustic Rubber Underlay 5mm glued down', array['engineered']::text[], 12, true)
 on conflict (underlay_id) do update set
   name = excluded.name,
   suitable_categories = excluded.suitable_categories,
@@ -284,8 +286,10 @@ on conflict (id) do update set
 
 insert into public.pricing_underlay_options (id, name, suitable_categories, price_per_m2, active)
 values
-  ('acoustic-underlay-standard', 'Standard Acoustic Underlay', '["laminate","engineered"]'::jsonb, 4, true),
-  ('acoustic-underlay-premium', 'Premium Acoustic Underlay', '["laminate","engineered"]'::jsonb, 6, true)
+  ('acoustic-underlay-standard', 'Standard silver underlay', '["laminate","engineered"]'::jsonb, 4, true),
+  ('acoustic-underlay-premium', 'Premium acoustic underlay', '["laminate","engineered"]'::jsonb, 6, true),
+  ('acoustic-rubber-underlay-5mm', 'Acoustic Rubber underlay 5mm', '["laminate","engineered"]'::jsonb, 12, true),
+  ('acoustic-rubber-underlay-5mm-glued-down', 'Acoustic Rubber Underlay 5mm glued down', '["engineered"]'::jsonb, 12, true)
 on conflict (id) do update set
   name = excluded.name,
   suitable_categories = excluded.suitable_categories,

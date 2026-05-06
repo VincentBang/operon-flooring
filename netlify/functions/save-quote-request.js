@@ -1,5 +1,7 @@
 "use strict";
 
+const { getSupabaseTables } = require("./_supabaseTables");
+
 function jsonResponse(statusCode, payload) {
   return {
     statusCode: statusCode,
@@ -177,9 +179,16 @@ function getInitialCloseScore(payload, status, leadStage) {
 
 function getQuoteRow(quoteId, payload, status) {
   const now = new Date().toISOString();
-  const leadStage = payload.leadStage || payload.lead_stage || (payload.leadPriority === "high" ? "hot" : "cold");
+  const leadAutomation = payload.leadAutomation || payload.lead_automation || {};
+  const requestedLeadStage = payload.leadStage || payload.lead_stage || leadAutomation.leadStage || leadAutomation.lead_stage || "";
+  const inferredLeadStage = payload.leadPriority === "high" ? "hot" : status === "draft_saved" ? "cold" : "warm";
+  const leadStage = requestedLeadStage && requestedLeadStage !== "unknown" ? requestedLeadStage : inferredLeadStage;
   const engagementScore = Number(payload.engagementScore || payload.engagement_score || (status === "emailed" ? 55 : 30)) || 0;
   const close = getInitialCloseScore(payload, status, leadStage);
+  const consentSms = Boolean(payload.consentSms || payload.consent_sms || leadAutomation.consentSms || leadAutomation.consent_sms);
+  const consentEmail = payload.consentEmail === false || payload.consent_email === false || leadAutomation.consentEmail === false || leadAutomation.consent_email === false
+    ? false
+    : true;
   return {
     id: quoteId,
     customer_name: payload.customer && payload.customer.name || "",
@@ -207,6 +216,10 @@ function getQuoteRow(quoteId, payload, status) {
     status: status,
     source_page: payload.sourcePage || "index.html",
     lead_stage: ["cold", "warm", "hot", "closing", "unknown"].indexOf(leadStage) >= 0 ? leadStage : "cold",
+    consent_sms: consentSms,
+    consent_email: consentEmail,
+    followup_status: "pending",
+    source: "website",
     engagement_score: Math.max(0, Math.min(100, Math.round(engagementScore))),
     close_score: close.closeScore,
     close_probability: close.closeProbability,
@@ -251,14 +264,15 @@ function getItemRows(quoteId, items) {
 }
 
 async function replaceChildRows(quoteId, rooms, items) {
-  await supabaseRequest("quote_rooms", {
+  const tables = getSupabaseTables();
+  await supabaseRequest(tables.quoteRooms, {
     method: "DELETE",
     query: {
       quote_id: "eq." + quoteId
     }
   });
 
-  await supabaseRequest("quote_items", {
+  await supabaseRequest(tables.quoteItems, {
     method: "DELETE",
     query: {
       quote_id: "eq." + quoteId
@@ -267,7 +281,7 @@ async function replaceChildRows(quoteId, rooms, items) {
 
   const roomRows = getRoomRows(quoteId, rooms);
   if (roomRows.length) {
-    await supabaseRequest("quote_rooms", {
+    await supabaseRequest(tables.quoteRooms, {
       method: "POST",
       headers: {
         Prefer: "return=minimal"
@@ -278,7 +292,7 @@ async function replaceChildRows(quoteId, rooms, items) {
 
   const itemRows = getItemRows(quoteId, items);
   if (itemRows.length) {
-    await supabaseRequest("quote_items", {
+    await supabaseRequest(tables.quoteItems, {
       method: "POST",
       headers: {
         Prefer: "return=minimal"
@@ -289,7 +303,7 @@ async function replaceChildRows(quoteId, rooms, items) {
 }
 
 async function updateQuoteRow(quoteId, row) {
-  return supabaseRequest("quote_requests", {
+  return supabaseRequest(getSupabaseTables().quoteRequests, {
     method: "PATCH",
     query: {
       id: "eq." + quoteId
@@ -299,6 +313,177 @@ async function updateQuoteRow(quoteId, row) {
     },
     body: row
   });
+}
+
+function normaliseFollowupStage(value) {
+  return value === "closing" || value === "hot" || value === "warm" || value === "cold" ? value : "unknown";
+}
+
+function getFollowupTemplateKeys(stage, consentSms, consentEmail) {
+  const keys = new Set();
+  keys.add("manual_quote_review");
+
+  if (stage === "closing") {
+    keys.add("manual_close_call");
+    if (consentSms) keys.add("immediate_sms_received");
+    if (consentEmail) keys.add("immediate_email_received");
+  } else if (stage === "hot") {
+    if (consentSms) {
+      keys.add("immediate_sms_received");
+      keys.add("day1_sms_checkin");
+    }
+    if (consentEmail) keys.add("immediate_email_received");
+  } else if (stage === "warm") {
+    if (consentSms) {
+      keys.add("immediate_sms_received");
+      keys.add("day7_sms_soft_reminder");
+    }
+    if (consentEmail) {
+      keys.add("immediate_email_received");
+      keys.add("day3_email_guidance");
+    }
+  } else if (stage === "cold") {
+    if (consentEmail) {
+      keys.add("immediate_email_received");
+      keys.add("day14_email_planning");
+    }
+    if (consentSms) keys.add("day7_sms_soft_reminder");
+  } else {
+    if (consentEmail) keys.add("immediate_email_received");
+    if (consentSms) keys.add("immediate_sms_received");
+  }
+
+  return keys;
+}
+
+function renderFollowupTemplate(value, quoteRow) {
+  const name = String(quoteRow.customer_name || "there").trim() || "there";
+  return String(value || "").replace(/\{\{name\}\}/g, name);
+}
+
+function postgrestIn(values) {
+  return "(" + values.map(function (value) {
+    return "\"" + String(value).replace(/"/g, "\\\"") + "\"";
+  }).join(",") + ")";
+}
+
+async function queueFollowupsForQuote(quoteId, quoteRow) {
+  const tables = getSupabaseTables();
+
+  if (!quoteId) {
+    return { queued: 0, skipped: "missing_quote_id", dryRunOnly: true };
+  }
+
+  if (quoteRow.followup_paused === true) {
+    return { queued: 0, skipped: "followup_paused", dryRunOnly: true };
+  }
+
+  const leadStage = normaliseFollowupStage(quoteRow.lead_stage);
+  const consentSms = Boolean(quoteRow.consent_sms);
+  const consentEmail = quoteRow.consent_email !== false;
+  const allowedKeys = getFollowupTemplateKeys(leadStage, consentSms, consentEmail);
+
+  if (!allowedKeys.size) {
+    return { queued: 0, skipped: "no_consented_channels", dryRunOnly: true };
+  }
+
+  const templates = await supabaseRequest(tables.followupTemplates, {
+    query: {
+      active: "eq.true",
+      select: "template_key,channel,lead_stage,timing_offset_hours,subject,body,active"
+    }
+  });
+  const now = Date.now();
+  const candidateRows = (Array.isArray(templates) ? templates : [])
+    .filter(function (template) {
+      return allowedKeys.has(template.template_key);
+    })
+    .filter(function (template) {
+      return template.channel !== "sms" || consentSms;
+    })
+    .filter(function (template) {
+      return template.channel !== "email" || consentEmail;
+    })
+    .map(function (template) {
+      return {
+        lead_id: null,
+        quote_request_id: quoteId,
+        channel: template.channel,
+        template_key: template.template_key,
+        scheduled_for: new Date(now + Number(template.timing_offset_hours || 0) * 60 * 60 * 1000).toISOString(),
+        status: "queued",
+        payload: {
+          dry_run_required: true,
+          source: "quote_submission",
+          lead_stage: leadStage,
+          consent_sms: consentSms,
+          consent_email: consentEmail,
+          to_phone: quoteRow.phone || "",
+          to_email: quoteRow.email || "",
+          subject: template.subject ? renderFollowupTemplate(template.subject, quoteRow) : null,
+          body: renderFollowupTemplate(template.body, quoteRow)
+        }
+      };
+    });
+
+  if (!candidateRows.length) {
+    return { queued: 0, skipped: "no_matching_templates", dryRunOnly: true };
+  }
+
+  const existingRows = await supabaseRequest(tables.followupMessages, {
+    query: {
+      quote_request_id: "eq." + quoteId,
+      template_key: "in." + postgrestIn(candidateRows.map(function (row) { return row.template_key; })),
+      select: "template_key"
+    }
+  });
+  const existingKeys = new Set((Array.isArray(existingRows) ? existingRows : []).map(function (row) {
+    return row.template_key;
+  }));
+  const rows = candidateRows.filter(function (row) {
+    return !existingKeys.has(row.template_key);
+  });
+
+  if (!rows.length) {
+    return { queued: 0, skipped: "already_queued", dryRunOnly: true };
+  }
+
+  await supabaseRequest(tables.followupMessages, {
+    method: "POST",
+    headers: {
+      Prefer: "return=minimal"
+    },
+    body: rows
+  });
+
+  await updateQuoteRow(quoteId, {
+    lead_stage: leadStage,
+    consent_sms: consentSms,
+    consent_email: consentEmail,
+    followup_status: "queued",
+    next_followup_at: rows.map(function (row) { return row.scheduled_for; }).sort()[0]
+  });
+
+  return {
+    queued: rows.length,
+    leadStage: leadStage,
+    dryRunOnly: true
+  };
+}
+
+async function safelyQueueFollowupsForQuote(quoteId, quoteRow) {
+  try {
+    const result = await queueFollowupsForQuote(quoteId, quoteRow);
+    return Object.assign({ ok: true }, result);
+  } catch (error) {
+    console.error("Follow-up queue creation failed", error);
+    return {
+      ok: false,
+      queued: 0,
+      dryRunOnly: true,
+      error: error && error.message ? error.message : "Follow-up queue creation failed."
+    };
+  }
 }
 
 function escapeHtml(value) {
@@ -648,7 +833,8 @@ exports.handler = async function (event) {
     return jsonResponse(400, { ok: false, error: "Invalid JSON payload." });
   }
 
-  const mode = body.mode === "email_quote" ? "email_quote" : "draft";
+  const allowedMode = String(body.mode || "").trim();
+  const mode = allowedMode === "email_quote" || allowedMode === "submit_quote" ? allowedMode : "draft";
   const payload = body.payload || null;
   const emailTo = String(body.emailTo || (payload && payload.customer && payload.customer.email) || "").trim();
 
@@ -661,12 +847,12 @@ exports.handler = async function (event) {
   }
 
   const quoteId = String(body.quoteId || payload.id || "").trim() || createQuoteUuid();
-  const status = mode === "email_quote" ? "emailed" : "draft_saved";
+  const status = mode === "email_quote" ? "emailed" : mode === "submit_quote" ? "submitted" : "draft_saved";
 
   try {
     const row = getQuoteRow(quoteId, payload, status);
-    if (mode === "draft") {
-      await supabaseRequest("quote_requests", {
+    if (mode === "draft" || mode === "submit_quote") {
+      await supabaseRequest(getSupabaseTables().quoteRequests, {
         method: "POST",
         query: {
           on_conflict: "id"
@@ -682,26 +868,33 @@ exports.handler = async function (event) {
         payload.measurement && payload.measurement.rooms || [],
         payload.pricing && payload.pricing.lineItems || []
       );
+
+      const followupResult = mode === "submit_quote"
+        ? await safelyQueueFollowupsForQuote(quoteId, row)
+        : { ok: true, queued: 0, skipped: "draft_only", dryRunOnly: true };
+
+      return jsonResponse(200, {
+        ok: true,
+        mode: mode,
+        quoteId: quoteId,
+        followup: followupResult
+      });
     } else {
       if (!String(body.quoteId || "").trim()) {
         throw new Error("Draft quote reference is missing. Save the estimate first.");
       }
       await updateQuoteRow(quoteId, row);
       const emailResult = await sendQuoteEmails(emailTo, payload, quoteId);
+      const followupResult = await safelyQueueFollowupsForQuote(quoteId, row);
       return jsonResponse(200, {
         ok: true,
         mode: mode,
         quoteId: quoteId,
         customerEmailSent: emailResult.customerEmailSent,
-        internalNotificationSent: emailResult.internalNotificationSent
+        internalNotificationSent: emailResult.internalNotificationSent,
+        followup: followupResult
       });
     }
-
-    return jsonResponse(200, {
-      ok: true,
-      mode: mode,
-      quoteId: quoteId
-    });
   } catch (error) {
     return jsonResponse(500, {
       ok: false,

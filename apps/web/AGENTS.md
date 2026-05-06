@@ -120,10 +120,13 @@ Forbidden chatbot task types:
 - Stay mobile-first.
 - Do not clutter the homepage.
 - Position quote validation as quote clarity / scope review, never as cheapest-price comparison.
-- Homepage is not the full quote wizard page. Keep it as a clean premium conversion, trust, and SEO-support page.
-- The full quote wizard lives on `quote.html`; all quote CTAs should navigate to `quote.html`.
+- Homepage is not the full quote-flow page. Keep it as a clean premium conversion, trust, and SEO-support page.
+- The full quote flow lives on `quote.html`; all quote CTAs should navigate to `quote.html`.
 - Preserve homepage SEO with concise sections, internal links, schema, and lower-page/expandable content without reintroducing a heavy form.
 - Keep customer-facing copy plain English wherever possible, without renaming the underlying pricing variables unless needed for code safety.
+- Customer-facing UI must be decision-first: short labels, clear selected states, and minimal helper text.
+- Do not turn option cards into explanatory paragraphs; only add helper text when it prevents a real mistake or guides the next action.
+- Hide redundant status copy such as “progress saved” and keep backend thresholds, internal formulas, implementation labels, and system-save language out of customer screens.
 - Do not add a visualiser or reintroduce one into customer-facing scope.
 - Do not expose internal labour rate, margin, material rate, surcharge formula, or installer cost.
 - Do not duplicate pricing logic.

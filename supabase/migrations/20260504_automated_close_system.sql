@@ -105,7 +105,7 @@ insert into public.followup_templates (
     'closing',
     0,
     null,
-    'Use OPERON_CLOSE_SCRIPTS.md phone close script. Confirm scope, preparation, access, stairs, removal/disposal and next step without pressure.',
+    'Use OPERON_CLOSE_SCRIPTS.md phone close script. Confirm scope, preparation, site conditions, stairs, removal/disposal and next step without pressure.',
     true
   )
 on conflict (template_key) do update set

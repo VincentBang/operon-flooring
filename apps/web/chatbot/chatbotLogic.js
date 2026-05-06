@@ -184,6 +184,27 @@
       return true;
     }
 
+    function getCategoryFromText(value) {
+      if (includesAny(value, ["engineered", "timber", "herringbone", "heringbone", "swish oak", "natura"])) {
+        return "engineered";
+      }
+      if (includesAny(value, ["laminate", "ac4", "12mm"])) {
+        return "laminate";
+      }
+      if (includesAny(value, ["hybrid", "waterproof", "water resistant", "etf", "7mm", "8mm", "9mm"])) {
+        return "hybrid";
+      }
+      return "";
+    }
+
+    function getRangeGuidanceForText(value) {
+      if (!knowledge || typeof knowledge.getRangeGuidance !== "function") {
+        return "";
+      }
+      const category = getCategoryFromText(value);
+      return category ? knowledge.getRangeGuidance(category) : "";
+    }
+
     function pushUser(text) {
       state.transcript.push(createMessage("user", text, []));
       sync();
@@ -297,13 +318,13 @@
         setIntent("quote_review", {
           readiness: "review",
           reason: "homepage review section visible",
-          missing_items_to_check: ["removal", "floor preparation", "access", "finishing"]
+          missing_items_to_check: ["removal", "floor preparation", "site details", "finishing"]
         });
         setRoute("Review your quote", "quote-review.html");
         pushTrigger(
           triggerId,
           "Already have a quote? Review the scope before comparing it.",
-          "Most quotes differ in removal, floor prep, access, and finishing.",
+          "Most quotes differ in removal, floor prep, and finishing.",
           "Review your quote.",
           prompts.actions.nextSteps
         );
@@ -343,7 +364,7 @@
         setIntent("quote_review", {
           readiness: "review",
           reason: "quote review page guidance",
-          missing_items_to_check: ["installation method", "disposal", "floor preparation", "skirting", "access"]
+          missing_items_to_check: ["installation method", "disposal", "floor preparation", "skirting", "site details"]
         });
         setRoute("Get structured estimate", "quote.html?from=quote-review");
         pushTrigger(
@@ -455,7 +476,7 @@
       let summary = meta.label + " looks like the strongest starting category here. " + meta.reasons[0];
 
       if (context === "context_apartment") {
-        summary += " Apartment access and durability often matter early, so keeping the quote path practical helps.";
+        summary += " Apartment details and durability often matter early, so keeping the quote path practical helps.";
       } else if (context === "context_design_led") {
         summary += " That gives more room for a finish-led review before the final quote is confirmed.";
       } else if (context === "context_quick_turnaround") {
@@ -594,7 +615,7 @@
       setRoute("Start quote", "quote.html");
       pushGuided(
         "The quote is a structured estimate before final confirmation.",
-        "Product direction, measured area, access, removal, and floor preparation shape the scope.",
+        "Product direction, measured area, removal, and floor preparation shape the scope.",
         "Start the quote or check missing details.",
         prompts.actions.quoteHelp
       );
@@ -643,7 +664,7 @@
 
       if (state.stage === "collect_subfloor") {
         state.stage = "collect_access";
-        pushGuided("Next scope check.", "Access and parking affect planning.", prompts.copy.detailAccess, prompts.actions.accessCollection);
+        pushGuided("Next scope check.", "Site details are reviewed before final confirmation.", prompts.copy.detailAccess, prompts.actions.accessCollection);
         return;
       }
 
@@ -739,7 +760,7 @@
           setRoute("Start quote", "quote.html");
           pushGuided(
             "Installation-only path selected.",
-            "The quote should still check prep, access, removal, trims, and stairs.",
+            "The quote should still check prep, removal, trims, and stairs.",
             "Start the quote and select Installation Only.",
             prompts.actions.nextSteps
           );
@@ -807,7 +828,7 @@
           setIntent("quote_explanation", { reason: "cost factors without pricing calculation" });
           pushGuided(
             "Pricing depends on scope, not one simple number.",
-            "Area, product range, removal, prep, trims, stairs, and access are the main checks.",
+            "Area, product range, removal, prep, trims, and stairs are the main checks.",
             "Start the quote or check missing details.",
             prompts.actions.quoteHelp
           );
@@ -829,7 +850,7 @@
           setIntent("quote_review", {
             readiness: "review",
             reason: "existing quote scope check",
-            missing_items_to_check: ["product clarity", "installation method", "floor preparation", "disposal", "access", "trims"]
+            missing_items_to_check: ["product clarity", "installation method", "floor preparation", "disposal", "site details", "trims"]
           });
           setRoute("Review quote scope", "quote-review.html");
           pushGuided(
@@ -876,7 +897,7 @@
           pushUser(actionLabel(actionId));
           pushGuided(
             "Quote scope review is the safer path.",
-            getValidationSummary(mapper.toStructuredOutput(state.draft)) || "Check product, area, removal, prep, access, and trims.",
+            getValidationSummary(mapper.toStructuredOutput(state.draft)) || "Check product, area, removal, prep, and trims.",
             "Open quote review.",
             prompts.actions.nextSteps
           );
@@ -1019,7 +1040,7 @@
         setRoute("Review quote scope", "quote-review.html");
         pushGuided(
           "I cannot compare competitor pricing or claim Operon is cheaper.",
-          "The safer review is whether product, area, removal, prep, access, trims, and disposal are clear.",
+          "The safer review is whether product, area, removal, prep, trims, and disposal are clear.",
           "Open quote review.",
           prompts.actions.nextSteps
         );
@@ -1030,7 +1051,7 @@
         setIntent("quote_review", {
           readiness: "review",
           reason: "existing quote scope check",
-          missing_items_to_check: ["product clarity", "installation method", "floor preparation", "disposal", "access", "trims"]
+          missing_items_to_check: ["product clarity", "installation method", "floor preparation", "disposal", "site details", "trims"]
         });
         setRoute("Review quote scope", "quote-review.html");
         pushGuided(
@@ -1042,17 +1063,52 @@
         return;
       }
 
+      if (includesAny(lowerValue, ["view colour", "view color", "colour preview", "color preview", "choose colour", "choose color", "swatch", "range colour", "range color"])) {
+        const category = getCategoryFromText(lowerValue) || "engineered";
+        setIntent("product_guidance", {
+          category: category,
+          recommended_category: category,
+          selection_mode: "recommend",
+          readiness: "browsing",
+          reason: "colour preview guidance"
+        });
+        setRoute("Browse products", "products.html");
+        pushGuided(
+          "Use the product page to preview colours by range.",
+          getRangeGuidanceForText(lowerValue) || "Colour previews help browsing. The quote confirms the final product details where needed.",
+          category === "engineered" ? "Browse the range, then confirm the colour in the quote." : "Browse the range, then continue to the quote.",
+          prompts.actions.nextSteps
+        );
+        return;
+      }
+
       if (includesAny(lowerValue, ["hidden cost", "hidden costs", "surprise cost", "extra cost", "extras"])) {
         setIntent("scope_validation", {
           readiness: "review",
           reason: "scope clarity and avoiding surprises",
-          missing_items_to_check: ["removal", "floor preparation", "disposal", "access", "trims", "furniture"]
+          missing_items_to_check: ["removal", "floor preparation", "disposal", "site details", "trims", "furniture"]
         });
         setRoute("Start quote", "quote.html");
         pushGuided(
           "Hidden costs usually come from unclear scope.",
-          "Removal, disposal, floor preparation, trims, furniture, stairs, and access are the main checks.",
+          "Removal, disposal, floor preparation, trims, furniture, and stairs are the main checks.",
           "Which item are you least sure about?",
+          prompts.actions.quoteHelp
+        );
+        return;
+      }
+
+      if (includesAny(lowerValue, ["disposal", "dispose", "take away", "take-away", "rubbish", "remove old floor"])) {
+        setIntent("scope_validation", {
+          readiness: "review",
+          reason: "removal and disposal clarity",
+          missing_items_to_check: ["existing floor to remove", "disposal", "site details"]
+        });
+        setRoute("Start quote", "quote.html");
+        pushGuided(
+          "Removal and disposal should be clear before submit.",
+          "Choose the existing floor to remove, then confirm whether take-away disposal is included.",
+          "Start the quote and check the extras step.",
           prompts.actions.quoteHelp
         );
         return;
@@ -1065,12 +1121,12 @@
           stairs: 1,
           readiness: "review",
           reason: "tile removal and stairs require quote scope review",
-          missing_items_to_check: ["tile removal", "disposal", "stairs", "access", "trims", "floor preparation"]
+          missing_items_to_check: ["tile removal", "disposal", "stairs", "site details", "trims", "floor preparation"]
         });
         setRoute("Review quote scope", "quote-review.html");
         pushGuided(
           "Tiles plus stairs need scope review.",
-          "Removal, disposal, stairs, trims, and access should be checked before submission.",
+          "Removal, disposal, stairs, and trims should be checked before submission.",
           "Open quote review.",
           prompts.actions.nextSteps
         );
@@ -1084,13 +1140,13 @@
           has_lift: "no",
           parking_access: "limited",
           readiness: "review",
-          reason: "apartment access without lift requires quote review",
-          missing_items_to_check: ["level", "parking", "loading access", "strata rules", "stairs"]
+          reason: "apartment without lift requires quote review",
+          missing_items_to_check: ["level", "parking", "loading details", "strata rules", "stairs"]
         });
         setRoute("Review quote scope", "quote-review.html");
         pushGuided(
-          "Apartment with no lift needs access review.",
-          "Level, loading, parking, and strata rules can affect planning.",
+          "Apartment with no lift needs site review.",
+          "Level, loading, parking, and strata rules are reviewed before final confirmation.",
           "Open quote review.",
           prompts.actions.nextSteps
         );
@@ -1120,12 +1176,12 @@
           stairs: 1,
           readiness: "review",
           reason: "stairs require quote scope review",
-          missing_items_to_check: ["stairs", "access", "trims"]
+          missing_items_to_check: ["stairs", "site details", "trims"]
         });
         setRoute("Review quote scope", "quote-review.html");
         pushGuided(
           "Stairs should be flagged early.",
-          "They may affect installation scope or access planning.",
+          "They should be clear before the final scope is confirmed.",
           "Open quote review.",
           prompts.actions.nextSteps
         );
@@ -1140,7 +1196,7 @@
         setRoute("Start quote", "quote.html");
         pushGuided(
           "Yes, final confirmation can adjust the estimate.",
-          "That keeps the quote aligned with the actual product, area, access, and site conditions.",
+          "That keeps the quote aligned with the actual product, area, and site conditions.",
           "Start the quote when the basic details are ready.",
           prompts.actions.quoteHelp
         );
@@ -1191,6 +1247,15 @@
           prompts.actions.productGuide
         );
         return;
+      }
+
+      if (knowledge && typeof knowledge.findApprovedAnswer === "function") {
+        const specificMatch = knowledge.findApprovedAnswer(value);
+        if (specificMatch && /^range_/.test(specificMatch.key || "")) {
+          if (pushKnowledgeAnswer(specificMatch)) {
+            return;
+          }
+        }
       }
 
       if (includesAny(lowerValue, ["engineered timber", "engineered floor", "herringbone", "chevron"])) {
@@ -1302,7 +1367,7 @@
         setRoute("Start quote", "quote.html");
         pushGuided(
           "Installation-only path selected.",
-          "The quote still needs area, access, prep, and extras checked.",
+          "The quote still needs area, prep, and extras checked.",
           "Start the quote and select Installation Only.",
           prompts.actions.nextSteps
         );

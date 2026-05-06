@@ -50,6 +50,12 @@ Run these in Supabase SQL Editor when ready:
 
 The seed uses placeholder `0` prices so you can fill real values in Supabase Table Editor. It uses upserts and preserves any existing manually entered prices.
 
+If the live Supabase project is missing the stair tables completely, run this single combined setup file instead:
+
+- `supabase/stair_pricing_live_setup.sql`
+
+That file creates both required tables and inserts the editable placeholder rows in one SQL Editor run.
+
 ## Tables To Edit
 
 Primary table:

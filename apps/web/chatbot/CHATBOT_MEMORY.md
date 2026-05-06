@@ -36,7 +36,7 @@ Important pages:
 
 - `index.html`: premium conversion and trust page
 - `products.html`: product category and catalogue path
-- `quote.html`: quote wizard, estimate engine, lead capture
+- `quote.html`: quote flow, estimate engine, lead capture
 - `floorplan.html`: measurement assistant
 - `quote-review.html`: Quote Advisor, scope review, and external quote clarity support
 - product pages: category education and product selection
@@ -51,7 +51,7 @@ The quote journey is:
 product/category -> area -> extras -> estimate -> review
 ```
 
-The chatbot should help customers understand this flow, but the quote wizard owns the actual quote process.
+The chatbot should help customers understand this flow, but the quote page owns the actual quote process.
 
 ## Product Logic
 

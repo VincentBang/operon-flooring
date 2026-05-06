@@ -41,6 +41,15 @@ function getEnv(name: string): string {
   return Deno.env.get(name) || "";
 }
 
+function getTablePath(path: string): string {
+  const mode = getEnv("OPERON_SUPABASE_SCHEMA_MODE").trim().toLowerCase();
+  if (!(mode === "v2" || mode === "clean" || mode === "operon_v2")) return path;
+  const questionIndex = path.indexOf("?");
+  const tableName = questionIndex >= 0 ? path.slice(0, questionIndex) : path;
+  const suffix = questionIndex >= 0 ? path.slice(questionIndex) : "";
+  return tableName.startsWith("operon_") ? path : `operon_${tableName}${suffix}`;
+}
+
 function isUuid(value: unknown): value is string {
   return typeof value === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{12}$/i.test(value);
 }
@@ -81,9 +90,10 @@ function getSuburbCluster(suburb: string, postcode: string) {
 async function supabaseFetch(path: string, init: RequestInit = {}) {
   const supabaseUrl = getEnv("SUPABASE_URL").replace(/\/$/, "");
   const serviceRoleKey = getEnv("SUPABASE_SERVICE_ROLE_KEY");
+  const tablePath = getTablePath(path);
   if (!supabaseUrl || !serviceRoleKey) throw new Error("Missing Supabase server credentials.");
 
-  const response = await fetch(`${supabaseUrl}/rest/v1/${path}`, {
+  const response = await fetch(`${supabaseUrl}/rest/v1/${tablePath}`, {
     ...init,
     headers: {
       apikey: serviceRoleKey,
@@ -93,7 +103,7 @@ async function supabaseFetch(path: string, init: RequestInit = {}) {
       ...(init.headers || {})
     }
   });
-  if (!response.ok) throw new Error(`Supabase request failed for ${path}: ${await response.text()}`);
+  if (!response.ok) throw new Error(`Supabase request failed for ${tablePath}: ${await response.text()}`);
   const text = await response.text();
   return text ? JSON.parse(text) : null;
 }

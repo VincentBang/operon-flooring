@@ -1,6 +1,6 @@
 # Operon Chatbot Integration Contract
 
-This chatbot is an isolated guided decision layer. It supports product guidance, quote explanation, missing-detail collection, quote-scope review, stuck-user recovery, near-completion nudges, and future structured handoff. It is not a pricing engine, product selector, quote wizard replacement, or free-form AI assistant.
+This chatbot is an isolated guided decision layer. It supports product guidance, quote explanation, missing-detail collection, quote-scope review, stuck-user recovery, near-completion nudges, and future structured handoff. It is not a pricing engine, product selector, quote-flow replacement, or free-form AI assistant.
 
 ## System Boundary
 
@@ -13,7 +13,7 @@ User -> Chatbot assistant layer
      -> quoteCalculator.js as source of truth
 ```
 
-The chatbot may guide the user toward the product system or quote wizard. It must not become part of those systems.
+The chatbot may guide the user toward the product system or quote page. It must not become part of those systems.
 
 ## Allowed Behavior
 
@@ -145,7 +145,7 @@ Approved flows:
 - stuck-user recovery -> current page next step
 - near-completion push -> review scope, then submit through the quote page
 
-The chatbot may ask only one question at a time. It must not calculate prices, display numeric estimates, or replace the quote wizard.
+The chatbot may ask only one question at a time. It must not calculate prices, display numeric estimates, or replace the quote flow.
 
 ## Readonly Page State
 

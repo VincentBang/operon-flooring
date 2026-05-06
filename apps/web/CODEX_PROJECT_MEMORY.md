@@ -26,7 +26,7 @@ If a rule exists in `OPERON_PRICING_RULES.md`, follow it strictly.
 
 ## Product Goal
 
-Build a clean, customer-facing flooring quote page that:
+Build a clean, customer-facing flooring quote page at `apps/web/quote.html` that:
 
 1. collects customer details
 2. collects property / access / postcode details
@@ -38,12 +38,14 @@ Build a clean, customer-facing flooring quote page that:
 
 This page is for quote conversion, not visual entertainment.
 
-Current marketing direction:
+Current customer-facing UI direction:
 
 - position Operon as a smarter flooring quote system for Sydney customers
 - keep the site practical, premium, and easy for normal homeowners to use
-- keep the quote wizard high on the page
-- keep SEO content below the tool
+- keep the quote flow on the dedicated quote page, not embedded in the homepage
+- keep homepage copy conversion-first with SEO support lower on the page
+- keep visible choices short, selected states obvious, and helper text minimal
+- hide backend thresholds, formulas, system-save messages, and implementation language from customer screens
 - avoid AI hype, generic brochure language, and fake automation claims
 
 Current SEO architecture:
@@ -57,11 +59,11 @@ Current SEO architecture:
 
 ## Current Quote Page State
 
-Current file: `apps/web/index.html`
+Current file: `apps/web/quote.html`
 
 Note:
 
-`floorplan.html` is the floor plan measurement tool. It should default to Trace Room Mode and output confirmed flooring area for `index.html`.
+`floorplan.html` is the floor plan measurement tool. It should default to Trace Room Mode and output confirmed flooring area for `quote.html`.
 Quick Room Mode inside `floorplan.html` has its own phased memory file at `apps/web/QUICK_ROOM_MODE_MEMORY.md`.
 
 Current structure is step-based:
@@ -75,8 +77,8 @@ Current structure is step-based:
 
 Current navigation / handoff rules:
 
-- `index.html` is the main customer-facing quote page and should preserve draft state locally while the customer works
-- moving from `index.html` to `floorplan.html` should preserve the quote context and return the customer to Step 4
+- `quote.html` is the main customer-facing quote page and should preserve draft state locally while the customer works
+- moving from `quote.html` to `floorplan.html` should preserve the quote context and return the customer to Step 4
 - returning from `floorplan.html` should show the saved measured area without silently overwriting other measurement choices
 - once `quote_requests` is saved successfully, child-save issues for rooms, items, or files should be treated as partial success, not a lost lead
 

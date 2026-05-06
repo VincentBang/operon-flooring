@@ -1,31 +1,159 @@
 [
   {
-    "id": "DOC-QUOTE-REVIEW-001",
-    "title": "Document Quote Advisor Supabase setup steps for owner",
-    "category": "lead_capture",
+    "id": "COPY-QUOTE-001",
+    "title": "Simplify quote flow customer wording and remove redundant save/status copy",
+    "category": "conversion",
     "assigned_agent": "Codex",
-    "impact": 7,
+    "impact": 9,
     "confidence": 9,
     "effort": 1,
-    "priority_score": 63,
+    "priority_score": 81,
     "approval_required": false,
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/QUOTE_REVIEW_DATA_ENGINE.md"
+      "apps/web/quote.html"
     ],
     "validation_checklist": [
-      "SQL path listed",
-      "env vars listed",
-      "local fallback described"
+      "step 3 shorter",
+      "status copy hidden/simplified",
+      "customer labels plain English"
     ],
     "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: advisor docs/schema handoff updated and validated. | Completed locally: Quote Advisor Supabase setup documented in database implementation and data-engine docs.",
-    "updated_at": "2026-05-03T21:29:08.566Z"
+    "notes": "Completed this run: Step 3 labels and quote messages simplified; hidden helper strings cleaned.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   },
   {
-    "id": "CHATBOT-004",
-    "title": "Refresh chatbot memory from quote.html and Quote Advisor changes",
+    "id": "UI-POLICY-001",
+    "title": "Add decision-first customer UI policy to source-of-truth files",
+    "category": "conversion",
+    "assigned_agent": "Codex",
+    "impact": 9,
+    "confidence": 9,
+    "effort": 1,
+    "priority_score": 81,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/PROJECT_MEMORY.md",
+      "apps/web/AGENTS.md",
+      "apps/web/OPERON_BUSINESS_OBJECTIVES_MARKETING_SEO_BRIEF.md",
+      "apps/web/CODEX_PROJECT_MEMORY.md"
+    ],
+    "validation_checklist": [
+      "policy exists",
+      "quote page split reflected",
+      "no pricing logic touched"
+    ],
+    "status": "done",
+    "notes": "Completed this run: added policy for short labels, clear selected states, minimal helper text, and no backend-facing UI.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "COPY-PRODUCTS-001",
+    "title": "Remove product pending-price wording from customer catalogue flow",
+    "category": "product_catalogue",
+    "assigned_agent": "Codex",
+    "impact": 8,
+    "confidence": 9,
+    "effort": 1,
+    "priority_score": 72,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/products.html",
+      "apps/web/products.js"
+    ],
+    "validation_checklist": [
+      "no price pending label",
+      "selection flow intact",
+      "no pricing logic changed"
+    ],
+    "status": "done",
+    "notes": "Completed this run: catalogue status language now says product options/final details instead of pending-price labels.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "DOC-001",
+    "title": "Append overnight run summary to PROJECT_MEMORY",
+    "category": "documentation",
+    "assigned_agent": "Codex",
+    "impact": 8,
+    "confidence": 9,
+    "effort": 1,
+    "priority_score": 72,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/PROJECT_MEMORY.md"
+    ],
+    "validation_checklist": [
+      "tasks listed",
+      "files listed",
+      "validation listed"
+    ],
+    "status": "done",
+    "notes": "Completed this run: PROJECT_MEMORY updated with customer UI policy pass, files changed, validation, risks, and next tasks.",
+    "updated_at": "2026-05-05T10:05:47.327Z"
+  },
+  {
+    "id": "QA-FINAL-001",
+    "title": "Run final static validation suite after overnight changes",
+    "category": "qa",
+    "assigned_agent": "Codex",
+    "impact": 9,
+    "confidence": 8,
+    "effort": 1,
+    "priority_score": 72,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/quote.html",
+      "apps/web/products.js",
+      "apps/web/task_queue.json"
+    ],
+    "validation_checklist": [
+      "syntax checks pass",
+      "task queue parses",
+      "diff check passes"
+    ],
+    "status": "done",
+    "notes": "Completed this run: final static validation passed including task_queue parse, chatbot syntax, inline scripts, and git diff whitespace check.",
+    "updated_at": "2026-05-05T09:49:13.009Z"
+  },
+  {
+    "id": "QA-SCRIPT-001",
+    "title": "Run syntax and quote calculator validation after content cleanup",
+    "category": "qa",
+    "assigned_agent": "Codex",
+    "impact": 9,
+    "confidence": 8,
+    "effort": 1,
+    "priority_score": 72,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/quote.html",
+      "apps/web/products.js",
+      "apps/web/quoteCalculator.js"
+    ],
+    "validation_checklist": [
+      "quote calculator tests pass",
+      "inline scripts parse",
+      "diff check passes"
+    ],
+    "status": "done",
+    "notes": "Completed this run: products.js and quoteCalculator.js syntax checks passed; quote calculator validation passed; inline scripts parsed for touched pages; diff check passed.",
+    "updated_at": "2026-05-05T09:49:13.009Z"
+  },
+  {
+    "id": "CHATBOT-COPY-001",
+    "title": "Align chatbot visible wording with decision-first quote language",
     "category": "chatbot",
     "assigned_agent": "Chatbot Agent",
     "impact": 7,
@@ -36,21 +164,27 @@
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/chatbot/CHATBOT_MEMORY.md"
+      "apps/web/chatbot/chatbotKnowledge.js",
+      "apps/web/chatbot/CHATBOT_CONVERSATION_FLOWS.md",
+      "apps/web/chatbot/CHATBOT_MEMORY.md",
+      "apps/web/chatbot/CHATBOT_AGENT.md",
+      "apps/web/chatbot/CHATBOT_JSON_SCHEMA.md",
+      "apps/web/chatbot/chatbotPolicy.js",
+      "apps/web/chatbot/INTEGRATION.md"
     ],
     "validation_checklist": [
-      "quote page moved",
-      "advisor is scope-only",
-      "safe handoff noted"
+      "no chatbot price calculation",
+      "short route language",
+      "assistant-only rules intact"
     ],
     "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: chatbot memory refreshed for Quote Advisor, data payload, and route to quote.html?source=quote_review.",
-    "updated_at": "2026-05-03T21:29:08.573Z"
+    "notes": "Completed this run: chatbot wording now uses quote/quote flow language and keeps assistant-only boundaries.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   },
   {
-    "id": "SEO-SITEMAP-001",
-    "title": "Ensure sitemap includes quote-review and quote page canonical paths",
-    "category": "seo_infrastructure",
+    "id": "COPY-SEO-PAGES-001",
+    "title": "Replace customer-facing quote-wizard wording across suburb/product/blog pages",
+    "category": "seo_product_pages",
     "assigned_agent": "Codex",
     "impact": 7,
     "confidence": 9,
@@ -60,23 +194,86 @@
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/sitemap.xml",
-      "apps/web/quote-review.html",
-      "apps/web/quote.html"
+      "apps/web/auburn-flooring.html",
+      "apps/web/blacktown-flooring.html",
+      "apps/web/liverpool-flooring.html",
+      "apps/web/miranda-flooring.html",
+      "apps/web/parramatta-flooring.html",
+      "apps/web/flooring-cabramatta.html",
+      "apps/web/flooring-eastern-suburbs.html",
+      "apps/web/engineered-timber-flooring-sydney.html",
+      "apps/web/hybrid-flooring-sydney.html",
+      "apps/web/laminate-flooring-sydney.html",
+      "apps/web/blog/index.html",
+      "apps/web/blog/how-to-measure-floor-area.html",
+      "apps/web/blog/laminate-vs-hybrid.html",
+      "apps/web/blog/flooring-installation-cost-breakdown.html",
+      "apps/web/blog/do-you-need-floor-preparation.html"
     ],
     "validation_checklist": [
-      "quote-review included",
-      "quote included",
-      "canonical matches"
+      "quote wording simplified",
+      "internal terms removed",
+      "links still point to quote.html"
     ],
     "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: sitemap already includes quote.html and quote-review.html with canonical pages present.",
-    "updated_at": "2026-05-03T21:29:08.573Z"
+    "notes": "Completed this run: customer copy now says quote/quote flow instead of quote wizard where visible.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   },
   {
-    "id": "DATA-001",
-    "title": "Extend Supabase implementation doc with quote_reviews table relationship",
-    "category": "data_engine",
+    "id": "QA-COPY-SCAN-001",
+    "title": "Run targeted backend/customer wording audit after copy cleanup",
+    "category": "qa",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 9,
+    "effort": 1,
+    "priority_score": 63,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/**/*.html",
+      "apps/web/**/*.js",
+      "apps/web/**/*.md"
+    ],
+    "validation_checklist": [
+      "targeted rg scan clean",
+      "customer phrases removed",
+      "docs only exceptions handled"
+    ],
+    "status": "done",
+    "notes": "Completed this run: targeted scan for quote-wizard/pending-price/progress/backend labels returned clean.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "CHATBOT-003",
+    "title": "Refresh chatbot memory with decision-first UI policy",
+    "category": "chatbot",
+    "assigned_agent": "Chatbot Agent",
+    "impact": 6,
+    "confidence": 9,
+    "effort": 1,
+    "priority_score": 54,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/chatbot/CHATBOT_MEMORY.md",
+      "apps/web/chatbot/CHATBOT_AGENT.md"
+    ],
+    "validation_checklist": [
+      "policy included",
+      "assistant-only preserved",
+      "no pricing change"
+    ],
+    "status": "pending",
+    "notes": "Partly completed; can add explicit option-card policy later.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "SEO-MEMORY-001",
+    "title": "Correct stale homepage SEO strategy to quote CTA instead of embedded quote tool",
+    "category": "seo_infrastructure",
     "assigned_agent": "Codex",
     "impact": 6,
     "confidence": 9,
@@ -86,76 +283,151 @@
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/OPERON_SUPABASE_DATABASE_IMPLEMENTATION.md"
+      "apps/web/OPERON_SEO_STRATEGY.md",
+      "apps/web/OPERON_SEO_EXECUTION_PLAN.md",
+      "apps/web/QA_NOTES.md"
     ],
     "validation_checklist": [
-      "quote_reviews documented",
-      "quote_leads relationship noted",
-      "function path noted"
+      "homepage role corrected",
+      "QA note updated",
+      "no sitemap change needed"
     ],
     "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: advisor docs/schema handoff updated and validated. | Completed locally: quote_reviews relationship documented and quote.html handoff payload wired to lead hidden field.",
-    "updated_at": "2026-05-03T21:29:08.573Z"
+    "notes": "Completed this run: stale homepage quote-wizard guidance replaced with quote CTA / conversion path guidance.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   },
   {
-    "id": "QA-QUOTE-REVIEW-001",
-    "title": "Validate Quote Advisor localStorage handoff into quote lead payload",
-    "category": "lead_capture",
+    "id": "CONVERSION-001",
+    "title": "Reduce remaining helper text density in quote steps 1, 2, 4, 5 and 6",
+    "category": "conversion",
     "assigned_agent": "Codex",
-    "impact": 9,
-    "confidence": 9,
+    "impact": 8,
+    "confidence": 8,
     "effort": 2,
-    "priority_score": 40.5,
+    "priority_score": 32,
     "approval_required": false,
     "dependencies": [],
-    "risk_level": "medium",
+    "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/quote-review.html",
       "apps/web/quote.html"
     ],
     "validation_checklist": [
-      "latestQuoteReview saved",
-      "quote.html hidden payload populated",
-      "no auto-fill",
-      "no pricing logic touched"
-    ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: advisor docs/schema handoff updated and validated. | Completed locally: quote-review and quote.html executable scripts parse; advisor context handoff reads latestQuoteReview without visible auto-fill.",
-    "updated_at": "2026-05-03T21:29:08.573Z"
-  },
-  {
-    "id": "DATA-QUOTE-REVIEW-001",
-    "title": "Run Supabase quote_reviews migration in SQL editor",
-    "category": "data_engine",
-    "assigned_agent": "Codex",
-    "impact": 9,
-    "confidence": 8,
-    "effort": 2,
-    "priority_score": 36,
-    "approval_required": true,
-    "dependencies": [],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "supabase/migrations/20260504_quote_review_data_engine.sql"
-    ],
-    "validation_checklist": [
-      "table exists",
-      "RLS enabled",
-      "anon revoked",
-      "no destructive statements"
+      "only helpful helpers remain",
+      "no validation loss",
+      "mobile cards shorter"
     ],
     "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+    "notes": "Safe wording-only task, but should be done after visual QA confirms Step 3 direction.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "CONVERSION-002",
+    "title": "Make selected states consistent across all quote choice cards",
+    "category": "conversion",
+    "assigned_agent": "Codex",
+    "impact": 8,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 32,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/quote.html",
+      "apps/web/theme.css"
+    ],
+    "validation_checklist": [
+      "active state obvious",
+      "hover not noisy",
+      "mobile accessible"
+    ],
+    "status": "pending",
+    "notes": "Safe UI task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "CONVERSION-003",
+    "title": "Simplify quote summary labels for customer clarity",
+    "category": "conversion",
+    "assigned_agent": "Codex",
+    "impact": 8,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 32,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/quote.html"
+    ],
+    "validation_checklist": [
+      "no internal terms",
+      "totals still correct",
+      "line items customer-safe"
+    ],
+    "status": "pending",
+    "notes": "Avoid pricing logic changes.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "QUOTE-ACCURACY-001",
+    "title": "Validate stair line item customer wording with zero placeholder prices",
+    "category": "quote_accuracy",
+    "assigned_agent": "Codex",
+    "impact": 8,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 32,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/quoteCalculator.js",
+      "apps/web/quote.html"
+    ],
+    "validation_checklist": [
+      "no internal width threshold exposed",
+      "warning is customer-safe",
+      "placeholder risk documented"
+    ],
+    "status": "pending",
+    "notes": "Do not change stair pricing math without instruction.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "QUOTE-ACCURACY-003",
+    "title": "Audit install-only summary for chargeable/material area leakage",
+    "category": "quote_accuracy",
+    "assigned_agent": "Codex",
+    "impact": 8,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 32,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/quote.html",
+      "apps/web/quoteCalculator.js"
+    ],
+    "validation_checklist": [
+      "install-only hides material area",
+      "summary note clean",
+      "calculator unchanged unless bug found"
+    ],
+    "status": "pending",
+    "notes": "User previously flagged this area.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   },
   {
     "id": "CHATBOT-001",
-    "title": "Audit chatbot for accidental pricing claims",
+    "title": "Audit chatbot for accidental price or formula claims",
     "category": "chatbot",
     "assigned_agent": "Chatbot Agent",
-    "impact": 8,
+    "impact": 7,
     "confidence": 9,
     "effort": 2,
-    "priority_score": 36,
+    "priority_score": 31.5,
     "approval_required": false,
     "dependencies": [],
     "risk_level": "low",
@@ -163,217 +435,560 @@
       "apps/web/chatbot/"
     ],
     "validation_checklist": [
-      "no calculated prices",
-      "no internal rates",
-      "routes to quote.html/products.html/quote-review.html"
+      "no prices",
+      "no formulas",
+      "no internal rates"
     ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: chatbot tests and safety docs confirm no price calculation or internal rate exposure; floor plan context regression fixed.",
-    "updated_at": "2026-05-03T21:29:08.573Z"
+    "status": "pending",
+    "notes": "Safe chatbot-only task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   },
   {
-    "id": "LEAD-001",
-    "title": "Verify Netlify form hidden lead payload includes advisor context",
-    "category": "lead_capture",
+    "id": "QA-MOBILE-001",
+    "title": "Browser-review quote flow mobile after decision-first copy changes",
+    "category": "qa",
     "assigned_agent": "Codex",
     "impact": 9,
-    "confidence": 8,
+    "confidence": 7,
     "effort": 2,
-    "priority_score": 36,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/quote.html"
-    ],
-    "validation_checklist": [
-      "quote_review_payload_json populated",
-      "lead_payload_json includes quoteReview",
-      "file mode safe"
-    ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: quote.html hidden quote_review_payload_json now receives latestQuoteReview only when source=quote_review.",
-    "updated_at": "2026-05-03T21:29:08.573Z"
-  },
-  {
-    "id": "CONV-QUOTE-REVIEW-001",
-    "title": "Add visible advisor handoff confirmation on quote page",
-    "category": "conversion",
-    "assigned_agent": "Codex",
-    "impact": 8,
-    "confidence": 8,
-    "effort": 2,
-    "priority_score": 32,
+    "priority_score": 31.5,
     "approval_required": false,
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/quote.html"
-    ],
-    "validation_checklist": [
-      "message appears only from quote_review source",
-      "no form autofill",
-      "mobile safe"
-    ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: quote.html now shows a visible Quote Advisor handoff card when opened with source=quote_review, without auto-filling fields or changing calculation logic.",
-    "updated_at": "2026-05-03T22:28:50.887Z"
-  },
-  {
-    "id": "QA-LINKS-001",
-    "title": "Run broken-link audit across core pages",
-    "category": "seo_infrastructure",
-    "assigned_agent": "Codex",
-    "impact": 8,
-    "confidence": 8,
-    "effort": 2,
-    "priority_score": 32,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/products.html",
       "apps/web/quote.html",
-      "apps/web/quote-review.html",
-      "apps/web/sitemap.xml"
+      "apps/web/theme.css"
     ],
     "validation_checklist": [
-      "no broken internal links",
-      "quote CTAs point to quote.html",
-      "review CTAs point to quote-review.html"
+      "375px view checked",
+      "selected states obvious",
+      "no clipped controls"
     ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: local HTML link audit found only dynamic JS template false positives, no static quote-review/quote broken links.",
-    "updated_at": "2026-05-03T21:29:08.573Z"
+    "status": "pending",
+    "notes": "Requires browser/device visual QA.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   },
   {
     "id": "CHATBOT-002",
-    "title": "Update chatbot quote-review support flow for Quote Advisor",
+    "title": "Shorten chatbot product guidance responses to one question at a time",
     "category": "chatbot",
     "assigned_agent": "Chatbot Agent",
-    "impact": 8,
+    "impact": 7,
     "confidence": 8,
     "effort": 2,
-    "priority_score": 32,
+    "priority_score": 28,
     "approval_required": false,
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/chatbot/CHATBOT_CONVERSATION_FLOWS.md",
-      "apps/web/chatbot/CHATBOT_MEMORY.md"
+      "apps/web/chatbot/chatbotLogic.js",
+      "apps/web/chatbot/chatbotPrompts.js"
     ],
     "validation_checklist": [
       "short responses",
-      "one question at a time",
-      "routes to quote-review.html",
-      "no price comparison"
+      "one question",
+      "routes preserved"
     ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: Quote Advisor conversation flows updated for quick/detailed review support.",
-    "updated_at": "2026-05-03T21:29:08.573Z"
+    "status": "pending",
+    "notes": "Safe chatbot-only task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   },
   {
-    "id": "ANALYTICS-QUOTE-REVIEW-001",
-    "title": "Audit Quote Advisor analytics event names against tracking dashboard",
-    "category": "analytics_tracking",
+    "id": "CONVERSION-004",
+    "title": "Tighten final submit step language and next-action clarity",
+    "category": "conversion",
     "assigned_agent": "Codex",
     "impact": 7,
     "confidence": 8,
     "effort": 2,
     "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/quote.html",
+      "apps/web/thank-you.html"
+    ],
+    "validation_checklist": [
+      "submit CTA clear",
+      "thank-you next action clear",
+      "no email dependency"
+    ],
+    "status": "pending",
+    "notes": "Safe copy/UX task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "FLOORPLAN-001",
+    "title": "Simplify floorplan tool helper text using decision-first policy",
+    "category": "conversion",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/floorplan.html"
+    ],
+    "validation_checklist": [
+      "instructions short",
+      "no debug text visible",
+      "trace flow clear"
+    ],
+    "status": "pending",
+    "notes": "Safe copy task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "LEAD-001",
+    "title": "Confirm Netlify form hidden payload labels remain customer-safe",
+    "category": "lead_capture",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/quote.html",
+      "netlify/functions/save-quote-request.js"
+    ],
+    "validation_checklist": [
+      "payload still present",
+      "no exposed rate fields in UI",
+      "fallback intact"
+    ],
+    "status": "pending",
+    "notes": "Do not change backend contract unless necessary.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "PRODUCT-001",
+    "title": "Audit product cards for long feature text and hidden backend labels",
+    "category": "product_catalogue",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/products.html",
+      "apps/web/products.js"
+    ],
+    "validation_checklist": [
+      "card text short",
+      "no internal labels",
+      "selection still works"
+    ],
+    "status": "pending",
+    "notes": "Catalogue copy audit.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "PRODUCT-002",
+    "title": "Standardise product selected/unselected state on catalogue buttons",
+    "category": "product_catalogue",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/products.html",
+      "apps/web/seo-pages.css"
+    ],
+    "validation_checklist": [
+      "selected button toggles clearly",
+      "mobile button size sane",
+      "localStorage state unchanged"
+    ],
+    "status": "pending",
+    "notes": "No product logic changes unless needed.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "QA-MOBILE-002",
+    "title": "Browser-review product catalogue mobile cards and range popups",
+    "category": "qa",
+    "assigned_agent": "Codex",
+    "impact": 8,
+    "confidence": 7,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/products.html",
+      "apps/web/seo-pages.css"
+    ],
+    "validation_checklist": [
+      "cards fit screen",
+      "colour popup usable",
+      "selection toggle clear"
+    ],
+    "status": "pending",
+    "notes": "Requires browser/device visual QA.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "QA-MOBILE-003",
+    "title": "Browser-review floorplan tool mobile tracing workspace",
+    "category": "qa",
+    "assigned_agent": "Codex",
+    "impact": 8,
+    "confidence": 7,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/floorplan.html",
+      "apps/web/theme.css"
+    ],
+    "validation_checklist": [
+      "canvas usable",
+      "left controls not too tall",
+      "measured rooms visible"
+    ],
+    "status": "pending",
+    "notes": "Requires browser/device visual QA.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "QUOTE-ACCURACY-002",
+    "title": "Add QA scenario for stair width unknown customer warning",
+    "category": "quote_accuracy",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/tests/quoteCalculator.validation.js"
+    ],
+    "validation_checklist": [
+      "test passes",
+      "warning wording customer-safe",
+      "no rate exposed"
+    ],
+    "status": "pending",
+    "notes": "Safe test-only task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "QUOTE-REVIEW-001",
+    "title": "Apply decision-first copy policy to Quote Advisor input cards",
+    "category": "conversion",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/quote-review.html"
+    ],
+    "validation_checklist": [
+      "mode cards concise",
+      "output still expert",
+      "no price comparison"
+    ],
+    "status": "pending",
+    "notes": "Safe copy task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "QUOTE-REVIEW-002",
+    "title": "Validate Quote Advisor payload still saves after copy changes",
+    "category": "lead_capture",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/quote-review.html"
+    ],
+    "validation_checklist": [
+      "payload built",
+      "localStorage saved",
+      "quote.html route intact"
+    ],
+    "status": "pending",
+    "notes": "Script validation plus manual browser later.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "SEO-001",
+    "title": "Update stale SEO memory that still describes homepage as quote page",
+    "category": "seo_infrastructure",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/OPERON_SEO_STRATEGY.md",
+      "apps/web/CODEX_PROJECT_MEMORY.md"
+    ],
+    "validation_checklist": [
+      "homepage role current",
+      "quote.html canonical retained",
+      "no duplicate strategy"
+    ],
+    "status": "pending",
+    "notes": "Partly completed; remaining deeper stale references can be reviewed.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "SEO-002",
+    "title": "Audit internal links for quote.html and quote-review.html funnel paths",
+    "category": "seo_infrastructure",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 28,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/**/*.html"
+    ],
+    "validation_checklist": [
+      "all quote CTAs valid",
+      "review CTAs valid",
+      "no broken links"
+    ],
+    "status": "pending",
+    "notes": "Static link audit.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "QA-MOBILE-004",
+    "title": "Browser-review Quote Advisor mobile output hierarchy",
+    "category": "qa",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 7,
+    "effort": 2,
+    "priority_score": 24.5,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/quote-review.html",
+      "apps/web/theme.css"
+    ],
+    "validation_checklist": [
+      "dual mode readable",
+      "output cards compact",
+      "CTA visible"
+    ],
+    "status": "pending",
+    "notes": "Requires browser/device visual QA.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "THEME-001",
+    "title": "Audit global button sizes after mobile responsiveness pass",
+    "category": "conversion",
+    "assigned_agent": "Codex",
+    "impact": 7,
+    "confidence": 7,
+    "effort": 2,
+    "priority_score": 24.5,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/theme.css",
+      "apps/web/seo-pages.css"
+    ],
+    "validation_checklist": [
+      "buttons not oversized",
+      "tap targets OK",
+      "desktop unaffected"
+    ],
+    "status": "pending",
+    "notes": "CSS review task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "ANALYTICS-001",
+    "title": "Confirm CTA tracking labels still attach after copy/CTA changes",
+    "category": "analytics",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 24,
     "approval_required": false,
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
       "apps/web/tracking.js",
-      "apps/web/quote-review.html"
+      "apps/web/index.html",
+      "apps/web/quote.html"
     ],
     "validation_checklist": [
-      "events fire safely",
-      "no duplicate spam",
-      "GA4 missing safe"
+      "CTA attributes present",
+      "events fail safe",
+      "no console dependency"
     ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: Quote Advisor events audited; quote_review_start, mode_select, upload_attempt, complete, to_quote_click, payload_saved, and payload_save_error are tracked through safe OperonTracking/gtag fallback.",
-    "updated_at": "2026-05-03T22:28:50.902Z"
+    "status": "pending",
+    "notes": "Safe audit task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   },
   {
-    "id": "CHATBOT-003",
-    "title": "Improve chatbot missing information JSON mapping",
+    "id": "CHATBOT-004",
+    "title": "Improve quote-review support flow in chatbot without price comparison",
     "category": "chatbot",
     "assigned_agent": "Chatbot Agent",
-    "impact": 7,
+    "impact": 6,
     "confidence": 8,
     "effort": 2,
-    "priority_score": 28,
+    "priority_score": 24,
     "approval_required": false,
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/chatbot/CHATBOT_JSON_SCHEMA.md"
+      "apps/web/chatbot/CHATBOT_CONVERSATION_FLOWS.md",
+      "apps/web/chatbot/chatbotScenarios.js"
     ],
     "validation_checklist": [
-      "maps category area scope gaps",
-      "does not auto-fill",
-      "no pricing fields"
+      "scope clarity framing",
+      "routes to quote-review",
+      "no cheapest language"
     ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: missing-info mapping now preserves floorplan_upload when customers mention a floor plan; chatbot tests cover uncertain-area and floorplan prompts.",
-    "updated_at": "2026-05-03T22:53:10.007Z"
+    "status": "pending",
+    "notes": "Safe chatbot-only task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   },
   {
-    "id": "PRIVACY-001",
-    "title": "Check public privacy copy covers quote uploads and lead details",
+    "id": "CHATBOT-005",
+    "title": "Validate chatbot tests after copy policy update",
+    "category": "chatbot",
+    "assigned_agent": "Chatbot Agent",
+    "impact": 6,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 24,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/chatbot/tests/chatbot.test.js"
+    ],
+    "validation_checklist": [
+      "tests pass",
+      "guardrails pass",
+      "no live flow change"
+    ],
+    "status": "pending",
+    "notes": "May depend on local test command availability.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "FLOORPLAN-002",
+    "title": "Keep Quick Room Mode hidden and audit future-mode copy",
+    "category": "qa",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 24,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/floorplan.html",
+      "apps/web/QUICK_ROOM_MODE_MEMORY.md"
+    ],
+    "validation_checklist": [
+      "hidden remains hidden",
+      "no customer debug UI",
+      "memory accurate"
+    ],
+    "status": "pending",
+    "notes": "Avoid enabling experimental mode.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "LEAD-002",
+    "title": "Review thank-you lead stage UI for pushiness and mobile fit",
     "category": "lead_capture",
     "assigned_agent": "Codex",
-    "impact": 7,
+    "impact": 6,
     "confidence": 8,
     "effort": 2,
-    "priority_score": 28,
+    "priority_score": 24,
     "approval_required": false,
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/privacy-policy.html",
-      "apps/web/quote-review.html"
+      "apps/web/thank-you.html"
     ],
     "validation_checklist": [
-      "quote upload mention",
-      "personal details handling",
-      "no overexposed strategy"
+      "no pressure",
+      "stage stored safely",
+      "mobile CTA fit"
     ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: privacy copy now explicitly covers quote review document references and quote clarity use.",
-    "updated_at": "2026-05-03T22:28:50.902Z"
+    "status": "pending",
+    "notes": "Safe UX task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   },
   {
-    "id": "CONV-HOME-001",
-    "title": "Audit homepage above-fold CTA clarity after advisor changes",
-    "category": "conversion",
+    "id": "PRODUCT-003",
+    "title": "Review products page SEO section for clutter and duplicate wording",
+    "category": "product_catalogue",
     "assigned_agent": "Codex",
-    "impact": 7,
+    "impact": 6,
     "confidence": 8,
     "effort": 2,
-    "priority_score": 28,
+    "priority_score": 24,
     "approval_required": false,
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/index.html"
+      "apps/web/products.html"
     ],
     "validation_checklist": [
-      "instant quote primary",
-      "quote advisor secondary",
-      "mobile stack clean"
+      "SEO stays bottom",
+      "copy concise",
+      "internal links preserved"
     ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: homepage is quote-first with one H1, no quote form, dominant instant quote CTA, validation secondary CTA, and CTA tracking fixed to use OperonTracking.trackEvent.",
-    "updated_at": "2026-05-03T23:13:01.628Z"
+    "status": "pending",
+    "notes": "Safe content task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   },
   {
-    "id": "QA-SCHEMA-001",
-    "title": "Validate visible FAQ content against FAQ schema on changed pages",
+    "id": "SEO-003",
+    "title": "Check FAQ schema visible-text alignment after copy changes",
     "category": "seo_infrastructure",
     "assigned_agent": "Codex",
     "impact": 6,
@@ -384,838 +999,263 @@
     "dependencies": [],
     "risk_level": "low",
     "files_likely_affected": [
-      "apps/web/index.html",
-      "apps/web/quote-review.html"
+      "apps/web/*.html",
+      "apps/web/blog/*.html"
     ],
     "validation_checklist": [
-      "FAQ schema matches visible copy",
-      "one H1",
-      "canonical valid"
-    ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: quote-review FAQ schema added and JSON-LD validated; index/quote/quote-review FAQ schema questions match visible content.",
-    "updated_at": "2026-05-03T22:53:10.010Z"
-  },
-  {
-    "id": "QA-QUOTE-001",
-    "title": "Run full quote calculator validation suite",
-    "category": "quote_accuracy",
-    "assigned_agent": "Codex",
-    "impact": 10,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 23.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/quoteCalculator.js",
-      "apps/web/tests"
-    ],
-    "validation_checklist": [
-      "supply install includes labour",
-      "install only excludes material",
-      "removal disposal correct",
-      "no internal rates exposed"
-    ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: apps/web/tests/quoteCalculator.validation.js passed after changes.",
-    "updated_at": "2026-05-03T23:13:01.642Z"
-  },
-  {
-    "id": "PRODUCTS-001",
-    "title": "Audit product range selection from products page into quote.html",
-    "category": "product_catalogue",
-    "assigned_agent": "Codex",
-    "impact": 8,
-    "confidence": 8,
-    "effort": 3,
-    "priority_score": 21.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/products.html",
-      "apps/web/products.js",
-      "apps/web/productSelection.js"
-    ],
-    "validation_checklist": [
-      "hybrid range selection works",
-      "laminate range selection works",
-      "engineered colour selection works"
-    ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: product pages parse, productSelection exposes three hybrid ranges with default hybrid recommendation, and products.html uses selectedRangeId/selectedProductId handoff to quote.html.",
-    "updated_at": "2026-05-03T23:13:01.642Z"
-  },
-  {
-    "id": "DATA-QUOTE-REVIEW-002",
-    "title": "Validate save-quote-review function with Netlify dev once env vars are configured",
-    "category": "data_engine",
-    "assigned_agent": "Codex",
-    "impact": 9,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 21,
-    "approval_required": true,
-    "dependencies": [],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "netlify/functions/save-quote-review.js"
-    ],
-    "validation_checklist": [
-      "function returns ok",
-      "missing env fails safely",
-      "review_id returned when configured"
+      "FAQ visible text matches schema",
+      "no stale quote-wizard answer",
+      "no duplicate H1"
     ],
     "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "BLOG-001",
-    "title": "Create decision guide: what flooring quotes usually miss",
-    "category": "blog_content",
-    "assigned_agent": "Codex",
-    "impact": 7,
-    "confidence": 8,
-    "effort": 3,
-    "priority_score": 18.67,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/blog/"
-    ],
-    "validation_checklist": [
-      "links to quote-review",
-      "links to quote",
-      "no price comparison"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "BLOG-005",
-    "title": "Create guide: how to read a flooring quote",
-    "category": "blog_content",
-    "assigned_agent": "Codex",
-    "impact": 7,
-    "confidence": 8,
-    "effort": 3,
-    "priority_score": 18.67,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/blog/"
-    ],
-    "validation_checklist": [
-      "scope-first language",
-      "links to quote-review",
-      "not price comparison"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "SEO-PROD-001",
-    "title": "Refresh hybrid SEO page CTA path to Quote Advisor and Quote",
-    "category": "seo_product_pages",
-    "assigned_agent": "Codex",
-    "impact": 7,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 16.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/hybrid-flooring-sydney.html"
-    ],
-    "validation_checklist": [
-      "primary quote CTA",
-      "secondary advisor CTA",
-      "no duplicate content"
-    ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: hybrid SEO page final CTA now includes Quote Advisor path plus quote/product paths.",
-    "updated_at": "2026-05-03T23:29:41.862Z"
-  },
-  {
-    "id": "SEO-PROD-002",
-    "title": "Refresh laminate SEO page CTA path to Quote Advisor and Quote",
-    "category": "seo_product_pages",
-    "assigned_agent": "Codex",
-    "impact": 7,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 16.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/laminate-flooring-sydney.html"
-    ],
-    "validation_checklist": [
-      "primary quote CTA",
-      "secondary advisor CTA",
-      "no duplicate content"
-    ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: laminate SEO page final CTA now includes Quote Advisor path plus quote/product paths.",
-    "updated_at": "2026-05-03T23:29:41.869Z"
-  },
-  {
-    "id": "SEO-PROD-003",
-    "title": "Refresh engineered SEO page CTA path to Quote Advisor and Quote",
-    "category": "seo_product_pages",
-    "assigned_agent": "Codex",
-    "impact": 7,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 16.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/engineered-timber-flooring-sydney.html"
-    ],
-    "validation_checklist": [
-      "primary quote CTA",
-      "secondary advisor CTA",
-      "no duplicate content"
-    ],
-    "status": "done",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z | Completed locally: engineered SEO page final CTA now includes Quote Advisor path plus quote/product paths.",
-    "updated_at": "2026-05-03T23:29:41.869Z"
-  },
-  {
-    "id": "BLOG-002",
-    "title": "Create guide: removal vs disposal in flooring quotes",
-    "category": "blog_content",
-    "assigned_agent": "Codex",
-    "impact": 6,
-    "confidence": 8,
-    "effort": 3,
-    "priority_score": 16,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/blog/"
-    ],
-    "validation_checklist": [
-      "clear scope framing",
-      "links to quote-review",
-      "no internal rates"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "BLOG-003",
-    "title": "Create guide: floor preparation and quote changes",
-    "category": "blog_content",
-    "assigned_agent": "Codex",
-    "impact": 6,
-    "confidence": 8,
-    "effort": 3,
-    "priority_score": 16,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/blog/"
-    ],
-    "validation_checklist": [
-      "practical scope advice",
-      "links to quote-review",
-      "links to quote"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "BLOG-004",
-    "title": "Create guide: apartment access and flooring quotes",
-    "category": "blog_content",
-    "assigned_agent": "Codex",
-    "impact": 6,
-    "confidence": 8,
-    "effort": 3,
-    "priority_score": 16,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/blog/"
-    ],
-    "validation_checklist": [
-      "access/lift/parking advice",
-      "links to quote",
-      "local SEO support"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MOBILE-QA-001",
-    "title": "Browser QA mobile layout for quote, products, floorplan, quote review",
-    "category": "conversion",
-    "assigned_agent": "Codex",
-    "impact": 9,
-    "confidence": 7,
-    "effort": 4,
-    "priority_score": 15.75,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/quote.html",
-      "apps/web/products.html",
-      "apps/web/floorplan.html",
-      "apps/web/quote-review.html"
-    ],
-    "validation_checklist": [
-      "no horizontal overflow",
-      "CTA visible",
-      "forms usable",
-      "menus work"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "ANALYTICS-001",
-    "title": "Add dashboard placeholders for quote review events",
-    "category": "analytics_tracking",
-    "assigned_agent": "Codex",
-    "impact": 6,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 14,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "medium",
-    "files_likely_affected": [
-      "apps/web/dashboard.html",
-      "apps/web/tracking.js"
-    ],
-    "validation_checklist": [
-      "events visible",
-      "safe if missing data",
-      "no live API dependency"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
+    "notes": "Static schema audit.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   },
   {
     "id": "SUBURB-001",
-    "title": "Audit suburb pages for duplicate repeated blocks",
+    "title": "Review suburb pages for consistent quote/floorplan CTA wording",
     "category": "suburb_pages",
     "assigned_agent": "Codex",
     "impact": 6,
-    "confidence": 7,
-    "effort": 4,
-    "priority_score": 10.5,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/parramatta-flooring.html",
-      "apps/web/liverpool-flooring.html",
-      "apps/web/auburn-flooring.html",
-      "apps/web/blacktown-flooring.html",
-      "apps/web/miranda-flooring.html"
-    ],
-    "validation_checklist": [
-      "unique local context",
-      "internal links present",
-      "CTA present"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-031",
-    "title": "Maintenance QA candidate 31",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-032",
-    "title": "Maintenance QA candidate 32",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-033",
-    "title": "Maintenance QA candidate 33",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-034",
-    "title": "Maintenance QA candidate 34",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-035",
-    "title": "Maintenance QA candidate 35",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-036",
-    "title": "Maintenance QA candidate 36",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-037",
-    "title": "Maintenance QA candidate 37",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-038",
-    "title": "Maintenance QA candidate 38",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-039",
-    "title": "Maintenance QA candidate 39",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-040",
-    "title": "Maintenance QA candidate 40",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-041",
-    "title": "Maintenance QA candidate 41",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-042",
-    "title": "Maintenance QA candidate 42",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-043",
-    "title": "Maintenance QA candidate 43",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-044",
-    "title": "Maintenance QA candidate 44",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-045",
-    "title": "Maintenance QA candidate 45",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-046",
-    "title": "Maintenance QA candidate 46",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-047",
-    "title": "Maintenance QA candidate 47",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-048",
-    "title": "Maintenance QA candidate 48",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-049",
-    "title": "Maintenance QA candidate 49",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "MAINT-050",
-    "title": "Maintenance QA candidate 50",
-    "category": "qa_stability",
-    "assigned_agent": "Codex",
-    "impact": 4,
-    "confidence": 7,
-    "effort": 3,
-    "priority_score": 9.33,
-    "approval_required": false,
-    "dependencies": [],
-    "risk_level": "low",
-    "files_likely_affected": [
-      "apps/web/"
-    ],
-    "validation_checklist": [
-      "no console errors",
-      "no broken links",
-      "no pricing exposure"
-    ],
-    "status": "pending",
-    "notes": "Refreshed for continue execution overnight on 2026-05-03T20:24:44.211Z"
-  },
-  {
-    "id": "SECURITY-QUOTE-REVIEW-001",
-    "title": "Tighten Quote Advisor function failure response",
-    "category": "lead_capture",
-    "impact": 7,
-    "confidence": 9,
+    "confidence": 8,
     "effort": 2,
-    "priority_score": 31.5,
-    "files_likely_affected": [
-      "netlify/functions/save-quote-review.js"
-    ],
-    "risk_level": "low",
+    "priority_score": 24,
     "approval_required": false,
-    "status": "done",
-    "validation_checklist": [
-      "No raw Supabase error returned to browser",
-      "Function syntax passes",
-      "User flow still fails safely"
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/*-flooring.html"
     ],
-    "notes": "Completed locally: save-quote-review now returns generic failure messages and keeps detailed errors server-side only.",
-    "updated_at": "2026-05-03T21:29:08.573Z"
+    "validation_checklist": [
+      "local context retained",
+      "CTA wording plain",
+      "no duplicate copy"
+    ],
+    "status": "pending",
+    "notes": "Safe content task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "SUPABASE-001",
+    "title": "Document V2 pricing table visibility rules for customer-safe UI",
+    "category": "quote_accuracy",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 24,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/OPERON_SUPABASE_DATABASE_IMPLEMENTATION.md",
+      "apps/web/SUPABASE_V2_REBUILD_PLAN.md"
+    ],
+    "validation_checklist": [
+      "private tables noted",
+      "frontend fallback noted",
+      "no secrets"
+    ],
+    "status": "pending",
+    "notes": "Documentation only.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "SUPABASE-002",
+    "title": "Review save-quote-request function for customer-facing error messages",
+    "category": "lead_capture",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 24,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "netlify/functions/save-quote-request.js",
+      "apps/web/quote.html"
+    ],
+    "validation_checklist": [
+      "errors generic",
+      "server logs detailed",
+      "no secrets returned"
+    ],
+    "status": "pending",
+    "notes": "No live deploy.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "THANKYOU-001",
+    "title": "Reduce thank-you page text density and strengthen call/product CTAs",
+    "category": "conversion",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 24,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/thank-you.html"
+    ],
+    "validation_checklist": [
+      "next steps clear",
+      "mobile CTA visible",
+      "no fake urgency"
+    ],
+    "status": "pending",
+    "notes": "Safe conversion task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "THEME-002",
+    "title": "Check all primary/secondary CTA colour consistency",
+    "category": "conversion",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 24,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/theme.css",
+      "apps/web/seo-pages.css",
+      "apps/web/*.html"
+    ],
+    "validation_checklist": [
+      "charcoal primary",
+      "bronze subtle only",
+      "no old blue CTAs"
+    ],
+    "status": "pending",
+    "notes": "Safe CSS audit.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "IMAGE-001",
+    "title": "Audit homepage hero image crop on mobile and desktop",
+    "category": "conversion",
+    "assigned_agent": "Codex",
+    "impact": 6,
+    "confidence": 7,
+    "effort": 2,
+    "priority_score": 21,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/index.html",
+      "apps/web/theme.css"
+    ],
+    "validation_checklist": [
+      "hero image attractive",
+      "no bad crop",
+      "CTA above fold"
+    ],
+    "status": "pending",
+    "notes": "Needs browser visual QA.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "ANALYTICS-002",
+    "title": "Add missing tracking note for decision-first UI policy",
+    "category": "analytics",
+    "assigned_agent": "Codex",
+    "impact": 5,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 20,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/tracking.js",
+      "apps/web/PROJECT_MEMORY.md"
+    ],
+    "validation_checklist": [
+      "no event spam",
+      "policy logged",
+      "no GA dependency"
+    ],
+    "status": "pending",
+    "notes": "Documentation/audit task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "BLOG-001",
+    "title": "Audit blog hub CTA density under decision-first policy",
+    "category": "blog",
+    "assigned_agent": "Codex",
+    "impact": 5,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 20,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/blog/index.html"
+    ],
+    "validation_checklist": [
+      "links useful",
+      "not cluttered",
+      "quote path clear"
+    ],
+    "status": "pending",
+    "notes": "Safe content task.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "BLOG-002",
+    "title": "Clean blog quote CTAs that use tool-heavy wording",
+    "category": "blog",
+    "assigned_agent": "Codex",
+    "impact": 5,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 20,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/blog/*.html"
+    ],
+    "validation_checklist": [
+      "plain quote wording",
+      "links preserved",
+      "schema unaffected"
+    ],
+    "status": "pending",
+    "notes": "Partly completed; remaining pass optional.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
+  },
+  {
+    "id": "EMAIL-001",
+    "title": "Document email send env vars without enabling outbound send",
+    "category": "lead_capture",
+    "assigned_agent": "Codex",
+    "impact": 5,
+    "confidence": 8,
+    "effort": 2,
+    "priority_score": 20,
+    "approval_required": false,
+    "dependencies": [],
+    "risk_level": "low",
+    "files_likely_affected": [
+      "apps/web/EMAIL_SETUP.md",
+      ".env.example"
+    ],
+    "validation_checklist": [
+      "no secrets",
+      "Resend vars listed",
+      "sending disabled by default"
+    ],
+    "status": "pending",
+    "notes": "Do not enable real email.",
+    "updated_at": "2026-05-05T09:31:48.697Z"
   }
 ]

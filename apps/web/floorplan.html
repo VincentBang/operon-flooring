@@ -67,7 +67,7 @@
       --radius-xl: 26px;
       --radius-lg: 18px;
       --radius-md: 14px;
-      --max-width: 1100px;
+      --max-width: 1240px;
       --font-sans: "Inter", "Segoe UI", BlinkMacSystemFont, -apple-system, sans-serif;
     }
 
@@ -470,6 +470,81 @@
       border: 1px solid rgba(30, 58, 138, 0.1);
     }
 
+    .upload-flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .upload-flow-step,
+    .confidence-item {
+      padding: 10px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(17, 17, 17, 0.08);
+    }
+
+    .upload-flow-step strong,
+    .confidence-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+
+    .upload-flow-step span,
+    .confidence-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+
+    .upload-flow-step.is-active {
+      border-color: rgba(31, 111, 139, 0.32);
+      background: rgba(234, 244, 247, 0.96);
+    }
+
+    .upload-flow-step.is-complete {
+      border-color: rgba(69, 107, 92, 0.22);
+      background: rgba(238, 246, 242, 0.9);
+    }
+
+    .confidence-panel {
+      display: grid;
+      gap: 12px;
+    }
+
+    .confidence-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .confidence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .confidence-item.is-complete {
+      background: rgba(238, 246, 242, 0.9);
+      border-color: rgba(69, 107, 92, 0.2);
+    }
+
+    .confidence-item.is-warning {
+      background: rgba(181, 110, 82, 0.08);
+      border-color: rgba(181, 110, 82, 0.18);
+    }
+
+    .room-label-row {
+      display: grid;
+      grid-template-columns: minmax(0, 0.78fr) minmax(0, 1fr);
+      gap: 10px;
+    }
+
     .section-card + .section-card {
       margin-top: 20px;
     }
@@ -581,7 +656,7 @@
 
     .canvas-shell {
       margin-top: 0;
-      padding: 16px;
+      padding: 12px;
       border-radius: 16px;
       background: rgba(245, 241, 235, 0.64);
       border: 1px solid var(--line);
@@ -591,7 +666,10 @@
 
     .canvas-stage {
       position: relative;
-      overflow: auto;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       max-height: 860px;
       border-radius: 16px;
       background: #f8f9fb;
@@ -946,6 +1024,10 @@
       padding: 0 0 60px;
     }
 
+    #measurementTool {
+      scroll-margin-top: 92px;
+    }
+
     .tool-header {
       display: grid;
       gap: 10px;
@@ -969,8 +1051,8 @@
 
     .workspace-main {
       display: grid;
-      grid-template-columns: minmax(300px, 340px) minmax(0, 1fr);
-      gap: 20px;
+      grid-template-columns: minmax(248px, 296px) minmax(0, 1fr);
+      gap: 16px;
       align-items: start;
       min-width: 0;
       flex: 1;
@@ -981,6 +1063,7 @@
       gap: 12px;
       min-width: 0;
       align-content: start;
+      scrollbar-gutter: stable;
     }
 
     .workspace-stage {
@@ -1053,6 +1136,13 @@
       margin-bottom: 14px;
     }
 
+    body.floorplan-workspace-active {
+      --max-width: 1360px;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(181, 110, 82, 0.07), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #f9fbfa 100%);
+    }
+
     body.floorplan-workspace-active #floorplanHero,
     body.floorplan-workspace-active #floorplanGuideSection,
     body.floorplan-workspace-active #floorplanSupportSection {
@@ -1060,25 +1150,53 @@
     }
 
     body.floorplan-workspace-active .tool-section {
-      padding-top: 20px;
+      padding-top: 8px;
+      padding-bottom: 16px;
     }
 
     body.floorplan-workspace-active .workspace-card,
     body.floorplan-workspace-active .workspace-summary {
-      padding: 22px;
+      padding: 14px;
+    }
+
+    body.floorplan-workspace-active .workspace-card {
+      height: clamp(616px, calc((100dvh - 205px) * 1.1), 792px);
+      min-height: 0;
     }
 
     body.floorplan-workspace-active .tool-header {
-      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    body.floorplan-workspace-active .tool-header .eyebrow {
+      justify-self: start;
+      min-height: 30px;
+      padding: 7px 12px;
+    }
+
+    body.floorplan-workspace-active .tool-header h2 {
+      font-size: clamp(1.2rem, 1.55vw, 1.45rem);
+      letter-spacing: -0.02em;
     }
 
     body.floorplan-workspace-active .tool-header p {
       display: none;
     }
 
+    body.floorplan-workspace-active .tool-panel-shell {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100dvh - 98px);
+      overflow: auto;
+      padding-right: 2px;
+    }
+
     body.floorplan-workspace-active .tool-subsection {
       gap: 10px;
-      padding: 14px;
+      padding: 11px;
     }
 
     body.floorplan-workspace-active .tool-subsection-header .helper,
@@ -1092,22 +1210,85 @@
 
     body.floorplan-workspace-active .field input,
     body.floorplan-workspace-active .field select {
-      min-height: 46px;
-      padding: 12px 13px;
+      min-height: 44px;
+      padding: 11px 12px;
+    }
+
+    body.floorplan-workspace-active .field {
+      margin-bottom: 8px;
+    }
+
+    body.floorplan-workspace-active .tool-panel-shell > .tool-subsection:first-child {
+      gap: 8px;
+    }
+
+    body.floorplan-workspace-active .tool-panel-shell > .tool-subsection:first-child .upload-flow,
+    body.floorplan-workspace-active .tool-panel-shell > .tool-subsection:first-child .upload-field {
+      display: none;
+    }
+
+    body.floorplan-workspace-active .tool-panel-shell > .tool-subsection:first-child .tool-subsection-title::after {
+      content: " loaded";
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    body.floorplan-workspace-active .workspace-main {
+      align-items: stretch;
+      min-height: 0;
+    }
+
+    body.floorplan-workspace-active .workspace-stage {
+      grid-template-rows: auto auto minmax(0, 1fr);
+      align-content: stretch;
+      min-height: 0;
+    }
+
+    body.floorplan-workspace-active .canvas-shell {
+      min-height: 0;
+      height: 100%;
+    }
+
+    body.floorplan-workspace-active .room-label-row {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    body.floorplan-workspace-active .upload-flow-step strong {
+      font-size: 0.86rem;
+      margin-bottom: 2px;
+    }
+
+    body.floorplan-workspace-active .upload-flow-step span {
+      font-size: 0.76rem;
+    }
+
+    body.floorplan-workspace-active .tool-subsection .status {
+      padding: 9px 10px;
+      font-size: 0.88rem;
+      line-height: 1.45;
     }
 
     body.floorplan-workspace-active .tool-button-row .button,
     body.floorplan-workspace-active .tool-button-row .button-secondary,
     body.floorplan-workspace-active .tool-button-row .button-quiet,
     body.floorplan-workspace-active .tool-button-row .button-danger {
-      min-height: 44px;
-      padding: 10px 12px;
-      font-size: 0.95rem;
+      min-height: 39px;
+      padding: 8px 9px;
+      font-size: 0.86rem;
     }
 
     body.floorplan-workspace-active .canvas-stage {
-      min-height: 520px;
-      max-height: calc(100vh - 260px);
+      height: 100%;
+      min-height: 0;
+      max-height: none;
+    }
+
+    body.floorplan-workspace-active .canvas-stage canvas {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 100%;
     }
 
     body.floorplan-workspace-active .workspace-summary .summary-heading p {
@@ -1137,6 +1318,7 @@
       .grid-3,
       .step-grid,
       .hero-stats,
+      .upload-flow,
       .footer-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -1159,13 +1341,25 @@
         grid-template-columns: 1fr;
       }
 
+      body.floorplan-workspace-active .workspace-card {
+        min-height: 0;
+      }
+
+      body.floorplan-workspace-active .tool-panel-shell {
+        position: static;
+        max-height: none;
+        overflow: visible;
+        padding-right: 0;
+      }
+
       body.floorplan-workspace-active .workspace-summary .summary-heading p {
         display: none;
       }
 
       body.floorplan-workspace-active .canvas-stage {
-        min-height: 500px;
-        max-height: 60vh;
+        height: min(56dvh, 500px);
+        min-height: 420px;
+        max-height: 56dvh;
       }
     }
 
@@ -1300,6 +1494,9 @@
 
       .step-grid,
       .hero-stats,
+      .upload-flow,
+      .confidence-grid,
+      .room-label-row,
       .footer-grid {
         grid-template-columns: 1fr;
       }
@@ -1317,11 +1514,13 @@
       .hero-card,
       .section-card,
       .summary-card {
-        padding: 24px;
+        padding: 18px;
+        border-radius: 18px;
       }
 
       .tool-subsection {
-        padding: 14px;
+        padding: 12px;
+        border-radius: 16px;
       }
 
       h1 {
@@ -1343,6 +1542,11 @@
       .tool-button-row,
       .tool-button-row.compact {
         grid-template-columns: 1fr;
+      }
+
+      .workspace-main {
+        grid-template-columns: 1fr;
+        gap: 14px;
       }
 
       .rooms-table {
@@ -1415,15 +1619,15 @@
 
       body.floorplan-workspace-active .workspace-card,
       body.floorplan-workspace-active .workspace-summary {
-        padding: 18px;
+        padding: 14px;
       }
 
       body.floorplan-workspace-active .summary-total {
-        font-size: 2.8rem;
+        font-size: clamp(2.1rem, 13vw, 2.8rem);
       }
 
       body.floorplan-workspace-active .metric-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: 1fr;
         gap: 10px;
       }
 
@@ -1434,7 +1638,27 @@
 
       body.floorplan-workspace-active .canvas-stage {
         min-height: 360px;
-        max-height: 52vh;
+        max-height: 56dvh;
+      }
+
+      body.floorplan-workspace-active .canvas-stage canvas {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .tool-button-row,
+      .tool-button-row.compact,
+      body.floorplan-workspace-active .tool-button-row,
+      body.floorplan-workspace-active .tool-button-row.compact {
+        grid-template-columns: 1fr;
+      }
+
+      body.floorplan-workspace-active .canvas-stage {
+        min-height: 330px;
       }
     }
   </style>
@@ -1470,20 +1694,20 @@
           <div class="hero-content-row">
             <div class="hero-copy-block">
               <h1>Measure your flooring area from a floor plan.</h1>
-              <p>Upload a floor plan, set scale from a known wall, trace the flooring rooms, and send the selected area straight into your quote.</p>
+              <p>Upload a floor plan, set scale from a known wall, label each room, trace the flooring areas, and send the selected total straight into your quote.</p>
               <div class="hero-actions" style="margin-top: 24px;">
                 <a class="button" href="#measurementTool">Start measuring</a>
                 <a class="button-secondary" data-quote-return-link href="quote.html">Open quote</a>
               </div>
-              <p class="helper" style="margin-top: 14px;">Use this when you want a clearer flooring area before requesting the final quote.</p>
+              <p class="helper" style="margin-top: 14px;">Use this when you want a clearer area before requesting the final quote. The confidence check will flag whether the measurement is ready to rely on.</p>
             </div>
 
             <aside class="hero-mini-panel" aria-label="Measurement summary">
-              <strong>Upload → Scale → Trace → Quote</strong>
+              <strong>Upload, scale, label, trace, quote</strong>
               <ul class="hero-mini-steps">
                 <li><span>1</span> Upload the floor plan</li>
                 <li><span>2</span> Set scale from a known wall</li>
-                <li><span>3</span> Trace the flooring rooms</li>
+                <li><span>3</span> Label and trace rooms</li>
                 <li><span>4</span> Use the selected area in quote</li>
               </ul>
             </aside>
@@ -1508,14 +1732,13 @@
             </div>
             <div class="step-card">
               <strong>3. Trace room</strong>
-              <span>Trace around the room. Return near the start point to close it automatically.</span>
+              <span>Pick a room label, trace around the room, then return near the start point to close it automatically.</span>
             </div>
             <div class="step-card">
               <strong>4. Use area in quote</strong>
               <span>Select the flooring rooms only, then send the total area into your quote.</span>
             </div>
           </div>
-          <div class="process-banner" id="globalStatus">Start with Step 1. Set scale, then trace each flooring room and send the selected area into your quote.</div>
         </article>
       </div>
     </section>
@@ -1526,7 +1749,7 @@
           <div class="tool-header">
             <span class="eyebrow">Measurement Tool</span>
             <h2>Upload, set scale and trace rooms</h2>
-            <p>Upload the plan, set scale once, then trace the rooms where flooring will be installed.</p>
+            <p>Upload the plan, set scale once, then label and trace the rooms where flooring will be installed.</p>
           </div>
 
           <div class="status hidden" id="resumeMeasurementBanner" style="margin-bottom: 20px;">
@@ -1543,7 +1766,7 @@
               <div class="tool-subsection">
                 <div class="tool-subsection-header">
                     <h3 class="tool-subsection-title">1. Upload floor plan</h3>
-                    <p class="helper" style="margin: 0;">Use a PDF, JPG or PNG. Uploading another file replaces the current plan.</p>
+                    <p class="helper" style="margin: 0;">Use a PDF, JPG or PNG. A plan with room walls and one known dimension gives the best result.</p>
                 </div>
                 <div class="field upload-field" style="margin-top: 0;">
                   <label for="planUpload">Choose plan file</label>
@@ -1571,11 +1794,26 @@
                 <div class="tool-subsection">
                   <div class="tool-subsection-header">
                     <h3 class="tool-subsection-title">2. Set scale and trace</h3>
-                    <p class="helper" style="margin: 0;">Optional room name. Set scale once, then trace each flooring room.</p>
+                    <p class="helper" style="margin: 0;">Set scale once, choose a room label, then trace each flooring room.</p>
                   </div>
-                  <div class="field">
-                    <label for="traceRoomName">Room name</label>
-                    <input id="traceRoomName" type="text" placeholder="Leave blank to auto-name">
+                  <div class="room-label-row">
+                    <div class="field">
+                      <label for="traceRoomLabel">Room label</label>
+                      <select id="traceRoomLabel">
+                        <option value="Living">Living</option>
+                        <option value="Bedroom">Bedroom</option>
+                        <option value="Kitchen">Kitchen</option>
+                        <option value="Dining">Dining</option>
+                        <option value="Hallway">Hallway</option>
+                        <option value="Study">Study</option>
+                        <option value="Rumpus">Rumpus</option>
+                        <option value="Other">Other room</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label for="traceRoomName">Custom room name</label>
+                      <input id="traceRoomName" type="text" placeholder="Optional, e.g. Master bedroom">
+                    </div>
                   </div>
 
                   <div class="tool-button-row compact">
@@ -1703,6 +1941,20 @@
             </div>
           </div>
 
+          <div class="summary-box confidence-panel">
+            <div class="confidence-head">
+              <strong>Measurement confidence</strong>
+              <span class="pill warn" id="measurementConfidenceTag">Low</span>
+            </div>
+            <p class="helper" id="measurementConfidenceText" style="margin: 0;">Upload a plan, set scale and trace at least one included room before using the area in quote.</p>
+            <div class="confidence-grid" id="confidenceChecklist">
+              <div class="confidence-item is-warning"><strong>Plan</strong><span>No plan uploaded yet.</span></div>
+              <div class="confidence-item is-warning"><strong>Scale</strong><span>Scale is not set.</span></div>
+              <div class="confidence-item is-warning"><strong>Rooms</strong><span>No rooms traced yet.</span></div>
+              <div class="confidence-item is-warning"><strong>Quote area</strong><span>No included flooring area yet.</span></div>
+            </div>
+          </div>
+
           <details class="summary-box room-list-panel" open>
             <summary>
               <strong>Measured rooms</strong>
@@ -1797,6 +2049,9 @@
     const AUTO_CLOSE_THRESHOLD_PX = 16;
     const HANDLE_HIT_RADIUS = 16;
     const EDGE_HANDLE_HIT_RADIUS = 14;
+    const DEFAULT_CANVAS_WIDTH = 1200;
+    const DEFAULT_CANVAS_HEIGHT = 860;
+    const READABLE_CANVAS_LONG_EDGE = 1600;
     const canvas = document.getElementById("planCanvas");
     const context = canvas.getContext("2d");
 
@@ -1816,6 +2071,7 @@
       canvasStatus: document.getElementById("canvasStatus"),
       canvasShell: document.getElementById("canvasShell"),
       traceStatus: document.getElementById("traceStatus"),
+      traceRoomLabel: document.getElementById("traceRoomLabel"),
       traceRoomName: document.getElementById("traceRoomName"),
       setScaleButton: document.getElementById("setScaleButton"),
       resetScaleButton: document.getElementById("resetScaleButton"),
@@ -1846,6 +2102,12 @@
       scaleReadout: document.getElementById("scaleReadout"),
       flooringCount: document.getElementById("flooringCount"),
       excludedCount: document.getElementById("excludedCount"),
+      measurementConfidenceTag: document.getElementById("measurementConfidenceTag"),
+      measurementConfidenceText: document.getElementById("measurementConfidenceText"),
+      confidenceChecklist: document.getElementById("confidenceChecklist"),
+      uploadFlowFile: document.getElementById("uploadFlowFile"),
+      uploadFlowScale: document.getElementById("uploadFlowScale"),
+      uploadFlowRooms: document.getElementById("uploadFlowRooms"),
       useAreaInQuoteButton: document.getElementById("useAreaInQuoteButton"),
       clearRoomsButton: document.getElementById("clearRoomsButton"),
       roomsTable: document.getElementById("roomsTable"),
@@ -1892,7 +2154,13 @@
         return;
       }
       window.requestAnimationFrame(function () {
-        tool.scrollIntoView({ behavior: "smooth", block: "start" });
+        const header = document.querySelector(".site-header");
+        const headerHeight = header ? header.getBoundingClientRect().height : 0;
+        const top = tool.getBoundingClientRect().top + window.scrollY - headerHeight - 10;
+        window.scrollTo({
+          top: Math.max(0, top),
+          behavior: "smooth"
+        });
       });
     }
 
@@ -1964,6 +2232,11 @@
       return roundTo(value || 0, 2).toFixed(2) + " m²";
     }
 
+    function formatCanvasRoomLabel(room) {
+      const label = (room && room.name ? room.name : "Room") + " · " + formatArea(room && room.areaM2);
+      return label.length > 42 ? label.slice(0, 39) + "..." : label;
+    }
+
     function calculateQuickSelectedTotalArea() {
       return quickRoomState.suggestedRooms.reduce(function (total, room) {
         return room.included ? total + (room.areaM2 || 0) : total;
@@ -1991,6 +2264,9 @@
     }
 
     function setGlobalStatus(message) {
+      if (!dom.globalStatus) {
+        return;
+      }
       dom.globalStatus.textContent = message;
     }
 
@@ -2015,6 +2291,101 @@
 
       dom.traceStatus.classList.remove("status-next");
       dom.traceStatus.textContent = message;
+    }
+
+    function setUploadFlowStep(element, stateName) {
+      if (!element) {
+        return;
+      }
+      element.classList.toggle("is-active", stateName === "active");
+      element.classList.toggle("is-complete", stateName === "complete");
+    }
+
+    function renderUploadFlow() {
+      const hasPlan = !!state.image;
+      const hasScale = !!state.pixelsPerMetre;
+      const hasRooms = state.rooms.length > 0;
+      setUploadFlowStep(dom.uploadFlowFile, hasPlan ? "complete" : "active");
+      setUploadFlowStep(dom.uploadFlowScale, hasScale ? "complete" : hasPlan ? "active" : "");
+      setUploadFlowStep(dom.uploadFlowRooms, hasRooms ? "complete" : hasScale ? "active" : "");
+    }
+
+    function getMeasurementConfidence() {
+      const hasPlan = !!state.image;
+      const hasScale = !!state.pixelsPerMetre;
+      const includedRooms = state.rooms.filter(function (room) {
+        return room.includeInQuote;
+      });
+      const selectedArea = calculateSelectedTotalArea();
+      const checklist = [
+        {
+          title: "Plan",
+          complete: hasPlan,
+          text: hasPlan ? "Floor plan loaded: " + (state.fileName || "uploaded plan") + "." : "No plan uploaded yet."
+        },
+        {
+          title: "Scale",
+          complete: hasScale,
+          text: hasScale ? "Scale is set from a known distance." : "Set scale from a known wall length."
+        },
+        {
+          title: "Rooms",
+          complete: state.rooms.length > 0,
+          text: state.rooms.length ? state.rooms.length + " room" + (state.rooms.length === 1 ? "" : "s") + " traced and labelled." : "No rooms traced yet."
+        },
+        {
+          title: "Quote area",
+          complete: selectedArea > 0 && includedRooms.length > 0,
+          text: selectedArea > 0 ? formatArea(selectedArea) + " selected for quote." : "No included flooring area yet."
+        }
+      ];
+      const completeCount = checklist.filter(function (item) {
+        return item.complete;
+      }).length;
+
+      if (completeCount === checklist.length && includedRooms.length >= 2) {
+        return {
+          level: "High",
+          className: "good",
+          text: "Good measurement confidence. Scale is set and multiple included rooms are traced. Final quote still depends on site confirmation.",
+          checklist: checklist
+        };
+      }
+      if (hasPlan && hasScale && selectedArea > 0) {
+        return {
+          level: "Medium",
+          className: "warn",
+          text: "Usable measurement confidence. Review room labels and included rooms before sending the area into your quote.",
+          checklist: checklist
+        };
+      }
+      return {
+        level: "Low",
+        className: "warn",
+        text: "Low measurement confidence. Upload a plan, set scale and trace at least one included room before using the area in quote.",
+        checklist: checklist
+      };
+    }
+
+    function renderMeasurementConfidence() {
+      if (!dom.measurementConfidenceTag || !dom.confidenceChecklist) {
+        return;
+      }
+      const confidence = getMeasurementConfidence();
+      dom.measurementConfidenceTag.textContent = confidence.level;
+      dom.measurementConfidenceTag.className = "pill " + confidence.className;
+      dom.measurementConfidenceText.textContent = confidence.text;
+      dom.confidenceChecklist.innerHTML = confidence.checklist.map(function (item) {
+        return '<div class="confidence-item ' + (item.complete ? "is-complete" : "is-warning") + '">' +
+          "<strong>" + escapeHtml(item.title) + "</strong>" +
+          "<span>" + escapeHtml(item.text) + "</span>" +
+          "</div>";
+      }).join("");
+    }
+
+    function renderMeasurementGuidance() {
+      renderUploadFlow();
+      renderMeasurementConfidence();
     }
 
     function clearStoredFloorplanImageState(options) {
@@ -2074,6 +2445,8 @@
             selectedRoomId: draft.selectedRoomId || "",
             pixelsPerMetre: Number(draft.pixelsPerMetre || 0),
             fileName: draft.fileName || "",
+            canvasWidth: Number(draft.canvasWidth || DEFAULT_CANVAS_WIDTH),
+            canvasHeight: Number(draft.canvasHeight || DEFAULT_CANVAS_HEIGHT),
             area: typeof draft.selectedTotalArea === "number" ? draft.selectedTotalArea : draft.rooms.reduce(function (sum, room) {
               return room.includeInQuote ? sum + (room.areaM2 || 0) : sum;
             }, 0)
@@ -2092,6 +2465,8 @@
             rooms: rooms,
             roomCounter: rooms.length + 1,
             selectedRoomId: "",
+            canvasWidth: DEFAULT_CANVAS_WIDTH,
+            canvasHeight: DEFAULT_CANVAS_HEIGHT,
             area: storedArea
           };
         }
@@ -2110,6 +2485,8 @@
           rooms: state.rooms,
           roomCounter: state.roomCounter,
           selectedRoomId: state.selectedRoomId,
+          canvasWidth: canvas.width,
+          canvasHeight: canvas.height,
           selectedTotalArea: calculateSelectedTotalArea()
         }));
       } catch (error) {
@@ -2141,6 +2518,76 @@
       createEmptyCanvasState();
     }
 
+    function getReadableCanvasSize(image) {
+      if (!image || !image.width || !image.height) {
+        return {
+          width: DEFAULT_CANVAS_WIDTH,
+          height: DEFAULT_CANVAS_HEIGHT
+        };
+      }
+
+      const ratio = image.width / image.height;
+      const longEdge = READABLE_CANVAS_LONG_EDGE;
+      const width = image.width >= image.height ? longEdge : Math.round(longEdge * ratio);
+      const height = image.height >= image.width ? longEdge : Math.round(longEdge / ratio);
+
+      return {
+        width: Math.max(720, Math.round(width)),
+        height: Math.max(720, Math.round(height))
+      };
+    }
+
+    function scalePoint(point, scaleX, scaleY) {
+      return {
+        x: roundTo((Number(point.x) || 0) * scaleX, 3),
+        y: roundTo((Number(point.y) || 0) * scaleY, 3)
+      };
+    }
+
+    function scaleStoredGeometry(previousWidth, previousHeight, nextWidth, nextHeight) {
+      const safePreviousWidth = Number(previousWidth) || DEFAULT_CANVAS_WIDTH;
+      const safePreviousHeight = Number(previousHeight) || DEFAULT_CANVAS_HEIGHT;
+      if (!safePreviousWidth || !safePreviousHeight || (safePreviousWidth === nextWidth && safePreviousHeight === nextHeight)) {
+        return;
+      }
+
+      const scaleX = nextWidth / safePreviousWidth;
+      const scaleY = nextHeight / safePreviousHeight;
+      state.scalePoints = state.scalePoints.map(function (point) {
+        return scalePoint(point, scaleX, scaleY);
+      });
+      state.tracePoints = state.tracePoints.map(function (point) {
+        return scalePoint(point, scaleX, scaleY);
+      });
+      state.rooms = state.rooms.map(function (room) {
+        const nextRoom = Object.assign({}, room, {
+          points: Array.isArray(room.points) ? room.points.map(function (point) {
+            return scalePoint(point, scaleX, scaleY);
+          }) : []
+        });
+        nextRoom.centroid = calculatePolygonCentroid(nextRoom.points);
+        return nextRoom;
+      });
+      if (state.pixelsPerMetre) {
+        state.pixelsPerMetre = state.pixelsPerMetre * ((scaleX + scaleY) / 2);
+      }
+    }
+
+    function resizeCanvasForImage(image, options) {
+      const nextSize = getReadableCanvasSize(image);
+      const previousWidth = options && options.previousWidth ? options.previousWidth : canvas.width;
+      const previousHeight = options && options.previousHeight ? options.previousHeight : canvas.height;
+
+      if (options && options.scaleGeometry) {
+        scaleStoredGeometry(previousWidth, previousHeight, nextSize.width, nextSize.height);
+      }
+
+      if (canvas.width !== nextSize.width || canvas.height !== nextSize.height) {
+        canvas.width = nextSize.width;
+        canvas.height = nextSize.height;
+      }
+    }
+
     function clearScaleState() {
       state.pixelsPerMetre = 0;
       state.scalePoints = [];
@@ -2168,6 +2615,8 @@
       state.fileName = "";
       state.imageLoaded = false;
       state.imageElement = null;
+      canvas.width = DEFAULT_CANVAS_WIDTH;
+      canvas.height = DEFAULT_CANVAS_HEIGHT;
       clearScaleState();
       clearTraceState();
       clearRoomsTable();
@@ -2184,6 +2633,7 @@
       setTraceStatus({ next: true, text: "Upload a floor plan first, then press Step 1. Set scale." });
       renderCanvas();
       renderRoomsTable();
+      renderMeasurementGuidance();
     }
 
     function showUploadedPlanState() {
@@ -2203,6 +2653,7 @@
         : { next: true, text: "Start with Step 1. Press Set scale, then click two points on the plan." });
       renderCanvas();
       renderRoomsTable();
+      renderMeasurementGuidance();
     }
 
     function renderFloorplanPreview() {
@@ -2227,6 +2678,11 @@
           state.image = restoredImage;
           state.imageElement = restoredImage;
           state.imageLoaded = true;
+          resizeCanvasForImage(restoredImage, {
+            previousWidth: snapshot.canvasWidth || DEFAULT_CANVAS_WIDTH,
+            previousHeight: snapshot.canvasHeight || DEFAULT_CANVAS_HEIGHT,
+            scaleGeometry: true
+          });
           renderFloorplanPreview();
           setGlobalStatus("Previous floor plan measurement resumed.");
           scrollToWorkspace();
@@ -2262,6 +2718,18 @@
 
     function getNextRoomName() {
       return "Room " + state.roomCounter;
+    }
+
+    function getSelectedRoomLabel() {
+      return dom.traceRoomLabel && dom.traceRoomLabel.value ? dom.traceRoomLabel.value : "Room";
+    }
+
+    function getNextRoomLabelName(label) {
+      const baseLabel = label || getSelectedRoomLabel();
+      const existingCount = state.rooms.filter(function (room) {
+        return (room.label || "").toLowerCase() === baseLabel.toLowerCase();
+      }).length;
+      return baseLabel + " " + (existingCount + 1);
     }
 
     function getDefaultIncludeForType(type) {
@@ -2364,6 +2832,49 @@
         image.onerror = reject;
         image.src = dataUrl;
       });
+    }
+
+    async function renderPdfPlanImage(file) {
+      const buffer = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+      let selectedPage = null;
+      let selectedPageNumber = 1;
+      let selectedScore = -1;
+
+      for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+        const page = await pdf.getPage(pageNumber);
+        const viewport = page.getViewport({ scale: 1 });
+        const score = viewport.width * viewport.height;
+        if (score > selectedScore) {
+          selectedScore = score;
+          selectedPage = page;
+          selectedPageNumber = pageNumber;
+        }
+      }
+
+      if (!selectedPage) {
+        throw new Error("No readable PDF page found.");
+      }
+
+      const baseViewport = selectedPage.getViewport({ scale: 1 });
+      const renderScale = Math.min(3.2, Math.max(2.2, 2200 / Math.max(baseViewport.width, baseViewport.height)));
+      const viewport = selectedPage.getViewport({ scale: renderScale });
+      const renderCanvas = document.createElement("canvas");
+      renderCanvas.width = Math.round(viewport.width);
+      renderCanvas.height = Math.round(viewport.height);
+      const renderContext = renderCanvas.getContext("2d");
+      await selectedPage.render({
+        canvasContext: renderContext,
+        viewport: viewport
+      }).promise;
+
+      const dataUrl = renderCanvas.toDataURL("image/png");
+      return {
+        dataUrl: dataUrl,
+        image: await loadImageFromDataUrl(dataUrl),
+        pageNumber: selectedPageNumber,
+        pageCount: pdf.numPages
+      };
     }
 
     function drawImageToCanvas(image, targetCanvas) {
@@ -2631,7 +3142,7 @@
 
         const centroid = room.centroid;
         if (centroid) {
-          const label = room.name + " · " + formatArea(room.areaM2);
+          const label = formatCanvasRoomLabel(room);
           context.font = "600 14px Inter, sans-serif";
           const textWidth = context.measureText(label).width;
           const bubbleWidth = textWidth + 18;
@@ -2808,9 +3319,11 @@
       dom.scaleReadout.textContent = state.pixelsPerMetre
         ? roundTo(state.pixelsPerMetre, 2) + " px/m"
         : "Not set";
+      dom.useAreaInQuoteButton.disabled = !(selectedTotalArea > 0);
 
       if (!state.rooms.length) {
         dom.roomsTable.innerHTML = "<p class=\"helper\">No rooms saved yet.</p>";
+        renderMeasurementGuidance();
         return;
       }
 
@@ -2821,6 +3334,7 @@
             <div class="room-main">
               <input type="text" value="${escapeHtml(room.name)}" data-room-field="name">
               <div class="room-meta">
+                <span>${escapeHtml(room.label || "Room")}</span>
                 <span>${escapeHtml(room.type === "flooring" ? "Flooring area" : room.type === "wet" ? "Wet area / exclude" : "Outdoor / exclude")}</span>
                 <strong>${formatArea(room.areaM2)}</strong>
               </div>
@@ -2835,6 +3349,7 @@
           </div>
         `;
       }).join("");
+      renderMeasurementGuidance();
     }
 
     function setMode(mode) {
@@ -2911,26 +3426,19 @@
 
       let loadedImage = null;
       let sessionImageDataUrl = "";
+      let pdfPageNote = "";
       if (file.type === "application/pdf" || /\.pdf$/i.test(file.name)) {
         if (!window.pdfjsLib) {
           setCanvasStatus("PDF support is unavailable. Use a JPG or PNG instead.");
           return;
         }
 
-        const buffer = await file.arrayBuffer();
-        const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
-        const page = await pdf.getPage(1);
-        const viewport = page.getViewport({ scale: 2 });
-        const renderCanvas = document.createElement("canvas");
-        renderCanvas.width = viewport.width;
-        renderCanvas.height = viewport.height;
-        const renderContext = renderCanvas.getContext("2d");
-        await page.render({
-          canvasContext: renderContext,
-          viewport: viewport
-        }).promise;
-        sessionImageDataUrl = renderCanvas.toDataURL("image/png");
-        loadedImage = await loadImageFromDataUrl(sessionImageDataUrl);
+        const pdfImage = await renderPdfPlanImage(file);
+        sessionImageDataUrl = pdfImage.dataUrl;
+        loadedImage = pdfImage.image;
+        pdfPageNote = pdfImage.pageCount > 1
+          ? " Page " + pdfImage.pageNumber + " of " + pdfImage.pageCount + " was selected for the clearest readable view."
+          : "";
       } else {
         sessionImageDataUrl = await new Promise(function (resolve, reject) {
           const reader = new FileReader();
@@ -2946,6 +3454,11 @@
       state.image = loadedImage;
       state.imageElement = loadedImage;
       state.imageLoaded = !!loadedImage;
+      resizeCanvasForImage(loadedImage, {
+        previousWidth: canvas.width,
+        previousHeight: canvas.height,
+        scaleGeometry: reconnectingRestoredMeasurement
+      });
       if (replacingActiveMeasurement) {
         clearScaleState();
       }
@@ -2959,7 +3472,7 @@
       renderFloorplanPreview();
       setUploadStatus(reconnectingRestoredMeasurement
         ? "Floor plan reconnected: " + state.fileName + ". Existing measured rooms are ready."
-        : "Loaded floor plan: " + state.fileName);
+        : "Loaded floor plan: " + state.fileName + "." + pdfPageNote);
       setGlobalStatus(reconnectingRestoredMeasurement
         ? "Previous floor plan reconnected. Existing measured rooms are ready."
         : "Plan uploaded. Set scale first, then trace each flooring room.");
@@ -3101,13 +3614,15 @@
         return;
       }
 
+      const roomLabel = getSelectedRoomLabel();
       const preferredName = dom.traceRoomName.value.trim();
-      const roomName = preferredName || getNextRoomName();
+      const roomName = preferredName || getNextRoomLabelName(roomLabel) || getNextRoomName();
       const roomType = "flooring";
 
       addMeasuredRoom({
         id: "room-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7),
         name: roomName,
+        label: roomLabel,
         type: roomType,
         areaM2: areaM2,
         points: state.tracePoints.slice(),
@@ -3159,6 +3674,12 @@
 
     function saveAreaForQuote() {
       const totalArea = calculateSelectedTotalArea();
+      if (!(totalArea > 0)) {
+        setGlobalStatus("Trace and include at least one flooring room before using the area in quote.");
+        setCanvasStatus("No included flooring area yet. Trace a room, then keep it included in quote.", { forceVisible: true });
+        renderMeasurementConfidence();
+        return;
+      }
       try {
         saveQuoteHandoff(totalArea, state.rooms, "trace_room_mode");
       } catch (error) {

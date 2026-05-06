@@ -218,7 +218,7 @@
     if (!rateSet) {
       emptyState.details = stairDetails;
       emptyState.totalCount = stairDetails.reduce(function (total, item) { return total + item.quantity; }, 0);
-      emptyState.warnings.push("Stair pricing for the selected flooring range requires setup.");
+      emptyState.warnings.push("Stair item totals need final confirmation.");
       emptyState.manualReviewRequired = true;
       return emptyState;
     }
@@ -249,11 +249,11 @@
     const warnings = [];
     let manualReviewRequired = false;
     if (tierState.assumed) {
-      warnings.push("Stair width not provided. Lower stair allowance used; final stair price changes if confirmed width is over " + tierState.guideWidthMm + " mm.");
+      warnings.push("Stair width still needs confirmation. Final stair allowance will be checked before confirmation.");
       manualReviewRequired = true;
     }
     if (missingPrice) {
-      warnings.push("Stair pricing for the selected flooring range requires setup.");
+      warnings.push("Stair item totals need final confirmation.");
       manualReviewRequired = true;
     }
 
@@ -514,8 +514,8 @@
       lines.push({
         label: "Stairs",
         note: result.stairWidthAssumed
-          ? "Lower width allowance used until stair width is confirmed"
-          : "Stair width tier: " + result.stairWidthTierLabel,
+          ? "Stair allowance included; final width checked before confirmation"
+          : "Stair allowance based on the width provided",
         quantity: result.stairCount + " stair item" + (result.stairCount === 1 ? "" : "s"),
         amount: result.stairsTotal
       });
@@ -530,7 +530,7 @@
       realArea: parsePositiveNumber(input.realArea),
       roomCount: Math.max(0, Math.round(parsePositiveNumber(input.roomCount))),
       warnings: Array.isArray(input.measurementWarnings) ? input.measurementWarnings.slice() : [],
-      sourceLabel: input.measurementSource || "Manual total"
+      sourceLabel: input.measurementSource || "Enter total area"
     };
 
     const product = getActiveProduct(input, libraries);

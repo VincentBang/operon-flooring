@@ -1,5 +1,7 @@
 "use strict";
 
+const { getSupabaseTables } = require("./_supabaseTables");
+
 function jsonResponse(statusCode, payload) {
   return {
     statusCode: statusCode,
@@ -91,7 +93,7 @@ async function insertQuoteReview(row) {
     throw new Error("Missing Supabase server credentials.");
   }
 
-  const response = await fetch(config.url + "/rest/v1/quote_reviews", {
+  const response = await fetch(config.url + "/rest/v1/" + getSupabaseTables().quoteReviews, {
     method: "POST",
     headers: {
       apikey: config.serviceRoleKey,

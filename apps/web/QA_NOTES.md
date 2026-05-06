@@ -37,7 +37,7 @@ Scope: safe non-core SEO, content structure, internal links, sitemap consistency
   - each active hybrid product has unique descriptive alt text
   - `products.js` now exposes a normalised `imageAlt` alias while preserving the existing `alt` field used by current cards and galleries
 - Product placeholder messaging reviewed:
-  - pending product prices show `Price to be confirmed` / `Price pending`
+  - pending product details use customer-facing confirmation language, not old pending-price labels
   - selected pending products continue to explain that the standard category estimate is used until review
   - no internal rates or formulas are exposed on catalogue cards
 - Maintenance blog conversion paths reviewed:
@@ -111,6 +111,6 @@ Scope: safe non-core SEO, content structure, internal links, sitemap consistency
 
 ## Quote Submit Event QA Checklist
 
-- Success path to test on Netlify runtime: complete the quote wizard, press `Submit quote request`, confirm `quote_submit` fires before submission, confirm `quote_submit_success` fires once after a successful form response, and confirm the page redirects to `thank-you.html`.
-- Error path to test on simple localhost/static preview: complete the quote wizard, press `Submit quote request`, confirm the lead payload is saved to `operon_last_submitted_lead_result_v1`, confirm `quote_submit_error` fires once, and confirm the recovery banner appears.
+- Success path to test on Netlify runtime: complete the quote flow, press `Submit quote request`, confirm `quote_submit` fires before submission, confirm `quote_submit_success` fires once after a successful form response, and confirm the page redirects to `thank-you.html`.
+- Error path to test on simple localhost/static preview: complete the quote flow, press `Submit quote request`, confirm the lead payload is saved to `operon_last_submitted_lead_result_v1`, confirm `quote_submit_error` fires once, and confirm the recovery banner appears.
 - Error path to test on Netlify runtime with form failure: block the form endpoint or inspect a failed response, confirm the saved recovery payload remains available, and confirm no duplicate success/error events fire.

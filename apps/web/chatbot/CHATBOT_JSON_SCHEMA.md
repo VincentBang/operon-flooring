@@ -19,7 +19,7 @@ Rules:
 
 - `recommended_category` is guidance only.
 - The product system remains responsible for real product selection.
-- The quote wizard remains responsible for estimate output.
+- The quote page remains responsible for estimate output.
 
 ## Missing Info Output
 

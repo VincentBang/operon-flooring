@@ -73,7 +73,7 @@
               </div>
               <div class="stat-card">
                 <strong>Built to stay clear</strong>
-                Product selection happens here. Measured area, access, and extras stay inside the quote flow where they belong.
+                Product selection happens here. Measured area, site details, and extras stay inside the quote flow where they belong.
               </div>
               <div class="stat-card">
                 <strong>Best use</strong>
@@ -152,7 +152,7 @@
       <div class="shell">
         <article class="section-card">
           <h2>Choose the product here, structure the estimate in the quote</h2>
-          <p>This catalogue is built to keep the decision simple. Save a product selection here, then continue into the quote wizard with that floor already attached. Final product confirmation still happens during review if price, stock, colour, or installation detail still needs checking.</p>
+          <p>This catalogue is built to keep the decision simple. Choose a range, then continue into the quote with that floor direction already attached. Final product, colour and site details are confirmed during review.</p>
         </article>
       </div>
     </section>
@@ -550,18 +550,18 @@
           const visibleCount = rangeCount || stats.liveProductCount;
           const countText = visibleCount > 0
             ? visibleCount + " live option" + (visibleCount === 1 ? "" : "s")
-            : "Estimate path ready";
+            : "Quote path ready";
           const pricingText = stats.liveProductCount > 0
-            ? (stats.hasConfirmedPrices ? "Confirmed pricing published" : "Product pricing still pending review")
-            : "Product confirmed during review";
+            ? "Product options available"
+            : "Final product confirmed later";
 
           return (
             '<article class="catalogue-category-card' + (state.category === item.id ? " is-active" : "") + '">' +
               '<span class="catalogue-category-card-label">' + escapeHtml(item.label) + "</span>" +
               '<h3>' + escapeHtml(item.shortDescription || item.label) + "</h3>" +
               '<p>' + escapeHtml(stats.liveProductCount > 0
-                ? "Browse live products, save a product selection, and move straight into the quote wizard."
-                : "Use the quote flow for this flooring type now, then confirm the final product during review.") + "</p>" +
+                ? "Browse product ranges, choose a direction, then continue into the quote."
+                : "Start the quote now and confirm the final product later.") + "</p>" +
               '<div class="catalogue-category-card-meta">' +
                 '<span class="catalogue-pill">' + escapeHtml(countText) + "</span>" +
                 '<span class="catalogue-pill">' + escapeHtml(pricingText) + "</span>" +
@@ -637,8 +637,8 @@
           ? "Selected range: " + PRODUCT_LIBRARY.getProductLabel(activeProduct)
           : "Selected product: " + PRODUCT_LIBRARY.getProductLabel(activeProduct);
         selectionText.textContent = activeProduct.pricePerM2 > 0
-          ? getCategoryLabel(activeProduct.category) + " · " + PRODUCT_LIBRARY.formatProductRate(activeProduct) + " · saved for the quote wizard."
-          : getCategoryLabel(activeProduct.category) + " · Price pending review · the quote will use the standard " + getCategoryLabel(activeProduct.category).toLowerCase() + " estimate until review.";
+          ? getCategoryLabel(activeProduct.category) + " · ready for quote."
+          : getCategoryLabel(activeProduct.category) + " · final product details confirmed during review.";
         continueQuoteLink.textContent = "Continue to quote";
         contextLinks.innerHTML =
           '<a class="button-quiet" href="' + escapeHtml(getCategoryPageUrl(activeProduct.category)) + '">Back to ' + escapeHtml(getCategoryLabel(activeProduct.category).toLowerCase()) + " guide</a>";
@@ -697,7 +697,7 @@
         resultsSummary.textContent = filtered.length + " option" + (filtered.length === 1 ? "" : "s") + " shown" + (state.category !== "all" ? " in " + getCategoryLabel(state.category).toLowerCase() : "") + ".";
         if (!filtered.length) {
           emptyState.textContent = state.category !== "all"
-            ? "No live products are published in this category yet. Continue with the quote wizard and confirm the final product during review."
+            ? "No products are published in this category yet. Continue with the quote and confirm the final product during review."
             : "No live products match the current filters. Clear the filters or continue with the quote tool.";
         }
       }

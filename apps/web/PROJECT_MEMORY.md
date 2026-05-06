@@ -19,8 +19,8 @@ Source-of-truth status: active project memory for current business direction, pa
 
 ## Structure
 
-- Homepage = clean premium conversion and trust page, not the full quote wizard
-- Quote wizard = dedicated `quote.html` pricing engine and lead capture page
+- Homepage = clean premium conversion and trust page, not the full quote flow
+- Quote flow = dedicated `quote.html` pricing engine and lead capture page
 - Floorplan = measurement assistant
 - Product pages = SEO + product selection
 - Suburb pages = local ranking support
@@ -30,7 +30,17 @@ Source-of-truth status: active project memory for current business direction, pa
 - Quote form = pricing engine + lead capture
 - Supabase / analytics = tracking layer
 - Agents = execution layer
-- Chatbot = guided conversion assistant layer; it supports product guidance, quote explanation, missing information collection, and quote scope review without replacing the quote wizard
+- Chatbot = guided conversion assistant layer; it supports product guidance, quote explanation, missing information collection, and quote scope review without replacing the quote flow
+
+## Customer-Facing UI Policy
+
+- Customer pages should feel like guided decisions, not documentation.
+- Choice cards should use short labels and obvious selected backgrounds; avoid long explanatory sentences inside every option.
+- Helper text is only allowed when it prevents a real mistake or explains the next required action.
+- Remove redundant confirmation/status copy such as “progress saved” when the state is already obvious or handled silently.
+- Backend thresholds, pricing formulas, rate logic, internal labels, implementation details, and “saved to system” language must stay out of customer-facing UI.
+- Use plain customer language for visible labels; keep technical/internal variable names only inside code and documentation.
+- Product and quote pages should show what the customer needs to decide now, then hide or defer details that can be confirmed later.
 
 ## Deployment Workflow
 
@@ -139,9 +149,12 @@ These are candidates only. Execute them only when their `priority_score = (impac
 - only confirmed live catalogue products should be shown
 - current live catalogue includes ETF Hybrid 7.0mm, 8.0mm, and 9.0mm ranges with supplier imagery
 - if a supplier product page exposes range-level `Description`, `Features`, and `Technical` content, capture it as structured range metadata in `apps/web/products.js` so the range card can show those tabs directly in the catalogue
+- if the supplier category page is thin, check the supplier brochure PDF and representative product pages before leaving range-level metadata shallow; brochure-backed range specs should be preferred over placeholder summaries
 - standard catalogue rule: all range cards should use `View X colours` as a compact popup preview, not a long inline drawer
 - standard catalogue rule: selecting a range and browsing colours are separate actions; if final colour must be chosen, enforce it later in `quote.html`
 - standard product-import rule: if a supplier colour page has second or third gallery images, save those extra images locally and attach them through `galleryImages` for that product
+- product import completion rule: do not mark a supplier range upload complete until each colour page has been checked for extra gallery images and any found images have been downloaded locally and attached in `apps/web/products.js`
+- range metadata completion rule: do not mark a supplier range upload complete until range-level description, feature, and technical content has been checked against the supplier category page, brochure, and at least one representative product page
 - standard catalogue UX rule: if a colour image opens from a `View X colours` popup, the single-image lightbox must include a back button to return to that full colour popup
 
 ## Supabase Pricing Privacy
@@ -156,7 +169,7 @@ These are candidates only. Execute them only when their `priority_score = (impac
 - rollout notes now live in:
   - `apps/web/OPERON_SUPABASE_PRICING_SETUP.md`
   - `apps/web/OPERON_PRIVATE_QUOTE_RUNTIME_PLAN.md`
-- `quote.html` quote wizard can use the private Netlify quote runtime path and local calculator fallback; homepage no longer contains the quote wizard
+- `quote.html` quote flow can use the private Netlify quote runtime path and local calculator fallback; homepage no longer contains the quote flow
 - customer-facing catalogue pricing now has a Netlify-backed Supabase source for:
   - `categoryMeta`
   - `products`
@@ -243,7 +256,7 @@ Reason:
 
 - quote calculation has been moved behind `apps/web/quoteCalculator.js`
 - install rates, underlay, skirting/scotia, removal, suburb zones, and pricing rules now live in separate central JS files
-- quote wizard uses the central calculator instead of embedded rate tables
+- quote flow uses the central calculator instead of embedded rate tables
 - selected products are resolved from central product data before pricing
 - suburb zone matching now uses a central location zone library with a default Sydney fallback
 - customer output stays bundled and avoids exposing raw labour/material rates
@@ -372,6 +385,17 @@ Reason:
 - Files changed this update: `apps/web/stairRates.js`, `apps/web/quote.html`, `apps/web/quoteCalculator.js`, `apps/web/pricingSource.js`, `apps/web/pricingSourceConfig.js`, `netlify/functions/_supabasePricing.js`, `supabase/migrations/20260504_stair_pricing_schema.sql`, `supabase/seed_stair_pricing.sql`, `apps/web/OPERON_SUPABASE_DATABASE_IMPLEMENTATION.md`, `apps/web/OPERON_PRICING_RULES.md`, `apps/web/STAIR_PRICING_SETUP.md`, and `apps/web/tests/quoteCalculator.validation.js`
 - Validation performed: local quote calculator tests pass, edited JavaScript syntax checks pass, Netlify helper syntax check passes, and quote inline scripts parse
 - Known risk: actual stair prices are placeholder `0` values until `price_short` and `price_long` are filled per range/type/tier in Supabase or local fallback
+
+## Latest Overnight Customer UI Policy Pass
+
+- Tasks completed this run: `UI-POLICY-001`, `COPY-QUOTE-001`, `COPY-PRODUCTS-001`, `COPY-SEO-PAGES-001`, `CHATBOT-COPY-001`, `SEO-MEMORY-001`, `QA-COPY-SCAN-001`, `QA-SCRIPT-001`, `QA-FINAL-001`
+- Files changed this run: `apps/web/AGENTS.md`, `apps/web/CODEX_PROJECT_MEMORY.md`, `apps/web/OPERON_BUSINESS_OBJECTIVES_MARKETING_SEO_BRIEF.md`, `apps/web/OPERON_SEO_STRATEGY.md`, `apps/web/OPERON_SEO_EXECUTION_PLAN.md`, `apps/web/PROJECT_MEMORY.md`, `apps/web/QA_NOTES.md`, `apps/web/task_queue.json`, `apps/web/quote.html`, `apps/web/products.html`, `apps/web/products.js`, priority suburb pages, product money pages, selected blog pages, and chatbot memory/guardrail files
+- Customer UI policy added: customer pages should feel like guided decisions, option cards should use short labels and obvious selected states, helper text should only prevent real mistakes or guide the next action, and backend thresholds, formulas, implementation labels, pending-price labels, and progress-save language should stay out of customer screens
+- Customer-facing copy changes: quote flow Step 3 wording was shortened, product catalogue pending-price wording was replaced with review/confirmation language, suburb/product/blog pages now use plain `quote` / `quote flow` language, and chatbot-facing wording was aligned with the same policy
+- Queue update: `apps/web/task_queue.json` was refreshed to exactly 50 ranked tasks, with 6 chatbot candidates and 9 tasks marked done in this run
+- Validation performed: `node --check apps/web/products.js`, `node --check apps/web/quoteCalculator.js`, `node apps/web/tests/quoteCalculator.validation.js`, task queue JSON/schema sanity check, inline script parsing for touched customer pages, chatbot syntax checks, targeted customer-copy scan, and `git diff --check`
+- Known risks: visual mobile/browser QA is still required for quote flow, products, floorplan, and Quote Advisor; no GitHub push, Netlify deploy, Supabase write, or email sending was performed
+- Next best tasks: browser-review mobile quote/product/floorplan/quote-review pages, then continue reducing helper-text density in remaining quote steps if the simplified Step 3 direction feels right
 
 ## TODO / NEXT_ACTIONS
 

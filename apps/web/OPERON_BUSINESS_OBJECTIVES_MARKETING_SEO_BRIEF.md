@@ -75,6 +75,15 @@ The website should feel:
 - easy to understand
 - trade-informed
 
+Customer-facing UI policy:
+
+- decision-first
+- short option labels
+- obvious selected states
+- minimal helper text
+- no redundant “saved/progress” status messages
+- no backend thresholds, formulas, rate logic, or implementation language
+
 Avoid:
 
 - hype
@@ -85,7 +94,7 @@ Avoid:
 
 ## Site Role Definitions
 
-- Homepage: clean premium conversion and trust page with concise SEO support, not the full quote wizard
+- Homepage: clean premium conversion and trust page with concise SEO support, not the full quote flow
 - Quote page: dedicated `quote.html` pricing engine and lead capture
 - All quote CTAs: navigate to `quote.html`
 - Floorplan page: measurement assistant only

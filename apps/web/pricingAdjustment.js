@@ -122,7 +122,7 @@
       reasons: [
         marketFit.reason,
         confidence === "high" ? "High confidence keeps the range tighter." : confidence === "medium" ? "Medium confidence keeps a moderate range." : "Low confidence keeps the range wider.",
-        complexity ? "Stairs, prep, access or review flags add an upward complexity bias." : "No major complexity bias detected."
+        complexity ? "Stairs, prep or review flags keep the range more cautious." : "No major complexity bias detected."
       ]
     };
   }

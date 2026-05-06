@@ -5,7 +5,7 @@
       reasons: [
         "Best when water resistance and low-fuss maintenance matter.",
         "Usually the easiest fit for busy family homes and apartments.",
-        "A practical starting point when you want durability first."
+        "A practical range-first path when you want durability first."
       ]
     },
     laminate: {
@@ -21,7 +21,7 @@
       reasons: [
         "Best when finish and timber look matter most.",
         "Useful when the project is more design-led or premium in feel.",
-        "A stronger fit when you already expect a more tailored review."
+        "A stronger fit when colour, method, or herringbone pattern needs a clear review."
       ]
     }
   };
@@ -69,10 +69,10 @@
       { id: "subfloor_unsure", label: "Subfloor unsure" }
     ],
     accessCollection: [
-      { id: "access_easy", label: "Access is easy" },
-      { id: "access_limited", label: "Parking or access is limited" },
-      { id: "access_apartment", label: "Apartment access" },
-      { id: "access_unsure", label: "Access unsure" }
+      { id: "access_easy", label: "Site details are straightforward" },
+      { id: "access_limited", label: "Parking or site details need review" },
+      { id: "access_apartment", label: "Apartment project" },
+      { id: "access_unsure", label: "Site details unsure" }
     ],
     stairsCollection: [
       { id: "stairs_none", label: "No stairs" },
@@ -104,33 +104,33 @@
     guidanceOnly: "I can guide product choice and scope, but I will not calculate pricing here.",
     productGuideIntro: "Start with the priority that matters most for this floor.",
     productGuideContext: "Understood. Which setting best describes the project?",
-    quoteExplain: "The online result is an estimate before final confirmation. Final pricing depends on product direction, measured area, access, and site conditions such as removal or floor preparation.",
-    priceFactors: "The main estimate factors are area, flooring category, product path, removal, floor preparation, trims, furniture handling, access, stairs, and any site conditions that need review.",
+    quoteExplain: "The online result is a starting estimate before final confirmation. Final price is confirmed after product, area, and site details are reviewed.",
+    priceFactors: "The main estimate items are area, product path, existing floor to remove, disposal, floor preparation, trims, furniture handling, stairs, and site access.",
     detailIntro: "A few optional details can make the quote scope clearer before review.",
-    detailExistingFloor: "What existing floor is being replaced, if any?",
+    detailExistingFloor: "What existing floor needs to be removed, if any?",
     detailSubfloor: "How does the subfloor look from what you know so far?",
-    detailAccess: "How would you describe access and parking?",
+    detailAccess: "What site details should be noted?",
     detailStairs: "Any stairs involved in the project?",
     detailFurniture: "Will furniture handling likely be part of the job?",
-    installOnlyExplain: "If you already have the flooring materials, the next step is usually installation only. The quote can still check access, prep, trims, and removal separately.",
-    reviewScope: "A scope review helps catch the common gaps: existing floor type, subfloor condition, access, stairs, and furniture handling.",
-    routeProducts: "Review the product catalogue first, then continue into the quote once the category is clear.",
+    installOnlyExplain: "If you already have the flooring materials, the next step is usually installation only. The quote can still check prep, trims, removal, disposal, and stairs.",
+    reviewScope: "A scope review helps catch common gaps: product detail, existing floor removal, disposal, prep, stairs, and site access.",
+    routeProducts: "Review the product catalogue first. Range cards show colour previews, then the quote confirms the final selection where needed.",
     routeQuote: "Start the quote when you are ready.",
     routeReview: "Review the quote scope and any unclear site details before submitting.",
     routeUnsure: "You do not need every answer now. The assistant can recommend a category and the quote can still start with unsure items.",
     areaCaptured: "I will keep that as a draft area note for this conversation.",
-    costQuestion: "I cannot calculate pricing here. Start the quote with product direction, area, removal, floor preparation, access, and extras, then Operon confirms the final quote after review.",
-    existingQuote: "Use quote review to check scope, not to argue cheapest price. Product, area, removal, preparation, access, trims, and disposal should all be clear.",
-    hiddenCosts: "Clear scope is the best protection against surprises. Removal, disposal, floor preparation, trims, furniture, stairs, and access are the main items worth checking.",
-    finalQuoteChange: "Yes, the final quote can change after review if product, measurements, access, or site conditions differ from the estimate. The estimate is there to make that review clearer, not to lock an unconfirmed final price.",
+    costQuestion: "I cannot calculate pricing here. Start the quote with product direction, area, removal, floor preparation, and extras, then Operon confirms the final quote after review.",
+    existingQuote: "Use quote review to check scope, not to argue cheapest price. Product, area, removal, disposal, preparation, trims, and site details should all be clear.",
+    hiddenCosts: "Clear scope is the best protection against surprises. Removal, disposal, floor preparation, trims, furniture, stairs, and site access are the main items worth checking.",
+    finalQuoteChange: "Yes, the final quote can change after review if product, measurements, or site conditions differ from the estimate. The estimate is there to make that review clearer, not to lock an unconfirmed final price.",
     practicalOption: "Choose by suitability and scope, not by cheapest-price comparison. Laminate can suit simpler dry areas; hybrid is often better when durability or water resistance matters.",
     trustAnswer: "Operon is positioned around professional Sydney flooring installation, clear estimates, product guidance, quality workmanship, and final confirmation before work starts.",
     hybridLaminate: "Hybrid is usually the stronger starting point when water resistance and busy-home durability matter. Laminate can be practical for simpler dry areas where the scope is straightforward.",
-    engineeredAnswer: "Engineered timber suits a more finish-led project. Range, colour, installation method, and pattern should be reviewed clearly before the final quote is confirmed.",
+    engineeredAnswer: "Engineered timber suits a more finish-led project. Select the range first, then confirm colour, installation method, and pattern clearly in the quote flow.",
     areaUnsure: "That is common. Start with a rough total, measure room by room, or use a floor plan if one is available.",
-    stairsAnswer: "Stairs should be flagged for quote review because they can affect installation scope and access. The assistant can capture that risk, but the quote system and Operon review confirm the final scope.",
-    tileStairsAnswer: "Tiles plus stairs should be treated as a scope-review item. Removal, disposal, access, trims, and stair details should be checked before the quote is submitted.",
-    apartmentNoLiftAnswer: "Apartment work with no lift should be reviewed for access, loading, level, parking, and strata rules. The assistant can flag it, but Operon review should confirm the final scope.",
+    stairsAnswer: "Stairs should be flagged for quote review because they need clear installation scope. The quote flow captures the detail, and Operon review confirms the final scope.",
+    tileStairsAnswer: "Tiles plus stairs should be treated as a scope-review item. Removal, disposal, trims, prep, and stair details should be checked before the quote is submitted.",
+    apartmentNoLiftAnswer: "Apartment work with no lift should be reviewed for site details, level, parking, and strata rules. The assistant can flag it, but Operon review should confirm the final scope.",
     unevenFloorAnswer: "An uneven floor should be reviewed before final quote confirmation because preparation or levelling may be needed. The quote flow can capture the concern, but final scope should be checked by Operon.",
     reviewMissingPrefix: "Still to confirm:",
     reviewReady: "You have covered the main scope questions.",

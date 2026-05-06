@@ -16,7 +16,7 @@ Route:
 ## Customer Asking "How Much Does Flooring Cost?"
 
 Answer:
-I cannot calculate pricing here. The quote wizard handles estimates, and the final quote is confirmed after product, area, access, and site scope are reviewed.
+I cannot calculate pricing here. The quote handles estimates, and the final quote is confirmed after product, area, access, and site scope are reviewed.
 
 Follow-up:
 Do you already know the approximate area in square metres?

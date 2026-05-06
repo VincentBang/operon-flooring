@@ -460,7 +460,7 @@
         parts.push("Subfloor: " + titleCase(structured.subfloor_condition));
       }
       if (structured.access) {
-        parts.push("Access: " + titleCase(structured.access));
+        parts.push("Site details: " + titleCase(structured.access));
       }
       if (hasValue(structured.stairs)) {
         parts.push("Stairs: " + (structured.stairs ? "yes" : "no"));

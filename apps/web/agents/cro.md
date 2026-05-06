@@ -26,7 +26,7 @@
 
 ## High-ROI Areas
 1. hero CTA clarity
-2. quote wizard completion
+2. quote flow completion
 3. floor plan handoff
 4. submit reassurance
 5. mobile readability

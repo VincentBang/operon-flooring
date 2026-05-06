@@ -34,6 +34,14 @@
     .metric-value { font-size:2rem; font-weight:700; color:var(--brand); margin-bottom:6px; }
     .list { margin:0; padding-left:18px; display:grid; gap:8px; color:var(--muted); }
     .small-grid { gap:14px; grid-template-columns:repeat(2, minmax(0,1fr)); margin-top:16px; }
+    .admin-row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:12px; }
+    .admin-row input,.admin-row select { min-height:46px; padding:10px 12px; border-radius:10px; border:1px solid rgba(17,17,17,.1); background:#fff; flex:1 1 220px; }
+    .admin-table { width:100%; border-collapse:collapse; margin-top:14px; font-size:.9rem; }
+    .admin-table th,.admin-table td { padding:10px 8px; border-bottom:1px solid rgba(17,17,17,.08); text-align:left; vertical-align:top; }
+    .admin-table th { color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.04em; }
+    .admin-table td:last-child { text-align:right; }
+    .mini-button { min-height:34px; padding:8px 10px; border-radius:8px; border:1px solid rgba(17,17,17,.12); background:#fff; cursor:pointer; font-weight:700; }
+    .mini-button.danger { color:#b42318; border-color:rgba(180,35,24,.18); background:rgba(180,35,24,.06); }
     @media (max-width: 980px) { .metrics-grid,.grid,.task-columns,.small-grid { grid-template-columns:1fr; } }
     @media (max-width: 820px) { .nav-links { display:none; } }
   </style>
@@ -85,6 +93,52 @@
       <div class="shell small-grid">
         <article class="card"><h3>Step completion</h3><ul class="list" id="stepCompletionList"></ul></article>
         <article class="card"><h3>Abandonment by step</h3><ul class="list" id="abandonmentList"></ul></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell section-head"><h2>Follow-up Queue</h2></div>
+      <div class="shell grid">
+        <article class="card">
+          <h3>Queue controls</h3>
+          <p class="muted">Safe mode only. These records prepare follow-up tasks; they do not send SMS or email.</p>
+          <div class="admin-row">
+            <input id="followupAdminToken" type="password" placeholder="Admin token">
+            <select id="followupStatusFilter">
+              <option value="queued">Queued</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="sent">Sent</option>
+              <option value="failed">Failed</option>
+              <option value="all">All</option>
+            </select>
+            <button class="button-secondary" id="followupLoadButton" type="button">Load queue</button>
+          </div>
+          <p class="muted" id="followupAdminStatus">Enter the admin token to view queued follow-ups.</p>
+        </article>
+        <article class="card">
+          <h3>Pause controls</h3>
+          <p class="muted">Pause cancels queued follow-ups for that quote and marks the quote as paused. Resume clears the pause flag only.</p>
+          <ul class="list" id="followupActionList"></ul>
+        </article>
+      </div>
+      <div class="shell">
+        <article class="card" style="margin-top:20px; overflow:auto;">
+          <h3>Recent follow-up tasks</h3>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>When</th>
+                <th>Customer</th>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Control</th>
+              </tr>
+            </thead>
+            <tbody id="followupQueueRows">
+              <tr><td colspan="5">No follow-ups loaded yet.</td></tr>
+            </tbody>
+          </table>
+        </article>
       </div>
     </section>
 
@@ -170,6 +224,123 @@
         .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
         .map(entry => entry[0] + ": " + entry[1]);
     }
+    function getFollowupToken() {
+      return sessionStorage.getItem("operon_followup_admin_token") || "";
+    }
+    function setFollowupStatus(message) {
+      const status = document.getElementById("followupAdminStatus");
+      if (status) status.textContent = message;
+    }
+    function formatDateTime(value) {
+      if (!value) return "Not scheduled";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return String(value);
+      return date.toLocaleString("en-AU", { dateStyle: "medium", timeStyle: "short" });
+    }
+    async function callFollowupAdmin(method, payload) {
+      const token = getFollowupToken();
+      const statusFilter = document.getElementById("followupStatusFilter");
+      const url = method === "GET"
+        ? "/.netlify/functions/followup-admin?status=" + encodeURIComponent(statusFilter ? statusFilter.value : "queued") + "&limit=25"
+        : "/.netlify/functions/followup-admin";
+      const response = await fetch(url, {
+        method: method,
+        headers: Object.assign({
+          "x-operon-admin-token": token
+        }, payload ? { "Content-Type": "application/json" } : {}),
+        body: payload ? JSON.stringify(payload) : undefined
+      });
+      const result = await response.json().catch(() => null);
+      if (!response.ok || !result || !result.ok) {
+        throw new Error(result && result.error ? result.error : "Follow-up admin request failed.");
+      }
+      return result;
+    }
+    function renderFollowupRows(messages) {
+      const rows = document.getElementById("followupQueueRows");
+      if (!rows) return;
+      if (!messages || !messages.length) {
+        rows.innerHTML = '<tr><td colspan="5">No follow-ups found for this filter.</td></tr>';
+        return;
+      }
+      rows.innerHTML = messages.map(message => {
+        const quote = message.quote || {};
+        const payload = message.payload || {};
+        const customer = quote.customer_name || payload.to_email || payload.to_phone || "Unknown customer";
+        const product = quote.product_name ? " · " + quote.product_name : "";
+        const task = (message.channel || "") + " · " + (message.template_key || "");
+        const quoteId = message.quote_request_id || "";
+        return '<tr>'
+          + '<td>' + escapeHtml(formatDateTime(message.scheduled_for)) + '</td>'
+          + '<td><strong>' + escapeHtml(customer) + '</strong><br><span class="muted">' + escapeHtml((quote.suburb || "") + product) + '</span></td>'
+          + '<td>' + escapeHtml(task) + '</td>'
+          + '<td>' + escapeHtml(message.status || "") + '</td>'
+          + '<td>'
+          + (message.status === "queued" ? '<button class="mini-button danger" data-followup-cancel="' + escapeHtml(message.id) + '">Cancel</button> ' : '')
+          + (quoteId ? '<button class="mini-button" data-followup-pause="' + escapeHtml(quoteId) + '">Pause quote</button>' : '')
+          + '</td>'
+          + '</tr>';
+      }).join("");
+    }
+    async function loadFollowupQueue() {
+      const tokenInput = document.getElementById("followupAdminToken");
+      if (tokenInput && tokenInput.value.trim()) {
+        sessionStorage.setItem("operon_followup_admin_token", tokenInput.value.trim());
+      }
+      if (!getFollowupToken()) {
+        setFollowupStatus("Enter the admin token first.");
+        return;
+      }
+      setFollowupStatus("Loading follow-up queue...");
+      try {
+        const result = await callFollowupAdmin("GET");
+        renderFollowupRows(result.messages || []);
+        setFollowupStatus("Loaded " + ((result.messages || []).length) + " follow-up task(s).");
+        renderList("followupActionList", [
+          "Queued tasks are safe drafts only.",
+          "Pause cancels queued tasks for that quote.",
+          "Resume can be done by clearing the quote pause flag from the admin endpoint."
+        ], "No follow-up controls loaded.");
+      } catch (error) {
+        setFollowupStatus(error.message || "Could not load follow-up queue.");
+      }
+    }
+    async function handleFollowupTableClick(event) {
+      const cancelButton = event.target.closest("[data-followup-cancel]");
+      const pauseButton = event.target.closest("[data-followup-pause]");
+      if (!cancelButton && !pauseButton) return;
+      try {
+        if (cancelButton) {
+          setFollowupStatus("Cancelling queued follow-up...");
+          await callFollowupAdmin("POST", {
+            action: "cancel_message",
+            message_id: cancelButton.getAttribute("data-followup-cancel")
+          });
+        }
+        if (pauseButton) {
+          setFollowupStatus("Pausing quote follow-ups...");
+          await callFollowupAdmin("POST", {
+            action: "pause_quote",
+            quote_request_id: pauseButton.getAttribute("data-followup-pause")
+          });
+        }
+        await loadFollowupQueue();
+      } catch (error) {
+        setFollowupStatus(error.message || "Follow-up control failed.");
+      }
+    }
+    function initialiseFollowupAdmin() {
+      const tokenInput = document.getElementById("followupAdminToken");
+      const loadButton = document.getElementById("followupLoadButton");
+      const rows = document.getElementById("followupQueueRows");
+      if (tokenInput) tokenInput.value = getFollowupToken();
+      if (loadButton) loadButton.addEventListener("click", loadFollowupQueue);
+      if (rows) rows.addEventListener("click", handleFollowupTableClick);
+      renderList("followupActionList", [
+        "Add OPERON_ADMIN_TOKEN in Netlify before using this panel.",
+        "Follow-ups stay queued until sending is separately enabled."
+      ], "Follow-up queue not configured.");
+    }
     async function initialiseDashboard(){
       const tracking = window.OperonTracking ? window.OperonTracking.getState() : null;
       const funnel = window.OperonTracking ? window.OperonTracking.getFunnelState() : null;
@@ -241,6 +412,7 @@
         "Only publish content that sounds local and trade-informed."
       ], "No blog actions yet.");
     }
+    initialiseFollowupAdmin();
     initialiseDashboard();
   </script>
 </body>

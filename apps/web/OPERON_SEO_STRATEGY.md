@@ -182,8 +182,8 @@ Every SEO page must:
 
 ### Must include
 
-- quote wizard near the top
-- SEO sections below the tool
+- clear quote CTA near the top
+- concise SEO-support sections below the conversion content
 - FAQ section
 - internal links to the product pages
 

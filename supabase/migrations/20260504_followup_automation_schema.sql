@@ -124,6 +124,15 @@ insert into public.followup_templates (
   active
 ) values
   (
+    'manual_quote_review',
+    'manual_call',
+    'all',
+    0,
+    null,
+    'Review the submitted quote request. Confirm product, area, preparation, removal/disposal, trims, stairs, site conditions and the best next step before contacting the customer.',
+    true
+  ),
+  (
     'immediate_sms_received',
     'sms',
     'all',
@@ -170,7 +179,7 @@ Operon Flooring',
 
 A quick follow-up on your flooring project.
 
-The main details that usually need confirmation are product selection, floor preparation, removal or disposal, trims, and access. If any of those are unclear, we can help check the scope before you decide.
+The main details that usually need confirmation are product selection, floor preparation, removal or disposal, trims, and site conditions. If any of those are unclear, we can help check the scope before you decide.
 
 You can reply with questions, send a floor plan, or continue from your saved estimate.
 
@@ -197,7 +206,7 @@ Operon Flooring',
 
 Just checking whether your flooring project is still being planned.
 
-Your estimate details can still be used as a starting point. If the product, area, access or timing has changed, we can update the scope before final confirmation.
+Your estimate details can still be used as a starting point. If the product, area, site details or timing has changed, we can update the scope before final confirmation.
 
 No pressure. Reply whenever you are ready.
 

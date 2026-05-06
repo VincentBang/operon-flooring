@@ -17,7 +17,7 @@
 
 ## Build Priorities
 1. homepage conversion flow
-2. quote wizard clarity
+2. quote flow clarity
 3. floor plan handoff
 4. supporting page consistency
 

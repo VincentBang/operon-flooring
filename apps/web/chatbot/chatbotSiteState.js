@@ -143,11 +143,11 @@
 
     if (activeStep === 0) {
       nudge = getValueById("fullName") && getValueById("phone")
-        ? "Customer details look started. Property access is next."
+        ? "Customer details look started. Property details are next."
         : "Start with name, phone, and the job location.";
       next.focusId = "fullName";
     } else if (activeStep === 1) {
-      nudge = "Check property type, access, parking, and lift details where relevant.";
+      nudge = "Check property type, parking and lift details where relevant.";
       next.focusId = "propertyType";
     } else if (activeStep === 2) {
       nudge = category
@@ -162,7 +162,7 @@
         ? "confirmedFloorplanArea"
         : (measurementMethod === "unknown" ? "floorplanLookupAddress" : "totalAreaM2");
     } else if (activeStep === 4) {
-      nudge = "Only select extras that apply. Removal, access, stairs, and floor condition are the main scope checks.";
+      nudge = "Only select extras that apply. Removal, stairs, and floor condition are the main scope checks.";
       next.focusId = "existingFloorType";
     } else if (activeStep === 5) {
       nudge = "Review the estimate and scope, then submit when the details look right.";
@@ -209,7 +209,7 @@
   function getReviewPageState() {
     return {
       userType: "validation_user",
-      nudge: "Use the review page to check scope items like removal, prep, access, trims, and installation before starting a structured estimate.",
+      nudge: "Use the review page to check scope items like removal, prep, trims, and installation before starting a structured estimate.",
       next: {
         label: "Get structured estimate",
         href: "quote.html?from=quote-review",

@@ -1,5 +1,7 @@
 "use strict";
 
+const { getSupabaseTables } = require("./_supabaseTables");
+
 function jsonResponse(statusCode, payload) {
   return {
     statusCode: statusCode,
@@ -82,7 +84,7 @@ exports.handler = async function (event) {
   const stairsFlag = body.stairs_flag === true;
 
   try {
-    const rows = await supabaseRequest("pricing_optimization_buckets", {
+    const rows = await supabaseRequest(getSupabaseTables().pricingOptimizationBuckets, {
       suburb_cluster: "eq." + suburbCluster,
       flooring_type: "eq." + flooringType,
       area_band: "eq." + areaBand,

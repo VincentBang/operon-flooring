@@ -14,7 +14,7 @@
     "Do not claim Operon is cheaper than a competitor.",
     "Do not describe the online estimate as a final quote.",
     "Do not update quote fields, product selection, localStorage, or forms.",
-    "Do not override the product catalogue, quote wizard, or quote calculator.",
+    "Do not override the product catalogue, quote flow, or quote calculator.",
     "Do not provide open-ended AI advice outside flooring product and quote guidance."
   ];
 

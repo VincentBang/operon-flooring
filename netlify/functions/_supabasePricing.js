@@ -1,5 +1,7 @@
 "use strict";
 
+const { getSupabaseTables } = require("./_supabaseTables");
+
 // Server-side only pricing adapter.
 // Current live frontend still uses local JS fallback modules. This helper reads the legacy
 // pricing_* tables for private Netlify functions; the 20260502 Supabase migration also
@@ -115,6 +117,7 @@ async function fetchOptionalTable(tableName, query) {
 }
 
 async function loadPricingLibrary() {
+  const tables = getSupabaseTables();
   const [
     categories,
     products,
@@ -126,15 +129,15 @@ async function loadPricingLibrary() {
     pricingRulesRows,
     stairRates
   ] = await Promise.all([
-    fetchTable("pricing_categories", { select: "*", active: "eq.true", order: "id.asc" }),
-    fetchTable("pricing_products", { select: "*", active: "eq.true", order: "sort_order.asc" }),
-    fetchTable("pricing_install_rates", { select: "*", active: "eq.true", order: "id.asc" }),
-    fetchTable("pricing_underlay_options", { select: "*", active: "eq.true", order: "id.asc" }),
-    fetchTable("pricing_trim_options", { select: "*", active: "eq.true", order: "id.asc" }),
-    fetchTable("pricing_removal_rates", { select: "*", active: "eq.true", order: "id.asc" }),
-    fetchTable("pricing_location_zones", { select: "*", active: "eq.true", order: "id.asc" }),
-    fetchTable("pricing_rules", { select: "*", order: "rule_key.asc" }),
-    fetchOptionalTable("pricing_stair_rates", { select: "*", active: "eq.true", order: "range_id.asc,stair_type.asc" })
+    fetchTable(tables.pricingCategories, { select: "*", active: "eq.true", order: "id.asc" }),
+    fetchTable(tables.pricingProducts, { select: "*", active: "eq.true", order: "sort_order.asc" }),
+    fetchTable(tables.pricingInstallRates, { select: "*", active: "eq.true", order: "id.asc" }),
+    fetchTable(tables.pricingUnderlayOptions, { select: "*", active: "eq.true", order: "id.asc" }),
+    fetchTable(tables.pricingTrimOptions, { select: "*", active: "eq.true", order: "id.asc" }),
+    fetchTable(tables.pricingRemovalRates, { select: "*", active: "eq.true", order: "id.asc" }),
+    fetchTable(tables.pricingLocationZones, { select: "*", active: "eq.true", order: "id.asc" }),
+    fetchTable(tables.pricingRules, { select: "*", order: "rule_key.asc" }),
+    fetchOptionalTable(tables.pricingStairRates, { select: "*", active: "eq.true", order: "range_id.asc,stair_type.asc" })
   ]);
 
   const categoryMap = categories.reduce(function (accumulator, category) {

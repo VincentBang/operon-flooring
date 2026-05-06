@@ -231,6 +231,16 @@ test("controlled knowledge index routes site content without prices", function (
       prompt: "What page helps with hybrid flooring?",
       route: "hybrid-flooring-sydney.html",
       expected: /Hybrid flooring/i
+    },
+    {
+      prompt: "Tell me about Swish Oak Natura Herringbone",
+      route: "products.html",
+      expected: /Herringbone|pattern/i
+    },
+    {
+      prompt: "Do I need disposal with carpet removal?",
+      route: "quote.html",
+      expected: /disposal|take-away|remove/i
     }
   ].forEach(function (example) {
     const snapshot = runPrompt(example.prompt);

@@ -93,6 +93,15 @@ function getEnv(name: string): string {
   return Deno.env.get(name) || "";
 }
 
+function getTablePath(path: string): string {
+  const mode = getEnv("OPERON_SUPABASE_SCHEMA_MODE").trim().toLowerCase();
+  if (!(mode === "v2" || mode === "clean" || mode === "operon_v2")) return path;
+  const questionIndex = path.indexOf("?");
+  const tableName = questionIndex >= 0 ? path.slice(0, questionIndex) : path;
+  const suffix = questionIndex >= 0 ? path.slice(questionIndex) : "";
+  return tableName.startsWith("operon_") ? path : `operon_${tableName}${suffix}`;
+}
+
 function hoursSince(value: string | null | undefined) {
   if (!value) {
     return Number.POSITIVE_INFINITY;
@@ -220,12 +229,13 @@ function getActionForLead(lead: QuoteRequest, score: number, stage: LeadStage, l
 async function supabaseFetch(path: string, init: RequestInit = {}) {
   const supabaseUrl = getEnv("SUPABASE_URL").replace(/\/$/, "");
   const serviceRoleKey = getEnv("SUPABASE_SERVICE_ROLE_KEY");
+  const tablePath = getTablePath(path);
 
   if (!supabaseUrl || !serviceRoleKey) {
     throw new Error("Missing Supabase server credentials.");
   }
 
-  const response = await fetch(`${supabaseUrl}/rest/v1/${path}`, {
+  const response = await fetch(`${supabaseUrl}/rest/v1/${tablePath}`, {
     ...init,
     headers: {
       apikey: serviceRoleKey,
@@ -238,7 +248,7 @@ async function supabaseFetch(path: string, init: RequestInit = {}) {
 
   if (!response.ok) {
     const text = await response.text();
-    throw new Error(`Supabase request failed for ${path}: ${text}`);
+    throw new Error(`Supabase request failed for ${tablePath}: ${text}`);
   }
 
   const text = await response.text();

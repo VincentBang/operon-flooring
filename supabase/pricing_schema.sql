@@ -257,8 +257,10 @@ on conflict (id) do update set
 
 insert into pricing_underlay_options (id, name, suitable_categories, price_per_m2, active)
 values
-  ('acoustic-underlay-standard', 'Standard Acoustic Underlay', '["laminate","engineered"]'::jsonb, 4, true),
-  ('acoustic-underlay-premium', 'Premium Acoustic Underlay', '["laminate","engineered"]'::jsonb, 6, true),
+  ('acoustic-underlay-standard', 'Standard silver underlay', '["laminate","engineered"]'::jsonb, 4, true),
+  ('acoustic-underlay-premium', 'Premium acoustic underlay', '["laminate","engineered"]'::jsonb, 6, true),
+  ('acoustic-rubber-underlay-5mm', 'Acoustic Rubber underlay 5mm', '["laminate","engineered"]'::jsonb, 12, true),
+  ('acoustic-rubber-underlay-5mm-glued-down', 'Acoustic Rubber Underlay 5mm glued down', '["engineered"]'::jsonb, 12, true),
   ('hybrid-additional-acoustic-layer', 'Additional Acoustic Layer', '["hybrid"]'::jsonb, 5, false)
 on conflict (id) do update set
   name = excluded.name,

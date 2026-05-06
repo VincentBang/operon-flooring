@@ -466,7 +466,7 @@ Operon advantage:
 
 Action:
 
-- keep the quote wizard high on the page
+- keep the primary quote CTA high on the page
 - reduce friction
 - keep CTAs direct
 - maintain one primary action per page
@@ -630,7 +630,7 @@ Reason:
 
 - it is the main conversion asset
 - it targets the most commercially important keyword
-- it already carries the quote wizard
+- it already carries the main quote conversion path
 - improvements here help every backlink, CTA and internal link perform better
 
 ### 5. Highest ROI new page after homepage
