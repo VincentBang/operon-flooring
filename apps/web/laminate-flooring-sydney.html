@@ -149,6 +149,8 @@
               <a class="button-secondary" href="products.html?category=laminate" data-save-category="laminate">View all laminate flooring products</a>
             </div>
           </div>
+          <div class="catalogue-grid" id="laminateFeaturedGrid"></div>
+          <div class="catalogue-status" id="laminateFeaturedStatus">Choose a laminate product, then continue into the quote when you are ready.</div>
         </article>
       </div>
     </section>
@@ -379,6 +381,14 @@
       }
 
       updateLaminateBridge();
+      productsApi.renderCategoryCatalogue({
+        category: "laminate",
+        targetId: "laminateFeaturedGrid",
+        statusId: "laminateFeaturedStatus",
+        limit: 6,
+        quoteUrl: "quote.html?from=product&category=laminate",
+        successMessage: "Laminate product selected. Continue to quote."
+      });
     }());
   </script>
 </body>

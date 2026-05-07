@@ -149,6 +149,8 @@
               <a class="button-secondary" href="products.html?category=engineered" data-save-category="engineered">View all engineered timber products</a>
             </div>
           </div>
+          <div class="catalogue-grid" id="engineeredFeaturedGrid"></div>
+          <div class="catalogue-status" id="engineeredFeaturedStatus">Choose an engineered timber product, then continue into the quote when you are ready.</div>
         </article>
       </div>
     </section>
@@ -379,6 +381,14 @@
       }
 
       updateEngineeredBridge();
+      productsApi.renderCategoryCatalogue({
+        category: "engineered",
+        targetId: "engineeredFeaturedGrid",
+        statusId: "engineeredFeaturedStatus",
+        limit: 6,
+        quoteUrl: "quote.html?from=product&category=engineered",
+        successMessage: "Engineered timber product selected. Continue to quote."
+      });
     }());
   </script>
 </body>
