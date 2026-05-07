@@ -2542,7 +2542,8 @@
               "image": "images/products/laminate/eco-villeroy-boch-heritage/blue-leaf.webp",
               "imageUrl": "images/products/laminate/eco-villeroy-boch-heritage/blue-leaf.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-villeroy-boch-heritage/blue-leaf.webp"
+                      "images/products/laminate/eco-villeroy-boch-heritage/blue-leaf.webp",
+                      "images/products/laminate/eco-villeroy-boch-heritage/blue-leaf-gallery-2.webp"
               ],
               "alt": "Blue Leaf Villeroy & Boch Heritage Laminate flooring sample",
               "description": "Blue Leaf is a laminate flooring colour from the Villeroy & Boch Heritage Laminate range.",
@@ -2583,6 +2584,14 @@
                               {
                                       "label": "Range",
                                       "value": "Villeroy & Boch Heritage Laminate"
+                              },
+                              {
+                                      "label": "Panel Size",
+                                      "value": "1380 × 193 × 8 mm"
+                              },
+                              {
+                                      "label": "Pack / Box",
+                                      "value": "8 panels · 2.131 m²"
                               }
                       ]
               }
@@ -2607,7 +2616,8 @@
               "image": "images/products/laminate/eco-villeroy-boch-heritage/travertin-hickory.webp",
               "imageUrl": "images/products/laminate/eco-villeroy-boch-heritage/travertin-hickory.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-villeroy-boch-heritage/travertin-hickory.webp"
+                      "images/products/laminate/eco-villeroy-boch-heritage/travertin-hickory.webp",
+                      "images/products/laminate/eco-villeroy-boch-heritage/travertin-hickory-gallery-2.webp"
               ],
               "alt": "Travertin Hickory Villeroy & Boch Heritage Laminate flooring sample",
               "description": "Travertin Hickory is a laminate flooring colour from the Villeroy & Boch Heritage Laminate range.",
@@ -2649,7 +2659,8 @@
               "image": "images/products/laminate/eco-villeroy-boch-heritage/travertin-oak.webp",
               "imageUrl": "images/products/laminate/eco-villeroy-boch-heritage/travertin-oak.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-villeroy-boch-heritage/travertin-oak.webp"
+                      "images/products/laminate/eco-villeroy-boch-heritage/travertin-oak.webp",
+                      "images/products/laminate/eco-villeroy-boch-heritage/travertin-oak-gallery-2.webp"
               ],
               "alt": "Travertin Oak Villeroy & Boch Heritage Laminate flooring sample",
               "description": "Travertin Oak is a laminate flooring colour from the Villeroy & Boch Heritage Laminate range.",
@@ -2691,7 +2702,8 @@
               "image": "images/products/laminate/eco-villeroy-boch-country/castle-oak.webp",
               "imageUrl": "images/products/laminate/eco-villeroy-boch-country/castle-oak.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-villeroy-boch-country/castle-oak.webp"
+                      "images/products/laminate/eco-villeroy-boch-country/castle-oak.webp",
+                      "images/products/laminate/eco-villeroy-boch-country/castle-oak-gallery-2.webp"
               ],
               "alt": "Castle Oak Villeroy & Boch Country Laminate flooring sample",
               "description": "Castle Oak is a laminate flooring colour from the Villeroy & Boch Country Laminate range.",
@@ -2732,6 +2744,14 @@
                               {
                                       "label": "Range",
                                       "value": "Villeroy & Boch Country Laminate"
+                              },
+                              {
+                                      "label": "Panel Size",
+                                      "value": "1375 × 188 × 12 mm"
+                              },
+                              {
+                                      "label": "Pack / Box",
+                                      "value": "5 panels · 1.293 m²&gt;"
                               }
                       ]
               }
@@ -2756,7 +2776,8 @@
               "image": "images/products/laminate/eco-villeroy-boch-country/meadow-teak.webp",
               "imageUrl": "images/products/laminate/eco-villeroy-boch-country/meadow-teak.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-villeroy-boch-country/meadow-teak.webp"
+                      "images/products/laminate/eco-villeroy-boch-country/meadow-teak.webp",
+                      "images/products/laminate/eco-villeroy-boch-country/meadow-teak-gallery-2.webp"
               ],
               "alt": "Meadow Teak Villeroy & Boch Country Laminate flooring sample",
               "description": "Meadow Teak is a laminate flooring colour from the Villeroy & Boch Country Laminate range.",
@@ -2881,6 +2902,14 @@
                               {
                                       "label": "Range",
                                       "value": "Villeroy & Boch Cosmopolitan Laminate"
+                              },
+                              {
+                                      "label": "Panel Size",
+                                      "value": "1380 × 193 × 8 mm"
+                              },
+                              {
+                                      "label": "Pack / Box",
+                                      "value": "8 panels · 2.131 m²"
                               }
                       ]
               }
@@ -2989,7 +3018,8 @@
               "image": "images/products/laminate/eco-villeroy-boch-cosmopolitan/royal-teak.webp",
               "imageUrl": "images/products/laminate/eco-villeroy-boch-cosmopolitan/royal-teak.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-villeroy-boch-cosmopolitan/royal-teak.webp"
+                      "images/products/laminate/eco-villeroy-boch-cosmopolitan/royal-teak.webp",
+                      "images/products/laminate/eco-villeroy-boch-cosmopolitan/royal-teak-gallery-2.webp"
               ],
               "alt": "Royal Teak Villeroy & Boch Cosmopolitan Laminate flooring sample",
               "description": "Royal Teak is a laminate flooring colour from the Villeroy & Boch Cosmopolitan Laminate range.",
@@ -3114,6 +3144,14 @@
                               {
                                       "label": "Range",
                                       "value": "Villeroy & Boch Contemporary Laminate"
+                              },
+                              {
+                                      "label": "Panel Size",
+                                      "value": "1380 × 193 × 10 mm"
+                              },
+                              {
+                                      "label": "Pack / Box",
+                                      "value": "6 panels · 1.598 m²"
                               }
                       ]
               }
@@ -3138,7 +3176,9 @@
               "image": "images/products/laminate/eco-villeroy-boch-contemporary/current-oak.webp",
               "imageUrl": "images/products/laminate/eco-villeroy-boch-contemporary/current-oak.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-villeroy-boch-contemporary/current-oak.webp"
+                      "images/products/laminate/eco-villeroy-boch-contemporary/current-oak.webp",
+                      "images/products/laminate/eco-villeroy-boch-contemporary/current-oak-gallery-2.webp",
+                      "images/products/laminate/eco-villeroy-boch-contemporary/current-oak-gallery-3.webp"
               ],
               "alt": "Current Oak Villeroy & Boch Contemporary Laminate flooring sample",
               "description": "Current Oak is a laminate flooring colour from the Villeroy & Boch Contemporary Laminate range.",
@@ -3264,7 +3304,8 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/blackbutt-aqua.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/blackbutt-aqua.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/blackbutt-aqua.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/blackbutt-aqua.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/blackbutt-aqua-gallery-2.webp"
               ],
               "alt": "Blackbutt- Aqua Swish Laminate Aqua flooring sample",
               "description": "Blackbutt- Aqua is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3305,6 +3346,26 @@
                               {
                                       "label": "Range",
                                       "value": "Swish Laminate Aqua"
+                              },
+                              {
+                                      "label": "Board Size",
+                                      "value": "Length 2200mm x Width 196mm"
+                              },
+                              {
+                                      "label": "Thickness",
+                                      "value": "var(--nfd-heading-border-size,3px)!important;text-underline-offset:.25em!important}.is-style-nfd-heading-underline.wp-block-heading[style*=\"--nfd-heading-border-style: solid\"],.is-style-nfd-heading-underline.wp-block-heading[style*=\"--nfd-heading-border-style:solid\"]{text-decoration-style:solid!important}.is-style-nfd-heading-underline.wp-block-heading[style*=\"--nfd-heading-border-style: dashed\"],.is-style-nfd-heading-underline.wp-block-heading[style*=\"--nfd-heading-border-style:dashed\"]{text-decoration-style:dashed!important}.is-style-nfd-heading-underline.wp-block-heading[style*=\"--nfd-heading-border-style: dotted\"],.is-style-nfd-heading-underline.wp-block-heading[style*=\"--nfd-heading-border-style:dotted\"]{text-decoration-style:dotted!important}.nfd-mask-fade-to-b>.wp-block-cover__background{-webkit-mask-image:linear-gradient(180deg,transparent 50%,#000 120%)!important;mask-image:linear-gradient(180deg,transparent 50%,#000 120%)!important}.nfd-mask-radial-center>.wp-block-cover__background{-webkit-mask-image:radial-gradient(circle,transparent -40%,rgba(0,0,0,.9) 58%)!important;mask-image:radial-gradient(circle,transparent -40%,rgba(0,0,0,.9) 58%)!important}p[style*=text-decoration]>a{color:inherit!important;text-decoration:inherit!important}.is-style-dots.nfd-text-left:before{padding-left:0!important}.nfd-h-full,.nfd-h-full>.components-resizable-box__container>img,.nfd-h-full>img{height:100%!important}.nfd-w-full,.nfd-w-full>.components-resizable-box__container>img,.nfd-w-full>img{width:100%!important}.nfd-backdrop-blur-sm{backdrop-filter:blur(4px)!important}.nfd-backdrop-blur-md{backdrop-filter:blur(8px)!important}:not(.editor-styles-wrapper) header:has(.nfd-absolute-header){position:sticky!important;top:0!important;z-index:1!important}.nfd-absolute-header:not([style*=margin]){margin:0!important}:not(.editor-styles-wrapper) .nfd-absolute-header:not([style*=padding]):not([class*=nfd-px-]):not([style*=padding]){padding-inline:var(--wndb--p)!important}body:not(.editor-styles-wrapper) .wp-site-blocks .nfd-transparent-header,body:not(.editor-styles-wrapper) .wp-site-blocks header:has(>:first-child.nfd-transparent-header){min-width:100%!important;position:absolute!important;z-index:1!important}body:not(.editor-styles-wrapper) .nfd-transparent-header{background-color:transparent!important}.editor-styles-wrapper .nfd-transparent-header{background-color:rgba(0,0,0,.2)!important}.wp-site-blocks .nfd-transparent-header+:not([style*=margin]),.wp-site-blocks>header:has(>:first-child.nfd-transparent-header)+:not([style*=margin]){margin-top:0!important}:is([style*=\"min-height:100vh\"]){min-height:calc(100vh - var(--wp-admin--admin-bar--height))!important}@supports (height:100dvh){:is([style*=\"height:100vh\"]){min-height:calc(100dvh - var(--wp-admin--admin-bar--height, 0px))!important}}.nfd-wk-search .wp-block-search__input{font-size:inherit!important;min-height:50px!important;padding:8px 16px!important}:where(.wp-block-search__input){border-radius:var(--wndb--border--radius--sm)!important}.nfd-stretch-cover-child,.nfd-stretch-cover-child .wp-block-cover__inner-container{display:flex!important;flex-direction:column!important}.nfd-stretch-cover-child .wp-block-cover__inner-container,.nfd-stretch-cover-child .wp-block-cover__inner-container>.nfd-pseudo-play-icon,.nfd-stretch-cover-child .wp-block-cover__inner-container>.wp-block-group{align-items:inherit!important;flex-grow:1!important;justify-content:inherit!important}.nfd-stretch-cover-child .wp-block-cover__inner-container>.wp-block-group,.nfd-stretch-cover-child .wp-block-cover__inner-container>p{width:100%!important}.nfd-container summary{line-height:1.5!important;padding-right:32px!important;position:relative!important}.nfd-container summary::marker{content:none!important}.nfd-container summary:before{align-items:center!important;background-color:var(--wndb--color--borders)!important;background-image:url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIyIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1wbHVzIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGQ9Ik01IDEyaDE0TTEyIDV2MTQiLz48L3N2Zz4=\")!important;background-position:50%!important;background-repeat:no-repeat!important;background-size:13px!important;border-radius:999px!important;content:\"\"!important;display:flex!important;height:1em!important;justify-content:center!important;opacity:.6!important;position:absolute!important;right:0!important;top:50%!important;transform:translateY(-50%)!important;width:1em!important}.nfd-container [open] summary{font-weight:700!important}.nfd-container [open] summary:before{opacity:1!important;transform:translateY(-50%) rotate(45deg)!important}.nfd-container summary:hover:before{opacity:1!important}.is-style-wide.wp-block-separator{width:100%!important}.nfd-aspect-video{aspect-ratio:16/9!important}.nfd-img-object-left img{-o-object-position:left!important;object-position:left!important}.nfd-img-object-right img{-o-object-position:right!important;object-position:right!important}.editor-styles-wrapper .wp-block-image.nfd-h-full>div{aspect-ratio:unset!important;height:100%!important;max-height:unset!important}.nfd-img-floating-photo{border:10px solid #fff!important;border-radius:8px!important;box-shadow:6px 6px 20px rgba(0,0,0,.2)!important;transform:rotate(5deg)!important}.nfd-yoast-toc ul li{list-style-type:disc!important}.nfd-yoast-toc{line-height:1.5!important}[class*=is-style-nfd-dots],[class*=is-style-nfd-waves]{padding-block:var(--wndb--p--sm)!important;position:relative!important}[class*=is-style-nfd-waves]{padding-block:var(--wndb--p--md)!important}.is-style-nfd-dots-bottom-right,.is-style-nfd-dots-top-right{padding-inline-end:var(--wndb--p--sm)!important}.is-style-nfd-dots-bottom-left,.is-style-nfd-dots-top-left{padding-inline-start:var(--wndb--p--sm)!important}.is-style-nfd-waves-bottom-right,.is-style-nfd-waves-top-right{padding-inline-end:var(--wndb--p--md)!important;padding-inline-start:var(--wndb--p--xs)!important}.is-style-nfd-waves-bottom-left,.is-style-nfd-waves-top-left{padding-inline-end:var(--wndb--p--xs)!important;padding-inline-start:var(--wndb--p--md)!important}[class*=is-style-nfd-dots]>img[class^=wp-image-],[class*=is-style-nfd-waves]>img[class^=wp-image-]{position:relative!important}[class*=is-style-nfd-dots]:before{background-image:radial-gradient(var(--wndb--color--primary) 2px,transparent 2px)!important;background-size:16px 16px!important;height:106px!important;opacity:1!important;width:106px!important}[class*=is-style-nfd-dots]:before,[class*=is-style-nfd-waves]:before{content:\"\"!important;display:block!important;position:absolute!important}[class*=is-style-nfd-waves]:before{--wndb--wave-width:380px;--wndb--wave-spacing:16px;--wndb--wave-thickness:8px;--wndb--wave-curve:0.85;background:color-mix(in srgb,var(--wndb--color--tertiary) 60%,#fff)!important;width:var(--wndb--wave-width)!important;z-index:1!important;--wndb--wave-radius:calc(var(--wndb--wave-spacing)*sqrt(var(--wndb--wave-curve) * var(--wndb--wave-curve) + 1) + var(--wndb--wave-thickness)/2);--wndb--wave-height:calc(var(--wndb--wave-spacing) + var(--wndb--wave-thickness));--wndb--wave-gap:14px;height:calc(var(--wndb--wave-height)*3 + var(--wndb--wave-gap)*2)!important;--wndb--y1:0px;--wndb--y2:calc(var(--wndb--wave-height) + var(--wndb--wave-gap));--wndb--y3:calc((var(--wndb--wave-height) + var(--wndb--wave-gap))*2);--wndb--wave-gradient:#0000 calc(99% - var(--wndb--wave-thickness)),#000 calc(101% - var(--wndb--wave-thickness)) 99%,#0000 101%;--wndb--mask-stripe-1-top:radial-gradient(var(--wndb--wave-radius) at left 50% top calc(var(--wndb--wave-curve)*-1*var(--wndb--wave-spacing)),var(--wndb--wave-gradient)) 50% calc(var(--wndb--y1) + var(--wndb--wave-spacing)/2 + var(--wndb--wave-thickness)/2) /calc(var(--wndb--wave-spacing)*4) calc(var(--wndb--wave-spacing) + var(--wndb--wave-thickness)) repeat-x;--wndb--mask-stripe-1-bottom:radial-gradient(var(--wndb--wave-radius) at left 50% bottom calc(var(--wndb--wave-curve)*-1*var(--wndb--wave-spacing)),var(--wndb--wave-gradient)) calc(50% - var(--wndb--wave-spacing)*2) calc(var(--wndb--y1) - var(--wndb--wave-spacing)/2 - var(--wndb--wave-thickness)/2) /calc(var(--wndb--wave-spacing)*4) calc(var(--wndb--wave-spacing) + var(--wndb--wave-thickness)) repeat-x;--wndb--mask-stripe-2-top:radial-gradient(var(--wndb--wave-radius) at left 50% top calc(var(--wndb--wave-curve)*-1*var(--wndb--wave-spacing)),var(--wndb--wave-gradient)) 50% calc(var(--wndb--y2) + var(--wndb--wave-spacing)/2 + var(--wndb--wave-thickness)/2) /calc(var(--wndb--wave-spacing)*4) calc(var(--wndb--wave-spacing) + var(--wndb--wave-thickness)) repeat-x;--wndb--mask-stripe-2-bottom:radial-gradient(var(--wndb--wave-radius) at left 50% bottom calc(var(--wndb--wave-curve)*-1*var(--wndb--wave-spacing)),var(--wndb--wave-gradient)) calc(50% - var(--wndb--wave-spacing)*2) calc(var(--wndb--y2) - var(--wndb--wave-spacing)/2 - var(--wndb--wave-thickness)/2) /calc(var(--wndb--wave-spacing)*4) calc(var(--wndb--wave-spacing) + var(--wndb--wave-thickness)) repeat-x;--wndb--mask-stripe-3-top:radial-gradient(var(--wndb--wave-radius) at left 50% top calc(var(--wndb--wave-curve)*-1*var(--wndb--wave-spacing)),var(--wndb--wave-gradient)) 50% calc(var(--wndb--y3) + var(--wndb--wave-spacing)/2 + var(--wndb--wave-thickness)/2) /calc(var(--wndb--wave-spacing)*4) calc(var(--wndb--wave-spacing) + var(--wndb--wave-thickness)) repeat-x;--wndb--mask-stripe-3-bottom:radial-gradient(var(--wndb--wave-radius) at left 50% bottom calc(var(--wndb--wave-curve)*-1*var(--wndb--wave-spacing)),var(--wndb--wave-gradient)) calc(50% - var(--wndb--wave-spacing)*2) calc(var(--wndb--y3) - var(--wndb--wave-spacing)/2 - var(--wndb--wave-thickness)/2) /calc(var(--wndb--wave-spacing)*4) calc(var(--wndb--wave-spacing) + var(--wndb--wave-thickness)) repeat-x;mask:var(--wndb--mask-stripe-1-bottom),var(--wndb--mask-stripe-1-top),var(--wndb--mask-stripe-2-bottom),var(--wndb--mask-stripe-2-top),var(--wndb--mask-stripe-3-bottom),var(--wndb--mask-stripe-3-top)!important;-webkit-mask:var(--wndb--mask-stripe-1-bottom),var(--wndb--mask-stripe-1-top),var(--wndb--mask-stripe-2-bottom),var(--wndb--mask-stripe-2-top),var(--wndb--mask-stripe-3-bottom),var(--wndb--mask-stripe-3-top)!important;mask-repeat:repeat-x!important;-webkit-mask-repeat:repeat-x!important}.is-style-nfd-dots-bottom-right:before,.is-style-nfd-waves-bottom-right:before{bottom:0!important;right:0!important}.is-style-nfd-dots-bottom-left:before,.is-style-nfd-waves-bottom-left:before{bottom:0!important;left:0!important}.is-style-nfd-dots-top-left:before,.is-style-nfd-waves-top-left:before{left:0!important;top:0!important}.is-style-nfd-dots-top-right:before,.is-style-nfd-waves-top-right:before{right:0!important;top:0!important}.nfd-hover-settings .components-heading{width:100%!important}.nfd-hoverable{transition:color .15s ease,background-color .15s ease,text-decoration-color .15s ease!important}.nfd-hoverable.nfd-hover-text:hover{color:var(--nfd-hover-text)!important}.nfd-hoverable.nfd-hover-bg:hover{background-color:var(--nfd-hover-bg)!important}@media (max-width:782px){.md\\:nfd-order-2{order:2!important}.md\\:nfd-my-0:not([style*=margin]){margin-bottom:0!important;margin-top:0!important}.md\\:nfd-flex{display:flex!important}.md\\:nfd-hidden{display:none!important}.md\\:nfd-basis-full{flex-basis:100%!important}.md\\:nfd-grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))!important}.md\\:nfd-flex-col{flex-direction:column!important}.md\\:nfd-flex-wrap{flex-wrap:wrap!important}.md\\:nfd-items-start{align-items:flex-start!important}.md\\:nfd-justify-start{justify-content:flex-start!important}.md\\:nfd-justify-end{justify-content:flex-end!important}.md\\:nfd-justify-center{justify-content:center!important}.md\\:nfd-gap-0{gap:0!important}.md\\:nfd-gap-4{gap:1rem!important}.md\\:nfd-gap-5{gap:1.25rem!important}.md\\:nfd-gap-8{gap:2rem!important}.md\\:nfd-self-start{align-self:flex-start!important}.md\\:nfd-rounded-lg:not([style*=-radius]){border-radius:.5rem!important}.md\\:nfd-border-none{border-style:none!important}.md\\:nfd-p-0:not([style*=padding]){padding:0!important}.md\\:nfd-p-4:not([style*=padding]){padding:1rem!important}.md\\:nfd-px-0:not([style*=padding]){padding-left:0!important;padding-right:0!important}.md\\:nfd-py-0:not([style*=padding]){padding-bottom:0!important;padding-top:0!important}.md\\:nfd-text-left{text-align:left!important}.md\\:nfd-text-center{text-align:center!important}} /*# sourceURL=nfd-wonder-blocks-utilities-inline-css */"
+                              },
+                              {
+                                      "label": "Pack Size",
+                                      "value": "2.16 m2"
+                              },
+                              {
+                                      "label": "Pack Weight",
+                                      "value": "23 kg"
+                              },
+                              {
+                                      "label": "Boards Per Pack",
+                                      "value": "5"
                               }
                       ]
               }
@@ -3329,7 +3390,8 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/fendi-oak.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/fendi-oak.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/fendi-oak.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/fendi-oak.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/fendi-oak-gallery-2.webp"
               ],
               "alt": "Fendi Oak Swish Laminate Aqua flooring sample",
               "description": "Fendi Oak is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3371,7 +3433,8 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/hawaii-oak.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/hawaii-oak.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/hawaii-oak.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/hawaii-oak.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/hawaii-oak-gallery-2.webp"
               ],
               "alt": "Hawaii Oak Swish Laminate Aqua flooring sample",
               "description": "Hawaii Oak is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3413,7 +3476,8 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/madrid-oak.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/madrid-oak.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/madrid-oak.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/madrid-oak.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/madrid-oak-gallery-2.webp"
               ],
               "alt": "Madrid Oak Swish Laminate Aqua flooring sample",
               "description": "Madrid Oak is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3455,7 +3519,8 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/manhattan-oak.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/manhattan-oak.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/manhattan-oak.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/manhattan-oak.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/manhattan-oak-gallery-2.webp"
               ],
               "alt": "Manhattan Oak Swish Laminate Aqua flooring sample",
               "description": "Manhattan Oak is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3497,7 +3562,8 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/miami-oak.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/miami-oak.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/miami-oak.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/miami-oak.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/miami-oak-gallery-2.webp"
               ],
               "alt": "Miami Oak Swish Laminate Aqua flooring sample",
               "description": "Miami Oak is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3539,7 +3605,8 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/montreal-oak.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/montreal-oak.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/montreal-oak.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/montreal-oak.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/montreal-oak-gallery-2.webp"
               ],
               "alt": "Montreal Oak Swish Laminate Aqua flooring sample",
               "description": "Montreal Oak is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3581,7 +3648,8 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/nsw-spotted-gum.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/nsw-spotted-gum.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/nsw-spotted-gum.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/nsw-spotted-gum.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/nsw-spotted-gum-gallery-2.webp"
               ],
               "alt": "NSW Spotted Gum Swish Laminate Aqua flooring sample",
               "description": "NSW Spotted Gum is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3623,7 +3691,8 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/oak-colonial.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/oak-colonial.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/oak-colonial.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-colonial.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-colonial-gallery-2.webp"
               ],
               "alt": "Oak Colonial Swish Laminate Aqua flooring sample",
               "description": "Oak Colonial is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3665,7 +3734,9 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/oak-fremont.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/oak-fremont.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/oak-fremont.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-fremont.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-fremont-gallery-2.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-fremont-gallery-3.webp"
               ],
               "alt": "Oak Fremont Swish Laminate Aqua flooring sample",
               "description": "Oak Fremont is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3749,7 +3820,8 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/oak-nashville.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/oak-nashville.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/oak-nashville.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-nashville.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-nashville-gallery-2.webp"
               ],
               "alt": "Oak Nashville Swish Laminate Aqua flooring sample",
               "description": "Oak Nashville is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3791,7 +3863,8 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/oak-ostana.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/oak-ostana.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/oak-ostana.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-ostana.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-ostana-gallery-2.webp"
               ],
               "alt": "Oak Ostana Swish Laminate Aqua flooring sample",
               "description": "Oak Ostana is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3833,7 +3906,9 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/oak-vermont.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/oak-vermont.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/oak-vermont.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-vermont.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-vermont-gallery-2.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/oak-vermont-gallery-3.webp"
               ],
               "alt": "Oak Vermont Swish Laminate Aqua flooring sample",
               "description": "Oak Vermont is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3875,7 +3950,8 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/qld-spotted-gum.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/qld-spotted-gum.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/qld-spotted-gum.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/qld-spotted-gum.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/qld-spotted-gum-gallery-2.webp"
               ],
               "alt": "QLD Spotted Gum Swish Laminate Aqua flooring sample",
               "description": "QLD Spotted Gum is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3917,7 +3993,8 @@
               "image": "images/products/laminate/eco-swish-laminate-aqua/smooth-blackbutt.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate-aqua/smooth-blackbutt.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate-aqua/smooth-blackbutt.webp"
+                      "images/products/laminate/eco-swish-laminate-aqua/smooth-blackbutt.webp",
+                      "images/products/laminate/eco-swish-laminate-aqua/smooth-blackbutt-gallery-2.webp"
               ],
               "alt": "Smooth Blackbutt Swish Laminate Aqua flooring sample",
               "description": "Smooth Blackbutt is a laminate flooring colour from the Swish Laminate Aqua range.",
@@ -3959,7 +4036,8 @@
               "image": "images/products/laminate/eco-swish-laminate/blackbutt-light.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate/blackbutt-light.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate/blackbutt-light.webp"
+                      "images/products/laminate/eco-swish-laminate/blackbutt-light.webp",
+                      "images/products/laminate/eco-swish-laminate/blackbutt-light-gallery-2.webp"
               ],
               "alt": "Blackbutt Light Swish Laminate flooring sample",
               "description": "Blackbutt Light is a laminate flooring colour from the Swish Laminate range.",
@@ -4000,6 +4078,26 @@
                               {
                                       "label": "Range",
                                       "value": "Swish Laminate"
+                              },
+                              {
+                                      "label": "Board Size",
+                                      "value": "Length 1518mm x Width 236mm"
+                              },
+                              {
+                                      "label": "Thickness",
+                                      "value": "12mm"
+                              },
+                              {
+                                      "label": "Pack Size",
+                                      "value": "1.791 m2"
+                              },
+                              {
+                                      "label": "Boards Per Pack",
+                                      "value": "5"
+                              },
+                              {
+                                      "label": "Warranty",
+                                      "value": "25 years for private use accordance with the Swish Laminate warranty terms"
                               }
                       ]
               }
@@ -4024,7 +4122,9 @@
               "image": "images/products/laminate/eco-swish-laminate/eggshell.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate/eggshell.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate/eggshell.webp"
+                      "images/products/laminate/eco-swish-laminate/eggshell.webp",
+                      "images/products/laminate/eco-swish-laminate/eggshell-gallery-2.webp",
+                      "images/products/laminate/eco-swish-laminate/eggshell-gallery-3.webp"
               ],
               "alt": "Eggshell Swish Laminate flooring sample",
               "description": "Eggshell is a laminate flooring colour from the Swish Laminate range.",
@@ -4066,7 +4166,8 @@
               "image": "images/products/laminate/eco-swish-laminate/fawn.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate/fawn.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate/fawn.webp"
+                      "images/products/laminate/eco-swish-laminate/fawn.webp",
+                      "images/products/laminate/eco-swish-laminate/fawn-gallery-2.webp"
               ],
               "alt": "Fawn Swish Laminate flooring sample",
               "description": "Fawn is a laminate flooring colour from the Swish Laminate range.",
@@ -4108,7 +4209,8 @@
               "image": "images/products/laminate/eco-swish-laminate/floria.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate/floria.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate/floria.webp"
+                      "images/products/laminate/eco-swish-laminate/floria.webp",
+                      "images/products/laminate/eco-swish-laminate/floria-gallery-2.webp"
               ],
               "alt": "Floria Swish Laminate flooring sample",
               "description": "Floria is a laminate flooring colour from the Swish Laminate range.",
@@ -4150,7 +4252,8 @@
               "image": "images/products/laminate/eco-swish-laminate/jarrah.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate/jarrah.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate/jarrah.webp"
+                      "images/products/laminate/eco-swish-laminate/jarrah.webp",
+                      "images/products/laminate/eco-swish-laminate/jarrah-gallery-2.webp"
               ],
               "alt": "Jarrah Swish Laminate flooring sample",
               "description": "Jarrah is a laminate flooring colour from the Swish Laminate range.",
@@ -4192,7 +4295,8 @@
               "image": "images/products/laminate/eco-swish-laminate/linden.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate/linden.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate/linden.webp"
+                      "images/products/laminate/eco-swish-laminate/linden.webp",
+                      "images/products/laminate/eco-swish-laminate/linden-gallery-2.webp"
               ],
               "alt": "Linden Swish Laminate flooring sample",
               "description": "Linden is a laminate flooring colour from the Swish Laminate range.",
@@ -4234,7 +4338,8 @@
               "image": "images/products/laminate/eco-swish-laminate/magnolia.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate/magnolia.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate/magnolia.webp"
+                      "images/products/laminate/eco-swish-laminate/magnolia.webp",
+                      "images/products/laminate/eco-swish-laminate/magnolia-gallery-2.webp"
               ],
               "alt": "Magnolia Swish Laminate flooring sample",
               "description": "Magnolia is a laminate flooring colour from the Swish Laminate range.",
@@ -4276,7 +4381,8 @@
               "image": "images/products/laminate/eco-swish-laminate/new-england-blackbutt.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate/new-england-blackbutt.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate/new-england-blackbutt.webp"
+                      "images/products/laminate/eco-swish-laminate/new-england-blackbutt.webp",
+                      "images/products/laminate/eco-swish-laminate/new-england-blackbutt-gallery-2.webp"
               ],
               "alt": "New England Blackbutt Swish Laminate flooring sample",
               "description": "New England Blackbutt is a laminate flooring colour from the Swish Laminate range.",
@@ -4318,7 +4424,8 @@
               "image": "images/products/laminate/eco-swish-laminate/nutmeg.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate/nutmeg.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate/nutmeg.webp"
+                      "images/products/laminate/eco-swish-laminate/nutmeg.webp",
+                      "images/products/laminate/eco-swish-laminate/nutmeg-gallery-2.webp"
               ],
               "alt": "Nutmeg Swish Laminate flooring sample",
               "description": "Nutmeg is a laminate flooring colour from the Swish Laminate range.",
@@ -4360,7 +4467,8 @@
               "image": "images/products/laminate/eco-swish-laminate/sydney-gum.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate/sydney-gum.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate/sydney-gum.webp"
+                      "images/products/laminate/eco-swish-laminate/sydney-gum.webp",
+                      "images/products/laminate/eco-swish-laminate/sydney-gum-gallery-2.webp"
               ],
               "alt": "Sydney Gum Swish Laminate flooring sample",
               "description": "Sydney Gum is a laminate flooring colour from the Swish Laminate range.",
@@ -4402,7 +4510,8 @@
               "image": "images/products/laminate/eco-swish-laminate/velvet.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate/velvet.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate/velvet.webp"
+                      "images/products/laminate/eco-swish-laminate/velvet.webp",
+                      "images/products/laminate/eco-swish-laminate/velvet-gallery-2.webp"
               ],
               "alt": "Velvet Swish Laminate flooring sample",
               "description": "Velvet is a laminate flooring colour from the Swish Laminate range.",
@@ -4444,7 +4553,8 @@
               "image": "images/products/laminate/eco-swish-laminate/vivid.webp",
               "imageUrl": "images/products/laminate/eco-swish-laminate/vivid.webp",
               "galleryImages": [
-                      "images/products/laminate/eco-swish-laminate/vivid.webp"
+                      "images/products/laminate/eco-swish-laminate/vivid.webp",
+                      "images/products/laminate/eco-swish-laminate/vivid-gallery-2.webp"
               ],
               "alt": "Vivid Swish Laminate flooring sample",
               "description": "Vivid is a laminate flooring colour from the Swish Laminate range.",
@@ -6775,7 +6885,9 @@
               "image": "images/products/hybrid/eco-xxl-8mm/coastal-blackbutt.webp",
               "imageUrl": "images/products/hybrid/eco-xxl-8mm/coastal-blackbutt.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-xxl-8mm/coastal-blackbutt.webp"
+                      "images/products/hybrid/eco-xxl-8mm/coastal-blackbutt.webp",
+                      "images/products/hybrid/eco-xxl-8mm/coastal-blackbutt-gallery-2.webp",
+                      "images/products/hybrid/eco-xxl-8mm/coastal-blackbutt-gallery-3.webp"
               ],
               "alt": "Coastal Blackbutt XXL 8.0 Hybrid Flooring sample",
               "description": "Coastal Blackbutt is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
@@ -6818,8 +6930,28 @@
                                       "value": "XXL 8.0 Hybrid Flooring"
                               },
                               {
+                                      "label": "Board Size",
+                                      "value": "Length 1511mm x Width 229mm"
+                              },
+                              {
                                       "label": "Thickness",
-                                      "value": "8.0mm"
+                                      "value": "8mm (1.5mm IXPE underlay)"
+                              },
+                              {
+                                      "label": "Pack Size",
+                                      "value": "1.73m2"
+                              },
+                              {
+                                      "label": "Pack Weight",
+                                      "value": "23 kg"
+                              },
+                              {
+                                      "label": "Boards Per Pack",
+                                      "value": "5"
+                              },
+                              {
+                                      "label": "Wear Layer",
+                                      "value": "0.55mm"
                               }
                       ]
               }
@@ -6844,7 +6976,8 @@
               "image": "images/products/hybrid/eco-xxl-8mm/cotton-oak.webp",
               "imageUrl": "images/products/hybrid/eco-xxl-8mm/cotton-oak.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-xxl-8mm/cotton-oak.webp"
+                      "images/products/hybrid/eco-xxl-8mm/cotton-oak.webp",
+                      "images/products/hybrid/eco-xxl-8mm/cotton-oak-gallery-2.webp"
               ],
               "alt": "Cotton Oak XXL 8.0 Hybrid Flooring sample",
               "description": "Cotton Oak is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
@@ -6886,7 +7019,8 @@
               "image": "images/products/hybrid/eco-xxl-8mm/ebony.webp",
               "imageUrl": "images/products/hybrid/eco-xxl-8mm/ebony.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-xxl-8mm/ebony.webp"
+                      "images/products/hybrid/eco-xxl-8mm/ebony.webp",
+                      "images/products/hybrid/eco-xxl-8mm/ebony-gallery-2.webp"
               ],
               "alt": "Ebony XXL 8.0 Hybrid Flooring sample",
               "description": "Ebony is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
@@ -6928,7 +7062,8 @@
               "image": "images/products/hybrid/eco-xxl-8mm/oak-atlanta.webp",
               "imageUrl": "images/products/hybrid/eco-xxl-8mm/oak-atlanta.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-xxl-8mm/oak-atlanta.webp"
+                      "images/products/hybrid/eco-xxl-8mm/oak-atlanta.webp",
+                      "images/products/hybrid/eco-xxl-8mm/oak-atlanta-gallery-2.webp"
               ],
               "alt": "Oak Atlanta XXL 8.0 Hybrid Flooring sample",
               "description": "Oak Atlanta is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
@@ -6970,7 +7105,9 @@
               "image": "images/products/hybrid/eco-xxl-8mm/oak-saffron.webp",
               "imageUrl": "images/products/hybrid/eco-xxl-8mm/oak-saffron.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-xxl-8mm/oak-saffron.webp"
+                      "images/products/hybrid/eco-xxl-8mm/oak-saffron.webp",
+                      "images/products/hybrid/eco-xxl-8mm/oak-saffron-gallery-2.webp",
+                      "images/products/hybrid/eco-xxl-8mm/oak-saffron-gallery-3.webp"
               ],
               "alt": "Oak Saffron XXL 8.0 Hybrid Flooring sample",
               "description": "Oak Saffron is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
@@ -7012,7 +7149,8 @@
               "image": "images/products/hybrid/eco-xxl-8mm/oak-sofia.webp",
               "imageUrl": "images/products/hybrid/eco-xxl-8mm/oak-sofia.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-xxl-8mm/oak-sofia.webp"
+                      "images/products/hybrid/eco-xxl-8mm/oak-sofia.webp",
+                      "images/products/hybrid/eco-xxl-8mm/oak-sofia-gallery-2.webp"
               ],
               "alt": "Oak Sofia XXL 8.0 Hybrid Flooring sample",
               "description": "Oak Sofia is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
@@ -7054,7 +7192,8 @@
               "image": "images/products/hybrid/eco-xxl-8mm/oak-titanium.webp",
               "imageUrl": "images/products/hybrid/eco-xxl-8mm/oak-titanium.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-xxl-8mm/oak-titanium.webp"
+                      "images/products/hybrid/eco-xxl-8mm/oak-titanium.webp",
+                      "images/products/hybrid/eco-xxl-8mm/oak-titanium-gallery-2.webp"
               ],
               "alt": "Oak Titanium XXL 8.0 Hybrid Flooring sample",
               "description": "Oak Titanium is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
@@ -7096,7 +7235,8 @@
               "image": "images/products/hybrid/eco-xxl-8mm/pearl-grey.webp",
               "imageUrl": "images/products/hybrid/eco-xxl-8mm/pearl-grey.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-xxl-8mm/pearl-grey.webp"
+                      "images/products/hybrid/eco-xxl-8mm/pearl-grey.webp",
+                      "images/products/hybrid/eco-xxl-8mm/pearl-grey-gallery-2.webp"
               ],
               "alt": "Pearl Grey XXL 8.0 Hybrid Flooring sample",
               "description": "Pearl Grey is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
@@ -7138,7 +7278,8 @@
               "image": "images/products/hybrid/eco-xxl-8mm/royal-oak.webp",
               "imageUrl": "images/products/hybrid/eco-xxl-8mm/royal-oak.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-xxl-8mm/royal-oak.webp"
+                      "images/products/hybrid/eco-xxl-8mm/royal-oak.webp",
+                      "images/products/hybrid/eco-xxl-8mm/royal-oak-gallery-2.webp"
               ],
               "alt": "Royal Oak XXL 8.0 Hybrid Flooring sample",
               "description": "Royal Oak is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
@@ -7180,7 +7321,8 @@
               "image": "images/products/hybrid/eco-xxl-8mm/seashell-white.webp",
               "imageUrl": "images/products/hybrid/eco-xxl-8mm/seashell-white.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-xxl-8mm/seashell-white.webp"
+                      "images/products/hybrid/eco-xxl-8mm/seashell-white.webp",
+                      "images/products/hybrid/eco-xxl-8mm/seashell-white-gallery-2.webp"
               ],
               "alt": "Seashell White XXL 8.0 Hybrid Flooring sample",
               "description": "Seashell White is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
@@ -7222,7 +7364,8 @@
               "image": "images/products/hybrid/eco-xxl-8mm/spotted-gum-hybrid.webp",
               "imageUrl": "images/products/hybrid/eco-xxl-8mm/spotted-gum-hybrid.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-xxl-8mm/spotted-gum-hybrid.webp"
+                      "images/products/hybrid/eco-xxl-8mm/spotted-gum-hybrid.webp",
+                      "images/products/hybrid/eco-xxl-8mm/spotted-gum-hybrid-gallery-2.webp"
               ],
               "alt": "Spotted Gum Hybrid XXL 8.0 Hybrid Flooring sample",
               "description": "Spotted Gum Hybrid is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
@@ -7264,7 +7407,8 @@
               "image": "images/products/hybrid/eco-xxl-8mm/walnut-brown.webp",
               "imageUrl": "images/products/hybrid/eco-xxl-8mm/walnut-brown.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-xxl-8mm/walnut-brown.webp"
+                      "images/products/hybrid/eco-xxl-8mm/walnut-brown.webp",
+                      "images/products/hybrid/eco-xxl-8mm/walnut-brown-gallery-2.webp"
               ],
               "alt": "Walnut Brown XXL 8.0 Hybrid Flooring sample",
               "description": "Walnut Brown is a hybrid flooring colour from the XXL 8.0 Hybrid Flooring range.",
@@ -7306,7 +7450,8 @@
               "image": "images/products/hybrid/eco-grande-7-5mm/capri-7-5.webp",
               "imageUrl": "images/products/hybrid/eco-grande-7-5mm/capri-7-5.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-grande-7-5mm/capri-7-5.webp"
+                      "images/products/hybrid/eco-grande-7-5mm/capri-7-5.webp",
+                      "images/products/hybrid/eco-grande-7-5mm/capri-7-5-gallery-2.webp"
               ],
               "alt": "Capri 7.5 Grande 7.5 Hybrid Flooring sample",
               "description": "Capri 7.5 is a hybrid flooring colour from the Grande 7.5 Hybrid Flooring range.",
@@ -7349,8 +7494,28 @@
                                       "value": "Grande 7.5 Hybrid Flooring"
                               },
                               {
+                                      "label": "Board Size",
+                                      "value": "Length 1500mm x Width 230mm"
+                              },
+                              {
                                       "label": "Thickness",
-                                      "value": "7.5mm"
+                                      "value": "7.5mm (1.5mm IXPE underlay)"
+                              },
+                              {
+                                      "label": "Pack Size",
+                                      "value": "1.725 m2"
+                              },
+                              {
+                                      "label": "Pack Weight",
+                                      "value": "20 kg"
+                              },
+                              {
+                                      "label": "Boards Per Pack",
+                                      "value": "5"
+                              },
+                              {
+                                      "label": "Wear Layer",
+                                      "value": "0.55mm"
                               }
                       ]
               }
@@ -7375,7 +7540,8 @@
               "image": "images/products/hybrid/eco-grande-7-5mm/cream-7-5.webp",
               "imageUrl": "images/products/hybrid/eco-grande-7-5mm/cream-7-5.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-grande-7-5mm/cream-7-5.webp"
+                      "images/products/hybrid/eco-grande-7-5mm/cream-7-5.webp",
+                      "images/products/hybrid/eco-grande-7-5mm/cream-7-5-gallery-2.webp"
               ],
               "alt": "Cream 7.5 Grande 7.5 Hybrid Flooring sample",
               "description": "Cream 7.5 is a hybrid flooring colour from the Grande 7.5 Hybrid Flooring range.",
@@ -7417,7 +7583,8 @@
               "image": "images/products/hybrid/eco-grande-7-5mm/northen-spotted-gum-7-5.webp",
               "imageUrl": "images/products/hybrid/eco-grande-7-5mm/northen-spotted-gum-7-5.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-grande-7-5mm/northen-spotted-gum-7-5.webp"
+                      "images/products/hybrid/eco-grande-7-5mm/northen-spotted-gum-7-5.webp",
+                      "images/products/hybrid/eco-grande-7-5mm/northen-spotted-gum-7-5-gallery-2.webp"
               ],
               "alt": "Northen Spotted Gum 7.5 Grande 7.5 Hybrid Flooring sample",
               "description": "Northen Spotted Gum 7.5 is a hybrid flooring colour from the Grande 7.5 Hybrid Flooring range.",
@@ -7501,7 +7668,8 @@
               "image": "images/products/hybrid/eco-grande-7-5mm/raw-spotted-gum-7-5.webp",
               "imageUrl": "images/products/hybrid/eco-grande-7-5mm/raw-spotted-gum-7-5.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-grande-7-5mm/raw-spotted-gum-7-5.webp"
+                      "images/products/hybrid/eco-grande-7-5mm/raw-spotted-gum-7-5.webp",
+                      "images/products/hybrid/eco-grande-7-5mm/raw-spotted-gum-7-5-gallery-2.webp"
               ],
               "alt": "Raw Spotted Gum 7.5 Grande 7.5 Hybrid Flooring sample",
               "description": "Raw Spotted Gum 7.5 is a hybrid flooring colour from the Grande 7.5 Hybrid Flooring range.",
@@ -7543,7 +7711,8 @@
               "image": "images/products/hybrid/eco-grande-7-5mm/sand-7-5.webp",
               "imageUrl": "images/products/hybrid/eco-grande-7-5mm/sand-7-5.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-grande-7-5mm/sand-7-5.webp"
+                      "images/products/hybrid/eco-grande-7-5mm/sand-7-5.webp",
+                      "images/products/hybrid/eco-grande-7-5mm/sand-7-5-gallery-2.webp"
               ],
               "alt": "Sand 7.5 Grande 7.5 Hybrid Flooring sample",
               "description": "Sand 7.5 is a hybrid flooring colour from the Grande 7.5 Hybrid Flooring range.",
@@ -7585,7 +7754,8 @@
               "image": "images/products/hybrid/eco-herringbone-7mm/clear-water-beach-herringbone.webp",
               "imageUrl": "images/products/hybrid/eco-herringbone-7mm/clear-water-beach-herringbone.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-herringbone-7mm/clear-water-beach-herringbone.webp"
+                      "images/products/hybrid/eco-herringbone-7mm/clear-water-beach-herringbone.webp",
+                      "images/products/hybrid/eco-herringbone-7mm/clear-water-beach-herringbone-gallery-2.webp"
               ],
               "alt": "Clear Water Beach Herringbone Herringbone 7.0 Hybrid Flooring sample",
               "description": "Clear Water Beach Herringbone is a hybrid flooring colour from the Herringbone 7.0 Hybrid Flooring range.",
@@ -7628,8 +7798,28 @@
                                       "value": "Herringbone 7.0 Hybrid Flooring"
                               },
                               {
+                                      "label": "Board Size",
+                                      "value": "Length 600mm x Width 150mm"
+                              },
+                              {
                                       "label": "Thickness",
-                                      "value": "7.0mm"
+                                      "value": "7mm (1.5mm IXPE underlay)"
+                              },
+                              {
+                                      "label": "Pack Size",
+                                      "value": "0.9 m2"
+                              },
+                              {
+                                      "label": "Pack Weight",
+                                      "value": "5 kg"
+                              },
+                              {
+                                      "label": "Boards Per Pack",
+                                      "value": "10"
+                              },
+                              {
+                                      "label": "Wear Layer",
+                                      "value": "0.55mm"
                               }
                       ]
               }
@@ -7654,7 +7844,8 @@
               "image": "images/products/hybrid/eco-herringbone-7mm/fresco-oak-herringbone.webp",
               "imageUrl": "images/products/hybrid/eco-herringbone-7mm/fresco-oak-herringbone.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-herringbone-7mm/fresco-oak-herringbone.webp"
+                      "images/products/hybrid/eco-herringbone-7mm/fresco-oak-herringbone.webp",
+                      "images/products/hybrid/eco-herringbone-7mm/fresco-oak-herringbone-gallery-2.webp"
               ],
               "alt": "Fresco Oak Herringbone Herringbone 7.0 Hybrid Flooring sample",
               "description": "Fresco Oak Herringbone is a hybrid flooring colour from the Herringbone 7.0 Hybrid Flooring range.",
@@ -7696,7 +7887,8 @@
               "image": "images/products/hybrid/eco-herringbone-7mm/natural-blackbutt-herringbone.webp",
               "imageUrl": "images/products/hybrid/eco-herringbone-7mm/natural-blackbutt-herringbone.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-herringbone-7mm/natural-blackbutt-herringbone.webp"
+                      "images/products/hybrid/eco-herringbone-7mm/natural-blackbutt-herringbone.webp",
+                      "images/products/hybrid/eco-herringbone-7mm/natural-blackbutt-herringbone-gallery-2.webp"
               ],
               "alt": "Natural Blackbutt Herringbone Herringbone 7.0 Hybrid Flooring sample",
               "description": "Natural Blackbutt Herringbone is a hybrid flooring colour from the Herringbone 7.0 Hybrid Flooring range.",
@@ -7738,7 +7930,8 @@
               "image": "images/products/hybrid/eco-herringbone-7mm/oak-saffron-herringbone.webp",
               "imageUrl": "images/products/hybrid/eco-herringbone-7mm/oak-saffron-herringbone.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-herringbone-7mm/oak-saffron-herringbone.webp"
+                      "images/products/hybrid/eco-herringbone-7mm/oak-saffron-herringbone.webp",
+                      "images/products/hybrid/eco-herringbone-7mm/oak-saffron-herringbone-gallery-2.webp"
               ],
               "alt": "Oak Saffron Herringbone Herringbone 7.0 Hybrid Flooring sample",
               "description": "Oak Saffron Herringbone is a hybrid flooring colour from the Herringbone 7.0 Hybrid Flooring range.",
@@ -7780,7 +7973,8 @@
               "image": "images/products/hybrid/eco-herringbone-7mm/oak-sofia-herringbone.webp",
               "imageUrl": "images/products/hybrid/eco-herringbone-7mm/oak-sofia-herringbone.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-herringbone-7mm/oak-sofia-herringbone.webp"
+                      "images/products/hybrid/eco-herringbone-7mm/oak-sofia-herringbone.webp",
+                      "images/products/hybrid/eco-herringbone-7mm/oak-sofia-herringbone-gallery-2.webp"
               ],
               "alt": "Oak Sofia Herringbone Herringbone 7.0 Hybrid Flooring sample",
               "description": "Oak Sofia Herringbone is a hybrid flooring colour from the Herringbone 7.0 Hybrid Flooring range.",
@@ -7822,7 +8016,8 @@
               "image": "images/products/hybrid/eco-herringbone-7mm/select-spotted-gum-herringbone.webp",
               "imageUrl": "images/products/hybrid/eco-herringbone-7mm/select-spotted-gum-herringbone.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-herringbone-7mm/select-spotted-gum-herringbone.webp"
+                      "images/products/hybrid/eco-herringbone-7mm/select-spotted-gum-herringbone.webp",
+                      "images/products/hybrid/eco-herringbone-7mm/select-spotted-gum-herringbone-gallery-2.webp"
               ],
               "alt": "Select Spotted Gum Herringbone Herringbone 7.0 Hybrid Flooring sample",
               "description": "Select Spotted Gum Herringbone is a hybrid flooring colour from the Herringbone 7.0 Hybrid Flooring range.",
@@ -7864,7 +8059,8 @@
               "image": "images/products/hybrid/eco-urban-6-5mm/alpine-oak.webp",
               "imageUrl": "images/products/hybrid/eco-urban-6-5mm/alpine-oak.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-urban-6-5mm/alpine-oak.webp"
+                      "images/products/hybrid/eco-urban-6-5mm/alpine-oak.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/alpine-oak-gallery-2.webp"
               ],
               "alt": "Alpine Oak Urban 6.5 Hybrid Flooring sample",
               "description": "Alpine Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
@@ -7907,8 +8103,28 @@
                                       "value": "Urban 6.5 Hybrid Flooring"
                               },
                               {
+                                      "label": "Board Size",
+                                      "value": "Length 1511mm x Width 229mm"
+                              },
+                              {
                                       "label": "Thickness",
-                                      "value": "6.5mm"
+                                      "value": "6.5mm (1.5mm IXPE underlay)"
+                              },
+                              {
+                                      "label": "Pack Size",
+                                      "value": "2.076 m2"
+                              },
+                              {
+                                      "label": "Pack Weight",
+                                      "value": "23 kg"
+                              },
+                              {
+                                      "label": "Boards Per Pack",
+                                      "value": "5"
+                              },
+                              {
+                                      "label": "Wear Layer",
+                                      "value": "0.55mm"
                               }
                       ]
               }
@@ -7933,7 +8149,8 @@
               "image": "images/products/hybrid/eco-urban-6-5mm/black-forest-oak.webp",
               "imageUrl": "images/products/hybrid/eco-urban-6-5mm/black-forest-oak.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-urban-6-5mm/black-forest-oak.webp"
+                      "images/products/hybrid/eco-urban-6-5mm/black-forest-oak.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/black-forest-oak-gallery-2.webp"
               ],
               "alt": "Black Forest Oak Urban 6.5 Hybrid Flooring sample",
               "description": "Black Forest Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
@@ -7975,7 +8192,8 @@
               "image": "images/products/hybrid/eco-urban-6-5mm/classic-blackbutt.webp",
               "imageUrl": "images/products/hybrid/eco-urban-6-5mm/classic-blackbutt.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-urban-6-5mm/classic-blackbutt.webp"
+                      "images/products/hybrid/eco-urban-6-5mm/classic-blackbutt.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/classic-blackbutt-gallery-2.webp"
               ],
               "alt": "Classic Blackbutt Urban 6.5 Hybrid Flooring sample",
               "description": "Classic Blackbutt is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
@@ -8017,7 +8235,8 @@
               "image": "images/products/hybrid/eco-urban-6-5mm/cotton-oak.webp",
               "imageUrl": "images/products/hybrid/eco-urban-6-5mm/cotton-oak.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-urban-6-5mm/cotton-oak.webp"
+                      "images/products/hybrid/eco-urban-6-5mm/cotton-oak.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/cotton-oak-gallery-2.webp"
               ],
               "alt": "Cotton Oak Urban 6.5 Hybrid Flooring sample",
               "description": "Cotton Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
@@ -8059,7 +8278,8 @@
               "image": "images/products/hybrid/eco-urban-6-5mm/highland-spotted-gum.webp",
               "imageUrl": "images/products/hybrid/eco-urban-6-5mm/highland-spotted-gum.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-urban-6-5mm/highland-spotted-gum.webp"
+                      "images/products/hybrid/eco-urban-6-5mm/highland-spotted-gum.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/highland-spotted-gum-gallery-2.webp"
               ],
               "alt": "Highland Spotted Gum Urban 6.5 Hybrid Flooring sample",
               "description": "Highland Spotted Gum is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
@@ -8101,7 +8321,9 @@
               "image": "images/products/hybrid/eco-urban-6-5mm/ice-sandy-oak.webp",
               "imageUrl": "images/products/hybrid/eco-urban-6-5mm/ice-sandy-oak.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-urban-6-5mm/ice-sandy-oak.webp"
+                      "images/products/hybrid/eco-urban-6-5mm/ice-sandy-oak.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/ice-sandy-oak-gallery-2.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/ice-sandy-oak-gallery-3.webp"
               ],
               "alt": "Ice Sandy Oak Urban 6.5 Hybrid Flooring sample",
               "description": "Ice Sandy Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
@@ -8143,7 +8365,9 @@
               "image": "images/products/hybrid/eco-urban-6-5mm/moonlight-oak.webp",
               "imageUrl": "images/products/hybrid/eco-urban-6-5mm/moonlight-oak.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-urban-6-5mm/moonlight-oak.webp"
+                      "images/products/hybrid/eco-urban-6-5mm/moonlight-oak.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/moonlight-oak-gallery-2.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/moonlight-oak-gallery-3.webp"
               ],
               "alt": "Moonlight Oak Urban 6.5 Hybrid Flooring sample",
               "description": "Moonlight Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
@@ -8185,7 +8409,8 @@
               "image": "images/products/hybrid/eco-urban-6-5mm/murray-river-spotted-gum.webp",
               "imageUrl": "images/products/hybrid/eco-urban-6-5mm/murray-river-spotted-gum.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-urban-6-5mm/murray-river-spotted-gum.webp"
+                      "images/products/hybrid/eco-urban-6-5mm/murray-river-spotted-gum.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/murray-river-spotted-gum-gallery-2.webp"
               ],
               "alt": "Murray River Spotted Gum Urban 6.5 Hybrid Flooring sample",
               "description": "Murray River Spotted Gum is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
@@ -8227,7 +8452,8 @@
               "image": "images/products/hybrid/eco-urban-6-5mm/natural-blackbutt.webp",
               "imageUrl": "images/products/hybrid/eco-urban-6-5mm/natural-blackbutt.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-urban-6-5mm/natural-blackbutt.webp"
+                      "images/products/hybrid/eco-urban-6-5mm/natural-blackbutt.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/natural-blackbutt-gallery-2.webp"
               ],
               "alt": "Natural Blackbutt Urban 6.5 Hybrid Flooring sample",
               "description": "Natural Blackbutt is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
@@ -8269,7 +8495,8 @@
               "image": "images/products/hybrid/eco-urban-6-5mm/seashell-white.webp",
               "imageUrl": "images/products/hybrid/eco-urban-6-5mm/seashell-white.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-urban-6-5mm/seashell-white.webp"
+                      "images/products/hybrid/eco-urban-6-5mm/seashell-white.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/seashell-white-gallery-2.webp"
               ],
               "alt": "Seashell White Urban 6.5 Hybrid Flooring sample",
               "description": "Seashell White is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
@@ -8311,7 +8538,8 @@
               "image": "images/products/hybrid/eco-urban-6-5mm/warm-spring-oak.webp",
               "imageUrl": "images/products/hybrid/eco-urban-6-5mm/warm-spring-oak.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-urban-6-5mm/warm-spring-oak.webp"
+                      "images/products/hybrid/eco-urban-6-5mm/warm-spring-oak.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/warm-spring-oak-gallery-2.webp"
               ],
               "alt": "Warm Spring Oak Urban 6.5 Hybrid Flooring sample",
               "description": "Warm Spring Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
@@ -8353,7 +8581,8 @@
               "image": "images/products/hybrid/eco-urban-6-5mm/weathered-oak.webp",
               "imageUrl": "images/products/hybrid/eco-urban-6-5mm/weathered-oak.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-urban-6-5mm/weathered-oak.webp"
+                      "images/products/hybrid/eco-urban-6-5mm/weathered-oak.webp",
+                      "images/products/hybrid/eco-urban-6-5mm/weathered-oak-gallery-2.webp"
               ],
               "alt": "Weathered Oak Urban 6.5 Hybrid Flooring sample",
               "description": "Weathered Oak is a hybrid flooring colour from the Urban 6.5 Hybrid Flooring range.",
@@ -8395,7 +8624,8 @@
               "image": "images/products/hybrid/eco-elite-6mm/american-hickory.webp",
               "imageUrl": "images/products/hybrid/eco-elite-6mm/american-hickory.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-elite-6mm/american-hickory.webp"
+                      "images/products/hybrid/eco-elite-6mm/american-hickory.webp",
+                      "images/products/hybrid/eco-elite-6mm/american-hickory-gallery-2.webp"
               ],
               "alt": "American Hickory Elite 6.0 Hybrid Flooring sample",
               "description": "American Hickory is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
@@ -8438,8 +8668,28 @@
                                       "value": "Elite 6.0 Hybrid Flooring"
                               },
                               {
+                                      "label": "Board Size",
+                                      "value": "Length 1511mm x Width 229mm"
+                              },
+                              {
                                       "label": "Thickness",
-                                      "value": "6.0mm"
+                                      "value": "6mm (1.5mm IXPE underlay)"
+                              },
+                              {
+                                      "label": "Pack Size",
+                                      "value": "2.08 m2"
+                              },
+                              {
+                                      "label": "Pack Weight",
+                                      "value": "20 kg"
+                              },
+                              {
+                                      "label": "Boards Per Pack",
+                                      "value": "5"
+                              },
+                              {
+                                      "label": "Wear Layer",
+                                      "value": "0.55mm"
                               }
                       ]
               }
@@ -8464,7 +8714,8 @@
               "image": "images/products/hybrid/eco-elite-6mm/clear-water-beach.webp",
               "imageUrl": "images/products/hybrid/eco-elite-6mm/clear-water-beach.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-elite-6mm/clear-water-beach.webp"
+                      "images/products/hybrid/eco-elite-6mm/clear-water-beach.webp",
+                      "images/products/hybrid/eco-elite-6mm/clear-water-beach-gallery-2.webp"
               ],
               "alt": "Clear Water Beach Elite 6.0 Hybrid Flooring sample",
               "description": "Clear Water Beach is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
@@ -8506,7 +8757,8 @@
               "image": "images/products/hybrid/eco-elite-6mm/coffee-berry.webp",
               "imageUrl": "images/products/hybrid/eco-elite-6mm/coffee-berry.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-elite-6mm/coffee-berry.webp"
+                      "images/products/hybrid/eco-elite-6mm/coffee-berry.webp",
+                      "images/products/hybrid/eco-elite-6mm/coffee-berry-gallery-2.webp"
               ],
               "alt": "Coffee Berry Elite 6.0 Hybrid Flooring sample",
               "description": "Coffee Berry is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
@@ -8548,7 +8800,8 @@
               "image": "images/products/hybrid/eco-elite-6mm/french-grey.webp",
               "imageUrl": "images/products/hybrid/eco-elite-6mm/french-grey.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-elite-6mm/french-grey.webp"
+                      "images/products/hybrid/eco-elite-6mm/french-grey.webp",
+                      "images/products/hybrid/eco-elite-6mm/french-grey-gallery-2.webp"
               ],
               "alt": "French Grey Elite 6.0 Hybrid Flooring sample",
               "description": "French Grey is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
@@ -8590,7 +8843,8 @@
               "image": "images/products/hybrid/eco-elite-6mm/french-sand.webp",
               "imageUrl": "images/products/hybrid/eco-elite-6mm/french-sand.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-elite-6mm/french-sand.webp"
+                      "images/products/hybrid/eco-elite-6mm/french-sand.webp",
+                      "images/products/hybrid/eco-elite-6mm/french-sand-gallery-2.webp"
               ],
               "alt": "French Sand Elite 6.0 Hybrid Flooring sample",
               "description": "French Sand is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
@@ -8632,7 +8886,8 @@
               "image": "images/products/hybrid/eco-elite-6mm/fresco-oak.webp",
               "imageUrl": "images/products/hybrid/eco-elite-6mm/fresco-oak.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-elite-6mm/fresco-oak.webp"
+                      "images/products/hybrid/eco-elite-6mm/fresco-oak.webp",
+                      "images/products/hybrid/eco-elite-6mm/fresco-oak-gallery-2.webp"
               ],
               "alt": "Fresco Oak Elite 6.0 Hybrid Flooring sample",
               "description": "Fresco Oak is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
@@ -8674,7 +8929,8 @@
               "image": "images/products/hybrid/eco-elite-6mm/miranda-beige.webp",
               "imageUrl": "images/products/hybrid/eco-elite-6mm/miranda-beige.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-elite-6mm/miranda-beige.webp"
+                      "images/products/hybrid/eco-elite-6mm/miranda-beige.webp",
+                      "images/products/hybrid/eco-elite-6mm/miranda-beige-gallery-2.webp"
               ],
               "alt": "Miranda Beige Elite 6.0 Hybrid Flooring sample",
               "description": "Miranda Beige is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
@@ -8716,7 +8972,8 @@
               "image": "images/products/hybrid/eco-elite-6mm/mont-blanc.webp",
               "imageUrl": "images/products/hybrid/eco-elite-6mm/mont-blanc.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-elite-6mm/mont-blanc.webp"
+                      "images/products/hybrid/eco-elite-6mm/mont-blanc.webp",
+                      "images/products/hybrid/eco-elite-6mm/mont-blanc-gallery-2.webp"
               ],
               "alt": "Mont Blanc Elite 6.0 Hybrid Flooring sample",
               "description": "Mont Blanc is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
@@ -8758,7 +9015,8 @@
               "image": "images/products/hybrid/eco-elite-6mm/select-blackbutt.webp",
               "imageUrl": "images/products/hybrid/eco-elite-6mm/select-blackbutt.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-elite-6mm/select-blackbutt.webp"
+                      "images/products/hybrid/eco-elite-6mm/select-blackbutt.webp",
+                      "images/products/hybrid/eco-elite-6mm/select-blackbutt-gallery-2.webp"
               ],
               "alt": "Select Blackbutt Elite 6.0 Hybrid Flooring sample",
               "description": "Select Blackbutt is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
@@ -8800,7 +9058,8 @@
               "image": "images/products/hybrid/eco-elite-6mm/select-spotted-gum.webp",
               "imageUrl": "images/products/hybrid/eco-elite-6mm/select-spotted-gum.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-elite-6mm/select-spotted-gum.webp"
+                      "images/products/hybrid/eco-elite-6mm/select-spotted-gum.webp",
+                      "images/products/hybrid/eco-elite-6mm/select-spotted-gum-gallery-2.webp"
               ],
               "alt": "Select Spotted Gum Elite 6.0 Hybrid Flooring sample",
               "description": "Select Spotted Gum is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
@@ -8842,7 +9101,8 @@
               "image": "images/products/hybrid/eco-elite-6mm/silver-lake.webp",
               "imageUrl": "images/products/hybrid/eco-elite-6mm/silver-lake.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-elite-6mm/silver-lake.webp"
+                      "images/products/hybrid/eco-elite-6mm/silver-lake.webp",
+                      "images/products/hybrid/eco-elite-6mm/silver-lake-gallery-2.webp"
               ],
               "alt": "Silver Lake Elite 6.0 Hybrid Flooring sample",
               "description": "Silver Lake is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
@@ -8884,7 +9144,8 @@
               "image": "images/products/hybrid/eco-elite-6mm/washed-blackbutt.webp",
               "imageUrl": "images/products/hybrid/eco-elite-6mm/washed-blackbutt.webp",
               "galleryImages": [
-                      "images/products/hybrid/eco-elite-6mm/washed-blackbutt.webp"
+                      "images/products/hybrid/eco-elite-6mm/washed-blackbutt.webp",
+                      "images/products/hybrid/eco-elite-6mm/washed-blackbutt-gallery-2.webp"
               ],
               "alt": "Washed Blackbutt Elite 6.0 Hybrid Flooring sample",
               "description": "Washed Blackbutt is a hybrid flooring colour from the Elite 6.0 Hybrid Flooring range.",
@@ -10755,7 +11016,9 @@
               "image": "images/products/engineered-timber/eco-swish-oak-wideboard/country-caramel-oak.webp",
               "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/country-caramel-oak.webp",
               "galleryImages": [
-                      "images/products/engineered-timber/eco-swish-oak-wideboard/country-caramel-oak.webp"
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/country-caramel-oak.webp",
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/country-caramel-oak-gallery-2.webp",
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/country-caramel-oak-gallery-3.webp"
               ],
               "alt": "Country Caramel Oak Swish Oak Wideboard flooring sample",
               "description": "Country Caramel Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
@@ -10798,8 +11061,24 @@
                                       "value": "Swish Oak Wideboard"
                               },
                               {
+                                      "label": "Board Size",
+                                      "value": "Length 2200mm x Width 220mm"
+                              },
+                              {
                                       "label": "Thickness",
                                       "value": "14/4mm"
+                              },
+                              {
+                                      "label": "Pack Size",
+                                      "value": "2.905m2"
+                              },
+                              {
+                                      "label": "Pack Weight",
+                                      "value": "25 kg"
+                              },
+                              {
+                                      "label": "Boards Per Pack",
+                                      "value": "6"
                               }
                       ]
               }
@@ -10866,7 +11145,9 @@
               "image": "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-walnut-oak.webp",
               "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-walnut-oak.webp",
               "galleryImages": [
-                      "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-walnut-oak.webp"
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-walnut-oak.webp",
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-walnut-oak-gallery-2.webp",
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-walnut-oak-gallery-3.webp"
               ],
               "alt": "Elegant Walnut Oak Swish Oak Wideboard flooring sample",
               "description": "Elegant Walnut Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
@@ -10908,7 +11189,8 @@
               "image": "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-white-oak.webp",
               "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-white-oak.webp",
               "galleryImages": [
-                      "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-white-oak.webp"
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-white-oak.webp",
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/elegant-white-oak-gallery-2.webp"
               ],
               "alt": "Elegant White Oak Swish Oak Wideboard flooring sample",
               "description": "Elegant White Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
@@ -10950,7 +11232,9 @@
               "image": "images/products/engineered-timber/eco-swish-oak-wideboard/paris-natural-oak.webp",
               "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/paris-natural-oak.webp",
               "galleryImages": [
-                      "images/products/engineered-timber/eco-swish-oak-wideboard/paris-natural-oak.webp"
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/paris-natural-oak.webp",
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/paris-natural-oak-gallery-2.webp",
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/paris-natural-oak-gallery-3.webp"
               ],
               "alt": "Paris Natural Oak Swish Oak Wideboard flooring sample",
               "description": "Paris Natural Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
@@ -11034,7 +11318,8 @@
               "image": "images/products/engineered-timber/eco-swish-oak-wideboard/urban-antique-oak.webp",
               "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/urban-antique-oak.webp",
               "galleryImages": [
-                      "images/products/engineered-timber/eco-swish-oak-wideboard/urban-antique-oak.webp"
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/urban-antique-oak.webp",
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/urban-antique-oak-gallery-2.webp"
               ],
               "alt": "Urban Antique Oak Swish Oak Wideboard flooring sample",
               "description": "Urban Antique Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
@@ -11076,7 +11361,8 @@
               "image": "images/products/engineered-timber/eco-swish-oak-wideboard/urban-limewash-oak.webp",
               "imageUrl": "images/products/engineered-timber/eco-swish-oak-wideboard/urban-limewash-oak.webp",
               "galleryImages": [
-                      "images/products/engineered-timber/eco-swish-oak-wideboard/urban-limewash-oak.webp"
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/urban-limewash-oak.webp",
+                      "images/products/engineered-timber/eco-swish-oak-wideboard/urban-limewash-oak-gallery-2.webp"
               ],
               "alt": "Urban Limewash Oak Swish Oak Wideboard flooring sample",
               "description": "Urban Limewash Oak is a engineered timber flooring colour from the Swish Oak Wideboard range.",
@@ -11159,6 +11445,26 @@
                               {
                                       "label": "Range",
                                       "value": "Swish Oak Contemporary"
+                              },
+                              {
+                                      "label": "Board Size",
+                                      "value": "Length 1900mm x Width 190mm"
+                              },
+                              {
+                                      "label": "Thickness",
+                                      "value": "14/2mm"
+                              },
+                              {
+                                      "label": "Pack Size",
+                                      "value": "2.90m2"
+                              },
+                              {
+                                      "label": "Pack Weight",
+                                      "value": "22 kg"
+                              },
+                              {
+                                      "label": "Boards Per Pack",
+                                      "value": "8"
                               }
                       ]
               }
@@ -11183,7 +11489,8 @@
               "image": "images/products/engineered-timber/eco-swish-oak-contemporary/elegant-natural-oak.webp",
               "imageUrl": "images/products/engineered-timber/eco-swish-oak-contemporary/elegant-natural-oak.webp",
               "galleryImages": [
-                      "images/products/engineered-timber/eco-swish-oak-contemporary/elegant-natural-oak.webp"
+                      "images/products/engineered-timber/eco-swish-oak-contemporary/elegant-natural-oak.webp",
+                      "images/products/engineered-timber/eco-swish-oak-contemporary/elegant-natural-oak-gallery-2.webp"
               ],
               "alt": "Elegant Natural Oak Swish Oak Contemporary flooring sample",
               "description": "Elegant Natural Oak is a engineered timber flooring colour from the Swish Oak Contemporary range.",
@@ -11393,7 +11700,8 @@
               "image": "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/misty-quartz.webp",
               "imageUrl": "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/misty-quartz.webp",
               "galleryImages": [
-                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/misty-quartz.webp"
+                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/misty-quartz.webp",
+                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/misty-quartz-gallery-2.webp"
               ],
               "alt": "Misty Quartz Swish Oak Natura Handcrafted flooring sample",
               "description": "Misty Quartz is a engineered timber flooring colour from the Swish Oak Natura Handcrafted range.",
@@ -11434,6 +11742,26 @@
                               {
                                       "label": "Range",
                                       "value": "Swish Oak Natura Handcrafted"
+                              },
+                              {
+                                      "label": "Board Size",
+                                      "value": "Length 1900mm x Width 190mm"
+                              },
+                              {
+                                      "label": "Thickness",
+                                      "value": "14/3mm"
+                              },
+                              {
+                                      "label": "Pack Size",
+                                      "value": "2.90m2"
+                              },
+                              {
+                                      "label": "Pack Weight",
+                                      "value": "25 kg"
+                              },
+                              {
+                                      "label": "Boards Per Pack",
+                                      "value": "8"
                               }
                       ]
               }
@@ -11458,7 +11786,9 @@
               "image": "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/natural-canvas.webp",
               "imageUrl": "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/natural-canvas.webp",
               "galleryImages": [
-                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/natural-canvas.webp"
+                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/natural-canvas.webp",
+                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/natural-canvas-gallery-2.webp",
+                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/natural-canvas-gallery-3.webp"
               ],
               "alt": "Natural Canvas Swish Oak Natura Handcrafted flooring sample",
               "description": "Natural Canvas is a engineered timber flooring colour from the Swish Oak Natura Handcrafted range.",
@@ -11500,7 +11830,9 @@
               "image": "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/sunlit-sienna.webp",
               "imageUrl": "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/sunlit-sienna.webp",
               "galleryImages": [
-                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/sunlit-sienna.webp"
+                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/sunlit-sienna.webp",
+                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/sunlit-sienna-gallery-2.webp",
+                      "images/products/engineered-timber/eco-swish-oak-natura-handcrafted/sunlit-sienna-gallery-3.webp"
               ],
               "alt": "Sunlit Sienna Swish Oak Natura Handcrafted flooring sample",
               "description": "Sunlit Sienna is a engineered timber flooring colour from the Swish Oak Natura Handcrafted range.",
@@ -11655,7 +11987,10 @@
 
   function inferRangeContent(product, category) {
     const configEntry = getRangeConfigEntry(product, category);
-    return configEntry && configEntry.rangeContent ? clone(configEntry.rangeContent) : null;
+    if (configEntry && configEntry.rangeContent) {
+      return clone(configEntry.rangeContent);
+    }
+    return product.rangeContent ? clone(product.rangeContent) : null;
   }
 
   function getCategoryMetaSource() {
@@ -11756,13 +12091,60 @@
     }, []);
   }
 
+  function applyRangeGalleryFallback(products) {
+    const grouped = {};
+
+    products.forEach(function (product) {
+      if (!product.rangeId) {
+        return;
+      }
+
+      if (!grouped[product.rangeId]) {
+        grouped[product.rangeId] = {
+          galleryPool: []
+        };
+      }
+
+      (product.galleryImages || []).forEach(function (imageUrl) {
+        if (!imageUrl || grouped[product.rangeId].galleryPool.indexOf(imageUrl) >= 0) {
+          return;
+        }
+        grouped[product.rangeId].galleryPool.push(imageUrl);
+      });
+    });
+
+    return products.map(function (product) {
+      const existingImages = Array.isArray(product.galleryImages) ? product.galleryImages.slice() : [];
+      if (existingImages.length >= 2 || !product.rangeId || !grouped[product.rangeId]) {
+        return product;
+      }
+
+      const enrichedImages = existingImages.slice();
+      grouped[product.rangeId].galleryPool.forEach(function (imageUrl) {
+        if (!imageUrl || enrichedImages.indexOf(imageUrl) >= 0) {
+          return;
+        }
+        enrichedImages.push(imageUrl);
+      });
+
+      if (enrichedImages.length === existingImages.length) {
+        return product;
+      }
+
+      return Object.assign({}, product, {
+        galleryImages: enrichedImages.slice(0, 3)
+      });
+    });
+  }
+
   function listAllProducts() {
     const productCollections = getProductsSource();
-    return Object.keys(productCollections).reduce(function (accumulator, category) {
+    const products = Object.keys(productCollections).reduce(function (accumulator, category) {
       return accumulator.concat((productCollections[category] || []).map(function (product) {
         return normaliseProduct(product, category);
       }));
     }, []);
+    return applyRangeGalleryFallback(products);
   }
 
   function getProductById(id) {

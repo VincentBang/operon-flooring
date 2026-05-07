@@ -228,13 +228,17 @@ For supplier catalogue uploads, keep commercial pricing and catalogue media sepa
 - if the range page itself is sparse, inspect the supplier brochure PDF and representative product page excerpts before writing range-level copy; use the richest supplier-backed source available instead of leaving placeholder summaries
 - use `RANGE_CONFIG.<category>.<range>.rangeContent` for this shared supplier information instead of duplicating it across every colour
 - if a supplier colour page exposes second or third gallery images, download them locally and attach them to that product via `galleryImages` in `apps/web/products.js`
+- if a supplier colour page exposes multiple usable gallery images, keep a few local images in that colour popup so customers can browse more than one photo
 - the first local image should stay as the main catalogue image and any extra local images should be saved as additional gallery images for the lightbox / popup
+- if a colour page only provides one usable image, extend that colour popup with a few gallery images inherited from the same range so the customer still sees a fuller preview
 - before closing a product upload task, verify every supplier colour page in that range for extra gallery images; a range is not complete until those local gallery assets and `galleryImages` links are in place
 - before closing a product upload task, verify the range-level `description`, `features`, and `technical` sections against the supplier category page, brochure, and a representative product page so the range modal is materially complete
+- range-level technical content should include plank, board, or panel size whenever the supplier provides it
 - if the supplier website runs on Shopify, inspect the collection/range landing page plus the `/products/<handle>.js` payload for each colour so supplier descriptions and every gallery image are captured before import completion
 - customer-facing catalogue UI should show this content from the range thumbnail or range information popup, not inside every colour-selection drawer
 - all range cards on `products.html` should use the same colour-preview pattern:
   - show `View X colours` on the card
+  - show a visible `Range details` / product information action on the card when range metadata exists
   - open a compact popup preview for colour browsing
   - do not use long inline colour drawers on the catalogue page
 - if a customer opens a single colour image from the range preview popup, the image lightbox should include a back button that returns to the full `View X colours` popup

@@ -1694,12 +1694,12 @@
           <div class="hero-content-row">
             <div class="hero-copy-block">
               <h1>Measure your flooring area from a floor plan.</h1>
-              <p>Upload a floor plan, set scale from a known wall, label each room, trace the flooring areas, and send the selected total straight into your quote.</p>
+              <p>Upload a floor plan, set scale from a known wall, trace the flooring areas, and send the total into your quote.</p>
               <div class="hero-actions" style="margin-top: 24px;">
                 <a class="button" href="#measurementTool">Start measuring</a>
                 <a class="button-secondary" data-quote-return-link href="quote.html">Open quote</a>
               </div>
-              <p class="helper" style="margin-top: 14px;">Use this when you want a clearer area before requesting the final quote. The confidence check will flag whether the measurement is ready to rely on.</p>
+              <p class="helper" style="margin-top: 14px;">Use this when you want a clearer area before quoting.</p>
             </div>
 
             <aside class="hero-mini-panel" aria-label="Measurement summary">
@@ -1728,15 +1728,15 @@
             </div>
             <div class="step-card">
               <strong>2. Set scale</strong>
-              <span>Click two points on a known wall length, then enter the real distance.</span>
+              <span>Click two points on a known wall, then enter the real distance.</span>
             </div>
             <div class="step-card">
               <strong>3. Trace room</strong>
-              <span>Pick a room label, trace around the room, then return near the start point to close it automatically.</span>
+              <span>Trace the flooring rooms and close each shape near the start point.</span>
             </div>
             <div class="step-card">
               <strong>4. Use area in quote</strong>
-              <span>Select the flooring rooms only, then send the total area into your quote.</span>
+              <span>Select the flooring rooms, then send the total into your quote.</span>
             </div>
           </div>
         </article>
@@ -1901,9 +1901,9 @@
 
             <div class="workspace-stage">
               <div class="status" id="traceStatus">
-                Click two points on a known wall, then enter the real distance.
+                Set scale: click two points on a known wall.
               </div>
-              <div class="status" id="canvasStatus">Upload a floor plan to start.</div>
+              <div class="status" id="canvasStatus">Upload a floor plan to begin.</div>
               <div class="canvas-shell hidden" id="canvasShell">
                 <div class="canvas-stage">
                   <canvas id="planCanvas" width="1200" height="860"></canvas>
@@ -2629,7 +2629,7 @@
       dom.planFileActions.classList.add("hidden");
       dom.planUpload.value = "";
       setUploadStatus("Upload a PDF, JPG or PNG floor plan to start measuring.");
-      setCanvasStatus("Upload a floor plan to start.", { forceVisible: true });
+      setCanvasStatus("Upload a floor plan to begin.", { forceVisible: true });
       setTraceStatus({ next: true, text: "Upload a floor plan first, then press Step 1. Set scale." });
       renderCanvas();
       renderRoomsTable();
@@ -3494,7 +3494,7 @@
       state.dragTarget = null;
       renderCanvas();
       setTraceStatus({ next: true, text: "Scale mode is on. Click the first point on a known wall." });
-      setCanvasStatus("Scale mode is active. Click two points on a known wall length.");
+      setCanvasStatus("Scale mode is active. Click two points on a known wall.");
     }
 
     function handleScalePointClick(point) {

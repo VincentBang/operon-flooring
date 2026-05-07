@@ -83,6 +83,7 @@ Use this priority order when `continue execution` ranks tasks:
 - laminate and hybrid are quoted as standard floating-floor installation only
 - engineered timber standard planks can be quoted as floating or direct glue
 - engineered herringbone and chevron are quoted as direct glue only
+- quote flow rule: for `Installation Only + Engineered Timber`, ask for `Board pattern` first (`Straight plank`, `Herringbone`, `Chevron`) before showing or locking the installation method
 - customer-facing quotes must not expose internal rates or multipliers
 - central pricing runtime now lives in:
   - `apps/web/products.js`
@@ -145,7 +146,7 @@ Every future 50-task queue should include at least 3 chatbot-related candidate t
 - audit chatbot for accidental pricing claims
 - validate chatbot does not interfere with quote flow
 
-These are candidates only. Execute them only when their `priority_score = (impact × confidence) / effort` ranks high enough and the task is safe.
+These are candidates only. Execute them only when their `priority_score = ((seo_impact + conversion_impact + trust_impact + utility_impact + risk_reduction + data_capture_value) × confidence) / effort` ranks high enough and the task is safe.
 
 ## Product Catalogue System
 
@@ -162,8 +163,11 @@ These are candidates only. Execute them only when their `priority_score = (impac
 - standard catalogue rule: all range cards should use `View X colours` as a compact popup preview, not a long inline drawer
 - standard catalogue rule: selecting a range and browsing colours are separate actions; if final colour must be chosen, enforce it later in `quote.html`
 - standard product-import rule: if a supplier colour page has second or third gallery images, save those extra images locally and attach them through `galleryImages` for that product
+- standard product-import rule: if a supplier colour page exposes two or more usable gallery images, every imported colour should keep a few local images in its popup, not only a single swatch image
+- standard product-import rule: if a specific supplier colour page only has one usable image, inherit a few gallery images from the same range so the popup still shows a fuller customer-facing preview
 - product import completion rule: do not mark a supplier range upload complete until each colour page has been checked for extra gallery images and any found images have been downloaded locally and attached in `apps/web/products.js`
 - range metadata completion rule: do not mark a supplier range upload complete until range-level description, feature, and technical content has been checked against the supplier category page, brochure, and at least one representative product page
+- range metadata completion rule: customer-facing range details must include a visible `Range details` / product information trigger on the range card and the modal should show description, features, and technical specs with plank, board, or panel size whenever the supplier provides it
 - standard catalogue UX rule: if a colour image opens from a `View X colours` popup, the single-image lightbox must include a back button to return to that full colour popup
 
 ## Supabase Pricing Privacy
@@ -287,7 +291,12 @@ Reason:
   - `title`
   - `category`
   - `assigned_agent`
-  - `impact`
+  - `seo_impact`
+  - `conversion_impact`
+  - `trust_impact`
+  - `utility_impact`
+  - `risk_reduction`
+  - `data_capture_value`
   - `confidence`
   - `effort`
   - `priority_score`
@@ -322,7 +331,7 @@ Reason:
 - New agent role: `Chatbot Agent`
 - New queue rule: every future 50-task queue must include at least 3 chatbot-related candidate tasks
 - Current chatbot queue candidates: `CHATBOT-001`, `CHATBOT-002`, `CHATBOT-003`
-- Validation performed: task queue JSON parsed successfully, queue length stayed at 50, queue contains 3 chatbot tasks, queue schema now uses `impact`, `confidence`, `effort`, `priority_score`, and `approval_required`
+- Validation performed: task queue JSON parsed successfully, queue length stayed at 50, queue contains 3 chatbot tasks, and the 2026-05-07 SEO/CRO loop update now supersedes the earlier single-score queue schema with multidimensional scoring fields
 - Known risks: chatbot work remains safe only while it stays inside `apps/web/chatbot/`; live page injection, quote/product changes, product selection changes, pricing files, and auto-fill remain approval-gated
 - Next best chatbot tasks: audit chatbot for accidental pricing claims, improve product guidance flow, improve quote-review and missing-information JSON mapping
 
@@ -400,14 +409,33 @@ Reason:
 - Tasks completed this run: `UI-POLICY-001`, `COPY-QUOTE-001`, `COPY-PRODUCTS-001`, `COPY-SEO-PAGES-001`, `CHATBOT-COPY-001`, `SEO-MEMORY-001`, `QA-COPY-SCAN-001`, `QA-SCRIPT-001`, `QA-FINAL-001`
 - Files changed this run: `apps/web/AGENTS.md`, `apps/web/CODEX_PROJECT_MEMORY.md`, `apps/web/OPERON_BUSINESS_OBJECTIVES_MARKETING_SEO_BRIEF.md`, `apps/web/OPERON_SEO_STRATEGY.md`, `apps/web/OPERON_SEO_EXECUTION_PLAN.md`, `apps/web/PROJECT_MEMORY.md`, `apps/web/QA_NOTES.md`, `apps/web/task_queue.json`, `apps/web/quote.html`, `apps/web/products.html`, `apps/web/products.js`, priority suburb pages, product money pages, selected blog pages, and chatbot memory/guardrail files
 - Customer UI policy added: customer pages should feel like guided decisions, option cards should use short labels and obvious selected states, helper text should only prevent real mistakes or guide the next action, and backend thresholds, formulas, implementation labels, pending-price labels, and progress-save language should stay out of customer screens
+- Site-wide copy policy added: secondary explanation copy should be short, premium and skimmable. Prefer `Start estimate`, `Review quote`, `Final details confirmed before installation`, and `Structured estimate first. Site confirmation before work starts.` Avoid repeated quote-process explanations and long CTA helper paragraphs.
+- Stricter copy direction added: secondary explanation should usually be one neat line or removed entirely when the primary heading, card title, or CTA is already enough.
+- Utility-page copy rule: on `quote.html`, `floorplan.html`, `quote-review.html`, `thank-you.html`, and `products.html`, helper copy should only explain the next action or a real risk. Avoid repeating process explanations once a section title already says the same thing.
+- Interactive product system policy added: SEO/product pages must preserve working live product selections, product cards, browsing behavior, product-related JavaScript, filters/sorting, recommendation behavior, selected states, and quote handoff. SEO structure should wrap and improve interaction, not replace it.
 - Customer-facing copy changes: quote flow Step 3 wording was shortened, product catalogue pending-price wording was replaced with review/confirmation language, suburb/product/blog pages now use plain `quote` / `quote flow` language, and chatbot-facing wording was aligned with the same policy
 - Queue update: `apps/web/task_queue.json` was refreshed to exactly 50 ranked tasks, with 6 chatbot candidates and 9 tasks marked done in this run
 - Validation performed: `node --check apps/web/products.js`, `node --check apps/web/quoteCalculator.js`, `node apps/web/tests/quoteCalculator.validation.js`, task queue JSON/schema sanity check, inline script parsing for touched customer pages, chatbot syntax checks, targeted customer-copy scan, and `git diff --check`
 - Known risks: visual mobile/browser QA is still required for quote flow, products, floorplan, and Quote Advisor; no GitHub push, Netlify deploy, Supabase write, or email sending was performed
 - Next best tasks: browser-review mobile quote/product/floorplan/quote-review pages, then continue reducing helper-text density in remaining quote steps if the simplified Step 3 direction feels right
 
+## Latest Overnight SEO/CRO System Run
+
+- Tasks completed this run: `QUEUE-20260507-001`, `HYBRID-SEO-REFRESH-001`, `LAMINATE-SEO-REFRESH-001`, `ENGINEERED-SEO-REFRESH-001`, `LINK-GRAPH-001`, `CONTENT-REFRESH-REGISTER-001`, `PROJECT-PROOF-BACKLOG-001`, `CHATBOT-MEMORY-001`, `PRODUCT-FAQ-SCHEMA-001`, `PRODUCT-CTA-001`, `PRODUCT-CHECKLIST-001`, `QA-STATIC-001`, `MEMORY-OVERNIGHT-001`
+- Files changed this run: `apps/web/task_queue.json`, `apps/web/hybrid-flooring-sydney.html`, `apps/web/laminate-flooring-sydney.html`, `apps/web/engineered-timber-flooring-sydney.html`, `apps/web/INTERNAL_LINK_GRAPH_AUDIT.md`, `apps/web/SEO_CONTENT_REFRESH_REGISTER.md`, `apps/web/PROJECT_CASE_STUDY_BACKLOG.md`, `apps/web/chatbot/CHATBOT_MEMORY.md`, and `apps/web/PROJECT_MEMORY.md`
+- Queue update: `apps/web/task_queue.json` now contains exactly 50 tasks using `seo_impact`, `conversion_impact`, `trust_impact`, `utility_impact`, `risk_reduction`, `data_capture_value`, `confidence`, `effort`, and `priority_score`
+- Product SEO refresh: hybrid, laminate, and engineered timber pages now have cleaner customer-facing FAQ answers, visible quote checklists, stronger quote-review CTAs, and more contextual product/comparison links while preserving live product interaction
+- Trust/proof governance: created a planning-only real project proof backlog so case studies can be prepared without inventing fake projects
+- Content and link governance: created content refresh and internal link graph registers to prioritize existing-page refreshes, prevent cannibalization, and guide crawl-depth work
+- Chatbot memory update: refreshed chatbot strategy language so it stays a short decision-first guide into quote, product, floorplan, and quote-review pathways
+- Validation performed: task queue JSON parsed successfully, queue length is exactly 50, product page inline scripts parse, product page FAQ JSON-LD parses, each refreshed product page has exactly one H1, refreshed product page local links resolve, backend/system wording scan passed after excluding CSS margin false positives, and `git diff --check` passed for changed files
+- Known risks: visual mobile/browser QA is still recommended for the three refreshed product SEO pages; no GitHub push, Netlify deploy, Supabase write, backend/email change, quote logic change, pricing logic change, product data edit, or floorplan logic edit was performed
+- Next best tasks: browser QA refreshed product pages on mobile, audit suburb pages for unique local intent, and add natural product links from high-performing comparison/problem guides
+
 ## TODO / NEXT_ACTIONS
 
+- 2026-05-07: SEO/CRO/site-quality agent loop upgraded. Operon now treats SEO as a compounding authority system: topical clusters, internal link graph, content quality enforcement, CRO, technical SEO, project proof, and utility moat improvements are part of every continue execution run.
+- 2026-05-07: Operon's agent system now includes SEO intelligence loops, CRO optimization loops, trust governance, data capture strategy, AI-search readiness, semantic authority governance, friction detection, content refresh systems, anti-cannibalization systems, utility moat prioritization, and closed-loop learning architecture.
 - future Supabase lead and queue sync contracts are documented in `OPERON_SUPABASE_DATABASE_IMPLEMENTATION.md`; they are planning-only and do not enable live writes
 - confirm real product ranges, colours, and supplier pricing in `products.js`
 - run `supabase/pricing_schema.sql` and verify private pricing tables in Supabase

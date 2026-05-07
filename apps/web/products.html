@@ -55,7 +55,7 @@
             <div class="hero-copy">
               <span class="eyebrow">Product Selection</span>
               <h1>Flooring Products</h1>
-              <p>Choose the flooring type, save the range that suits the project, and move straight into the quote flow with that selection already attached.</p>
+              <p>Choose a flooring range, then start the quote with it saved.</p>
               <div class="hero-actions" style="margin-top: 24px;">
                 <a class="button" href="quote.html?from=product">Start Quote</a>
                 <a class="button-secondary" href="floorplan.html">Upload Floor Plan</a>
@@ -73,11 +73,11 @@
               </div>
               <div class="stat-card">
                 <strong>Built to stay clear</strong>
-                Product selection happens here. Measured area, site details, and extras stay inside the quote flow where they belong.
+                Choose product here. Confirm scope in the quote.
               </div>
               <div class="stat-card">
                 <strong>Best use</strong>
-                Use this page when you already know the flooring category and want the cleanest handoff into a structured estimate.
+                Use this page to shortlist a range before estimating.
               </div>
             </div>
           </div>
@@ -90,7 +90,7 @@
         <article class="section-card">
           <span class="eyebrow">Choose Your Flooring Type</span>
           <h2 style="margin-top: 18px;">Start with the right category</h2>
-          <p>Choose the flooring type first, then filter the live catalogue. If a category does not have live products yet, you can still continue into the quote using that estimate path.</p>
+          <p>Choose a category, then filter the live catalogue.</p>
           <div class="catalogue-category-cards" id="catalogueCategoryCards"></div>
         </article>
       </div>
@@ -101,7 +101,7 @@
         <article class="section-card">
           <span class="eyebrow">Product Filters</span>
           <h2 style="margin-top: 18px;">Filter the catalogue</h2>
-          <p>Use the category cards or quick chips first, then narrow by brand, colour and thickness only. The filtering stays intentionally simple so the catalogue remains quick to use.</p>
+          <p>Use category first, then narrow by brand, colour or thickness.</p>
 
           <div class="catalogue-toolbar">
             <div class="catalogue-category-row" id="catalogueCategoryRow"></div>
@@ -152,7 +152,7 @@
       <div class="shell">
         <article class="section-card">
           <h2>Choose the product here, structure the estimate in the quote</h2>
-          <p>This catalogue is built to keep the decision simple. Choose a range, then continue into the quote with that floor direction already attached. Final product, colour and site details are confirmed during review.</p>
+          <p>Choose a range, then continue into the quote with it attached.</p>
         </article>
       </div>
     </section>
@@ -163,7 +163,6 @@
       <div class="footer-col">
         <h3>Operon Flooring</h3>
         <p>Premium laminate, hybrid and engineered timber flooring quotes for Sydney homes.</p>
-        <p>Clear estimates, measured areas and final pricing confirmed before work begins.</p>
       </div>
       <div class="footer-col">
         <h4>Products</h4>
@@ -513,7 +512,7 @@
           return (
             '<' + imageFrameTag + ' class="catalogue-image-frame' + (product.type === "range" ? " is-static" : "") + (isRangeInfoCard ? " has-range-info" : "") + '"' + imageFrameAttrs + ">" +
               '<img class="catalogue-image" src="' + escapeHtml(product.image) + '" alt="' + escapeHtml(altText) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">' +
-              (isRangeInfoCard ? '<span class="catalogue-range-info-hint">Click to see product information</span>' : "") +
+              (isRangeInfoCard ? '<span class="catalogue-range-info-hint">Range details</span>' : "") +
               '<div class="catalogue-swatch-fallback" aria-hidden="true">' +
                 '<div class="catalogue-swatch" style="background:' + escapeHtml(product.swatch || "#d1d5db") + ';"></div>' +
                 '<span>' + escapeHtml(product.colour) + "</span>" +
@@ -524,7 +523,7 @@
 
         return (
           '<' + imageFrameTag + ' class="catalogue-image-frame is-fallback' + (product.type === "range" ? " is-static" : "") + (isRangeInfoCard ? " has-range-info" : "") + '"' + imageFrameAttrs + ">" +
-            (isRangeInfoCard ? '<span class="catalogue-range-info-hint">Click to see product information</span>' : "") +
+            (isRangeInfoCard ? '<span class="catalogue-range-info-hint">Range details</span>' : "") +
             '<div class="catalogue-swatch-fallback" aria-hidden="true">' +
               '<div class="catalogue-swatch" style="background:' + escapeHtml(product.swatch || "#d1d5db") + ';"></div>' +
               '<span>' + escapeHtml(product.colour) + "</span>" +
@@ -560,9 +559,7 @@
             '<article class="catalogue-category-card' + (state.category === item.id ? " is-active" : "") + '">' +
               '<span class="catalogue-category-card-label">' + escapeHtml(item.label) + "</span>" +
               '<h3>' + escapeHtml(item.shortDescription || item.label) + "</h3>" +
-              '<p>' + escapeHtml(stats.liveProductCount > 0
-                ? "Browse product ranges, choose a direction, then continue into the quote."
-                : "Start the quote now and confirm the final product later.") + "</p>" +
+              '<p>Final details confirmed before installation.</p>" +
               '<div class="catalogue-category-card-meta">' +
                 '<span class="catalogue-pill">' + escapeHtml(countText) + "</span>" +
                 '<span class="catalogue-pill">' + escapeHtml(pricingText) + "</span>" +
@@ -665,8 +662,17 @@
         const colourDrawerButton = hasRangeColourPreview
           ? '<button class="button-quiet catalogue-colour-toggle" type="button" data-open-range-colours-preview="' + escapeHtml(product.rangeId) + '" aria-label="View ' + escapeHtml(String(rangeProducts.length)) + ' colours in ' + escapeHtml(product.rangeLabel || product.range || "this range") + '">View ' + rangeProducts.length + " colours</button>"
           : "";
+        const rangeInfoButton = product.type === "range" && product.rangeContent
+          ? '<button class="button-quiet catalogue-range-details-button" type="button" data-open-range-info="' + escapeHtml(product.rangeId) + '" aria-label="Open range details for ' + escapeHtml(product.rangeLabel || product.range || "this range") + '">Range details</button>'
+          : "";
+        const rangeUtilityActions = (colourDrawerButton || rangeInfoButton)
+          ? '<div class="catalogue-card-actions-range">' +
+              colourDrawerButton +
+              rangeInfoButton +
+            "</div>"
+          : "";
         const cardActions = '<div class="catalogue-card-actions">' +
-            colourDrawerButton +
+            rangeUtilityActions +
             '<button class="button-secondary" type="button" data-select-floor="' + escapeHtml(selectId) + '">' + (isSelected ? "Selected" : actionLabel) + "</button>" +
             '<button class="button" type="button" data-get-quote="' + escapeHtml(quoteId) + '">Continue to quote</button>' +
           "</div>";

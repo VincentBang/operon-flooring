@@ -18,6 +18,7 @@ Phase 1 means:
 - conversion to quote
 - structured data capture
 - trust building
+- homepage, product, suburb, blog, guide, analytics, and technical SEO improvement
 
 Do not build SaaS features, marketplace logic, backend email changes, pricing logic changes, quote calculation changes, or product data logic changes unless the user explicitly asks.
 
@@ -70,9 +71,11 @@ Use this order when scores are close or tradeoffs are unclear:
 9. Analytics tracking
 10. Lead capture without email
 11. Backlinks
-12. Future SaaS infrastructure
+12. Future SaaS positioning documentation only, with execution approval required
 
 ## Agent Roles
+
+All agents must follow the protected-file rules. Do not edit quote flow, floorplan tool, pricing logic, product data, backend/API/email logic, Supabase functions, or chatbot live integration unless the user explicitly requests that work.
 
 ### Chatbot Agent
 
@@ -128,6 +131,151 @@ Forbidden chatbot task types:
 - chatbot modifying `quoteCalculator.js`
 - chatbot overriding product or pricing logic
 
+### SEO Strategist Agent
+
+Purpose: own topic clusters, keyword intent, internal link graph, and the content roadmap.
+
+Responsibilities:
+
+- map every important page to a topic cluster and search intent
+- identify missing topical clusters, orphan pages, duplicate semantic intent, and weak internal links
+- prioritize pages that strengthen commercial, local, comparison, problem/risk, project, and utility clusters
+- protect against generic AI filler, keyword stuffing, thin suburb pages, and fake authority
+- ensure every SEO task has a conversion path toward `quote.html`, `quote-review.html`, `floorplan.html`, or `products.html`
+
+### Onsite Optimization Agent
+
+Purpose: own page-level crawl clarity and search presentation.
+
+Responsibilities:
+
+- improve title/meta/H1 alignment
+- maintain logical heading hierarchy
+- add or refine schema only when it matches visible content
+- keep canonical, sitemap, robots, FAQ, and breadcrumb opportunities clean
+- improve page structure without removing live product interaction
+
+### CRO Agent
+
+Purpose: own conversion hierarchy and mobile decision flow.
+
+Responsibilities:
+
+- improve CTA hierarchy, section flow, and quote-start momentum
+- reduce scroll friction and competing actions
+- keep mobile flows simple, skimmable, and easy to tap
+- preserve premium trust while guiding users toward quote, validation, product browsing, floorplan tool, or contact/help
+- avoid changing quote calculation or quote step logic unless explicitly requested
+
+### Content Quality Agent
+
+Purpose: prevent generic AI content, duplication, overexplaining, and weak suburb pages.
+
+Responsibilities:
+
+- reject or rewrite content that lacks flooring-specific detail, installation nuance, decision value, or conversion purpose
+- compress bloated copy into clear sections, FAQs, tables, guide blocks, or internal links
+- ensure every important page includes practical trade logic, product tradeoffs, cost implications, installation considerations, preparation risks, measurement issues, apartment/site constraints, quote comparison insight, maintenance implications, or real operational detail
+- prevent fake reviews, fake guarantees, fake projects, and thin doorway pages
+
+### Technical SEO Agent
+
+Purpose: own technical crawl health, page speed, schema hygiene, and accessibility.
+
+Responsibilities:
+
+- maintain sitemap, robots, canonical tags, structured data, image SEO, performance, and accessibility quality
+- identify Core Web Vitals risks, layout shifts, oversized images, duplicated CSS, blocking scripts, and unnecessary JavaScript
+- keep SEO improvements lightweight and mobile-first
+- validate links, schema, no horizontal overflow, and page load risks after changes
+
+### Project Proof Agent
+
+Purpose: own real project/case-study backlog and trust proof structure.
+
+Responsibilities:
+
+- prioritize real project content over generic blogs where possible
+- define case-study data needs: suburb, property type, flooring type, product/range, project size, preparation work, constraints, customer decision context, timeline, outcome, and photos
+- never invent fake projects
+- create documentation/backlog placeholders when real project data is missing
+
+### Utility Moat Agent
+
+Purpose: own calculators, quote validation, floorplan entry points, and decision tools.
+
+Responsibilities:
+
+- prioritize useful tools and interactive systems over generic content volume
+- improve entry points to quote tool, quote validation tool, floor plan measurement tool, area/wastage calculators, product comparison, visual selection, and quote clarity checklists
+- protect quote/pricing/floorplan logic while improving discoverability, UX, and conversion paths around those utilities
+
+### Internal Linking Agent
+
+Purpose: own crawl graph density, contextual link quality, and semantic page relationships.
+
+Responsibilities:
+
+- identify orphan pages, weakly connected pages, and missing parent/child/sibling relationships
+- add natural internal links toward quote, quote review, floorplan, product, guide, suburb, and project pathways
+- avoid footer-only linking, random link dumping, and repeated exact-match anchor spam
+- preserve premium UX and avoid cluttering pages with link blocks that do not help the customer decide
+
+### Trust Signal Agent
+
+Purpose: own real trust proof, process clarity, and customer confidence.
+
+Responsibilities:
+
+- strengthen real project proof, installation realism, quote clarity, process clarity, operational transparency, and flooring expertise
+- avoid fake urgency, fake scarcity, fake badges, fake reviews, fake guarantees, and exaggerated claims
+- keep trust copy concise and grounded in real flooring operations
+- support conversion without making the estimate feel unreliable
+
+### Information Architecture Agent
+
+Purpose: own scalable page organization, navigation clarity, and semantic structure.
+
+Responsibilities:
+
+- maintain clean hierarchy, semantic URL structure, predictable navigation, and logical page relationships
+- prevent disconnected pages, random content creation, orphan structures, and overlapping navigation
+- classify page intent, funnel stage, decision stage, and conversion destination before page creation
+- protect existing live quote, product, and floorplan pathways
+
+### Analytics Intelligence Agent
+
+Purpose: own measurement quality, behavior signals, and data-informed backlog prioritization.
+
+Responsibilities:
+
+- improve safe tracking for quote starts, quote completion, quote review usage, floorplan usage, product interactions, CTA clicks, and friction signals
+- use behavior data to prioritize SEO, CRO, UX, and content refresh work
+- support structured data capture without collecting unnecessary data
+- avoid backend, email, Supabase, or analytics architecture overhauls without owner approval
+
+### Friction Detection Agent
+
+Purpose: own user-effort reduction across pages and conversion transitions.
+
+Responsibilities:
+
+- identify abandoned flows, dead-end pages, excessive cognitive load, unclear instructions, mobile friction, form hesitation points, and weak transitions
+- prioritize reducing uncertainty and effort
+- keep mobile UX clean, compact, and easy to skim
+- avoid changing pricing logic, quote calculations, measurement accuracy, or backend systems
+
+### Content Refresh Agent
+
+Purpose: own existing-page improvement before unnecessary new page creation.
+
+Responsibilities:
+
+- audit strong pages for outdated wording, weak CTAs, missing links, weak trust signals, schema drift, content bloat, and mobile UX issues
+- refresh high-value pages before creating overlapping new pages
+- identify cannibalization risks and recommend merges for weak overlapping pages
+- preserve uniqueness, concise copy, and premium UX consistency
+
 ## Hard Rules
 
 - Keep UI clean, premium, and minimal.
@@ -143,11 +291,19 @@ Forbidden chatbot task types:
 - Homepage is not the full quote-flow page. Keep it as a clean premium conversion, trust, and SEO-support page.
 - The full quote flow lives on `quote.html`; all quote CTAs should navigate to `quote.html`.
 - SEO page builds must not modify `quote.html`, `floorplan.html`, pricing logic, quote calculation, product data logic, or backend email. They may only link into `quote.html` and `quote-review.html`.
+- SEO/product pages must not become static brochure pages. Preserve working live product selection sections, product cards, product browsing interaction, product-related JavaScript, filtering/sorting, and recommendation behavior.
+- The SEO component system must wrap and improve the product interaction layer, not replace it. Refactor layout, spacing, typography, section hierarchy, CTA placement, responsive/mobile UX, SEO content structure, and visual clarity only.
+- Product interaction is strategically valuable for engagement, dwell time, conversion, and differentiation. Treat it as a curated, premium exploration layer, not clutter.
+- On SEO/product pages, product interaction should appear after the hero, quick value cards, and short explanation where practical. Product cards should stay compact, elegant, skimmable, mobile-friendly, and show a clear selected state.
 - Preserve homepage SEO with concise sections, internal links, schema, and lower-page/expandable content without reintroducing a heavy form.
 - Keep customer-facing copy plain English wherever possible, without renaming the underlying pricing variables unless needed for code safety.
 - Customer-facing UI must be decision-first: short labels, clear selected states, and minimal helper text.
 - Do not turn option cards into explanatory paragraphs; only add helper text when it prevents a real mistake or guides the next action.
 - Hide redundant status copy such as “progress saved” and keep backend thresholds, internal formulas, implementation labels, and system-save language out of customer screens.
+- Secondary explanation copy must stay lean: shorten long paragraphs under headings, repeated CTA helper lines, “no obligation” reassurance lines, and repeated quote-process explanations.
+- Secondary explanation should usually be one neat line, or removed completely when the heading, card title, or CTA already makes the section clear.
+- Preferred microcopy: `Start estimate`, `Review quote`, `Final details confirmed before installation`, and `Structured estimate first. Site confirmation before work starts.`
+- Avoid defensive or over-explained copy such as long “choose your flooring type, enter your area...” paragraphs, repeated “the fastest route depends...” sections, and unnecessary quote-process explanations.
 - Do not add a visualiser or reintroduce one into customer-facing scope.
 - Do not expose internal labour rate, margin, material rate, surcharge formula, or installer cost.
 - Do not duplicate pricing logic.
@@ -175,8 +331,8 @@ Codex must:
 
 1. read the source-of-truth files
 2. generate a ranked backlog of 50 tasks
-   - include at least 3 chatbot-related candidate tasks
-3. score every task using `priority_score = (impact × confidence) / effort`
+   - include the required SEO, CRO, technical SEO, internal linking/schema, chatbot, analytics, QA, project proof, and utility candidates
+3. score every task using `priority_score = ((seo_impact + conversion_impact + trust_impact + utility_impact + risk_reduction + data_capture_value) × confidence) / effort`
 4. save all 50 tasks into `apps/web/task_queue.json`
 5. execute tasks in ranked order
 6. complete up to 8 tasks unless blocked
@@ -207,7 +363,12 @@ Every task entry must include:
 - `title`
 - `category`
 - `assigned_agent`
-- `impact`
+- `seo_impact`
+- `conversion_impact`
+- `trust_impact`
+- `utility_impact`
+- `risk_reduction`
+- `data_capture_value`
 - `confidence`
 - `effort`
 - `priority_score`
@@ -218,6 +379,40 @@ Every task entry must include:
 - `validation_checklist`
 - `status`
 - `notes`
+
+Allowed categories:
+
+- `seo`
+- `content`
+- `cro`
+- `technical_seo`
+- `schema`
+- `internal_linking`
+- `performance`
+- `accessibility`
+- `homepage`
+- `product_page`
+- `suburb_page`
+- `blog`
+- `project_case_study`
+- `quote_review`
+- `floorplan_entry`
+- `chatbot`
+- `analytics`
+- `qa`
+- `documentation`
+
+Every 50-task queue must include at least:
+
+- 8 SEO/content tasks
+- 5 CRO tasks
+- 5 technical SEO/performance tasks
+- 5 internal linking/schema tasks
+- 3 chatbot candidate tasks
+- 3 analytics/tracking tasks
+- 3 QA/stability tasks
+- 2 real project/case study candidate tasks
+- 2 utility/tool improvement candidate tasks
 
 For chatbot tasks, use:
 
@@ -249,9 +444,26 @@ Minimum validation rule:
 
 1. confirm the targeted behavior changed as intended
 2. confirm no quote logic regression was introduced
-3. confirm no internal pricing detail became customer-visible
-4. confirm affected links, storage, or event hooks still work
-5. confirm mobile behavior still makes sense when UI is touched
+3. confirm no pricing logic changed
+4. confirm no internal pricing detail became customer-visible
+5. confirm no product data was corrupted
+6. confirm no floorplan logic changed unless requested
+7. confirm affected links, storage, or event hooks still work
+8. confirm mobile behavior still makes sense when UI is touched
+9. confirm title/meta/H1 still align when SEO pages are touched
+10. confirm schema matches visible content when schema is touched
+11. confirm CTAs still route correctly
+12. confirm no duplicate content, fake claims, or keyword stuffing was introduced
+13. confirm no performance-heavy asset was added without reason
+
+For SEO/content tasks, additionally verify:
+
+1. clear search intent
+2. clear conversion path
+3. useful internal links added where natural
+4. content strengthens a defined topic cluster
+5. no generic filler or thin doorway content
+6. no live product interaction was removed or replaced
 
 For chatbot-related tasks, additionally verify:
 

@@ -1017,7 +1017,7 @@
             <a class="button" href="#reviewForm" data-track-cta="quote_review_start">Start quote review</a>
             <a class="button-secondary quote-review-to-quote" href="quote.html?source=quote_review">Get structured Operon estimate</a>
           </div>
-          <p class="hero-note">Use the quick check to see whether the written scope is clear enough to compare. A document-based review requires the actual quote.</p>
+          <p class="hero-note">Use the quick check for a fast scope read, or upload the quote for a stronger review.</p>
         </div>
         <div class="hero-panel">
           <div class="hero-panel-header">
@@ -1064,7 +1064,7 @@
           <div class="section-head">
             <p class="eyebrow">Start here</p>
             <h2>Choose review type</h2>
-            <p>Check quote clarity quickly, or upload the written quote for a document-based review.</p>
+            <p>Start with a quick check, or upload the written quote for a stronger review.</p>
           </div>
 
           <div class="mode-grid" role="radiogroup" aria-label="Quote review level">
@@ -1074,18 +1074,18 @@
               <span>No upload needed. Tick what is clearly written.</span>
               <ul class="mode-points">
                 <li>No upload needed</li>
-                <li>Checks whether the scope is clear enough to compare</li>
+                <li>Fast scope check</li>
                 <li>Guides the next step</li>
               </ul>
             </label>
             <label class="mode-card">
               <input type="radio" name="reviewMode" value="detailed">
               <strong>Document-based quote review</strong>
-              <span>Use the actual quote document for a stronger review.</span>
+              <span>Upload the written quote for a stronger review.</span>
               <ul class="mode-points">
                 <li>Upload your quote</li>
-                <li>Review what is actually written</li>
-                <li>Stronger document-based feedback</li>
+                <li>Review what is clearly written</li>
+                <li>Stronger feedback</li>
               </ul>
             </label>
           </div>
@@ -1094,7 +1094,7 @@
             <div class="section-head">
               <p class="eyebrow">Quote details</p>
               <h2>What does the quote show?</h2>
-              <p>This is a high-level scan based on visible details. A detailed review requires the actual quote.</p>
+              <p>High-level scan only. Upload the quote for a stronger review.</p>
             </div>
 
             <div class="field-grid">
@@ -1115,7 +1115,7 @@
               <div class="field">
                 <label for="reviewTotal">Quote total (optional)</label>
                 <input id="reviewTotal" name="reviewTotal" type="number" min="0" step="0.01" placeholder="Optional context only">
-                <p class="field-help">Used for context only.</p>
+                <p class="field-help">Context only.</p>
               </div>
               <div class="field detailed-only" hidden>
                 <label for="reviewProvider">Quote provider name (optional)</label>
@@ -1149,7 +1149,7 @@
 
             <div class="section-head">
               <div class="check-heading">Existing quote includes</div>
-              <p>Leave unclear items unticked. Unticked means unknown, not automatically missing.</p>
+              <p>Leave unclear items unticked. Unticked means unknown.</p>
             </div>
 
             <div class="check-grid" id="inclusionGrid">
@@ -1211,7 +1211,7 @@
           <div class="section-head">
             <p class="eyebrow">Results</p>
             <h2 id="reviewOutputTitle" style="font-size: clamp(1.35rem, 2.5vw, 1.75rem);">Quick scope clarity check</h2>
-            <p id="reviewOutputIntro">High-level guidance only. Upload the quote for a document-based review.</p>
+            <p id="reviewOutputIntro">High-level guidance only. Upload the quote for a stronger review.</p>
           </div>
 
           <div class="summary-block" id="reviewReportContent">
@@ -1268,27 +1268,27 @@
 
             <div class="summary-box questions">
               <div class="risk-group">
-                <h3>Questions to ask contractor</h3>
-                <span class="risk-tag medium">Before accepting</span>
-                <div id="questionsToAskList">
-                  <div class="risk-card"><strong>Questions will appear here.</strong><span>They are based on missing or unclear quote items.</span></div>
-                </div>
+              <h3>Questions to ask contractor</h3>
+              <span class="risk-tag medium">Before accepting</span>
+              <div id="questionsToAskList">
+                  <div class="risk-card"><strong>Questions will appear here.</strong><span>Based on missing or unclear scope items.</span></div>
               </div>
+            </div>
             </div>
 
             <div class="summary-box">
               <div class="risk-group">
-                <h3>What typically changes</h3>
-                <span class="risk-tag low">Common changes</span>
-                <div id="lowRiskList">
-                  <div class="risk-card"><strong>Common change items will appear here.</strong><span>These are typical flooring quote variables, not confirmed charges.</span></div>
-                </div>
+              <h3>What typically changes</h3>
+              <span class="risk-tag low">Common changes</span>
+              <div id="lowRiskList">
+                  <div class="risk-card"><strong>Common change items will appear here.</strong><span>These are common scope variables, not confirmed charges.</span></div>
               </div>
+            </div>
             </div>
 
             <div class="summary-box guidance">
               <h3>Next step</h3>
-              <p id="decisionGuidance">Add the basic quote details first. For a more precise review, upload your quote.</p>
+              <p id="decisionGuidance">Add the basic quote details first. Upload the quote for a stronger review.</p>
               <div class="cta-actions" style="justify-content: flex-start;">
                 <a class="button-secondary quote-review-to-quote" href="quote.html?source=quote_review">Get structured Operon estimate</a>
                 <a class="button-secondary" href="products.html">Browse products</a>
@@ -1319,19 +1319,19 @@
       <div class="faq-grid">
         <details open>
           <summary>What does a complete flooring quote include?</summary>
-          <p>A complete flooring quote clearly lists product, installation method, site preparation, trims, removal, disposal and site details before final confirmation.</p>
+          <p>Final details confirmed before installation.</p>
         </details>
         <details>
           <summary>Why can flooring quotes change?</summary>
-          <p>Quotes often change when product details, subfloor condition, moisture requirements or finishing items are not fully confirmed at the start.</p>
+          <p>Choose product, then start estimate.</p>
         </details>
         <details>
           <summary>Should I accept a flooring quote without checking scope?</summary>
-          <p>It is better to confirm the product, installation method, preparation, finishing items and site details first. A total only makes sense when the included work is clear.</p>
+          <p>It is better to confirm the product, installation method, preparation, finishing items and site details first.</p>
         </details>
         <details>
           <summary>Should removal and disposal be listed separately?</summary>
-          <p>Yes. Removal and disposal are commonly separate. A quote can include lifting old flooring without including take-away disposal.</p>
+          <p>Broad damage may justify a replacement estimate.</p>
         </details>
       </div>
     </section>

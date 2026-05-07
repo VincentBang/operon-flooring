@@ -2458,9 +2458,10 @@
 
       .wizard-progress {
         padding: 9px 10px;
-        position: sticky;
-        top: 69px;
-        z-index: 4;
+        position: static;
+        top: auto;
+        z-index: auto;
+        margin-bottom: 12px;
       }
 
       .wizard-step-row {
@@ -2917,7 +2918,7 @@
           <div class="hero-actions">
             <a href="#quoteForm" class="btn-primary">Start 2-minute quote</a>
           </div>
-          <p class="hero-trust">No obligation. Final product and site details are confirmed before installation.</p>
+          <p class="hero-trust">Structured estimate first. Final details confirmed before installation.</p>
           <div class="status" id="pageStatus" hidden></div>
         </div>
       </div>
@@ -3266,7 +3267,7 @@
               <div class="field" id="productColourField" hidden>
                 <label for="productColourSelect">Choose colour</label>
                 <select id="productColourSelect" name="productColourSelect"></select>
-                <p class="helper" id="productColourHelper">Choose colour for engineered timber.</p>
+                <p class="helper" id="productColourHelper">Choose product colour.</p>
               </div>
 
               <div class="field" style="margin-bottom: 0;" hidden aria-hidden="true">
@@ -3289,7 +3290,7 @@
                 <div class="field" id="patternTypeField">
                   <label for="patternType" id="patternTypeLabel">Install pattern</label>
                   <select id="patternType" name="patternType">
-                    <option value="standard">Standard plank</option>
+                    <option value="standard">Straight plank</option>
                     <option value="herringbone">Herringbone</option>
                     <option value="chevron">Chevron</option>
                   </select>
@@ -3416,7 +3417,6 @@
                   <span class="pill">Quote adjusted if required</span>
                 </div>
                 <ul class="list" style="margin-top: 14px;">
-                  <li>No obligation</li>
                   <li>No commitment required</li>
                   <li>Final decision remains with you</li>
                 </ul>
@@ -3786,7 +3786,7 @@
                 <div class="field" id="quoteDeliveryEmailField" hidden>
                   <label for="quoteDeliveryEmail">Email for your copy</label>
                   <input id="quoteDeliveryEmail" name="quoteDeliveryEmail" type="email" autocomplete="email" placeholder="name@example.com">
-                  <p class="helper">We only need this because no email was entered at the start.</p>
+                  <p class="helper">Only needed because no email was added earlier.</p>
                 </div>
               </div>
             </div>
@@ -3802,7 +3802,7 @@
             <div class="summary-total" id="summaryTotal">$0</div>
             <div class="estimate-status" id="summaryCaption">Estimate only · final confirmation after site review</div>
             <div class="estimate-status" id="summaryPricingRangeNote" hidden></div>
-            <p>Check the main details below, then submit the request for final review.</p>
+            <p>Review the details, then send the request for confirmation.</p>
           </div>
 
           <div class="summary-box summary-key-card">
@@ -3812,7 +3812,7 @@
               <div class="summary-row"><span>Quote type</span><strong id="summaryScope">Installation only</strong></div>
               <div class="summary-row"><span>Measurement source</span><strong id="summaryMeasurement">Enter total area</strong></div>
               <div class="summary-row"><span>Area</span><strong id="summaryRealArea">0.0 m²</strong></div>
-              <div class="summary-row" id="summaryChargeableAreaRow"><span id="summaryChargeableAreaLabel">Area used for estimate</span><strong id="summaryChargeableArea">0.0 m²</strong></div>
+              <div class="summary-row" id="summaryChargeableAreaRow"><span id="summaryChargeableAreaLabel">Estimated area</span><strong id="summaryChargeableArea">0.0 m²</strong></div>
             </div>
             <span id="summaryConfidence" hidden>Low</span>
             <span id="summaryConfidenceText" hidden>Confidence improves as area, product and site details become clearer.</span>
@@ -3834,7 +3834,7 @@
 
           <div class="summary-box next-step-card">
             <h3>Next step</h3>
-            <p class="helper" id="summaryNextStepText">Submit the quote request from the final step when the scope looks right.</p>
+            <p class="helper" id="summaryNextStepText">Send the request when the scope looks right.</p>
             <div class="summary-secondary-links">
               <button class="button-quiet" id="summaryEditButton" type="button">Not ready yet</button>
               <a class="button-quiet" href="products.html">Browse products</a>
@@ -3871,7 +3871,7 @@
           <span>Choose the quote path that fits the job.</span>
         </div>
         <div>
-          <strong>No obligation</strong>
+          <strong>Review first</strong>
           <span>Review first, confirm when ready.</span>
         </div>
       </div>
@@ -4406,13 +4406,13 @@
       return "standard " + (meta ? meta.label.toLowerCase() : "flooring") + " estimate";
     }
 
-    function shouldUseTimberProductChoiceTiers() {
+    function shouldUseProductChoiceTiers() {
       return (getInputValue("quoteMode") || "supply_install") === "supply_install"
-        && getSelectedProductCategory() === "engineered";
+        && ["laminate", "hybrid", "engineered"].indexOf(getSelectedProductCategory()) >= 0;
     }
 
     function getProductChoiceModeOptions() {
-      return shouldUseTimberProductChoiceTiers()
+      return shouldUseProductChoiceTiers()
         ? ["choose_range", "budget", "standard", "premium"]
         : ["recommend", "choose_range"];
     }
@@ -4427,7 +4427,7 @@
       if (options.indexOf(mode) >= 0) {
         return mode;
       }
-      return shouldUseTimberProductChoiceTiers() ? "standard" : "recommend";
+      return shouldUseProductChoiceTiers() ? "standard" : "recommend";
     }
 
     function getRangeRecordById(category, rangeId) {
@@ -4841,14 +4841,14 @@
           try {
             const payload = await buildQuotePayload();
             if (state.quoteRuntimeHealth.checked && !state.quoteRuntimeHealth.quoteSaveReady) {
-              showQuoteSubmitMessage("review_ready", "Estimate ready. Review it here, then send when you are ready.");
+              showQuoteSubmitMessage("review_ready", "Estimate ready. Review it, then send when ready.");
             } else {
               await saveQuoteDraftToNetlify(payload);
-              showQuoteSubmitMessage("review_ready", "Estimate ready. Review it here, then send when you are ready.");
+              showQuoteSubmitMessage("review_ready", "Estimate ready. Review it, then send when ready.");
             }
           } catch (error) {
             console.error(error);
-            showQuoteSubmitMessage("review_ready", "Estimate ready. We could not save the draft to Netlify just now, but you can still review and send the quote.");
+            showQuoteSubmitMessage("review_ready", "Estimate ready. Draft save is unavailable right now, but you can still review and send it.");
           }
         }
       }
@@ -5355,7 +5355,7 @@
       if (value === "chevron") {
         return "Chevron";
       }
-      return "Standard plank";
+      return "Straight plank";
     }
 
     function getInstallMethodLabelText(value) {
@@ -5498,12 +5498,12 @@
       const currentPatternType = getInputValue("patternType") || "standard";
       const isEngineered = selectedCategory === "engineered";
       const installMethodFieldVisible = isEngineered;
-      const patternFieldVisible = false;
+      const patternFieldVisible = isEngineered && isInstallOnly;
       const shouldLockInstallMethod = isEngineered && (currentPatternType === "herringbone" || currentPatternType === "chevron");
 
       if (patternTypeLabel) {
         patternTypeLabel.textContent = isEngineered && isInstallOnly
-          ? "Pattern"
+          ? "Board pattern"
           : "Install pattern";
       }
       if (patternTypeSelect) {
@@ -5560,14 +5560,14 @@
       } else if (currentPatternType === "herringbone" || currentPatternType === "chevron") {
         setInputValue("installMethod", "direct_glue");
         installationPathHelper.textContent = isInstallOnly
-          ? "Herringbone and chevron engineered timber installation is quoted as direct glue only."
+          ? "Herringbone and chevron engineered timber are installed as glued down only."
           : "Herringbone and chevron engineered timber are quoted as direct glue installation only.";
       } else {
         if (!getInputValue("installMethod")) {
           setInputValue("installMethod", "floating");
         }
         installationPathHelper.textContent = isInstallOnly
-          ? "Choose floating floor or glued down for straight-plank engineered timber installation."
+          ? "Choose the board pattern first, then confirm floating floor or glued down for straight-plank engineered timber."
           : "Engineered timber standard planks can be quoted as floating or direct glue installation.";
       }
 
@@ -5917,7 +5917,7 @@
       const availableModes = getProductChoiceModeOptions();
       const nextMode = availableModes.indexOf(mode) >= 0
         ? mode
-        : (shouldUseTimberProductChoiceTiers() ? "standard" : "recommend");
+        : (shouldUseProductChoiceTiers() ? "standard" : "recommend");
       setInputValue("productChoiceMode", nextMode);
       setActiveCards("[data-product-choice-mode]", nextMode, "data-product-choice-mode");
 
@@ -6086,20 +6086,20 @@
       }
 
       if (productChoiceModeChoices) {
-        const useTimberTiers = shouldUseTimberProductChoiceTiers();
-        const choices = useTimberTiers
+        const useProductTiers = shouldUseProductChoiceTiers();
+        const choices = useProductTiers
           ? [
-            { mode: "choose_range", label: "Choose a range", note: "Pick the exact timber range." },
-            { mode: "budget", label: "Budget range", note: "Uses the lowest priced timber range." },
-            { mode: "standard", label: "Standard range", note: "Uses a mid-priced timber range." },
-            { mode: "premium", label: "Premium range", note: "Uses the highest priced timber range." }
+            { mode: "choose_range", label: "Choose a range", note: "Pick exact range." },
+            { mode: "budget", label: "Budget range", note: "Lowest priced range." },
+            { mode: "standard", label: "Standard range", note: "Mid-priced range." },
+            { mode: "premium", label: "Premium range", note: "Highest priced range." }
           ]
           : [
             { mode: "recommend", label: "Recommend a practical range", note: "Use a sensible starting option." },
             { mode: "choose_range", label: "Choose a range", note: "Pick from the live product ranges." }
           ];
 
-        productChoiceModeChoices.className = "choice-grid " + (useTimberTiers ? "four" : "two");
+        productChoiceModeChoices.className = "choice-grid " + (useProductTiers ? "four" : "two");
         productChoiceModeChoices.innerHTML = choices.map(function (choice) {
           return '<button class="choice-card' + (currentMode === choice.mode ? " active" : "") + '" type="button" data-product-choice-mode="' + escapeHtml(choice.mode) + '">'
             + "<strong>" + escapeHtml(choice.label) + "</strong>"
@@ -6164,7 +6164,7 @@
       })).join("");
       productColourSelect.disabled = !colours.length;
       productColourHelper.textContent = colours.length
-        ? "Choose colour for engineered timber."
+        ? "Choose product colour."
         : "No live colour-level products are published for this range yet.";
     }
 
@@ -6244,7 +6244,7 @@
 
       if (isAutomaticProductChoiceMode(choiceMode)) {
         selectedProductHeadline.textContent = getProductChoiceModeLabel(choiceMode) + " selected";
-        selectedProductSummary.textContent = "Using " + (rangeRecord ? rangeRecord.rangeLabel : (product ? (product.rangeLabel || product.range) : "selected timber range")) + ". Final colour can be confirmed before installation.";
+        selectedProductSummary.textContent = "Using " + (rangeRecord ? rangeRecord.rangeLabel : (product ? (product.rangeLabel || product.range) : "selected range")) + ". Final colour can be confirmed before installation.";
         browseCategoryLink.textContent = "Change range";
         browseCategoryLink.dataset.behavior = "change-range";
         clearSelectedProductButton.textContent = "Use category estimate instead";
@@ -6486,7 +6486,7 @@
             return { valid: false, message: "Please choose a product range." };
           }
           if (getInputValue("productSelectionMode") === "range_then_colour" && !getInputValue("selectedColour")) {
-            return { valid: false, message: "Please choose the engineered timber colour." };
+            return { valid: false, message: "Please choose the product colour." };
           }
         }
         if (getSelectedProductCategory() === "engineered" && !getInputValue("patternType")) {
@@ -7827,8 +7827,6 @@
       updateQuoteCtaSystem();
       if (state.pendingHandoffMessage) {
         showPageStatus(state.pendingHandoffMessage);
-      } else {
-        showPageStatus("Latest pricing data loaded.");
       }
     }
 
@@ -8748,17 +8746,33 @@
           console.error("Quote draft save failed before final submit", draftError);
         }
 
-        await submitLeadToNetlifyForm(leadPayload);
         const deliveryEmail = getDeliveryEmailAddress(input);
         const shouldSendEmailCopy = !!(deliveryEmail && input.emailQuoteCopy && (!state.quoteRuntimeHealth.checked || state.quoteRuntimeHealth.emailReady));
         let submitUpdateResult = null;
+        let leadFormSubmitted = false;
+        let submitUpdateError = null;
+        let leadFormError = null;
+
         try {
           submitUpdateResult = await markQuoteSubmittedToNetlify(submitPayload, {
             emailTo: deliveryEmail,
             sendCustomerCopy: shouldSendEmailCopy
           });
-        } catch (submitUpdateError) {
-          console.error("Quote submit update failed after lead submission", submitUpdateError);
+        } catch (caughtSubmitUpdateError) {
+          console.error("Quote submit update failed before backup lead capture", caughtSubmitUpdateError);
+          submitUpdateError = caughtSubmitUpdateError;
+        }
+
+        try {
+          await submitLeadToNetlifyForm(leadPayload);
+          leadFormSubmitted = true;
+        } catch (formError) {
+          leadFormError = formError;
+          console.warn("Backup Netlify form submission failed after quote save attempt", formError);
+        }
+
+        if (!submitUpdateResult && !leadFormSubmitted) {
+          throw submitUpdateError || leadFormError || new Error("Quote request submission failed.");
         }
 
         let successMessage = "Quote submitted. We will review the details and contact you shortly.";
