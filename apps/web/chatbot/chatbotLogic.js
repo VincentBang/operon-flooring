@@ -350,18 +350,6 @@
       }
 
       if (triggerId === "quote_idle" && pageKey === "quote") {
-        setIntent("route_next_step", {
-          readiness: siteState && siteState.isNearCompletion ? "ready" : "unsure",
-          reason: "quote page idle help"
-        });
-        setRoute("Continue quote", "quote.html", siteState && siteState.next ? siteState.next.focusId : "");
-        pushTrigger(
-          triggerId,
-          "This step can be kept clear.",
-          siteState && siteState.nudge ? siteState.nudge : "You can keep unsure items moving and refine them later.",
-          getStateAwareNextStep(siteState),
-          prompts.actions.quoteHelp
-        );
         return;
       }
 

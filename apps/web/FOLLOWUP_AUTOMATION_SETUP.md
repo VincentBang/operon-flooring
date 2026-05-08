@@ -1,14 +1,15 @@
 # Operon Follow-Up Automation Setup
 
-This guide explains how to enable the post-submit follow-up engine in safe phases.
+This guide explains how the post-submit follow-up engine works.
 
-Current default: queue and dry-run only. Real SMS/email sending is disabled.
+Current default: email follow-up can send through the Netlify/Resend server path when `RESEND_API_KEY` and `OPERON_FROM_EMAIL` are configured. SMS remains queued-only.
 
 ## Files
 
 - `supabase/migrations/20260504_followup_automation_schema.sql`
 - `supabase/functions/create-followup-queue/index.ts`
 - `supabase/functions/process-followups/index.ts`
+- `netlify/functions/process-followups.js`
 - `apps/web/POST_SUBMIT_CONVERSION_SYSTEM.md`
 
 ## Database Setup
@@ -48,9 +49,35 @@ FROM_PHONE=
 
 Important:
 
-- Keep `ENABLE_FOLLOWUP_SEND=false` until real providers, consent wording, and compliance checks are approved.
+- Supabase Edge Functions are still dry-run unless separately deployed and enabled.
+- Netlify email follow-up uses `RESEND_API_KEY`, `OPERON_FROM_EMAIL`, and `SUPABASE_SERVICE_ROLE_KEY`.
+- Keep SMS disabled until consent, reply, and opt-out handling are approved.
 - Keep `DRY_RUN_FOLLOWUP_STATUS=queued` if you want dry-run checks without consuming queued messages.
 - Use `DRY_RUN_FOLLOWUP_STATUS=skipped` only in a test database when you want to verify status updates.
+
+## Netlify Live Email Worker
+
+Function:
+
+```text
+netlify/functions/process-followups.js
+```
+
+Behaviour:
+
+- Finds due queued email follow-ups.
+- Sends them through Resend.
+- Marks successful messages as `sent`.
+- Marks failed messages as `failed`.
+- Leaves SMS/manual-call tasks untouched.
+- Runs on a 10-minute Netlify schedule.
+- Can also be called manually at `/.netlify/functions/process-followups`.
+
+Quote submit behaviour:
+
+- `netlify/functions/save-quote-request.js` queues follow-ups after a submitted quote.
+- It immediately attempts due email follow-ups for that quote.
+- A follow-up failure does not block quote saving.
 
 ## Deploy Functions
 
@@ -144,15 +171,15 @@ Default behaviour:
 
 Real sending:
 
-- Must remain disabled until an SMS/email provider is wired in and approved.
-- Provider calls are placeholders only.
+- Email sending is implemented in Netlify through Resend.
+- SMS provider calls are still placeholders only.
 
 ## Scheduling
 
 Recommended future schedule:
 
-- Run `process-followups` every 5-15 minutes using Supabase scheduled functions or cron.
-- Keep the schedule disabled until queue tests pass.
+- Netlify `process-followups` runs every 10 minutes.
+- Supabase scheduled functions are optional and should remain disabled unless we choose Supabase Edge Functions as the worker.
 
 Example future cron:
 

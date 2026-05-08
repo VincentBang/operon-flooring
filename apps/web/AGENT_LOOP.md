@@ -87,6 +87,10 @@ Refresh additional files only when relevant:
   - `apps/web/locationZones.js`
 - analytics / lead tasks:
   - `apps/web/tracking.js`
+- quote review / comparison tasks:
+  - `apps/web/QUOTE_REVIEW_POLICY.md`
+  - `apps/web/QUOTE_REVIEW_DATA_ENGINE.md`
+  - `apps/web/quote-review.html`
 - chatbot tasks:
   - `apps/web/chatbot/CHATBOT_AGENT.md`
   - `apps/web/chatbot/CHATBOT_MEMORY.md`
@@ -243,6 +247,8 @@ Every unattended run must look for:
 8. pages that educate but do not convert
 9. pages with too many competing actions
 10. pages with unclear product paths
+11. quote review surfaces that expose backend/process language instead of customer guidance
+12. quote review sections that compare price before clarifying scope
 
 Priority conversion paths:
 
@@ -254,6 +260,112 @@ Priority conversion paths:
 6. Contact / request help
 
 Every SEO page must support at least one conversion path.
+
+## Operon Scope Standard Governance
+
+The Operon Scope Standard is a foundational operational framework that helps customers compare flooring quotes based on scope clarity, not price alone.
+
+Use it quietly across content, SEO, CRO, product, suburb, quote-review, and future workflow tasks. Do not turn it into a forced public slogan.
+
+Every relevant content, SEO, CRO, quote-review, product-page, suburb-page, comparison-guide, or marketing task must check:
+
+1. Does this strengthen scope clarity?
+2. Does this reduce customer uncertainty?
+3. Does this avoid cheapest-price positioning?
+4. Does this improve trust?
+5. Does this support quote review intelligence?
+6. Does this help customers compare properly?
+7. Does this preserve premium minimal UX?
+8. Does this avoid generic flooring marketing?
+
+Scope Standard dimensions:
+
+- product definition
+- area and measurement
+- installation scope
+- site and access
+- risk and preparation
+- finishing and accessories
+- commercial clarity
+- quality signals
+- exclusions and assumptions
+- final site confirmation
+
+Customer-facing language should be plain:
+
+- "Clear scope before price comparison"
+- "Final details confirmed before installation"
+- "Know what is included before you decide"
+- "Compare flooring quotes by scope, not just total price"
+- "A cheaper quote may not describe the same job"
+
+Avoid:
+
+- proprietary-standard language
+- forced "Operon Scope Standard" branding
+- cheapest-price positioning
+- generic "premium workmanship" claims
+- fear tactics or competitor attacks
+
+## Quote Review Governance Loop
+
+When a task touches quote review, validate these rules before and after changes:
+
+1. scope is compared before price
+2. OCR/API processing stays backend-only
+3. uploaded files remain private or temporary by design
+4. raw files are treated as temporary evidence, not the permanent intelligence layer
+5. structured extracted data is favored over long-term raw storage
+6. no duplicate pricing logic is added inside quote review
+7. no internal rates are exposed in UI, payloads, or docs intended for customers
+8. customer-facing privacy copy stays clear, short, and accurate
+9. comparable estimates use existing pricing logic only when enough fields exist
+10. if exact product match is unavailable, category-level comparison is used where safe instead of pretending comparison is impossible
+11. mobile review UI stays clear without expanding every detail by default
+12. GPT-4.1 mini quote review work stays multi-stage, not one giant prompt
+13. extraction confidence and comparison confidence remain separate
+14. output reads like a flooring consultant review, not an OCR summary, chatbot response, or spreadsheet
+15. price is interpreted through scope clarity and comparison confidence
+16. quote review reduces uncertainty instead of adding technical complexity
+17. AI stays invisible in customer-facing language
+18. risk dimensions are used instead of good/bad quote labels
+19. likely variation risks are educational, not fear-based
+20. quote review converts through trust and decision confidence, not aggressive selling
+21. outcome tracking is treated as structured intelligence, not raw file retention
+22. Operon Scope Standard is used to judge completeness before price comparison
+23. confidence is separated into extraction, scope, comparison, product match, price, and site risk where relevant
+24. next-best-action guidance recommends one calm step, not a stack of competing CTAs
+25. low-confidence or unusual reviews escalate to manual clarification instead of pretending certainty
+26. future price-positioning labels remain disabled until enough structured historical data exists
+
+Quote review goals:
+
+- reduce uncertainty
+- improve trust
+- improve scope clarity
+- improve conversion quality
+- collect structured operational intelligence
+- learn from outcomes, including won/lost reasons, variations, returned customers, and missing-scope issues
+- predict likely variation risks calmly
+- assess installation quality evidence without attacking competitors
+- recommend one appropriate next best action
+
+Quote review should not optimize for:
+
+- maximum AI output
+- maximum document summary length
+- maximum token usage
+- cheapest-price comparison
+
+Quote review intelligence candidates for future task queues:
+
+- add or improve outcome capture for quote-review-to-quote conversions
+- map missing scope to follow-up education content
+- refine variation risk prediction from extracted quote fields
+- improve Operon Scope Standard scoring
+- audit confidence labels for generic or misleading scores
+- add human review escalation triggers for unusual quote structures
+- normalize structured competitor wording without exposing sensitive data publicly
 
 ## Site Quality Governance
 
@@ -381,6 +493,21 @@ Do not remove valuable SEO content. Instead:
 - convert to FAQ
 - convert to guide page
 - convert to internal link block
+
+## Progressive Disclosure Check
+
+During every SEO, CRO, UX, or content task, check:
+
+1. Is visible copy too wordy?
+2. Should explanation be moved into an accordion?
+3. Is the accordion answer useful enough?
+4. Does the page still clearly communicate its purpose without expanding anything?
+5. Does the hidden content strengthen SEO without becoming spam?
+6. Is mobile UX still clean?
+
+Visible copy must stay short, premium, direct, and easy to scan. Accordions, FAQs, and details blocks can carry deeper explanation when they answer real customer questions about quote scope, product tradeoffs, installation risks, floor preparation, underlay/acoustic requirements, apartment constraints, cost variation, or maintenance.
+
+Do not use expandable content for keyword stuffing, generic filler, duplicated answers, or hiding all important page meaning. If the answer becomes long, link to or create a dedicated guide page.
 
 ## Business Impact Governance
 

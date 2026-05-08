@@ -6,6 +6,13 @@
   # such as SUPABASE_SERVICE_ROLE_KEY and RESEND_API_KEY protected by Netlify scan.
   SECRETS_SCAN_OMIT_KEYS = "DRY_RUN_FOLLOWUP_STATUS,OPERON_FROM_EMAIL,OPERON_FROM_NAME,OPERON_REPLY_TO,OPERON_INTERNAL_EMAIL"
 
+[functions]
+  included_files = [
+    "apps/web/assets/operon-logo-final.png",
+    "apps/web/assets/operon-logo-wordmark.png",
+    "apps/web/assets/Operon Flooring brand logo final.png"
+  ]
+
 [[redirects]]
   from = "/quote"
   to = "/quote.html"

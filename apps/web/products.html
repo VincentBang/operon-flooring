@@ -152,13 +152,27 @@
       <div class="shell">
         <article class="section-card">
           <h2>Choose the product here, structure the estimate in the quote</h2>
-          <p>Choose a range, then continue into the quote with it attached.</p>
+          <p>Shortlist the range here. Confirm scope in the quote.</p>
+          <div class="faq-grid" style="margin-top: 22px;">
+            <details>
+              <summary>Why choose a range before quoting?</summary>
+              <p>Choosing a range first gives the quote a clearer product direction and avoids comparing a job with no real product basis behind it. Hybrid and laminate can usually start from the range alone, while engineered timber often needs colour, pattern and installation method confirmed more carefully before final approval.</p>
+            </details>
+            <details>
+              <summary>Can colour be confirmed later?</summary>
+              <p>Yes, in many cases colour can be confirmed later once the broader range and quote path are clear. For hybrid and laminate this is usually straightforward, but for engineered timber the colour can affect the price within the same range, so it is better to confirm the colour before final pricing is locked in.</p>
+            </details>
+            <details>
+              <summary>What should I check before selecting a product?</summary>
+              <p>Check the flooring type, thickness, colour direction, apartment or acoustic needs, maintenance expectations and whether the product suits the room conditions. If you are still unsure, it is better to shortlist the likely range now and use the quote flow to confirm the final product during review instead of guessing too early.</p>
+            </details>
+          </div>
         </article>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer footer-contained">
     <div class="container footer-grid">
       <div class="footer-col">
         <h3>Operon Flooring</h3>
@@ -662,13 +676,9 @@
         const colourDrawerButton = hasRangeColourPreview
           ? '<button class="button-quiet catalogue-colour-toggle" type="button" data-open-range-colours-preview="' + escapeHtml(product.rangeId) + '" aria-label="View ' + escapeHtml(String(rangeProducts.length)) + ' colours in ' + escapeHtml(product.rangeLabel || product.range || "this range") + '">View ' + rangeProducts.length + " colours</button>"
           : "";
-        const rangeInfoButton = product.type === "range" && product.rangeContent
-          ? '<button class="button-quiet catalogue-range-details-button" type="button" data-open-range-info="' + escapeHtml(product.rangeId) + '" aria-label="Open range details for ' + escapeHtml(product.rangeLabel || product.range || "this range") + '">Range details</button>'
-          : "";
-        const rangeUtilityActions = (colourDrawerButton || rangeInfoButton)
+        const rangeUtilityActions = colourDrawerButton
           ? '<div class="catalogue-card-actions-range">' +
               colourDrawerButton +
-              rangeInfoButton +
             "</div>"
           : "";
         const cardActions = '<div class="catalogue-card-actions">' +

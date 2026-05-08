@@ -49,6 +49,103 @@ The chatbot must not:
 - Document-based quote review requires the actual uploaded quote before the full report is shown.
 - Email copy is optional and should be described as a customer copy, not as a gate to seeing the estimate.
 
+## Quote Review Coverage Notes
+
+The chatbot can safely explain that Quote Advisor checks:
+
+- product/category clarity
+- measured area
+- supply and installation inclusions
+- removal and disposal
+- subfloor preparation
+- trims, skirting or scotia
+- stairs and stair quantities
+- furniture handling
+- apartment level, lift, parking and site details
+- confidence level and recommended next step
+
+The chatbot must not:
+
+- say another quote is good or bad based on total price alone
+- rank quotes by cheapest
+- must not rank external quotes by price
+- claim Operon is better because another quote is incomplete
+- infer missing prices, rates or margins
+- expose OCR, payload, API, Supabase, localStorage or internal status labels in customer answers
+
+Preferred route when a customer already has another quote:
+
+```text
+quote-review.html -> quote.html?source=quote_review
+```
+
+Use plain language:
+
+- "scope check"
+- "quote clarity"
+- "missing inclusions"
+- "questions to confirm"
+- "final scope review"
+
+Avoid internal language:
+
+- "OCR extraction"
+- "structured payload"
+- "comparison status"
+- "backend endpoint"
+- "internal confidence flag"
+
+## Product Page Refresh Coverage Notes
+
+Recent product SEO refreshes strengthened the hybrid, laminate and engineered timber pathways. Chatbot guidance should stay aligned with these page roles:
+
+- hybrid: practical waterproof-core category, busy homes, apartments where product and acoustic requirements fit
+- laminate: value-led timber-look category, mainly dry internal rooms
+- engineered timber: premium real-timber finish, clearer method and pattern review
+
+The chatbot may route to:
+
+- `products.html` for browsing product categories and ranges
+- `quote.html` when the user is ready to estimate
+- `quote-review.html` when the user has another quote or unclear scope
+
+The chatbot should not claim that a colour, range or final product has been selected inside chat.
+
+## Friction Handling Coverage Notes
+
+When a user seems stuck, the chatbot should identify one blocker and ask one question. Common blockers:
+
+- area is unknown
+- product category is unclear
+- existing floor type is unknown
+- removal or disposal is unclear
+- stairs are present
+- apartment site details are uncertain
+- another quote has missing inclusions
+
+The safest pattern is:
+
+```text
+Brief reassurance.
+One practical scope point.
+One question or one route.
+```
+
+Do not use labels like `Key point:` or `Next step:` in the customer-facing answer.
+
 ## Runtime Boundary
 
 `chatbotKnowledgeIndex.js` is a static approved index. It does not crawl the site and does not pull page content dynamically. Any new knowledge should be added manually and tested before use.
+
+## Refreshed Guide Coverage Candidates - 2026-05-08
+
+Future chatbot knowledge updates can safely include these guide routes as static destinations:
+
+- `blog/how-to-clean-laminate-flooring.html` for low-moisture laminate cleaning and swelling warnings.
+- `blog/how-to-clean-hybrid-flooring.html` for hybrid cleaning, spill response and movement warnings.
+- `blog/flooring-maintenance-checklist.html` for routine care across laminate, hybrid and engineered timber.
+- `blog/flooring-gaps-and-expansion.html` for floating floor movement, gaps and expansion pressure.
+- `blog/flooring-cost-sydney.html` and `blog/flooring-installation-cost-breakdown.html` for cost-scope education.
+- `blog/engineered-timber-vs-laminate.html` for premium finish versus value-led product comparison.
+
+Routing rule: answer briefly, then send users to one useful page or one primary conversion path. Do not list many guides in one chatbot answer unless the user asks for reading options.

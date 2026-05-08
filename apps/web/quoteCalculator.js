@@ -184,6 +184,8 @@
   }
 
   function getStairPricingState(input, product, libraries) {
+    const quoteMode = input.jobType || input.quoteMode || "supply_install";
+    const productCategory = product.category || input.category || "";
     const emptyState = {
       selected: input.stairs === "yes",
       total: 0,
@@ -194,7 +196,9 @@
       widthTier: "short",
       widthAssumed: false,
       guideWidthMm: 1200,
-      rangeId: input.selectedRangeId || product.rangeId || "",
+      rangeId: quoteMode === "install_only" && libraries.stairRates && typeof libraries.stairRates.getInstallationOnlyRangeId === "function"
+        ? libraries.stairRates.getInstallationOnlyRangeId(productCategory)
+        : (input.selectedRangeId || product.rangeId || ""),
       warnings: [],
       manualReviewRequired: false
     };
@@ -206,7 +210,10 @@
     const stairDetails = normaliseStairDetails(input);
     const rangeId = input.selectedRangeId || product.rangeId || "";
     const rateSet = libraries.stairRates && typeof libraries.stairRates.getRateSet === "function"
-      ? libraries.stairRates.getRateSet(rangeId)
+      ? libraries.stairRates.getRateSet(rangeId, {
+        quoteMode: quoteMode,
+        category: productCategory
+      })
       : null;
 
     if (!stairDetails.length) {
@@ -267,7 +274,7 @@
       widthTier: tierState.tier,
       widthAssumed: tierState.assumed,
       guideWidthMm: tierState.guideWidthMm,
-      rangeId: rangeId,
+      rangeId: rateSet.rangeId || emptyState.rangeId || rangeId,
       warnings: warnings,
       manualReviewRequired: manualReviewRequired
     };

@@ -1426,9 +1426,17 @@ li,
 }
 
 .site-footer {
-  background: #17191f;
+  background: var(--brand);
   color: #ffffff;
-  padding: 56px 0 20px;
+  padding: 72px 0 22px;
+}
+
+.site-footer.footer-contained {
+  width: min(1360px, calc(100% - 80px));
+  margin: 72px auto 28px;
+  border-radius: 28px 28px 0 0;
+  overflow: hidden;
+  box-shadow: 0 18px 48px rgba(23, 49, 58, 0.16);
 }
 
 .footer-grid {
@@ -1448,6 +1456,16 @@ li,
 .footer-col h3 {
   font-size: 1.1rem;
   text-transform: none;
+}
+
+.footer-col h3::before {
+  content: "";
+  display: block;
+  width: 190px;
+  height: 58px;
+  margin: 0 0 16px;
+  border-radius: 18px;
+  background: #ffffff url("assets/operon-logo-final.png") center / 156px auto no-repeat;
 }
 
 .footer-col h4 {
@@ -1485,7 +1503,7 @@ li,
 }
 
 .footer-bottom {
-  border-top: 1px solid #333333;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
   margin-top: 40px;
   padding-top: 20px;
   display: flex;
@@ -1650,6 +1668,12 @@ li,
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
+  }
+
+  .site-footer.footer-contained {
+    width: calc(100% - 24px);
+    margin: 44px auto 12px;
+    border-radius: 22px 22px 0 0;
   }
 
   .catalogue-image-frame,

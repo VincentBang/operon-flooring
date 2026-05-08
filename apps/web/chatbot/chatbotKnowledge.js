@@ -25,7 +25,7 @@
     }
   };
 
-  const QUOTE_EXPLANATION = "The online result is a guided starting estimate, not the final confirmed quote. The quote gathers contact details, property access, product direction, measured area, stairs, removal, disposal, preparation, trims, furniture, and notes so Operon can review the real scope before confirmation.";
+  const QUOTE_EXPLANATION = "The online result is a guided starting estimate, not the final confirmed quote. The quote gathers contact details, property details, product direction, measured area, stairs, removal, disposal, preparation, trims, furniture, and notes so Operon can review the real scope before confirmation.";
   const FACTORS = [
     "measured area",
     "flooring category and product path",

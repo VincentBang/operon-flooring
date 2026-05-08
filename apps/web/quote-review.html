@@ -36,7 +36,7 @@
         "name": "What does a complete flooring quote include?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "A complete flooring quote clearly lists product, installation method, site preparation, trims, removal, disposal and site details before final confirmation."
+          "text": "A complete flooring quote should clearly list the product range, installation method, area basis, removal, disposal, floor preparation, trims or scotia, stairs and any items still subject to site confirmation. The goal is not just to see a total, but to understand exactly what work is included before you compare prices."
         }
       },
       {
@@ -44,7 +44,7 @@
         "name": "Why can flooring quotes change?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Quotes often change when product details, subfloor condition, moisture requirements or finishing items are not fully confirmed at the start."
+          "text": "Flooring quotes usually change when important details are not fully confirmed at the start, such as product selection, subfloor condition, moisture protection, trims, stairs or preparation. Most quote differences come from missing or unclear scope, not just from the headline rate."
         }
       },
       {
@@ -52,7 +52,7 @@
         "name": "Should I accept a flooring quote without checking scope?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "It is better to confirm the product, installation method, preparation, finishing items and site details first. A total only makes sense when the included work is clear."
+          "text": "It is better to confirm the product, installation method, preparation, finishing items and site details first. A total only becomes meaningful when the included work, excluded work and items still needing site confirmation are clearly written."
         }
       },
       {
@@ -60,7 +60,7 @@
         "name": "Should removal and disposal be listed separately?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Removal and disposal are commonly separate. A quote can include lifting old flooring without including take-away disposal."
+          "text": "Yes. Removal and disposal are often separate items, and one can be included without the other. A quote may allow for lifting the old floor but still leave take-away disposal, dumping fees or extra labour to be confirmed later."
         }
       }
     ]
@@ -810,25 +810,109 @@
       margin: 12px 0 0;
     }
 
-    footer {
-      border-top: 1px solid var(--line);
-      background: var(--surface);
+    .site-footer .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
     }
 
-    .footer-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 40px 22px;
+    .site-footer {
+      background: var(--primary);
+      color: #fff;
+      padding: 72px 0 22px;
+    }
+
+    .site-footer.footer-contained {
+      width: min(1360px, calc(100% - 80px));
+      margin: 72px auto 28px;
+      border-radius: 28px 28px 0 0;
+      overflow: hidden;
+      box-shadow: 0 18px 48px rgba(23, 49, 58, 0.16);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 40px;
+    }
+
+    .footer-col h3,
+    .footer-col h4 {
+      margin: 0 0 12px;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: normal;
+    }
+
+    .footer-col h3 {
+      font-size: 1.1rem;
+      text-transform: none;
+    }
+
+    .footer-col h3::before {
+      content: "";
+      display: block;
+      width: 190px;
+      height: 58px;
+      margin: 0 0 16px;
+      border-radius: 18px;
+      background: #fff url("assets/operon-logo-final.png") center / 156px auto no-repeat;
+    }
+
+    .footer-col h4 {
+      font-size: 1rem;
+      text-transform: none;
+    }
+
+    .footer-col p {
+      margin: 0 0 12px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .footer-col ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 8px;
+    }
+
+    .footer-col a,
+    .footer-legal a {
+      color: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .footer-col a:hover,
+    .footer-legal a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      margin-top: 40px;
+      padding-top: 20px;
       display: flex;
       justify-content: space-between;
-      gap: 24px;
-      color: var(--muted);
+      align-items: center;
+      gap: 16px;
+      color: rgba(255, 255, 255, 0.64);
+      font-size: 13px;
     }
 
-    .footer-links {
+    .footer-bottom p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.64);
+    }
+
+    .footer-legal {
       display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
     }
 
     @media (max-width: 960px) {
@@ -919,7 +1003,20 @@
       .cta-actions .button-secondary {
         width: 100%;
       }
-      .footer-inner { flex-direction: column; }
+      .site-footer.footer-contained {
+        width: calc(100% - 24px);
+        margin: 44px auto 12px;
+        border-radius: 22px 22px 0 0;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
       h1 {
         max-width: none;
         font-size: clamp(2rem, 10vw, 2.7rem);
@@ -1094,7 +1191,7 @@
             <div class="section-head">
               <p class="eyebrow">Quote details</p>
               <h2>What does the quote show?</h2>
-              <p>High-level scan only. Upload the quote for a stronger review.</p>
+              <p>High-level check only. Upload the quote for a stronger review.</p>
             </div>
 
             <div class="field-grid">
@@ -1203,7 +1300,7 @@
             <input id="reviewQuoteFile" name="reviewQuoteFile" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx">
             <p class="field-help" id="uploadedQuoteReference">No quote file selected.</p>
             <p class="field-help" id="quoteOcrStatus" hidden>Quote file not checked yet.</p>
-            <p class="field-help">We use the file for this review. See our <a href="privacy-policy.html">privacy policy</a>.</p>
+            <p class="field-help">Uploaded quotes are used to extract flooring scope and pricing details for review. Files are processed securely and may be stored temporarily to support the review. Structured quote details may be retained to improve Operon’s quoting system. See our <a href="privacy-policy.html">privacy policy</a>.</p>
           </div>
         </div>
 
@@ -1222,16 +1319,16 @@
                 <span class="risk-tag medium" id="clarityTag">Scope clarity</span>
               </div>
               <div class="risk-counts" id="clarityCounts">
-                <div class="risk-count"><span class="risk-dot low"></span><span>Add the flooring type and clearly written inclusions to generate the scan.</span></div>
+                <div class="risk-count"><span class="risk-dot low"></span><span>Add the flooring type and clearly written inclusions to generate the review.</span></div>
               </div>
             </div>
 
             <div class="summary-box">
               <div class="risk-group">
-                <h3>Key observations</h3>
+                <h3>Decision confidence</h3>
                 <span class="risk-tag high">Advisor view</span>
                 <div id="highRiskList">
-                  <div class="risk-card"><strong>Observations will appear here.</strong><span>The scan uses flooring type, visible inclusions and common installation patterns.</span></div>
+                  <div class="risk-card"><strong>Observations will appear here.</strong><span>The review uses flooring type, visible inclusions and common installation patterns.</span></div>
                 </div>
               </div>
             </div>
@@ -1239,19 +1336,29 @@
             <div class="summary-box" id="extractedQuoteFieldsBox" hidden>
               <div class="risk-group">
                 <h3>Extracted from uploaded quote</h3>
-                <span class="risk-tag medium" id="extractedQuoteFieldsTag">OCR fields</span>
+                <span class="risk-tag medium" id="extractedQuoteFieldsTag">Document fields</span>
                 <div id="extractedQuoteFieldsList">
                   <div class="risk-card"><strong>No extracted fields yet.</strong><span>Upload a quote and generate the document-based review.</span></div>
                 </div>
               </div>
             </div>
 
+            <div class="summary-box" id="riskDimensionsBox" hidden>
+              <div class="risk-group">
+                <h3>Risk dimensions</h3>
+                <span class="risk-tag medium">Decision confidence</span>
+                <div id="riskDimensionsList">
+                  <div class="risk-card"><strong>Risk dimensions will appear here.</strong><span>Upload a quote and generate the document-based review.</span></div>
+                </div>
+              </div>
+            </div>
+
             <div class="summary-box" id="databaseComparisonBox" hidden>
               <div class="risk-group">
-                <h3>Operon database comparison</h3>
-                <span class="risk-tag medium" id="databaseComparisonTag">Database guide</span>
+                <h3>Operon comparable estimate</h3>
+                <span class="risk-tag medium" id="databaseComparisonTag">Comparison guide</span>
                 <div id="databaseComparisonList">
-                  <div class="risk-card"><strong>No database comparison yet.</strong><span>Upload a quote and generate the document-based review.</span></div>
+                  <div class="risk-card"><strong>No comparable estimate yet.</strong><span>Upload a quote and generate the document-based review.</span></div>
                 </div>
               </div>
             </div>
@@ -1278,7 +1385,7 @@
 
             <div class="summary-box">
               <div class="risk-group">
-              <h3>What typically changes</h3>
+              <h3>Why quotes can differ</h3>
               <span class="risk-tag low">Common changes</span>
               <div id="lowRiskList">
                   <div class="risk-card"><strong>Common change items will appear here.</strong><span>These are common scope variables, not confirmed charges.</span></div>
@@ -1319,33 +1426,64 @@
       <div class="faq-grid">
         <details open>
           <summary>What does a complete flooring quote include?</summary>
-          <p>Final details confirmed before installation.</p>
+          <p>A complete flooring quote should clearly list the product range, installation method, area basis, removal, disposal, floor preparation, trims or scotia, stairs and any items still subject to site confirmation. The goal is not just to see a total, but to understand exactly what work is included before you compare prices.</p>
         </details>
         <details>
           <summary>Why can flooring quotes change?</summary>
-          <p>Choose product, then start estimate.</p>
+          <p>Flooring quotes usually change when important details are not fully confirmed at the start, such as product selection, subfloor condition, moisture protection, trims, stairs or preparation. Most quote differences come from missing or unclear scope, not just from the headline rate.</p>
         </details>
         <details>
           <summary>Should I accept a flooring quote without checking scope?</summary>
-          <p>It is better to confirm the product, installation method, preparation, finishing items and site details first.</p>
+          <p>It is better to confirm the product, installation method, preparation, finishing items and site details first. A total only becomes meaningful when the included work, excluded work and items still needing site confirmation are clearly written.</p>
         </details>
         <details>
           <summary>Should removal and disposal be listed separately?</summary>
-          <p>Broad damage may justify a replacement estimate.</p>
+          <p>Yes. Removal and disposal are often separate items, and one can be included without the other. A quote may allow for lifting the old floor but still leave take-away disposal, dumping fees or extra labour to be confirmed later.</p>
         </details>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="footer-inner">
-      <div>© <span id="year"></span> Operon Flooring. Sydney flooring installation and quote service.</div>
-      <div class="footer-links">
-        <a href="quote.html">Start Quote</a>
-        <a href="quote-review.html">Review Quote</a>
-        <a href="products.html">Products</a>
-        <a href="floorplan.html">Floor Plan</a>
-        <a href="contact.html">Contact</a>
+  <footer class="site-footer footer-contained">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <h3>Operon Flooring</h3>
+        <p>Premium laminate, hybrid and engineered timber flooring quotes for Sydney homes.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="hybrid-flooring-sydney.html">Hybrid Flooring Sydney</a></li>
+          <li><a href="laminate-flooring-sydney.html">Laminate Flooring Sydney</a></li>
+          <li><a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring Sydney</a></li>
+          <li><a href="products.html">Products page</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Locations</h4>
+        <ul>
+          <li><a href="parramatta-flooring.html">Parramatta</a></li>
+          <li><a href="liverpool-flooring.html">Liverpool</a></li>
+          <li><a href="auburn-flooring.html">Auburn</a></li>
+          <li><a href="blacktown-flooring.html">Blacktown</a></li>
+          <li><a href="miranda-flooring.html">Miranda</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Actions</h4>
+        <ul>
+          <li><a href="quote.html">Start Quote</a></li>
+          <li><a href="floorplan.html">Upload Floor Plan</a></li>
+          <li><a href="blog/index.html">Guides</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; <span id="year"></span> Operon Flooring. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms</a>
       </div>
     </div>
   </footer>
@@ -1444,8 +1582,20 @@
         extractedQuoteFields: quoteFile && quoteFile.dataset && quoteFile.dataset.extractedQuoteFields
           ? JSON.parse(quoteFile.dataset.extractedQuoteFields)
           : null,
+        scopeClassification: quoteFile && quoteFile.dataset && quoteFile.dataset.scopeClassification
+          ? JSON.parse(quoteFile.dataset.scopeClassification)
+          : null,
         databaseComparison: quoteFile && quoteFile.dataset && quoteFile.dataset.databaseComparison
           ? JSON.parse(quoteFile.dataset.databaseComparison)
+          : null,
+        operonComparison: quoteFile && quoteFile.dataset && quoteFile.dataset.operonComparison
+          ? JSON.parse(quoteFile.dataset.operonComparison)
+          : null,
+        decisionReport: quoteFile && quoteFile.dataset && quoteFile.dataset.decisionReport
+          ? JSON.parse(quoteFile.dataset.decisionReport)
+          : null,
+        reviewPipeline: quoteFile && quoteFile.dataset && quoteFile.dataset.reviewPipeline
+          ? JSON.parse(quoteFile.dataset.reviewPipeline)
           : null,
         inclusions: Array.from(document.querySelectorAll("#inclusionGrid input:checked")).map(function (input) {
           return input.value;
@@ -1475,6 +1625,33 @@
       }).format(number);
     }
 
+    function formatMoneyExact(value) {
+      const number = Number(value || 0);
+      if (!Number.isFinite(number) || number <= 0) {
+        return "";
+      }
+      return new Intl.NumberFormat("en-AU", {
+        style: "currency",
+        currency: "AUD",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(number);
+    }
+
+    function formatUnitPrice(value) {
+      const formatted = formatMoneyExact(value);
+      return formatted ? formatted + " / m² ex GST" : "";
+    }
+
+    function getPrimaryExtractedLineItem(fields) {
+      const items = fields && (fields.lineItems || fields.line_items);
+      return Array.isArray(items) && items.length ? items[0] : null;
+    }
+
+    function getFieldValue(fields, camelKey, snakeKey) {
+      return fields && (fields[camelKey] || fields[snakeKey]) || "";
+    }
+
     function humaniseScopeValue(value) {
       const map = {
         included: "Included",
@@ -1489,25 +1666,53 @@
       if (!fields) {
         return [];
       }
+      const lineItem = getPrimaryExtractedLineItem(fields);
+      const rawDescription = lineItem && (lineItem.rawDescription || lineItem.raw_description || lineItem.label) || "";
+      const quantity = Number(lineItem && lineItem.quantity || fields.quotedAreaM2 || fields.area_m2 || 0);
+      const unitPrice = Number(lineItem && (lineItem.unitPriceExGst || lineItem.unit_price_ex_gst) || 0);
+      const subtotal = Number(fields.quoteTotalExGst || fields.subtotalExGst || fields.subtotal_ex_gst || lineItem && (lineItem.lineTotalExGst || lineItem.line_total_ex_gst) || 0);
+      const gst = Number(fields.gstAmount || fields.gstTotal || fields.gst_total || lineItem && lineItem.gst || 0);
+      const total = Number(fields.quoteTotalIncGst || fields.totalIncGst || fields.total_inc_gst || lineItem && (lineItem.lineTotalIncGst || lineItem.line_total_inc_gst) || 0);
       const productParts = [fields.productBrand, fields.productRange, fields.productColour, fields.productThickness].filter(Boolean);
       const rows = [
-        ["Company", fields.contractorName],
-        ["Quote number", fields.quoteNumber],
+        ["Supplier", getFieldValue(fields, "supplierName", "supplier_name") || fields.contractorName],
+        ["Document type", getFieldValue(fields, "documentType", "document_type")],
+        ["Invoice / quote number", getFieldValue(fields, "invoiceOrQuoteNumber", "invoice_or_quote_number") || fields.quoteNumber],
+        ["Issue date", getFieldValue(fields, "issueDate", "issue_date") || fields.quoteDate],
+        ["Due date", getFieldValue(fields, "dueDate", "due_date")],
+        ["Customer", getFieldValue(fields, "customerName", "customer_name")],
+        ["Job address", getFieldValue(fields, "jobAddress", "job_address") || fields.siteAddress],
+        ["Product / scope line", rawDescription || productParts.join(" · ")],
         ["Flooring type", fields.flooringType],
-        ["Product", productParts.join(" · ")],
-        ["Area", fields.quotedAreaM2 ? Number(fields.quotedAreaM2).toFixed(1) + " m²" : ""],
-        ["Total inc GST", formatMoneyValue(fields.quoteTotalIncGst)],
-        ["Install method", fields.installMethod]
+        ["Quantity", quantity ? quantity.toFixed(1) + " m²" : ""],
+        ["Unit price", formatUnitPrice(unitPrice)],
+        ["Subtotal ex GST", formatMoneyExact(subtotal)],
+        ["GST", formatMoneyExact(gst)],
+        ["Total inc GST", formatMoneyExact(total)]
       ].filter(function (row) {
         return row[1];
       });
-      const scope = fields.scope || {};
-      ["supply", "installation", "removal", "disposal", "floorPreparation", "underlay", "moistureProtection", "skirting", "scotia", "stairs"].forEach(function (key) {
-        if (scope[key] && scope[key] !== "unknown") {
-          rows.push([key.replace(/([A-Z])/g, " $1").replace(/^./, function (letter) { return letter.toUpperCase(); }), humaniseScopeValue(scope[key])]);
-        }
-      });
-      return rows.slice(0, 12);
+      return rows.slice(0, 16);
+    }
+
+    function getExtractedPriceBreakdownRows(fields) {
+      const lineItem = getPrimaryExtractedLineItem(fields);
+      const quantity = Number(lineItem && lineItem.quantity || fields && (fields.quotedAreaM2 || fields.area_m2) || 0);
+      const unitPrice = Number(lineItem && (lineItem.unitPriceExGst || lineItem.unit_price_ex_gst) || 0);
+      const subtotal = Number(fields && (fields.quoteTotalExGst || fields.subtotalExGst || fields.subtotal_ex_gst) || lineItem && (lineItem.lineTotalExGst || lineItem.line_total_ex_gst) || 0);
+      const gst = Number(fields && (fields.gstAmount || fields.gstTotal || fields.gst_total) || lineItem && lineItem.gst || 0);
+      const total = Number(fields && (fields.quoteTotalIncGst || fields.totalIncGst || fields.total_inc_gst) || lineItem && (lineItem.lineTotalIncGst || lineItem.line_total_inc_gst) || 0);
+      const rows = [];
+      if (quantity && unitPrice && subtotal) {
+        rows.push(["Price breakdown", quantity.toFixed(1) + " m² × " + formatMoneyExact(unitPrice) + " = " + formatMoneyExact(subtotal) + " ex GST"]);
+      }
+      if (gst) {
+        rows.push(["GST", formatMoneyExact(gst)]);
+      }
+      if (total) {
+        rows.push(["Total", formatMoneyExact(total) + " inc GST"]);
+      }
+      return rows;
     }
 
     function renderExtractedQuoteFields(fields) {
@@ -1522,31 +1727,47 @@
         return;
       }
       if (tag) {
-        tag.textContent = fields.status === "fields_extracted" ? "AI extracted" : "Rule extracted";
+        tag.textContent = fields.status === "fields_extracted" ? "Document extracted" : "Document parsed";
         tag.className = "risk-tag " + (fields.status === "fields_extracted" ? "low" : "medium");
       }
       const rows = getExtractedFieldRows(fields);
       if (!rows.length) {
-        list.innerHTML = "<div class=\"risk-card\"><strong>No clear fields found.</strong><span>OCR ran, but the quote text did not contain enough readable pricing or scope detail.</span></div>";
+        list.innerHTML = "<div class=\"risk-card\"><strong>No clear fields found.</strong><span>The quote did not contain enough readable pricing or scope detail.</span></div>";
         return;
       }
+      const priceRows = getExtractedPriceBreakdownRows(fields);
+      const confidence = fields.fieldConfidence || fields.field_confidence || {};
+      const confidentFields = Object.keys(confidence).filter(function (key) {
+        return confidence[key] === "high";
+      }).length;
+      const missingFields = Object.keys(confidence).filter(function (key) {
+        return confidence[key] === "missing";
+      }).length;
       list.className = "report-card-grid two-column";
       list.innerHTML = rows.map(function (row) {
         return "<div class=\"risk-card compact\"><strong>" + escapeHtml(row[0]) + "</strong><span>" + escapeHtml(row[1]) + "</span></div>";
-      }).join("");
+      }).join("") + priceRows.map(function (row) {
+        return "<div class=\"risk-card compact\"><strong>" + escapeHtml(row[0]) + "</strong><span>" + escapeHtml(row[1]) + "</span></div>";
+      }).join("") + "<div class=\"risk-card compact\"><strong>Extraction confidence</strong><span>" + confidentFields + " fields high confidence. " + missingFields + " fields missing or unclear.</span></div>";
     }
 
     function getPricePositionClass(status) {
-      if (status === "within_database_guide") {
+      if (status === "within_database_guide" || status === "within_comparison_guide") {
         return "low";
       }
-      if (status === "below_database_guide" || status === "above_database_guide") {
+      if (status === "below_database_guide" || status === "above_database_guide" || status === "below_comparison_guide" || status === "above_comparison_guide") {
         return "medium";
       }
       return "medium";
     }
 
-    function renderDatabaseComparison(comparison) {
+    function titleCaseStatus(value) {
+      return String(value || "")
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, function (letter) { return letter.toUpperCase(); });
+    }
+
+    function renderDatabaseComparison(comparison, operonComparison, decisionReport) {
       const box = document.getElementById("databaseComparisonBox");
       const list = document.getElementById("databaseComparisonList");
       const tag = document.getElementById("databaseComparisonTag");
@@ -1560,40 +1781,68 @@
 
       const priceGuide = comparison.priceGuide || {};
       const position = priceGuide.position || {};
+      const operon = operonComparison || {};
+      const decision = decisionReport || {};
       if (tag) {
-        tag.textContent = comparison.status === "compared" ? (position.label || "Compared") : "Check needed";
+        tag.textContent = operon.comparisonConfidence
+          ? titleCaseStatus(operon.comparisonConfidence) + " confidence"
+          : "Check needed";
         tag.className = "risk-tag " + getPricePositionClass(position.status);
       }
 
       const rows = [];
-      if (comparison.status !== "compared") {
-        rows.push(["Database status", comparison.notes || "Database comparison is not available yet."]);
+      rows.push(["Comparison result", decision.priceDifferenceInterpretation || comparison.notes || "Scope can be checked, but exact product comparison needs clearer product and inclusion detail."]);
+      if (operon.status) {
+        rows.push(["Operon comparison status", titleCaseStatus(operon.status)]);
       }
       if (comparison.productMatches && comparison.productMatches.length) {
         rows.push(["Likely product match", comparison.productMatches[0].label + " · match " + comparison.productMatches[0].matchScore + "%"]);
       } else {
-        rows.push(["Product match", "No clear Operon product match found from the uploaded quote text."]);
+        rows.push(["Product match", "Exact brand and range are not clear enough for a product-level match."]);
       }
-      if (priceGuide.quotedRateIncGstPerM2) {
-        rows.push(["Uploaded quote rate", formatMoneyValue(priceGuide.quotedRateIncGstPerM2) + " / m² inc GST"]);
+      rows.push(["Operon estimate", operon.operonEstimateAvailable ? "Available through existing pricing logic." : "Not shown until enough product, scope and site detail is available through the existing pricing engine."]);
+      if (priceGuide.quotedUnitPriceExGstPerM2) {
+        rows.push(["Uploaded quote rate", formatMoneyExact(priceGuide.quotedUnitPriceExGstPerM2) + " / m² ex GST"]);
       }
-      if (priceGuide.operonGuideRateIncGstPerM2) {
-        rows.push(["Operon guide rate", formatMoneyValue(priceGuide.operonGuideRateIncGstPerM2) + " / m² inc GST"]);
+      if (priceGuide.quoteTotalExGst) {
+        rows.push(["Uploaded quote subtotal", formatMoneyExact(priceGuide.quoteTotalExGst) + " ex GST"]);
       }
-      if (priceGuide.operonGuideTotalIncGst) {
-        rows.push(["Operon guide total", formatMoneyValue(priceGuide.operonGuideTotalIncGst) + " inc GST"]);
+      if (priceGuide.quoteTotalIncGst) {
+        rows.push(["Uploaded quote total", formatMoneyExact(priceGuide.quoteTotalIncGst) + " inc GST"]);
       }
-      if (position.label && typeof position.differencePercent === "number") {
-        rows.push(["Price position", position.label + " · " + position.differencePercent + "% vs guide"]);
+      if (priceGuide.quotedAreaM2) {
+        rows.push(["Area basis", Number(priceGuide.quotedAreaM2).toFixed(1) + " m²"]);
       }
       if (comparison.comparisonLevel) {
         rows.push(["Comparison level", comparison.comparisonLevel.replace(/_/g, " ")]);
       }
-      rows.push(["Important", comparison.notes || "Database guide is a comparison aid only. Final price is confirmed after site details are reviewed."]);
+      if (operon.scopeRiskCount || operon.scopeRiskCount === 0) {
+        rows.push(["Scope risk count", String(operon.scopeRiskCount)]);
+      }
+      rows.push(["Important", "Do not compare this on total price only. Confirm missing scope in writing first."]);
 
       list.className = "report-card-grid";
       list.innerHTML = rows.map(function (row) {
         return "<div class=\"risk-card\"><strong>" + escapeHtml(row[0]) + "</strong><span>" + escapeHtml(row[1]) + "</span></div>";
+      }).join("");
+    }
+
+    function renderRiskDimensions(decisionReport) {
+      const box = document.getElementById("riskDimensionsBox");
+      const list = document.getElementById("riskDimensionsList");
+      if (!box || !list) {
+        return;
+      }
+      const dimensions = decisionReport && Array.isArray(decisionReport.riskDimensions)
+        ? decisionReport.riskDimensions
+        : [];
+      box.hidden = !dimensions.length;
+      if (!dimensions.length) {
+        return;
+      }
+      list.className = "report-card-grid two-column";
+      list.innerHTML = dimensions.slice(0, 6).map(function (item) {
+        return "<div class=\"risk-card compact\"><strong>" + escapeHtml(item.label) + " · " + escapeHtml(titleCaseStatus(item.level)) + "</strong><span>Why this matters: " + escapeHtml(item.whyThisMatters) + "</span></div>";
       }).join("");
     }
 
@@ -1635,7 +1884,7 @@
         return null;
       });
       if (!response.ok || !result || !result.ok) {
-        throw new Error(result && result.error ? result.error : "Quote OCR handoff failed.");
+        throw new Error(result && result.error ? result.error : "Quote review handoff failed.");
       }
       return result;
     }
@@ -1924,25 +2173,25 @@
           body: "The flooring category is clear. Product and installation assumptions are easier to confirm."
         });
       }
-      if (formatArea(state.area)) {
+      if (formatArea(state.area) || normaliseNumber((state.extractedQuoteFields || {}).quotedAreaM2)) {
         strengths.push({
           title: "Area is recorded",
           body: "The quote has a measured basis rather than only a room description."
         });
       }
-      if (included.has("supply")) {
+      if (included.has("supply") || extractedScopeIsIncluded(state, "supply")) {
         strengths.push({ title: "Product supply listed", body: "Flooring supply is clearly included." });
       }
-      if (included.has("installation")) {
+      if (included.has("installation") || extractedScopeIsIncluded(state, "installation")) {
         strengths.push({ title: "Installation listed", body: "Labour is visible in the written scope." });
       }
-      if (included.has("removal")) {
+      if (included.has("removal") || extractedScopeIsIncluded(state, "removal")) {
         strengths.push({ title: "Removal listed", body: "Existing flooring removal is included." });
       }
-      if (included.has("disposal")) {
+      if (included.has("disposal") || extractedScopeIsIncluded(state, "disposal")) {
         strengths.push({ title: "Disposal listed", body: "Take-away disposal is clearly included." });
       }
-      if (included.has("floor_prep")) {
+      if (included.has("floor_prep") || extractedScopeIsIncluded(state, "floorPreparation")) {
         strengths.push({ title: "Floor preparation listed", body: "The written quote allows for floor preparation instead of leaving it completely unstated." });
       }
       if (included.has("access_delivery")) {
@@ -1963,28 +2212,29 @@
     }
 
     function getCategoryAdvisorInsight(state) {
-      if (state.category === "hybrid") {
+      const category = state.category || (state.extractedQuoteFields && state.extractedQuoteFields.flooringType) || "";
+      if (category === "hybrid") {
         return {
-          title: "Hybrid flooring scan",
+          title: "Hybrid flooring review",
           consequence: "Hybrid quotes often look simple, but subfloor flatness, trims, transitions and acoustic details still affect the final scope."
         };
       }
-      if (state.category === "laminate") {
+      if (category === "laminate") {
         return {
-          title: "Laminate flooring scan",
+          title: "Laminate flooring review",
           consequence: "Laminate quotes should be clear about underlay, moisture limits, trims and dry-area suitability before prices are compared."
         };
       }
-      if (state.category === "engineered") {
+      if (category === "engineered") {
         return {
-          title: "Engineered timber scan",
+          title: "Engineered timber review",
           consequence: "Engineered timber pricing depends heavily on installation method, subfloor preparation, moisture checks and finishing details."
         };
       }
-      if (state.category === "unknown") {
+      if (category === "unknown") {
         return {
           title: "Flooring category is unknown",
-          consequence: "The scan can only stay broad until the flooring type, range and installation method are visible."
+          consequence: "The review can only stay broad until the flooring type, range and installation method are visible."
         };
       }
       return null;
@@ -1994,13 +2244,27 @@
       const observations = [];
       const categoryInsight = getCategoryAdvisorInsight(state);
       const inclusionCount = state.inclusions.length;
-      const total = normaliseNumber(state.quoteTotal);
-      const area = normaliseNumber(state.area);
+      const fields = state.extractedQuoteFields || {};
+      const lineItem = getPrimaryExtractedLineItem(fields);
+      const total = normaliseNumber(state.quoteTotal) || normaliseNumber(fields.quoteTotalIncGst || fields.total_inc_gst);
+      const area = normaliseNumber(state.area) || normaliseNumber(fields.quotedAreaM2 || fields.area_m2);
+      const unitPrice = normaliseNumber(lineItem && (lineItem.unitPriceExGst || lineItem.unit_price_ex_gst));
 
       if (categoryInsight) {
         observations.push(categoryInsight);
       }
-      if (area && total) {
+      if (fields.comparisonStatus === "COMPARABLE_WITH_CAUTION") {
+        observations.push({
+          title: "Price and area are readable",
+          consequence: "This can be reviewed at category level, but the written scope is too thin for an exact product comparison."
+        });
+      }
+      if (area && unitPrice) {
+        observations.push({
+          title: "Extracted pricing basis",
+          consequence: area.toFixed(1) + " m² at " + formatMoneyExact(unitPrice) + " ex GST per m² is visible on the document."
+        });
+      } else if (area && total) {
         observations.push({
           title: "Price needs scope context",
           consequence: "The entered total is roughly $" + Math.round(total / area) + " per m², but that number is only meaningful when inclusions and exclusions match."
@@ -2009,7 +2273,7 @@
       if (inclusionCount >= 4) {
         observations.push({
           title: "Several inclusions are visible",
-          consequence: inclusionCount + " scope items have been marked as clearly written, which gives the scan a better starting point."
+          consequence: inclusionCount + " scope items have been marked as clearly written, which gives the review a better starting point."
         });
       } else if (inclusionCount > 0) {
         observations.push({
@@ -2027,7 +2291,7 @@
 
       if (!observations.length) {
         observations.push({
-          title: "Initial scan waiting for input",
+          title: "Initial review waiting for input",
           consequence: "Select the flooring type and tick only what is clearly written on the quote."
         });
       }
@@ -2043,7 +2307,7 @@
         },
         installation: {
           title: "Installation labour is unknown",
-          consequence: "The scan cannot confirm whether installation is included without that item being clearly written."
+          consequence: "The review cannot confirm whether installation is included without that item being clearly written."
         },
         area: {
           title: "Measured area is unknown",
@@ -2080,7 +2344,7 @@
       };
       return messages[key] || {
         title: "Scope item is unknown",
-        consequence: "This item cannot be confirmed from the current scan."
+        consequence: "This item cannot be confirmed from the current review."
       };
     }
 
@@ -2150,6 +2414,10 @@
 
     function extractedScopeIsClear(state, key) {
       return isScopeClearlyWritten(getExtractedScope(state)[key]);
+    }
+
+    function extractedScopeIsIncluded(state, key) {
+      return getExtractedScope(state)[key] === "included";
     }
 
     function hasExtractedProductSpec(state) {
@@ -2227,21 +2495,23 @@
 
     function getQuestionForScopeKey(key) {
       const questions = {
-        product_specified: "Is the product range, thickness and colour clearly specified?",
+        product_specified: "What brand, range and colour is the flooring product?",
         supply: "Is flooring supply included, or is this installation only?",
         installation: "Does this quote clearly include installation labour?",
         area: "What measured area is this price based on?",
-        removal: "Does this price include removal of the existing flooring?",
-        disposal: "Does this price include removal and take-away disposal?",
-        floor_preparation: "Is floor preparation included, or assessed after inspection?",
-        floorPreparation: "Is floor preparation included, or assessed after inspection?",
-        underlay: "Is underlay or the required acoustic layer included?",
-        skirting_trims: "Are trims, scotia or skirting included?",
+        removal: "Is existing floor removal included?",
+        disposal: "Is take-away disposal included?",
+        floor_preparation: "Is floor preparation or levelling included?",
+        floorPreparation: "Is floor preparation or levelling included?",
+        underlay: "Is acoustic underlay included?",
+        skirting_trims: "Are trims, scotia, transition trims or skirting included?",
         skirting: "Are skirting boards included, excluded or priced separately?",
         scotia: "Is scotia included, excluded or priced separately?",
-        stairs: "Are stairs or stair nosings included, or priced separately?",
-        moisture_protection: "Is moisture protection included where needed, or checked first on site?",
-        moistureProtection: "Is moisture protection included where needed, or checked first on site?"
+        stairs: "Are stairs, stair nosings or stair edge trims included?",
+        moisture_protection: "Is moisture testing or moisture protection included where needed?",
+        moistureProtection: "Is moisture testing or moisture protection included where needed?",
+        warranty: "What product and installation warranty applies?",
+        exclusions: "What exclusions could increase the final price?"
       };
       return questions[key] || "Can you confirm whether this item is included, excluded or subject to site confirmation?";
     }
@@ -2263,6 +2533,10 @@
 
       if (!questions.length && state.mode === "quick") {
         pushUniqueQuestion(questions, "Can you confirm which items are still subject to site inspection before the final quote is locked in?");
+      }
+      if (state.extractedQuoteFields) {
+        pushUniqueQuestion(questions, "What warranty applies?");
+        pushUniqueQuestion(questions, "What exclusions could increase the final price?");
       }
 
       return questions.slice(0, 8);
@@ -2301,7 +2575,7 @@
           return "Before accepting, ask the contractor to confirm the flagged items in writing. The comparison is strongest when inclusions, exclusions and site-confirmation items are clear.";
         }
         return state.mode === "quick"
-          ? "This scan has enough uncertainty that the next step should be a detailed quote review. For a more precise review, upload your quote."
+          ? "This review has enough uncertainty that the next step should be a detailed quote review. For a more precise review, upload your quote."
           : "Use the uploaded quote to confirm the unknown items, then compare scope. For a more precise review, upload your quote."
       }
       if (risks.medium.length || risks.low.length) {
@@ -2309,7 +2583,7 @@
           return "The quote is partly clear. Use the questions above to confirm missing or unclear items before comparing totals.";
         }
         return state.mode === "quick"
-          ? "The quote is partly clear, but the scan cannot confirm hidden scope. For a more precise review, upload your quote."
+          ? "The quote is partly clear, but this review cannot confirm hidden scope. For a more precise review, upload your quote."
           : "The quote is partly clear. Check exclusions, site items and finish details. For a more precise review, upload your quote."
       }
       if (hasDocumentReview) {
@@ -2339,6 +2613,12 @@
 
     function buildQuoteIntelligencePayload(state, risks, strengths, clarity) {
       const clarityScore = calculateClarityScore(state);
+      const riskDimensions = state.decisionReport && Array.isArray(state.decisionReport.riskDimensions)
+        ? state.decisionReport.riskDimensions
+        : [];
+      const likelyVariationRisks = state.decisionReport && Array.isArray(state.decisionReport.likelyVariationRisks)
+        ? state.decisionReport.likelyVariationRisks
+        : [];
       const riskItems = risks.high.concat(risks.medium, risks.low).map(function (risk) {
         return {
           key: risk.key,
@@ -2364,7 +2644,11 @@
         ocr_confidence: state.ocrConfidence ? Number(state.ocrConfidence) : null,
         ocr_engine: state.ocrEngine || "",
         extracted_quote_fields: state.extractedQuoteFields || null,
+        scope_classification: state.scopeClassification || null,
         database_comparison: state.databaseComparison || null,
+        operon_comparison: state.operonComparison || null,
+        decision_report: state.decisionReport || null,
+        review_pipeline: state.reviewPipeline || null,
         quote_total: normaliseNumber(state.quoteTotal),
         quote_provider_name: state.quoteProviderName || "",
         included_items: state.inclusions.slice(),
@@ -2374,6 +2658,8 @@
         missing_items: getMissingScopeItems(state),
         unknown_items: getMissingScopeItems(state),
         risk_items: riskItems,
+        risk_dimensions: riskDimensions,
+        likely_variation_risks: likelyVariationRisks,
         clarity_score: clarityScore,
         risk_level: normaliseRiskLevel(clarity.riskLevel),
         confidence_level: normaliseConfidenceLevel(clarity.confidenceLevel),
@@ -2414,6 +2700,51 @@
       const missingItems = getMissingScopeItems(state);
       const completion = getScopeCompletionMap(state);
       const missingCoreItem = !completion.product_specified || !completion.installation || !completion.area;
+      const fields = state.extractedQuoteFields || {};
+      const comparisonStatus = fields.comparisonStatus || fields.comparison_status || "";
+
+      if (comparisonStatus === "READY_TO_COMPARE") {
+        return {
+          level: "Ready to compare",
+          riskLevel: "Low risk",
+          confidenceLevel: "Extraction confidence: high",
+          tag: "Ready",
+          tagClass: "low",
+          counts: [
+            { level: "low", text: "Product type, area and price were extracted." },
+            { level: "medium", text: "Final comparison still depends on site and product confirmation." }
+          ]
+        };
+      }
+
+      if (comparisonStatus === "COMPARABLE_WITH_CAUTION") {
+        return {
+          level: "Comparable with caution",
+          riskLevel: "Scope incomplete",
+          confidenceLevel: "Extraction confidence: high",
+          tag: "Caution",
+          tagClass: "medium",
+          counts: [
+            { level: "low", text: "Product category, area and price were extracted." },
+            { level: "medium", text: missingItems.length + " scope item" + (missingItems.length === 1 ? " is" : "s are") + " not specified." },
+            { level: "medium", text: "Comparison confidence: category-level only until brand, range and inclusions are confirmed." }
+          ]
+        };
+      }
+
+      if (comparisonStatus === "NOT_READY_SCOPE_MISSING") {
+        return {
+          level: "Not ready - scope missing",
+          riskLevel: "Needs confirmation",
+          confidenceLevel: confidenceLevel,
+          tag: "Scope missing",
+          tagClass: "high",
+          counts: [
+            { level: "high", text: "The price exists, but key scope details are not clear enough." },
+            { level: "medium", text: "Ask for inclusions and exclusions in writing before comparing totals." }
+          ]
+        };
+      }
 
       if (!hasAnyInput) {
         return {
@@ -2437,7 +2768,7 @@
           tag: "Not ready",
           tagClass: "high",
           counts: [
-            { level: "high", text: missingItems.length + " important item" + (missingItems.length === 1 ? " is" : "s are") + " unknown from this scan." },
+            { level: "high", text: missingItems.length + " important item" + (missingItems.length === 1 ? " is" : "s are") + " unknown from this review." },
             { level: "medium", text: "Do not treat unticked items as excluded unless the quote says so." },
             { level: "low", text: confidenceLevel + "." }
           ]
@@ -2465,7 +2796,7 @@
         tag: "Clear enough",
         tagClass: "low",
         counts: [
-          { level: "low", text: "Main comparison items are visible in this scan." },
+          { level: "low", text: "Main comparison items are visible in this review." },
           { level: "medium", text: confidenceLevel + ". Hidden site conditions can still change after review." }
         ]
       };
@@ -2688,11 +3019,19 @@
       const payload = buildQuoteIntelligencePayload(state, risks, strengths, clarity);
       const keyObservations = buildKeyObservations(state, risks, strengths);
       const unknownConfirmations = buildUnknownConfirmations(state);
-      const typicalChanges = buildTypicalChanges(state, risks);
+      const decisionVariationRisks = state.decisionReport && Array.isArray(state.decisionReport.likelyVariationRisks)
+        ? state.decisionReport.likelyVariationRisks.map(function (item) {
+          return {
+            title: item.label,
+            consequence: "Why this matters: " + item.whyThisMatters
+          };
+        })
+        : [];
+      const typicalChanges = decisionVariationRisks.length ? decisionVariationRisks : buildTypicalChanges(state, risks);
 
       renderClarity(clarity);
       renderRiskList("highRiskList", keyObservations, {
-        title: "Initial scan waiting for input.",
+        title: "Initial review waiting for input.",
         body: "Add visible quote details to generate observations."
       });
       renderRiskList("mediumRiskList", unknownConfirmations, {
@@ -2706,7 +3045,8 @@
       renderQuestionsToAsk(buildQuestionsToAsk(state));
       renderDecisionGuidance(state, risks);
       renderExtractedQuoteFields(state.extractedQuoteFields);
-      renderDatabaseComparison(state.databaseComparison);
+      renderRiskDimensions(state.decisionReport);
+      renderDatabaseComparison(state.databaseComparison, state.operonComparison, state.decisionReport);
 
       saveReviewState();
       saveQuoteIntelligencePayload(payload);
@@ -2722,7 +3062,11 @@
             element.dataset.ocrReference = "";
             element.dataset.ocrStatus = "";
             element.dataset.extractedQuoteFields = "";
+            element.dataset.scopeClassification = "";
             element.dataset.databaseComparison = "";
+            element.dataset.operonComparison = "";
+            element.dataset.decisionReport = "";
+            element.dataset.reviewPipeline = "";
             document.getElementById("uploadedQuoteReference").textContent = element.dataset.savedReference
               ? "Selected quote reference: " + element.dataset.savedReference
               : "No quote file selected.";
@@ -2791,7 +3135,7 @@
           if (file) {
             detailedUploadCta.disabled = true;
             detailedUploadCta.textContent = "Checking uploaded quote...";
-            setQuoteOcrStatus("Sending quote file for OCR setup...", true);
+            setQuoteOcrStatus("Reviewing uploaded quote...", true);
             try {
               const ocrResult = await sendQuoteFileForOcr(file);
               quoteFile.dataset.ocrReference = ocrResult.file && ocrResult.file.reference || "";
@@ -2800,16 +3144,20 @@
               quoteFile.dataset.ocrConfidence = ocrResult.ocr && typeof ocrResult.ocr.confidence !== "undefined" ? String(ocrResult.ocr.confidence) : "";
               quoteFile.dataset.ocrEngine = ocrResult.ocr && ocrResult.ocr.engine || "";
               quoteFile.dataset.extractedQuoteFields = ocrResult.extractedFields ? JSON.stringify(ocrResult.extractedFields) : "";
+              quoteFile.dataset.scopeClassification = ocrResult.scopeClassification ? JSON.stringify(ocrResult.scopeClassification) : "";
               quoteFile.dataset.databaseComparison = ocrResult.databaseComparison ? JSON.stringify(ocrResult.databaseComparison) : "";
+              quoteFile.dataset.operonComparison = ocrResult.operonComparison ? JSON.stringify(ocrResult.operonComparison) : "";
+              quoteFile.dataset.decisionReport = ocrResult.decisionReport ? JSON.stringify(ocrResult.decisionReport) : "";
+              quoteFile.dataset.reviewPipeline = ocrResult.pipeline ? JSON.stringify(ocrResult.pipeline) : "";
               if (quoteFile.dataset.ocrStatus === "text_extracted") {
-                setQuoteOcrStatus("OCR extracted " + quoteFile.dataset.ocrExtractedText.length + " characters from the quote.", true);
+                setQuoteOcrStatus("Quote details extracted. Generating review...", true);
               } else if (quoteFile.dataset.ocrStatus === "engine_not_configured") {
-                setQuoteOcrStatus("OCR engine is installed but OPENAI_API_KEY is not configured yet.", true);
+                setQuoteOcrStatus("Document review is not configured yet.", true);
               } else {
-                setQuoteOcrStatus(ocrResult.ocr && ocrResult.ocr.notes ? ocrResult.ocr.notes : "OCR could not extract readable text yet.", true);
+                setQuoteOcrStatus(ocrResult.ocr && ocrResult.ocr.notes ? ocrResult.ocr.notes : "Could not extract readable quote detail yet.", true);
               }
             } catch (error) {
-              setQuoteOcrStatus(error && error.message ? error.message : "Could not send the file for OCR.", true);
+              setQuoteOcrStatus(error && error.message ? error.message : "Could not send the file for review.", true);
             } finally {
               detailedUploadCta.disabled = false;
             }
@@ -2822,7 +3170,7 @@
               if (saveResult && saveResult.ok) {
                 setQuoteOcrStatus("Document-based review saved for follow-up.", true);
               } else if (quoteFile.dataset.ocrStatus === "text_extracted") {
-                setQuoteOcrStatus("OCR extracted " + quoteFile.dataset.ocrExtractedText.length + " characters. Review kept locally if server save is unavailable.", true);
+                setQuoteOcrStatus("Quote details extracted. Review kept locally if server save is unavailable.", true);
               }
             }
             trackQuoteReviewEvent("quote_review_document_review_generate", {

@@ -77,7 +77,7 @@ Important concepts:
 - labour uses real area
 - wastage is handled by `quoteCalculator.js`
 - floorplan measurement returns real area only
-- final quote is confirmed after product, measurements, access, and scope are reviewed
+- final quote is confirmed after product, measurements, site details, and scope are reviewed
 
 The chatbot must never calculate a final price or expose internal pricing logic.
 
@@ -125,6 +125,37 @@ quote-review.html -> quote.html?source=quote_review
 
 The advisor context is saved locally and carried into the quote lead payload. It does not auto-fill visible quote fields.
 
+## Operon Scope Standard In Chat
+
+The chatbot should quietly use the Operon Scope Standard as a decision framework, not as a public slogan.
+
+When users are unsure, guide them through one scope area at a time:
+
+- product definition
+- area and measurement
+- installation scope
+- site and access
+- risk and preparation
+- finishing and accessories
+- commercial clarity
+- exclusions and assumptions
+- final confirmation
+
+Use plain customer language:
+
+- "Let’s check what is included."
+- "The next useful step is confirming the scope."
+- "Price is easier to compare once the same work is described."
+- "A cheaper quote may not describe the same job."
+
+Avoid:
+
+- saying "Operon Scope Standard" unless asked internally
+- ranking competitor quotes
+- saying another installer is wrong
+- calculating price
+- asking multiple questions at once
+
 ## SEO And Content
 
 Operon uses product pages, suburb pages, and blog guides to educate customers before they request a quote.
@@ -152,3 +183,27 @@ The chatbot should prioritize:
 - concise answers that avoid backend terms and internal implementation language
 
 The chatbot should not behave like a generic content assistant. It should be a calm, short, decision-first guide into Operon's quote, product, floorplan and quote-review pathways.
+
+## Latest Chatbot Agent Update - 2026-05-08
+
+- Quote-review routing examples now emphasize scope clarity before price and route existing external quotes to `quote-review.html`.
+- Friction-handling flows now cover stuck quote users, near-submit uncertainty, area uncertainty, product choice uncertainty, stairs, and site-detail notes.
+- Knowledge coverage now includes product-page refresh alignment for hybrid, laminate, and engineered timber pages.
+- The chatbot remains isolated: it may suggest `quote.html`, `products.html`, `floorplan.html`, and `quote-review.html`, but it must not calculate prices, write quote fields, change product selections, or expose internal implementation language.
+
+## Latest SEO Routing Candidate Audit - 2026-05-08
+
+- New local SEO routes to be aware of in future chatbot knowledge updates: `flooring-cabramatta.html` and `flooring-eastern-suburbs.html`.
+- Existing high-confidence routes remain `quote.html`, `quote-review.html`, `products.html`, `floorplan.html`, `floor-care-maintenance.html`, product category pages, suburb pages and blog guides.
+- For maintenance/problem questions, route by intent: cleaning and care to `floor-care-maintenance.html` or relevant guides; unclear damage/replacement scope to `quote-review.html`; ready-to-price replacement to `quote.html`.
+- For quote-review uploads, use privacy-safe wording: uploaded quotes are used for scope review and may be stored temporarily to support follow-up.
+- Docs-only audit. No chatbot runtime, chatbot logic or customer-facing automation was changed.
+
+## Latest Scope Standard Routing Audit - 2026-05-08
+
+- The chatbot should route quote-scope uncertainty to `quote-review.html` only when the user already has a written quote or is comparing inclusions.
+- The chatbot should route estimate-ready users to `quote.html`.
+- The chatbot should route product-choice uncertainty to `products.html` or category pages only when browsing is the next useful step.
+- The chatbot should treat area uncertainty as a quote-flow support issue, with floor plan measurement as an option inside the quote journey.
+- The chatbot should not name the internal Scope Standard publicly unless asked by the owner/developer.
+- The best safe phrase is: "Price is easier to compare once both quotes describe the same job."

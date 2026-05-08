@@ -65,6 +65,42 @@ Homepage direction:
 
 Homepage should stay clean, visual, premium, and not overloaded with tool or form language.
 
+## Operon Scope Standard Positioning
+
+The Operon Scope Standard is a foundational operational framework that helps customers compare flooring quotes based on scope clarity, not price alone.
+
+It is an internal strategic framework, not a public slogan.
+
+Use it to reinforce:
+
+- scope clarity
+- operational professionalism
+- reduced uncertainty
+- better quote comparison
+- installation confidence
+- margin protection
+- future workflow intelligence
+
+Customer-facing copy should sound plain and practical.
+
+Use:
+
+- "Clear scope before price comparison"
+- "Final details confirmed before installation"
+- "Know what is included before you decide"
+- "Compare flooring quotes by scope, not just total price"
+- "A cheaper quote may not describe the same job"
+
+Avoid:
+
+- "Our proprietary scope standard"
+- "Operon Scope Standard(TM)"
+- "We are the best"
+- "Premium workmanship"
+- "Cheapest quote"
+
+Marketing should position Operon around clarity, structured quoting, reduced surprises, professional installation thinking, and final site confirmation. It should not chase cheapest-price customers.
+
 ## Customer Experience Principles
 
 The website should feel:

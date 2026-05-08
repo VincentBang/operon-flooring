@@ -106,6 +106,23 @@ function createQuoteUuid() {
   return "quote-" + Date.now() + "-" + Math.random().toString(36).slice(2, 10);
 }
 
+function getFirstSupabaseRow(value) {
+  return Array.isArray(value) && value.length ? value[0] : (value && typeof value === "object" ? value : null);
+}
+
+function formatQuoteReference(reference, quoteId) {
+  const numericReference = Number(reference);
+  if (Number.isFinite(numericReference) && numericReference > 0) {
+    return String(Math.round(numericReference));
+  }
+  return String(quoteId || "").slice(0, 8);
+}
+
+function getQuoteReference(row, payload, quoteId) {
+  const payloadReference = payload && (payload.quoteReference || payload.quote_reference);
+  return formatQuoteReference(row && row.quote_reference || payloadReference, quoteId);
+}
+
 function getCloseBand(score) {
   if (score >= 75) return "high";
   if (score >= 45) return "medium";
@@ -489,6 +506,123 @@ async function safelyQueueFollowupsForQuote(quoteId, quoteRow) {
   }
 }
 
+function buildFollowupEmailFromMessage(message) {
+  const payload = message && message.payload && typeof message.payload === "object" ? message.payload : {};
+  const to = String(payload.to_email || "").trim();
+  const subject = String(payload.subject || "Your flooring estimate - next steps").trim();
+  const text = String(payload.body || "").trim();
+
+  if (!to || !/.+@.+\..+/.test(to)) {
+    throw new Error("Queued follow-up has no valid customer email.");
+  }
+  if (!text) {
+    throw new Error("Queued follow-up has no message body.");
+  }
+
+  return {
+    to: to,
+    subject: subject,
+    html: "<div style=\"font-family:Arial,sans-serif;line-height:1.55;color:#142f38;font-size:16px;\">"
+      + escapeHtml(text).replace(/\n{2,}/g, "</p><p>").replace(/\n/g, "<br>")
+      + "</div>",
+    text: text
+  };
+}
+
+async function sendImmediateFollowupEmailsForQuote(quoteId) {
+  const tables = getSupabaseTables();
+  const queuedEmails = await supabaseRequest(tables.followupMessages, {
+    query: {
+      quote_request_id: "eq." + quoteId,
+      status: "eq.queued",
+      channel: "eq.email",
+      scheduled_for: "lte." + new Date().toISOString(),
+      select: "id,quote_request_id,channel,template_key,scheduled_for,status,payload",
+      order: "scheduled_for.asc",
+      limit: "3"
+    }
+  });
+  const results = [];
+
+  for (const message of Array.isArray(queuedEmails) ? queuedEmails : []) {
+    try {
+      const email = buildFollowupEmailFromMessage(message);
+      const providerResponse = await sendResendEmail(email);
+      await supabaseRequest(tables.followupMessages, {
+        method: "PATCH",
+        query: { id: "eq." + message.id },
+        headers: { Prefer: "return=minimal" },
+        body: {
+          status: "sent",
+          sent_at: new Date().toISOString(),
+          provider_response: providerResponse,
+          error_message: null
+        }
+      });
+      results.push({ id: message.id, status: "sent", templateKey: message.template_key });
+    } catch (error) {
+      await supabaseRequest(tables.followupMessages, {
+        method: "PATCH",
+        query: { id: "eq." + message.id },
+        headers: { Prefer: "return=minimal" },
+        body: {
+          status: "failed",
+          error_message: error && error.message ? error.message : "Immediate follow-up email failed."
+        }
+      });
+      results.push({
+        id: message.id,
+        status: "failed",
+        templateKey: message.template_key,
+        error: error && error.message ? error.message : "Immediate follow-up email failed."
+      });
+    }
+  }
+
+  const remainingEmails = await supabaseRequest(tables.followupMessages, {
+    query: {
+      quote_request_id: "eq." + quoteId,
+      status: "eq.queued",
+      channel: "eq.email",
+      select: "scheduled_for",
+      order: "scheduled_for.asc",
+      limit: "1"
+    }
+  });
+  const nextFollowupAt = Array.isArray(remainingEmails) && remainingEmails[0] ? remainingEmails[0].scheduled_for : null;
+
+  if (results.length) {
+    await updateQuoteRow(quoteId, {
+      followup_status: nextFollowupAt ? "queued" : (results.some(function (row) { return row.status === "sent"; }) ? "sent" : "failed"),
+      last_followup_at: results.some(function (row) { return row.status === "sent"; }) ? new Date().toISOString() : null,
+      next_followup_at: nextFollowupAt
+    });
+  }
+
+  return {
+    attempted: results.length > 0,
+    sent: results.filter(function (row) { return row.status === "sent"; }).length,
+    failed: results.filter(function (row) { return row.status === "failed"; }).length,
+    nextFollowupAt: nextFollowupAt,
+    results: results
+  };
+}
+
+async function safelySendImmediateFollowupEmailsForQuote(quoteId) {
+  try {
+    return Object.assign({ ok: true }, await sendImmediateFollowupEmailsForQuote(quoteId));
+  } catch (error) {
+    console.error("Immediate follow-up email processing failed", error);
+    return {
+      ok: false,
+      attempted: false,
+      sent: 0,
+      failed: 0,
+      error: error && error.message ? error.message : "Immediate follow-up email processing failed."
+    };
+  }
+}
+
 function escapeHtml(value) {
   return String(value || "")
     .replace(/&/g, "&amp;")
@@ -634,11 +768,23 @@ function buildScopeText(payload) {
 }
 
 function getLogoPath() {
-  const candidates = [
-    path.join(process.cwd(), "apps/web/assets/operon-logo-final.png"),
-    path.join(__dirname, "../../apps/web/assets/operon-logo-final.png"),
-    path.join(__dirname, "../apps/web/assets/operon-logo-final.png")
+  const logoFiles = [
+    "operon-logo-final.png",
+    "operon-logo-wordmark.png",
+    "Operon Flooring brand logo final.png"
   ];
+  const assetRoots = [
+    path.join(process.cwd(), "apps/web/assets"),
+    path.join(__dirname, "../../apps/web/assets"),
+    path.join(__dirname, "../apps/web/assets"),
+    path.join(__dirname, "apps/web/assets")
+  ];
+  const candidates = [];
+  assetRoots.forEach(function (root) {
+    logoFiles.forEach(function (fileName) {
+      candidates.push(path.join(root, fileName));
+    });
+  });
   return candidates.find(function (candidate) {
     return fs.existsSync(candidate);
   }) || "";
@@ -674,7 +820,7 @@ function wrapPdfText(text, font, fontSize, maxWidth) {
   return lines.length ? lines : [""];
 }
 
-async function buildCustomerQuotePdf(payload, quoteId) {
+async function buildCustomerQuotePdf(payload, quoteId, quoteReference) {
   const company = getCompanyDetails();
   const pricing = payload.pricing || {};
   const measurement = payload.measurement || {};
@@ -735,7 +881,7 @@ async function buildCustomerQuotePdf(payload, quoteId) {
   if (logoPath) {
     try {
       const logoImage = await pdfDoc.embedPng(fs.readFileSync(logoPath));
-      const logoDims = logoImage.scaleToFit(150, 42);
+      const logoDims = logoImage.scaleToFit(185, 46);
       page.drawImage(logoImage, {
         x: margin,
         y: y - logoDims.height,
@@ -750,8 +896,9 @@ async function buildCustomerQuotePdf(payload, quoteId) {
   }
 
   page.drawText("Quote summary", { x: pageSize[0] - margin - 142, y: y - 8, size: 18, font: boldFont, color: brand });
-  page.drawText("Reference: " + String(quoteId).slice(0, 8), { x: pageSize[0] - margin - 142, y: y - 28, size: 10, font: font, color: muted });
-  y -= 72;
+  page.drawText("Reference: " + formatQuoteReference(quoteReference, quoteId), { x: pageSize[0] - margin - 142, y: y - 28, size: 10, font: font, color: muted });
+  page.drawText(company.email, { x: pageSize[0] - margin - 142, y: y - 44, size: 9, font: font, color: muted });
+  y -= 82;
 
   drawText("Your flooring estimate", margin, 24, boldFont, brand, pageSize[0] - margin * 2, 30);
   drawText("Prepared for " + (customer.name || "customer") + ". This is a starting estimate for review before final confirmation.", margin, 10, font, muted, pageSize[0] - margin * 2, 15);
@@ -838,7 +985,7 @@ function getWarningsText(payload) {
   return lines.join("\n");
 }
 
-function buildCustomerQuoteEmail(payload, quoteId) {
+function buildCustomerQuoteEmail(payload, quoteId, quoteReference) {
   const pricing = payload.pricing || {};
   const measurement = payload.measurement || {};
   const customerName = getCustomerName(payload);
@@ -875,14 +1022,14 @@ function buildCustomerQuoteEmail(payload, quoteId) {
     "<p style=\"margin:0 0 14px;color:#4b5563;line-height:1.6;\">" + escapeHtml(pricing.disclaimer || "Starting estimate only. Final site scope is confirmed before booking.") + "</p>",
     "<p style=\"margin:0 0 14px;color:#4b5563;line-height:1.6;\">Reply to this email if you want us to confirm the next step. Already have another quote? Send it through and we can review scope and missing items.</p>",
     "</div>",
-    "<p style=\"margin:24px 0 0;color:#6b7280;font-size:13px;\">Reference: " + escapeHtml(String(quoteId).slice(0, 8)) + "</p>",
+    "<p style=\"margin:24px 0 0;color:#6b7280;font-size:13px;\">Reference: " + escapeHtml(formatQuoteReference(quoteReference, quoteId)) + "</p>",
     "</div></div>"
   ].join("");
 
   const text = [
     "Operon Flooring estimate",
     "",
-    "Reference: " + String(quoteId).slice(0, 8),
+    "Reference: " + formatQuoteReference(quoteReference, quoteId),
     "Selected product: " + (pricing.productLabel || productName),
     "Measured area: " + formatArea(measurement.realArea || pricing.realArea || 0),
     measurement.chargeableArea ? "Estimated area including off-cuts: " + formatArea(measurement.chargeableArea) : "",
@@ -907,7 +1054,7 @@ function buildCustomerQuoteEmail(payload, quoteId) {
   return { html: html, text: text };
 }
 
-function buildInternalQuoteEmail(payload, quoteId) {
+function buildInternalQuoteEmail(payload, quoteId, quoteReference) {
   const pricing = payload.pricing || {};
   const customer = payload.customer || {};
   const property = payload.property || {};
@@ -922,7 +1069,8 @@ function buildInternalQuoteEmail(payload, quoteId) {
   const text = [
     "New Operon quote request",
     "",
-    "Reference: " + quoteId,
+    "Customer reference: " + formatQuoteReference(quoteReference, quoteId),
+    "Internal ID: " + quoteId,
     "Submitted: " + (payload.submittedAt || new Date().toISOString()),
     "Source page: " + (payload.sourcePage || ""),
     "",
@@ -1011,7 +1159,7 @@ async function sendResendEmail(message) {
   return response.json();
 }
 
-async function sendQuoteEmails(emailTo, payload, quoteId) {
+async function sendQuoteEmails(emailTo, payload, quoteId, quoteReference) {
   const config = getEmailConfig();
   const result = {
     customerEmailSent: false,
@@ -1021,8 +1169,8 @@ async function sendQuoteEmails(emailTo, payload, quoteId) {
 
   let customerError = null;
   if (emailTo) {
-    const customerContent = buildCustomerQuoteEmail(payload, quoteId);
-    const pdfAttachment = await buildCustomerQuotePdf(payload, quoteId);
+    const customerContent = buildCustomerQuoteEmail(payload, quoteId, quoteReference);
+    const pdfAttachment = await buildCustomerQuotePdf(payload, quoteId, quoteReference);
     try {
       await sendResendEmail({
         to: emailTo,
@@ -1030,7 +1178,7 @@ async function sendQuoteEmails(emailTo, payload, quoteId) {
         html: customerContent.html,
         text: customerContent.text,
         attachments: [{
-          filename: "operon-flooring-quote-" + String(quoteId).slice(0, 8) + ".pdf",
+          filename: "operon-flooring-quote-" + formatQuoteReference(quoteReference, quoteId) + ".pdf",
           content: pdfAttachment
         }]
       });
@@ -1041,7 +1189,7 @@ async function sendQuoteEmails(emailTo, payload, quoteId) {
   }
 
   if (config.internalEmail) {
-    const internalContent = buildInternalQuoteEmail(payload, quoteId);
+    const internalContent = buildInternalQuoteEmail(payload, quoteId, quoteReference);
     try {
       await sendResendEmail({
         to: config.internalEmail,
@@ -1063,7 +1211,7 @@ async function sendQuoteEmails(emailTo, payload, quoteId) {
   return result;
 }
 
-async function safelySendQuoteEmails(emailTo, payload, quoteId) {
+async function safelySendQuoteEmails(emailTo, payload, quoteId, quoteReference) {
   const result = {
     attempted: !!emailTo,
     customerEmailSent: false,
@@ -1077,7 +1225,7 @@ async function safelySendQuoteEmails(emailTo, payload, quoteId) {
   }
 
   try {
-    const emailResult = await sendQuoteEmails(emailTo, payload, quoteId);
+    const emailResult = await sendQuoteEmails(emailTo, payload, quoteId, quoteReference);
     return Object.assign(result, emailResult);
   } catch (error) {
     result.customerEmailError = error && error.message ? error.message : "Customer quote email failed.";
@@ -1118,7 +1266,7 @@ exports.handler = async function (event) {
   try {
     const row = getQuoteRow(quoteId, payload, status);
     if (mode === "draft" || mode === "submit_quote") {
-      await supabaseRequest(getSupabaseTables().quoteRequests, {
+      const savedQuoteResponse = await supabaseRequest(getSupabaseTables().quoteRequests, {
         method: "POST",
         query: {
           on_conflict: "id"
@@ -1128,6 +1276,8 @@ exports.handler = async function (event) {
         },
         body: row
       });
+      const savedQuoteRow = getFirstSupabaseRow(savedQuoteResponse) || row;
+      const quoteReference = getQuoteReference(savedQuoteRow, payload, quoteId);
 
       await replaceChildRows(
         quoteId,
@@ -1138,8 +1288,11 @@ exports.handler = async function (event) {
       const followupResult = mode === "submit_quote"
         ? await safelyQueueFollowupsForQuote(quoteId, row)
         : { ok: true, queued: 0, skipped: "draft_only", dryRunOnly: true };
+      const immediateFollowupEmailResult = mode === "submit_quote"
+        ? await safelySendImmediateFollowupEmailsForQuote(quoteId)
+        : { ok: true, attempted: false, sent: 0, failed: 0 };
       const emailResult = shouldSendCustomerCopy
-        ? await safelySendQuoteEmails(emailTo, payload, quoteId)
+        ? await safelySendQuoteEmails(emailTo, payload, quoteId, quoteReference)
         : {
             attempted: false,
             customerEmailSent: false,
@@ -1152,27 +1305,34 @@ exports.handler = async function (event) {
         ok: true,
         mode: mode,
         quoteId: quoteId,
+        quoteReference: quoteReference,
         emailAttempted: emailResult.attempted,
         customerEmailSent: emailResult.customerEmailSent,
         internalNotificationSent: emailResult.internalNotificationSent,
         customerEmailError: emailResult.customerEmailError,
         internalNotificationError: emailResult.internalNotificationError,
-        followup: followupResult
+        followup: followupResult,
+        immediateFollowupEmail: immediateFollowupEmailResult
       });
     } else {
       if (!String(body.quoteId || "").trim()) {
         throw new Error("Draft quote reference is missing. Save the estimate first.");
       }
-      await updateQuoteRow(quoteId, row);
-      const emailResult = await sendQuoteEmails(emailTo, payload, quoteId);
+      const updatedQuoteResponse = await updateQuoteRow(quoteId, row);
+      const updatedQuoteRow = getFirstSupabaseRow(updatedQuoteResponse) || row;
+      const quoteReference = getQuoteReference(updatedQuoteRow, payload, quoteId);
+      const emailResult = await sendQuoteEmails(emailTo, payload, quoteId, quoteReference);
       const followupResult = await safelyQueueFollowupsForQuote(quoteId, row);
+      const immediateFollowupEmailResult = await safelySendImmediateFollowupEmailsForQuote(quoteId);
       return jsonResponse(200, {
         ok: true,
         mode: mode,
         quoteId: quoteId,
+        quoteReference: quoteReference,
         customerEmailSent: emailResult.customerEmailSent,
         internalNotificationSent: emailResult.internalNotificationSent,
-        followup: followupResult
+        followup: followupResult,
+        immediateFollowupEmail: immediateFollowupEmailResult
       });
     }
   } catch (error) {

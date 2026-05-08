@@ -138,9 +138,9 @@
     <section class="section">
       <div class="shell">
         <article class="section-card">
-          <span class="eyebrow">Featured Laminate Products</span>
-          <h2 style="margin-top: 18px;">Start with the laminate category, then confirm product</h2>
-          <p>Compare laminate colours, then continue into the quote with laminate saved.</p>
+          <span class="eyebrow">Laminate Ranges</span>
+          <h2 style="margin-top: 18px;">Compare laminate ranges before you quote</h2>
+          <p>Choose a laminate range first, then continue into the quote with laminate saved.</p>
           <div class="catalogue-selection-banner">
             <strong id="laminateSelectionTitle">Laminate quote path ready</strong>
             <p id="laminateSelectionText">Laminate category saved for quote.</p>
@@ -150,7 +150,30 @@
             </div>
           </div>
           <div class="catalogue-grid" id="laminateFeaturedGrid"></div>
-          <div class="catalogue-status" id="laminateFeaturedStatus">Choose a laminate product, then continue into the quote when you are ready.</div>
+          <div class="catalogue-status" id="laminateFeaturedStatus">Choose a laminate range, then continue into the quote when you are ready.</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <article class="section-card">
+          <span class="eyebrow">Other Flooring Categories</span>
+          <h2 style="margin-top: 18px;">Compare laminate with hybrid or engineered timber</h2>
+          <div class="link-grid" style="margin-top: 20px;">
+            <a class="link-card" href="hybrid-flooring-sydney.html">
+              <strong>Hybrid Flooring Sydney</strong>
+              <span>Water-resistant flooring ranges for busy Sydney homes.</span>
+            </a>
+            <a class="link-card" href="engineered-timber-flooring-sydney.html">
+              <strong>Engineered Timber Flooring Sydney</strong>
+              <span>Premium real-timber finish for higher-end projects.</span>
+            </a>
+            <a class="link-card" href="products.html?category=laminate">
+              <strong>All Laminate Products</strong>
+              <span>Open the full laminate catalogue and browse colours.</span>
+            </a>
+          </div>
         </article>
       </div>
     </section>
@@ -242,37 +265,37 @@
             <details class="faq-toggle">
               <summary>What is laminate flooring best used for?</summary>
               <div class="faq-toggle-body">
-                <p>Laminate flooring is usually best for dry internal areas such as bedrooms, living spaces, studies and hallways where a timber-look finish is wanted at a value-led level.</p>
+                <p>Laminate flooring is usually best for dry internal areas such as bedrooms, living spaces, studies and hallways where a timber-look finish is wanted at a value-led level. It is often chosen when the renovation brief is practical, clean-looking and cost-conscious rather than premium or moisture-heavy.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>How much does laminate flooring cost in Sydney?</summary>
               <div class="faq-toggle-body">
-                <p>Cost depends on the selected range, measured area and scope items such as removal, trims and preparation. The quote flow gives a starting estimate before final site confirmation.</p>
+                <p>Laminate flooring cost depends on the selected range, measured area and scope items such as removal, trims, underlay and preparation. The quote flow gives a structured starting estimate, then the final site scope is reviewed before anything is confirmed.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>Is laminate flooring suitable for apartments?</summary>
               <div class="faq-toggle-body">
-                <p>Laminate can suit apartments where the selected product and building rules allow it. Acoustic requirements and site details should be checked before installation is confirmed.</p>
+                <p>Laminate can suit apartments where the selected product and building rules allow it, especially when the project is value-led and the area is dry. Acoustic requirements, underlay setup and site details should still be checked before the installation path is confirmed.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>Is laminate flooring better than hybrid flooring?</summary>
               <div class="faq-toggle-body">
-                <p>Laminate is often the stronger value-led option in dry internal spaces. Hybrid is usually better when water resistance and a tougher everyday surface matter more.</p>
+                <p>Laminate is often the stronger value-led option in dry internal spaces where the brief is straightforward and budget matters. Hybrid is usually the better choice when water resistance and a tougher everyday surface matter more than the lower starting price.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>Can laminate flooring be installed over existing floors?</summary>
               <div class="faq-toggle-body">
-                <p>Sometimes, but the existing surface still needs to be checked for level, soundness and height transitions before installation is confirmed.</p>
+                <p>Sometimes, yes, but the existing surface still needs to be checked for level, soundness and height transitions before installation is confirmed. If the old floor creates movement, moisture, or door clearance issues, additional preparation may still be needed.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>Can I use the floor plan tool for a laminate quote?</summary>
               <div class="faq-toggle-body">
-                <p>Yes. The floor plan tool can help confirm the area before you return to the quote flow.</p>
+                <p>Yes. The floor plan tool is a practical way to confirm the area before you return to the quote flow, especially when the room layout is not simple. It helps with measurement, but the final product and scope still need to be reviewed in the quote itself.</p>
               </div>
             </details>
           </div>
@@ -345,7 +368,7 @@
   <script>
     (function () {
       const productsApi = window.OperonProducts;
-      if (!productsApi) {
+      if (!productsApi || typeof productsApi.renderCategoryRangeCatalogue !== "function") {
         return;
       }
 
@@ -364,13 +387,25 @@
 
       function updateLaminateBridge() {
         const storedProduct = productsApi.getStoredProduct();
+        const storedSelection = productsApi.getStoredSelectionState();
+        const selectedRangeId = storedSelection ? storedSelection.selectedRangeId : "";
+        const selectedRange = selectedRangeId
+          ? productsApi.getRangesByCategory("laminate").find(function (range) { return range.rangeId === selectedRangeId; })
+          : null;
         quoteLink.setAttribute("href", "quote.html?from=product&category=laminate");
 
         if (storedProduct && storedProduct.category === "laminate") {
-          title.textContent = "Selected for quote: " + productsApi.getProductLabel(storedProduct);
-          text.textContent = storedProduct.pricePerM2 > 0
-            ? storedProduct.brand + " / " + storedProduct.range + " / " + storedProduct.colour + " · " + productsApi.formatProductRate(storedProduct)
-            : storedProduct.brand + " / " + storedProduct.range + " / " + storedProduct.colour + " · final details confirmed during review.";
+          title.textContent = "Selected range: " + (storedProduct.rangeLabel || productsApi.getProductLabel(storedProduct));
+          text.textContent = "Colour can be confirmed later. " + productsApi.formatProductRate(storedProduct);
+          quoteLink.textContent = "Continue to quote";
+          return;
+        }
+
+        if (selectedRange && selectedRange.category === "laminate") {
+          title.textContent = "Selected range: " + selectedRange.rangeLabel;
+          text.textContent = selectedRange.colourCount
+            ? selectedRange.colourCount + " colours available. Final colour can be confirmed later."
+            : "Final colour can be confirmed later.";
           quoteLink.textContent = "Continue to quote";
           return;
         }
@@ -381,13 +416,15 @@
       }
 
       updateLaminateBridge();
-      productsApi.renderCategoryCatalogue({
+      window.addEventListener("operon:range-selected", updateLaminateBridge);
+      window.addEventListener("operon:range-cleared", updateLaminateBridge);
+      productsApi.renderCategoryRangeCatalogue({
         category: "laminate",
         targetId: "laminateFeaturedGrid",
         statusId: "laminateFeaturedStatus",
         limit: 6,
         quoteUrl: "quote.html?from=product&category=laminate",
-        successMessage: "Laminate product selected. Continue to quote."
+        successMessage: "Laminate range selected. Continue to quote."
       });
     }());
   </script>

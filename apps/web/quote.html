@@ -171,6 +171,10 @@
       font-weight: 600;
     }
 
+    body.quote-focused-flow main > .quote-section ~ section {
+      display: none;
+    }
+
     main > .section:nth-of-type(even) {
       background: rgba(244, 247, 246, 0.58);
       border-top: 1px solid rgba(216, 226, 223, 0.82);
@@ -578,6 +582,10 @@
 
     #quoteForm.quote-form-compact .form-intro,
     #quoteForm.quote-form-compact .quote-kickoff {
+      display: none;
+    }
+
+    body.quote-step-past-intro .hero {
       display: none;
     }
 
@@ -2109,9 +2117,22 @@
     }
 
     .site-footer {
-      background: #111820;
+      background: var(--brand);
       color: #ffffff;
-      padding: 60px 0 20px;
+      padding: 72px 0 22px;
+    }
+
+    .site-footer .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .site-footer.footer-contained {
+      width: min(1360px, calc(100% - 80px));
+      margin: 72px auto 28px;
+      border-radius: 28px 28px 0 0;
+      overflow: hidden;
+      box-shadow: 0 18px 48px rgba(23, 49, 58, 0.16);
     }
 
     .footer-grid {
@@ -2131,13 +2152,23 @@
       font-size: 1.1rem;
     }
 
+    .footer-col h3::before {
+      content: "";
+      display: block;
+      width: 190px;
+      height: 58px;
+      margin: 0 0 16px;
+      border-radius: 18px;
+      background: #ffffff url("assets/operon-logo-final.png") center / 156px auto no-repeat;
+    }
+
     .footer-col h4 {
       font-size: 1rem;
     }
 
     .footer-col p {
       margin: 0 0 12px;
-      color: #bbbbbb;
+      color: rgba(255, 255, 255, 0.72);
       font-size: 14px;
       line-height: 1.6;
     }
@@ -2154,7 +2185,7 @@
 
     .footer-col a,
     .footer-legal a {
-      color: #bbbbbb;
+      color: rgba(255, 255, 255, 0.72);
       text-decoration: none;
       font-size: 14px;
     }
@@ -2165,7 +2196,7 @@
     }
 
     .footer-bottom {
-      border-top: 1px solid #333333;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
       margin-top: 40px;
       padding-top: 20px;
       display: flex;
@@ -2173,12 +2204,12 @@
       align-items: center;
       gap: 16px;
       font-size: 13px;
-      color: #aaaaaa;
+      color: rgba(255, 255, 255, 0.64);
     }
 
     .footer-bottom p {
       margin: 0;
-      color: #aaaaaa;
+      color: rgba(255, 255, 255, 0.64);
     }
 
     .footer-legal {
@@ -2225,6 +2256,12 @@
       .trust-grid,
       .steps {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .site-footer.footer-contained {
+        width: calc(100% - 24px);
+        margin: 44px auto 12px;
+        border-radius: 22px 22px 0 0;
       }
 
       .summary-card {
@@ -2396,6 +2433,10 @@
       .shell,
       .container {
         width: min(var(--max-width), calc(100% - 20px));
+      }
+
+      .trust-strip {
+        display: none;
       }
 
       body {
@@ -2952,7 +2993,7 @@
           <input type="hidden" id="leadPriority" name="lead_priority" value="">
           <input type="hidden" id="leadQuoteReviewPayload" name="quote_review_payload_json" value="">
           <input type="hidden" id="leadPayloadJson" name="lead_payload_json" value="">
-          <h2 style="margin-top: 18px;">Request a flooring quote</h2>
+          <h2 class="quote-form-title" style="margin-top: 18px;">Request a flooring quote</h2>
           <p class="form-intro">Build a practical estimate first, then confirm the final scope before work is booked.</p>
           <div class="advisor-handoff-card" id="quoteAdvisorHandoffCard" aria-live="polite">
             <strong>Quote Advisor context attached</strong>
@@ -3083,6 +3124,16 @@
             </div>
           </section>
 
+          <div class="wizard-recovery" id="leadRecoveryBanner" hidden>
+            <div class="wizard-recovery-copy">
+              <strong id="leadRecoveryTitle">Saved draft found</strong>
+              <p id="leadRecoveryText">Your last quote was not submitted. This draft is still saved on this device.</p>
+            </div>
+            <div class="wizard-recovery-actions">
+              <button class="button-quiet" id="leadRecoveryButton" type="button">Review draft</button>
+            </div>
+          </div>
+
           <div class="wizard-progress">
             <div class="wizard-progress-label" id="quoteStepCounter">Step 1 of 7 · Customer details</div>
             <div class="wizard-progress-title" id="quoteStepTitle">Customer details</div>
@@ -3103,16 +3154,6 @@
             <p id="wizardAssistText">Name, phone, suburb, and postcode are enough to begin.</p>
           </div>
           <p class="wizard-micro-confirmation" id="wizardMicroConfirmation" hidden>Details saved.</p>
-
-          <div class="wizard-recovery" id="leadRecoveryBanner" hidden>
-            <div class="wizard-recovery-copy">
-              <strong id="leadRecoveryTitle">Saved draft found</strong>
-              <p id="leadRecoveryText">Your last quote was not submitted. This draft is still saved on this device.</p>
-            </div>
-            <div class="wizard-recovery-actions">
-              <button class="button-quiet" id="leadRecoveryButton" type="button">Review draft</button>
-            </div>
-          </div>
 
           <section class="step-card quote-step" data-quote-step="0" style="margin-top: 14px;">
             <div class="step-head">
@@ -3142,7 +3183,7 @@
                 <input id="siteAddress" name="siteAddress" type="text" autocomplete="street-address" placeholder="Street address if available">
                 <details class="field-note">
                   <summary>Why we ask this</summary>
-                  <p>It helps us identify the project location and any follow-up needed before final confirmation.</p>
+                  <p>The address helps us identify the project, review the location properly, and keep the follow-up tied to the correct site. If you do not know the full address yet, suburb and postcode are still enough to start.</p>
                 </details>
               </div>
               <div class="field">
@@ -3177,7 +3218,7 @@
                 </select>
                 <details class="field-note">
                   <summary>Why we ask this</summary>
-                  <p>Property type helps us understand the site before the final quote is confirmed.</p>
+                  <p>Property type helps us understand the likely site setup before the final quote is confirmed. For example, houses, townhouses and apartments can differ in acoustic requirements, working conditions and what usually needs to be checked before installation.</p>
                 </details>
               </div>
               <div class="field" id="propertyLevelField">
@@ -3347,7 +3388,7 @@
                 <input id="totalAreaM2" name="totalAreaM2" type="number" min="0" step="0.1" placeholder="e.g. 54">
                 <details class="field-note">
                   <summary>Why we ask this</summary>
-                  <p>Area is the main driver of material and installation scope.</p>
+                  <p>Area is one of the main drivers of both material quantity and installation scope. Even an approximate total helps the estimate start in the right range, and we can refine the number later if room sizes or floor plan details change.</p>
                 </details>
               </div>
                 <div class="field" id="manualRoomCountField" hidden>
@@ -3952,31 +3993,31 @@
           <details class="faq-toggle">
             <summary>Do I need exact measurements to start?</summary>
             <div class="faq-toggle-body">
-              <p>No. Start with the best area you know now. Final measurements can be checked before the quote is confirmed.</p>
+              <p>No. Start with the best area you know now, even if it is only an approximate total or an early floor plan measurement. The quote is designed to give you a structured starting estimate first, then confirm final measurements before the work is locked in.</p>
             </div>
           </details>
           <details class="faq-toggle">
             <summary>Can I upload a floor plan instead of measuring manually?</summary>
             <div class="faq-toggle-body">
-              <p>Yes. Use the floor plan tool to trace rooms, confirm area, and send that measured total into the quote.</p>
+              <p>Yes. The floor plan tool lets you trace the flooring rooms, calculate a measured area, and send that figure back into the quote flow. It is a practical option when you do not want to measure each room by hand, but final scope items still need review in the quote itself.</p>
             </div>
           </details>
           <details class="faq-toggle">
             <summary>Is the online quote the final price?</summary>
             <div class="faq-toggle-body">
-              <p>No. The online result is an estimate. Final price is confirmed after site details are reviewed.</p>
+              <p>No. The online result is a structured estimate, not the final approved contract price. Final price is confirmed after the selected product, area, scope items and relevant site details are reviewed together.</p>
             </div>
           </details>
           <details class="faq-toggle">
             <summary>Can I choose supply and install or installation only?</summary>
             <div class="faq-toggle-body">
-              <p>Yes. The quote supports both supply and install, and installation-only projects.</p>
+              <p>Yes. You can use the quote for both supply and install projects or installation-only work where the flooring product is already chosen or supplied separately. The flow adjusts the estimate path so the pricing structure matches the type of job you are planning.</p>
             </div>
           </details>
           <details class="faq-toggle">
             <summary>Am I committed when I send the quote?</summary>
             <div class="faq-toggle-body">
-              <p>No. Sending the estimate does not lock you in. It gives us the project details so we can review and confirm the next step with you.</p>
+              <p>No. Sending the estimate does not lock you in or force a booking. It simply gives us the project details in one structured place so the scope can be reviewed properly and the next step can be confirmed with you.</p>
             </div>
           </details>
         </div>
@@ -3992,12 +4033,11 @@
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer footer-contained">
     <div class="container footer-grid">
       <div class="footer-col">
         <h3>Operon Flooring</h3>
         <p>Premium laminate, hybrid and engineered timber flooring quotes for Sydney homes.</p>
-        <p>Clear estimates, measured areas and final pricing confirmed before work begins.</p>
       </div>
       <div class="footer-col">
         <h4>Products</h4>
@@ -4021,10 +4061,10 @@
       <div class="footer-col">
         <h4>Actions</h4>
         <ul>
-          <li><a href="#quoteForm">Start Quote</a></li>
-          <li><a href="quote-review.html">Review Quote</a></li>
+          <li><a href="quote.html">Start Quote</a></li>
           <li><a href="floorplan.html">Upload Floor Plan</a></li>
           <li><a href="blog/index.html">Guides</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -4534,7 +4574,8 @@
         return;
       }
 
-      const target = window.innerWidth <= 820 ? step : quoteForm;
+      const progress = quoteForm.querySelector(".wizard-progress");
+      const target = progress || step;
       const top = window.scrollY + target.getBoundingClientRect().top - getHeaderOffset();
       window.scrollTo({
         top: Math.max(0, top),
@@ -4746,6 +4787,8 @@
       wizardSubmitButton.hidden = !isFinalStep;
       wizardSubmitButton.setAttribute("aria-hidden", isFinalStep ? "false" : "true");
       document.body.classList.toggle("quote-final-step", isFinalStep);
+      document.body.classList.toggle("quote-step-past-intro", currentQuoteStep > 0);
+      document.body.classList.toggle("quote-focused-flow", currentQuoteStep >= 1);
       if (emailQuoteCopyControls) {
         emailQuoteCopyControls.hidden = !isFinalStep;
         emailQuoteCopyControls.setAttribute("aria-hidden", isFinalStep ? "false" : "true");
@@ -6138,7 +6181,7 @@
       })).join("");
 
       productRangeHelper.textContent = category === "engineered"
-        ? "Choose range, then colour."
+        ? "Choose range, then colour. Engineered timber price may vary by colour within the same range."
         : "Colour can be confirmed later.";
     }
 
@@ -6164,7 +6207,9 @@
       })).join("");
       productColourSelect.disabled = !colours.length;
       productColourHelper.textContent = colours.length
-        ? "Choose product colour."
+        ? (category === "engineered"
+          ? "Choose product colour. Engineered timber price may vary by colour within the same range."
+          : "Choose product colour.")
         : "No live colour-level products are published for this range yet.";
     }
 
@@ -9069,9 +9114,11 @@
         submitQuoteRequest(event);
       });
 
-      headerQuoteButton.addEventListener("click", function (event) {
-        event.preventDefault();
-        focusQuoteFlow();
+      document.querySelectorAll('a[href="#quoteForm"]').forEach(function (link) {
+        link.addEventListener("click", function (event) {
+          event.preventDefault();
+          focusQuoteFlow();
+        });
       });
 
       stickyQuoteButton.addEventListener("click", function () {

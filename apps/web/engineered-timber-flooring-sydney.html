@@ -138,9 +138,9 @@
     <section class="section">
       <div class="shell">
         <article class="section-card">
-          <span class="eyebrow">Featured Engineered Products</span>
-          <h2 style="margin-top: 18px;">Browse live engineered timber colours first</h2>
-          <p>Browse live engineered ranges, then continue into the quote with the range saved.</p>
+          <span class="eyebrow">Engineered Timber Ranges</span>
+          <h2 style="margin-top: 18px;">Compare engineered timber ranges before you quote</h2>
+          <p>Choose an engineered timber range first, then confirm the final colour in the quote because price can vary by colour within the same range.</p>
           <div class="catalogue-selection-banner">
             <strong id="engineeredSelectionTitle">Engineered timber quote path ready</strong>
             <p id="engineeredSelectionText">Browse the live Swish Oak Natura ranges or continue straight into the quote and confirm the final board during review.</p>
@@ -150,7 +150,30 @@
             </div>
           </div>
           <div class="catalogue-grid" id="engineeredFeaturedGrid"></div>
-          <div class="catalogue-status" id="engineeredFeaturedStatus">Choose an engineered timber product, then continue into the quote when you are ready.</div>
+          <div class="catalogue-status" id="engineeredFeaturedStatus">Choose an engineered timber range, then continue into the quote when you are ready.</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <article class="section-card">
+          <span class="eyebrow">Other Flooring Categories</span>
+          <h2 style="margin-top: 18px;">Compare engineered timber with hybrid or laminate</h2>
+          <div class="link-grid" style="margin-top: 20px;">
+            <a class="link-card" href="hybrid-flooring-sydney.html">
+              <strong>Hybrid Flooring Sydney</strong>
+              <span>Water-resistant and practical ranges for busy homes.</span>
+            </a>
+            <a class="link-card" href="laminate-flooring-sydney.html">
+              <strong>Laminate Flooring Sydney</strong>
+              <span>Value-led timber-look flooring for dry internal rooms.</span>
+            </a>
+            <a class="link-card" href="products.html?category=engineered">
+              <strong>All Engineered Timber Products</strong>
+              <span>Open the full engineered timber catalogue and browse colours.</span>
+            </a>
+          </div>
         </article>
       </div>
     </section>
@@ -242,37 +265,37 @@
             <details class="faq-toggle">
               <summary>What is engineered timber flooring?</summary>
               <div class="faq-toggle-body">
-                <p>Engineered timber flooring uses a real timber wear layer over a layered base. It is usually chosen when the natural timber finish is central to the renovation result.</p>
+                <p>Engineered timber flooring uses a real timber wear layer over a layered base, which gives you the visual appeal of timber with a more controlled board structure than solid timber. It is usually chosen when the natural timber finish is central to the renovation result and the project calls for a more premium look.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>How much does engineered timber flooring cost in Sydney?</summary>
               <div class="faq-toggle-body">
-                <p>Cost depends on the selected range, measured area, installation method, pattern, preparation and finishing scope. The quote flow gives a starting estimate before final confirmation.</p>
+                <p>Cost depends on the selected range, measured area, installation method, pattern, preparation and finishing scope. Engineered timber projects often vary more than laminate or hybrid because the product, installation path and detailing matter more, so the quote flow is best used as a structured starting estimate before final confirmation.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>Can engineered timber be installed as floating or direct glue?</summary>
               <div class="faq-toggle-body">
-                <p>Straight-plank engineered timber can often be assessed as floating or direct glue. Herringbone and chevron installations require direct glue and clearer site-scope review.</p>
+                <p>Straight-plank engineered timber can often be assessed as either floating or direct glue, depending on the product and the site conditions. Herringbone and chevron installations are more specialised, so they are treated as direct glue setups with clearer site-scope review before final approval.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>Is engineered timber better than hybrid flooring?</summary>
               <div class="faq-toggle-body">
-                <p>Engineered timber is usually better when real timber appearance is the priority. Hybrid is often better when water resistance, low maintenance and a simpler project path matter more.</p>
+                <p>Engineered timber is usually the better fit when real timber appearance, warmth and a more premium finish are the priority. Hybrid is often the stronger practical option when water resistance, lower maintenance and a simpler project path matter more than the natural timber surface.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>Can engineered timber be used in apartments?</summary>
               <div class="faq-toggle-body">
-                <p>It can be suitable, but acoustic rules, building requirements and the installation method need to be checked before an apartment project is confirmed.</p>
+                <p>It can be suitable, but acoustic rules, building requirements and the installation method need to be checked before an apartment project is confirmed. This matters more with engineered timber because the product, underlay or glue system and final finish expectations all affect the approval path.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>Can I use the floor plan tool for an engineered timber quote?</summary>
               <div class="faq-toggle-body">
-                <p>Yes. The floor plan tool can be used to confirm the area before returning to the quote flow.</p>
+                <p>Yes. The floor plan tool can be used to confirm the area before returning to the quote flow, which is especially helpful on larger or more considered projects. It solves the measurement part first, while the final product, pattern and installation method are still confirmed during review.</p>
               </div>
             </details>
           </div>
@@ -345,7 +368,7 @@
   <script>
     (function () {
       const productsApi = window.OperonProducts;
-      if (!productsApi) {
+      if (!productsApi || typeof productsApi.renderCategoryRangeCatalogue !== "function") {
         return;
       }
 
@@ -364,6 +387,11 @@
 
       function updateEngineeredBridge() {
         const storedProduct = productsApi.getStoredProduct();
+        const storedSelection = productsApi.getStoredSelectionState();
+        const selectedRangeId = storedSelection ? storedSelection.selectedRangeId : "";
+        const selectedRange = selectedRangeId
+          ? productsApi.getRangesByCategory("engineered").find(function (range) { return range.rangeId === selectedRangeId; })
+          : null;
         quoteLink.setAttribute("href", "quote.html?from=product&category=engineered");
 
         if (storedProduct && storedProduct.category === "engineered") {
@@ -375,19 +403,30 @@
           return;
         }
 
+        if (selectedRange && selectedRange.category === "engineered") {
+          title.textContent = "Selected range: " + selectedRange.rangeLabel;
+          text.textContent = selectedRange.colourCount
+            ? selectedRange.colourCount + " colours available. Confirm the colour in the quote because price can vary within this range."
+            : "Confirm the colour in the quote because price can vary within this range.";
+          quoteLink.textContent = "Continue to quote";
+          return;
+        }
+
         title.textContent = "Engineered timber quote path ready";
         text.textContent = "Browse the live Swish Oak Natura ranges or continue straight into the quote and confirm the final board during review.";
         quoteLink.textContent = "Continue to quote";
       }
 
       updateEngineeredBridge();
-      productsApi.renderCategoryCatalogue({
+      window.addEventListener("operon:range-selected", updateEngineeredBridge);
+      window.addEventListener("operon:range-cleared", updateEngineeredBridge);
+      productsApi.renderCategoryRangeCatalogue({
         category: "engineered",
         targetId: "engineeredFeaturedGrid",
         statusId: "engineeredFeaturedStatus",
         limit: 6,
         quoteUrl: "quote.html?from=product&category=engineered",
-        successMessage: "Engineered timber product selected. Continue to quote."
+        successMessage: "Engineered timber range selected. Continue to quote."
       });
     }());
   </script>

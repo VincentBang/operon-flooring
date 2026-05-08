@@ -148,21 +148,44 @@
     <section class="section">
       <div class="shell">
         <article class="section-card">
-          <span class="eyebrow">Featured Hybrid Products</span>
-          <h2 style="margin-top: 18px;">Select a hybrid floor before you quote</h2>
-          <p>Choose a hybrid range first, or continue with the standard hybrid estimate.</p>
+          <span class="eyebrow">Hybrid Ranges</span>
+          <h2 style="margin-top: 18px;">Compare hybrid ranges before you quote</h2>
+          <p>Choose a hybrid range first, then confirm the final colour during quote review if needed.</p>
           <div class="catalogue-selection-banner" id="hybridFeaturedSelection">
-            <strong id="hybridSelectionTitle">No hybrid floor selected yet</strong>
-            <p id="hybridSelectionText">Select a floor here to carry it into the quote, or continue with the standard hybrid flooring estimate.</p>
+            <strong id="hybridSelectionTitle">No hybrid range selected yet</strong>
+            <p id="hybridSelectionText">Select a range here to carry it into the quote, or continue with the standard hybrid flooring estimate.</p>
             <div class="catalogue-selection-actions">
               <a class="button" href="quote.html?from=product&category=hybrid" data-save-category="hybrid">Continue to quote</a>
               <button class="button-secondary" id="hybridSelectionClearButton" type="button">Use hybrid estimate instead</button>
             </div>
           </div>
           <div class="catalogue-grid" id="hybridFeaturedGrid"></div>
-          <div class="catalogue-status" id="hybridFeaturedStatus">Choose a product, then continue into the quote when you are ready.</div>
+          <div class="catalogue-status" id="hybridFeaturedStatus">Choose a range, then continue into the quote when you are ready.</div>
           <div class="hero-actions" style="margin-top: 24px;">
             <a class="button-secondary" href="products.html?category=hybrid" data-save-category="hybrid">View all hybrid flooring products</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <article class="section-card">
+          <span class="eyebrow">Other Flooring Categories</span>
+          <h2 style="margin-top: 18px;">Compare hybrid with laminate or engineered timber</h2>
+          <div class="link-grid" style="margin-top: 20px;">
+            <a class="link-card" href="laminate-flooring-sydney.html">
+              <strong>Laminate Flooring Sydney</strong>
+              <span>Value-led timber-look floors for dry internal rooms.</span>
+            </a>
+            <a class="link-card" href="engineered-timber-flooring-sydney.html">
+              <strong>Engineered Timber Flooring Sydney</strong>
+              <span>Premium real-timber finish with floating or glue-down options.</span>
+            </a>
+            <a class="link-card" href="products.html?category=hybrid">
+              <strong>All Hybrid Products</strong>
+              <span>Open the full hybrid catalogue and browse colours.</span>
+            </a>
           </div>
         </article>
       </div>
@@ -289,43 +312,43 @@
             <details class="faq-toggle">
               <summary>Is hybrid flooring waterproof?</summary>
               <div class="faq-toggle-body">
-                <p>Most modern hybrid flooring uses a waterproof core, which makes it popular for kitchens, living areas and busy homes. Final suitability still depends on the selected range and site conditions.</p>
+                <p>Most modern hybrid flooring uses a waterproof core, which is why it is commonly chosen for kitchens, living areas and busy family homes. That said, waterproof does not mean every installation detail can be ignored, so the selected range and site conditions still need to suit the project properly.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>Is hybrid flooring suitable for apartments?</summary>
               <div class="faq-toggle-body">
-                <p>Hybrid flooring is often suitable for apartments because it is usually installed as a floating floor, but acoustic rules and building requirements still need to be checked.</p>
+                <p>Hybrid flooring is often suitable for apartments because it is commonly installed as a floating floor and gives a practical, low-maintenance finish. Acoustic rules, building requirements and the specific product setup still need to be checked before the final installation path is confirmed.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>How much does hybrid flooring cost in Sydney?</summary>
               <div class="faq-toggle-body">
-                <p>Cost depends on the hybrid range, measured area and selected scope. Use the quote flow for a starting estimate, then confirm final site details before booking.</p>
+                <p>Hybrid flooring cost depends on the selected range, measured area and scope items such as removal, trims, moisture protection or stairs. The quote flow gives you a structured starting estimate first, then the final scope is confirmed before booking.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>Does hybrid flooring need underlay?</summary>
               <div class="faq-toggle-body">
-                <p>Some hybrid flooring ranges include pre-attached acoustic backing, while other projects may.</p>
+                <p>Some hybrid ranges already include an attached acoustic layer, while other projects may still need a separate underlay depending on the product and installation setup. It is worth checking this early because underlay affects comfort, sound performance and the overall scope of the quote.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>Can hybrid flooring be installed over tiles?</summary>
               <div class="faq-toggle-body">
-                <p>Sometimes, but only when the tile surface is sound and suitable.</p>
+                <p>Sometimes, yes, but only when the existing tile surface is sound, level enough and suitable for the selected product system. If the tiles are uneven, loose or causing height issues, preparation may still be needed before installation is confirmed.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>Is hybrid better than laminate flooring?</summary>
               <div class="faq-toggle-body">
-                <p>Hybrid is usually stronger when water resistance and durability matter. Laminate can still be the better value-led option for dry internal rooms.</p>
+                <p>Hybrid is usually the stronger option when water resistance, durability and everyday practicality matter most. Laminate can still be the better value-led option for dry internal rooms where the brief is simpler and the project does not need the same moisture-focused performance.</p>
               </div>
             </details>
             <details class="faq-toggle">
               <summary>How long does hybrid flooring installation take?</summary>
               <div class="faq-toggle-body">
-                <p>Installation time depends on area, room layout, removal, preparation and site details.</p>
+                <p>Installation time depends on the area, room layout, removal, preparation needs and how clear the site scope is before work starts. A smaller straightforward job may move quickly, while projects with stairs, old floor removal or subfloor work naturally take longer.</p>
               </div>
             </details>
           </div>
@@ -397,7 +420,7 @@
   <script>
     (function () {
       const productsApi = window.OperonProducts;
-      if (!productsApi) {
+      if (!productsApi || typeof productsApi.renderCategoryRangeCatalogue !== "function") {
         return;
       }
 
@@ -408,167 +431,63 @@
         }
       });
 
-      const featuredGrid = document.getElementById("hybridFeaturedGrid");
-      const status = document.getElementById("hybridFeaturedStatus");
       const selectionTitle = document.getElementById("hybridSelectionTitle");
       const selectionText = document.getElementById("hybridSelectionText");
       const clearButton = document.getElementById("hybridSelectionClearButton");
 
-      function getHybridProducts() {
-        return productsApi.getProductsByCategory("hybrid").slice(0, 6);
-      }
-
-      function getFeatureText(product) {
-        return (product.features && product.features[0]) || "Waterproof hybrid flooring";
-      }
-
-      function getSpecLine(product) {
-        return [product.brand, product.thickness].filter(Boolean).join(" · ");
-      }
-
-      function buildImageMarkup(product) {
-        if (product.imageUrl || product.image) {
-          return '<button class="catalogue-image-frame" type="button" data-open-product-image="' + product.id + '" aria-label="Open larger image for ' + product.colour + '">' +
-            '<img class="catalogue-image" src="' + (product.imageUrl || product.image) + '" alt="' + productsApi.getProductLabel(product) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">' +
-            '<div class="catalogue-swatch-fallback" aria-hidden="true"><div class="catalogue-swatch" style="background:' + product.swatch + ';"></div><span>' + product.colour + "</span></div>" +
-          "</button>";
-        }
-
-        return '<button class="catalogue-image-frame is-fallback" type="button" data-open-product-image="' + product.id + '" aria-label="Open larger image for ' + product.colour + '">' +
-          '<div class="catalogue-swatch-fallback" aria-hidden="true"><div class="catalogue-swatch" style="background:' + product.swatch + ';"></div><span>' + product.colour + "</span></div>" +
-        "</button>";
-      }
-
-      function buildFeaturedCard(product, isSelected) {
-        return '<article class="catalogue-card' + (isSelected ? " selected" : "") + '" data-product-card="' + product.id + '">' +
-          buildImageMarkup(product) +
-          '<div class="catalogue-card-top">' +
-            '<div class="catalogue-copy">' +
-              '<span class="catalogue-brand">' + product.brand + "</span>" +
-              "<h3>" + product.range + "</h3>" +
-              '<p class="catalogue-colour">' + product.colour + "</p>" +
-              '<p class="catalogue-spec">' + getSpecLine(product) + "</p>" +
-            "</div>" +
-          "</div>" +
-          '<p class="catalogue-single-feature">' + getFeatureText(product) + "</p>" +
-          '<div class="catalogue-card-actions">' +
-            '<button class="button-secondary" type="button" data-select-hybrid-product="' + product.id + '">Select this floor</button>' +
-            '<a class="button" href="quote.html?from=product&category=hybrid" data-get-hybrid-quote="' + product.id + '">Get quote</a>' +
-          "</div>" +
-        "</article>";
-      }
-
       function updateSelectionState() {
         const storedProduct = productsApi.getStoredProduct();
+        const storedSelection = productsApi.getStoredSelectionState();
+        const selectedRangeId = storedSelection ? storedSelection.selectedRangeId : "";
+        const selectedRange = selectedRangeId
+          ? productsApi.getRangesByCategory("hybrid").find(function (range) { return range.rangeId === selectedRangeId; })
+          : null;
         if (storedProduct && storedProduct.category === "hybrid") {
-          selectionTitle.textContent = "Selected for quote: " + productsApi.getProductLabel(storedProduct);
-          selectionText.textContent = storedProduct.pricePerM2 > 0
-            ? storedProduct.brand + " / " + storedProduct.range + " / " + storedProduct.colour + " · " + productsApi.formatProductRate(storedProduct)
-            : storedProduct.brand + " / " + storedProduct.range + " / " + storedProduct.colour + " · final details confirmed during review.";
+          selectionTitle.textContent = "Selected range: " + (storedProduct.rangeLabel || productsApi.getProductLabel(storedProduct));
+          selectionText.textContent = "Colour can be confirmed later. " + productsApi.formatProductRate(storedProduct);
           clearButton.textContent = "Use hybrid estimate instead";
           return;
         }
 
-        selectionTitle.textContent = "No hybrid floor selected yet";
-        selectionText.textContent = "Select a floor here to carry it into the quote, or continue with the standard hybrid flooring estimate.";
-        clearButton.textContent = "Use hybrid estimate instead";
-      }
-
-      function renderFeaturedProducts() {
-        const products = getHybridProducts();
-        const storedProduct = productsApi.getStoredProduct();
-
-        if (!products.length) {
-          featuredGrid.innerHTML = "";
-          status.textContent = "Live hybrid products will appear here as they are confirmed.";
+        if (selectedRange && selectedRange.category === "hybrid") {
+          selectionTitle.textContent = "Selected range: " + selectedRange.rangeLabel;
+          selectionText.textContent = selectedRange.colourCount
+            ? selectedRange.colourCount + " colours available. Final colour can be confirmed later."
+            : "Final colour can be confirmed later.";
+          clearButton.textContent = "Use hybrid estimate instead";
           return;
         }
 
-        featuredGrid.innerHTML = products.map(function (product) {
-          return buildFeaturedCard(product, storedProduct && storedProduct.id === product.id);
-        }).join("");
-
-        status.textContent = "Choose a product, then continue into the quote when you are ready.";
-        delete status.dataset.state;
+        selectionTitle.textContent = "No hybrid range selected yet";
+        selectionText.textContent = "Select a range here to carry it into the quote, or continue with the standard hybrid flooring estimate.";
+        clearButton.textContent = "Use hybrid estimate instead";
       }
 
       clearButton.addEventListener("click", function () {
         productsApi.clearSelectedProduct();
         productsApi.saveSelectedCategory("hybrid");
         updateSelectionState();
-        renderFeaturedProducts();
+        productsApi.renderCategoryRangeCatalogue({
+          category: "hybrid",
+          targetId: "hybridFeaturedGrid",
+          statusId: "hybridFeaturedStatus",
+          limit: 6,
+          quoteUrl: "quote.html?from=product&category=hybrid",
+          successMessage: "Hybrid range selected. Continue to quote when you are ready."
+        });
       });
 
-      featuredGrid.addEventListener("click", function (event) {
-        const selectButton = event.target.closest("[data-select-hybrid-product]");
-        if (selectButton) {
-          const product = productsApi.getProductById(selectButton.getAttribute("data-select-hybrid-product"));
-          if (!product) {
-            return;
-          }
-          productsApi.saveSelectedProduct(product);
-          status.textContent = "Hybrid floor selected. Continue to quote when you are ready.";
-          status.dataset.state = "success";
-          updateSelectionState();
-          renderFeaturedProducts();
-          if (window.OperonTracking) {
-            if (typeof window.OperonTracking.trackProductSelect === "function") {
-              window.OperonTracking.trackProductSelect({
-                category: product.category,
-                brand: product.brand,
-                range: product.range,
-                colour: product.colour,
-                source: "hybrid_featured_select"
-              });
-            } else {
-              window.OperonTracking.trackEvent("product_select", {
-                category: product.category,
-                brand: product.brand,
-                range: product.range,
-                colour: product.colour
-              });
-            }
-          }
-          return;
-        }
-
-        const quoteLink = event.target.closest("[data-get-hybrid-quote]");
-        if (quoteLink) {
-          const product = productsApi.getProductById(quoteLink.getAttribute("data-get-hybrid-quote"));
-          if (product) {
-            productsApi.saveSelectedProduct(product);
-            productsApi.saveSelectedCategory("hybrid");
-            if (window.OperonTracking) {
-              if (typeof window.OperonTracking.trackProductSelect === "function") {
-                window.OperonTracking.trackProductSelect({
-                  category: product.category,
-                  brand: product.brand,
-                  range: product.range,
-                  colour: product.colour,
-                  source: "hybrid_featured_quote"
-                });
-              } else {
-                window.OperonTracking.trackEvent("product_select", {
-                  category: product.category,
-                  brand: product.brand,
-                  range: product.range,
-                  colour: product.colour
-                });
-              }
-            }
-          }
-          return;
-        }
-
-        const imageButton = event.target.closest("[data-open-product-image]");
-        if (imageButton) {
-          const product = productsApi.getProductById(imageButton.getAttribute("data-open-product-image"));
-          productsApi.openCatalogueLightbox(product);
-        }
-      });
-
+      window.addEventListener("operon:range-selected", updateSelectionState);
+      window.addEventListener("operon:range-cleared", updateSelectionState);
       updateSelectionState();
-      renderFeaturedProducts();
+      productsApi.renderCategoryRangeCatalogue({
+        category: "hybrid",
+        targetId: "hybridFeaturedGrid",
+        statusId: "hybridFeaturedStatus",
+        limit: 6,
+        quoteUrl: "quote.html?from=product&category=hybrid",
+        successMessage: "Hybrid range selected. Continue to quote when you are ready."
+      });
     }());
   </script>
 </body>

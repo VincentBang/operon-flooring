@@ -476,6 +476,9 @@ const STAIR_TYPE_LABELS = {
   one_side_open: "Stairs with one open side",
   two_side_open: "Stairs with two open sides"
 };
+const STAIR_RATE_RANGE_ALIASES = {
+  "engineered-swish-oak-natura-herringbone": "engineered-swish-oak-natura"
+};
 
 function normaliseStairDetails(input) {
   const legacyMap = {
@@ -510,8 +513,9 @@ function normaliseStairDetails(input) {
 
 function getStairRateSet(library, rangeId) {
   const rows = Array.isArray(library.stairRates) ? library.stairRates : [];
+  const lookupRangeId = String(rangeId || "").trim();
   const rangeRows = rows.filter(function (row) {
-    return row.range_id === rangeId;
+    return row.range_id === lookupRangeId;
   });
   if (!rangeRows.length) {
     return null;
@@ -533,9 +537,51 @@ function getStairRateSet(library, rangeId) {
   };
 }
 
+function getInstallationOnlyStairRangeId(category) {
+  const normalizedCategory = String(category || "").trim();
+  if (normalizedCategory === "laminate" || normalizedCategory === "hybrid" || normalizedCategory === "engineered") {
+    return "installation-only-" + normalizedCategory;
+  }
+  return "";
+}
+
+function hasStairRateRange(library, rangeId) {
+  const rows = Array.isArray(library.stairRates) ? library.stairRates : [];
+  const lookupRangeId = String(rangeId || "").trim();
+  return !!lookupRangeId && rows.some(function (row) {
+    return row.range_id === lookupRangeId;
+  });
+}
+
+function getMappedStairRateRangeId(library, rangeId) {
+  const lookupRangeId = String(rangeId || "").trim();
+  const explicitSourceRangeId = STAIR_RATE_RANGE_ALIASES[lookupRangeId] || "";
+  if (explicitSourceRangeId && hasStairRateRange(library, explicitSourceRangeId)) {
+    return explicitSourceRangeId;
+  }
+  if (lookupRangeId.endsWith("-herringbone")) {
+    const straightRangeId = lookupRangeId.replace(/-herringbone$/, "");
+    if (hasStairRateRange(library, straightRangeId)) {
+      return straightRangeId;
+    }
+  }
+  if (lookupRangeId.endsWith("-chevron")) {
+    const straightRangeId = lookupRangeId.replace(/-chevron$/, "");
+    if (hasStairRateRange(library, straightRangeId)) {
+      return straightRangeId;
+    }
+  }
+  return "";
+}
+
 function getStairPricingState(input, product, library) {
   const details = normaliseStairDetails(input);
-  const rangeId = input.selectedRangeId || product.rangeId || "";
+  const quoteMode = input.jobType || input.quoteMode || "supply_install";
+  const productCategory = product.category || input.category || "";
+  const selectedRangeId = input.selectedRangeId || product.rangeId || "";
+  const rangeId = quoteMode === "install_only"
+    ? getInstallationOnlyStairRangeId(productCategory)
+    : (getMappedStairRateRangeId(library, selectedRangeId) || selectedRangeId);
   const state = {
     selected: input.stairs === "yes",
     total: 0,

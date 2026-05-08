@@ -18,8 +18,11 @@ Source-of-truth status: active project memory for current business direction, pa
 - Supporting message: `Get a clearer laminate, hybrid, or engineered timber flooring estimate with area capture, product selection, and pricing built for real installation work.`
 - Trust message: `Measured where needed. Priced clearly. Product and site details confirmed before installation starts.`
 - Brand position: Operon Flooring is not only a quick quote tool; it presents clear flooring estimates, professional installation, quality workmanship, an experienced installation team, reliable Sydney service, clean product selection, correct scope, quote transparency, and final site confirmation before work.
+- Installation trust policy: Operon should signal professionalism through scope clarity, process clarity, installation detail awareness, preparation discipline, quote transparency, real project proof, and flooring decision guidance. Avoid generic claims such as “best quality,” “premium workmanship,” and “Sydney’s best flooring.” Prefer real installation details, process explanations, project examples, scope guidance, operational clarity, and visual craftsmanship proof so customers feel Operon is structured, careful, professional, and detail-aware.
 - Quote validation must be positioned as quote clarity and scope review, not price comparison.
 - Homepage should stay clean, visual, premium, and not overloaded with tool or form language.
+- Operon Scope Standard is a foundational operational framework that helps customers compare flooring quotes based on scope clarity, not price alone. It should quietly shape marketing, SEO, quote review, product pages, suburb pages, comparison guides, quote UX, installation-quality signaling, and future SaaS workflow logic without becoming forced public branding.
+- Public copy should prefer plain language such as “clear scope before price comparison,” “final details confirmed before installation,” “know what is included before you decide,” “compare flooring quotes by scope, not just total price,” and “a cheaper quote may not describe the same job.”
 
 ## Structure
 
@@ -35,6 +38,44 @@ Source-of-truth status: active project memory for current business direction, pa
 - Supabase / analytics = tracking layer
 - Agents = execution layer
 - Chatbot = guided conversion assistant layer; it supports product guidance, quote explanation, missing information collection, and quote scope review without replacing the quote flow
+
+## Quote Review System
+
+- Quote review is not document analysis software. It is a structured flooring decision-confidence system.
+- Quote review is a scope-first trust and data-capture system, not a price-comparison gimmick.
+- Raw uploaded quote files are temporary evidence; structured extracted data is the long-term intelligence asset.
+- OCR/API extraction must stay backend-only. Frontend should call Operon endpoints, never OpenAI or OCR providers directly.
+- AI-assisted quote review should use GPT-4.1 mini as a staged backend workflow: OCR extraction, structured field extraction, scope classification, Operon comparison mapping, then consultant-style decision report.
+- AI should be invisible in customer-facing review language. The customer should feel flooring expertise, not AI hype.
+- Comparable Operon estimates are allowed only when enough fields are extracted and only through existing pricing logic.
+- If exact product/range is unknown but product category is clear, quote review should fall back to category-level comparison rather than pretending no comparison is possible.
+- Quote review should preserve two layers of status:
+  - customer-facing review status such as `COMPARABLE_WITH_CAUTION`
+  - internal Operon comparison status such as `OPERON_CATEGORY_ESTIMATE_ONLY`
+- Quote review must not expose internal rates, duplicate pricing logic, or auto-claim Operon is better because the comparison is incomplete.
+- The report should feel like a senior flooring consultant: concise executive summary, extracted quote details, scope confidence, why quotes differ, Operon comparable estimate only when safe, price interpretation, questions to clarify, and next step CTA.
+- Price is interpreted after scope. Do not lead with price difference before explaining missing inclusions, exclusions, site risks, and comparison confidence.
+- Quote review should use risk dimensions such as pricing clarity risk, scope completeness risk, variation risk, installation risk, product certainty, and comparison confidence instead of declaring a quote good or bad.
+- Quote review should now operate as decision-confidence infrastructure with an intelligence loop: track whether customers request an Operon estimate, proceed with Operon, choose a competitor, return after a competitor quote, encounter later variations, or identify won/lost reasons.
+- Operon Scope Standard is the internal completeness benchmark for quote review: product, range/colour, thickness, area, wastage/material allowance, supply/install split, underlay/acoustic layer, removal/disposal, prep/levelling, trims, stairs, door trimming, access, moisture/subfloor checks, warranty, exclusions, and final site confirmation.
+- Scope Standard dimensions now include product definition, area and measurement, installation scope, site/access, risk/preparation, finishing/accessories, commercial clarity, quality signals, exclusions/assumptions, and final site confirmation.
+- Quote review should classify product clarity, area clarity, installation clarity, site/access clarity, prep/risk clarity, finishing clarity, commercial clarity, exclusion clarity, and final confirmation requirement before any price interpretation.
+- Scope confidence labels should be: High scope definition, Medium scope definition, Low scope definition.
+- Quote review should classify job definition as high, medium, or low rather than using a single generic confidence score.
+- Confidence must be separated into extraction confidence, scope confidence, comparison confidence, product match confidence, price confidence, and site risk confidence where relevant.
+- Quote review should flag likely variation risks such as floor levelling, acoustic underlay, removal/disposal, trims, stairs, moisture preparation, apartment access, parking/lift restrictions, unclear product range, and warranty ambiguity using calm wording: “Potential variation risk if not confirmed.”
+- Installation quality risk should be assessed by whether the uploaded quote clearly handles prep, moisture checks, underlay/acoustic details, trims, warranty, installation method, exclusions, and access/site assumptions.
+- Every completed quote review should recommend one next best action, such as confirming missing scope, choosing a closest Operon product, building a structured Operon estimate, requesting site confirmation, asking the contractor to confirm inclusions in writing, or manual review.
+- Customer decision state may be inferred or asked for when useful, such as researching, comparing prices, worried about hidden costs, apartment compliance concern, quality-focused, budget-sensitive, urgent replacement, overwhelmed, or already has a preferred contractor. Use it for relevance, not pressure.
+- Future follow-up should be based on review context: missing acoustic underlay should lead to acoustic guidance, missing prep to floor preparation explanation, product uncertainty to product comparison, and scope-thin quotes to quote checklist education.
+- Competitor intelligence must be normalized and used internally only for patterns such as common missing scope, common product categories, suburb pricing patterns, under-scoped quote patterns, frequent exclusions, and common wording.
+- Future price-positioning intelligence such as unusually low, market-normal, or premium-positioned is a backlog item only and should not be implemented until enough structured historical data exists.
+- Quote review should attract customers who value clarity, professionalism, scope confidence, and reduced surprises, not purely lowest-price shopping.
+- Customer-facing privacy copy should explain that uploaded quotes are processed securely, may be stored temporarily for review support, and that structured quote details may be retained to improve the quoting system.
+- Recommended retention:
+  - raw uploaded files: 7–30 days
+  - OCR text: 30–90 days
+  - structured extracted data: long term
 
 ## Customer-Facing UI Policy
 
@@ -431,6 +472,150 @@ Reason:
 - Validation performed: task queue JSON parsed successfully, queue length is exactly 50, product page inline scripts parse, product page FAQ JSON-LD parses, each refreshed product page has exactly one H1, refreshed product page local links resolve, backend/system wording scan passed after excluding CSS margin false positives, and `git diff --check` passed for changed files
 - Known risks: visual mobile/browser QA is still recommended for the three refreshed product SEO pages; no GitHub push, Netlify deploy, Supabase write, backend/email change, quote logic change, pricing logic change, product data edit, or floorplan logic edit was performed
 - Next best tasks: browser QA refreshed product pages on mobile, audit suburb pages for unique local intent, and add natural product links from high-performing comparison/problem guides
+
+## Latest 2026-05-08 SEO Continuation Run
+
+- Tasks completed this run: `NO-BACKEND-WORDING-SCAN-001`, `ROBOTS-SITEMAP-QA-001`, `PRODUCT-INTERACTION-GUARD-001`, `SUBURB-PROJECT-PROOF-001`, `PRODUCT-INTENT-MAP-001`, `SUBURB-INTENT-AUDIT-001`, `GUIDE-MEASUREMENT-PATH-001`, and `BLOG-PRODUCT-LINKS-001`
+- Files changed this run: `apps/web/blog/how-to-measure-floor-area.html`, `apps/web/blog/laminate-vs-hybrid.html`, `apps/web/blog/hybrid-flooring-problems.html`, `apps/web/floor-care-maintenance.html`, `apps/web/SEO_CONTENT_REFRESH_REGISTER.md`, `apps/web/PROJECT_CASE_STUDY_BACKLOG.md`, `apps/web/QA_NOTES.md`, `apps/web/task_queue.json`, and `apps/web/PROJECT_MEMORY.md`
+- Content refresh: replaced clipped or generic guide copy with compact measurement, product-comparison, hybrid-problem, and maintenance decision guidance; added natural quote-review and product/category links where the reader is comparing scope or considering replacement
+- SEO governance: added a product SEO intent map, suburb intent audit notes for Parramatta/Liverpool/Auburn, and a priority suburb project-proof map that requires real project data before any case study goes live
+- Validation performed: `task_queue.json` parsed successfully, sitemap has 37 local targets and all resolve, edited page JSON-LD parses, edited page links resolve, clipped-fragment scan passed for the edited pages, and `git diff --check` passed
+- Known risks: the wider maintenance/blog cluster still contains older generic snippets and should be handled in a future content-quality batch; visual mobile/browser QA was not run in this pass
+- Protected-file status: no quote calculation, pricing logic, product data, floorplan logic, backend/email, Supabase, or chatbot live integration files were edited in this run
+- Next best tasks: run browser QA for refreshed pages, continue the maintenance-guide placeholder cleanup, audit visible images for alt/dimensions/lazy loading, then review quote-review entry points across commercial and guide pages
+
+## Latest 2026-05-08 Chatbot Agent Continuation Run
+
+- Tasks completed this run: `CHATBOT-QUOTE-REVIEW-001`, `CHATBOT-COVERAGE-001`, and `CHATBOT-FRICTION-001`
+- Files changed this run: `apps/web/chatbot/CHATBOT_CONVERSATION_FLOWS.md`, `apps/web/chatbot/CHATBOT_KNOWLEDGE_INDEX.md`, `apps/web/chatbot/CHATBOT_MEMORY.md`, `apps/web/task_queue.json`, and `apps/web/PROJECT_MEMORY.md`
+- Quote-review support: added safe phrasing, detailed review handoff rules, quote-advisor examples, and explicit boundaries against ranking quotes or claiming Operon is cheaper
+- Friction support: added flows for stuck quote users, near-submit uncertainty, area uncertainty, product choice uncertainty, stairs, and access notes
+- Knowledge coverage: documented current quote-review coverage, product-page refresh alignment, and safe friction-handling pattern for future chatbot responses
+- Validation performed: chatbot doc coverage check passed, `task_queue.json` parsed successfully with 50 tasks and all three chatbot tasks marked done, `node apps/web/chatbot/tests/chatbot.test.js` passed, and `git diff --check` passed
+- Protected-file status: no quote logic, pricing logic, product data, floorplan logic, live page wiring, backend/email, Supabase, or chatbot runtime logic was edited in this chatbot pass
+- Known risks: the existing modified `apps/web/chatbot/chatbotLogic.js` predates this run and was intentionally left untouched; isolated chatbot runtime tests should be run before any code-level chatbot change
+- Next best chatbot tasks: add or update isolated scenario tests for quote-review/stuck-user prompts, then consider docs-to-runtime alignment if live behavior needs the new flows
+
+## Latest 2026-05-08 Analytics Intelligence Agent Continuation Run
+
+- Task completed this run: `DATA-CAPTURE-MAP-001`
+- Files changed this run: `apps/web/OPERON_FUNNEL_SYSTEM.md`, `apps/web/task_queue.json`, and `apps/web/PROJECT_MEMORY.md`
+- Analytics scope: added a safe structured data capture map across entry pages, product discovery, quote progress, scope shape, floorplan usage, quote review, submission, thank-you, and close feedback
+- Safety rules reinforced: no unnecessary data collection, no backend writes, no quote calculation changes, no pricing logic changes, no internal rates exposed, and no raw uploaded plans/photos/quote-review text stored as general analytics events
+- Implementation order documented: audit CTA coverage first, standardise CTA metadata, then persist submitted safe scope fields server-side before building admin dashboards
+- Validation performed: `task_queue.json` parsed successfully and `git diff --check` passed for the edited files
+- Protected-file status: no quote logic, pricing logic, product data, floorplan logic, backend/email, Supabase migration, or chatbot runtime files were edited in this analytics pass
+- Next best analytics task: `ANALYTICS-CTA-AUDIT-001`, auditing CTA tracking coverage on product SEO pages while keeping `quote.html` and pricing files untouched
+
+## Latest 2026-05-08 SEO Audit Continuation Run
+
+- Tasks completed this run: `FINAL-QA-NEXT-RUN-001`, `QUOTE-REVIEW-SEO-ENTRY-001`, `IMAGE-SEO-AUDIT-001`, `PRODUCT-SECTION-DENSITY-001`, `CONTACT-PATH-AUDIT-001`, `FLOORPLAN-ENTRY-001`, and `ACCESSIBILITY-CTA-001`
+- Files changed this run: `apps/web/INTERNAL_LINK_GRAPH_AUDIT.md`, `apps/web/QA_NOTES.md`, `apps/web/OPERON_FUNNEL_SYSTEM.md`, `apps/web/task_queue.json`, and `apps/web/PROJECT_MEMORY.md`
+- Link graph audit: quote-review pathways are strongest on homepage, quote/quote-review, thank-you, and product SEO pages; suburb and maintenance pages should add quote-review links only when scope uncertainty is part of the page intent
+- Technical SEO audit: image tags were reviewed for alt text, lazy loading, and dimensions; dynamic catalogue images have alt/lazy handling but no fixed width/height attributes
+- CRO/accessibility audit: CTA labels are visible; existing `thank-you.html` hash-only `Call now` and `Send message` actions are logged for later contact-action cleanup
+- Product page audit: hybrid, laminate and engineered pages have one H1 each and section counts are still manageable after checklist additions
+- Validation performed: `task_queue.json` parsed, all visible JSON-LD blocks parsed, sitemap has 37 local targets, static internal links resolved after excluding generated catalogue href strings, and `git diff --check` passed
+- Protected-file status: no quote calculation, pricing logic, product data, floorplan logic, backend/email, Supabase, chatbot runtime, or live product interaction code was changed in this run
+- Known risks: visual browser QA is still pending; dynamic catalogue image dimensions need a careful product-page UX pass before any code edit
+- Next best SEO tasks: `MAINTENANCE-CTA-001`, `TRUST-COPY-AUDIT-001`, `PRODUCT-PAGE-HEADINGS-001`, `GUIDE-CANNIBALIZATION-001`, and `PRODUCT-RANGE-CONTENT-AUDIT-001`
+
+## Latest 2026-05-08 SEO Safe Task Follow-Up
+
+- Tasks completed this run: `GUIDE-CARD-REUSE-001`, `MAINTENANCE-CTA-001`, `HOMEPAGE-CRO-AUDIT-001`, `TRUST-COPY-AUDIT-001`, and `PRODUCT-PAGE-HEADINGS-001`
+- Files changed this run: `apps/web/floor-care-maintenance.html`, `apps/web/QA_NOTES.md`, `apps/web/task_queue.json`, and `apps/web/PROJECT_MEMORY.md`
+- Floor care CRO: added product-browse and quote-review CTAs to the repair-vs-replace section while keeping quote as the primary path and floorplan as the measurement path
+- Homepage audit: confirmed the homepage has hero quote/review CTAs, a three-path intent router, quote-process CTA, quote-review CTA, floorplan CTA, SEO support links, and final quote CTA without requiring restructuring
+- Trust audit: scanned public pages for fake reviews, guarantees, urgency, cheapest-price promises, and overclaims; the only cheapest wording is defensive quote-review positioning
+- Product heading audit: hybrid, laminate and engineered timber pages each have one H1 and no heading-level jumps
+- Guide-card audit: `seo-pages.css` already has reusable responsive card/grid patterns for `section-card`, `mini-card`, `faq-card`, `link-card`, `grid-2`, `grid-3`, and `link-grid`
+- Validation performed: floor-care JSON-LD parsed, floor-care CTA links resolved, queue status check passed for the five tasks, and `git diff --check` passed
+- Protected-file status: no quote calculation, pricing logic, product data, floorplan logic, backend/email, Supabase, chatbot runtime, or product interaction code was changed in this run
+- Next best SEO tasks: `GUIDE-CANNIBALIZATION-001`, `PRODUCT-RANGE-CONTENT-AUDIT-001`, `ANALYTICS-CTA-AUDIT-001`, `QUOTE-VALIDATION-CONTENT-001`, and `LOCALBUSINESS-SCHEMA-AUDIT-001`
+
+## Latest 2026-05-08 SEO Planning/Audit Continuation
+
+- Tasks completed this run: `GUIDE-CANNIBALIZATION-001`, `PRODUCT-RANGE-CONTENT-AUDIT-001`, `ANALYTICS-CTA-AUDIT-001`, `QUOTE-VALIDATION-CONTENT-001`, and `SCHEMA-BREADCRUMB-001`
+- Files changed this run: `apps/web/SEO_CONTENT_REFRESH_REGISTER.md`, `apps/web/QA_NOTES.md`, `apps/web/task_queue.json`, and `apps/web/PROJECT_MEMORY.md`
+- Guide cannibalization: mapped comparison, cost, repair/replacement, and problem-guide intent boundaries without merging, deleting, or creating pages
+- Product range audit: confirmed `products.html` already supports range-first browsing, range detail review, colour preview, range selection, selected-range banner, and quote handoff; no product data, product JS, or pricing files were edited
+- Analytics CTA audit: product SEO pages have visible quote/product/quote-review/guide/floorplan CTAs and preserve category handoff via `data-save-category`, but explicit `data-track-cta` labels are still a future metadata pass
+- Quote validation content: planned a safe educational support guide concept while preserving `quote-review.html` as the owner of upload/review intent
+- Schema audit: deferred `BreadcrumbList` schema because the product SEO pages do not yet show visible breadcrumb navigation
+- Validation performed: `task_queue.json` parsed successfully with 50 tasks and these five tasks marked done, queue rollup checked, and `git diff --check` passed
+- Protected-file status: no quote calculation, pricing logic, product data, floorplan logic, backend/email, Supabase, chatbot runtime, tracking runtime, or product interaction code was changed in this run
+- Next best SEO tasks: prioritize the remaining safe pending items by queue score after reviewing the updated 42 done / 8 pending rollup
+
+## Latest 2026-05-08 SEO Mobile/Local Routing Continuation
+
+- Tasks completed this run: `PRODUCT-PAGE-MOBILE-QA-001`, `LOCAL-SERVICE-NAV-001`, `AI-SEARCH-FAQ-001`, `BLOG-INDEX-CRO-001`, and `QUOTE-CLARITY-GUIDE-001`
+- Files changed this run: `apps/web/parramatta-flooring.html`, `apps/web/liverpool-flooring.html`, `apps/web/auburn-flooring.html`, `apps/web/blacktown-flooring.html`, `apps/web/miranda-flooring.html`, `apps/web/blog/index.html`, `apps/web/flooring-installation-cost-sydney.html`, `apps/web/SEO_CONTENT_REFRESH_REGISTER.md`, `apps/web/QA_NOTES.md`, `apps/web/task_queue.json`, and `apps/web/PROJECT_MEMORY.md`
+- Product mobile QA: Browser loaded the hybrid product page and confirmed hero CTAs, selected-range banner, product range cards and quote links in the DOM; screenshot capture timed out, so static responsive CSS checks were used as the backstop
+- Local routing: suburb pages keep visible quote/product/floorplan paths and now add contextual guide links where the local concern benefits from preparation, measurement, repair-vs-replace or product-comparison guidance
+- Copy quality: corrected clipped or generic suburb copy on Parramatta, Auburn, Blacktown and Miranda, plus one clipped cost-page sentence and the blog index hero summary
+- Blog CRO: added a direct quote-review route to the blog hub while keeping quote, product, floorplan and maintenance paths visible
+- AI-search FAQ audit: product and cost pages already have concise visible answer blocks; no schema changes were needed
+- Quote clarity planning: added a planning-only quote clarity checklist guide brief to `SEO_CONTENT_REFRESH_REGISTER.md`; no new page was published
+- Validation performed: clipped-fragment scan passed for edited pages, visible JSON-LD on affected commercial pages parsed, edited-page links resolved locally, `task_queue.json` parsed successfully with 50 tasks and these five tasks marked done, and `git diff --check` passed
+- Protected-file status: no quote calculation, pricing logic, product data, floorplan logic, backend/email, Supabase, chatbot runtime, tracking runtime, or product interaction code was changed in this run
+- Next best SEO tasks: continue with the remaining queue items after reviewing the updated 47 done / 3 pending rollup
+
+## Latest 2026-05-08 Technical SEO Queue Close
+
+- Tasks completed this run: `PERFORMANCE-CSS-001`, `BLOG-FAQ-SCHEMA-AUDIT-001`, and `LOCALBUSINESS-SCHEMA-AUDIT-001`
+- Files changed this run: `apps/web/blog/index.html`, `apps/web/SEO_CONTENT_REFRESH_REGISTER.md`, `apps/web/QA_NOTES.md`, `apps/web/task_queue.json`, and `apps/web/PROJECT_MEMORY.md`
+- Blog schema: added `FAQPage` JSON-LD to the blog hub because its four visible FAQ answers were the only blog FAQ coverage gap
+- CSS audit: kept `seo-pages.css` unchanged after confirming it is the active shared responsive layout system for SEO pages, cards, catalogue modules, modals and mobile breakpoints
+- LocalBusiness audit: kept business schema concentrated on the homepage, with contact-page Organization/ContactPoint schema; no fake ratings, reviews, opening hours, address or phone markup was added
+- Validation performed: blog FAQ schema coverage check passed, all JSON-LD blocks in the audited pages parsed, `task_queue.json` parsed successfully with 50 tasks and these final three tasks marked done, queue rollup is 50 done / 0 pending, and `git diff --check` passed
+- Protected-file status: no quote calculation, pricing logic, product data, floorplan logic, backend/email, Supabase, chatbot runtime, tracking runtime, or product interaction code was changed in this run
+- Next best SEO tasks: the current 50-task queue is complete; create or refresh the next queue before continuing unattended execution
+
+## Latest 2026-05-08 Overnight SEO Queue 002
+
+- Tasks completed this run: the top 25 items in the refreshed 50-task queue, from `SEO-NEXT-QUEUE-002` through `FLOORPLAN-SEO-COPY-AUDIT-002`.
+- Files changed this run: selected public blog/content HTML files, `apps/web/floor-care-maintenance.html`, `apps/web/SEO_CONTENT_REFRESH_REGISTER.md`, `apps/web/INTERNAL_LINK_GRAPH_AUDIT.md`, `apps/web/PROJECT_CASE_STUDY_BACKLOG.md`, `apps/web/QA_NOTES.md`, `apps/web/task_queue.json`, and `apps/web/PROJECT_MEMORY.md`.
+- Schema fixes: `blog/flooring-cost-sydney.html` FAQ schema now includes the visible online-quote question; `floor-care-maintenance.html` FAQ schema now matches the visible manufacturer-care question wording.
+- Content quality: tightened selected generic snippets on cost, installation cost, engineered-vs-laminate, gaps/expansion, hybrid cleaning, laminate cleaning and maintenance checklist pages.
+- Planning/audit outputs: refreshed quote-clarity guide brief, premium suburb proof roadmap, apartment flooring cluster plan, cost/prep cluster map, AI answer block gap map, quote-review link policy, product checklist reuse map and blog hub density notes.
+- Validation performed: sitemap/canonical crawl snapshot, JSON-LD parse checks, FAQ schema/visible-question checks, static link checks, queue parse/status check, and `git diff --check`.
+- Protected-file status: no live page logic, quote calculation, pricing logic, product data, floorplan runtime, backend/email, Supabase, chatbot runtime, tracking runtime, quote.html, floorplan.html, quoteCalculator.js, pricingRules.js, products.js, or product interaction code was changed.
+- Next best SEO tasks: continue from the remaining 25 pending queue items, starting with `MAINTENANCE-CLUSTER-LINK-MAP-002`, `PRIVACY-QUOTE-REVIEW-COPY-AUDIT-002`, `SUBURB-ORPHAN-PAGE-AUDIT-002`, `QUOTE-PATH-PARAM-CONSISTENCY-002`, and `QUOTE-REVIEW-SEO-COPY-GUARD-002`.
+
+## Latest 2026-05-08 Overnight SEO Queue 002 Closeout
+
+- Tasks completed this run: the remaining 25 Queue 002 items, from `MAINTENANCE-CLUSTER-LINK-MAP-002` through `RANK-TRACKER-KEYWORD-GROUPS-002`.
+- Files changed this run: `apps/web/privacy-policy.html`, `apps/web/contact.html`, `apps/web/index.html`, `apps/web/quote-review.html`, `apps/web/INTERNAL_LINK_GRAPH_AUDIT.md`, `apps/web/SEO_CONTENT_REFRESH_REGISTER.md`, `apps/web/QA_NOTES.md`, `apps/web/OPERON_SEO_STRATEGY.md`, `apps/web/OPERON_FUNNEL_SYSTEM.md`, chatbot documentation, `apps/web/task_queue.json`, and `apps/web/PROJECT_MEMORY.md`.
+- Customer-facing safe fixes: privacy page now explains quote/floorplan/quote-review data handling; contact FAQ visible copy now matches schema; homepage now links to Cabramatta and Eastern Suburbs service pages; homepage and quote-review footer legal links were completed.
+- Audits completed: maintenance cluster links, quote path parameters, quote-review positioning, products-page SEO copy, blog/suburb orphan risk, sitemap blog coverage, robots/noindex guard, contact schema match, mobile nav pattern, guide title/meta uniqueness, footer consistency, image alt/dimension coverage, product-page schema opportunity, social metadata coverage, clean URL roadmap, Search Console metrics placeholder, backlinkable assets and rank-tracker keyword groups.
+- Validation performed: task queue parses at 50 done / 0 pending, blog sitemap coverage is complete, contact JSON-LD parses, contact visible FAQ/schema match passed, suburb orphan check passed after homepage links, static image alt check passed, and `git diff --check` passed.
+- Protected-file status: no quote calculation, pricing logic, product data, floorplan runtime, backend/email, Supabase, chatbot runtime, tracking runtime, analytics runtime or product catalogue logic was changed.
+- Next best SEO task: Queue 002 is fully complete; create a new ranked SEO-safe queue before continuing unattended execution.
+
+## Latest 2026-05-08 Overnight Full Agent Loop Queue 003
+
+- Tasks completed this run: 27 Queue 003 tasks across documentation, SEO strategy, quote review policy, site copy policy, marketing policy, internal linking, case-study planning, chatbot documentation, analytics mapping, sitemap/link/schema validation and QA notes.
+- Files changed this run: `apps/web/OPERON_SCOPE_STANDARD_APPLICATION_AUDIT.md`, `apps/web/SITE_COPY_POLICY.md`, `apps/web/OPERON_BUSINESS_OBJECTIVES_MARKETING_SEO_BRIEF.md`, `apps/web/OPERON_SEO_STRATEGY.md`, `apps/web/QUOTE_REVIEW_POLICY.md`, `apps/web/AGENT_LOOP.md`, `apps/web/PROJECT_MEMORY.md`, `apps/web/SEO_CONTENT_REFRESH_REGISTER.md`, `apps/web/INTERNAL_LINK_GRAPH_AUDIT.md`, `apps/web/PROJECT_CASE_STUDY_BACKLOG.md`, `apps/web/chatbot/CHATBOT_MEMORY.md`, `apps/web/chatbot/CHATBOT_CONVERSATION_FLOWS.md`, `apps/web/AGENTS.md`, `apps/web/QUOTE_REVIEW_DATA_ENGINE.md`, `apps/web/OPERON_FUNNEL_SYSTEM.md`, `apps/web/QA_NOTES.md`, and `apps/web/task_queue.json`.
+- Scope Standard system: created a dedicated application audit and propagated the framework through policy, SEO, quote review, chatbot, project-proof and funnel documentation while keeping the term internal rather than public marketing language.
+- Quote-review intelligence: added future outcome fields, outcome learning loop, scope-definition labels, confidence separation and next-best-action guidance without changing quote review runtime code.
+- Funnel/analytics planning: mapped future safe signals for scope definition, missing scope categories, decision state, next best action and observed variations; no backend tracking implementation was changed.
+- Chatbot docs: added a safe flow for users asking what to check in a flooring quote and recorded Scope Standard routing guidance.
+- Validation performed: sitemap local-target check passed with 37 URLs and no missing files; quote and quote-review links across 52 HTML files resolve locally; JSON-LD parsed for homepage, quote-review, contact and blog hub; public HTML has no “Operon Scope Standard” branding; `git diff --check` passed for changed policy/docs files.
+- Queue state: Queue 003 now has 50 tasks, with 27 done, 18 pending and 5 blocked because they require explicit approval for protected quote, product, floorplan, backend or Supabase areas.
+- Protected-file status: no quote calculation, pricing logic, product data, floorplan runtime, backend/email, Supabase function, tracking runtime or product catalogue logic was edited in this pass. Existing dirty protected files predated this pass and were left untouched.
+- Next best tasks: refresh older problem guides with compact scope-confirmation blocks, strengthen the floor-preparation guide as the prep owner, audit product-page installation implication copy, and run browser/mobile QA when ready.
+
+## Latest 2026-05-08 200-Task Full Agent Loop
+
+- Tasks completed this run: 145 of 200 tasks were completed through safe static audits, queue governance, policy-aligned planning, and documentation updates. The remaining 43 tasks are pending and 12 are blocked behind protected-file approval gates.
+- Files changed this run: `apps/web/OPERON_200_TASK_AGENT_LOOP_RUN.md`, `apps/web/task_queue.json`, `apps/web/QA_NOTES.md`, and `apps/web/PROJECT_MEMORY.md`.
+- Audit coverage: 19 high-value public pages were statically checked for one-H1 structure, quote/product/floorplan routes, selective quote-review routes, progressive disclosure usage, JSON-LD presence, image alt coverage, and mobile/CRO risk.
+- Queue governance: `task_queue.json` now contains 200 ranked tasks across quote review, analytics, documentation, SEO, CRO, product page, suburb page, blog, internal linking, schema, chatbot, project proof, QA, performance, accessibility, and protected-system candidates.
+- Completed safe batches: analytics scope-signal planning, SEO scope-cluster mapping, static mobile/CRO review, quote-review utility planning, product/suburb scope audits, internal-link mapping, schema-safety review, QA checks, performance/static-risk review, and accessibility/static-risk review.
+- Key findings: all 19 audited pages have exactly one H1; all audited pages link to quote, products, and floorplan paths; quote-review links remain selective; 13 audited pages include JSON-LD; `products.html` has 2 static image alt gaps and dynamic catalogue images still need a later product-UI accessibility/performance pass.
+- Validation performed: `task_queue.json` parsed successfully, sitemap local targets resolved, quote/quote-review links resolved in static scan, selected JSON-LD blocks parsed, public HTML has no forced "Operon Scope Standard" branding, and whitespace diff validation passed for files changed in this pass.
+- Protected-file status: no quote calculation logic, pricing rules, product data, floorplan logic, backend/API/email functions, Supabase migrations/functions, tracking runtime, analytics runtime, or live chatbot runtime integration was changed. Existing dirty protected files predated this pass and were intentionally left untouched.
+- Next best tasks: run browser/mobile QA across quote, products, floorplan and quote-review; then handle the 43 pending content/chatbot/project-proof tasks or explicitly approve a focused protected-file pass if runtime UX needs changes.
 
 ## TODO / NEXT_ACTIONS
 

@@ -11923,6 +11923,15 @@
     return JSON.parse(JSON.stringify(value));
   }
 
+  function escapeHtml(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
   function slugify(value) {
     return String(value || "")
       .trim()
@@ -12599,6 +12608,447 @@
     );
   }
 
+  function getRangeById(category, rangeId) {
+    return getRangesByCategory(category).find(function (range) {
+      return range.rangeId === rangeId;
+    }) || null;
+  }
+
+  const categoryRangeInfoTabs = {};
+
+  function buildCategoryRangeInfoModalBody(content, activeTab) {
+    if (activeTab === "description") {
+      return (content.description || []).slice(0, 3).map(function (paragraph) {
+        return "<p>" + escapeHtml(paragraph) + "</p>";
+      }).join("");
+    }
+
+    if (activeTab === "features") {
+      return (
+        (content.featuresIntro ? '<p class="catalogue-range-panel-intro">' + escapeHtml(content.featuresIntro) + "</p>" : "") +
+        '<ul class="catalogue-range-list">' +
+          (content.features || []).slice(0, 5).map(function (feature) {
+            return "<li>" + escapeHtml(feature) + "</li>";
+          }).join("") +
+        "</ul>"
+      );
+    }
+
+    return (
+      '<div class="catalogue-range-specs">' +
+        (content.technical || []).filter(function (item) {
+          return item.label !== "Product Code";
+        }).slice(0, 8).map(function (item) {
+          return '<div class="catalogue-range-spec"><span>' + escapeHtml(item.label) + "</span><strong>" + escapeHtml(item.value) + "</strong></div>";
+        }).join("") +
+      "</div>"
+    );
+  }
+
+  function ensureCategoryRangeInfoModal() {
+    let modal = document.getElementById("categoryRangeInfoModal");
+    if (modal) {
+      return modal;
+    }
+
+    modal = document.createElement("div");
+    modal.className = "catalogue-range-modal";
+    modal.id = "categoryRangeInfoModal";
+    modal.hidden = true;
+    modal.innerHTML =
+      '<div class="catalogue-range-modal-backdrop" data-close-category-range-info="true"></div>' +
+      '<div class="catalogue-range-modal-dialog" role="dialog" aria-modal="true" aria-label="Range product information">' +
+        '<button class="catalogue-range-modal-close" type="button" aria-label="Close product information" data-close-category-range-info="true">×</button>' +
+        '<div class="catalogue-range-modal-head">' +
+          '<strong data-category-range-info-title></strong>' +
+          '<span data-category-range-info-subtitle></span>' +
+        "</div>" +
+        '<div class="catalogue-range-modal-tabs" data-category-range-info-tabs></div>' +
+        '<div class="catalogue-range-modal-body" data-category-range-info-body></div>' +
+      "</div>";
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", function (event) {
+      if (event.target.closest("[data-close-category-range-info]")) {
+        closeCategoryRangeInfoModal();
+        return;
+      }
+
+      const tabButton = event.target.closest("[data-category-range-modal-tab]");
+      if (!tabButton) {
+        return;
+      }
+
+      const category = modal.dataset.category || "";
+      const rangeId = modal.dataset.rangeId || "";
+      categoryRangeInfoTabs[rangeId] = tabButton.getAttribute("data-category-range-modal-tab");
+      const range = getRangeById(category, rangeId);
+      if (range) {
+        openCategoryRangeInfoModal(range);
+      }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !modal.hidden) {
+        closeCategoryRangeInfoModal();
+      }
+    });
+
+    return modal;
+  }
+
+  function openCategoryRangeInfoModal(range) {
+    const content = range && range.rangeContent;
+    if (!content) {
+      return false;
+    }
+
+    const activeTab = categoryRangeInfoTabs[range.rangeId] || "description";
+    const modal = ensureCategoryRangeInfoModal();
+    modal.dataset.category = range.category || "";
+    modal.dataset.rangeId = range.rangeId || "";
+    modal.querySelector("[data-category-range-info-title]").textContent = range.rangeLabel || "Product information";
+    modal.querySelector("[data-category-range-info-subtitle]").textContent = [range.brand, range.colourCount ? range.colourCount + " colours available" : ""].filter(Boolean).join(" · ");
+    modal.querySelector("[data-category-range-info-tabs]").innerHTML = ["description", "features", "technical"].map(function (key) {
+      const isActive = activeTab === key;
+      const label = key.charAt(0).toUpperCase() + key.slice(1);
+      return '<button class="catalogue-range-modal-tab' + (isActive ? " is-active" : "") + '" type="button" data-category-range-modal-tab="' + key + '" aria-selected="' + (isActive ? "true" : "false") + '">' + label + "</button>";
+    }).join("");
+    modal.querySelector("[data-category-range-info-body]").innerHTML = buildCategoryRangeInfoModalBody(content, activeTab);
+    modal.hidden = false;
+    document.body.classList.add("catalogue-lightbox-open");
+    return true;
+  }
+
+  function closeCategoryRangeInfoModal() {
+    const modal = document.getElementById("categoryRangeInfoModal");
+    if (!modal) {
+      return;
+    }
+
+    modal.hidden = true;
+    modal.dataset.category = "";
+    modal.dataset.rangeId = "";
+    document.body.classList.remove("catalogue-lightbox-open");
+  }
+
+  function buildCategoryRangeColourPreviewBody(rangeProducts) {
+    return '<div class="catalogue-range-preview-grid">' +
+      rangeProducts.map(function (colourProduct) {
+        const altText = colourProduct.alt || (getProductLabel(colourProduct) + " colour sample");
+        const imageMarkup = colourProduct.image
+          ? '<img src="' + escapeHtml(colourProduct.image) + '" alt="' + escapeHtml(altText) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">'
+          : "";
+        return (
+          '<button class="catalogue-colour-option catalogue-colour-option-preview" type="button" data-open-category-range-colour-lightbox="' + escapeHtml(colourProduct.id) + '">' +
+            '<span class="catalogue-colour-thumb" style="--swatch:' + escapeHtml(colourProduct.swatch || "#d1d5db") + ';">' +
+              imageMarkup +
+            "</span>" +
+            '<span>' + escapeHtml(colourProduct.colour || "Colour option") + "</span>" +
+          "</button>"
+        );
+      }).join("") +
+    "</div>";
+  }
+
+  function ensureCategoryRangeColourPreviewModal() {
+    let modal = document.getElementById("categoryRangeColourPreviewModal");
+    if (modal) {
+      return modal;
+    }
+
+    modal = document.createElement("div");
+    modal.className = "catalogue-range-modal";
+    modal.id = "categoryRangeColourPreviewModal";
+    modal.hidden = true;
+    modal.innerHTML =
+      '<div class="catalogue-range-modal-backdrop" data-close-category-range-colours="true"></div>' +
+      '<div class="catalogue-range-modal-dialog" role="dialog" aria-modal="true" aria-label="Range colour preview">' +
+        '<button class="catalogue-range-modal-close" type="button" aria-label="Close colour preview" data-close-category-range-colours="true">×</button>' +
+        '<div class="catalogue-range-modal-head">' +
+          '<strong data-category-range-colour-preview-title></strong>' +
+          '<span data-category-range-colour-preview-subtitle></span>' +
+        "</div>" +
+        '<div class="catalogue-range-modal-body catalogue-range-modal-body-colours" data-category-range-colour-preview-body></div>' +
+      "</div>";
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", function (event) {
+      if (event.target.closest("[data-close-category-range-colours]")) {
+        closeCategoryRangeColourPreviewModal();
+        return;
+      }
+
+      const lightboxButton = event.target.closest("[data-open-category-range-colour-lightbox]");
+      if (!lightboxButton) {
+        return;
+      }
+
+      const product = getProductById(lightboxButton.getAttribute("data-open-category-range-colour-lightbox"));
+      if (product) {
+        const range = getRangeById(modal.dataset.category || "", modal.dataset.rangeId || "");
+        closeCategoryRangeColourPreviewModal();
+        openCatalogueLightbox(product, {
+          onBack: function () {
+            if (range) {
+              openCategoryRangeColourPreviewModal(range);
+            }
+          }
+        });
+      }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !modal.hidden) {
+        closeCategoryRangeColourPreviewModal();
+      }
+    });
+
+    return modal;
+  }
+
+  function openCategoryRangeColourPreviewModal(range) {
+    const rangeProducts = getProductsByRangeId(range.rangeId);
+    if (!rangeProducts.length) {
+      return false;
+    }
+
+    const modal = ensureCategoryRangeColourPreviewModal();
+    modal.dataset.category = range.category || "";
+    modal.dataset.rangeId = range.rangeId || "";
+    modal.querySelector("[data-category-range-colour-preview-title]").textContent = range.rangeLabel || "Available colours";
+    modal.querySelector("[data-category-range-colour-preview-subtitle]").textContent = rangeProducts.length + " colours available · Final colour can be confirmed in the quote.";
+    modal.querySelector("[data-category-range-colour-preview-body]").innerHTML = buildCategoryRangeColourPreviewBody(rangeProducts);
+    modal.hidden = false;
+    document.body.classList.add("catalogue-lightbox-open");
+    return true;
+  }
+
+  function closeCategoryRangeColourPreviewModal() {
+    const modal = document.getElementById("categoryRangeColourPreviewModal");
+    if (!modal) {
+      return;
+    }
+
+    modal.hidden = true;
+    modal.dataset.category = "";
+    modal.dataset.rangeId = "";
+    document.body.classList.remove("catalogue-lightbox-open");
+  }
+
+  function saveSelectedRange(range) {
+    if (!range || !range.rangeId || !isValidCategory(range.category)) {
+      return;
+    }
+
+    const representative = getRepresentativeProductByRangeId(range.rangeId);
+    if (range.selectionMode === "range_only" && representative) {
+      saveSelectedProduct(representative);
+      return;
+    }
+
+    saveSelectionState({
+      selectedProductId: "",
+      selectedRangeId: range.rangeId,
+      selectedCategory: range.category,
+      selectedColour: "",
+      productSelectionMode: range.selectionMode || "range_then_colour"
+    });
+  }
+
+  function buildRangeImageMarkup(range) {
+    const representativeId = range.representativeProductId || "";
+    const imageUrl = range.imageUrl || range.image || "";
+    const label = range.rangeLabel || "Flooring range";
+    const hasRangeInfo = !!range.rangeContent;
+    const imageActionAttrs = hasRangeInfo
+      ? ' type="button" data-open-category-range-info="' + escapeHtml(range.rangeId) + '" aria-label="Open range details for ' + escapeHtml(label) + '"'
+      : ' type="button" data-open-range-image="' + escapeHtml(representativeId) + '" aria-label="Open larger image for ' + escapeHtml(label) + '"';
+    const fallbackText = range.colourCount
+      ? range.colourCount + " colour" + (range.colourCount === 1 ? "" : "s")
+      : "Range preview";
+
+    if (imageUrl) {
+      return (
+        '<button class="catalogue-image-frame' + (hasRangeInfo ? " has-range-info" : "") + '"' + imageActionAttrs + ">" +
+          '<img class="catalogue-image" src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(label) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">' +
+          (hasRangeInfo ? '<span class="catalogue-range-info-hint">Range details</span>' : "") +
+          '<div class="catalogue-swatch-fallback" aria-hidden="true">' +
+            '<span>' + escapeHtml(fallbackText) + "</span>" +
+          "</div>" +
+        "</button>"
+      );
+    }
+
+    return (
+      '<button class="catalogue-image-frame is-fallback' + (hasRangeInfo ? " has-range-info" : "") + '"' + imageActionAttrs + ">" +
+        (hasRangeInfo ? '<span class="catalogue-range-info-hint">Range details</span>' : "") +
+        '<div class="catalogue-swatch-fallback" aria-hidden="true">' +
+          '<span>' + escapeHtml(fallbackText) + "</span>" +
+        "</div>" +
+      "</button>"
+    );
+  }
+
+  function renderRangeCard(range, options) {
+    const settings = options || {};
+    const selection = getStoredSelectionState();
+    const isSelected = selection.selectedRangeId === range.rangeId;
+    const specLine = [range.brand, range.productType, range.thickness].filter(Boolean).join(" · ");
+    const colourLine = range.colourCount
+      ? range.colourCount + " colour" + (range.colourCount === 1 ? "" : "s") + " in this range"
+      : "Colour confirmed after range selection";
+    const feature = range.feature || (range.rangeContent && range.rangeContent.summary) || "";
+    const priceLine = range.pricePerM2 > 0
+      ? '<span class="catalogue-card-price">From $' + Number(range.pricePerM2).toFixed(0) + "/m²</span>"
+      : "";
+    const colourPreviewButton = range.colourCount
+      ? '<button class="button-quiet" type="button" data-open-category-range-colours="' + escapeHtml(range.rangeId) + '">View colours</button>'
+      : "";
+
+    return (
+      '<article class="catalogue-card' + (isSelected ? " selected" : "") + '" data-range-card="' + escapeHtml(range.rangeId) + '">' +
+        buildRangeImageMarkup(range) +
+        '<div class="catalogue-card-top">' +
+          '<div class="catalogue-copy">' +
+            '<span class="catalogue-brand">' + escapeHtml(range.brand || getCategoryMeta(range.category).label) + "</span>" +
+            "<h3>" + escapeHtml(range.rangeLabel || "Flooring range") + "</h3>" +
+            '<p class="catalogue-colour">' + escapeHtml(colourLine) + "</p>" +
+            '<p class="catalogue-spec">' + escapeHtml(specLine) + "</p>" +
+            priceLine +
+            (isSelected ? '<span class="catalogue-card-status">Selected for quote</span>' : "") +
+          "</div>" +
+        "</div>" +
+        (feature ? '<p class="catalogue-single-feature">' + escapeHtml(feature) + "</p>" : "") +
+        '<div class="catalogue-card-actions">' +
+          '<div class="catalogue-card-actions-range">' +
+            colourPreviewButton +
+          "</div>" +
+          '<button class="button-secondary" type="button" data-select-category-range="' + escapeHtml(range.rangeId) + '">' + (isSelected ? "Selected · click to clear" : "Select this range") + "</button>" +
+          '<a class="button" href="' + escapeHtml(settings.quoteUrl || ("quote.html?from=product&category=" + range.category)) + '" data-get-category-range-quote="' + escapeHtml(range.rangeId) + '">Continue to quote</a>' +
+        "</div>" +
+      "</article>"
+    );
+  }
+
+  function renderCategoryRangeCatalogue(options) {
+    const settings = Object.assign({
+      category: "",
+      targetId: "",
+      statusId: "",
+      limit: 0,
+      quoteUrl: "quote.html?from=product",
+      successMessage: "Range selected. Continue to quote."
+    }, options || {});
+
+    const target = document.getElementById(settings.targetId);
+    if (!target) {
+      return;
+    }
+
+    const ranges = getRangesByCategory(settings.category);
+    const limitedRanges = settings.limit > 0 ? ranges.slice(0, settings.limit) : ranges;
+    const status = settings.statusId ? document.getElementById(settings.statusId) : null;
+
+    if (!limitedRanges.length) {
+      target.innerHTML = "";
+      if (status) {
+        const categoryMeta = getCategoryMeta(settings.category);
+        status.textContent = categoryMeta
+          ? "Live " + categoryMeta.label.toLowerCase() + " ranges will be added here when confirmed."
+          : "Live flooring ranges will appear here when confirmed.";
+        status.dataset.state = "info";
+      }
+      return;
+    }
+
+    target.innerHTML = limitedRanges.map(function (range) {
+      return renderRangeCard(range, settings);
+    }).join("");
+
+    target.__operonRangeCatalogueConfig = settings;
+    if (target.dataset.rangeCatalogueBound === "true") {
+      return;
+    }
+
+    target.dataset.rangeCatalogueBound = "true";
+    target.addEventListener("click", function (event) {
+      const activeSettings = target.__operonRangeCatalogueConfig || settings;
+      const activeStatus = activeSettings.statusId ? document.getElementById(activeSettings.statusId) : null;
+      const selectButton = event.target.closest("[data-select-category-range]");
+      const quoteLink = event.target.closest("[data-get-category-range-quote]");
+      const rangeInfoTrigger = event.target.closest("[data-open-category-range-info]");
+      const rangeColourTrigger = event.target.closest("[data-open-category-range-colours]");
+      const imageTrigger = event.target.closest("[data-open-range-image]");
+
+      if (rangeInfoTrigger) {
+        const range = getRangeById(activeSettings.category, rangeInfoTrigger.getAttribute("data-open-category-range-info"));
+        if (range) {
+          openCategoryRangeInfoModal(range);
+        }
+        return;
+      }
+
+      if (rangeColourTrigger) {
+        const range = getRangeById(activeSettings.category, rangeColourTrigger.getAttribute("data-open-category-range-colours"));
+        if (range) {
+          openCategoryRangeColourPreviewModal(range);
+        }
+        return;
+      }
+
+      if (selectButton || quoteLink) {
+        const rangeId = (selectButton || quoteLink).getAttribute(selectButton ? "data-select-category-range" : "data-get-category-range-quote");
+        const range = getRangeById(activeSettings.category, rangeId);
+        if (!range) {
+          return;
+        }
+
+        const isAlreadySelected = selectButton && getStoredSelectionState().selectedRangeId === range.rangeId;
+        if (isAlreadySelected) {
+          clearSelectedProduct();
+          saveSelectedCategory(activeSettings.category);
+          if (activeStatus) {
+            activeStatus.textContent = "Range selection cleared.";
+            activeStatus.dataset.state = "info";
+          }
+          window.dispatchEvent(new CustomEvent("operon:range-cleared", { detail: { category: activeSettings.category } }));
+          renderCategoryRangeCatalogue(activeSettings);
+          return;
+        }
+
+        saveSelectedRange(range);
+        saveSelectedCategory(activeSettings.category);
+        if (activeStatus) {
+          activeStatus.textContent = activeSettings.successMessage;
+          activeStatus.dataset.state = "success";
+        }
+        if (window.OperonTracking) {
+          const trackingPayload = {
+            category: range.category,
+            range: range.rangeLabel,
+            rangeId: range.rangeId
+          };
+          if (typeof window.OperonTracking.trackProductSelect === "function") {
+            window.OperonTracking.trackProductSelect(trackingPayload);
+          } else {
+            window.OperonTracking.trackEvent("product_select", trackingPayload);
+          }
+        }
+        window.dispatchEvent(new CustomEvent("operon:range-selected", { detail: { range: range } }));
+        if (selectButton) {
+          renderCategoryRangeCatalogue(activeSettings);
+        }
+        return;
+      }
+
+      if (imageTrigger) {
+        const product = getProductById(imageTrigger.getAttribute("data-open-range-image"));
+        openCatalogueLightbox(product);
+      }
+    });
+  }
+
   function ensureCatalogueLightbox() {
     let modal = document.getElementById("catalogueLightbox");
     if (modal) {
@@ -12977,6 +13427,7 @@
     openCatalogueLightbox: openCatalogueLightbox,
     renderCategoryCatalogue: renderCategoryCatalogue
     ,
+    renderCategoryRangeCatalogue: renderCategoryRangeCatalogue,
     renderSelectionBanner: renderSelectionBanner
   };
 }());

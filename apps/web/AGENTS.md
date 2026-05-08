@@ -228,7 +228,10 @@ Purpose: own real trust proof, process clarity, and customer confidence.
 Responsibilities:
 
 - strengthen real project proof, installation realism, quote clarity, process clarity, operational transparency, and flooring expertise
+- communicate installation trust through scope clarity, process clarity, installation detail awareness, preparation discipline, quote transparency, real project proof, and flooring decision guidance
 - avoid fake urgency, fake scarcity, fake badges, fake reviews, fake guarantees, and exaggerated claims
+- avoid generic quality claims such as “best quality,” “premium workmanship,” “Sydney’s best flooring,” or similar unsupported superlatives
+- prefer real installation details, process explanations, project examples, scope guidance, operational clarity, and visual craftsmanship proof
 - keep trust copy concise and grounded in real flooring operations
 - support conversion without making the estimate feel unreliable
 
@@ -284,6 +287,8 @@ Responsibilities:
 - Every SEO/content page must pass the 5-second understanding test: what it is, what to do next, and why Operon is different.
 - Every SEO/content page must include a primary quote CTA and secondary quote validation CTA in hero, mid-page, or end-page positions where natural.
 - Content must educate, clarify scope, reduce uncertainty, and route users toward `quote.html` or `quote-review.html`.
+- Apply the Operon Scope Standard quietly as an internal framework across SEO, CRO, quote review, product pages, suburb pages, comparison guides, chatbot support and future workflow logic. It should improve product definition, area clarity, installation scope, site/access context, preparation/risk clarity, finishing detail, commercial clarity, exclusions and final confirmation without becoming a public slogan.
+- Do not overuse the term "Operon Scope Standard" in customer-facing pages. Prefer plain wording such as "clear scope before price comparison", "know what is included before you decide", and "final details confirmed before installation."
 - Use warm off-white backgrounds, white cards, charcoal CTAs, and bronze only as a subtle accent.
 - Stay mobile-first.
 - Do not clutter the homepage.
@@ -313,6 +318,7 @@ Responsibilities:
 - Wastage only applies inside `apps/web/quoteCalculator.js`.
 - Do not create spammy or thin duplicate suburb pages.
 - Do not use generic filler copy.
+- Do not rely on generic quality claims such as “best quality,” “premium workmanship,” or “Sydney’s best flooring.” Installation trust must come from specific details, process clarity, preparation discipline, scope guidance, project proof, and operational clarity.
 - Do not publish long undifferentiated text blocks, repeated templates, or generic AI SEO content.
 - Do not create suburb pages without local uniqueness, practical flooring recommendations, quote explanation, scope clarity, and CTA.
 - Do not push to GitHub, `dev`, Netlify, or `main` unless the user explicitly asks.

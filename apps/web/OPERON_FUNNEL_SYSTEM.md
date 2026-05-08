@@ -1,6 +1,6 @@
 # Operon Funnel System
 
-Updated: 2026-05-04
+Updated: 2026-05-08
 
 Purpose: turn Operon Flooring from a set of pages into a structured conversion system that improves lead quality, completion rate, decision speed, and data advantage without changing pricing logic or exposing internal rates.
 
@@ -15,6 +15,29 @@ Purpose: turn Operon Flooring from a set of pages into a structured conversion s
 7. Follow-up: SMS/email playbook and future automation queue.
 8. Close: scope confirmation, site assessment, final quote, booking.
 9. Data feedback: intent, product, quote, stage, and conversion signals.
+
+## Scope Standard Funnel Principle
+
+The Operon Scope Standard supports the funnel quietly: it helps customers compare flooring quotes by scope clarity, not price alone.
+
+Use it to improve:
+
+- entry-page trust language
+- product/category guidance
+- quote flow completeness
+- quote-review intelligence
+- follow-up education
+- close-stage scope confirmation
+- future workflow logic
+
+Customer-facing language should stay plain:
+
+- clear scope before price comparison
+- know what is included before you decide
+- final details confirmed before installation
+- a cheaper quote may not describe the same job
+
+Do not turn this into public trademark-style branding.
 
 ## Layer 1: Entry
 
@@ -179,6 +202,20 @@ Close scripts:
 - Offer choices instead of pushing for immediate commitment.
 - Use `process-leads` to score engagement and queue manual close actions when a lead reaches `closing`.
 
+## SEO Entry Data Capture Map
+
+Use this as the safe measurement map for SEO and CRO work. It documents what should be observed, not new data collection requirements.
+
+| Entry signal | Current or safe source | Funnel value | Guardrail |
+| --- | --- | --- | --- |
+| Quote-start click | CTA tracking on homepage, SEO pages, product pages and guides | Measures quote intent by page and topic cluster | Do not collect sensitive notes before the user enters the quote flow. |
+| Quote-review click | Links from homepage, product pages, selected guides and thank-you page | Measures scope-clarity intent and existing-quote demand | Position as scope review, not cheapest-price comparison. |
+| Floorplan click | Links from product pages, suburb pages, cost guides and measurement guide | Measures area-uncertainty and measurement-assistance demand | Floorplan remains measurement only; wastage and pricing stay in quote calculation. |
+| Product browse click | Links from product SEO pages, suburb pages, guides and quote flow | Measures category/product exploration before estimate | Product selection remains owned by the product system. |
+| Contact/help click | Footer/header paths and contact page | Measures support need outside self-serve quote flow | Do not replace quote CTAs with contact-first routing on high-intent pages. |
+
+Next safe analytics improvements should stay event-level and page-level until explicit approval exists for deeper lead/profile joins.
+
 ## Layer 9: Data Feedback
 
 Current data signals:
@@ -210,12 +247,58 @@ Data advantage goal:
 - Learn which product categories and scope flags create better leads.
 - Learn which lead stages progress to site assessment or booking.
 
+Safe structured capture principles:
+
+- Capture intent, scope category, confidence, and completion state before capturing more personal detail.
+- Keep personal details limited to submitted quote requests, customer portal access, or explicit file uploads.
+- Do not collect unnecessary notes, full addresses, uploaded plans, photos, or raw quote-review files as analytics events.
+- Do not expose internal rates, margin logic, stair unit prices, supplier costs, or pricing formulas in analytics metadata.
+- Keep backend persistence server-side. Frontend tracking can emit events, but long-term CRM fields should be saved through Netlify/Supabase functions.
+
+Safe capture map:
+
+| Funnel area | Safe structured fields | Why it helps | Risk control |
+| --- | --- | --- | --- |
+| Entry pages | `page_type`, `topic_cluster`, `cta_location`, `cta_intent`, `device_type`, `traffic_source` | Shows which SEO and guide pages create quote demand | Do not store raw query strings beyond approved UTM/source fields |
+| Product discovery | `category`, `range`, `colour_selected`, `selection_source`, `product_choice_mode` | Shows whether users want exact ranges, budget guidance, or premium guidance | Do not store internal product cost, margin, or private supplier rates |
+| Quote step progress | `step_number`, `step_name`, `validation_source`, `error_type`, `completion_state` | Identifies confusing steps and mobile friction | Store error categories, not long free-text user entries |
+| Scope shape | `quote_mode`, `flooring_category`, `measurement_source`, `area_band`, `room_count_band`, `stairs_flag`, `extras_flags` | Improves lead quality and future follow-up routing | Use bands/booleans where exact values are not needed for analytics |
+| Measurement tools | `floorplan_opened`, `floorplan_uploaded`, `scale_set`, `room_count`, `area_used` | Shows whether the floorplan tool creates better estimates | Do not persist uploaded plan images as analytics events |
+| Quote review | `review_started`, `review_completed`, `confidence_level`, `category_detected`, `missing_information_count` | Measures demand for quote validation without overclaiming accuracy | Do not store raw supplier quote text in analytics tables |
+| Submit and thank-you | `quote_reference`, `estimated_total`, `lead_stage`, `site_assessment_interest`, `copy_requested` | Links quote intent to follow-up priority and close probability | Customer PII belongs only in quote-request records, not general events |
+| Close feedback | `lead_status`, `site_assessment_needed`, `final_quote_sent`, `accepted`, `lost_reason_category` | Closes the loop between SEO/quote behaviour and real outcomes | Admin-only fields; no public page exposure |
+
+Scope Standard future signals:
+
+| Signal | Source | Why it helps | Guardrail |
+| --- | --- | --- | --- |
+| `scope_definition_level` | Quote review or admin review | Separates high-definition quotes from unclear quotes | Do not treat as a public score until UX is ready. |
+| `missing_scope_categories` | Quote review structured output | Shows common gaps such as prep, underlay, access, trims or stairs | Store categories, not raw competitor text. |
+| `customer_decision_state` | Quote review / thank-you / close notes | Helps follow-up match the customer's concern | Use for relevance, not pressure. |
+| `next_best_action` | Quote review output | Measures whether users need estimate, clarification, product selection or manual review | Keep one calm next step. |
+| `variation_observed_later` | Admin/close feedback | Links early missing-scope warnings to real outcomes | Internal only; do not use as public competitor commentary. |
+
+Recommended event taxonomy:
+
+- Keep existing events: `cta_click`, `funnel_intent_select`, `product_catalogue_view`, `product_filter_change`, `product_select`, `quote_start`, `step_view`, `step_complete`, `step_error`, `quote_submit`, `quote_submit_success`, `quote_submit_error`, `summary_view`, `quote_thank_you_view`, and `lead_stage_selected`.
+- Add future events only when they answer a conversion question, such as `quote_review_started`, `quote_review_completed`, `floorplan_area_used`, `site_assessment_requested`, and `quote_copy_requested`.
+- Prefer stable category values over changing copy text. For example, use `cta_intent: "quote_start"` rather than the exact button label.
+
+Analytics implementation order:
+
+1. Audit CTA coverage on commercial, product, guide, quote-review, and floorplan entry pages.
+2. Standardise CTA metadata using `cta_location`, `cta_intent`, and `page_type`.
+3. Persist safe quote-scope fields through the server-side quote save path after submission.
+4. Add admin-only close outcome fields so SEO and quote quality can be measured against real results.
+5. Build dashboard views from aggregated fields, not raw customer notes or uploaded files.
+
 ## Remaining Weak Points
 
 - Follow-up SMS/email is a playbook only until provider and consent setup are complete.
 - Close-stage outcomes are not yet stored as structured CRM events.
 - Product pricing and catalogue admin remain split between local files, Supabase compatibility tables, and future canonical tables.
 - Thank-you lead stage is stored locally unless backend persistence is added.
+- CTA metadata coverage is not yet fully audited across all SEO/product entry pages.
 - Site assessment booking is still a soft CTA, not a true scheduler.
 
 ## Next Optimisation Priority
@@ -230,3 +313,25 @@ The next best optimisation is backend lead enrichment:
 - create `conversion_to_booking`
 
 Do this through server-side Netlify/Supabase functions only. Do not change customer-facing pricing logic to add this data layer.
+
+## Search Console Metrics Placeholder
+
+When Search Console data is available, capture it manually or through an approved integration using stable page and cluster fields.
+
+Suggested fields:
+
+- date range
+- query
+- landing page
+- cluster
+- impressions
+- clicks
+- click-through rate
+- average position
+- device
+- country
+- notes or hypothesis
+
+Initial clusters should match SEO strategy groups: quote intent, quote review, product, cost, measurement, maintenance/problem and local intent.
+
+Do not add credentials, API integrations, scraping, backend writes or automated imports until explicitly approved.

@@ -8,6 +8,9 @@
     { id: "one_side_open", label: "Stairs with one open side" },
     { id: "two_side_open", label: "Stairs with two open sides" }
   ];
+  const STAIR_RATE_RANGE_ALIASES = {
+    "engineered-swish-oak-natura-herringbone": "engineered-swish-oak-natura"
+  };
 
   function clone(value) {
     return JSON.parse(JSON.stringify(value));
@@ -39,9 +42,34 @@
     });
   }
 
+  function createInstallationOnlyRateSet(config) {
+    return createRateSet(Object.assign({
+      rangeId: "installation-only-" + config.category,
+      rangeLabel: config.rangeLabel || "Installation-only " + config.category + " stairs",
+      guideWidthMm: config.category === "engineered" ? 950 : DEFAULT_WIDTH_THRESHOLD_MM,
+      plankLengthMm: config.category === "engineered" ? 1900 : null,
+      needsReview: false
+    }, config));
+  }
+
   // Prices are intentionally zero placeholders until the owner enters each range's stair rates.
   // The calculator will warn and keep the quote review-required when a selected stair rate is not configured.
   const LOCAL_STAIR_RATES = {
+    "installation-only-laminate": createInstallationOnlyRateSet({
+      rangeId: "installation-only-laminate",
+      category: "laminate",
+      rangeLabel: "Installation-only laminate stairs"
+    }),
+    "installation-only-hybrid": createInstallationOnlyRateSet({
+      rangeId: "installation-only-hybrid",
+      category: "hybrid",
+      rangeLabel: "Installation-only hybrid stairs"
+    }),
+    "installation-only-engineered": createInstallationOnlyRateSet({
+      rangeId: "installation-only-engineered",
+      category: "engineered",
+      rangeLabel: "Installation-only engineered timber stairs"
+    }),
     "hybrid-etf-7mm": createRateSet({
       rangeId: "hybrid-etf-7mm",
       category: "hybrid",
@@ -125,16 +153,63 @@
     return LOCAL_STAIR_RATES;
   }
 
+  function getInstallationOnlyRangeId(category) {
+    const normalizedCategory = String(category || "").trim();
+    if (normalizedCategory === "laminate" || normalizedCategory === "hybrid" || normalizedCategory === "engineered") {
+      return "installation-only-" + normalizedCategory;
+    }
+    return "";
+  }
+
+  function getMappedStairRateRangeId(source, rangeId) {
+    const lookupRangeId = String(rangeId || "").trim();
+    const directRateSet = lookupRangeId ? source[lookupRangeId] : null;
+    const explicitSourceRangeId = directRateSet && directRateSet.stairGuideSourceRangeId
+      ? directRateSet.stairGuideSourceRangeId
+      : STAIR_RATE_RANGE_ALIASES[lookupRangeId];
+
+    if (explicitSourceRangeId && source[explicitSourceRangeId]) {
+      return explicitSourceRangeId;
+    }
+    if (lookupRangeId.endsWith("-herringbone")) {
+      const straightRangeId = lookupRangeId.replace(/-herringbone$/, "");
+      if (source[straightRangeId]) {
+        return straightRangeId;
+      }
+    }
+    if (lookupRangeId.endsWith("-chevron")) {
+      const straightRangeId = lookupRangeId.replace(/-chevron$/, "");
+      if (source[straightRangeId]) {
+        return straightRangeId;
+      }
+    }
+    return "";
+  }
+
+  function getStairRateRangeId(source, rangeId, options) {
+    const settings = options || {};
+    if (settings.quoteMode === "install_only") {
+      return getInstallationOnlyRangeId(settings.category);
+    }
+    return getMappedStairRateRangeId(source, rangeId) || String(rangeId || "").trim();
+  }
+
   function getStairType(typeId) {
     return STAIR_TYPES.find(function (type) {
       return type.id === typeId;
     }) || null;
   }
 
-  function getRateSet(rangeId) {
+  function getRateSet(rangeId, options) {
     const source = getRateSource();
-    const rateSet = rangeId ? source[rangeId] : null;
-    return rateSet && rateSet.active !== false ? clone(rateSet) : null;
+    const lookupRangeId = getStairRateRangeId(source, rangeId, options);
+    const rateSet = lookupRangeId ? source[lookupRangeId] : null;
+    if (!rateSet || rateSet.active === false) {
+      return null;
+    }
+    return Object.assign(clone(rateSet), {
+      requestedRangeId: String(rangeId || "").trim()
+    });
   }
 
   function getGuideWidthMm(rateSet) {
@@ -173,6 +248,7 @@
       return clone(STAIR_TYPES);
     },
     getRateSet: getRateSet,
+    getInstallationOnlyRangeId: getInstallationOnlyRangeId,
     getStairType: getStairType,
     getGuideWidthMm: getGuideWidthMm,
     getTierForWidth: getTierForWidth,

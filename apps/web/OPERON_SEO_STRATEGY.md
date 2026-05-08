@@ -43,6 +43,66 @@ SEO must compound into:
 
 SEO must not become spam.
 
+## Quote Review Positioning
+
+Quote review is not a PDF summary tool or an AI document analyzer.
+It is a structured flooring decision-confidence system.
+
+SEO and CRO work around quote review should emphasize:
+
+- scope clarity
+- flooring quote confidence
+- missing inclusions
+- installation risk
+- product certainty
+- site confirmation
+- practical next steps
+
+Avoid positioning quote review as:
+
+- cheapest-price comparison
+- competitor attack
+- AI-powered verdict
+- document summarizer
+- generic quote checker
+
+Quote review content should naturally move users toward `quote.html`, product selection, or site confirmation through trust and clarity.
+
+## Operon Scope Standard Semantic Pillar
+
+The Operon Scope Standard is a foundational operational framework that helps customers compare flooring quotes based on scope clarity, not price alone.
+
+SEO should use this as a semantic content pillar, not as a forced public marketing term.
+
+Use it to guide content clusters around:
+
+- quote clarity
+- installation inclusions
+- hidden flooring costs
+- floor preparation
+- underlay/acoustic layer
+- trims/skirting/scotia
+- apartment flooring requirements
+- flooring quote comparison
+- site confirmation
+
+The standard supports these page types:
+
+- product pages: explain product choice, installation implications, underlay, preparation, suitability, and quote-scope items
+- suburb pages: include local scope considerations such as apartment access, strata/acoustic requirements, common housing types, delivery/access risk, and local project examples where available
+- comparison guides: show how product choice changes installation scope, preparation, accessories, maintenance, and final confirmation
+- problem/risk guides: explain hidden cost risks, prep risks, apartment/site constraints, finishing details, and confirmation steps
+- quote review pages: classify product clarity, area clarity, installation clarity, site/access clarity, prep/risk clarity, finishing clarity, commercial clarity, exclusion clarity, and final confirmation requirements
+
+Content should use customer-friendly language:
+
+- "clear scope before price comparison"
+- "know what is included before you decide"
+- "compare flooring quotes by scope, not just total price"
+- "a cheaper quote may not describe the same job"
+
+Avoid repeating the internal phrase "Operon Scope Standard" in public page copy unless it is genuinely useful and lightly used.
+
 ## 3. Topic Cluster Map
 
 Maintain and expand these clusters:
@@ -382,7 +442,37 @@ Preserve:
 
 Do not remove valuable SEO content. Instead relocate, compress, structure, convert to FAQ, convert to guide content, or convert to an internal link block.
 
-## 18. Prohibited SEO Behavior
+## 18. Progressive Disclosure and SEO
+
+Operon uses progressive disclosure to keep visible pages clean while preserving useful decision depth.
+
+Hidden but user-accessible accordion content can support SEO when it is:
+
+- present in the DOM
+- useful to users
+- relevant to page intent
+- written for real flooring decisions
+- not spammy
+- not replacing core visible page clarity
+
+Use accordions and details blocks for:
+
+- quote process explanations
+- flooring scope clarification
+- product tradeoffs
+- installation risks
+- underlay and acoustic layer explanations
+- floor preparation issues
+- quote review guidance
+- apartment flooring questions
+- cost variation explanations
+- maintenance guidance
+
+Do not use hidden content to stuff keywords, create fake FAQ volume, repeat answers across pages, or hide the main meaning of a page.
+
+If an accordion answer becomes too long, create or link to a dedicated guide page such as hybrid vs laminate, why flooring quotes vary, underlay and acoustic layer, scotia vs skirting, apartment flooring, or quote review checklist.
+
+## 19. Prohibited SEO Behavior
 
 Never create:
 
@@ -400,7 +490,7 @@ Never create:
 
 SEO must strengthen trust, utility, crawl clarity, and conversion.
 
-## 19. 90-Day SEO Roadmap
+## 20. 90-Day SEO Roadmap
 
 Days 1 to 30:
 
@@ -501,10 +591,14 @@ Trust should come from real operational clarity, not decoration.
 
 Continuously strengthen:
 
+- scope clarity
+- process clarity
+- installation detail awareness
+- preparation discipline
+- quote transparency
 - real project proof
 - installation realism
 - quote clarity
-- process clarity
 - operational transparency
 - flooring expertise
 - practical decision guidance
@@ -516,8 +610,18 @@ Avoid:
 - fake trust badges
 - fake reviews
 - exaggerated claims
+- generic claims such as “best quality,” “premium workmanship,” and “Sydney’s best flooring”
 
-Trust signals should support conversion without making the estimate feel unreliable.
+Prefer:
+
+- real installation details
+- process explanations
+- project examples
+- scope guidance
+- operational clarity
+- visual craftsmanship proof
+
+Trust signals should support conversion without making the estimate feel unreliable. Customers should feel Operon is structured, careful, professional, and detail-aware.
 
 ## 25. AI Search Readiness
 
@@ -647,3 +751,39 @@ The long-term operating cycle is:
 `Traffic -> Behavior -> Analytics -> Prioritized Improvements -> Better Conversion -> More Structured Data -> Better Intelligence -> Better SEO -> More Traffic`
 
 Every SEO, CRO, content, utility, analytics, and trust improvement should strengthen this feedback loop.
+
+## 33. Backlinkable Asset Gap Map
+
+Current safest backlinkable assets:
+
+- `quote.html`: primary utility asset for instant flooring estimate intent
+- `quote-review.html`: scope-clarity asset for users with another flooring quote
+- `floorplan.html`: measurement utility asset for users with a plan but no confirmed area
+- `hybrid-flooring-sydney.html`, `laminate-flooring-sydney.html`, `engineered-timber-flooring-sydney.html`: category decision assets
+- `blog/how-to-measure-floor-area.html`: measurement education asset
+- maintenance/problem guides: practical trust assets for common flooring issues
+
+Future backlink asset gaps:
+
+- verified project case studies with real photos and scope detail
+- apartment flooring guide with acoustic/access considerations
+- quote clarity checklist guide that does not duplicate `quote-review.html`
+- subfloor preparation guide refresh with stronger practical examples
+
+No outreach, citation submission, external scraping or directory work was performed in this audit.
+
+## 34. Rank Tracking Keyword Groups
+
+Manual rank tracking should group keywords by cluster rather than treating every phrase as equal.
+
+Recommended groups:
+
+- Quote intent: flooring quote Sydney, flooring estimate Sydney, flooring installation quote
+- Quote review intent: flooring quote review, check flooring quote, compare flooring quote inclusions
+- Product intent: hybrid flooring Sydney, laminate flooring Sydney, engineered timber flooring Sydney
+- Cost intent: flooring installation cost Sydney, flooring cost Sydney, hybrid flooring cost Sydney
+- Measurement intent: floor plan measurement, measure floor area from plan, flooring area calculator
+- Maintenance/problem intent: floor lifting, laminate water damage, hybrid flooring problems, flooring gaps
+- Local intent: flooring Parramatta, flooring Liverpool, flooring Auburn, flooring Blacktown, flooring Miranda, flooring Cabramatta, flooring Eastern Suburbs
+
+Use Search Console data when available. Do not invent rankings, impressions or clicks.

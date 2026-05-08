@@ -19,6 +19,12 @@ begin
 end;
 $$ language plpgsql;
 
+create sequence if not exists public.operon_quote_reference_seq
+  start with 352
+  increment by 1
+  no maxvalue
+  cache 1;
+
 create table if not exists public.operon_pricing_categories (
   id text primary key,
   created_at timestamptz not null default now(),
@@ -153,6 +159,7 @@ create table if not exists public.operon_pricing_stair_rates (
 
 create table if not exists public.operon_quote_requests (
   id uuid primary key default gen_random_uuid(),
+  quote_reference bigint not null default nextval('public.operon_quote_reference_seq'),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   customer_name text,
@@ -427,6 +434,7 @@ create table if not exists public.operon_pricing_optimization_buckets (
 );
 
 create index if not exists operon_quote_requests_status_idx on public.operon_quote_requests(status, created_at desc);
+create unique index if not exists operon_quote_requests_reference_idx on public.operon_quote_requests(quote_reference);
 create index if not exists operon_quote_requests_close_priority_idx on public.operon_quote_requests(close_band, priority_rank, close_score desc, last_activity desc);
 create index if not exists operon_quote_rooms_quote_id_idx on public.operon_quote_rooms(quote_id);
 create index if not exists operon_quote_items_quote_id_idx on public.operon_quote_items(quote_id);
@@ -537,6 +545,101 @@ on conflict (id) do update set
   label = excluded.label,
   short_description = excluded.short_description,
   page_url = excluded.page_url,
+  active = excluded.active,
+  updated_at = now();
+
+insert into public.operon_followup_templates (
+  template_key,
+  channel,
+  lead_stage,
+  timing_offset_hours,
+  subject,
+  body,
+  active
+) values
+  (
+    'manual_quote_review',
+    'manual_call',
+    'all',
+    0,
+    null,
+    'Review the submitted quote request. Confirm product, measured area, preparation, removal/disposal, trims, stairs, access and the best next step before contacting the customer.',
+    true
+  ),
+  (
+    'immediate_email_received',
+    'email',
+    'all',
+    0,
+    'Your flooring estimate - next steps',
+    'Hi {{name}},
+
+Thanks for sending your flooring estimate through Operon Flooring.
+
+We will review the product, measured area and scope details before final confirmation. If anything needs clarification, we will contact you before work is booked.
+
+Regards,
+Operon Flooring',
+    true
+  ),
+  (
+    'day1_sms_checkin',
+    'sms',
+    'hot',
+    24,
+    null,
+    'Hi {{name}}, just checking if you had any questions about your Operon flooring estimate. We can confirm scope before you make a decision.',
+    true
+  ),
+  (
+    'day3_email_guidance',
+    'email',
+    'warm',
+    72,
+    'Flooring quote clarity',
+    'Hi {{name}},
+
+A quick follow-up on your flooring estimate.
+
+The main items worth checking before booking are product range, measured area, floor preparation, removal/disposal, trims and access. These are the details that usually affect final scope.
+
+If you would like us to review anything, reply to this email and we can help clarify the next step.
+
+Regards,
+Operon Flooring',
+    true
+  ),
+  (
+    'day7_sms_soft_reminder',
+    'sms',
+    'all',
+    168,
+    null,
+    'Hi {{name}}, if your flooring project is still moving ahead, we can help confirm scope and next steps from your Operon estimate.',
+    true
+  ),
+  (
+    'day14_email_planning',
+    'email',
+    'cold',
+    336,
+    'Planning your flooring project',
+    'Hi {{name}},
+
+Just checking in while you are planning your flooring project.
+
+When you are ready, the next useful step is to confirm area, product direction and any site details such as access, preparation or removal.
+
+Regards,
+Operon Flooring',
+    true
+  )
+on conflict (template_key) do update set
+  channel = excluded.channel,
+  lead_stage = excluded.lead_stage,
+  timing_offset_hours = excluded.timing_offset_hours,
+  subject = excluded.subject,
+  body = excluded.body,
   active = excluded.active,
   updated_at = now();
 
