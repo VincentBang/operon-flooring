@@ -617,6 +617,45 @@ Reason:
 - Protected-file status: no quote calculation logic, pricing rules, product data, floorplan logic, backend/API/email functions, Supabase migrations/functions, tracking runtime, analytics runtime, or live chatbot runtime integration was changed. Existing dirty protected files predated this pass and were intentionally left untouched.
 - Next best tasks: run browser/mobile QA across quote, products, floorplan and quote-review; then handle the 43 pending content/chatbot/project-proof tasks or explicitly approve a focused protected-file pass if runtime UX needs changes.
 
+## Latest 2026-05-09 Continue Execution Overnight
+
+- Tasks completed this run: 39 safe queue items, including `CHATBOT-LIVE-SCOPE-INJECTION-004`, `GUIDE-SCOPE-REFRESH-001-004` through `GUIDE-SCOPE-REFRESH-012-004`, `CHATBOT-SCOPE-001-004` through `CHATBOT-SCOPE-012-004`, `PROJECT-PROOF-SCOPE-001-004` through `PROJECT-PROOF-SCOPE-012-004`, and `BACKLOG-SAFE-194-004` through `BACKLOG-SAFE-200-004`.
+- Files changed this run: chatbot runtime/docs/tests, selected problem-guide HTML pages, five suburb pages, three product money pages, `flooring-installation-cost-sydney.html`, `products.html`, `quote-review.html`, `PROJECT_CASE_STUDY_BACKLOG.md`, `OPERON_SCOPE_STANDARD_APPLICATION_AUDIT.md`, `apps/web/task_queue.json`, `apps/web/QA_NOTES.md`, and `apps/web/PROJECT_MEMORY.md`.
+- Chatbot result guidance: the assistant now reads visible Quote Advisor result text as read-only context, explains one missing or unclear scope item, suggests one contractor question, and routes to a structured Operon estimate without calculating price or judging a competitor.
+- Guide refresh: repair/replace, floor lifting, laminate water damage, hybrid problems, comparison guides, product money pages and suburb pages now include tighter scope-first guidance and quote-review routes where the intent is natural.
+- Project proof planning: `PROJECT_CASE_STUDY_BACKLOG.md` now has page-specific proof intake fields for problem guides, suburb pages and product money pages so future trust proof can be collected without inventing public claims.
+- Backlog governance: `OPERON_SCOPE_STANDARD_APPLICATION_AUDIT.md` now includes a safe future backlog register for copy, routing, product education, suburb proof, guide consolidation, mobile skim and analytics planning work.
+- Queue state: the 200-task queue now has 189 done, 0 pending and 11 blocked.
+- Validation performed: `node apps/web/chatbot/tests/chatbot.test.js`, queue parse/count checks, guide/page JSON-LD and H1 checks, local target existence checks and `git diff --check` passed for the touched files.
+- Protected-file status: no quote calculation logic, pricing rules, product data, floorplan runtime, backend/API/email functions, Supabase migrations/functions, or tracking runtime was edited in this pass.
+- Next best tasks: resolve the 11 blocked approval-gated items only if explicitly approved, otherwise run browser/mobile QA across quote, products, floorplan and quote-review before pushing.
+
+## Latest 2026-05-09 Blocked Queue Closeout
+
+- Tasks completed this run: the remaining 11 approval-gated queue items, bringing `task_queue.json` to 200 done, 0 pending and 0 blocked.
+- Files changed this run: `apps/web/quoteCalculator.js`, `apps/web/products.js`, `apps/web/quote.html`, `apps/web/floorplan.html`, `apps/web/products.html`, `apps/web/quote-review.html`, `netlify/functions/save-quote-request.js`, `supabase/migrations/20260509_scope_standard_signals.sql`, `apps/web/task_queue.json`, `apps/web/QA_NOTES.md`, and `apps/web/PROJECT_MEMORY.md`.
+- Calculator scope fields: `quoteCalculator.js` now emits read-only `scopeSignals` that describe included scope, missing or unclear scope, variation risks and final-confirmation requirements. Pricing formulas, rates and totals were not changed.
+- Product scope metadata: `products.js` now exposes derived product scope metadata from existing product/range fields, such as thickness, board size, warranty, installation note and quote prompts. No product prices or catalogue entries were changed.
+- Lead/save plumbing: `quote.html` carries `scopeSignals` and product scope metadata into the payload; `save-quote-request.js` preserves scope signals in the existing raw payload path and can show missing scope in quote emails.
+- Data readiness: added an additive Supabase migration for future `scope_signals`, `missing_scope_items`, `scope_definition_level` and next-action fields on quote requests/leads/reviews.
+- Customer copy: floorplan handoff copy now clarifies that the tool transfers measured area while product/site scope is confirmed in the quote; products and quote-review pages received one compact decision-focused FAQ each.
+- Validation performed: `task_queue.json` parsed at 200 done / 0 pending / 0 blocked, `node apps/web/tests/quoteCalculator.validation.js`, `node --check apps/web/quoteCalculator.js`, `node --check apps/web/products.js`, `node --check netlify/functions/save-quote-request.js`, and chatbot tests passed.
+- Risk note: Supabase migration is additive and must still be applied to the database before those new columns are available outside raw payload storage.
+
+## Latest 2026-05-09 Overnight Full Agents Queue 005
+
+- Tasks completed this run: 25 safe Queue 005 items: `OVN-001`, `OVN-002`, `OVN-003`, `OVN-004`, `OVN-005`, `OVN-006`, `OVN-007`, `OVN-009`, `OVN-010`, `OVN-011`, `OVN-012`, `OVN-013`, `OVN-014`, `OVN-018`, `OVN-022`, `OVN-025`, `OVN-029`, `OVN-030`, `OVN-031`, `OVN-032`, `OVN-036`, `OVN-042`, `OVN-044`, `OVN-048`, and `OVN-049`.
+- Files changed this run: `apps/web/task_queue.json`, `apps/web/QA_NOTES.md`, chatbot documentation under `apps/web/chatbot/`, `apps/web/PROJECT_CASE_STUDY_BACKLOG.md`, `apps/web/OPERON_SCOPE_STANDARD_APPLICATION_AUDIT.md`, and `apps/web/PROJECT_MEMORY.md`.
+- Agent split: Worker A completed chatbot scope-first conversion, floorplan guidance, no-price-calculation, QA matrix and memory updates; Worker B completed technical SEO and QA documentation for sitemap, robots, metadata, H1, JSON-LD, links and conversion-route coverage; Worker C completed project-proof, photo/permission, premium suburb proof and trust-signal documentation.
+- Floorplan policy captured: the floorplan tool remains a measurement assistant only. It sends real measured area into the quote flow and must not apply wastage, chargeable area, pricing, or final site-measurement claims.
+- Measurement confidence language: floorplan confidence is measurement-quality language only and must stay separate from quote confidence, product confidence, and final scope confirmation.
+- QA documentation added: `QA_NOTES.md` now includes floorplan public browser checks, mobile checks, hidden debug/prototype exposure notes, and manual QA placeholders for upload, scale, trace, selected area, quote handoff and footer overlap.
+- Queue state: Queue 005 now has 50 ranked tasks, with 25 done and 25 pending. Scores use `priority_score = (impact_score x confidence_score) / effort_score`.
+- Validation performed: `node apps/web/chatbot/tests/chatbot.test.js` passed, `npm run test:floorplan` passed, `git diff --check` passed for the updated queue/docs/chatbot/project-proof files, and internal-rate exposure scan found only forbidden examples or guardrail language, not customer-facing rate disclosures.
+- Known risks: browser/mobile rendering QA was not run in this cycle; the worktree remains very dirty from previous Operon work; several protected runtime files are already modified from earlier tasks and were not reverted.
+- Blocked items: live quote/product/floorplan/pricing/backend/Supabase/runtime changes remain approval-gated unless the user explicitly requests a focused protected-file pass.
+- Next best tasks: run rendered mobile/browser QA for homepage, products, product SEO pages, `quote.html`, `quote-review.html`, and `floorplan.html`; then complete remaining safe documentation/content tasks or explicitly approve a narrow runtime QA/fix pass.
+
 ## TODO / NEXT_ACTIONS
 
 - 2026-05-07: SEO/CRO/site-quality agent loop upgraded. Operon now treats SEO as a compounding authority system: topical clusters, internal link graph, content quality enforcement, CRO, technical SEO, project proof, and utility moat improvements are part of every continue execution run.

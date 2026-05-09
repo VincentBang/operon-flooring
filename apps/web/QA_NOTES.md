@@ -211,3 +211,109 @@ Scope: safe non-core SEO, content structure, internal links, sitemap consistency
 - Success path to test on Netlify runtime: complete the quote flow, press `Submit quote request`, confirm `quote_submit` fires before submission, confirm `quote_submit_success` fires once after a successful form response, and confirm the page redirects to `thank-you.html`.
 - Error path to test on simple localhost/static preview: complete the quote flow, press `Submit quote request`, confirm the lead payload is saved to `operon_last_submitted_lead_result_v1`, confirm `quote_submit_error` fires once, and confirm the recovery banner appears.
 - Error path to test on Netlify runtime with form failure: block the form endpoint or inspect a failed response, confirm the saved recovery payload remains available, and confirm no duplicate success/error events fire.
+
+## 2026-05-09 Continue Execution Overnight
+
+- Scope: completed a safe continuation batch focused on chatbot guidance and compact guide-page scope confirmation.
+- Chatbot QA: Quote Advisor result awareness now has isolated tests confirming read-only page state, no price calculation, no competitor judgment, and correct routing to `quote.html?from=quote-review`.
+- Guide QA: refreshed `blog/floor-repair-or-replace.html`, `blog/why-is-my-floor-lifting.html`, `blog/laminate-floor-water-damage.html`, and `blog/hybrid-flooring-problems.html` with concise scope-check sections and quote-review/preparation/gaps guide routes.
+- Suburb QA: Parramatta, Liverpool, Auburn, Blacktown and Miranda pages now include compact local scope-check sections with quote-review and practical guide routes; generic or clipped snippets found during review were corrected.
+- Product/commercial QA: hybrid, laminate and engineered money pages plus installation-cost, products and quote-review pages now have tighter scope-first guidance without exposing rates or changing product/pricing logic.
+- Project-proof QA: `PROJECT_CASE_STUDY_BACKLOG.md` now has planning-only proof intake fields for product pages, suburb pages and problem guides. No public project claims or fake case studies were published.
+- Backlog QA: `OPERON_SCOPE_STANDARD_APPLICATION_AUDIT.md` now records safe future backlog categories for copy, quote-review routing, product education, suburb proof, guide consolidation, mobile skim and analytics planning.
+- Queue QA: the 200-task queue now parses at 189 done, 0 pending and 11 blocked. Blocked items remain approval-gated because they touch protected quote, product, floorplan, backend, email, Supabase or live runtime areas.
+- Validation performed: chatbot test suite passed, updated guide/page JSON-LD parsed where present, H1 checks passed for refreshed pages, linked targets exist locally, the public HTML scan avoids forced “Operon Scope Standard” branding, and whitespace diff checks passed for touched files.
+- Protected-file status: no quote calculation logic, pricing rules, product data, floorplan runtime, backend/API/email functions, Supabase files, or tracking runtime were edited in this pass.
+
+## 2026-05-09 Blocked Queue Closeout
+
+- Scope: completed the remaining 11 previously blocked tasks after explicit approval to continue them.
+- Queue QA: `task_queue.json` now parses at 200 done, 0 pending and 0 blocked.
+- Calculator QA: `quoteCalculator.js` now adds read-only `scopeSignals` to the result object. The existing validation suite still passes, confirming supply/install, install-only, removal/disposal and stair pricing scenarios remain intact.
+- Product QA: `products.js` now derives scope metadata from existing product/range fields only; no product prices, ranges, colours or selection logic were changed.
+- Floorplan QA: floorplan copy now clarifies that the tool sends measured area into quote and that product/site scope is handled in the quote flow. No floorplan measurement logic was changed.
+- Backend/save QA: `save-quote-request.js` syntax passes and stores `scopeSignals` in the existing raw payload path. Customer/internal email copy can list missing scope items when present; sending behavior and provider configuration were not changed.
+- Supabase QA: added one additive migration, `20260509_scope_standard_signals.sql`, for future scope signal columns. It does not drop or rewrite data.
+- Page QA: `products.html` and `quote-review.html` received one compact decision-focused FAQ each; quote/pricing/product interaction logic was not changed.
+- Validation performed: queue parse check, `node apps/web/tests/quoteCalculator.validation.js`, `node --check apps/web/quoteCalculator.js`, `node --check apps/web/products.js`, `node --check netlify/functions/save-quote-request.js`, and chatbot test suite passed.
+- Remaining deployment note: the Supabase migration still needs to be applied in the database environment before the new scope signal columns are available for direct querying.
+
+## 2026-05-09 Worker B Technical SEO / QA Documentation
+
+Scope: documentation-only technical SEO QA pass for sitemap, robots, core SEO pages, blog pages, and obvious crawl/link/meta/H1 risks. No public page, quote flow, floorplan runtime, product catalogue, pricing logic, Supabase, Netlify function, chatbot runtime, or tracking architecture files were edited in this pass.
+
+### Completed Task IDs
+
+- `B-SEO-QA-001` - Sitemap and robots crawl directive snapshot.
+- `B-SEO-QA-002` - Public sitemap title/meta/canonical/H1 coverage audit.
+- `B-SEO-QA-003` - Local href and conversion-route crawl audit.
+- `B-SEO-QA-004` - Safe technical SEO next-task documentation.
+
+### Validation Performed
+
+- Read-only sitemap audit found 37 URLs in `sitemap.xml`; every sitemap target resolves to a local file in the workspace.
+- `robots.txt` allows crawling and declares `https://operonflooring.com.au/sitemap.xml`.
+- Public sitemap pages were checked for title tag, meta description, canonical tag, and H1 count; no missing title, missing description, missing canonical, or multi/missing-H1 issue was found.
+- JSON-LD on the 37 sitemap pages was parsed; no invalid JSON-LD blocks were found.
+- Sitemap pages were checked for accidental `noindex`; no sitemap-listed page is currently marked `noindex`.
+- Local hrefs across 53 HTML files were resolved after removing hash/query fragments; no missing local link targets were found.
+- Conversion-route coverage remains strong in the static crawl: `quote.html` links appear 229 times, `quote-review.html` links 53 times, `products.html` links 149 times, and `floorplan.html` links 126 times across the audited HTML set.
+
+### Findings
+
+- No urgent sitemap, robots, canonical, H1, schema-parse, or broken-local-link defect was found in this pass.
+- Quote-review links are present but still selective compared with quote/product/floorplan paths, which matches the current policy to use quote review where scope uncertainty or quote comparison intent is natural.
+- The existing `href="#"` contact actions on `thank-you.html` remain a known deferred item, but they were not changed because this pass avoided live page edits and the actions are hidden until contact details are finalized.
+- Homepage placeholder phone-number TODO comments remain a known business-data dependency. Do not replace them until the real Operon phone number is confirmed.
+- Dynamic catalogue image dimension/accessibility follow-up remains the main future technical SEO item, but any fix must be coordinated carefully because product rendering and `products.js` are protected unless explicitly approved.
+
+### Next Safe Tasks
+
+- `B-SEO-NEXT-001` - Run a rendered mobile browser QA pass for homepage, product pages, `products.html`, `quote-review.html`, and floorplan entry points after current dirty page edits settle.
+- `B-SEO-NEXT-002` - Add explicit CTA tracking metadata to product SEO page anchors in a careful HTML-only pass, without editing `tracking.js` or quote/product runtime logic.
+- `B-SEO-NEXT-003` - Resolve `thank-you.html` hidden `Call now` and `Send message` hash actions once real phone/message destinations are confirmed.
+- `B-SEO-NEXT-004` - Review dynamic catalogue image width/height and alt rendering with product-owner approval before touching protected catalogue logic.
+
+## 2026-05-09 Overnight Full Agents Floorplan QA Notes
+
+Scope: documentation-only QA follow-up after the floor plan measurement upgrade. No quote flow, floorplan runtime, product catalogue, pricing logic, Supabase, Netlify function, or tracking runtime file was edited for this QA section.
+
+### Completed Task IDs
+
+- `OVN-001` - Document floorplan public QA checklist.
+- `OVN-013` - Audit floorplan page for hidden debug text exposure.
+- `OVN-014` - Document mobile QA checklist for floorplan tool.
+- `OVN-029` - Add floorplan manual QA result placeholder.
+
+### Public Workflow Checks To Run In Browser
+
+- Open `floorplan.html` with no query string and confirm the visible workflow is only upload, set scale, trace rooms, review selected area, and use area in quote.
+- Confirm customer-facing copy describes the tool as a measured starting area, not a final site measurement or pricing engine.
+- Upload one JPG, one PNG, and one PDF if supported; verify the plan displays without pushing the footer under the tool on mobile.
+- Set scale from a long labelled wall where possible and confirm scale status, known distance, pixel distance, pixels per metre, metres per pixel, and scale quality messaging appear.
+- Try a short known distance under 2m and confirm the warning recommends using a longer known wall.
+- Trace a simple rectangle, an L-shaped room, and two separate rooms; confirm point count, open/closed state, Finish room, Undo point, Clear trace, and saved area display behave cleanly.
+- Save a room under 1 m2 and over 150 m2 in a test plan only; confirm the tool asks for confirmation before saving unusual room sizes.
+- Exclude one saved room and confirm total selected area updates.
+- Click `Use this area in quote`; if the quote already has an area, confirm the replacement warning appears.
+- Confirm `quote.html` receives real measured area only and explains that off-cuts/final pricing are handled later in quote review.
+
+### Mobile QA Checklist
+
+- Confirm the upload control, scale controls, trace controls, selected area panel, and `Use this area in quote` button fit within the viewport without overlapping the sticky chatbot or footer.
+- Confirm canvas pan/zoom does not break point placement or measured area after scale is set.
+- Confirm the selected area section stacks below the tool without hiding the instruction card or room list.
+- Confirm the footer sits below the tool after rooms are added and after the quote handoff panel appears.
+- Confirm the scale modal fits a narrow mobile viewport and the keyboard does not hide the confirm action.
+
+### Debug / Prototype UI Exposure
+
+- The assisted/quick room code remains in source for developer-only use, but public CSS hides it behind `quick-room-hidden` by default.
+- Developer mode can expose the assisted workflow with the approved dev flag only; it should not be visible to customers from normal navigation.
+- Source searches may still find terms such as threshold, quick room, or detection because those are internal code paths. The public QA requirement is that those labels are not visible in the default customer workflow.
+
+### Precision Test Status
+
+- `npm run test:floorplan` passed after the floorplan upgrade.
+- Synthetic area fixtures cover rectangles, L-shape, multi-room aggregation, rotated rectangle, duplicate closing point handling, and viewport scaling independence.
+- Manual browser QA is still required before describing the tool as visually verified on mobile.

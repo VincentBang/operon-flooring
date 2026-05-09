@@ -229,7 +229,8 @@
       setRoute("Request operator follow-up", href, "fullName");
       state.operatorHandoff = {
         title: "Need a person?",
-        copy: prompts.copy.operatorHandoff || "Send your contact details and project note so the team can follow up.",
+        copy: prompts.copy.operatorHandoff || "Send your contact details and project note so Operon can follow up. This is not a live chat.",
+        privacyCopy: "Your message and recent chat context may be sent to support this follow-up request.",
         primaryLabel: "Request operator follow-up",
         href: href
       };
@@ -248,22 +249,79 @@
         return "Start with products, quote, or quote review.";
       }
 
+      if (siteState.flow === "quote_review_result") {
+        return "Confirm the unclear scope items, or build a structured Operon estimate.";
+      }
+
       if (siteState.isNearCompletion) {
         return "Review the scope, then submit the quote request.";
       }
 
       if (siteState.missingInputs && siteState.missingInputs.length) {
+        if (siteState.missingInputs[0] === "review and submit") {
+          return "Review the estimate, then submit the quote request.";
+        }
         return "Complete " + siteState.missingInputs[0] + " first.";
+      }
+
+      if (siteState.stepTitle && siteState.activeStepNumber) {
+        return "Continue Step " + siteState.activeStepNumber + ": " + siteState.stepTitle + ".";
       }
 
       return siteState.nudge || "Continue to the next step.";
     }
 
+    function getFirstUsefulReviewItem(items, fallback) {
+      if (Array.isArray(items)) {
+        const item = items.find(function (value) {
+          return value && !/will appear|no extracted|questions will appear/i.test(value);
+        });
+        if (item) {
+          return compact(item).slice(0, 130);
+        }
+      }
+      return fallback;
+    }
+
+    function pushQuoteReviewResultGuide(siteState, focus) {
+      const status = siteState && siteState.reviewStatus ? compact(siteState.reviewStatus) : "Review result is ready";
+      const missing = getFirstUsefulReviewItem(
+        siteState && siteState.reviewMissingScope,
+        "The useful check is whether removal, prep, underlay, trims, stairs and site details are clearly written."
+      );
+      const question = getFirstUsefulReviewItem(
+        siteState && siteState.reviewQuestions,
+        "Ask the contractor to confirm missing inclusions in writing before comparing totals."
+      );
+      const answer = focus === "question"
+        ? "Ask one direct scope question first."
+        : status + ".";
+      const insight = focus === "extracted" && siteState && siteState.reviewExtractedDetails && siteState.reviewExtractedDetails.length
+        ? "Extracted detail: " + getFirstUsefulReviewItem(siteState.reviewExtractedDetails, missing)
+        : "Main scope point: " + missing;
+      const nextStep = focus === "question" ? question : "Confirm that item, or build a structured Operon estimate.";
+
+      setIntent("quote_review_result_explanation", {
+        readiness: "review",
+        reason: "quote review result guidance",
+        missing_items_to_check: siteState && siteState.reviewMissingScope ? siteState.reviewMissingScope.slice(0, 5) : []
+      });
+      setRoute("Get structured estimate", siteState && siteState.next ? siteState.next.href : "quote.html?from=quote-review");
+      pushGuided(answer, insight, nextStep, prompts.actions.nextSteps);
+      state.stage = "quote_review_result";
+    }
+
     function pushStateAwareGuide(prefix, actions) {
       const siteState = applySiteRouteSuggestion();
+      if (siteState && siteState.flow === "quote_review_result") {
+        pushQuoteReviewResultGuide(siteState, "result");
+        return;
+      }
       pushGuided(
         prefix || "Use the next suitable step.",
-        "Keep the decision focused on product choice, quote scope, and missing details.",
+        siteState && siteState.stepTitle
+          ? "You are on " + siteState.stepTitle + ". Keep the quote moving one decision at a time."
+          : "Keep the decision focused on product choice, quote scope, and missing details.",
         getStateAwareNextStep(siteState),
         actions || prompts.actions.nextSteps
       );
@@ -367,6 +425,11 @@
       }
 
       if (triggerId === "review_page_idle" && pageKey === "quote-review") {
+        if (siteState && siteState.flow === "quote_review_result") {
+          pushQuoteReviewResultGuide(siteState, "result");
+          return;
+        }
+
         setIntent("quote_review", {
           readiness: "review",
           reason: "quote review page guidance",
@@ -842,28 +905,44 @@
           return;
         case "route_floorplan":
           pushUser(actionLabel(actionId));
-          setIntent("missing_info_collection", { measurement_method: "floorplan_upload", reason: "area unclear" });
-          setRoute("Continue quote", "quote.html");
+          setIntent("floorplan_help", { measurement_method: "floorplan_upload", reason: "customer has a floor plan" });
+          setRoute("Measure from floor plan", "floorplan.html");
           pushGuided(
-            "Area can be handled without exact measuring now.",
-            "The quote flow can use manual area, rooms, or floor plan measurement.",
-            "Continue to the area step.",
+            "Use the floor plan tool when you already have a plan.",
+            "For general area uncertainty, the quote can still start with a rough total or room-by-room entry.",
+            "Open floor plan measurement.",
             prompts.actions.nextSteps
           );
           state.stage = "area_help";
           return;
+        case "quick_completeness_check":
+          pushUser(actionLabel(actionId));
+          setIntent("quick_quote_completeness", {
+            readiness: "review",
+            reason: "no-file quote completeness check",
+            missing_items_to_check: ["product clarity", "area", "inclusions", "exclusions", "site assumptions"]
+          });
+          setRoute("Run quick check", "quote-review.html");
+          pushGuided(
+            prompts.copy.quickCompleteness,
+            "It checks whether the quote is complete enough to compare, based only on what you enter.",
+            "Run the quick check.",
+            prompts.actions.nextSteps
+          );
+          state.stage = "quick_quote_completeness";
+          return;
         case "review_existing_quote":
           pushUser(actionLabel(actionId));
-          setIntent("quote_review", {
+          setIntent("document_quote_review", {
             readiness: "review",
-            reason: "existing quote scope check",
+            reason: "document-based quote review",
             missing_items_to_check: ["product clarity", "installation method", "floor preparation", "disposal", "site details", "trims"]
           });
-          setRoute("Review quote scope", "quote-review.html");
+          setRoute("Upload written quote", "quote-review.html");
           pushGuided(
-            "Review what is included in the quote, not who is cheapest.",
-            "The useful review is flooring type, area, included items, missing scope, and any concerns you want clarified.",
-            "Open quote review.",
+            prompts.copy.documentReview,
+            "It can check visible inclusions and create questions to confirm before accepting.",
+            "Upload written quote.",
             prompts.actions.nextSteps
           );
           state.stage = "quote_review";
@@ -910,13 +989,13 @@
           state.stage = "ready";
           return;
         case "review_scope":
-          setIntent("quote_review", { readiness: "review" });
-          setRoute("Review quote scope", "quote-review.html");
+          setIntent("document_quote_review", { readiness: "review" });
+          setRoute("Upload written quote", "quote-review.html");
           pushUser(actionLabel(actionId));
           pushGuided(
-            "Quote scope review is the safer path.",
+            prompts.copy.documentReview,
             getValidationSummary(mapper.toStructuredOutput(state.draft)) || "Check product, area, removal, prep, and trims.",
-            "Open quote review.",
+            "Upload written quote.",
             prompts.actions.nextSteps
           );
           state.stage = "review";
@@ -1043,6 +1122,27 @@
 
       const lowerValue = value.toLowerCase();
 
+      if (settings.pageKey === "quote-review" && includesAny(lowerValue, [
+        "what does this mean",
+        "explain",
+        "result",
+        "review result",
+        "missing",
+        "unclear",
+        "scope gap",
+        "question to ask",
+        "what should i ask",
+        "what should i do",
+        "what next"
+      ])) {
+        const siteState = applySiteRouteSuggestion();
+        if (siteState && siteState.flow === "quote_review_result") {
+          const focus = includesAny(lowerValue, ["ask", "question"]) ? "question" : "result";
+          pushQuoteReviewResultGuide(siteState, focus);
+          return;
+        }
+      }
+
       if (includesAny(lowerValue, ["operator", "human", "person", "live chat", "online chat", "sales", "consultant", "speak to someone", "talk to someone", "call me", "can someone call"])) {
         setOperatorHandoff();
         pushGuided(
@@ -1063,31 +1163,78 @@
         return;
       }
 
-      if (includesAny(lowerValue, ["beat price", "price match", "competitor pricing", "competitor quote", "beat a competitor", "beat this quote", "beat my quote", "cheaper than"])) {
+      if (includesAny(lowerValue, ["beat price", "price match", "competitor pricing", "competitor quote", "beat a competitor", "beat this quote", "beat my quote", "cheaper than", "quote expensive", "is this quote expensive"])) {
         setIntent("unsupported", {
           reason: "competitor pricing comparison requested"
         });
-        setRoute("Review quote scope", "quote-review.html");
+        setRoute("Upload written quote", "quote-review.html");
         pushGuided(
-          "I cannot compare competitor pricing or claim Operon is cheaper.",
-          "The safer review is whether product, area, removal, prep, trims, and disposal are clear.",
-          "Open quote review.",
+          "I cannot judge another quote by price or claim a cheaper outcome.",
+          "Price is easier to compare once both quotes describe the same job.",
+          "Upload the written quote or run the quick completeness check.",
           prompts.actions.nextSteps
         );
         return;
       }
 
-      if (includesAny(lowerValue, ["existing quote", "another quote", "compare quote", "quote review"])) {
-        setIntent("quote_review", {
+      if (includesAny(lowerValue, ["do not have the file", "don't have the file", "no file", "quick check", "quick completeness", "only know total", "only says supply and install", "quote only says", "my quote only says"])) {
+        setIntent("quick_quote_completeness", {
           readiness: "review",
-          reason: "existing quote scope check",
+          reason: "no-file quote completeness check",
+          missing_items_to_check: ["product clarity", "area", "inclusions", "exclusions", "site assumptions"]
+        });
+        setRoute("Run quick check", "quote-review.html");
+        pushGuided(
+          prompts.copy.quickCompleteness,
+          "It is not a full quote review and does not judge price fairness.",
+          "Run the quick check.",
+          prompts.actions.nextSteps
+        );
+        return;
+      }
+
+      if (includesAny(lowerValue, ["product match 35", "match 35", "35% match", "35 percent match"])) {
+        setIntent("quote_review_result_explanation", {
+          readiness: "review",
+          reason: "quote review result explanation",
+          missing_items_to_check: ["product brand", "range", "colour", "full specification"]
+        });
+        setRoute("Upload written quote", "quote-review.html");
+        pushGuided(
+          "A low product signal should not be treated as a confirmed match.",
+          "If the uploaded quote only says something broad like Hybrid 7mm, the safe result is product match not confirmed.",
+          "Confirm the product brand, range, colour and specification.",
+          prompts.actions.nextSteps
+        );
+        return;
+      }
+
+      if (includesAny(lowerValue, ["what does this quote review mean", "what does this report mean", "what does this review mean"])) {
+        setIntent("quote_review_result_explanation", {
+          readiness: "review",
+          reason: "quote review result explanation"
+        });
+        setRoute("Upload written quote", "quote-review.html");
+        pushGuided(
+          "A quote review result is about scope completeness and comparison readiness.",
+          "It should explain what is clear, what is missing, and what to ask before accepting.",
+          "Open the review and check the questions section.",
+          prompts.actions.nextSteps
+        );
+        return;
+      }
+
+      if (includesAny(lowerValue, ["existing quote", "another quote", "compare quote", "quote review", "review my quote", "check my quote", "uploaded quote", "written quote", "hybrid 7mm quote", "is this quote fair"])) {
+        setIntent("document_quote_review", {
+          readiness: "review",
+          reason: "document-based quote review",
           missing_items_to_check: ["product clarity", "installation method", "floor preparation", "disposal", "site details", "trims"]
         });
-        setRoute("Review quote scope", "quote-review.html");
+        setRoute("Upload written quote", "quote-review.html");
         pushGuided(
-          "Use quote review for scope clarity.",
-          "It checks flooring type, area, inclusions, missing scope, and concerns without turning this into price comparison.",
-          "Open quote review.",
+          prompts.copy.documentReview,
+          "It checks visible details, scope clarity, and comparison readiness without judging cheapest price.",
+          "Upload written quote.",
           prompts.actions.nextSteps
         );
         return;
@@ -1307,18 +1454,18 @@
 
       if (includesAny(lowerValue, ["do not know area", "do not know my area", "don't know area", "don't know my area", "not sure area", "not sure my area", "unsure about area", "floor plan", "floorplan", "measure area"])) {
         const hasFloorPlanContext = includesAny(lowerValue, ["floor plan", "floorplan"]);
-        setIntent("missing_info_collection", {
+        setIntent(hasFloorPlanContext ? "floorplan_help" : "missing_info_collection", {
           measurement_method: hasFloorPlanContext ? "floorplan_upload" : "",
           reason: "area unclear"
         });
-        setRoute("Continue quote", "quote.html");
+        setRoute(hasFloorPlanContext ? "Measure from floor plan" : "Continue quote", hasFloorPlanContext ? "floorplan.html" : "quote.html");
         pushGuided(
           "No problem. You can still move forward without the area right now.",
           hasFloorPlanContext
-            ? "Use the floor plan path in the quote flow so the area can be measured before review."
+            ? "Use floor plan measurement when you already have a plan."
             : "If you're unsure about size, a rough total, room entry, or floor plan can keep the quote moving.",
           hasFloorPlanContext
-            ? "Continue to the area step and upload the floor plan."
+            ? "Open floor plan measurement."
             : "Continue to the area step.",
           prompts.actions.quoteHelp
         );
@@ -1412,6 +1559,62 @@
       }
       if (intent === "quote_explanation" || intent === "quote") {
         explainQuote();
+        return;
+      }
+      if (intent === "quick_quote_completeness") {
+        setIntent("quick_quote_completeness", {
+          readiness: "review",
+          reason: "no-file quote completeness check"
+        });
+        setRoute("Run quick check", "quote-review.html");
+        pushGuided(
+          prompts.copy.quickCompleteness,
+          "It checks scope completeness only, based on what you enter.",
+          "Run the quick check.",
+          prompts.actions.nextSteps
+        );
+        return;
+      }
+      if (intent === "document_quote_review") {
+        setIntent("document_quote_review", {
+          readiness: "review",
+          reason: "document-based quote review"
+        });
+        setRoute("Upload written quote", "quote-review.html");
+        pushGuided(
+          prompts.copy.documentReview,
+          "This is stronger than a no-file check because it can use visible document details.",
+          "Upload written quote.",
+          prompts.actions.nextSteps
+        );
+        return;
+      }
+      if (intent === "quote_review_result_explanation") {
+        setIntent("quote_review_result_explanation", {
+          readiness: "review",
+          reason: "quote review result explanation"
+        });
+        setRoute("Upload written quote", "quote-review.html");
+        pushGuided(
+          "A review result is about scope completeness and comparison readiness.",
+          "It should explain what is clear, what is missing, and what to ask before accepting.",
+          "Open the review and check the questions section.",
+          prompts.actions.nextSteps
+        );
+        return;
+      }
+      if (intent === "floorplan_help") {
+        setIntent("floorplan_help", {
+          measurement_method: "floorplan_upload",
+          reason: "floor plan measurement support"
+        });
+        setRoute("Measure from floor plan", "floorplan.html");
+        pushGuided(
+          "Use floor plan measurement when you already have a plan.",
+          "If you are only unsure about area, the quote can still start with rough details.",
+          "Open floor plan measurement.",
+          prompts.actions.nextSteps
+        );
         return;
       }
       if (intent === "scope_validation" || intent === "review") {

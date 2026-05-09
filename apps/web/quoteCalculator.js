@@ -530,6 +530,98 @@
     return lines;
   }
 
+  function pushUnique(list, value) {
+    if (value && list.indexOf(value) === -1) {
+      list.push(value);
+    }
+  }
+
+  function buildScopeSignals(input, result) {
+    const included = [];
+    const missingOrUnclear = [];
+    const variationRisks = [];
+    const siteConfirmation = [];
+
+    pushUnique(included, result.quoteMode === "install_only" ? "installation_only" : "supply_and_install");
+    if (result.productCategory) pushUnique(included, "product_category");
+    if (result.productId || result.pricingMode === "product") pushUnique(included, "product_or_range");
+    if (result.realArea > 0) pushUnique(included, "measured_area");
+    if (result.installMethod) pushUnique(included, "installation_method");
+    if (result.removalTotal > 0) pushUnique(included, "removal");
+    if (result.disposalSelected || result.disposalTotal > 0) pushUnique(included, "disposal");
+    if (result.floorPrepTotal > 0) pushUnique(included, "floor_preparation");
+    if (result.underlayTotal > 0) pushUnique(included, "underlay");
+    if (result.moistureBarrierTotal > 0) pushUnique(included, "moisture_protection");
+    if (result.skirtingTotal > 0 || result.scotiaTotal > 0) pushUnique(included, "finishing_trims");
+    if (result.furnitureTotal > 0) pushUnique(included, "furniture_handling");
+    if (result.doorTrimmingTotal > 0) pushUnique(included, "door_trimming");
+    if (result.stairsSelected) pushUnique(included, "stairs");
+
+    if (!input.subfloorCondition || input.subfloorCondition === "not_sure" || input.subfloorCondition === "unsure") {
+      pushUnique(missingOrUnclear, "subfloor_condition");
+      pushUnique(variationRisks, "floor_preparation");
+    }
+    if (!input.underfloorHeating || input.underfloorHeating === "not_sure" || input.underfloorHeating === "unsure") {
+      pushUnique(missingOrUnclear, "underfloor_heating");
+    }
+    if (input.removalOption === "unsure" || input.removalOption === "other") {
+      pushUnique(missingOrUnclear, "existing_floor_removal");
+      pushUnique(variationRisks, "removal_disposal");
+    }
+    if (input.removalOption && input.removalOption !== "none" && !input.removalDisposal) {
+      pushUnique(missingOrUnclear, "disposal");
+      pushUnique(variationRisks, "removal_disposal");
+    }
+    if (input.floorPrepType === "unsure" || input.floorPrepType === "manual" || input.floorPrepType === "heavy") {
+      pushUnique(missingOrUnclear, "floor_preparation");
+      pushUnique(variationRisks, "floor_preparation");
+    }
+    if (input.parkingAccess === "limited" || input.parkingAccess === "difficult" || input.parkingAccess === "unsure") {
+      pushUnique(missingOrUnclear, "access_parking");
+      pushUnique(variationRisks, "access");
+    }
+    if (result.stairsSelected && (result.stairWidthAssumed || !result.stairCount)) {
+      pushUnique(missingOrUnclear, "stair_details");
+      pushUnique(variationRisks, "stairs");
+    }
+    if (result.pricePending || result.pricingMode === "fallback") {
+      pushUnique(missingOrUnclear, "product_pricing_confirmation");
+      pushUnique(variationRisks, "product_selection");
+    }
+
+    (result.warnings || []).forEach(function (warning) {
+      pushUnique(siteConfirmation, warning);
+    });
+
+    return {
+      version: "scope_signals_v1",
+      productDefinition: {
+        category: result.productCategory || "",
+        productId: result.productId || null,
+        productLabel: result.productLabel || "",
+        pricingMode: result.pricingMode || "",
+        productNeedsConfirmation: !!result.pricePending
+      },
+      areaMeasurement: {
+        realArea: result.realArea || 0,
+        chargeableArea: result.quoteMode === "install_only" ? null : result.chargeableArea,
+        measurementSource: result.measurementSource || "",
+        basis: result.quoteMode === "install_only" ? "real_area" : "real_area_and_estimated_area_including_offcuts"
+      },
+      installationScope: {
+        quoteMode: result.quoteMode,
+        installationMethod: result.installMethod || "",
+        pattern: result.pattern || "standard",
+        stairsIncluded: !!result.stairsSelected
+      },
+      includedScope: included,
+      missingOrUnclearScope: missingOrUnclear,
+      variationRisks: variationRisks,
+      siteConfirmationItems: siteConfirmation,
+      finalConfirmationRequired: !!(result.manualReviewRequired || missingOrUnclear.length || siteConfirmation.length)
+    };
+  }
+
   function calculateQuote(input) {
     const libraries = getLibraries();
     const rules = clone((libraries.pricingRules && libraries.pricingRules.rules) || {});
@@ -745,6 +837,7 @@
       disclaimer: "Estimate only — final quote confirmed after review and site check."
     };
 
+    result.scopeSignals = buildScopeSignals(normalizedInput, result);
     result.quoteLines = buildCustomerLineItems(result);
     return result;
   }

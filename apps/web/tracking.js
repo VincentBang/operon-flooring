@@ -7,6 +7,41 @@
   const LAST_COMPLETED_STEP_NAME_KEY = "last_step_name";
   const RAPID_DUPLICATE_WINDOW_MS = 500;
   const recentEventSignatures = {};
+  const GA_ALLOWED_PARAM_KEYS = [
+    "page",
+    "step_index",
+    "step_name",
+    "product_category",
+    "quote_mode",
+    "area_method",
+    "review_required",
+    "confidence_level",
+    "source",
+    "measurement_mode",
+    "has_floorplan",
+    "has_stairs",
+    "has_quote_review",
+    "event_context"
+  ];
+  const GA_BLOCKED_KEY_PATTERN = /(name|phone|email|address|note|message|file|upload|payload|formula|rate|price|pricing|total|amount|cost|suburb|postcode|contractor|provider|customer|raw|quote_text|wording)/i;
+  const CTA_EVENT_ALIASES = {
+    click_hero_start_quote: "hero_start_quote_click",
+    hero_instant_quote: "hero_start_quote_click",
+    click_hero_quote_review: "hero_quote_review_click",
+    hero_validate_quote: "hero_quote_review_click",
+    click_start_quote_header: "header_start_quote_click",
+    header_quote: "header_start_quote_click",
+    click_contact_email: "email_click"
+  };
+  const GA_EVENT_ALIASES = {
+    quote_review_start: "quote_review_started",
+    quote_review_mode_select: "quote_review_mode_selected",
+    quote_review_complete: "quote_review_generated",
+    quote_review_document_review_generate: "quote_review_generated",
+    quote_email_send_attempt: "quote_email_copy_requested",
+    product_selected: "quote_product_selected",
+    product_select: "quote_product_selected"
+  };
 
   // Optimisation signals:
   // Step 1 drop-off -> form too long
@@ -133,6 +168,76 @@
     return lastSeenAt > 0 && (now - lastSeenAt) < RAPID_DUPLICATE_WINDOW_MS;
   }
 
+  function cleanAnalyticsValue(value) {
+    if (typeof value === "boolean") {
+      return value;
+    }
+    if (typeof value === "number") {
+      return Number.isFinite(value) ? value : undefined;
+    }
+    if (typeof value === "string") {
+      return value.slice(0, 100);
+    }
+    return undefined;
+  }
+
+  function firstDefined() {
+    for (let index = 0; index < arguments.length; index += 1) {
+      if (typeof arguments[index] !== "undefined" && arguments[index] !== null && arguments[index] !== "") {
+        return arguments[index];
+      }
+    }
+    return undefined;
+  }
+
+  function sanitizeAnalyticsParams(params) {
+    const source = params && typeof params === "object" ? params : {};
+    const mapped = {
+      page: firstDefined(source.page, window.location.pathname),
+      step_index: firstDefined(source.step_index, source.step, source.stepNumber),
+      step_name: firstDefined(source.step_name, source.stepName),
+      product_category: firstDefined(source.product_category, source.category, source.productCategory, source.type),
+      quote_mode: firstDefined(source.quote_mode, source.quoteMode, source.type),
+      area_method: firstDefined(source.area_method, source.measurement_method, source.measurementMethod),
+      review_required: firstDefined(source.review_required, source.reviewRequired),
+      confidence_level: firstDefined(source.confidence_level, source.confidenceLevel, source.quote_confidence),
+      source: firstDefined(source.source),
+      measurement_mode: firstDefined(source.measurement_mode, source.measurementMethod, source.method),
+      has_floorplan: firstDefined(source.has_floorplan, source.hasFloorplan),
+      has_stairs: firstDefined(source.has_stairs, source.hasStairs),
+      has_quote_review: firstDefined(source.has_quote_review, source.hasQuoteReview),
+      event_context: firstDefined(source.event_context, source.cta, source.label, source.action_id, source.interaction_type, source.review_mode)
+    };
+    const safe = {};
+    GA_ALLOWED_PARAM_KEYS.forEach(function (key) {
+      if (GA_BLOCKED_KEY_PATTERN.test(key)) {
+        return;
+      }
+      const value = cleanAnalyticsValue(mapped[key]);
+      if (typeof value !== "undefined") {
+        safe[key] = value;
+      }
+    });
+    return safe;
+  }
+
+  window.operonTrack = function (eventName, params) {
+    if (!eventName) {
+      return;
+    }
+    const safeParams = sanitizeAnalyticsParams(params || {});
+    try {
+      if (typeof window.gtag === "function") {
+        window.gtag("event", eventName, safeParams);
+      }
+    } catch (error) {
+      // GA4 is optional and should never block UX.
+    }
+    if (window.console && window.location.search.indexOf("debug_tracking=1") >= 0) {
+      console.log("[Operon tracking]", eventName, safeParams);
+    }
+  };
+
   function getOrCreateSessionId() {
     let sessionId = sessionStorage.getItem(SESSION_KEY);
     if (!sessionId) {
@@ -225,12 +330,23 @@
       metadata: details
     };
 
-    try {
-      if (typeof window.gtag === "function") {
-        window.gtag("event", eventName, details);
+    window.operonTrack(eventName, details);
+    if (GA_EVENT_ALIASES[eventName]) {
+      window.operonTrack(GA_EVENT_ALIASES[eventName], details);
+    }
+    if (eventName === "quote_review_upload_attempt") {
+      window.operonTrack("quote_review_document_upload_started", details);
+      if (details.has_file) {
+        window.operonTrack("quote_review_document_uploaded", {
+          source: "quote_review"
+        });
       }
-    } catch (error) {
-      // GA4 is optional and should never block UX.
+    }
+    if (eventName === "quote_review_payload_saved") {
+      window.operonTrack("quote_review_generated", details);
+      if (details.review_mode === "quick") {
+        window.operonTrack("quote_review_quick_check_started", details);
+      }
     }
 
     appendEvent(trackingState, event);
@@ -245,7 +361,6 @@
       writeTrackingState(trackingState);
       void sendToSupabase("quote_events", aliasEvent);
     }
-    console.log("TRACK:", eventName, details);
     return { trackingState: trackingState, event: event };
   }
 
@@ -326,6 +441,7 @@
     writeTrackingState(trackingState);
     clearPendingAbandonment();
     trackEvent("quote_start", {});
+    trackEvent("quote_started", { source: "quote_flow" });
     return updateFunnelState({
       started_quote: true,
       landing_page: window.location.pathname,
@@ -341,6 +457,10 @@
     writeTrackingState(trackingState);
     trackEvent("quote_step_view", {
       step: stepNumber,
+      step_name: stepName
+    });
+    trackEvent("quote_step_viewed", {
+      step_index: stepNumber,
       step_name: stepName
     });
     trackEvent("step_view", {
@@ -366,6 +486,10 @@
       step: stepNumber,
       step_name: stepName
     });
+    trackEvent("quote_step_completed", {
+      step_index: stepNumber,
+      step_name: stepName
+    });
     trackEvent("step_complete", {
       step: stepNumber,
       step_name: stepName
@@ -378,6 +502,11 @@
   }
 
   function trackQuoteStepError(stepNumber, stepName, message, source) {
+    trackEvent("quote_step_missing_info_shown", {
+      step_index: stepNumber,
+      step_name: stepName,
+      source: source || "validation"
+    });
     return trackEvent("step_error", {
       step: stepNumber,
       step_name: stepName,
@@ -392,6 +521,10 @@
       estimated_value: amount,
       area: Number(realArea) || 0,
       type: quoteType || ""
+    });
+    trackEvent("quote_submitted", {
+      quote_mode: quoteType || "",
+      area_method: "quote_form"
     });
   }
 
@@ -415,6 +548,10 @@
       estimated_value: amount,
       area: Number(realArea) || 0,
       type: quoteType || ""
+    });
+    trackEvent("quote_submitted", {
+      quote_mode: quoteType || "",
+      area_method: "quote_form"
     });
     return updateFunnelState({
       completed_quote: true,
@@ -466,6 +603,9 @@
     trackEvent("floorplan_uploaded", {
       file_name: fileName || ""
     });
+    trackEvent("floorplan_file_uploaded", {
+      has_floorplan: true
+    });
   }
 
   function trackFloorplanScaleSet(distanceMeters) {
@@ -478,6 +618,9 @@
     trackEvent("floorplan_room_added", {
       area: Number(area) || 0,
       room_type: roomType || "flooring"
+    });
+    trackEvent("floorplan_manual_room_saved", {
+      measurement_mode: roomType || "manual_trace"
     });
   }
 
@@ -494,6 +637,9 @@
     trackingState.floorplanAreaUses += 1;
     writeTrackingState(trackingState);
     trackEvent("floorplan_area_used", payload);
+    trackEvent("floorplan_area_sent_to_quote", {
+      has_floorplan: true
+    });
     trackEvent("floorplan_usage", payload);
     return updateFunnelState({
       estimated_quote_value: readFunnelState().estimated_quote_value
@@ -506,6 +652,67 @@
 
   function getFunnelState() {
     return readFunnelState();
+  }
+
+  function initTrackedCtaClicks() {
+    document.querySelectorAll("[data-track-cta]").forEach(function (element) {
+      if (element.dataset.trackingBound === "true") {
+        return;
+      }
+      element.dataset.trackingBound = "true";
+      element.addEventListener("click", function () {
+        const eventName = element.getAttribute("data-track-cta") || "cta_click";
+        const payload = {
+          cta: eventName,
+          destination: element.getAttribute("href") || "",
+          label: (element.textContent || "").trim()
+        };
+        trackEvent("cta_click", payload);
+        if (element.href && element.href.indexOf("tel:") === 0) {
+          trackEvent("phone_click", { source: eventName });
+        }
+        if (element.href && element.href.indexOf("mailto:") === 0) {
+          trackEvent("email_click", { source: eventName });
+        }
+        if (CTA_EVENT_ALIASES[eventName]) {
+          trackEvent(CTA_EVENT_ALIASES[eventName], payload);
+        }
+        if (element.hasAttribute("data-funnel-intent")) {
+          trackEvent("funnel_intent_select", {
+            source: element.getAttribute("data-funnel-intent"),
+            event_context: eventName
+          });
+        }
+        if (/^click_|^guide_to_quote_clicked$|^floor_plan_tool_clicked$/.test(eventName)) {
+          trackEvent(eventName, payload);
+        }
+      });
+    });
+  }
+
+  function initContactFormTracking() {
+    document.querySelectorAll("form[name='contact-enquiry'], .contact-form").forEach(function (form) {
+      if (form.dataset.contactTrackingBound === "true") {
+        return;
+      }
+      form.dataset.contactTrackingBound = "true";
+      const markStarted = function () {
+        if (form.dataset.contactTrackingStarted === "true") {
+          return;
+        }
+        form.dataset.contactTrackingStarted = "true";
+        trackEvent("contact_form_started", {
+          source: "contact_form"
+        });
+      };
+      form.addEventListener("input", markStarted, { once: false });
+      form.addEventListener("change", markStarted, { once: false });
+      form.addEventListener("submit", function () {
+        trackEvent("contact_form_submitted", {
+          source: "contact_form"
+        });
+      });
+    });
   }
 
   window.OperonTracking = {
@@ -528,9 +735,20 @@
     trackProductCatalogueView: trackProductCatalogueView,
     trackProductFilterChange: trackProductFilterChange,
     trackProductSelect: trackProductSelect,
+    initTrackedCtaClicks: initTrackedCtaClicks,
+    sanitizeAnalyticsParams: sanitizeAnalyticsParams,
     getState: getTrackingState,
     getFunnelState: getFunnelState
   };
 
   flushPendingAbandonment();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function () {
+      initTrackedCtaClicks();
+      initContactFormTracking();
+    });
+  } else {
+    initTrackedCtaClicks();
+    initContactFormTracking();
+  }
 }());

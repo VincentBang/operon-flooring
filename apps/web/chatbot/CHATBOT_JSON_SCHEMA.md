@@ -45,9 +45,11 @@ Rules:
 
 ## Quote Review Output
 
+Quick check output:
+
 ```json
 {
-  "intent": "quote_review",
+  "intent": "quick_quote_completeness",
   "review_mode": "quick",
   "flooring_type": "hybrid",
   "area_m2": 52,
@@ -69,19 +71,49 @@ Rules:
 
 Rules:
 
-- Quote review is a scope check.
+- Quick quote completeness is a no-file scope completeness check.
+- It is based only on customer-entered or ticked information.
 - It must not rank external quotes by price.
 - It must not claim another quote is wrong.
 - `clarity_score` is scope completeness only.
+- It must not show document extraction, product match, or an Operon comparable estimate.
 - No internal rates, margins, formulas, or calculated quote totals are allowed.
 - The chatbot can collect draft values, but `quote-review.html` owns the real advisor payload.
+
+Document review output:
+
+```json
+{
+  "intent": "document_quote_review",
+  "review_mode": "document",
+  "business_shown_on_document": "Business shown on document",
+  "document_type": "quote",
+  "product_scope_line": "Hybrid 7mm supply and install",
+  "flooring_type": "hybrid",
+  "comparison_level": "category-level only",
+  "extraction_confidence": "high",
+  "decision_confidence": "low to medium",
+  "product_match_status": "Product match not confirmed",
+  "missing_items_to_check": ["brand/range", "underlay", "floor preparation", "trims"],
+  "recommended_next_step": "quote.html?from=quote-review"
+}
+```
+
+Rules:
+
+- Document mode may extract visible document details.
+- Extraction confidence means visible fields were read correctly.
+- Comparison level means not comparable, category-level only, product-level, or scope-level.
+- Decision confidence means how safe it is to compare the uploaded quote.
+- Do not show high comparison confidence when the level is category-level only.
+- If only category and thickness are shown, use "Product match not confirmed."
 
 ## Full Draft Output
 
 ```json
 {
   "version": "1.0.0",
-  "intent": "quote_review",
+  "intent": "document_quote_review",
   "category": "hybrid",
   "recommended_category": "hybrid",
   "selection_mode": "recommend",

@@ -14,6 +14,8 @@ The assistant is ready to stay mounted as a controlled, closed-by-default guided
 - `products.html`
 - `quote.html`
 - `quote-review.html`
+- `floorplan.html` for floor-plan measurement prompts only
+- `thank-you.html` as an approved passive preset/mount only when the page includes the bootstrap
 
 Mount condition:
 
@@ -38,6 +40,10 @@ Mount condition:
 | Coverage map | Main customer journey prompts are covered | Pass |
 | Response guardrails | Answers avoid pricing, pressure, and competitor-cheapest claims | Pass |
 | Guided decision format | Responses stay short, include one key point, and end with a next step | Pass |
+| Quote-review mode policy | Quick completeness and document-based review are separated | Pass |
+| Floorplan route policy | `floorplan.html` is allowed only for explicit floor-plan measurement help | Pass |
+| Thank-you preset | Treated as passive post-submit mount, not an active lead-capture path | Pass |
+| Operator handoff | Explicit request only, with not-live-chat and privacy copy | Pass |
 | Conversion triggers | Idle, stuck-user, and near-completion nudges remain advisory only | Pass |
 | Handoff contract | Readiness is returned only, with `safe_to_apply: false` | Pass |
 | Mobile overlap | Widget uses constrained mobile layout and pointer-safe root | Pass |
@@ -58,6 +64,8 @@ node apps/web/chatbot/tests/chatbot.test.js
 - Future live-page UI changes must check CTA overlap on mobile and desktop.
 - Future chatbot UI changes must rerun the mobile overlap audit.
 - Future lead capture must remain owned by the existing quote submission flow.
+- Future operator follow-up must remain explicit and must not become silent lead capture.
+- Future quote-review UI work must keep quick results separate from document extraction/product-match sections.
 - Future conversion nudges must remain passive: no auto-navigation, no auto-submit, and no auto-field updates.
 
 ## Release Rule

@@ -2,11 +2,10 @@
   // Source of truth for optional underlay products.
   // Future Google Sheets / Supabase integration can replace this file with fetched data.
   const UNDERLAY_PRODUCTS = [
-    { id: "acoustic-underlay-standard", name: "Standard silver underlay", suitableCategories: ["laminate", "engineered"], pricePerM2: 4, active: true },
+    { id: "standard-silver-underlay", name: "Standard silver underlay", suitableCategories: ["laminate", "engineered"], pricePerM2: 4, active: true },
     { id: "acoustic-underlay-premium", name: "Premium acoustic underlay", suitableCategories: ["laminate", "engineered"], pricePerM2: 6, active: true },
-    { id: "acoustic-rubber-underlay-5mm", name: "Acoustic Rubber underlay 5mm", suitableCategories: ["laminate", "engineered"], pricePerM2: 12, active: true },
-    { id: "acoustic-rubber-underlay-5mm-glued-down", name: "Acoustic Rubber Underlay 5mm glued down", suitableCategories: ["engineered"], pricePerM2: 12, active: true },
-    { id: "hybrid-additional-acoustic-layer", name: "Additional Acoustic Layer", suitableCategories: ["hybrid"], pricePerM2: 5, active: false }
+    { id: "acoustic-rubber-underlay-5mm", name: "Acoustic Rubber Underlay 5mm", suitableCategories: ["laminate", "engineered"], pricePerM2: 12, active: true },
+    { id: "acoustic-rubber-underlay-5mm-glued-down", name: "Acoustic Rubber Underlay 5mm glued down", suitableCategories: ["engineered"], pricePerM2: 12, active: true }
   ];
 
   function clone(value) {

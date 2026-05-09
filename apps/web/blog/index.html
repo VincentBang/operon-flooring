@@ -58,8 +58,15 @@
       ]
     }
   </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2LEXZJM3Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T2LEXZJM3Q');
+  </script>
 </head>
-<body>
+<body class="has-mobile-sticky-cta">
   <header class="site-header">
     <div class="shell nav">
       <a class="brand" href="../index.html#top">
@@ -78,9 +85,18 @@
         <span></span>
         <span></span>
       </button>
-      <a class="button" href="../quote.html">Start quote</a>
+      <div class="header-actions">
+        <a class="header-phone" href="tel:04XXXXXXXX" data-track-cta="click_call_header">Call 04XX XXX XXX</a>
+        <a class="button" href="../quote.html" data-track-cta="click_start_quote_header">Start quote</a>
+      </div>
     </div>
   </header>
+
+  <nav class="mobile-sticky-cta" aria-label="Quick contact actions">
+    <a href="tel:04XXXXXXXX" data-track-cta="click_call_mobile_sticky">Call</a>
+    <a class="primary" href="../quote.html" data-track-cta="click_start_quote_mobile_sticky">Start quote</a>
+    <a href="../quote-review.html" data-track-cta="click_quote_validation">Check quote</a>
+  </nav>
 
   <main>
     <section class="hero">
@@ -88,10 +104,76 @@
         <article class="hero-card">
           <span class="eyebrow">Sydney Flooring Guides</span>
           <h1>Flooring advice and cost guides</h1>
-          <p>Use the right guide to compare products, understand scope and move into a clearer quote path.</p>
+          <p>Use the guide clusters to compare products, understand installation scope and move into a clearer quote path.</p>
           <div class="hero-actions" style="margin-top: 24px;">
             <a class="button" href="../quote.html">Start quote</a>
             <a class="button-secondary" href="../floorplan.html">Measure from floor plan</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <article class="section-card">
+          <span class="eyebrow">Guide Clusters</span>
+          <h2 style="margin-top: 18px;">Find the right guide before you quote</h2>
+          <div class="cluster-grid">
+            <article class="guide-cluster">
+              <h3>Before you get a quote</h3>
+              <p>Understand area, installation cost and scope before requesting pricing.</p>
+              <ul>
+                <li><a href="../quote.html">Flooring quote Sydney</a></li>
+                <li><a href="../flooring-installation-cost-sydney.html">Flooring installation cost guide</a></li>
+                <li><a href="../quote-review.html">Flooring quote review</a></li>
+                <li><a href="flooring-cost-sydney.html">Flooring cost Sydney</a></li>
+              </ul>
+              <a class="button-secondary" href="../quote.html">Start quote</a>
+            </article>
+            <article class="guide-cluster">
+              <h3>Compare flooring types</h3>
+              <p>Compare practical product tradeoffs before choosing a range.</p>
+              <ul>
+                <li><a href="laminate-vs-hybrid.html">Hybrid vs laminate</a></li>
+                <li><a href="engineered-timber-vs-laminate.html">Laminate vs engineered timber</a></li>
+                <li><a href="../engineered-timber-flooring-sydney.html">Engineered timber guide</a></li>
+                <li><a href="../hybrid-flooring-sydney.html">Hybrid Flooring Sydney</a></li>
+                <li><a href="../laminate-flooring-sydney.html">Laminate Flooring Sydney</a></li>
+              </ul>
+              <a class="button-secondary" href="../quote.html">Start quote</a>
+            </article>
+            <article class="guide-cluster">
+              <h3>Apartment and strata flooring</h3>
+              <p>Check measurement, acoustic and access issues that often affect apartment projects.</p>
+              <ul>
+                <li><a href="../flooring-installation-cost-sydney.html">Apartment cost considerations</a></li>
+                <li><a href="../floorplan.html">Floor plan measurement</a></li>
+                <li><a href="../quote.html">Apartment quote path</a></li>
+              </ul>
+              <a class="button-secondary" href="../quote.html">Start quote</a>
+            </article>
+            <article class="guide-cluster">
+              <h3>Installation scope and risks</h3>
+              <p>Review floor preparation, removal, stairs, trims, moisture and subfloor issues.</p>
+              <ul>
+                <li><a href="do-you-need-floor-preparation.html">Floor preparation</a></li>
+                <li><a href="flooring-installation-cost-breakdown.html">Removal and disposal</a></li>
+                <li><a href="../quote.html">Stairs and trims in quote</a></li>
+                <li><a href="flooring-gaps-and-expansion.html">Moisture and subfloor issues</a></li>
+              </ul>
+              <a class="button-secondary" href="../quote.html">Start quote</a>
+            </article>
+            <article class="guide-cluster">
+              <h3>Maintenance and problems</h3>
+              <p>Use these guides when the question is cleaning, damage, swelling or repair versus replacement.</p>
+              <ul>
+                <li><a href="how-to-clean-hybrid-flooring.html">Cleaning</a></li>
+                <li><a href="laminate-floor-water-damage.html">Swelling and water damage</a></li>
+                <li><a href="why-is-my-floor-lifting.html">Floor lifting</a></li>
+                <li><a href="floor-repair-or-replace.html">Repair or replacement guidance</a></li>
+              </ul>
+              <a class="button-secondary" href="../quote.html">Start quote</a>
+            </article>
           </div>
         </article>
       </div>
@@ -193,7 +275,14 @@
     <div class="container footer-grid">
       <div class="footer-col">
         <h3>Operon Flooring</h3>
-        <p>Premium laminate, hybrid and engineered timber flooring quotes for Sydney homes.</p>
+        <p>Sydney flooring quotes and installation support.</p>
+        <ul class="footer-contact-list">
+          <li><strong>Phone:</strong> <a href="tel:04XXXXXXXX">04XX XXX XXX</a></li>
+          <li><strong>Email:</strong> <a href="mailto:quotes@operonflooring.com.au">quotes@operonflooring.com.au</a></li>
+          <li><strong>Hours:</strong> Mon-Fri 8:00am-5:30pm, Sat 9:00am-2:00pm</li>
+          <li><strong>Online quotes:</strong> Available 24/7</li>
+          <li><strong>Service area:</strong> Sydney and surrounding suburbs</li>
+        </ul>
       </div>
       <div class="footer-col">
         <h4>Products</h4>
@@ -234,5 +323,6 @@
     </div>
   </footer>
   <script src="../mobile-nav.js"></script>
+  <script src="../tracking.js"></script>
 </body>
 </html>

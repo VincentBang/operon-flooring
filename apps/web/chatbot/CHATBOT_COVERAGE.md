@@ -15,11 +15,15 @@ node apps/web/chatbot/tests/chatbot.test.js
 | Product guidance | Should I choose hybrid or laminate? | Explain suitability and keep product selection untouched | products.html |
 | Quote explanation | How does the quote work? | Explain estimate vs final quote without pricing | quote.html |
 | Missing area | I don't know my area | Guide to the quote area step for rough area, room entry, or floor plan context | quote.html |
+| Floor plan measurement | I have a floor plan | Route to measurement help only; no area calculation | floorplan.html |
 | Stairs/access/furniture | I have stairs | Flag manual scope review | quote-review.html |
 | Existing flooring/removal | Replacing carpet in bedrooms | Capture removal/review context as draft only | quote.html |
 | Hidden costs | Are there hidden costs? | Explain scope items to check, no scare tactics | quote.html |
 | Final quote changes | Can final quote change? | Clarify estimate vs final confirmation | quote.html |
 | Cheapest/competitor | I want cheapest / Can you beat this quote? | Avoid cheapest-price claims and competitor comparisons | products.html / quote-review.html |
+| Quick completeness | My quote only says supply and install | Offer no-file scope completeness check, not full document review | quote-review.html |
+| Document review | I have Hybrid 7mm quote | Route to uploaded/written quote review; product match not confirmed unless details support it | quote-review.html |
+| Operator follow-up | I want a human to call me | Show explicit follow-up path with not-live-chat and privacy copy | quote.html?from=chatbot&support=operator |
 | Trust/professionalism | Can I trust Operon? | Reinforce quality installation, clear estimate, professional team | quote.html |
 | Controlled site knowledge | Tell me about Parramatta flooring | Answer from approved static index and route to the relevant content page | suburb/service/blog page |
 | Route suggestions | I am ready | Suggest the next step without auto-navigation | quote.html |
@@ -34,6 +38,8 @@ node apps/web/chatbot/tests/chatbot.test.js
 - LocalStorage output remains a returned draft string only; it is not written.
 - Product choice stays advisory; product system remains the source of product selection.
 - `quoteCalculator.js` remains the only pricing authority.
+- Quick quote completeness check remains separate from document-based quote review.
+- Product match and confidence wording follow the threshold/confidence policy.
 - Controlled site knowledge comes from `chatbotKnowledgeIndex.js`, not from automatic crawling.
 
 ## Current Coverage Status

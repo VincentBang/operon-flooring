@@ -7,6 +7,14 @@
     selectionMode: "operon_selected_product_selection_mode"
   };
 
+  const QUOTE_STEP_META = [
+    { index: 0, title: "Project basics", flow: "project_basics", focusId: "suburb" },
+    { index: 1, title: "Flooring and area", flow: "flooring_area", focusId: "selectedProductCategory" },
+    { index: 2, title: "Main scope", flow: "main_scope", focusId: "removalDecision" },
+    { index: 3, title: "Estimate preview", flow: "estimate_preview", focusId: "summaryHeadline" },
+    { index: 4, title: "Contact and submit", flow: "contact_submit", focusId: "fullName" }
+  ];
+
   function safeGetStorage(key) {
     try {
       return window.localStorage ? String(window.localStorage.getItem(key) || "") : "";
@@ -18,6 +26,58 @@
   function getValueById(id) {
     const element = document.getElementById(id);
     return element && "value" in element ? String(element.value || "") : "";
+  }
+
+  function getTextById(id) {
+    const element = document.getElementById(id);
+    if (!element) {
+      return "";
+    }
+
+    return String(element.innerText || element.textContent || "").replace(/\s+/g, " ").trim();
+  }
+
+  function isElementVisibleById(id) {
+    const element = document.getElementById(id);
+    if (!element) {
+      return false;
+    }
+
+    if (element.hidden) {
+      return false;
+    }
+
+    if (element.style && element.style.display === "none") {
+      return false;
+    }
+
+    if (element.classList && typeof element.classList.contains === "function" && element.classList.contains("hidden")) {
+      return false;
+    }
+
+    return true;
+  }
+
+  function compactListText(text, limit) {
+    return String(text || "")
+      .replace(/\s+/g, " ")
+      .split(/(?=[A-Z][A-Za-z /-]{2,}(?: is| are|:)|\?)/)
+      .map(function (item) {
+        return item.replace(/\s+/g, " ").trim();
+      })
+      .filter(function (item) {
+        return item && item.length > 8;
+      })
+      .slice(0, limit || 4);
+  }
+
+  function getActiveChoiceValue(selector, attributeName) {
+    if (!document || typeof document.querySelector !== "function") {
+      return "";
+    }
+
+    const active = document.querySelector(selector + ".active");
+    return active && typeof active.getAttribute === "function" ? String(active.getAttribute(attributeName) || "") : "";
   }
 
   function toNumber(value) {
@@ -39,7 +99,15 @@
       return step.classList.contains("active");
     });
 
-    return activeIndex >= 0 ? activeIndex : 0;
+    if (activeIndex < 0) {
+      return 0;
+    }
+
+    const activeStepValue = steps[activeIndex] && typeof steps[activeIndex].getAttribute === "function"
+      ? Number(steps[activeIndex].getAttribute("data-quote-step"))
+      : activeIndex;
+
+    return Number.isFinite(activeStepValue) ? activeStepValue : activeIndex;
   }
 
   function getSelectedCategory() {
@@ -88,22 +156,77 @@
       || null;
   }
 
+  function getStairItemCount() {
+    return [
+      "stairStraightTreadCount",
+      "stairWinderTreadCount",
+      "stairLandingSmallCount",
+      "stairLandingLargeCount",
+      "stairOneSideOpenCount",
+      "stairTwoSideOpenCount"
+    ].reduce(function (total, id) {
+      return total + (toNumber(getValueById(id)) || 0);
+    }, 0);
+  }
+
+  function hasProjectLocation() {
+    return !!(getValueById("siteAddress") || getValueById("suburb") || getValueById("postcode"));
+  }
+
   function getMissingQuoteInputs(activeStep, data) {
     const missing = [];
 
     if (activeStep === 0) {
-      if (!getValueById("fullName")) missing.push("name");
-      if (!getValueById("phone")) missing.push("phone");
-      if (!getValueById("siteAddress")) missing.push("address");
-    } else if (activeStep === 2) {
+      if (!hasProjectLocation()) missing.push("location");
+      if (!getValueById("propertyType")) missing.push("property type");
+      if (!getValueById("quoteMode")) missing.push("quote mode");
+    } else if (activeStep === 1) {
+      const method = getValueById("measurementMethod");
+      const productChoiceMode = getValueById("productChoiceMode");
       if (!data.selectedCategory) missing.push("flooring category");
-      if (data.selectedCategory && !data.selectedRangeId && !data.selectedProductId) missing.push("product range");
+      if (data.selectedCategory && productChoiceMode === "choose_range" && !data.selectedRangeId && !data.selectedProductId) missing.push("product range");
+      if (method === "unknown" && !getValueById("unknownMeasurementNextStep")) {
+        missing.push("measurement next step");
+      } else if (!data.realArea && method !== "unknown") {
+        missing.push("area");
+      }
+    } else if (activeStep === 2) {
+      const propertyType = getValueById("propertyType");
+      const stairs = getValueById("stairs") || getActiveChoiceValue("[data-stairs-choice]", "data-stairs-choice");
+      if (propertyType === "unit_apartment" && !getValueById("parkingAccess")) missing.push("access detail");
+      if (!getValueById("removalDecision")) missing.push("removal");
+      if (!getValueById("floorPrepDecision")) missing.push("floor preparation");
+      if (!stairs) {
+        missing.push("stairs");
+      } else if (stairs === "not_sure") {
+        missing.push("stair detail");
+      }
     } else if (activeStep === 3) {
-      if (!data.realArea) missing.push("area");
+      [
+        ["removalDecision", "removal"],
+        ["underlayDecision", "underlay"],
+        ["finishDecision", "finishing"],
+        ["floorPrepDecision", "floor preparation"],
+        ["moistureBarrier", "moisture protection"],
+        ["doorDecision", "door trimming"],
+        ["furnitureDecision", "furniture"]
+      ].forEach(function (item) {
+        if (getValueById(item[0]) === "not_sure") {
+          missing.push(item[1]);
+        }
+      });
+
+      if (getValueById("removalDecision") === "yes") {
+        if (!getValueById("removalType")) missing.push("existing floor");
+        if (!getValueById("removalDisposal")) missing.push("disposal");
+      }
+
+      if (getValueById("floorPrepDecision") === "yes" && !getValueById("subfloorCondition")) {
+        missing.push("subfloor condition");
+      }
     } else if (activeStep === 4) {
-      if (!getValueById("existingFloorType")) missing.push("existing floor");
-      if (!getValueById("subfloorCondition")) missing.push("subfloor condition");
-    } else if (activeStep === 5) {
+      if (!getValueById("fullName")) missing.push("name");
+      if (!getValueById("phone") && !getValueById("email")) missing.push("phone or email");
       missing.push("review and submit");
     }
 
@@ -111,13 +234,18 @@
   }
 
   function getQuoteFlowName(activeStep) {
-    if (activeStep === 0) return "missing_info_collection";
-    if (activeStep === 1) return "access_check";
-    if (activeStep === 2) return "product_selection";
-    if (activeStep === 3) return "area_capture";
-    if (activeStep === 4) return "scope_check";
-    if (activeStep === 5) return "near_completion";
+    const meta = QUOTE_STEP_META.find(function (step) {
+      return step.index === activeStep;
+    });
+    if (meta) return meta.flow;
     return "quote_start";
+  }
+
+  function getQuoteStepTitle(activeStep) {
+    const meta = QUOTE_STEP_META.find(function (step) {
+      return step.index === activeStep;
+    });
+    return meta ? meta.title : "Quote";
   }
 
   function getQuotePageState() {
@@ -142,35 +270,36 @@
     let nudge = "Keep going through the quote steps and review the details before submitting.";
 
     if (activeStep === 0) {
-      nudge = getValueById("fullName") && getValueById("phone")
-        ? "Customer details look started. Property details are next."
-        : "Start with name, phone, and the job location.";
-      next.focusId = "fullName";
+      nudge = hasProjectLocation()
+        ? "Project location is started. Choose property type and quote mode, then continue."
+        : "Start with suburb and postcode. Contact details come at the submit step.";
+      next.focusId = "suburb";
     } else if (activeStep === 1) {
-      nudge = "Check property type, parking and lift details where relevant.";
-      next.focusId = "propertyType";
-    } else if (activeStep === 2) {
       nudge = category
-        ? "Flooring category is selected. Next, choose a practical recommendation or product range."
-        : "Choose laminate, hybrid, or engineered timber before moving on.";
+        ? "Flooring direction is selected. Add the clearest area you have, or choose an area follow-up."
+        : "Choose laminate, hybrid, engineered timber, or Not sure, then add area.";
       next.focusId = "selectedProductCategory";
-    } else if (activeStep === 3) {
-      nudge = realArea
-        ? "Area is entered. Continue to extras and site conditions."
-        : "Do you have a floor plan, or would you prefer a site assessment?";
-      next.focusId = measurementMethod === "floorplan_upload"
+      if (!realArea) {
+        next.focusId = measurementMethod === "floorplan_upload"
         ? "confirmedFloorplanArea"
         : (measurementMethod === "unknown" ? "floorplanLookupAddress" : "totalAreaM2");
+      }
+    } else if (activeStep === 2) {
+      nudge = "Answer removal, stairs and floor preparation. Use Not sure if the site needs review.";
+      next.focusId = "stairs";
+    } else if (activeStep === 3) {
+      nudge = "Review the estimate status. Advanced details are optional and stay read-only unless the customer fills them.";
+      next.focusId = "summaryHeadline";
     } else if (activeStep === 4) {
-      nudge = "Only select extras that apply. Removal, stairs, and floor condition are the main scope checks.";
-      next.focusId = "existingFloorType";
-    } else if (activeStep === 5) {
-      nudge = "Review the estimate and scope, then submit when the details look right.";
+      nudge = "Add contact details so Operon can review the project and follow up.";
       next.focusId = "customerNotes";
     }
 
     return {
       activeStep: activeStep,
+      activeStepNumber: activeStep === null ? null : activeStep + 1,
+      totalSteps: QUOTE_STEP_META.length,
+      stepTitle: getQuoteStepTitle(activeStep),
       flow: getQuoteFlowName(activeStep),
       userType: "quote_user",
       quoteMode: getValueById("quoteMode") || "supply_install",
@@ -180,7 +309,7 @@
       measurementMethod: measurementMethod,
       realArea: realArea,
       missingInputs: missingInputs,
-      isNearCompletion: activeStep === 5,
+      isNearCompletion: activeStep === 4,
       nudge: nudge,
       next: next
     };
@@ -207,9 +336,36 @@
   }
 
   function getReviewPageState() {
+    const clarityLevel = getTextById("clarityLevel");
+    const clarityTag = getTextById("clarityTag");
+    const decisionGuidance = getTextById("decisionGuidance");
+    const extractedText = isElementVisibleById("extractedQuoteFieldsBox")
+      ? getTextById("extractedQuoteFieldsList")
+      : "";
+    const missingText = getTextById("mediumRiskList");
+    const questionsText = getTextById("questionsToAskList");
+    const resultVisible = Boolean(
+      clarityLevel
+      && !/add quote details|initial review|waiting|begin/i.test(clarityLevel)
+      && !/unknown items will appear|observations will appear/i.test(missingText)
+    );
+    const missingScope = compactListText(missingText, 5);
+    const extractedDetails = compactListText(extractedText, 5);
+    const questions = compactListText(questionsText, 4);
+
     return {
+      flow: resultVisible ? "quote_review_result" : "quote_review_start",
       userType: "validation_user",
-      nudge: "Use the review page to check scope items like removal, prep, trims, and installation before starting a structured estimate.",
+      reviewResultVisible: resultVisible,
+      reviewStatus: clarityLevel,
+      reviewConfidenceLabel: clarityTag,
+      reviewExtractedDetails: extractedDetails,
+      reviewMissingScope: missingScope,
+      reviewQuestions: questions,
+      reviewDecisionGuidance: decisionGuidance,
+      nudge: resultVisible
+        ? "The review result is ready. Use the missing or unclear scope items to decide what to confirm before comparing totals."
+        : "Use the review page to check scope items like removal, prep, trims, and installation before starting a structured estimate.",
       next: {
         label: "Get structured estimate",
         href: "quote.html?from=quote-review",

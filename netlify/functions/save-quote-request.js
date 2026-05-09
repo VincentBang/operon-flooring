@@ -197,6 +197,16 @@ function getInitialCloseScore(payload, status, leadStage) {
   };
 }
 
+function getPayloadScopeSignals(payload) {
+  return payload && (payload.scopeSignals || payload.scope_signals || (payload.pricing && (payload.pricing.scopeSignals || payload.pricing.scope_signals))) || null;
+}
+
+function getMissingScopeItems(payload) {
+  const signals = getPayloadScopeSignals(payload);
+  const items = signals && (signals.missingOrUnclearScope || signals.missing_or_unclear_scope);
+  return Array.isArray(items) ? items.filter(Boolean) : [];
+}
+
 function getQuoteRow(quoteId, payload, status) {
   const now = new Date().toISOString();
   const leadAutomation = payload.leadAutomation || payload.lead_automation || {};
@@ -209,6 +219,10 @@ function getQuoteRow(quoteId, payload, status) {
   const consentEmail = payload.consentEmail === false || payload.consent_email === false || leadAutomation.consentEmail === false || leadAutomation.consent_email === false
     ? false
     : true;
+  const rawPayload = Object.assign({}, payload, {
+    scopeSignals: getPayloadScopeSignals(payload)
+  });
+
   return {
     id: quoteId,
     customer_name: payload.customer && payload.customer.name || "",
@@ -249,7 +263,7 @@ function getQuoteRow(quoteId, payload, status) {
     priority_rank: close.priorityRank,
     last_activity: now,
     last_action: status === "emailed" ? "quote_submit" : "summary_view",
-    raw_payload: payload
+    raw_payload: rawPayload
   };
 }
 
@@ -752,6 +766,11 @@ function buildScopeList(payload) {
   if (extras.furniture && extras.furniture.type && extras.furniture.type !== "no") scope.push("Furniture handling");
   if (extras.doorTrimming && extras.doorTrimming.selected === "yes") scope.push("Door trimming");
   if (extras.stairs && Number(extras.stairs.count || 0) > 0) scope.push("Stairs require confirmation");
+  const signals = getPayloadScopeSignals(payload);
+  const includedSignals = signals && (signals.includedScope || signals.included_scope);
+  if (Array.isArray(includedSignals) && includedSignals.indexOf("floor_preparation") >= 0 && scope.indexOf("Floor preparation") === -1) {
+    scope.push("Floor preparation");
+  }
   return scope;
 }
 
@@ -764,6 +783,36 @@ function buildScopeHtml(payload) {
 function buildScopeText(payload) {
   return buildScopeList(payload).map(function (item) {
     return "- " + item;
+  }).join("\n");
+}
+
+function formatScopeSignalLabel(value) {
+  return String(value || "")
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, function (letter) { return letter.toUpperCase(); });
+}
+
+function buildMissingScopeHtml(payload) {
+  const missing = getMissingScopeItems(payload);
+  if (!missing.length) {
+    return "";
+  }
+  return "<div style=\"border:1px solid #e8e2d8;border-radius:16px;padding:18px;margin:20px 0;background:#fffaf3;\">"
+    + "<strong style=\"display:block;margin-bottom:12px;color:#111820;\">Items to confirm</strong>"
+    + "<ul style=\"padding-left:18px;margin:0;\">"
+    + missing.map(function (item) {
+      return "<li style=\"margin:0 0 8px;color:#374151;\">" + escapeHtml(formatScopeSignalLabel(item)) + "</li>";
+    }).join("")
+    + "</ul></div>";
+}
+
+function buildMissingScopeText(payload) {
+  const missing = getMissingScopeItems(payload);
+  if (!missing.length) {
+    return "";
+  }
+  return missing.map(function (item) {
+    return "- " + formatScopeSignalLabel(item);
   }).join("\n");
 }
 
@@ -1015,6 +1064,7 @@ function buildCustomerQuoteEmail(payload, quoteId, quoteReference) {
     "<strong style=\"display:block;margin-bottom:12px;color:#111820;\">Included scope</strong>",
     "<ul style=\"padding-left:18px;margin:0;\">" + buildScopeHtml(payload) + "</ul>",
     "</div>",
+    buildMissingScopeHtml(payload),
     "<div style=\"border-top:1px solid #e8e2d8;padding-top:16px;margin-top:8px;\">",
     "<p style=\"margin:0 0 8px;color:#111827;\">Subtotal ex GST: <strong>" + escapeHtml(formatCurrency(pricing.subtotalExGst || 0)) + "</strong></p>",
     "<p style=\"margin:0 0 8px;color:#111827;\">GST: <strong>" + escapeHtml(formatCurrency(pricing.gst || 0)) + "</strong></p>",
@@ -1041,6 +1091,7 @@ function buildCustomerQuoteEmail(payload, quoteId, quoteReference) {
     "",
     "Included scope:",
     buildScopeText(payload),
+    buildMissingScopeText(payload) ? "\nItems to confirm:\n" + buildMissingScopeText(payload) : "",
     "",
     "Subtotal ex GST: " + formatCurrency(pricing.subtotalExGst || 0),
     "GST: " + formatCurrency(pricing.gst || 0),
@@ -1107,6 +1158,7 @@ function buildInternalQuoteEmail(payload, quoteId, quoteReference) {
     "",
     "Scope",
     buildScopeText(payload) || "No scope items captured.",
+    buildMissingScopeText(payload) ? "\nItems to confirm\n" + buildMissingScopeText(payload) : "",
     "",
     "Risk flags / warnings",
     getWarningsText(payload),

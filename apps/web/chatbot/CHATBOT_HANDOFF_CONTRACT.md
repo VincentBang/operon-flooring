@@ -21,6 +21,7 @@ Only these routes may be suggested:
 - `quote.html`
 - `products.html`
 - `quote-review.html`
+- `floorplan.html` only when the customer says they have a floor plan or asks to measure from a plan
 
 ## Handoff Status Values
 
@@ -78,6 +79,42 @@ Future integration may consider mapping:
 - Supabase fields
 - lead form status
 - selected product IDs that override the product system
+
+## Quote-Review Draft Fields
+
+Future quote-review explanation may return draft context for display only:
+
+- `review_mode`
+- `quote_review_status`
+- `comparison_level`
+- `scope_completeness_score`
+- `missing_scope_items`
+- `questions_to_confirm`
+- `product_match_status`
+
+These fields must not include prices, totals, customer contact fields, selected product IDs, quote submission status, or hidden backend details.
+
+## Operator Handoff Policy
+
+Operator follow-up is allowed only after explicit user action.
+
+Allowed:
+
+- customer clicks or requests follow-up
+- customer voluntarily enters name, phone, optional email and message
+- chatbot sends an explicit follow-up request to the approved endpoint
+- transcript is limited and used only for support context
+- copy explains this is an automated assistant, not live chat
+
+Forbidden:
+
+- automatic lead submission
+- submitting quote forms
+- silent lead capture
+- sending contact details without explicit action
+- using follow-up as price-beating or sales-pressure copy
+
+Customer-facing copy should say: "Send your contact details and project note so Operon can follow up. This is not a live chat." Include the privacy note: "Your message and recent chat context may be sent to support this follow-up request."
 
 ## Review Flags
 

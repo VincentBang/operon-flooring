@@ -28,12 +28,12 @@
 
   const ACTIONS = {
     welcome: [
-      { id: "start_product_guide", label: "Choose a flooring type" },
-      { id: "explain_quote", label: "How the quote works" },
-      { id: "collect_project_details", label: "Prepare my project details" },
-      { id: "set_install_only", label: "I already have flooring" },
-      { id: "review_existing_quote", label: "Review existing quote" },
-      { id: "request_operator", label: "Chat with operator" }
+      { id: "ready_for_quote", label: "Start flooring quote" },
+      { id: "review_existing_quote", label: "Upload written quote" },
+      { id: "quick_completeness_check", label: "Quick completeness check" },
+      { id: "start_product_guide", label: "Choose flooring type" },
+      { id: "route_floorplan", label: "Measure from floor plan" },
+      { id: "request_operator", label: "Request human follow-up" }
     ],
     productGuide: [
       { id: "context_apartment", label: "Apartment" },
@@ -53,9 +53,9 @@
       { id: "collect_project_details", label: "Check missing details" },
       { id: "set_supply_install", label: "Need supply and install" },
       { id: "set_install_only", label: "Installation only" },
-      { id: "route_floorplan", label: "Measure with floor plan" },
+      { id: "route_floorplan", label: "Measure from floor plan" },
       { id: "ready_for_quote", label: "I am ready to start" },
-      { id: "request_operator", label: "Talk to operator" }
+      { id: "request_operator", label: "Request follow-up" }
     ],
     detailCollection: [
       { id: "existing_floor_carpet", label: "Existing floor: Carpet" },
@@ -89,9 +89,10 @@
     nextSteps: [
       { id: "ready_for_quote", label: "Start quote" },
       { id: "browse_products", label: "Browse products" },
-      { id: "route_floorplan", label: "Measure area" },
-      { id: "review_scope", label: "Review quote scope" },
-      { id: "request_operator", label: "Talk to operator" },
+      { id: "route_floorplan", label: "Measure from floor plan" },
+      { id: "review_scope", label: "Upload written quote" },
+      { id: "quick_completeness_check", label: "Run quick check" },
+      { id: "request_operator", label: "Request follow-up" },
       { id: "restart_chatbot", label: "Start over" }
     ],
     postSubmit: [
@@ -107,7 +108,7 @@
     guidanceOnly: "I can guide product choice and scope, but I will not calculate pricing here.",
     productGuideIntro: "Start with the priority that matters most for this floor.",
     productGuideContext: "Understood. Which setting best describes the project?",
-    quoteExplain: "The online result is a starting estimate before final confirmation. Final price is confirmed after product, area, and site details are reviewed.",
+    quoteExplain: "The online result is a starting estimate before final confirmation. Confirmed pricing follows product, area, and site review.",
     priceFactors: "The main estimate items are area, product path, existing floor to remove, disposal, floor preparation, trims, furniture handling, stairs, and site details.",
     detailIntro: "A few optional details can make the quote scope clearer before review.",
     detailExistingFloor: "What existing floor needs to be removed, if any?",
@@ -125,10 +126,10 @@
     costQuestion: "I cannot calculate pricing here. Start the quote with product direction, area, removal, floor preparation, and extras, then Operon confirms the final quote after review.",
     existingQuote: "Use quote review to check scope, not to argue cheapest price. Product, area, removal, disposal, preparation, trims, and site details should all be clear.",
     hiddenCosts: "Clear scope is the best protection against surprises. Removal, disposal, floor preparation, trims, furniture, stairs, and site details are the main items worth checking.",
-    finalQuoteChange: "Yes, the final quote can change after review if product, measurements, or site conditions differ from the estimate. The estimate is there to make that review clearer, not to lock an unconfirmed final price.",
+    finalQuoteChange: "Yes, the final quote can change after review if product, measurements, or site conditions differ from the estimate. The estimate is there to make that review clearer, not to lock an unconfirmed total.",
     practicalOption: "Choose by suitability and scope, not by cheapest-price comparison. Laminate can suit simpler dry areas; hybrid is often better when durability or water resistance matters.",
     trustAnswer: "Operon is positioned around professional Sydney flooring installation, clear estimates, product guidance, quality workmanship, and final confirmation before work starts.",
-    operatorHandoff: "A real person can help after your contact details and project note are sent. The fastest path is to submit the quote request and mention that you want operator help.",
+    operatorHandoff: "Send your contact details and project note so Operon can follow up. This is not a live chat. Your message and recent chat context may be sent to support this follow-up request.",
     hybridLaminate: "Hybrid is usually the stronger starting point when water resistance and busy-home durability matter. Laminate can be practical for simpler dry areas where the scope is straightforward.",
     engineeredAnswer: "Engineered timber suits a more finish-led project. Select the range first, then confirm colour, installation method, and pattern clearly in the quote flow.",
     areaUnsure: "That is common. Start with a rough total, measure room by room, or use a floor plan if one is available.",
@@ -136,6 +137,8 @@
     tileStairsAnswer: "Tiles plus stairs should be treated as a scope-review item. Removal, disposal, trims, prep, and stair details should be checked before the quote is submitted.",
     apartmentNoLiftAnswer: "Apartment work with no lift should be reviewed for site details, level, parking, and strata rules. The assistant can flag it, but Operon review should confirm the final scope.",
     unevenFloorAnswer: "An uneven floor should be reviewed before final quote confirmation because preparation or levelling may be needed. The quote flow can capture the concern, but final scope should be checked by Operon.",
+    quickCompleteness: "The quick quote completeness check uses only what you enter or tick. It can create questions, but it is not a full review of the written quote.",
+    documentReview: "Upload the written quote for the strongest review. The document-based review can read visible quote details and flag unclear scope.",
     reviewMissingPrefix: "Still to confirm:",
     reviewReady: "You have covered the main scope questions.",
     validationPrefix: "Worth checking before you submit:"

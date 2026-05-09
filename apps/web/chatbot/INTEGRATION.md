@@ -26,7 +26,7 @@ The chatbot may:
 - explain common scope factors such as area, removal, floor preparation, trims, furniture, access, and stairs
 - collect optional draft details into its own structured JSON
 - identify missing or risky scope details
-- suggest navigation to `products.html`, `quote.html`, or `quote-review.html`
+- suggest navigation to `products.html`, `quote.html`, `floorplan.html`, or `quote-review.html`
 - use short guided responses with one key point and one next step
 - show idle, stuck-user, and near-submit nudges without auto-navigation
 - scroll/focus a relevant visible section after user clicks a suggestion
@@ -40,6 +40,7 @@ The chatbot must never:
 - calculate prices, rates, subtotals, totals, discounts, or quote outputs
 - claim Operon is cheaper than a competitor
 - compare competitor pricing
+- judge whether an uploaded quote is expensive
 - describe the online estimate as the final quote
 - modify quote form fields directly
 - write to quote/product localStorage keys
@@ -77,6 +78,7 @@ The approved module order is:
 ```text
 chatbotPrompts.js
 chatbotPolicy.js
+chatbotKnowledgeIndex.js
 chatbotKnowledge.js
 chatbotScenarios.js
 chatbotSiteState.js
@@ -122,6 +124,7 @@ window.OperonChatbotBootstrap.mount({
 - `products`: product/category guidance
 - `quote`: quote scope helper
 - `quote-review`: quote scope review helper
+- `thank-you`: passive post-submit preset only when mounted
 - `default`: neutral fallback
 
 Preset detection must only affect chatbot copy, title, subtitle, readonly state hints, and route suggestions. It must not affect product, quote, pricing, or form behavior.
@@ -141,11 +144,36 @@ Approved flows:
 - product selection -> `products.html`
 - cost explanation -> `quote.html`
 - quote validation -> `quote-review.html`
+- floor plan measurement -> `floorplan.html` only when the user has a plan or asks to measure from a plan
 - missing information collection -> `quote.html`
 - stuck-user recovery -> current page next step
 - near-completion push -> review scope, then submit through the quote page
 
 The chatbot may ask only one question at a time. It must not calculate prices, display numeric estimates, or replace the quote flow.
+
+## Quote-Review Mode Boundary
+
+Quick quote completeness check:
+
+- no-file check based only on what the customer enters or ticks
+- may assess whether product, area, inclusions, exclusions and assumptions are clear
+- may generate missing-item questions and route to document upload or structured estimate
+- must not show document extraction labels, product match, price fairness, total-price comparison, or Operon comparable estimate
+
+Document-based quote review:
+
+- strongest path when the written or uploaded quote is available
+- may extract visible document details and explain comparison readiness
+- must not call the output final price advice, claim another installer is wrong, or say Operon is cheaper
+
+Product match threshold:
+
+- below 50%: hide or show "Product match not confirmed"
+- 50-69%: "Possible category match only"
+- 70-84%: "Possible product match"
+- 85%+: "Likely product match"
+
+Confidence wording must keep extraction confidence, comparison level and decision confidence separate.
 
 ## Readonly Page State
 

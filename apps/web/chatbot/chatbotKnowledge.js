@@ -32,9 +32,49 @@
     "existing floor to remove",
     "take-away disposal",
     "subfloor preparation",
+    "underlay or acoustic layer",
     "apartment parking and lift details",
     "stairs or manual review items",
-    "skirting, scotia, furniture, and door trimming"
+    "skirting, scotia, transition trims, furniture, and door trimming",
+    "warranty, exclusions, and final confirmation"
+  ];
+
+  const SCOPE_CHECKS = [
+    {
+      key: "product",
+      label: "Product definition",
+      customerCopy: "Product type, range, thickness, colour direction, and warranty should be clear enough to compare."
+    },
+    {
+      key: "area",
+      label: "Area and measurement",
+      customerCopy: "Measured area, allowance, room count, and stairs should be clear before total price is compared."
+    },
+    {
+      key: "installation",
+      label: "Installation scope",
+      customerCopy: "Supply/install path, installation method, underlay, moisture protection, and furniture handling should be stated where relevant."
+    },
+    {
+      key: "site",
+      label: "Site details",
+      customerCopy: "Apartment level, lift, parking, loading, occupied rooms, and strata constraints should be captured early."
+    },
+    {
+      key: "prep",
+      label: "Preparation risk",
+      customerCopy: "Subfloor condition, levelling, old adhesive, tile removal, moisture, and unknown site risks are common variation points."
+    },
+    {
+      key: "finishing",
+      label: "Finishing detail",
+      customerCopy: "Trims, scotia, skirting, stair nosing, transitions, and door trimming should not be assumed."
+    },
+    {
+      key: "commercial",
+      label: "Commercial clarity",
+      customerCopy: "GST status, subtotal, total, payment terms, quote validity, exclusions, and variation conditions should be easy to read."
+    }
   ];
 
   const RISK_COPY = {
@@ -43,7 +83,12 @@
     apartment_lift_not_confirmed: "apartment lift details are not confirmed",
     stairs_require_manual_review: "stairs require manual review",
     subfloor_review_recommended: "subfloor condition should be reviewed",
-    access_review_recommended: "parking or site details should be reviewed"
+    access_review_recommended: "parking or site details should be reviewed",
+    area_capture_needed: "area still needs a rough total, room entry, or floor plan",
+    parking_access_review: "parking or loading details should be noted",
+    acoustic_review_recommended: "underlay or acoustic requirements should be checked",
+    trims_review_recommended: "trims, scotia, skirting, or transitions should be confirmed",
+    moisture_review_recommended: "moisture or concrete-floor conditions should be checked"
   };
 
   const PLAYBOOKS = {
@@ -104,6 +149,18 @@
     return "The main estimate factors are " + FACTORS.join(", ") + ".";
   }
 
+  function getScopeChecks() {
+    return SCOPE_CHECKS.map(function (item) {
+      return Object.assign({}, item);
+    });
+  }
+
+  function getScopeCheckCopy() {
+    return SCOPE_CHECKS.map(function (item) {
+      return item.label + ": " + item.customerCopy;
+    }).join(" ");
+  }
+
   function getRangeGuidance(category) {
     const guidance = getCategoryGuidance(category);
     if (!guidance || !Array.isArray(guidance.rangeNotes)) {
@@ -140,11 +197,14 @@
   window.OperonChatbotKnowledge = {
     categoryGuidance: CATEGORY_GUIDANCE,
     factors: FACTORS.slice(),
+    scopeChecks: getScopeChecks(),
     playbooks: PLAYBOOKS,
     getCategoryGuidance: getCategoryGuidance,
     getRecommendationSummary: getRecommendationSummary,
     getQuoteExplanation: getQuoteExplanation,
     getPriceFactorsCopy: getPriceFactorsCopy,
+    getScopeChecks: getScopeChecks,
+    getScopeCheckCopy: getScopeCheckCopy,
     getRangeGuidance: getRangeGuidance,
     getRiskCopy: getRiskCopy,
     getPlaybook: getPlaybook,

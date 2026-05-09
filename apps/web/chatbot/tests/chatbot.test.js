@@ -30,6 +30,8 @@ function createDocumentStub(pathname) {
   return {
     readyState: "complete",
     location: { pathname: pathname || "/index.html" },
+    _elements: {},
+    _quoteSteps: [],
     head,
     body: {
       appendChild(node) {
@@ -65,10 +67,19 @@ function createDocumentStub(pathname) {
       };
     },
     getElementById() {
+      return this._elements[arguments[0]] || null;
+    },
+    querySelector(selector) {
+      if (selector === "[data-stairs-choice].active") {
+        return this._activeStairsChoice || null;
+      }
       return null;
     },
-    querySelector() {
-      return null;
+    querySelectorAll(selector) {
+      if (selector === "[data-quote-step]") {
+        return this._quoteSteps;
+      }
+      return [];
     },
     addEventListener() {}
   };
@@ -141,6 +152,48 @@ function runPrompt(prompt) {
   return logic.getSnapshot();
 }
 
+function setQuotePageFixture(context, activeStep, values) {
+  const document = context.document;
+  document._elements = {};
+  document._quoteSteps = Array.from({ length: 7 }).map(function (_, index) {
+    return {
+      classList: {
+        contains(name) {
+          return name === "active" && index === activeStep;
+        }
+      },
+      getAttribute(name) {
+        return name === "data-quote-step" ? String(index) : "";
+      }
+    };
+  });
+
+  Object.keys(values || {}).forEach(function (id) {
+    document._elements[id] = { value: values[id] };
+  });
+}
+
+function setQuoteReviewFixture(context, values) {
+  const document = context.document;
+  document._elements = {};
+
+  Object.keys(values || {}).forEach(function (id) {
+    const value = values[id] || {};
+    document._elements[id] = {
+      value: value.value || "",
+      innerText: value.text || "",
+      textContent: value.text || "",
+      hidden: Boolean(value.hidden),
+      style: { display: value.display || "" },
+      classList: {
+        contains(name) {
+          return Array.isArray(value.classes) && value.classes.indexOf(name) >= 0;
+        }
+      }
+    };
+  });
+}
+
 function assertResponseGuardrails(snapshot, label, options) {
   const settings = Object.assign({
     maxLength: 520
@@ -207,7 +260,8 @@ test("competitor pricing prompts are blocked", function () {
   logic.applyTextInput("Can you beat a competitor quote?");
 
   const text = lastAssistantText(logic.getSnapshot());
-  assert.match(text, /cannot compare competitor pricing/i);
+  assert.match(text, /cannot judge another quote by price|both quotes describe the same job/i);
+  assert.doesNotMatch(text, /Operon will be cheaper|we will beat/i);
 });
 
 test("controlled knowledge index routes site content without prices", function () {
@@ -241,6 +295,21 @@ test("controlled knowledge index routes site content without prices", function (
       prompt: "Do I need disposal with carpet removal?",
       route: "quote.html",
       expected: /disposal|take-away|remove/i
+    },
+    {
+      prompt: "Is acoustic underlay included?",
+      route: "quote-review.html",
+      expected: /Underlay|acoustic|scope/i
+    },
+    {
+      prompt: "Are trims and skirting included?",
+      route: "quote-review.html",
+      expected: /Trims|scotia|skirting|Finishing/i
+    },
+    {
+      prompt: "What warranty and exclusions should I check?",
+      route: "quote-review.html",
+      expected: /Warranty|exclusions|variation/i
     }
   ].forEach(function (example) {
     const snapshot = runPrompt(example.prompt);
@@ -284,6 +353,83 @@ test("scenario QA matrix routes without pricing output", function () {
     assert.strictEqual(snapshot.structuredOutput.intent, scenario.intent, scenario.prompt);
     assert.strictEqual(snapshot.routeSuggestion.href, scenario.route, scenario.prompt);
     assert.doesNotMatch(lastAssistantText(snapshot), scenario.forbidden, scenario.prompt);
+  });
+});
+
+test("quote-review and handoff policy scenarios stay inside approved boundaries", function () {
+  [
+    {
+      prompt: "Is this quote expensive?",
+      intent: "unsupported",
+      route: "quote-review.html",
+      expected: /both quotes describe the same job|written quote|quick completeness/i,
+      forbidden: /\$\s*\d|that quote is expensive|Operon will be cheaper|we will beat/i
+    },
+    {
+      prompt: "I have Hybrid 7mm quote",
+      intent: "document_quote_review",
+      route: "quote-review.html",
+      expected: /Upload the written quote|strongest review/i,
+      forbidden: /Likely product match|final price|\$\s*\d/i
+    },
+    {
+      prompt: "My quote only says supply and install",
+      intent: "quick_quote_completeness",
+      route: "quote-review.html",
+      expected: /quick quote completeness|not a full quote review|Run the quick check/i,
+      forbidden: /Extracted from uploaded quote|Product match|Operon comparable estimate|\$\s*\d/i
+    },
+    {
+      prompt: "I have a floor plan",
+      intent: "floorplan_help",
+      route: "floorplan.html",
+      expected: /floor plan measurement|already have a plan|measurement/i,
+      forbidden: /\$\s*\d|calculate|final price/i
+    },
+    {
+      prompt: "I want a human to call me",
+      intent: "operator_handoff",
+      route: "quote.html?from=chatbot&support=operator",
+      expected: /automated|not a live operator|contact details/i,
+      forbidden: /live operator is available|online now|quote submitted/i
+    },
+    {
+      prompt: "Can you give final price?",
+      intent: "quote_explanation",
+      route: "quote.html",
+      expected: /cannot calculate pricing|structured estimate/i,
+      forbidden: /\$\s*\d|guaranteed quote|final fixed/i
+    },
+    {
+      prompt: "What does this quote review mean?",
+      intent: "quote_review_result_explanation",
+      route: "quote-review.html",
+      expected: /scope completeness|comparison readiness|review result/i,
+      forbidden: /\$\s*\d|cheaper|bad quote|formula/i
+    },
+    {
+      prompt: "It says product match 35%",
+      intent: "quote_review_result_explanation",
+      route: "quote-review.html",
+      expected: /not treated as a confirmed match|product match not confirmed/i,
+      forbidden: /Likely product match|match 35%|\$\s*\d/i
+    },
+    {
+      prompt: "I live in an apartment no lift",
+      intent: "scope_validation",
+      route: "quote-review.html",
+      expected: /Apartment with no lift|site review|strata/i,
+      forbidden: /\$\s*\d|rate|cheaper/i
+    }
+  ].forEach(function (scenario) {
+    const snapshot = runPrompt(scenario.prompt);
+    const text = lastAssistantText(snapshot);
+
+    assert.strictEqual(snapshot.structuredOutput.intent, scenario.intent, scenario.prompt);
+    assert.strictEqual(snapshot.routeSuggestion.href, scenario.route, scenario.prompt);
+    assert.match(text, scenario.expected, scenario.prompt);
+    assert.doesNotMatch(text, scenario.forbidden, scenario.prompt);
+    assert.strictEqual(snapshot.handoffReadiness.safe_to_apply, false, scenario.prompt);
   });
 });
 
@@ -469,8 +615,8 @@ test("edge-case intent set routes messy customer prompts safely", function () {
     {
       label: "only floorplan",
       prompt: "I only have a floorplan",
-      intent: "missing_info_collection",
-      route: "quote.html",
+      intent: "floorplan_help",
+      route: "floorplan.html",
       assertStructured: function (structured) {
         assert.strictEqual(structured.measurement_method, "floorplan_upload");
       }
@@ -510,10 +656,10 @@ test("uncertain area routes to quote area flow without updating forms", function
   logic.applyTextInput("I don't know area but I have a floor plan");
 
   const snapshot = logic.getSnapshot();
-  assert.strictEqual(snapshot.structuredOutput.intent, "missing_info_collection");
+  assert.strictEqual(snapshot.structuredOutput.intent, "floorplan_help");
   assert.strictEqual(snapshot.structuredOutput.measurement_method, "floorplan_upload");
-  assert.strictEqual(snapshot.structuredOutput.next_step, "quote.html");
-  assert.strictEqual(snapshot.routeSuggestion.href, "quote.html");
+  assert.strictEqual(snapshot.structuredOutput.next_step, "floorplan.html");
+  assert.strictEqual(snapshot.routeSuggestion.href, "floorplan.html");
 });
 
 test("operator requests show human follow-up without pretending live chat", function () {
@@ -543,8 +689,10 @@ test("conversion routes stay inside approved guided funnel", function () {
     "I am stuck"
   ].forEach(function (prompt) {
     const snapshot = runPrompt(prompt);
-    assert(["quote.html", "products.html", "quote-review.html"].indexOf(snapshot.routeSuggestion.href) >= 0, prompt);
-    assert.notStrictEqual(snapshot.routeSuggestion.href, "floorplan.html", prompt);
+    assert(["quote.html", "products.html", "quote-review.html", "floorplan.html"].indexOf(snapshot.routeSuggestion.href) >= 0, prompt);
+    if (prompt.indexOf("floorplan") < 0) {
+      assert.notStrictEqual(snapshot.routeSuggestion.href, "floorplan.html", prompt);
+    }
   });
 });
 
@@ -897,6 +1045,48 @@ test("site state reads page context without exposing pricing control", function 
   assert(siteState.next && siteState.next.href);
 });
 
+test("quote page site state detects current wizard step and missing fields", function () {
+  const context = loadCore("/quote.html");
+
+  setQuotePageFixture(context, 1, {
+    measurementMethod: "manual_total",
+    totalAreaM2: ""
+  });
+
+  const areaState = context.window.OperonChatbotSiteState.getSnapshot({ pageKey: "quote" });
+  assert.strictEqual(areaState.activeStep, 1);
+  assert.strictEqual(areaState.activeStepNumber, 2);
+  assert.strictEqual(areaState.stepTitle, "Flooring and area");
+  assert.strictEqual(areaState.flow, "flooring_area");
+  assert(areaState.missingInputs.indexOf("area") >= 0);
+  assert.strictEqual(areaState.next.focusId, "totalAreaM2");
+
+  setQuotePageFixture(context, 2, {
+    stairs: "yes",
+    stairWidthKnown: "yes",
+    stairWidthMm: "",
+    stairStraightTreadCount: "0",
+    stairWinderTreadCount: "0",
+    stairLandingSmallCount: "0",
+    stairLandingLargeCount: "0",
+    stairOneSideOpenCount: "0",
+    stairTwoSideOpenCount: "0"
+  });
+
+  const stairState = context.window.OperonChatbotSiteState.getSnapshot({ pageKey: "quote" });
+  assert.strictEqual(stairState.stepTitle, "Main scope");
+  assert.strictEqual(stairState.flow, "main_scope");
+
+  setQuotePageFixture(context, 4, {
+    customerNotes: ""
+  });
+
+  const summaryState = context.window.OperonChatbotSiteState.getSnapshot({ pageKey: "quote" });
+  assert.strictEqual(summaryState.stepTitle, "Contact and submit");
+  assert.strictEqual(summaryState.flow, "contact_submit");
+  assert.strictEqual(summaryState.isNearCompletion, true);
+});
+
 test("quote page stuck recovery uses read-only site state", function () {
   const context = loadCore("/quote.html");
   const logic = context.window.OperonChatbotLogic.createChatbotLogic({
@@ -913,6 +1103,103 @@ test("quote page stuck recovery uses read-only site state", function () {
   assert.strictEqual(snapshot.siteState.readOnly, true);
   assert.doesNotMatch(lastAssistantText(snapshot), /Key point:|Next step:|source of truth|calculator stays/i);
 });
+
+test("quote page stuck recovery gives step-specific guidance", function () {
+  const context = loadCore("/quote.html");
+  setQuotePageFixture(context, 1, {
+    measurementMethod: "manual_total",
+    totalAreaM2: ""
+  });
+  const logic = context.window.OperonChatbotLogic.createChatbotLogic({
+    onUpdate() {},
+    pageKey: "quote"
+  });
+
+  logic.begin();
+  logic.applyTextInput("I am stuck");
+
+  const snapshot = logic.getSnapshot();
+  const text = lastAssistantText(snapshot);
+  assert.strictEqual(snapshot.siteState.stepTitle, "Flooring and area");
+  assert.strictEqual(snapshot.siteState.next.focusId, "totalAreaM2");
+  assert.match(text, /Flooring and area|area/i);
+  assert.doesNotMatch(text, /\$\s*\d|per\s*m2|formula|calculator/i);
+});
+
+test("quote review site state detects visible result without pricing control", function () {
+  const context = loadCore("/quote-review.html");
+  setQuoteReviewFixture(context, {
+    clarityLevel: { text: "Comparable with caution" },
+    clarityTag: { text: "Scope clarity" },
+    extractedQuoteFieldsBox: { text: "", hidden: false },
+    extractedQuoteFieldsList: { text: "Hybrid 7mm supply and install. 73 m2. Total inc GST visible." },
+    mediumRiskList: { text: "Underlay or acoustic layer is unknown. Floor preparation is unknown. Trims and skirting are unknown." },
+    questionsToAskList: { text: "Is acoustic underlay included? Is floor preparation or levelling included?" },
+    decisionGuidance: { text: "Confirm inclusions before comparing totals." }
+  });
+
+  const siteState = context.window.OperonChatbotSiteState.getSnapshot({ pageKey: "quote-review" });
+  assert.strictEqual(siteState.readOnly, true);
+  assert.strictEqual(siteState.canCalculatePrice, false);
+  assert.strictEqual(siteState.flow, "quote_review_result");
+  assert.strictEqual(siteState.reviewResultVisible, true);
+  assert.strictEqual(siteState.reviewStatus, "Comparable with caution");
+  assert(siteState.reviewMissingScope.join(" ").indexOf("Underlay") >= 0);
+  assert(siteState.reviewQuestions.join(" ").indexOf("acoustic underlay") >= 0);
+});
+
+test("quote review result guidance stays scope-first and routes to estimate", function () {
+  const context = loadCore("/quote-review.html");
+  setQuoteReviewFixture(context, {
+    clarityLevel: { text: "Comparable with caution" },
+    clarityTag: { text: "Scope clarity" },
+    extractedQuoteFieldsBox: { text: "", hidden: false },
+    extractedQuoteFieldsList: { text: "Hybrid 7mm supply and install. 73 m2. Total inc GST visible." },
+    mediumRiskList: { text: "Underlay or acoustic layer is unknown. Floor preparation is unknown." },
+    questionsToAskList: { text: "Is acoustic underlay included? Is floor preparation or levelling included?" },
+    decisionGuidance: { text: "Confirm inclusions before comparing totals." }
+  });
+  const logic = context.window.OperonChatbotLogic.createChatbotLogic({
+    onUpdate() {},
+    pageKey: "quote-review"
+  });
+
+  logic.begin();
+  logic.applyTextInput("what does this result mean?");
+
+  const snapshot = logic.getSnapshot();
+  const text = lastAssistantText(snapshot);
+  assert.strictEqual(snapshot.siteState.flow, "quote_review_result");
+  assert.strictEqual(snapshot.structuredOutput.intent, "quote_review_result_explanation");
+  assert.strictEqual(snapshot.routeSuggestion.href, "quote.html?from=quote-review");
+  assert.match(text, /scope|Underlay|Confirm/i);
+  assert.doesNotMatch(text, /\$\s*\d|cheaper|bad quote|calculator|formula/i);
+});
+
+test("quote review result guidance gives one contractor question", function () {
+  const context = loadCore("/quote-review.html");
+  setQuoteReviewFixture(context, {
+    clarityLevel: { text: "Comparable with caution" },
+    clarityTag: { text: "Scope clarity" },
+    mediumRiskList: { text: "Floor preparation is unknown. Trims and skirting are unknown." },
+    questionsToAskList: { text: "Is floor preparation or levelling included? Are trims, scotia, transition trims or skirting included?" },
+    decisionGuidance: { text: "Confirm inclusions before comparing totals." }
+  });
+  const logic = context.window.OperonChatbotLogic.createChatbotLogic({
+    onUpdate() {},
+    pageKey: "quote-review"
+  });
+
+  logic.begin();
+  logic.applyTextInput("what should I ask?");
+
+  const snapshot = logic.getSnapshot();
+  const text = lastAssistantText(snapshot);
+  assert.match(text, /Ask one direct scope question/i);
+  assert.match(text, /floor preparation|levelling/i);
+  assert.doesNotMatch(text, /cheaper|expensive|bad quote|\$\s*\d/i);
+});
+
 
 test("preview includes diagnostics panel and scenario matrix", function () {
   const html = fs.readFileSync(path.resolve(CHATBOT_DIR, "preview.html"), "utf8");
@@ -990,6 +1277,8 @@ test("knowledge index document defines controlled static knowledge boundary", fu
     "product category summaries",
     "suburb page summaries",
     "blog guide summaries",
+    "underlay/acoustic layer",
+    "Scope-First Knowledge Pattern",
     "must not",
     "display prices",
     "does not crawl the site"

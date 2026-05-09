@@ -81,16 +81,72 @@
     quoteReview: {
       key: "scope_quote_review",
       label: "Quote review",
-      summary: "Quick scope check uses the customer's structured inputs. Document-based review needs the actual quote uploaded before showing the full report.",
-      route: { label: "Review quote", href: "quote-review.html" },
-      terms: ["quote review", "review my quote", "scope check", "document review", "upload quote", "existing quote"]
+      summary: "Quick quote completeness check uses only customer-entered details. Document-based quote review is stronger when the written quote is uploaded.",
+      route: { label: "Upload written quote", href: "quote-review.html" },
+      terms: ["quote review", "review my quote", "scope check", "quick check", "quick completeness", "document review", "upload quote", "existing quote"]
     },
     floorplan: {
       key: "scope_floorplan_measurement",
       label: "Floor plan measurement",
-      summary: "If the customer does not know the area, they can start with a rough total, measure room by room, or use the floor plan path in the quote.",
-      route: { label: "Start quote", href: "quote.html" },
+      summary: "If the customer already has a floor plan, they can use the measurement tool for area support before quote review.",
+      route: { label: "Measure from floor plan", href: "floorplan.html" },
       terms: ["floorplan", "floor plan", "do not know area", "don't know area", "unknown area", "measure"]
+    },
+    underlay: {
+      key: "scope_underlay_acoustic",
+      label: "Underlay and acoustic layer",
+      summary: "Underlay or acoustic layer should be confirmed when the building, product, or strata requirements depend on it. It is a scope item, not something to assume from the total price.",
+      route: { label: "Review quote scope", href: "quote-review.html" },
+      terms: ["underlay", "acoustic", "sound rating", "strata acoustic", "soundproof", "noise", "apartment acoustic"]
+    },
+    floorPrep: {
+      key: "scope_floor_preparation",
+      label: "Floor preparation",
+      summary: "Floor preparation should be checked when the floor is uneven, has old adhesive, moisture concern, movement, or tile removal. This is one of the common reasons final scope changes after review.",
+      route: { label: "Review quote scope", href: "quote-review.html" },
+      terms: ["floor preparation", "floor prep", "subfloor", "uneven", "levelling", "leveling", "old adhesive", "not flat", "dips"]
+    },
+    trims: {
+      key: "scope_trims_finishing",
+      label: "Trims, scotia and skirting",
+      summary: "Finishing should say whether trims, scotia, skirting, transition strips, door trims, or stair nosing are included. If it is not written, it should be confirmed before comparing quotes.",
+      route: { label: "Review quote scope", href: "quote-review.html" },
+      terms: ["trim", "trims", "scotia", "skirting", "transition", "door trim", "door trimming", "stair nosing", "nosing", "edge trim"]
+    },
+    stairs: {
+      key: "scope_stairs",
+      label: "Stairs",
+      summary: "Stairs should be treated as a separate scope check. Step type, width, nosing, landing, open sides, product type, and site details should be reviewed before final confirmation.",
+      route: { label: "Review quote scope", href: "quote-review.html" },
+      terms: ["stairs", "staircase", "steps", "landing", "triangle step", "winder", "open side", "stair nosing"]
+    },
+    access: {
+      key: "scope_access_site_details",
+      label: "Site details",
+      summary: "Site details should capture apartment level, lift, parking, loading, stairs, occupied rooms, and strata rules where relevant. These details help avoid comparing quotes that describe different jobs.",
+      route: { label: "Start quote", href: "quote.html" },
+      terms: ["access", "parking", "lift", "elevator", "loading", "level", "strata", "apartment access", "site details"]
+    },
+    moisture: {
+      key: "scope_moisture_concrete",
+      label: "Moisture and concrete floors",
+      summary: "Concrete floors may need moisture awareness before final confirmation. The quote should note moisture protection where the site or product path makes it relevant.",
+      route: { label: "Review quote scope", href: "quote-review.html" },
+      terms: ["moisture", "concrete", "moisture barrier", "damp", "slab", "vapour", "vapor"]
+    },
+    warrantyExclusions: {
+      key: "scope_warranty_exclusions",
+      label: "Warranty and exclusions",
+      summary: "Warranty, exclusions, product details, and variation conditions should be written clearly. If they are not listed, ask for confirmation before comparing by total price.",
+      route: { label: "Review quote scope", href: "quote-review.html" },
+      terms: ["warranty", "warranties", "exclusion", "exclusions", "variation", "variations", "quote validity", "payment terms"]
+    },
+    quoteComparison: {
+      key: "scope_quote_comparison",
+      label: "Comparing flooring quotes",
+      summary: "Compare flooring quotes by scope first. Product, area, underlay, removal, disposal, prep, trims, stairs, site details, warranty, and exclusions should be clear before total price carries much meaning.",
+      route: { label: "Review quote", href: "quote-review.html" },
+      terms: ["compare quotes", "compare flooring quotes", "quote comparison", "fair quote", "is this quote fair", "is my quote fair"]
     }
   };
 
@@ -212,6 +268,27 @@
       summary: "Maintenance advice should stay practical: clean regularly, avoid harsh moisture, protect from scratches, and review damage early.",
       route: { label: "Read care guide", href: "floor-care-maintenance.html" },
       terms: ["maintenance checklist", "how to clean", "clean hybrid", "clean laminate"]
+    },
+    waterDamage: {
+      key: "blog_water_damage",
+      label: "Water damage and swelling",
+      summary: "Water damage, swelling, cupping, or soft boards should be reviewed before choosing repair or replacement. Product type and subfloor condition matter more than a quick surface guess.",
+      route: { label: "Review scope", href: "quote-review.html" },
+      terms: ["water damage", "swelling", "swollen", "cupping", "soft boards", "wet floor"]
+    },
+    pets: {
+      key: "blog_pet_flooring",
+      label: "Flooring for pets",
+      summary: "For pets, start with scratch awareness, water resistance, easy cleaning, and product suitability. Hybrid is often the practical category to compare first.",
+      route: { label: "Browse products", href: "products.html" },
+      terms: ["pets", "dog", "dogs", "cat", "cats", "pet friendly", "scratch resistant"]
+    },
+    gapsMovement: {
+      key: "blog_gaps_movement",
+      label: "Gaps, lifting and movement",
+      summary: "Gaps, lifting, peaking, or movement usually point to installation conditions, expansion, subfloor, moisture, or product suitability. Treat it as a scope review before deciding repair versus replacement.",
+      route: { label: "Review scope", href: "quote-review.html" },
+      terms: ["gaps", "lifting", "peaking", "buckling", "movement", "floor moving", "expansion"]
     }
   };
 
@@ -291,9 +368,12 @@
       return null;
     }
 
+    const isProduct = entry.key.indexOf("product_") === 0 || entry.key.indexOf("range_") === 0;
+    const isScope = entry.key.indexOf("scope_") === 0;
+
     return {
       key: entry.key,
-      intent: entry.key.indexOf("product_") === 0 ? "product_guidance" : "route_next_step",
+      intent: isProduct ? "product_guidance" : isScope ? "scope_validation" : "route_next_step",
       answer: entry.label + ": " + entry.summary,
       insight: entry.suitability || "Keep the scope clear before the final quote is confirmed.",
       nextStep: entry.route && entry.route.label ? entry.route.label + "." : "Choose the next step.",

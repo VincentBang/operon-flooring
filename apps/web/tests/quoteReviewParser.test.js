@@ -2,9 +2,10 @@
 
 const assert = require("assert");
 const { _test } = require("../../../netlify/functions/quote-review-ocr");
+const quoteReviewReport = require("../quoteReviewReport");
 
 const invoiceText = [
-  "Oz Timber Floor",
+  "Sample Flooring Co",
   "Tax invoice",
   "Invoice number Issue date Due date",
   "IV00000000944 28/02/2026 07/03/2026",
@@ -24,7 +25,7 @@ const missingScope = scopeComparison
   .filter((item) => item.status === "unknown" || item.status === "subject_to_confirmation")
   .map((item) => item.key);
 
-assert.strictEqual(fields.supplierName, "Oz Timber Floor");
+assert.strictEqual(fields.supplierName, "Sample Flooring Co");
 assert.strictEqual(fields.documentType, "invoice");
 assert.strictEqual(fields.invoiceOrQuoteNumber, "IV00000000944");
 assert.strictEqual(fields.issueDate, "28/02/2026");
@@ -54,8 +55,15 @@ assert.ok(missingScope.includes("stairs"));
   const scopeClassification = _test.buildScopeClassification(fields, comparison);
   const operonComparison = _test.buildOperonComparison(fields, comparison, scopeClassification);
   const decisionReport = _test.buildDecisionReport(fields, scopeClassification, operonComparison);
+  const normalizedReport = quoteReviewReport.normalizeQuoteReview({
+    mode: "detailed",
+    extractedQuoteFields: fields,
+    databaseComparison: comparison,
+    operonComparison: operonComparison,
+    decisionReport: decisionReport
+  });
   assert.notStrictEqual(comparison.status, "not_ready");
-  assert.notStrictEqual(comparison.notes, "No extracted quote text is available for database comparison.");
+  assert.notStrictEqual(comparison.notes, "Readable uploaded quote text is not available for Operon comparison.");
   assert.strictEqual(comparison.priceGuide.quotedAreaM2, 73);
   assert.strictEqual(comparison.priceGuide.quotedUnitPriceExGstPerM2, 48);
   assert.strictEqual(comparison.comparisonLevel, "category_level_only");
@@ -73,6 +81,21 @@ assert.ok(missingScope.includes("stairs"));
   assert.ok(decisionReport.visualScopeComparison.competitorQuote.unclear.includes("Underlay/acoustic layer"));
   assert.ok(decisionReport.scopeConfidence.missing.includes("Underlay/acoustic layer"));
   assert.ok(decisionReport.priceDifferenceInterpretation.includes("scope"));
+  assert.strictEqual(normalizedReport.quantityM2, 73);
+  assert.strictEqual(normalizedReport.unitPriceExGst, 48);
+  assert.strictEqual(normalizedReport.subtotalExGst, 3504);
+  assert.strictEqual(normalizedReport.gstAmount, 350.4);
+  assert.strictEqual(normalizedReport.totalIncGst, 3854.4);
+  assert.strictEqual(normalizedReport.flooringType, "hybrid");
+  assert.strictEqual(normalizedReport.thicknessMm, 7);
+  assert.strictEqual(normalizedReport.comparisonLevel, "Category-level only");
+  assert.strictEqual(normalizedReport.decisionConfidence, "Low to medium");
+  assert.strictEqual(normalizedReport.productMatchStatus, "not_confirmed");
+  assert.strictEqual(normalizedReport.statusHeadline, "Readable, but not fully comparable yet");
+  assert.ok(normalizedReport.summary.includes("73 m²"));
+  assert.ok(normalizedReport.summary.includes("$48.00/m² ex GST"));
+  assert.ok(normalizedReport.missingScopeItems.some((item) => item.key === "underlay"));
+  assert.ok(normalizedReport.missingScopeItems.some((item) => item.key === "floor_preparation"));
   console.log("quoteReviewParser.test.js passed");
 })().catch((error) => {
   console.error(error);

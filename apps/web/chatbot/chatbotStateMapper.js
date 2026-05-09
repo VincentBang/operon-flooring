@@ -110,6 +110,10 @@
       "quote_explanation",
       "missing_info_collection",
       "quote_review",
+      "quick_quote_completeness",
+      "document_quote_review",
+      "quote_review_result_explanation",
+      "floorplan_help",
       "scope_validation",
       "route_next_step",
       "operator_handoff",
@@ -200,7 +204,7 @@
   }
 
   function normaliseNextStep(value) {
-    const allowed = ["quote.html", "products.html", "quote-review.html"];
+    const allowed = ["quote.html", "products.html", "quote-review.html", "floorplan.html"];
     return allowed.indexOf(value) >= 0 ? value : "";
   }
 

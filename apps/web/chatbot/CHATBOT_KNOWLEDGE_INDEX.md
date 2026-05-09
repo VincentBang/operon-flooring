@@ -7,7 +7,7 @@ Purpose: give the isolated chatbot approved site knowledge without crawling the 
 - product category summaries for hybrid, laminate, and engineered timber
 - current range-level guidance for ETF hybrid, 12mm water-resistant laminate, Swish Oak Natura, and Swish Oak Natura Herringbone
 - quote flow explanation at a high level only
-- quote scope explanations for removal, disposal, floor plan measurement, quick quote review, and document-based quote review
+- quote scope explanations for removal, disposal, floor plan measurement, underlay/acoustic layer, floor preparation, trims/scotia/skirting, stairs, site details, moisture, warranty/exclusions, quick quote completeness check, and document-based quote review
 - service page summaries for installation guidance, floor plan measurement, and floor care
 - suburb page summaries for selected Sydney service areas
 - blog guide summaries for measuring, floor preparation, product comparison, maintenance, and common floor issues
@@ -20,6 +20,7 @@ The chatbot may:
 - explain product suitability at category level
 - explain product range browsing at a high level, including that colour previews are for browsing and final engineered colour is confirmed through the quote flow
 - explain quote scope and missing details
+- explain why quotes should be compared by scope first, including product definition, area, removal, disposal, prep, underlay/acoustic layer, finishing, site details, warranty and exclusions
 - route customers to `products.html`, `quote.html`, `floorplan.html`, `quote-review.html`, service pages, suburb pages, or blog guides
 - mention that final confirmation happens after review
 
@@ -27,7 +28,7 @@ The chatbot must not:
 
 - display prices, totals, rates, discounts, formulas, or internal pricing logic
 - calculate estimates inside the chatbot
-- compare competitors by cheapest price
+- compare uploaded or existing quotes by cheapest price
 - update quote forms, product selections, localStorage, Supabase, lead capture, or submission logic
 - expose backend words such as payload, localStorage, Supabase, API key, pricing formula, source of truth, or internal field names in customer answers
 
@@ -43,10 +44,13 @@ The chatbot must not:
 ## Current Quote Guidance Rules
 
 - The online result is a starting estimate, not a final confirmed quote.
+- On `quote.html`, the chatbot may read the current wizard step and suggest the next visible action.
+- Quote step awareness must remain read-only. It can identify the active step, likely missing field, and next focus target, but it must not write fields, trigger calculations, submit forms, or move the wizard automatically.
 - Removal should be explained as one clear existing floor to remove, such as carpet, floating floor, glue-down timber, tile, vinyl, not sure, or other.
 - Disposal or take-away should be explained separately from removal when relevant.
-- Quick quote review is a scope check from structured inputs.
-- Document-based quote review requires the actual uploaded quote before the full report is shown.
+- Quick quote completeness check is a no-file scope check based only on customer-entered or ticked information.
+- Document-based quote review requires the actual uploaded or written quote before the full report is shown.
+- If a document only says category and thickness, such as "Hybrid 7mm", product match should be "Product match not confirmed."
 - Email copy is optional and should be described as a customer copy, not as a gate to seeing the estimate.
 
 ## Quote Review Coverage Notes
@@ -62,7 +66,16 @@ The chatbot can safely explain that Quote Advisor checks:
 - stairs and stair quantities
 - furniture handling
 - apartment level, lift, parking and site details
-- confidence level and recommended next step
+- extraction confidence, comparison level, decision confidence, and recommended next step
+
+Additional approved scope topics:
+
+- underlay and acoustic requirements
+- concrete moisture awareness
+- floor preparation and levelling
+- trims, scotia, skirting, transition strips, door trimming and stair nosing
+- stair type, width, landing, open sides and site details
+- warranty, exclusions, payment terms, quote validity and variation conditions
 
 The chatbot must not:
 
@@ -72,8 +85,10 @@ The chatbot must not:
 - claim Operon is better because another quote is incomplete
 - infer missing prices, rates or margins
 - expose OCR, payload, API, Supabase, localStorage or internal status labels in customer answers
+- show document extraction, product match, or Operon comparable estimate in quick-mode language
+- show high comparison confidence when the comparison level is category-level only
 
-Preferred route when a customer already has another quote:
+Preferred route when a customer already has an uploaded quote:
 
 ```text
 quote-review.html -> quote.html?source=quote_review
@@ -81,8 +96,9 @@ quote-review.html -> quote.html?source=quote_review
 
 Use plain language:
 
-- "scope check"
+- "scope completeness"
 - "quote clarity"
+- "comparison readiness"
 - "missing inclusions"
 - "questions to confirm"
 - "final scope review"
@@ -122,6 +138,7 @@ When a user seems stuck, the chatbot should identify one blocker and ask one que
 - stairs are present
 - apartment site details are uncertain
 - another quote has missing inclusions
+- underlay, acoustic, trims, warranty, or exclusions are unclear
 
 The safest pattern is:
 
@@ -132,6 +149,40 @@ One question or one route.
 ```
 
 Do not use labels like `Key point:` or `Next step:` in the customer-facing answer.
+
+## Scope-First Knowledge Pattern
+
+When the customer asks whether a quote is fair, whether a lower total is safe, or why two quotes differ, use this pattern:
+
+```text
+Total price is only useful when the scope is clear.
+Check product, area, underlay, removal, preparation, finishing, stairs, site details and exclusions.
+Use quote review if anything is unclear.
+```
+
+Keep this calm. Do not imply another contractor is wrong, and do not claim Operon is cheaper or better from price alone.
+
+## Quote Advisor Result Awareness
+
+On `quote-review.html`, the chatbot may read the visible quote-review result panel as read-only context.
+
+It may use:
+
+- visible status text
+- visible extracted quote details
+- visible missing or unclear scope items
+- visible contractor questions
+- visible decision guidance
+
+It must translate those into short customer guidance:
+
+```text
+The result is mainly about scope clarity.
+One item to confirm is [visible missing scope item].
+Ask the contractor one direct question, or build a structured Operon estimate.
+```
+
+It must not use hidden backend fields, calculate price, compare cheapest options, or treat missing items as excluded unless the review clearly says so.
 
 ## Runtime Boundary
 

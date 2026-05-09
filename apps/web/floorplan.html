@@ -3,32 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Floor Plan Flooring Measure Sydney | Confirm Area for Quote | Operon Flooring</title>
+  <title>Floor Plan Flooring Measure Sydney | Operon Flooring</title>
   <meta
     name="description"
-    content="Upload a floor plan, set scale using a known wall length, trace flooring rooms, and send confirmed area into the Operon quote page."
+    content="Upload a floor plan, set scale from a known wall, trace flooring rooms, and send the measured area into your Sydney flooring quote."
   >
   <link rel="icon" href="assets/Operon favicon.png" type="image/png">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://operonflooring.com.au/floorplan.html">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Floor Plan Flooring Measure Sydney | Confirm Area for Quote | Operon Flooring">
-  <meta property="og:description" content="Upload a floor plan, set scale using a known wall length, trace flooring rooms, and send confirmed area into the Operon quote page.">
+  <meta property="og:title" content="Floor Plan Flooring Measure Sydney | Operon Flooring">
+  <meta property="og:description" content="Upload a floor plan, set scale from a known wall, trace flooring rooms, and send the measured area into your Sydney flooring quote.">
   <meta property="og:url" content="https://operonflooring.com.au/floorplan.html">
   <meta property="og:site_name" content="Operon Flooring">
   <meta property="og:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Floor Plan Flooring Measure Sydney | Confirm Area for Quote | Operon Flooring">
-  <meta name="twitter:description" content="Upload a floor plan, set scale using a known wall length, trace flooring rooms, and send confirmed area into the Operon quote page.">
+  <meta name="twitter:title" content="Floor Plan Flooring Measure Sydney | Operon Flooring">
+  <meta name="twitter:description" content="Upload a floor plan, set scale from a known wall, trace flooring rooms, and send the measured area into your Sydney flooring quote.">
   <meta name="twitter:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2LEXZJM3Q"></script>
+  <script src="floorplanQuickRoom.js"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-XXXXXXXXXX');
+    gtag('config', 'G-T2LEXZJM3Q');
   </script>
   <script type="application/ld+json">
     {
@@ -36,12 +37,52 @@
       "@type": "WebPage",
       "name": "Operon Flooring Floor Plan Tool",
       "url": "https://operonflooring.com.au/floorplan.html",
-      "description": "Upload a floor plan, set scale using a known wall length, trace flooring rooms, and send confirmed area into the Operon quote page.",
+      "description": "Upload a floor plan, set scale from a known wall, trace flooring rooms, and send the measured area into your Sydney flooring quote.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Operon Flooring",
         "url": "https://operonflooring.com.au/"
       }
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is this the final flooring measurement?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. It gives a measured starting area from your floor plan. Final site details can still be confirmed before installation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What kind of floor plan works best?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A PDF, JPG or PNG with visible room walls and at least one known dimension."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this calculate the final quote?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. It sends measured area into the quote. Product choice, removal, stairs, trims, underlay, preparation and site details are reviewed separately."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I include every room?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only trace rooms where flooring will be installed."
+          }
+        }
+      ]
     }
   </script>
   <script src="tracking.js"></script>
@@ -67,7 +108,7 @@
       --radius-xl: 26px;
       --radius-lg: 18px;
       --radius-md: 14px;
-      --max-width: 1240px;
+      --max-width: 1280px;
       --font-sans: "Inter", "Segoe UI", BlinkMacSystemFont, -apple-system, sans-serif;
     }
 
@@ -135,7 +176,7 @@
     .brand {
       display: inline-flex;
       align-items: center;
-      width: clamp(260px, 26vw, 380px);
+      width: clamp(232px, 22vw, 340px);
       min-height: 52px;
       background: left center / auto 100% no-repeat url("assets/operon-logo-final.png");
       color: transparent;
@@ -160,6 +201,11 @@
       color: var(--muted);
       font-size: 0.95rem;
       font-weight: 500;
+      flex-wrap: nowrap;
+    }
+
+    .nav-links a {
+      white-space: nowrap;
     }
 
     .nav-toggle {
@@ -824,8 +870,37 @@
       display: none !important;
     }
 
-    .quick-status-grid,
-    .quick-debug-grid {
+    body.floorplan-dev-mode .mode-row.quick-room-hidden {
+      display: grid !important;
+    }
+
+    body.floorplan-dev-mode .mode-panel.quick-room-hidden.active {
+      display: block !important;
+    }
+
+    .scale-detail-grid,
+    .trace-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .scale-detail-grid span,
+    .trace-detail-grid span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.86rem;
+      margin-bottom: 4px;
+    }
+
+    .scale-warning,
+    .trace-warning {
+      color: var(--warn);
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .quick-status-grid {
       display: grid;
       gap: 12px;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -846,37 +921,38 @@
       font-size: 0.98rem;
     }
 
-    .debug-toggle-row,
-    .debug-view-row {
+    .quick-suggestion-card {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(31, 111, 139, 0.18);
+      box-shadow: 0 12px 26px rgba(23, 35, 45, 0.06);
+    }
+
+    .quick-suggestion-card[data-confidence="Low"] {
+      border-color: rgba(181, 110, 82, 0.28);
+      background: rgba(255, 248, 244, 0.96);
+    }
+
+    .quick-suggestion-meta {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 16px;
+      align-items: center;
     }
 
-    .debug-chip {
-      display: inline-flex;
-      align-items: center;
-      min-height: 40px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(16, 24, 40, 0.08);
-      background: rgba(255, 255, 255, 0.86);
+    .quick-reason-list {
+      margin: 0;
+      padding-left: 18px;
       color: var(--muted);
     }
 
-    .debug-chip.active {
-      background: rgba(234, 244, 247, 0.96);
-      border-color: rgba(31, 111, 139, 0.28);
-      color: var(--brand);
-    }
-
-    .quick-preview-shell {
-      margin-top: 18px;
-      padding: 16px;
-      border-radius: 24px;
-      background: rgba(248, 250, 252, 0.84);
-      border: 1px solid rgba(16, 24, 40, 0.06);
+    .quick-reason-list li {
+      font-size: 0.9rem;
+      line-height: 1.45;
     }
 
     .quick-preview-stage {
@@ -961,7 +1037,7 @@
 
     .footer-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
       gap: 40px;
     }
 
@@ -1742,21 +1818,22 @@
           <div class="hero-content-row">
             <div class="hero-copy-block">
               <h1>Measure your flooring area from a floor plan.</h1>
-              <p>Upload a floor plan, set scale from a known wall, trace the flooring areas, and send the total into your quote.</p>
+              <p>Upload a floor plan, set a known scale, trace the rooms receiving flooring, and send the measured area into your quote.</p>
               <div class="hero-actions" style="margin-top: 24px;">
                 <a class="button" href="#measurementTool">Start measuring</a>
                 <a class="button-secondary" data-quote-return-link href="quote.html">Open quote</a>
               </div>
-              <p class="helper" style="margin-top: 14px;">Use this when you want a clearer area before quoting.</p>
+              <p class="helper" style="margin-top: 14px;">Measured starting area only. Final area and site scope may still be confirmed before installation.</p>
             </div>
 
             <aside class="hero-mini-panel" aria-label="Measurement summary">
-              <strong>Upload, scale, label, trace, quote</strong>
+              <strong>Upload, scale, trace, review, quote</strong>
               <ul class="hero-mini-steps">
                 <li><span>1</span> Upload the floor plan</li>
                 <li><span>2</span> Set scale from a known wall</li>
-                <li><span>3</span> Label and trace rooms</li>
-                <li><span>4</span> Use the selected area in quote</li>
+                <li><span>3</span> Trace flooring rooms</li>
+                <li><span>4</span> Review selected area</li>
+                <li><span>5</span> Use area in quote</li>
               </ul>
             </aside>
           </div>
@@ -1784,7 +1861,7 @@
             </div>
             <div class="step-card">
               <strong>4. Use area in quote</strong>
-              <span>Select the flooring rooms, then send the total into your quote.</span>
+              <span>Send real measured area only. Product and site scope are still confirmed separately.</span>
             </div>
           </div>
         </article>
@@ -1797,7 +1874,7 @@
           <div class="tool-header">
             <span class="eyebrow">Measurement Tool</span>
             <h2>Upload, set scale and trace rooms</h2>
-            <p>Upload the plan, set scale once, then label and trace the rooms where flooring will be installed.</p>
+            <p>Trace Room Mode measures real flooring area from your plan. Quote pricing is handled later.</p>
           </div>
 
           <div class="status hidden" id="resumeMeasurementBanner" style="margin-bottom: 20px;">
@@ -1826,15 +1903,14 @@
                 </div>
               </div>
 
-              <!-- Future Quick Room Mode remains hidden until automatic floor plan segmentation is reliable. -->
               <div class="mode-row quick-room-hidden" aria-hidden="true">
                 <button class="mode-chip active" type="button" data-mode="trace">
                   <strong>Trace Room Mode</strong>
-                  <span>Best for confirmed flooring measurement.</span>
+                  <span>Trace rooms receiving flooring.</span>
                 </button>
                 <button class="mode-chip" type="button" data-mode="quick">
-                  <strong>Future Quick Room Mode</strong>
-                  <span>Hidden experimental workflow.</span>
+                  <strong>Quick Room Mode</strong>
+                  <span>Click inside a room and review the suggested outline.</span>
                 </button>
               </div>
 
@@ -1842,7 +1918,7 @@
                 <div class="tool-subsection">
                   <div class="tool-subsection-header">
                     <h3 class="tool-subsection-title">2. Set scale and trace</h3>
-                    <p class="helper" style="margin: 0;">Set scale once, choose a room label, then trace each flooring room.</p>
+                    <p class="helper" style="margin: 0;">Use the longest labelled wall dimension available for best results.</p>
                   </div>
                   <div class="room-label-row">
                     <div class="field">
@@ -1867,24 +1943,57 @@
                   <div class="tool-button-row compact">
                     <button class="button-secondary" id="setScaleButton" type="button">Step 1. Set scale</button>
                     <button class="button-secondary" id="resetScaleButton" type="button">Reset scale</button>
+                    <button class="button-quiet" id="verifyScaleButton" type="button">Verify scale with another wall</button>
+                  </div>
+
+                  <div class="summary-box" id="scaleDetailsPanel" style="margin-top: 4px;">
+                    <strong>Scale status: <span id="scaleStatusLabel">Not set</span></strong>
+                    <div class="scale-detail-grid" style="margin-top: 12px;">
+                      <div><span>Known distance</span><strong id="scaleKnownDistance">-</strong></div>
+                      <div><span>Pixel distance</span><strong id="scalePixelDistance">-</strong></div>
+                      <div><span>Pixels per metre</span><strong id="scalePixelsPerMetre">-</strong></div>
+                      <div><span>Metres per pixel</span><strong id="scaleMetresPerPixel">-</strong></div>
+                    </div>
+                    <p class="helper" id="scaleQualityMessage" style="margin: 12px 0 0;">Set scale before tracing rooms.</p>
                   </div>
 
                   <div class="tool-button-row" style="margin-top: 2px;">
                     <button class="button-secondary" id="startTraceButton" type="button">Step 2. Trace room</button>
                     <button class="button-quiet" id="undoTracePointButton" type="button">Undo point</button>
                     <button class="button-quiet" id="clearTraceButton" type="button">Clear trace</button>
+                    <button class="button-secondary" id="finishTraceButton" type="button">Finish room</button>
+                  </div>
+
+                  <div class="summary-box" style="margin-top: 4px;">
+                    <strong>Trace rooms</strong>
+                    <p class="helper" style="margin: 8px 0 12px;">Click each corner of the flooring area. Close the room by clicking near the first point, or use Finish room.</p>
+                    <div class="trace-detail-grid">
+                      <div><span>Current points</span><strong id="tracePointCount">0</strong></div>
+                      <div><span>Shape status</span><strong id="traceShapeStatus">Open</strong></div>
+                    </div>
+                    <p class="trace-warning" id="traceValidationMessage" style="margin: 12px 0 0;"></p>
                   </div>
                 </div>
               </div>
 
               <div class="mode-panel quick-room-hidden" id="quickPanel" aria-hidden="true">
-                <div class="summary-box" style="margin-top: 18px;">
-                  <strong>Future Quick Room Mode — hidden experimental workflow</strong>
-                  <p style="margin-top: 10px;">This mode is reserved for future assisted room detection work and must not be treated as a confirmed customer measurement path yet.</p>
-                  <p style="margin-top: 10px;">Trace Room Mode remains the primary workflow for confirmed flooring measurement.</p>
+                <div class="tool-subsection">
+                  <div class="tool-subsection-header">
+                    <h3 class="tool-subsection-title">2. Quick Room Mode</h3>
+                    <p class="helper" style="margin: 0;">Click inside a room and Operon will suggest the likely flooring area. Review the outline before adding it to your measured area.</p>
+                  </div>
+                  <div class="status">
+                    Suggested areas are a starting point only. Confirm included rooms before sending the measured area into your quote.
+                  </div>
+                  <div class="action-row">
+                    <button class="button" id="suggestAllAreasButton" type="button">Suggest areas</button>
+                    <button class="button-secondary" id="prepareQuickModeButton" type="button">Prepare Quick Room Mode</button>
+                    <button class="button-secondary" id="quickModeInfoButton" type="button">Use Manual Trace</button>
+                  </div>
+                  <p class="helper" style="margin: 12px 0 0;">Review suggested areas before using them in your quote.</p>
                 </div>
 
-                <div class="quick-status-grid">
+                <div class="quick-status-grid" aria-live="polite">
                   <div class="quick-status-card">
                     <strong>Uploaded plan</strong>
                     <span id="quickImageLoadedLabel">No</span>
@@ -1894,11 +2003,11 @@
                     <span id="quickScaleStatusLabel">No</span>
                   </div>
                   <div class="quick-status-card">
-                    <strong>Detection status</strong>
+                    <strong>Suggestion status</strong>
                     <span id="quickDetectionStatusLabel">Not started</span>
                   </div>
                   <div class="quick-status-card">
-                    <strong>Suggested zones</strong>
+                    <strong>Saved quick rooms</strong>
                     <span id="quickSuggestedCountLabel">0</span>
                   </div>
                   <div class="quick-status-card">
@@ -1907,49 +2016,30 @@
                   </div>
                 </div>
 
-                <div class="action-row" style="margin-top: 16px;">
-                  <button class="button-secondary" id="prepareQuickModeButton" type="button">Prepare assisted view</button>
-                  <button class="button-quiet" id="toggleQuickDebugButton" type="button">Show debug view</button>
-                  <button class="button-secondary" id="quickModeInfoButton" type="button">Use trace mode instead</button>
-                </div>
-
-                <div class="debug-view-row hidden" id="quickViewRow">
-                  <button class="debug-chip active" type="button" data-quick-view="original">Original</button>
-                  <button class="debug-chip" type="button" data-quick-view="grayscale">Grayscale</button>
-                  <button class="debug-chip" type="button" data-quick-view="threshold">Threshold</button>
-                  <button class="debug-chip" type="button" data-quick-view="cleaned">Cleaned</button>
-                </div>
-
-                <div class="quick-preview-shell hidden" id="quickPreviewShell">
-                  <div class="quick-preview-stage">
-                    <canvas id="quickPreviewCanvas" width="1200" height="860"></canvas>
+                <div class="quick-suggestion-card hidden" id="quickSuggestionPanel" data-confidence="">
+                  <div>
+                    <strong id="quickSuggestionTitle">Suggested room</strong>
+                    <p class="helper" id="quickSuggestionCopy" style="margin: 8px 0 0;">Review the outline on the plan before adding it.</p>
+                  </div>
+                  <div class="quick-suggestion-meta">
+                    <span class="pill" id="quickSuggestionArea">0.00 m²</span>
+                    <span class="pill" id="quickSuggestionConfidence">Confidence</span>
+                  </div>
+                  <ul class="quick-reason-list" id="quickSuggestionReasons"></ul>
+                  <div class="action-row">
+                    <button class="button" id="acceptQuickRoomButton" type="button">Accept room</button>
+                    <button class="button-secondary" id="editQuickRoomButton" type="button">Edit manually</button>
+                    <button class="button-quiet" id="discardQuickRoomButton" type="button">Discard</button>
                   </div>
                 </div>
 
-                <details class="advanced-panel">
-                  <summary>Advanced detection settings</summary>
-                  <div class="quick-debug-grid">
-                    <div class="field range-field">
-                      <label for="quickContrastSlider">Contrast</label>
-                      <input id="quickContrastSlider" type="range" min="100" max="220" value="150">
-                    </div>
-                    <div class="field range-field">
-                      <label for="quickThresholdSlider">Threshold</label>
-                      <input id="quickThresholdSlider" type="range" min="80" max="220" value="160">
-                    </div>
-                    <div class="field range-field">
-                      <label for="quickNoiseSlider">Noise removal</label>
-                      <input id="quickNoiseSlider" type="range" min="0" max="3" value="1">
-                    </div>
-                  </div>
-                  <p class="helper" style="margin-top: 10px;">These settings only affect the assisted preparation view for now. Room segmentation comes in later phases.</p>
-                </details>
+                <canvas id="quickPreviewCanvas" width="1200" height="860" class="hidden"></canvas>
               </div>
             </div>
 
             <div class="workspace-stage">
               <div class="status" id="traceStatus">
-                Set scale: click two points on a known wall.
+                Upload a floor plan, set scale, then trace rooms receiving flooring.
               </div>
               <div class="status" id="canvasStatus">Upload a floor plan to begin.</div>
               <div class="canvas-shell hidden" id="canvasShell">
@@ -1989,6 +2079,16 @@
             </div>
           </div>
 
+          <div class="summary-box">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+              <strong>Measurement confidence</strong>
+              <span class="pill warn" id="measurementConfidenceTag">Low</span>
+            </div>
+            <p class="helper" id="measurementConfidenceText" style="margin: 10px 0 0;">Upload a plan, set scale and trace rooms before using the area in quote.</p>
+            <div class="confidence-checklist" id="confidenceChecklist" style="margin-top: 12px;"></div>
+            <p class="helper" id="scaleWarningText" style="margin: 8px 0 0;"></p>
+          </div>
+
           <details class="summary-box room-list-panel" open>
             <summary>
               <strong>Measured rooms</strong>
@@ -1998,14 +2098,55 @@
           </details>
 
           <div class="summary-box">
+            <strong>Review before quote</strong>
+            <p class="helper" style="margin: 10px 0 0;">Only include rooms where flooring will be installed.</p>
+            <p class="helper" style="margin: 12px 0 6px;">Common areas to exclude:</p>
+            <ul class="helper" style="margin: 0; padding-left: 18px;">
+              <li>Bathrooms</li>
+              <li>Balconies</li>
+              <li>Garage</li>
+              <li>Outdoor areas</li>
+              <li>Voids</li>
+              <li>Rooms not receiving flooring</li>
+            </ul>
+          </div>
+
+          <div class="summary-box">
             <strong>Ready to continue your quote?</strong>
-            <p class="helper" style="margin: 10px 0 0;">Send the selected floor area back to the quote form and complete your estimate.</p>
+            <p class="helper" style="margin: 10px 0 0;">Send the selected floor area back to the quote form, then confirm product and site scope before submitting.</p>
             <div class="summary-actions" style="margin-top: 16px;">
-              <button class="button" id="useAreaInQuoteButton" type="button">Use this area in quote</button>
+              <button class="button" id="useAreaInQuoteButton" type="button">Use selected measured area in quote</button>
               <button class="button-danger" id="clearRoomsButton" type="button">Clear rooms</button>
             </div>
           </div>
         </aside>
+      </div>
+    </section>
+
+    <section class="section" id="floorplanFaq">
+      <div class="shell">
+        <article class="section-card">
+          <span class="eyebrow">Floor Plan Measurement FAQ</span>
+          <h2 style="margin-top: 18px;">Before you use the measured area</h2>
+          <div class="rooms-table">
+            <details class="summary-box">
+              <summary><strong>Is this the final flooring measurement?</strong></summary>
+              <p class="helper" style="margin: 10px 0 0;">No. It gives a measured starting area from your floor plan. Final site details can still be confirmed before installation.</p>
+            </details>
+            <details class="summary-box">
+              <summary><strong>What kind of floor plan works best?</strong></summary>
+              <p class="helper" style="margin: 10px 0 0;">A PDF, JPG or PNG with visible room walls and at least one known dimension.</p>
+            </details>
+            <details class="summary-box">
+              <summary><strong>Does this calculate the final quote?</strong></summary>
+              <p class="helper" style="margin: 10px 0 0;">No. It sends measured area into the quote. Product choice, removal, stairs, trims, underlay, preparation and site details are reviewed separately.</p>
+            </details>
+            <details class="summary-box">
+              <summary><strong>Should I include every room?</strong></summary>
+              <p class="helper" style="margin: 10px 0 0;">Only trace rooms where flooring will be installed.</p>
+            </details>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -2057,8 +2198,8 @@
 
   <div class="overlay" id="scaleModal">
     <div class="modal">
-      <h3>Enter real distance in metres</h3>
-      <p class="helper" style="margin-top: 12px;">Example: 4.4</p>
+      <h3 id="scaleModalTitle">Enter real distance in metres</h3>
+      <p class="helper" id="scaleModalHelp" style="margin-top: 12px;">Example: 4.4</p>
       <div class="field" style="margin-top: 18px;">
         <label for="scaleDistanceInput">Known wall distance</label>
         <input id="scaleDistanceInput" type="number" min="0" step="0.01" placeholder="4.4">
@@ -2087,6 +2228,7 @@
     const READABLE_CANVAS_LONG_EDGE = 1600;
     const canvas = document.getElementById("planCanvas");
     const context = canvas.getContext("2d");
+    const QUICK_ROOM = window.OperonQuickRoom || null;
 
     if (window.pdfjsLib) {
       pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.worker.min.js";
@@ -2107,17 +2249,25 @@
       traceRoomLabel: document.getElementById("traceRoomLabel"),
       traceRoomName: document.getElementById("traceRoomName"),
       setScaleButton: document.getElementById("setScaleButton"),
+      verifyScaleButton: document.getElementById("verifyScaleButton"),
       resetScaleButton: document.getElementById("resetScaleButton"),
       startTraceButton: document.getElementById("startTraceButton"),
       undoTracePointButton: document.getElementById("undoTracePointButton"),
       clearTraceButton: document.getElementById("clearTraceButton"),
+      finishTraceButton: document.getElementById("finishTraceButton"),
+      suggestAllAreasButton: document.getElementById("suggestAllAreasButton"),
       prepareQuickModeButton: document.getElementById("prepareQuickModeButton"),
-      toggleQuickDebugButton: document.getElementById("toggleQuickDebugButton"),
       quickModeInfoButton: document.getElementById("quickModeInfoButton"),
-      quickPreviewShell: document.getElementById("quickPreviewShell"),
+      quickSuggestionPanel: document.getElementById("quickSuggestionPanel"),
+      quickSuggestionTitle: document.getElementById("quickSuggestionTitle"),
+      quickSuggestionCopy: document.getElementById("quickSuggestionCopy"),
+      quickSuggestionArea: document.getElementById("quickSuggestionArea"),
+      quickSuggestionConfidence: document.getElementById("quickSuggestionConfidence"),
+      quickSuggestionReasons: document.getElementById("quickSuggestionReasons"),
+      acceptQuickRoomButton: document.getElementById("acceptQuickRoomButton"),
+      editQuickRoomButton: document.getElementById("editQuickRoomButton"),
+      discardQuickRoomButton: document.getElementById("discardQuickRoomButton"),
       quickPreviewCanvas: document.getElementById("quickPreviewCanvas"),
-      quickViewRow: document.getElementById("quickViewRow"),
-      quickViewButtons: Array.from(document.querySelectorAll("[data-quick-view]")),
       quickImageLoadedLabel: document.getElementById("quickImageLoadedLabel"),
       quickScaleStatusLabel: document.getElementById("quickScaleStatusLabel"),
       quickDetectionStatusLabel: document.getElementById("quickDetectionStatusLabel"),
@@ -2127,14 +2277,29 @@
       quickThresholdSlider: document.getElementById("quickThresholdSlider"),
       quickNoiseSlider: document.getElementById("quickNoiseSlider"),
       scaleModal: document.getElementById("scaleModal"),
+      scaleModalTitle: document.getElementById("scaleModalTitle"),
+      scaleModalHelp: document.getElementById("scaleModalHelp"),
       scaleDistanceInput: document.getElementById("scaleDistanceInput"),
       saveScaleButton: document.getElementById("saveScaleButton"),
       cancelScaleButton: document.getElementById("cancelScaleButton"),
       selectedAreaTotal: document.getElementById("selectedAreaTotal"),
       roomsCountText: document.getElementById("roomsCountText"),
       scaleReadout: document.getElementById("scaleReadout"),
+      scaleStatusLabel: document.getElementById("scaleStatusLabel"),
+      scaleKnownDistance: document.getElementById("scaleKnownDistance"),
+      scalePixelDistance: document.getElementById("scalePixelDistance"),
+      scalePixelsPerMetre: document.getElementById("scalePixelsPerMetre"),
+      scaleMetresPerPixel: document.getElementById("scaleMetresPerPixel"),
+      scaleQualityMessage: document.getElementById("scaleQualityMessage"),
       flooringCount: document.getElementById("flooringCount"),
       excludedCount: document.getElementById("excludedCount"),
+      suggestedAreasCount: document.getElementById("suggestedAreasCount"),
+      suggestedIncludedCount: document.getElementById("suggestedIncludedCount"),
+      suggestedConfidenceSummary: document.getElementById("suggestedConfidenceSummary"),
+      scaleWarningText: document.getElementById("scaleWarningText"),
+      tracePointCount: document.getElementById("tracePointCount"),
+      traceShapeStatus: document.getElementById("traceShapeStatus"),
+      traceValidationMessage: document.getElementById("traceValidationMessage"),
       measurementConfidenceTag: document.getElementById("measurementConfidenceTag"),
       measurementConfidenceText: document.getElementById("measurementConfidenceText"),
       confidenceChecklist: document.getElementById("confidenceChecklist"),
@@ -2161,10 +2326,28 @@
       });
     }
 
+    function sanitiseRoomForQuote(room) {
+      return {
+        label: room && (room.label || room.name) || "Room",
+        name: room && (room.name || room.label) || "Room",
+        areaM2: roundTo(Number(room && room.areaM2) || 0, 2),
+        included: !!(room && room.includeInQuote),
+        includeInQuote: !!(room && room.includeInQuote),
+        source: room && room.source || "manual_trace"
+      };
+    }
+
     function saveQuoteHandoff(realArea, rooms, source) {
+      const measurementMode = source === "suggest_all_mode"
+        ? "suggest_all"
+        : source === "quick_room_mode"
+          ? "quick_room"
+          : "manual_trace";
       const payload = {
         realArea: Math.max(0, Number(realArea) || 0),
-        rooms: Array.isArray(rooms) ? rooms : [],
+        rooms: (Array.isArray(rooms) ? rooms : []).map(sanitiseRoomForQuote),
+        measurementSource: "floorplan",
+        measurementMode: measurementMode,
         source: source || "trace_room_mode",
         savedAt: new Date().toISOString()
       };
@@ -2214,6 +2397,12 @@
       scalePoints: [],
       pendingScaleDistancePx: 0,
       pixelsPerMetre: 0,
+      scaleStatus: "not_set",
+      scaleWarnings: [],
+      scaleVerified: false,
+      scaleModalMode: "set",
+      lastScaleDistanceMeters: 0,
+      lastScaleDistancePx: 0,
       tracePoints: [],
       rooms: [],
       roomCounter: 1,
@@ -2234,9 +2423,10 @@
       processedCanvas: null,
       detectedRegions: [],
       suggestedRooms: [],
+      activeSuggestion: null,
+      pendingMergeRoomId: "",
       selectedRoomIds: new Set(),
       excludedRegions: [],
-      debugMode: false,
       detectionStatus: "Not started",
       currentView: "original",
       grayscaleCanvas: null,
@@ -2271,8 +2461,9 @@
     }
 
     function calculateQuickSelectedTotalArea() {
-      return quickRoomState.suggestedRooms.reduce(function (total, room) {
-        return room.included ? total + (room.areaM2 || 0) : total;
+      return state.rooms.reduce(function (total, room) {
+        const isQuickRoom = room && room.source === "quick_room";
+        return isQuickRoom && room.includeInQuote ? total + (room.areaM2 || 0) : total;
       }, 0);
     }
 
@@ -2343,11 +2534,78 @@
       setUploadFlowStep(dom.uploadFlowRooms, hasRooms ? "complete" : hasScale ? "active" : "");
     }
 
+    function getConfidenceCustomerLabel(level) {
+      if (QUICK_ROOM && typeof QUICK_ROOM.getCustomerConfidenceLabel === "function") {
+        return QUICK_ROOM.getCustomerConfidenceLabel(level);
+      }
+      if (level === "High") {
+        return "Looks clean";
+      }
+      if (level === "Medium") {
+        return "Review suggested boundary";
+      }
+      return "Manual trace recommended";
+    }
+
+    function getScaleStatusText() {
+      if (!state.pixelsPerMetre) {
+        return "Not set";
+      }
+      if (state.scaleStatus === "verified") {
+        return "Verified";
+      }
+      if (state.scaleStatus === "needs_review") {
+        return "Needs review";
+      }
+      if (state.scaleStatus === "verification_recommended") {
+        return "Set, verification recommended";
+      }
+      return "Set";
+    }
+
+    function hasScaleQualityIssue() {
+      return state.scaleStatus === "needs_review" || state.scaleStatus === "verification_recommended" || (Array.isArray(state.scaleWarnings) && state.scaleWarnings.length > 0);
+    }
+
+    function hasUnusualIncludedRoom(includedRooms) {
+      return includedRooms.some(function (room) {
+        return Number(room.areaM2 || 0) < 1 || Number(room.areaM2 || 0) > 150;
+      });
+    }
+
+    function getSuggestedAreaStats() {
+      const suggestedRooms = state.rooms.filter(function (room) {
+        return room.source === "quick_room" && room.origin === "suggest_all";
+      });
+      const includedSuggestedRooms = suggestedRooms.filter(function (room) {
+        return room.includeInQuote;
+      });
+      const counts = suggestedRooms.reduce(function (summary, room) {
+        const level = room.confidence || "Low";
+        summary[level] = (summary[level] || 0) + 1;
+        return summary;
+      }, { High: 0, Medium: 0, Low: 0 });
+      return {
+        total: suggestedRooms.length,
+        included: includedSuggestedRooms.length,
+        high: counts.High || 0,
+        medium: counts.Medium || 0,
+        low: counts.Low || 0
+      };
+    }
+
     function getMeasurementConfidence() {
       const hasPlan = !!state.image;
       const hasScale = !!state.pixelsPerMetre;
       const includedRooms = state.rooms.filter(function (room) {
         return room.includeInQuote;
+      });
+      const unusualIncludedRoom = hasUnusualIncludedRoom(includedRooms);
+      const hasLowIncludedRoom = includedRooms.some(function (room) {
+        return room.source === "quick_room" && room.confidence === "Low";
+      });
+      const hasMediumIncludedRoom = includedRooms.some(function (room) {
+        return room.source === "quick_room" && room.confidence === "Medium";
       });
       const selectedArea = calculateSelectedTotalArea();
       const checklist = [
@@ -2359,7 +2617,7 @@
         {
           title: "Scale",
           complete: hasScale,
-          text: hasScale ? "Scale is set from a known distance." : "Set scale from a known wall length."
+          text: hasScale ? "Scale status: " + getScaleStatusText() + "." : "Set scale from a known wall length."
         },
         {
           title: "Rooms",
@@ -2376,26 +2634,44 @@
         return item.complete;
       }).length;
 
-      if (completeCount === checklist.length && includedRooms.length >= 2) {
+      if (hasPlan && hasScale && selectedArea > 0 && (hasScaleQualityIssue() || unusualIncludedRoom)) {
         return {
-          level: "High",
-          className: "good",
-          text: "Good measurement confidence. Scale is set and multiple included rooms are traced. Final quote still depends on site confirmation.",
+          level: "Low",
+          className: "warn",
+          text: "Needs review. Check the scale and any unusual room sizes before using this area.",
+          checklist: checklist
+        };
+      }
+      if (completeCount === checklist.length && includedRooms.length >= 1) {
+        if (state.scaleStatus === "verified" && !hasMediumIncludedRoom && !hasLowIncludedRoom) {
+          return {
+            level: "High",
+            className: "good",
+            text: "Measured confidence is high. Scale has been verified and rooms are traced.",
+            checklist: checklist
+          };
+        }
+      }
+      if (hasPlan && hasScale && selectedArea > 0 && !hasLowIncludedRoom) {
+        return {
+          level: "Medium",
+          className: "warn",
+          text: "Measured confidence is medium. Scale is set and rooms are traced, but verification is still recommended.",
           checklist: checklist
         };
       }
       if (hasPlan && hasScale && selectedArea > 0) {
         return {
-          level: "Medium",
+          level: "Low",
           className: "warn",
-          text: "Usable measurement confidence. Review room labels and included rooms before sending the area into your quote.",
+          text: "Measured confidence is low. Review boundaries and unusual room sizes before using this area.",
           checklist: checklist
         };
       }
       return {
         level: "Low",
         className: "warn",
-        text: "Low measurement confidence. Upload a plan, set scale and trace at least one included room before using the area in quote.",
+        text: "Measured confidence is low. Upload a plan, set scale and trace at least one included room.",
         checklist: checklist
       };
     }
@@ -2419,6 +2695,86 @@
     function renderMeasurementGuidance() {
       renderUploadFlow();
       renderMeasurementConfidence();
+    }
+
+    function renderScaleDetails() {
+      const statusText = getScaleStatusText();
+      const warnings = Array.isArray(state.scaleWarnings) ? state.scaleWarnings : [];
+      if (dom.scaleStatusLabel) {
+        dom.scaleStatusLabel.textContent = statusText;
+      }
+      if (dom.scaleKnownDistance) {
+        dom.scaleKnownDistance.textContent = state.lastScaleDistanceMeters
+          ? roundTo(state.lastScaleDistanceMeters, 2) + " m"
+          : "-";
+      }
+      if (dom.scalePixelDistance) {
+        dom.scalePixelDistance.textContent = state.lastScaleDistancePx
+          ? roundTo(state.lastScaleDistancePx, 1) + " px"
+          : "-";
+      }
+      if (dom.scalePixelsPerMetre) {
+        dom.scalePixelsPerMetre.textContent = state.pixelsPerMetre
+          ? roundTo(state.pixelsPerMetre, 2) + " px/m"
+          : "-";
+      }
+      if (dom.scaleMetresPerPixel) {
+        dom.scaleMetresPerPixel.textContent = state.pixelsPerMetre
+          ? roundTo(1 / state.pixelsPerMetre, 4) + " m/px"
+          : "-";
+      }
+      if (dom.scaleQualityMessage) {
+        dom.scaleQualityMessage.textContent = warnings.length
+          ? warnings.join(" ")
+          : state.pixelsPerMetre
+            ? "Scale is set. Verify with another wall when possible for higher confidence."
+            : "Set scale before tracing rooms.";
+      }
+      if (dom.scaleWarningText) {
+        dom.scaleWarningText.textContent = warnings.length ? warnings.join(" ") : "";
+      }
+    }
+
+    function renderSuggestedAreaSummary() {
+      if (!dom.suggestedAreasCount || !dom.suggestedIncludedCount || !dom.suggestedConfidenceSummary) {
+        return;
+      }
+      const stats = getSuggestedAreaStats();
+      dom.suggestedAreasCount.textContent = String(stats.total);
+      dom.suggestedIncludedCount.textContent = String(stats.included);
+      if (!stats.total) {
+        dom.suggestedConfidenceSummary.textContent = "No suggested areas yet.";
+        return;
+      }
+      dom.suggestedConfidenceSummary.textContent = [
+        getConfidenceCustomerLabel("High") + ": " + stats.high,
+        getConfidenceCustomerLabel("Medium") + ": " + stats.medium,
+        getConfidenceCustomerLabel("Low") + ": " + stats.low
+      ].join(" · ");
+    }
+
+    function renderTraceDetails() {
+      if (dom.tracePointCount) {
+        dom.tracePointCount.textContent = String(state.tracePoints.length);
+      }
+      if (dom.traceShapeStatus) {
+        dom.traceShapeStatus.textContent = state.tracePoints.length >= 3
+          ? "Ready to finish"
+          : state.tracePoints.length > 0
+            ? "Add more points"
+            : "Open";
+      }
+      if (dom.traceValidationMessage) {
+        if (!state.pixelsPerMetre) {
+          dom.traceValidationMessage.textContent = "Set scale before tracing.";
+        } else if (state.activeTool === "trace" && state.tracePoints.length > 0 && state.tracePoints.length < 3) {
+          dom.traceValidationMessage.textContent = "Add at least three points before finishing a room.";
+        } else if (state.activeTool === "trace" && state.tracePoints.length >= 3) {
+          dom.traceValidationMessage.textContent = "Finish room when the outline follows the flooring area.";
+        } else {
+          dom.traceValidationMessage.textContent = "";
+        }
+      }
     }
 
     function clearStoredFloorplanImageState(options) {
@@ -2477,6 +2833,11 @@
             roomCounter: draft.roomCounter || (draft.rooms.length + 1),
             selectedRoomId: draft.selectedRoomId || "",
             pixelsPerMetre: Number(draft.pixelsPerMetre || 0),
+            scaleStatus: draft.scaleStatus || "",
+            scaleWarnings: Array.isArray(draft.scaleWarnings) ? draft.scaleWarnings : [],
+            scaleVerified: !!draft.scaleVerified,
+            lastScaleDistanceMeters: Number(draft.lastScaleDistanceMeters || 0),
+            lastScaleDistancePx: Number(draft.lastScaleDistancePx || 0),
             fileName: draft.fileName || "",
             canvasWidth: Number(draft.canvasWidth || DEFAULT_CANVAS_WIDTH),
             canvasHeight: Number(draft.canvasHeight || DEFAULT_CANVAS_HEIGHT),
@@ -2515,6 +2876,11 @@
         sessionStorage.setItem(FLOORPLAN_DRAFT_KEY, JSON.stringify({
           fileName: state.fileName,
           pixelsPerMetre: state.pixelsPerMetre,
+          scaleStatus: state.scaleStatus,
+          scaleWarnings: state.scaleWarnings,
+          scaleVerified: state.scaleVerified,
+          lastScaleDistanceMeters: state.lastScaleDistanceMeters,
+          lastScaleDistancePx: state.lastScaleDistancePx,
           rooms: state.rooms,
           roomCounter: state.roomCounter,
           selectedRoomId: state.selectedRoomId,
@@ -2541,6 +2907,7 @@
         localStorage.removeItem(FLOORPLAN_CONFIRMED_AREA_KEY);
         localStorage.removeItem(FLOORPLAN_ROOMS_KEY);
         localStorage.removeItem(FLOORPLAN_SOURCE_KEY);
+        localStorage.removeItem(FLOORPLAN_QUOTE_HANDOFF_KEY);
       } catch (error) {
         // Ignore storage cleanup failures.
       }
@@ -2598,6 +2965,7 @@
             return scalePoint(point, scaleX, scaleY);
           }) : []
         });
+        nextRoom.polygon = nextRoom.points.slice();
         nextRoom.centroid = calculatePolygonCentroid(nextRoom.points);
         return nextRoom;
       });
@@ -2625,6 +2993,13 @@
       state.pixelsPerMetre = 0;
       state.scalePoints = [];
       state.pendingScaleDistancePx = 0;
+      state.scaleStatus = "not_set";
+      state.scaleWarnings = [];
+      state.scaleVerified = false;
+      state.scaleModalMode = "set";
+      state.lastScaleDistanceMeters = 0;
+      state.lastScaleDistancePx = 0;
+      renderScaleDetails();
     }
 
     function clearTraceState() {
@@ -2634,11 +3009,21 @@
       state.suppressNextClick = false;
     }
 
+    function clearQuickSuggestion() {
+      quickRoomState.activeSuggestion = null;
+      quickRoomState.detectionStatus = state.mode === "quick" ? "Click inside a room to suggest an outline" : quickRoomState.detectionStatus;
+      renderQuickSuggestionPanel();
+      renderQuickRoomStatus();
+    }
+
     function clearRoomsTable() {
       state.rooms = [];
       state.roomCounter = 1;
       state.selectedRoomId = "";
       state.selectedTotalArea = 0;
+      quickRoomState.pendingMergeRoomId = "";
+      quickRoomState.suggestedRooms = [];
+      clearQuickSuggestion();
       renderRoomsTable();
     }
 
@@ -2702,6 +3087,11 @@
       state.roomCounter = snapshot.roomCounter || (state.rooms.length + 1);
       state.selectedRoomId = snapshot.selectedRoomId || "";
       state.pixelsPerMetre = Number(snapshot.pixelsPerMetre || 0);
+      state.scaleStatus = snapshot.scaleStatus || (state.pixelsPerMetre ? "verification_recommended" : "not_set");
+      state.scaleWarnings = Array.isArray(snapshot.scaleWarnings) ? snapshot.scaleWarnings.slice() : [];
+      state.scaleVerified = !!snapshot.scaleVerified;
+      state.lastScaleDistanceMeters = Number(snapshot.lastScaleDistanceMeters || 0);
+      state.lastScaleDistancePx = Number(snapshot.lastScaleDistancePx || 0);
       state.fileName = snapshot.fileName || state.fileName || "";
 
       const sessionImageDataUrl = snapshot.source === "draft" ? getSessionFloorplanImage() : "";
@@ -2728,7 +3118,7 @@
       renderRoomsTable();
       setGlobalStatus("Previous measurement loaded. Please re-upload the floor plan to continue editing.");
       setUploadStatus("Please re-upload the floor plan to continue editing.");
-      setCanvasStatus("Measured rooms restored. Re-upload the floor plan to keep tracing or adjusting rooms.", { forceVisible: true });
+      setCanvasStatus("Room measurements were restored, but the plan image could not be reopened. Upload the plan again to continue editing.", { forceVisible: true });
       setTraceStatus({ next: true, text: "Rooms restored. Upload the floor plan again to continue editing." });
       scrollToWorkspace();
     }
@@ -2743,6 +3133,7 @@
 
       resetFloorplanState();
       clearDraftState();
+      clearStoredMeasurementResults();
       clearStoredFloorplanImageState();
       showUploadEmptyState();
       setGlobalStatus("Floor plan cleared. Upload a new plan to start again.");
@@ -2784,6 +3175,31 @@
           edgeIndex: index
         };
       });
+    }
+
+    function getPointBounds(points) {
+      return (Array.isArray(points) ? points : []).reduce(function (bounds, point) {
+        return {
+          minX: Math.min(bounds.minX, point.x),
+          minY: Math.min(bounds.minY, point.y),
+          maxX: Math.max(bounds.maxX, point.x),
+          maxY: Math.max(bounds.maxY, point.y)
+        };
+      }, {
+        minX: canvas.width,
+        minY: canvas.height,
+        maxX: 0,
+        maxY: 0
+      });
+    }
+
+    function polygonFromPointBounds(bounds) {
+      return [
+        { x: clamp(bounds.minX, 0, canvas.width), y: clamp(bounds.minY, 0, canvas.height) },
+        { x: clamp(bounds.maxX, 0, canvas.width), y: clamp(bounds.minY, 0, canvas.height) },
+        { x: clamp(bounds.maxX, 0, canvas.width), y: clamp(bounds.maxY, 0, canvas.height) },
+        { x: clamp(bounds.minX, 0, canvas.width), y: clamp(bounds.maxY, 0, canvas.height) }
+      ];
     }
 
     function pointInPolygon(point, polygon) {
@@ -2840,6 +3256,8 @@
     function recalculateRoomGeometry(room) {
       room.areaM2 = roundTo(convertPixelAreaToSquareMeters(calculatePolygonAreaPx(room.points)), 2);
       room.centroid = calculatePolygonCentroid(room.points);
+      room.polygon = room.points.slice();
+      room.included = !!room.includeInQuote;
     }
 
     function selectRoom(roomId) {
@@ -2926,6 +3344,8 @@
     function loadFloorplanImage() {
       quickRoomState.imageLoaded = !!state.image;
       quickRoomState.imageElement = state.image || null;
+      quickRoomState.canvas.width = canvas.width;
+      quickRoomState.canvas.height = canvas.height;
       quickRoomState.scale = state.pixelsPerMetre ? {
         pixelsPerMetre: state.pixelsPerMetre,
         metresPerPixel: 1 / state.pixelsPerMetre
@@ -2939,9 +3359,11 @@
         quickRoomState.cleanedCanvas = null;
         quickRoomState.detectedRegions = [];
         quickRoomState.suggestedRooms = [];
+        quickRoomState.activeSuggestion = null;
         quickRoomState.selectedRoomIds = new Set();
         quickRoomState.detectionStatus = "No plan uploaded";
         renderQuickRoomStatus();
+        renderQuickSuggestionPanel();
         renderQuickPreview();
         return null;
       }
@@ -3056,7 +3478,7 @@
         return;
       }
 
-      quickRoomState.detectionStatus = "Preparing assisted view";
+      quickRoomState.detectionStatus = "Preparing Quick Room Mode";
       renderQuickRoomStatus();
 
       const grayscaleCanvas = convertToGrayscale(baseCanvas);
@@ -3068,56 +3490,383 @@
       quickRoomState.thresholdCanvas = thresholdCanvas;
       quickRoomState.cleanedCanvas = cleanedCanvas;
       quickRoomState.processedCanvas = cleanedCanvas;
-      quickRoomState.detectionStatus = "Image normalised";
+      quickRoomState.detectionStatus = "Quick Room Mode ready";
       renderQuickRoomStatus();
       renderQuickPreview();
     }
 
     function renderQuickRoomStatus() {
       dom.quickImageLoadedLabel.textContent = quickRoomState.imageLoaded ? "Yes" : "No";
-      dom.quickScaleStatusLabel.textContent = quickRoomState.scale ? "Yes" : "No";
+      dom.quickScaleStatusLabel.textContent = quickRoomState.scale ? getScaleStatusText() : "No";
       dom.quickDetectionStatusLabel.textContent = quickRoomState.detectionStatus;
-      dom.quickSuggestedCountLabel.textContent = String(quickRoomState.suggestedRooms.length);
+      dom.quickSuggestedCountLabel.textContent = String(state.rooms.filter(function (room) {
+        return room.source === "quick_room";
+      }).length);
       dom.quickSelectedTotalLabel.textContent = formatArea(calculateQuickSelectedTotalArea());
+    }
+
+    function renderQuickSuggestionPanel() {
+      const suggestion = quickRoomState.activeSuggestion;
+      if (!dom.quickSuggestionPanel) {
+        return;
+      }
+      dom.quickSuggestionPanel.classList.toggle("hidden", !suggestion);
+      if (!suggestion) {
+        return;
+      }
+
+      dom.quickSuggestionPanel.dataset.confidence = suggestion.confidence || "Low";
+      dom.quickSuggestionTitle.textContent = suggestion.confidence === "Low"
+        ? "Suggested outline needs manual review"
+        : "Suggested room outline";
+      dom.quickSuggestionCopy.textContent = suggestion.confidence === "Low"
+        ? "This click may have leaked or picked up plan noise. Use Manual Trace if the outline is not right."
+        : "Review the outline on the plan before adding it to your measured area.";
+      dom.quickSuggestionArea.textContent = formatArea(suggestion.areaM2);
+      dom.quickSuggestionConfidence.textContent = getConfidenceCustomerLabel(suggestion.confidence || "Low");
+      dom.quickSuggestionConfidence.className = "pill " + (suggestion.confidence === "High" ? "good" : "warn");
+      dom.quickSuggestionReasons.innerHTML = (suggestion.confidenceReasons || []).map(function (reason) {
+        return "<li>" + escapeHtml(reason) + "</li>";
+      }).join("");
+      dom.acceptQuickRoomButton.disabled = suggestion.confidence === "Low" || !(suggestion.areaM2 > 0);
+      dom.editQuickRoomButton.disabled = !(suggestion.polygon && suggestion.polygon.length >= 3);
+    }
+
+    function ensureQuickRoomReady() {
+      if (!QUICK_ROOM) {
+        quickRoomState.detectionStatus = "Quick Room Mode is unavailable";
+        renderQuickRoomStatus();
+        return false;
+      }
+      if (!state.image) {
+        quickRoomState.detectionStatus = "Upload a plan first";
+        renderQuickRoomStatus();
+        return false;
+      }
+      if (!state.pixelsPerMetre) {
+        quickRoomState.detectionStatus = "Set scale first";
+        setCanvasStatus("Set scale before using Quick Room Mode.", { forceVisible: true });
+        setTraceStatus({ next: true, text: "Press Step 1. Set scale, then use Quick Room Mode." });
+        renderQuickRoomStatus();
+        return false;
+      }
+      if (!quickRoomState.originalCanvas || quickRoomState.originalCanvas.width !== canvas.width || quickRoomState.originalCanvas.height !== canvas.height) {
+        loadFloorplanImage();
+      }
+      return !!quickRoomState.originalCanvas;
+    }
+
+    function getQuickRoomImageData() {
+      if (!ensureQuickRoomReady()) {
+        return null;
+      }
+      const workingContext = quickRoomState.originalCanvas.getContext("2d");
+      return workingContext.getImageData(0, 0, quickRoomState.originalCanvas.width, quickRoomState.originalCanvas.height);
+    }
+
+    function suggestQuickRoomAtPoint(point) {
+      const imageData = getQuickRoomImageData();
+      if (!imageData) {
+        return;
+      }
+
+      quickRoomState.detectionStatus = "Suggesting room outline";
+      renderQuickRoomStatus();
+      if (window.OperonTracking) {
+        window.OperonTracking.trackEvent("floorplan_quick_room_started", {
+          measurement_mode: "quick_room"
+        });
+      }
+
+      const result = QUICK_ROOM.detectRoomFromImageData(
+        imageData,
+        quickRoomState.originalCanvas.width,
+        quickRoomState.originalCanvas.height,
+        point,
+        {
+          pixelsPerMetre: state.pixelsPerMetre,
+          threshold: quickRoomState.settings.threshold,
+          wallCloseRadius: 2,
+          wallDilateRadius: 1
+        }
+      );
+      const roomLabel = getSelectedRoomLabel();
+      const suggestion = Object.assign({}, result, {
+        id: "quick-suggestion-" + Date.now(),
+        label: roomLabel,
+        name: getNextRoomLabelName(roomLabel),
+        source: "quick_room",
+        included: true,
+        includeInQuote: true,
+        createdAt: new Date().toISOString()
+      });
+
+      quickRoomState.activeSuggestion = suggestion;
+      quickRoomState.detectionStatus = suggestion.confidence === "Low"
+        ? "Low confidence suggestion"
+        : "Suggestion ready";
+      renderCanvas();
+      renderQuickSuggestionPanel();
+      renderQuickRoomStatus();
+      setCanvasStatus(suggestion.confidence === "Low"
+        ? "Quick Room Mode found a low-confidence outline. Use Manual Trace if the preview is not right."
+        : "Quick Room Mode suggested a room outline. Review it before adding the room.");
+    }
+
+    function buildQuickRoomFromSuggestion(suggestion) {
+      const polygon = (suggestion.polygon || []).map(function (point) {
+        return {
+          x: roundTo(point.x, 3),
+          y: roundTo(point.y, 3)
+        };
+      });
+      return {
+        id: "room-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7),
+        source: "quick_room",
+        label: suggestion.label || "Room",
+        name: suggestion.name || getNextRoomLabelName(suggestion.label || "Room"),
+        type: "flooring",
+        polygon: polygon,
+        points: polygon.slice(),
+        areaM2: roundTo(Number(suggestion.areaM2) || 0, 2),
+        included: true,
+        includeInQuote: true,
+        confidence: suggestion.confidence || "Low",
+        confidenceLabel: getConfidenceCustomerLabel(suggestion.confidence || "Low"),
+        confidenceReasons: Array.isArray(suggestion.confidenceReasons) ? suggestion.confidenceReasons.slice() : [],
+        editable: true,
+        centroid: calculatePolygonCentroid(polygon),
+        createdAt: suggestion.createdAt || new Date().toISOString()
+      };
+    }
+
+    function acceptQuickRoom(options) {
+      const suggestion = quickRoomState.activeSuggestion;
+      if (!suggestion || !suggestion.polygon || suggestion.polygon.length < 3 || !(suggestion.areaM2 > 0)) {
+        setCanvasStatus("No usable quick room suggestion is ready yet.", { forceVisible: true });
+        return;
+      }
+      if (suggestion.confidence === "Low" && !(options && options.allowLowConfidence)) {
+        setCanvasStatus("This quick suggestion is low confidence. Use Edit manually or Manual Trace.", { forceVisible: true });
+        return;
+      }
+
+      const room = buildQuickRoomFromSuggestion(suggestion);
+      addMeasuredRoom(room);
+      state.roomCounter += 1;
+      selectRoom(room.id);
+      clearQuickSuggestion();
+      saveDraftState();
+      renderCanvas();
+      renderRoomsTable();
+      setTraceStatus(options && options.edit
+        ? "Quick room added. Drag a corner or edge handle to edit the outline manually."
+        : "Quick room added. Confirm the included rooms before sending the measured area into your quote.");
+      setCanvasStatus("Quick room added: " + formatArea(room.areaM2) + ".");
+      setGlobalStatus("Quick room added: " + formatArea(room.areaM2));
+      if (window.OperonTracking) {
+        window.OperonTracking.trackEvent("floorplan_quick_room_accepted", {
+          measurement_mode: "quick_room",
+          confidence_level: room.confidence || ""
+        });
+        window.OperonTracking.trackFloorplanRoomAdded(room.areaM2, "quick_room");
+      }
+    }
+
+    function editQuickRoomSuggestion() {
+      acceptQuickRoom({ edit: true, allowLowConfidence: true });
+    }
+
+    function discardQuickRoomSuggestion() {
+      clearQuickSuggestion();
+      renderCanvas();
+      setCanvasStatus("Quick room suggestion discarded. Click inside another room or use Manual Trace.");
+    }
+
+    function buildQuickRoomFromCandidate(candidate, index) {
+      const polygon = (candidate.polygon || []).map(function (point) {
+        return {
+          x: roundTo(point.x, 3),
+          y: roundTo(point.y, 3)
+        };
+      });
+      const isHighConfidence = candidate.confidence === "High";
+      return {
+        id: "room-" + Date.now() + "-" + candidate.id + "-" + Math.random().toString(36).slice(2, 5),
+        source: "quick_room",
+        origin: "suggest_all",
+        candidateId: candidate.id,
+        name: candidate.displayName || ("Area " + (index + 1)),
+        label: candidate.label || "Unknown",
+        type: "flooring",
+        polygon: polygon,
+        points: polygon.slice(),
+        areaM2: roundTo(Number(candidate.areaM2) || 0, 2),
+        included: isHighConfidence && candidate.included !== false,
+        includeInQuote: isHighConfidence && candidate.included !== false,
+        confidence: candidate.confidence || "Low",
+        confidenceLabel: candidate.confidenceLabel || getConfidenceCustomerLabel(candidate.confidence || "Low"),
+        confidenceReasons: Array.isArray(candidate.confidenceReasons) ? candidate.confidenceReasons.slice() : [],
+        editable: candidate.editable !== false,
+        centroid: calculatePolygonCentroid(polygon),
+        createdAt: new Date().toISOString()
+      };
+    }
+
+    function suggestAllAreas() {
+      const imageData = getQuickRoomImageData();
+      if (!imageData || !QUICK_ROOM || typeof QUICK_ROOM.detectAllRoomCandidatesFromImageData !== "function") {
+        return;
+      }
+
+      const existingSuggestedRooms = state.rooms.filter(function (room) {
+        return room.source === "quick_room" && room.origin === "suggest_all";
+      });
+      if (existingSuggestedRooms.length) {
+        const confirmed = window.confirm("Replace the current suggested areas with a new set?");
+        if (!confirmed) {
+          return;
+        }
+        state.rooms = state.rooms.filter(function (room) {
+          return !(room.source === "quick_room" && room.origin === "suggest_all");
+        });
+      }
+
+      quickRoomState.activeSuggestion = null;
+      quickRoomState.pendingMergeRoomId = "";
+      quickRoomState.detectionStatus = "Finding suggested areas";
+      if (window.OperonTracking) {
+        window.OperonTracking.trackEvent("floorplan_suggest_all_started", {
+          measurement_mode: "suggest_all"
+        });
+      }
+      renderQuickSuggestionPanel();
+      renderQuickRoomStatus();
+
+      const candidates = QUICK_ROOM.detectAllRoomCandidatesFromImageData(
+        imageData,
+        quickRoomState.originalCanvas.width,
+        quickRoomState.originalCanvas.height,
+        {
+          pixelsPerMetre: state.pixelsPerMetre,
+          threshold: quickRoomState.settings.threshold,
+          wallCloseRadius: 2,
+          minAreaM2: 1,
+          maxAreaM2: 150,
+          maxCandidates: 36
+        }
+      );
+
+      quickRoomState.suggestedRooms = candidates.slice();
+      const candidateRooms = candidates.map(buildQuickRoomFromCandidate);
+      const autoIncludedCount = candidateRooms.filter(function (room) {
+        return room.includeInQuote;
+      }).length;
+      state.rooms = state.rooms.concat(candidateRooms);
+      state.selectedRoomId = candidateRooms.length ? candidateRooms[0].id : "";
+      quickRoomState.detectionStatus = candidateRooms.length
+        ? candidateRooms.length + " suggested area" + (candidateRooms.length === 1 ? "" : "s") + " found"
+        : "No suggested areas found";
+      saveDraftState();
+      renderCanvas();
+      renderRoomsTable();
+      renderQuickRoomStatus();
+      setCanvasStatus(candidateRooms.length
+        ? "Suggested areas added. " + autoIncludedCount + " high-confidence area" + (autoIncludedCount === 1 ? " is" : "s are") + " included by default. Review, include, edit, merge or delete before using the area in quote."
+        : "No clear suggested areas were found. Use Manual Trace for this plan.", { forceVisible: !candidateRooms.length });
+      setTraceStatus({ next: true, text: "Review suggested areas before using them in your quote." });
+      if (window.OperonTracking) {
+        window.OperonTracking.trackEvent("floorplan_suggest_all_completed", {
+          measurement_mode: "suggest_all",
+          confidence_level: autoIncludedCount > 0 ? "high" : "low"
+        });
+      }
+    }
+
+    function mergeQuickRoom(roomId) {
+      const room = state.rooms.find(function (item) {
+        return item.id === roomId;
+      });
+      if (!room || room.source !== "quick_room") {
+        return;
+      }
+
+      if (!quickRoomState.pendingMergeRoomId || quickRoomState.pendingMergeRoomId === roomId) {
+        quickRoomState.pendingMergeRoomId = roomId;
+        selectRoom(roomId);
+        setTraceStatus("Merge started. Press Merge on another suggested area to combine the two outlines.");
+        return;
+      }
+
+      const anchor = state.rooms.find(function (item) {
+        return item.id === quickRoomState.pendingMergeRoomId;
+      });
+      if (!anchor || anchor.source !== "quick_room") {
+        quickRoomState.pendingMergeRoomId = roomId;
+        selectRoom(roomId);
+        setTraceStatus("Merge started. Press Merge on another suggested area to combine the two outlines.");
+        return;
+      }
+
+      const mergedPoints = polygonFromPointBounds(getPointBounds(anchor.points.concat(room.points)));
+      const mergedAreaM2 = roundTo(convertPixelAreaToSquareMeters(calculatePolygonAreaPx(mergedPoints)), 2);
+      const mergedRoom = {
+        id: "room-" + Date.now() + "-merged-" + Math.random().toString(36).slice(2, 6),
+        source: "quick_room",
+        origin: "suggest_all",
+        name: anchor.name + " + " + room.name,
+        label: "Unknown",
+        type: "flooring",
+        polygon: mergedPoints,
+        points: mergedPoints.slice(),
+        areaM2: mergedAreaM2,
+        included: !!(anchor.includeInQuote || room.includeInQuote),
+        includeInQuote: !!(anchor.includeInQuote || room.includeInQuote),
+        confidence: "Medium",
+        confidenceLabel: getConfidenceCustomerLabel("Medium"),
+        confidenceReasons: ["Merged from suggested areas. Review the outline before using it in your quote."],
+        editable: true,
+        centroid: calculatePolygonCentroid(mergedPoints),
+        createdAt: new Date().toISOString()
+      };
+
+      state.rooms = state.rooms.filter(function (item) {
+        return item.id !== anchor.id && item.id !== room.id;
+      });
+      addMeasuredRoom(mergedRoom);
+      quickRoomState.pendingMergeRoomId = "";
+      selectRoom(mergedRoom.id);
+      saveDraftState();
+      renderCanvas();
+      renderRoomsTable();
+      setTraceStatus("Suggested areas merged. Drag handles to refine the merged outline if needed.");
+    }
+
+    function splitQuickRoomManually(roomId) {
+      quickRoomState.pendingMergeRoomId = "";
+      setMode("trace");
+      selectRoom(roomId);
+      setTraceStatus({ next: true, text: "Split manually: adjust or delete this suggested area, then use Manual Trace to draw separate zones." });
+      setCanvasStatus("Manual Trace is ready for splitting or replacing the suggested area.");
     }
 
     function renderQuickPreview() {
       const targetContext = quickRoomState.ctx;
-      const previewCanvas = quickRoomState.currentView === "grayscale"
-        ? quickRoomState.grayscaleCanvas
-        : quickRoomState.currentView === "threshold"
-          ? quickRoomState.thresholdCanvas
-          : quickRoomState.currentView === "cleaned"
-            ? quickRoomState.cleanedCanvas
-            : quickRoomState.originalCanvas;
-
-      dom.quickPreviewShell.classList.toggle("hidden", !quickRoomState.debugMode);
-      dom.quickViewRow.classList.toggle("hidden", !quickRoomState.debugMode);
-      dom.quickViewButtons.forEach(function (button) {
-        button.classList.toggle("active", button.dataset.quickView === quickRoomState.currentView);
-      });
-
       targetContext.clearRect(0, 0, quickRoomState.canvas.width, quickRoomState.canvas.height);
       targetContext.fillStyle = "#f8fafc";
       targetContext.fillRect(0, 0, quickRoomState.canvas.width, quickRoomState.canvas.height);
-
-      if (!quickRoomState.debugMode || !previewCanvas) {
-        return;
-      }
-
-      targetContext.drawImage(previewCanvas, 0, 0, quickRoomState.canvas.width, quickRoomState.canvas.height);
-    }
-
-    function toggleDebugView() {
-      quickRoomState.debugMode = !quickRoomState.debugMode;
-      dom.toggleQuickDebugButton.textContent = quickRoomState.debugMode ? "Hide debug view" : "Show debug view";
-      renderQuickPreview();
     }
 
     function initQuickRoomMode() {
-      quickRoomState.settings.contrast = Number(dom.quickContrastSlider.value) / 100;
-      quickRoomState.settings.threshold = Number(dom.quickThresholdSlider.value);
-      quickRoomState.settings.noisePasses = Number(dom.quickNoiseSlider.value);
+      if (dom.quickContrastSlider) {
+        quickRoomState.settings.contrast = Number(dom.quickContrastSlider.value) / 100;
+      }
+      if (dom.quickThresholdSlider) {
+        quickRoomState.settings.threshold = Number(dom.quickThresholdSlider.value);
+      }
+      if (dom.quickNoiseSlider) {
+        quickRoomState.settings.noisePasses = Number(dom.quickNoiseSlider.value);
+      }
       loadFloorplanImage();
       renderQuickRoomStatus();
       renderQuickPreview();
@@ -3132,7 +3881,7 @@
       context.fillText("Upload a floor plan to begin", 80, 120);
       context.font = "500 18px Inter, sans-serif";
       context.fillStyle = "rgba(102,112,133,0.92)";
-      context.fillText("Set scale, trace rooms, and send the confirmed area into quote.", 80, 154);
+      context.fillText("Set scale, trace rooms, and send measured area into quote.", 80, 154);
     }
 
     function drawImageFit(image) {
@@ -3167,11 +3916,42 @@
       context.stroke();
     }
 
+    function getRoomCanvasVisual(room) {
+      if (room && room.source === "quick_room") {
+        const included = room.includeInQuote !== false;
+        if (room.confidence === "High") {
+          return {
+            fill: included ? "rgba(15, 118, 110, 0.24)" : "rgba(15, 118, 110, 0.09)",
+            stroke: "rgba(15, 118, 110, 0.92)",
+            dashed: !included
+          };
+        }
+        if (room.confidence === "Medium") {
+          return {
+            fill: included ? "rgba(245, 158, 11, 0.22)" : "rgba(245, 158, 11, 0.08)",
+            stroke: "rgba(180, 83, 9, 0.9)",
+            dashed: !included
+          };
+        }
+        return {
+          fill: included ? "rgba(180, 83, 9, 0.18)" : "rgba(180, 83, 9, 0.07)",
+          stroke: "rgba(154, 52, 18, 0.86)",
+          dashed: true
+        };
+      }
+      return roomVisuals[room.type] || roomVisuals.flooring;
+    }
+
     function drawRooms() {
       state.rooms.forEach(function (room) {
-        const visual = roomVisuals[room.type] || roomVisuals.flooring;
+        const visual = getRoomCanvasVisual(room);
         const isSelected = room.id === state.selectedRoomId;
+        context.save();
+        if (visual.dashed) {
+          context.setLineDash([10, 8]);
+        }
         drawPolygon(room.points, visual.fill, visual.stroke, isSelected ? 4 : 3);
+        context.restore();
 
         const centroid = room.centroid;
         if (centroid) {
@@ -3216,6 +3996,43 @@
           });
         }
       });
+    }
+
+    function drawQuickSuggestionPreview() {
+      const suggestion = quickRoomState.activeSuggestion;
+      if (state.mode !== "quick" || !suggestion || !suggestion.polygon || suggestion.polygon.length < 3) {
+        return;
+      }
+
+      const isLowConfidence = suggestion.confidence === "Low";
+      context.save();
+      context.setLineDash(isLowConfidence ? [10, 8] : []);
+      drawPolygon(
+        suggestion.polygon,
+        isLowConfidence ? "rgba(245, 158, 11, 0.16)" : "rgba(31, 111, 139, 0.18)",
+        isLowConfidence ? "rgba(180, 83, 9, 0.95)" : "rgba(31, 111, 139, 0.95)",
+        4
+      );
+      context.setLineDash([]);
+
+      const centroid = calculatePolygonCentroid(suggestion.polygon);
+      if (centroid) {
+        const label = "Suggested " + formatArea(suggestion.areaM2);
+        context.font = "700 14px Inter, sans-serif";
+        const textWidth = context.measureText(label).width;
+        const bubbleWidth = textWidth + 22;
+        const bubbleHeight = 32;
+        context.fillStyle = "rgba(255,255,255,0.96)";
+        context.strokeStyle = "rgba(31,111,139,0.22)";
+        context.lineWidth = 1;
+        context.beginPath();
+        context.roundRect(centroid.x - (bubbleWidth / 2), centroid.y - (bubbleHeight / 2), bubbleWidth, bubbleHeight, 16);
+        context.fill();
+        context.stroke();
+        context.fillStyle = isLowConfidence ? "rgba(146, 64, 14, 0.95)" : "rgba(16,24,40,0.9)";
+        context.fillText(label, centroid.x - (bubbleWidth / 2) + 11, centroid.y + 5);
+      }
+      context.restore();
     }
 
     function drawScaleDraft() {
@@ -3279,6 +4096,7 @@
 
     function renderCanvas() {
       refreshTraceStepUi();
+      renderTraceDetails();
       context.clearRect(0, 0, canvas.width, canvas.height);
       context.fillStyle = "#f8fafc";
       context.fillRect(0, 0, canvas.width, canvas.height);
@@ -3290,6 +4108,7 @@
 
       drawImageFit(state.image);
       drawRooms();
+      drawQuickSuggestionPreview();
       drawScaleDraft();
       drawTraceDraft();
     }
@@ -3353,6 +4172,8 @@
         ? roundTo(state.pixelsPerMetre, 2) + " px/m"
         : "Not set";
       dom.useAreaInQuoteButton.disabled = !(selectedTotalArea > 0);
+      renderScaleDetails();
+      renderSuggestedAreaSummary();
 
       if (!state.rooms.length) {
         dom.roomsTable.innerHTML = "<p class=\"helper\">No rooms saved yet.</p>";
@@ -3362,13 +4183,21 @@
 
       dom.roomsTable.innerHTML = state.rooms.map(function (room) {
         const selectedClass = room.id === state.selectedRoomId ? " style=\"border-color: rgba(31,111,139,0.34); box-shadow: inset 0 0 0 1px rgba(31,111,139,0.12);\"" : "";
+        const isQuickRoom = room.source === "quick_room";
+        const sourceLabel = isQuickRoom && room.origin === "suggest_all" ? "Suggested" : isQuickRoom ? "Quick" : "Manual";
+        const confidenceLabel = room.source === "quick_room"
+          ? "Confidence: " + escapeHtml(getConfidenceCustomerLabel(room.confidence || "Medium"))
+          : "Manual trace";
+        const mergeActive = quickRoomState.pendingMergeRoomId === room.id ? "Merge target" : "Merge";
         return `
           <div class="room-row" data-room-id="${room.id}"${selectedClass}>
             <div class="room-main">
               <input type="text" value="${escapeHtml(room.name)}" data-room-field="name">
               <div class="room-meta">
                 <span>${escapeHtml(room.label || "Room")}</span>
+                <span>${sourceLabel}</span>
                 <span>${escapeHtml(room.type === "flooring" ? "Flooring area" : room.type === "wet" ? "Wet area / exclude" : "Outdoor / exclude")}</span>
+                <span>${confidenceLabel}</span>
                 <strong>${formatArea(room.areaM2)}</strong>
               </div>
             </div>
@@ -3377,6 +4206,9 @@
                 <input type="checkbox" data-room-field="include" ${room.includeInQuote ? "checked" : ""}>
                 <span>Include in quote</span>
               </label>
+              <button class="button-secondary" type="button" data-room-action="edit">Edit</button>
+              ${isQuickRoom ? '<button class="button-secondary" type="button" data-room-action="merge">' + mergeActive + '</button>' : ""}
+              ${isQuickRoom ? '<button class="button-secondary" type="button" data-room-action="split">Split manually</button>' : ""}
               <button class="room-delete" type="button" data-room-action="delete">Delete</button>
             </div>
           </div>
@@ -3387,6 +4219,11 @@
 
     function setMode(mode) {
       state.mode = mode;
+      clearQuickSuggestion();
+      if (mode === "quick") {
+        state.activeTool = "idle";
+        state.tracePoints = [];
+      }
       dom.modeButtons.forEach(function (button) {
         button.classList.toggle("active", button.dataset.mode === mode);
       });
@@ -3397,7 +4234,8 @@
       if (mode === "trace") {
         setGlobalStatus("Set scale first, then trace each flooring room. When you return near the start point, the room closes automatically.");
       } else {
-        setGlobalStatus("Set scale first, then trace each flooring room. When you return near the start point, the room closes automatically.");
+        initQuickRoomMode();
+        setGlobalStatus("Quick Room Mode is ready. Set scale first, then click inside a room and review the suggested outline.");
       }
       renderCanvas();
       renderQuickRoomStatus();
@@ -3409,11 +4247,17 @@
         dom.setScaleButton.textContent = "Step 1. Set scale";
         dom.setScaleButton.disabled = true;
         dom.setScaleButton.classList.add("button-step-active");
+        if (dom.verifyScaleButton) {
+          dom.verifyScaleButton.disabled = true;
+        }
         dom.resetScaleButton.disabled = true;
         dom.startTraceButton.disabled = true;
         dom.startTraceButton.classList.remove("button-step-active");
         dom.undoTracePointButton.disabled = true;
         dom.clearTraceButton.disabled = true;
+        if (dom.finishTraceButton) {
+          dom.finishTraceButton.disabled = true;
+        }
         return;
       }
 
@@ -3424,11 +4268,18 @@
       dom.setScaleButton.textContent = scaleReady ? "Step 1. Scale set" : "Step 1. Set scale";
       dom.setScaleButton.disabled = scaleReady;
       dom.setScaleButton.classList.toggle("button-step-active", !scaleReady || scaleActive);
+      if (dom.verifyScaleButton) {
+        dom.verifyScaleButton.disabled = !scaleReady;
+        dom.verifyScaleButton.classList.toggle("button-step-active", state.activeTool === "verify_scale");
+      }
       dom.resetScaleButton.disabled = !scaleReady;
       dom.startTraceButton.disabled = !scaleReady;
       dom.startTraceButton.classList.toggle("button-step-active", scaleReady && !traceActive);
       dom.undoTracePointButton.disabled = !(traceActive && hasTracePoints);
       dom.clearTraceButton.disabled = !(traceActive && hasTracePoints);
+      if (dom.finishTraceButton) {
+        dom.finishTraceButton.disabled = !(traceActive && state.tracePoints.length >= 3);
+      }
     }
 
     async function handlePlanUpload(file) {
@@ -3522,12 +4373,38 @@
         return;
       }
       state.activeTool = "scale";
+      state.scaleModalMode = "set";
       state.scalePoints = [];
       state.tracePoints = [];
       state.dragTarget = null;
       renderCanvas();
       setTraceStatus({ next: true, text: "Scale mode is on. Click the first point on a known wall." });
       setCanvasStatus("Scale mode is active. Click two points on a known wall.");
+      if (window.OperonTracking) {
+        window.OperonTracking.trackEvent("floorplan_scale_started", {
+          measurement_mode: "manual_scale"
+        });
+      }
+    }
+
+    function startScaleVerificationMode() {
+      if (!state.image) {
+        setCanvasStatus("Upload a floor plan first.");
+        return;
+      }
+      if (!state.pixelsPerMetre) {
+        setCanvasStatus("Set scale before verifying it.", { forceVisible: true });
+        setTraceStatus({ next: true, text: "Set scale first, then verify with another wall if possible." });
+        return;
+      }
+      state.activeTool = "verify_scale";
+      state.scaleModalMode = "verify";
+      state.scalePoints = [];
+      state.tracePoints = [];
+      state.dragTarget = null;
+      renderCanvas();
+      setTraceStatus({ next: true, text: "Verification mode is on. Click two points on another known wall." });
+      setCanvasStatus("Click two points on another known wall to check the scale.");
     }
 
     function handleScalePointClick(point) {
@@ -3540,11 +4417,22 @@
 
       const distancePx = distanceBetweenPoints(state.scalePoints[0], state.scalePoints[1]);
       state.pendingScaleDistancePx = distancePx;
-      openScaleDistanceModal();
+      openScaleDistanceModal(state.scaleModalMode || "set");
       renderCanvas();
     }
 
-    function openScaleDistanceModal() {
+    function openScaleDistanceModal(mode) {
+      state.scaleModalMode = mode || "set";
+      if (dom.scaleModalTitle) {
+        dom.scaleModalTitle.textContent = state.scaleModalMode === "verify"
+          ? "Verify real distance in metres"
+          : "Enter real distance in metres";
+      }
+      if (dom.scaleModalHelp) {
+        dom.scaleModalHelp.textContent = state.scaleModalMode === "verify"
+          ? "Enter the real distance for this second wall. Operon will compare it with the current scale."
+          : "Example: 4.4";
+      }
       dom.scaleModal.classList.add("active");
       dom.scaleDistanceInput.value = "";
       dom.scaleDistanceInput.focus();
@@ -3559,18 +4447,74 @@
         setTraceStatus("Enter a valid wall distance in metres.");
         return;
       }
-      state.pixelsPerMetre = state.pendingScaleDistancePx / distanceMeters;
+      const quality = QUICK_ROOM && typeof QUICK_ROOM.assessScaleQuality === "function"
+        ? QUICK_ROOM.assessScaleQuality(state.pendingScaleDistancePx, distanceMeters)
+        : {
+          status: distanceMeters < 2 || state.pendingScaleDistancePx < 80 ? "verification_recommended" : "set",
+          warnings: [
+            distanceMeters < 2 ? "Use a longer known wall where possible. Short calibration distances can reduce accuracy." : "",
+            state.pendingScaleDistancePx < 80 ? "Calibration points are too close. Choose a longer wall or larger dimension." : ""
+          ].filter(Boolean),
+          pixelsPerMetre: state.pendingScaleDistancePx / distanceMeters
+        };
+
+      if (state.scaleModalMode === "verify" && state.pixelsPerMetre) {
+        const verifiedPixelsPerMetre = quality.pixelsPerMetre || 0;
+        const variance = verifiedPixelsPerMetre > 0
+          ? Math.abs(verifiedPixelsPerMetre - state.pixelsPerMetre) / state.pixelsPerMetre
+          : 1;
+        if (variance <= 0.05) {
+          state.scaleStatus = "verified";
+          state.scaleVerified = true;
+          state.scaleWarnings = [];
+          setTraceStatus({ next: true, text: "Scale verified. Review rooms and include only flooring areas." });
+          setCanvasStatus("Scale verified against another wall.");
+          setGlobalStatus("Scale verified.");
+        } else {
+          state.scaleStatus = "needs_review";
+          state.scaleVerified = false;
+          state.scaleWarnings = ["Scale verification differs by " + roundTo(variance * 100, 1) + "%. Reset scale if the original wall distance was not reliable."];
+          setTraceStatus({ next: true, text: "Scale needs review. Reset scale if the first known distance may be wrong." });
+          setCanvasStatus("Scale verification differed from the current scale. Review before using the area.", { forceVisible: true });
+          setGlobalStatus("Scale needs review.");
+        }
+        state.pendingScaleDistancePx = 0;
+        state.activeTool = "idle";
+        state.scalePoints = [];
+        closeScaleModal();
+        saveDraftState();
+        renderCanvas();
+          renderRoomsTable();
+          initQuickRoomMode();
+          if (window.OperonTracking) {
+            window.OperonTracking.trackEvent("floorplan_scale_verified", {
+              confidence_level: state.scaleStatus === "verified" ? "high" : "low",
+              measurement_mode: "verify_scale"
+            });
+          }
+          return;
+        }
+
+      state.pixelsPerMetre = quality.pixelsPerMetre || (state.pendingScaleDistancePx / distanceMeters);
+      state.scaleStatus = quality.status || "set";
+      state.scaleWarnings = Array.isArray(quality.warnings) ? quality.warnings.slice() : [];
+      state.scaleVerified = false;
+      state.lastScaleDistanceMeters = distanceMeters;
+      state.lastScaleDistancePx = state.pendingScaleDistancePx;
       state.pendingScaleDistancePx = 0;
       state.activeTool = "idle";
       state.scalePoints = [];
+      state.scaleModalMode = "set";
       closeScaleModal();
       saveDraftState();
       renderCanvas();
       renderRoomsTable();
       initQuickRoomMode();
-      setTraceStatus({ next: true, text: "Scale saved. Press Step 2. Trace room to start tracing." });
-      setCanvasStatus("Scale confirmed. Trace around a room, then return near the start point to close it.");
-      setGlobalStatus("Scale set. You can now trace rooms.");
+      setTraceStatus({ next: true, text: state.scaleWarnings.length ? "Scale saved. Verification is recommended before using suggested areas." : "Scale saved. Press Step 2. Trace room to start tracing." });
+      setCanvasStatus(state.scaleWarnings.length
+        ? "Scale saved, but verification is recommended before using suggested areas."
+        : "Scale confirmed. Trace around a room, then return near the start point to close it.");
+      setGlobalStatus(state.scaleWarnings.length ? "Scale set. Verification recommended." : "Scale set. You can now trace rooms.");
       if (window.OperonTracking) {
         window.OperonTracking.trackFloorplanScaleSet(distanceMeters);
       }
@@ -3603,6 +4547,11 @@
       renderCanvas();
       setTraceStatus({ next: true, text: "Trace around the room boundary. Return near the first point to close it." });
       setCanvasStatus("Trace mode is active. Click around the room boundary.");
+      if (window.OperonTracking) {
+        window.OperonTracking.trackEvent("floorplan_manual_trace_started", {
+          measurement_mode: "manual_trace"
+        });
+      }
     }
 
     function shouldAutoClosePolygon(points, newPoint) {
@@ -3626,6 +4575,7 @@
 
       state.tracePoints.push(point);
       renderCanvas();
+      renderTraceDetails();
       if (state.tracePoints.length < 3) {
         setTraceStatus({ next: true, text: "Keep tracing around the room. Return near the first point to close it." });
       } else {
@@ -3646,21 +4596,35 @@
         setTraceStatus("Could not calculate room area. Check the scale and try again.");
         return;
       }
+      if (areaM2 < 1 && !window.confirm("This room is under 1 m². Save it anyway?")) {
+        setTraceStatus("Room not saved. Continue tracing or clear the trace.");
+        return;
+      }
+      if (areaM2 > 150 && !window.confirm("This room is over 150 m². Save it anyway?")) {
+        setTraceStatus("Room not saved. Review the outline before saving.");
+        return;
+      }
 
       const roomLabel = getSelectedRoomLabel();
       const preferredName = dom.traceRoomName.value.trim();
-      const roomName = preferredName || getNextRoomLabelName(roomLabel) || getNextRoomName();
+      const roomName = preferredName || (roomLabel === "Other" ? "Other room" : getNextRoomLabelName(roomLabel)) || getNextRoomName();
       const roomType = "flooring";
 
       addMeasuredRoom({
         id: "room-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7),
+        source: "manual_trace",
         name: roomName,
         label: roomLabel,
         type: roomType,
         areaM2: areaM2,
         points: state.tracePoints.slice(),
+        polygon: state.tracePoints.slice(),
         centroid: calculatePolygonCentroid(state.tracePoints),
-        includeInQuote: getDefaultIncludeForType(roomType)
+        includeInQuote: getDefaultIncludeForType(roomType),
+        included: getDefaultIncludeForType(roomType),
+        confidence: "Manual",
+        confidenceReasons: ["Manual trace confirmed by customer."],
+        createdAt: new Date().toISOString()
       });
 
       state.tracePoints = [];
@@ -3689,11 +4653,13 @@
       }
       state.tracePoints.pop();
       renderCanvas();
+      renderTraceDetails();
     }
 
     function clearTrace() {
       state.tracePoints = [];
       renderCanvas();
+      renderTraceDetails();
       setTraceStatus({ next: true, text: "Trace cleared. Press Step 2. Trace room to start again." });
     }
 
@@ -3714,7 +4680,22 @@
         return;
       }
       try {
-        saveQuoteHandoff(totalArea, state.rooms, "trace_room_mode");
+        const includedRooms = state.rooms.filter(function (room) {
+          return room.includeInQuote;
+        });
+        const hasSuggestedAreas = includedRooms.some(function (room) {
+          return room.source === "quick_room" && room.origin === "suggest_all";
+        });
+        const hasQuickRoom = includedRooms.some(function (room) {
+          return room.source === "quick_room";
+        });
+        if (hasSuggestedAreas) {
+          const confirmed = window.confirm("Use selected measured area in quote? Only included rooms will be sent, and final site details may still be confirmed before installation.");
+          if (!confirmed) {
+            return;
+          }
+        }
+        saveQuoteHandoff(totalArea, state.rooms, hasSuggestedAreas ? "suggest_all_mode" : hasQuickRoom ? "quick_room_mode" : "trace_room_mode");
       } catch (error) {
         setGlobalStatus("Area could not be saved for quote.");
         return;
@@ -3870,6 +4851,11 @@
         return;
       }
 
+      if (state.activeTool === "verify_scale") {
+        handleScalePointClick(point);
+        return;
+      }
+
       if (state.activeTool === "trace") {
         handleTracePointClick(point);
         return;
@@ -3878,6 +4864,11 @@
       if (!state.pixelsPerMetre) {
         setCanvasStatus("Press Set scale first to begin measuring.");
         setTraceStatus({ next: true, text: "Start with Step 1. Press Set scale, then click two points on the plan." });
+        return;
+      }
+
+      if (state.mode === "quick") {
+        suggestQuickRoomAtPoint(point);
         return;
       }
 
@@ -3902,6 +4893,13 @@
         room.name = event.target.value.trim() || room.name;
       } else if (field === "include") {
         room.includeInQuote = !!event.target.checked;
+        room.included = room.includeInQuote;
+        if (window.OperonTracking) {
+          window.OperonTracking.trackEvent(room.includeInQuote ? "floorplan_room_included" : "floorplan_room_excluded", {
+            measurement_mode: room.source || "manual_trace",
+            confidence_level: room.confidence || ""
+          });
+        }
       }
 
       selectRoom(roomId);
@@ -3933,6 +4931,22 @@
         return;
       }
 
+      if (event.target.dataset.roomAction === "edit") {
+        selectRoom(roomId);
+        setTraceStatus("Saved room selected. Drag a corner or edge handle to adjust it.");
+        return;
+      }
+
+      if (event.target.dataset.roomAction === "merge") {
+        mergeQuickRoom(roomId);
+        return;
+      }
+
+      if (event.target.dataset.roomAction === "split") {
+        splitQuickRoomManually(roomId);
+        return;
+      }
+
       selectRoom(roomId);
       setTraceStatus("Saved room selected. Drag a corner or edge handle to line it up with the walls.");
     }
@@ -3941,6 +4955,9 @@
       if (window.OperonTracking) {
         window.OperonTracking.trackFloorplanOpened();
       }
+      const params = new URLSearchParams(window.location.search);
+      const devFloorplanEnabled = params.get("devFloorplan") === "1" || params.get("floorplanDev") === "1";
+      document.body.classList.toggle("floorplan-dev-mode", devFloorplanEnabled);
       setQuoteReturnLinks();
       refreshWorkspaceMode();
       clearStoredFloorplanImageState({ preserveSessionImage: true });
@@ -3986,13 +5003,20 @@
       });
 
       dom.setScaleButton.addEventListener("click", startScaleMode);
+      if (dom.verifyScaleButton) {
+        dom.verifyScaleButton.addEventListener("click", startScaleVerificationMode);
+      }
       dom.resetScaleButton.addEventListener("click", resetScale);
       dom.startTraceButton.addEventListener("click", startTraceMode);
       dom.undoTracePointButton.addEventListener("click", undoTracePoint);
       dom.clearTraceButton.addEventListener("click", clearTrace);
+      if (dom.finishTraceButton) {
+        dom.finishTraceButton.addEventListener("click", closeAndSavePolygon);
+      }
       dom.quickModeInfoButton.addEventListener("click", function () {
         setMode("trace");
       });
+      dom.suggestAllAreasButton.addEventListener("click", suggestAllAreas);
       dom.prepareQuickModeButton.addEventListener("click", function () {
         if (!state.image) {
           quickRoomState.detectionStatus = "Upload a plan first";
@@ -4001,18 +5025,31 @@
         }
         normaliseImage();
       });
-      dom.toggleQuickDebugButton.addEventListener("click", toggleDebugView);
-      dom.quickViewButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-          quickRoomState.currentView = button.dataset.quickView || "original";
-          renderQuickPreview();
+      if (dom.acceptQuickRoomButton) {
+        dom.acceptQuickRoomButton.addEventListener("click", function () {
+          acceptQuickRoom();
         });
-      });
+      }
+      if (dom.editQuickRoomButton) {
+        dom.editQuickRoomButton.addEventListener("click", editQuickRoomSuggestion);
+      }
+      if (dom.discardQuickRoomButton) {
+        dom.discardQuickRoomButton.addEventListener("click", discardQuickRoomSuggestion);
+      }
       [dom.quickContrastSlider, dom.quickThresholdSlider, dom.quickNoiseSlider].forEach(function (input) {
+        if (!input) {
+          return;
+        }
         input.addEventListener("input", function () {
-          quickRoomState.settings.contrast = Number(dom.quickContrastSlider.value) / 100;
-          quickRoomState.settings.threshold = Number(dom.quickThresholdSlider.value);
-          quickRoomState.settings.noisePasses = Number(dom.quickNoiseSlider.value);
+          if (dom.quickContrastSlider) {
+            quickRoomState.settings.contrast = Number(dom.quickContrastSlider.value) / 100;
+          }
+          if (dom.quickThresholdSlider) {
+            quickRoomState.settings.threshold = Number(dom.quickThresholdSlider.value);
+          }
+          if (dom.quickNoiseSlider) {
+            quickRoomState.settings.noisePasses = Number(dom.quickNoiseSlider.value);
+          }
           if (quickRoomState.imageLoaded) {
             normaliseImage();
           } else {
@@ -4029,6 +5066,7 @@
         closeScaleModal();
         state.scalePoints = [];
         state.pendingScaleDistancePx = 0;
+        state.scaleModalMode = "set";
         state.activeTool = "idle";
         renderCanvas();
         setTraceStatus("Scale cancelled. Click Set scale to try again.");

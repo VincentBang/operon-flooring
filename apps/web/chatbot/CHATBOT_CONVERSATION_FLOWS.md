@@ -27,16 +27,18 @@ Route:
 ## Customer With Existing Quote
 
 Answer:
-Use Quote Advisor. It checks scope clarity, not whether another quote is good or bad. The useful read is product, area, installation, removal, disposal, preparation, trims, and site conditions.
+Upload the written quote for the strongest review. It checks visible scope clarity and comparison readiness, not whether another quote is good or bad. The useful read is product, area, installation, removal, disposal, preparation, trims, and site conditions.
 
 Follow-up:
-Do you want a quick scope check or a detailed quote review?
+Do you have the written quote ready, or do you need the no-file quick completeness check?
 
 Route:
 `quote-review.html`.
 
 Safe phrasing:
 - "I can help you check what the quote includes."
+- "Upload the written quote for stronger feedback."
+- "Use the quick quote completeness check if you do not have the file ready."
 - "The useful question is whether both quotes cover the same scope."
 - "Price only makes sense after product, area, preparation, trims, stairs, disposal and site conditions are clear."
 
@@ -49,10 +51,58 @@ Avoid:
 ## Customer Asking What To Check In A Flooring Quote
 
 Answer:
-Start with scope, not the total alone. A clear quote should show product, area, installation, removal or disposal, preparation, trims, stairs, access and what still needs confirmation.
+Start with scope, not the total alone. A clear quote should show product, area, installation, removal or disposal, preparation, trims, stairs, site details and what still needs confirmation.
 
 Follow-up:
 Do you already have a written quote, or are you preparing to request one?
+
+## Scope-First Conversion Triage
+
+Use this when the customer is unsure what to do next, asks broad questions, or mixes product, area, and quote concerns in one message.
+
+Answer:
+The safest next step is to decide what is unclear first. Product choice, area, existing floor, removal, preparation, stairs, trims, and site access all affect whether the scope is ready to quote.
+
+Follow-up:
+Which one is least clear right now: product, area, existing floor, site details, or an existing quote?
+
+Route:
+`quote.html` when the customer is ready to build an Operon estimate, `quote-review.html` when they already have a written quote or are comparing inclusions, `products.html` when browsing product categories is the next useful step, and `floorplan.html` only when they specifically have a plan to measure from.
+
+Guidance:
+- Start with one scope question, not a full checklist.
+- Keep the user moving toward the smallest useful structured step.
+- If they ask for a price shortcut, explain that the quote page handles estimates after product, area, and scope are entered.
+- If they ask whether a quote is fair, reframe to whether the same work is described clearly.
+- If they are overwhelmed, suggest starting in `quote.html` with the details they know and marking uncertain items for review.
+
+Boundary:
+The chatbot must not turn this triage into a pricing calculator, product selector, or form-filling shortcut. It may collect draft context for conversation only.
+
+## Quote Page Step Awareness
+
+When the chatbot is used on `quote.html`, it may read the active wizard step and give one next action.
+
+Allowed examples:
+
+- "You are on Floor area. Complete area first."
+- "You are on Flooring and area. Choose a flooring direction and add area if you know it."
+- "You are on Main scope. Use Not sure for removal, stairs or floor preparation if they still need review."
+- "You are on Estimate preview. Advanced details are optional."
+- "You are on Contact and submit. Add contact details so Operon can follow up."
+
+Rules:
+
+- read only
+- one action at a time
+- express path helps customers start faster
+- advanced scope can still be added if known
+- uncertain items are reviewed before final pricing
+- no auto-fill
+- no auto-navigation
+- no form submission
+- no pricing calculation
+- no internal field names in customer copy
 
 Route:
 `quote-review.html` if they have a quote, `quote.html` if they need a structured estimate.
@@ -70,7 +120,7 @@ Avoid:
 ## Customer Asking For Detailed Quote Review
 
 Answer:
-Detailed review is stronger when the written quote is available. It captures the source details, scope inclusions, missing items, risk level, and confidence level without calculating price.
+Document-based quote review is strongest when the written quote is available. It captures visible quote details, scope inclusions, missing items, extraction confidence, comparison level and decision confidence without calculating price.
 
 Follow-up:
 Do you have the quote file or would you rather enter the scope manually?
@@ -80,9 +130,35 @@ Route:
 
 Detailed review handoff:
 - If they have a PDF, photo, email or screenshot, route to `quote-review.html`.
-- If they do not have the file, offer quick scope check on the same page.
+- If they do not have the file, offer the quick quote completeness check on the same page.
 - If they only know the total price, ask for one clarifying detail before routing: product category, area, or what is included.
 - If they ask for a comparison, reframe to scope alignment before price.
+
+Document-mode boundaries:
+- Do not call it final price advice.
+- Do not claim another installer is wrong.
+- Do not say Operon is cheaper.
+- Do not show likely product match below the threshold.
+- If the uploaded quote only says "Hybrid 7mm", say product match is not confirmed because brand, range, colour and full specification are not shown.
+
+## Customer Using No-File Quick Check
+
+Answer:
+Use the quick quote completeness check when you do not have the written quote ready. It is based only on what you enter or tick, so it can show missing scope questions but it is not a full document review.
+
+Follow-up:
+Do you know the flooring type, area, total, or what is listed as included?
+
+Route:
+`quote-review.html`.
+
+Quick-mode boundaries:
+- Do not say the document was reviewed.
+- Do not judge price fairness or compare total price.
+- Do not show document extraction labels.
+- Do not show product match.
+- Do not show an Operon comparable estimate.
+- Use "scope completeness" and "comparison readiness" language.
 
 ## Customer Asking What Quote Advisor Does
 
@@ -114,12 +190,32 @@ Follow-up:
 Do you have a floor plan available?
 
 Route:
-`quote.html`, with floor plan kept as measurement context inside the quote flow.
+`quote.html` for general area uncertainty. Use `floorplan.html` only when the user specifically has a floor plan or asks to measure from a plan.
 
 If the user is stuck:
-- If they have a floor plan, route to `quote.html` and mention floor plan measurement as the area option.
+- If they have a floor plan, route to `floorplan.html` for measurement help.
 - If they do not have a floor plan, ask whether they know rough room dimensions.
 - If they only know the number of rooms, say that is enough to start thinking about scope but the quote still needs area.
+
+## Customer Wants Area Calculated From A Floor Plan
+
+Answer:
+I cannot calculate the area inside chat. If you have a floor plan, use the floor plan measurement tool so the measured area can be reviewed in the right place before it is used in a quote.
+
+Follow-up:
+Do you have a plan image or PDF ready to measure from?
+
+Route:
+`floorplan.html`.
+
+Guidance:
+- Explain that floor plan help is measurement guidance only.
+- Keep wastage, product allowance, labour, and pricing out of the chat answer.
+- If the customer does not have a plan, route back to `quote.html` and suggest starting with rough area or room-by-room measurements.
+- If the customer asks the chatbot to estimate from room names, say the quote still needs an area and guide them to the quote flow.
+
+Boundary:
+The chatbot must not calculate square metres, apply wastage, infer chargeable area, or convert measurement into a price.
 
 ## Customer Asking Hybrid vs Laminate
 
@@ -210,6 +306,26 @@ Route:
 
 Boundary:
 The chatbot may identify missing detail. It must not calculate stair pricing, site adjustments, rates or totals.
+
+## Customer Reading Quote Advisor Results
+
+Answer:
+The result should be explained as a scope completeness and comparison readiness check, not a price verdict. Use the visible review result to identify one clear item, one unclear item, or one question to ask.
+
+Follow-up:
+Which unclear item do you want to confirm first?
+
+Route:
+`quote.html?from=quote-review` when the customer wants a structured Operon estimate, or stay on `quote-review.html` if they are still reading the review.
+
+Guidance:
+- If a result is visible, reference the customer-facing status and one missing or unclear scope item.
+- If extracted quote details are visible, explain that the system understood the quote and is checking whether the scope is complete enough to compare.
+- If questions are visible, suggest one direct question to ask the contractor.
+- If no result is visible, guide the customer to upload or enter the quote first.
+
+Boundary:
+The chatbot must not calculate price, judge the business shown on document, expose internal rates, or say the quote is good or bad. It should keep the decision focused on product, area, included work, missing work, and final site confirmation.
 
 ## Customer Wanting Cheapest Option
 

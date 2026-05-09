@@ -19,13 +19,13 @@
   <meta name="twitter:description" content="Start a flooring quote for hybrid, laminate or engineered timber flooring in Sydney. Choose product, area, extras and request review before final confirmation.">
   <meta name="twitter:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2LEXZJM3Q"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-XXXXXXXXXX');
+    gtag('config', 'G-T2LEXZJM3Q');
   </script>
   <script src="tracking.js"></script>
   <script src="pricingSourceConfig.js"></script>
@@ -107,7 +107,7 @@
       --radius-xl: 26px;
       --radius-lg: 18px;
       --radius-md: 14px;
-      --max-width: 1100px;
+      --max-width: 1280px;
       --font-sans: "Inter", "Segoe UI", BlinkMacSystemFont, -apple-system, sans-serif;
     }
 
@@ -160,7 +160,7 @@
       font-size: 1.02rem;
       line-height: 1.55;
       color: var(--muted);
-      max-width: 60ch;
+      max-width: 820px;
       margin: 0 auto 18px;
     }
 
@@ -201,7 +201,7 @@
     .brand {
       display: inline-flex;
       align-items: center;
-      width: clamp(260px, 26vw, 380px);
+      width: clamp(232px, 22vw, 340px);
       min-height: 52px;
       background: left center / auto 100% no-repeat url("assets/operon-logo-final.png");
       color: transparent;
@@ -226,6 +226,11 @@
       color: var(--muted);
       font-size: 0.95rem;
       font-weight: 600;
+      flex-wrap: nowrap;
+    }
+
+    .nav-links a {
+      white-space: nowrap;
     }
 
     .nav-toggle {
@@ -247,6 +252,26 @@
 
     .header-quote-button {
       min-width: 132px;
+      white-space: nowrap;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-phone {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      color: var(--brand);
+      background: rgba(255, 255, 255, 0.76);
+      font-weight: 800;
       white-space: nowrap;
     }
 
@@ -366,6 +391,21 @@
       box-shadow: none;
     }
 
+    .sticky-cta-actions {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr 0.9fr;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .sticky-cta-actions a,
+    .sticky-cta-actions button {
+      min-height: 48px;
+      width: 100%;
+      border-radius: 14px;
+      white-space: nowrap;
+    }
+
     .hero-grid,
     .layout,
     .grid-2,
@@ -383,7 +423,16 @@
     }
 
     .layout.layout-single {
-      grid-template-columns: minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .layout.layout-single > #quoteForm {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
+
+    .layout.layout-single > .summary-card {
+      display: none !important;
     }
 
     .grid-2 {
@@ -444,7 +493,7 @@
       font-size: clamp(2.15rem, 4vw, 3.1rem);
       font-weight: 800;
       margin-bottom: 12px;
-      max-width: 16ch;
+      max-width: none;
       margin-inline: auto;
     }
 
@@ -488,7 +537,7 @@
     }
 
     .hero-copy {
-      max-width: 640px;
+      max-width: 900px;
       margin: 0 auto;
     }
 
@@ -664,7 +713,7 @@
     }
 
     .form-intro {
-      max-width: 60ch;
+      max-width: 72ch;
     }
 
     .faq-card {
@@ -899,6 +948,59 @@
       padding: 7px 10px;
     }
 
+    .hero-secondary-action {
+      display: block;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .hero-secondary-action a {
+      color: var(--brand);
+      font-weight: 850;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      white-space: nowrap;
+    }
+
+    .quote-build-status {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+      margin: 16px 0;
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      box-shadow: 0 10px 22px rgba(17, 24, 32, 0.04);
+    }
+
+    .quote-build-status-item {
+      min-width: 0;
+      padding: 10px;
+      border-radius: 12px;
+      background: var(--soft);
+    }
+
+    .quote-build-status-item span {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .quote-build-status-item strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.9rem;
+      line-height: 1.25;
+    }
+
     .quote-kickoff {
       margin-top: 20px;
       padding: 18px;
@@ -923,6 +1025,142 @@
       box-shadow: var(--shadow);
       display: grid;
       gap: 12px;
+    }
+
+    .quote-review-optional[hidden] {
+      display: none !important;
+    }
+
+    .quote-step-legacy {
+      display: none !important;
+    }
+
+    .express-step-shell {
+      display: grid;
+      gap: 18px;
+    }
+
+    .express-subsection {
+      display: grid;
+      gap: 14px;
+    }
+
+    .express-subsection h4 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .express-advanced-details {
+      margin-top: 16px;
+      padding: 0;
+      border: 2px solid rgba(181, 110, 82, 0.42);
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(181, 110, 82, 0.11), rgba(255, 255, 255, 0.96));
+      box-shadow: 0 14px 30px rgba(23, 35, 45, 0.07);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .express-advanced-details:hover,
+    .express-advanced-details:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 18px 36px rgba(23, 35, 45, 0.11);
+    }
+
+    .express-advanced-details > summary {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      min-height: 92px;
+      padding: 18px 20px;
+      cursor: pointer;
+      color: var(--text);
+      list-style: none;
+    }
+
+    .express-advanced-details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .advanced-toggle-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .advanced-toggle-title {
+      font-size: 1.12rem;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .advanced-toggle-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--accent);
+      font-size: 0.74rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      box-shadow: inset 0 0 0 1px rgba(181, 110, 82, 0.24);
+    }
+
+    .advanced-toggle-helper {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .advanced-toggle-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      background: var(--brand);
+      color: #ffffff;
+      box-shadow: 0 10px 22px rgba(23, 49, 58, 0.2);
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .advanced-toggle-icon::before {
+      content: "+";
+      font-size: 1.45rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .express-advanced-details:hover .advanced-toggle-icon,
+    .express-advanced-details:focus-within .advanced-toggle-icon {
+      transform: translateX(2px);
+      background: var(--accent);
+    }
+
+    .express-advanced-details[open] .advanced-toggle-icon {
+      transform: rotate(45deg);
+      background: var(--accent);
+    }
+
+    .advanced-group {
+      display: grid;
+      gap: 12px;
+      margin: 0 20px 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .advanced-group h4 {
+      margin: 0;
+      font-size: 0.95rem;
     }
 
     .quote-review-optional h3 {
@@ -1909,10 +2147,25 @@
       align-items: baseline;
       justify-content: space-between;
       gap: 10px;
+      cursor: pointer;
     }
 
     .decision-tier-head strong {
       font-size: 0.92rem;
+    }
+
+    .decision-tier-head span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .decision-tier > summary {
+      list-style: none;
+    }
+
+    .decision-tier > summary::-webkit-details-marker {
+      display: none;
     }
 
     .decision-card {
@@ -2137,7 +2390,7 @@
 
     .footer-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
       gap: 40px;
     }
 
@@ -2171,6 +2424,21 @@
       color: rgba(255, 255, 255, 0.72);
       font-size: 14px;
       line-height: 1.6;
+    }
+
+    .footer-contact-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .footer-contact-list strong {
+      color: #ffffff;
     }
 
     .footer-col ul {
@@ -2340,7 +2608,8 @@
         transform: translate(-50%, -50%) rotate(-45deg);
       }
 
-      .header-quote-button {
+      .header-quote-button,
+      .header-actions {
         display: none;
       }
     }
@@ -2374,6 +2643,10 @@
 
       .room-row {
         grid-template-columns: 1fr;
+      }
+
+      .quote-build-status {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       body {
@@ -2693,7 +2966,8 @@
         align-items: stretch;
       }
 
-      .sticky-cta-button {
+      .sticky-cta-button,
+      .sticky-cta-actions {
         width: 100%;
       }
     }
@@ -2702,6 +2976,10 @@
       .shell,
       .container {
         width: min(var(--max-width), calc(100% - 18px));
+      }
+
+      .quote-build-status {
+        grid-template-columns: 1fr;
       }
 
       .hero-sub,
@@ -2936,7 +3214,10 @@
         <span></span>
         <span></span>
       </button>
-      <a class="button header-quote-button" id="headerQuoteButton" href="#quoteForm">Start quote</a>
+      <div class="header-actions">
+        <a class="header-phone" href="tel:04XXXXXXXX" data-track-cta="click_call_header">Call 04XX XXX XXX</a>
+        <a class="button header-quote-button" id="headerQuoteButton" href="#quoteForm">Start quote</a>
+      </div>
     </div>
   </header>
 
@@ -2946,7 +3227,11 @@
         <strong id="stickyQuoteTitle">Start your flooring quote</strong>
         <span id="stickyQuoteText">Measured, priced, and reviewed before work is confirmed.</span>
         </div>
-        <button class="button sticky-cta-button" id="stickyQuoteButton" type="button">Start quote</button>
+        <div class="sticky-cta-actions">
+          <a class="button-secondary" href="tel:04XXXXXXXX" data-track-cta="click_call_mobile_sticky">Call</a>
+          <button class="button sticky-cta-button" id="stickyQuoteButton" type="button" data-track-cta="click_start_quote_mobile_sticky">Start quote</button>
+          <a class="button-secondary" href="quote-review.html" data-track-cta="click_quote_validation">Check quote</a>
+        </div>
       </div>
   </div>
 
@@ -2955,23 +3240,23 @@
       <div class="container">
         <div class="hero-copy">
           <h1>Start your flooring quote</h1>
-          <p class="hero-sub">2 minutes. Add area, product and project details.</p>
+          <p class="hero-sub">Add product, area and scope details. Approximate information is okay to start.</p>
           <div class="hero-actions">
             <a href="#quoteForm" class="btn-primary">Start 2-minute quote</a>
           </div>
-          <p class="hero-trust">Structured estimate first. Final details confirmed before installation.</p>
+          <p class="hero-secondary-action">
+            Already have a written quote? <a href="quote-review.html" data-track-cta="click_quote_validation">Review existing quote</a>
+          </p>
           <div class="status" id="pageStatus" hidden></div>
         </div>
       </div>
     </section>
 
     <section class="quote-section">
-      <div class="shell layout" id="quoteLayout">
+      <div class="shell layout layout-single" id="quoteLayout">
         <form id="quoteForm" class="section-card" name="quote-request" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
           <input type="hidden" name="form-name" value="quote-request">
-          <p hidden>
-            <label>Do not fill this out if you are human: <input name="bot-field"></label>
-          </p>
+          <input type="text" name="bot-field" tabindex="-1" autocomplete="off" hidden aria-hidden="true">
           <input type="hidden" id="leadCreatedAt" name="created_at" value="">
           <input type="hidden" id="leadStatus" name="lead_status" value="new">
           <input type="hidden" id="leadStage" name="lead_stage" value="unknown">
@@ -2994,14 +3279,14 @@
           <input type="hidden" id="leadQuoteReviewPayload" name="quote_review_payload_json" value="">
           <input type="hidden" id="leadPayloadJson" name="lead_payload_json" value="">
           <h2 class="quote-form-title" style="margin-top: 18px;">Request a flooring quote</h2>
-          <p class="form-intro">Build a practical estimate first, then confirm the final scope before work is booked.</p>
+          <p class="form-intro">Approximate details are okay to start. Final site details are confirmed before installation.</p>
           <div class="advisor-handoff-card" id="quoteAdvisorHandoffCard" aria-live="polite">
-            <strong>Quote Advisor context attached</strong>
-            <p id="quoteAdvisorHandoffText">Your quote review will be saved with this request so the scope can be checked during follow-up.</p>
+            <strong>Quote review context attached</strong>
+            <p id="quoteAdvisorHandoffText">We’ll use this during follow-up to check scope and missing details.</p>
             <div class="advisor-handoff-meta" id="quoteAdvisorHandoffMeta"></div>
           </div>
 
-          <section class="quote-review-optional" id="quoteReview" aria-labelledby="quoteReviewTitle" hidden>
+          <section class="quote-review-optional" id="quoteReview" aria-labelledby="quoteReviewTitle" hidden aria-hidden="true">
             <div class="quote-review-copy">
               <h3 id="quoteReviewTitle">Already have a flooring quote?</h3>
               <p>Use this optional review to check scope, understand what may still need confirming, and avoid missing items before final pricing is locked in.</p>
@@ -3135,17 +3420,15 @@
           </div>
 
           <div class="wizard-progress">
-            <div class="wizard-progress-label" id="quoteStepCounter">Step 1 of 7 · Customer details</div>
-            <div class="wizard-progress-title" id="quoteStepTitle">Customer details</div>
+            <div class="wizard-progress-label" id="quoteStepCounter">Step 1 of 5 · Project basics</div>
+            <div class="wizard-progress-title" id="quoteStepTitle">Project basics</div>
             <div class="wizard-progress-bar" aria-hidden="true"><span></span></div>
             <div class="wizard-step-row" id="quoteStepLabels">
-              <span class="wizard-step-pill">1 Details</span>
-              <span class="wizard-step-pill">2 Property</span>
-              <span class="wizard-step-pill">3 Flooring</span>
-              <span class="wizard-step-pill">4 Area</span>
-              <span class="wizard-step-pill">5 Stairs</span>
-              <span class="wizard-step-pill">6 Extras</span>
-              <span class="wizard-step-pill">7 Summary</span>
+              <span class="wizard-step-pill">1 Basics</span>
+              <span class="wizard-step-pill">2 Flooring &amp; Area</span>
+              <span class="wizard-step-pill">3 Scope</span>
+              <span class="wizard-step-pill">4 Estimate</span>
+              <span class="wizard-step-pill">5 Submit</span>
             </div>
           </div>
 
@@ -3155,13 +3438,40 @@
           </div>
           <p class="wizard-micro-confirmation" id="wizardMicroConfirmation" hidden>Details saved.</p>
 
+          <div class="quote-build-status" id="quoteBuildStatusPanel" aria-live="polite" hidden aria-hidden="true">
+            <div class="quote-build-status-item">
+              <span>Product</span>
+              <strong id="quoteBuildProduct">Pending</strong>
+            </div>
+            <div class="quote-build-status-item">
+              <span>Area</span>
+              <strong id="quoteBuildArea">Pending</strong>
+            </div>
+            <div class="quote-build-status-item">
+              <span>Scope</span>
+              <strong id="quoteBuildScope">Needs review</strong>
+            </div>
+            <div class="quote-build-status-item">
+              <span>Estimate</span>
+              <strong id="quoteBuildEstimate">Pending</strong>
+            </div>
+            <div class="quote-build-status-item">
+              <span>Confidence</span>
+              <strong id="quoteBuildConfidence">Not ready</strong>
+            </div>
+            <div class="quote-build-status-item">
+              <span>Next step</span>
+              <strong id="quoteBuildNextStep">Add product and area</strong>
+            </div>
+          </div>
+
           <section class="step-card quote-step" data-quote-step="0" style="margin-top: 14px;">
             <div class="step-head">
               <div style="display: flex; gap: 12px; align-items: flex-start;">
                 <span class="step-badge">1</span>
                 <div>
-                  <h3>Customer details</h3>
-                  <p class="helper">Basic contact and site location are enough to begin.</p>
+                  <h3>Project basics</h3>
+                  <p class="helper">Suburb and postcode are enough to begin. Add contact details when you are ready to send the quote request for review.</p>
                 </div>
               </div>
             </div>
@@ -3169,10 +3479,12 @@
               <div class="field">
                 <label for="fullName">Full name</label>
                 <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Your name">
+                <p class="helper">Optional until final submission.</p>
               </div>
               <div class="field">
                 <label for="phone">Phone</label>
                 <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="Mobile or best contact number">
+                <p class="helper">Required when you send the quote request.</p>
               </div>
               <div class="field">
                 <label for="email">Email</label>
@@ -3202,8 +3514,8 @@
               <div style="display: flex; gap: 12px; align-items: flex-start;">
                 <span class="step-badge">2</span>
                 <div>
-                  <h3>Property details</h3>
-                  <p class="helper">Access details help us confirm the scope.</p>
+                  <h3>Property and access</h3>
+                  <p class="helper">Access details help us flag anything that may need review before final pricing.</p>
                 </div>
               </div>
             </div>
@@ -3257,8 +3569,8 @@
               <div style="display: flex; gap: 12px; align-items: flex-start;">
                 <span class="step-badge">3</span>
                 <div>
-                  <h3>Job type and product</h3>
-                  <p class="helper">Choose how this job should be priced.</p>
+                  <h3>Flooring direction</h3>
+                  <p class="helper">Choose a flooring type now. Product range and colour can be confirmed later if needed.</p>
                 </div>
               </div>
             </div>
@@ -3284,6 +3596,7 @@
               <input id="selectedColour" name="selectedColour" type="hidden" value="">
               <input id="productSelectionMode" name="productSelectionMode" type="hidden" value="">
               <input id="productChoiceMode" name="productChoiceMode" type="hidden" value="recommend">
+              <input id="flooringCategoryUncertain" name="flooringCategoryUncertain" type="hidden" value="">
             </div>
 
             <div class="product-choice-panel">
@@ -3321,7 +3634,7 @@
                 <strong id="selectedProductHeadline">Recommended starting option</strong>
                 <p id="selectedProductSummary">We’ll use a practical starting range for this estimate. Final product and colour can be confirmed before installation.</p>
                 <div class="selected-product-actions">
-                  <a class="button-quiet" id="browseCategoryLink" href="hybrid-flooring-sydney.html">View hybrid products</a>
+                  <a class="button-quiet" id="browseCategoryLink" href="products.html">View flooring products</a>
                   <button class="button-secondary" id="clearSelectedProductButton" type="button" hidden aria-hidden="true">Use category estimate instead</button>
                 </div>
               </div>
@@ -3410,7 +3723,7 @@
               <div class="field">
                 <label for="confirmedFloorplanArea">Floor plan area (m²)</label>
                 <input id="confirmedFloorplanArea" name="confirmedFloorplanArea" type="number" min="0" step="0.1" placeholder="Enter measured area">
-                <p class="helper">This area comes from the floor plan tool. You can edit it if needed.</p>
+                <p class="helper">This area comes from the floor plan tool. You can edit it if needed. Off-cuts and final pricing are handled later in the quote review.</p>
               </div>
               <div class="action-row">
                 <a class="button-quiet" data-floorplan-link href="floorplan.html">Re-open floor plan tool</a>
@@ -3472,11 +3785,11 @@
                 <span class="tiny">Current measurement source</span>
               </div>
               <div class="metric">
-                <strong id="realAreaMetric">0.0 m²</strong>
+                <strong id="realAreaMetric">Area pending</strong>
                 <span class="tiny">Real flooring area</span>
               </div>
               <div class="metric" id="chargeableAreaMetricCard">
-                <strong id="chargeableAreaMetric">0.0 m²</strong>
+                <strong id="chargeableAreaMetric">Estimate pending</strong>
                 <span class="tiny" id="chargeableAreaMetricLabel">Estimated area including off-cuts</span>
               </div>
             </div>
@@ -3487,26 +3800,31 @@
               <div style="display: flex; gap: 12px; align-items: flex-start;">
                 <span class="step-badge">5</span>
                 <div>
-                  <h3>Stairs</h3>
-                  <p class="helper">We treat stairs as a scope flag so we can keep the estimate fast and confirm the final detail later.</p>
+                  <h3>Stairs or step areas</h3>
+                  <p class="helper">Stairs or step areas can affect labour, trims and nosing details. Add them now if known.</p>
                 </div>
               </div>
             </div>
 
             <div class="decision-card">
-              <strong>Does your project include stairs?</strong>
+              <strong>Does your project include stairs or step areas?</strong>
               <div class="decision-options compact-options" id="stairsChoiceButtons">
-                <button class="decision-option active" type="button" data-stairs-choice="no">No</button>
+                <button class="decision-option" type="button" data-stairs-choice="no">No</button>
                 <button class="decision-option" type="button" data-stairs-choice="yes">Yes</button>
-                <button class="decision-option" type="button" data-stairs-choice="not_sure">Not sure</button>
-              </div>
-              <input id="stairs" name="stairs" type="hidden" value="no">
+                    <button class="decision-option" type="button" data-stairs-choice="not_sure">Not sure</button>
+                  </div>
+              <input id="stairs" name="stairs" type="hidden" value="not_sure">
               <input id="stairsCount" name="stairsCount" type="hidden" value="0">
               <input id="stairsCountRange" name="stairsCountRange" type="hidden" value="">
-              <input id="stairsRequiresReview" name="stairsRequiresReview" type="hidden" value="no">
+              <input id="stairsRequiresReview" name="stairsRequiresReview" type="hidden" value="yes">
               <div class="decision-detail" id="stairsCountDetail" hidden>
-                <strong style="margin-bottom: 8px;">Stair quantities</strong>
-                <p class="helper" style="margin: 0;">Enter what you know. Leave other types as 0.</p>
+                <div class="field">
+                  <label for="stairApproxCount">Approximate number of steps if known</label>
+                  <input id="stairApproxCount" name="stairApproxCount" type="number" inputmode="numeric" min="0" step="1" placeholder="Optional">
+                  <p class="helper">Leave blank if you are not sure. Final stair detail can be confirmed before installation.</p>
+                </div>
+                <details class="field-note stair-advanced-details">
+                  <summary>Add stair details if known</summary>
                 <div class="stair-width-row">
                   <strong style="margin-bottom: 8px;">Do you know the stair width?</strong>
                   <div class="decision-options compact-options two-options" id="stairWidthKnownButtons">
@@ -3564,6 +3882,7 @@
                     <input id="stairTwoSideOpenCount" name="stairTwoSideOpenCount" type="number" inputmode="numeric" min="0" step="1" value="0">
                   </div>
                 </div>
+                </details>
               </div>
               <div class="decision-status" id="stairsStatusMessage">No stairs included in the current scope.</div>
             </div>
@@ -3574,8 +3893,8 @@
               <div style="display: flex; gap: 12px; align-items: flex-start;">
                 <span class="step-badge">6</span>
                 <div>
-                  <h3>Extras and site conditions</h3>
-                  <p class="helper">We include standard scope where required. You can adjust anything here if you already know.</p>
+                  <h3>Main scope and advanced details</h3>
+                  <p class="helper">Choose Not sure if you do not know. We’ll review uncertain items before final pricing.</p>
                 </div>
               </div>
             </div>
@@ -3588,20 +3907,21 @@
                 </ul>
               </div>
 
-              <div class="decision-tier">
-                <div class="decision-tier-head">
+              <details class="decision-tier" open>
+                <summary class="decision-tier-head">
                   <strong>Main scope</strong>
-                </div>
+                  <span id="mainScopeStatus">Needs review</span>
+                </summary>
 
                 <div class="decision-card">
                   <strong>Removal</strong>
                   <div class="decision-options compact-options" id="removalDecisionButtons">
-                    <button class="decision-option active" type="button" data-extra-field="removalDecision" data-extra-choice="no">No</button>
+                    <button class="decision-option" type="button" data-extra-field="removalDecision" data-extra-choice="no">No</button>
                     <button class="decision-option" type="button" data-extra-field="removalDecision" data-extra-choice="yes">Yes</button>
                     <button class="decision-option" type="button" data-extra-field="removalDecision" data-extra-choice="not_sure">Not sure</button>
                   </div>
-                  <input id="removalDecision" name="removalDecision" type="hidden" value="no">
-                  <input id="existingFloorType" name="existingFloorType" type="hidden" value="none">
+                  <input id="removalDecision" name="removalDecision" type="hidden" value="not_sure">
+                  <input id="existingFloorType" name="existingFloorType" type="hidden" value="unsure">
                   <div class="decision-detail" id="removalDetail" hidden>
                     <div class="grid-2">
                       <div class="field">
@@ -3648,11 +3968,11 @@
                 <div class="decision-card">
                   <strong>Skirting or scotia</strong>
                   <div class="decision-options compact-options" id="finishDecisionButtons">
-                    <button class="decision-option active" type="button" data-extra-field="finishDecision" data-extra-choice="no">No</button>
+                    <button class="decision-option" type="button" data-extra-field="finishDecision" data-extra-choice="no">No</button>
                     <button class="decision-option" type="button" data-extra-field="finishDecision" data-extra-choice="yes">Yes</button>
-                    <button class="decision-option" type="button" data-extra-field="finishDecision" data-extra-choice="not_sure">Not sure</button>
+                    <button class="decision-option active" type="button" data-extra-field="finishDecision" data-extra-choice="not_sure">Not sure</button>
                   </div>
-                  <input id="finishDecision" name="finishDecision" type="hidden" value="no">
+                  <input id="finishDecision" name="finishDecision" type="hidden" value="not_sure">
                   <div class="decision-detail" id="finishDetail" hidden>
                     <div class="grid-2">
                       <div class="field">
@@ -3675,21 +3995,22 @@
                   </div>
                   <div class="decision-status" id="finishDecisionStatus" hidden></div>
                 </div>
-              </div>
+              </details>
 
-              <div class="decision-tier">
-                <div class="decision-tier-head">
-                  <strong>Optional</strong>
-                </div>
+              <details class="decision-tier">
+                <summary class="decision-tier-head">
+                  <strong>Site risk and optional details</strong>
+                  <span id="siteRiskStatus">Needs review</span>
+                </summary>
 
                 <div class="decision-card">
                   <strong>Floor preparation</strong>
                   <div class="decision-options compact-options" id="floorPrepDecisionButtons">
-                    <button class="decision-option active" type="button" data-extra-field="floorPrepDecision" data-extra-choice="no">No</button>
+                    <button class="decision-option" type="button" data-extra-field="floorPrepDecision" data-extra-choice="no">No</button>
                     <button class="decision-option" type="button" data-extra-field="floorPrepDecision" data-extra-choice="yes">Yes</button>
                     <button class="decision-option" type="button" data-extra-field="floorPrepDecision" data-extra-choice="not_sure">Not sure</button>
                   </div>
-                  <input id="floorPrepDecision" name="floorPrepDecision" type="hidden" value="no">
+                  <input id="floorPrepDecision" name="floorPrepDecision" type="hidden" value="not_sure">
                   <div class="decision-detail" id="floorPrepDetail" hidden>
                     <div class="grid-2">
                       <div class="field">
@@ -3718,22 +4039,22 @@
                 <div class="decision-card">
                   <strong>Moisture protection</strong>
                   <div class="decision-options compact-options" id="moistureBarrierButtons">
-                    <button class="decision-option active" type="button" data-extra-field="moistureBarrier" data-extra-choice="no">No</button>
+                    <button class="decision-option" type="button" data-extra-field="moistureBarrier" data-extra-choice="no">No</button>
                     <button class="decision-option" type="button" data-extra-field="moistureBarrier" data-extra-choice="yes">Yes</button>
-                    <button class="decision-option" type="button" data-extra-field="moistureBarrier" data-extra-choice="not_sure">Not sure</button>
+                    <button class="decision-option active" type="button" data-extra-field="moistureBarrier" data-extra-choice="not_sure">Not sure</button>
                   </div>
-                  <input id="moistureBarrier" name="moistureBarrier" type="hidden" value="no">
+                  <input id="moistureBarrier" name="moistureBarrier" type="hidden" value="not_sure">
                   <div class="decision-status" id="moistureBarrierStatus" hidden></div>
                 </div>
 
                 <div class="decision-card">
                   <strong>Door trimming</strong>
                   <div class="decision-options compact-options" id="doorDecisionButtons">
-                    <button class="decision-option active" type="button" data-extra-field="doorDecision" data-extra-choice="no">No</button>
+                    <button class="decision-option" type="button" data-extra-field="doorDecision" data-extra-choice="no">No</button>
                     <button class="decision-option" type="button" data-extra-field="doorDecision" data-extra-choice="yes">Yes</button>
-                    <button class="decision-option" type="button" data-extra-field="doorDecision" data-extra-choice="not_sure">Not sure</button>
+                    <button class="decision-option active" type="button" data-extra-field="doorDecision" data-extra-choice="not_sure">Not sure</button>
                   </div>
-                  <input id="doorDecision" name="doorDecision" type="hidden" value="no">
+                  <input id="doorDecision" name="doorDecision" type="hidden" value="not_sure">
                   <div class="decision-detail" id="doorDetail" hidden>
                     <input id="doorTrimming" name="doorTrimming" type="hidden" value="no">
                     <div class="field" id="doorCountField" hidden>
@@ -3747,11 +4068,11 @@
                 <div class="decision-card">
                   <strong>Furniture moving</strong>
                   <div class="decision-options compact-options" id="furnitureDecisionButtons">
-                    <button class="decision-option active" type="button" data-extra-field="furnitureDecision" data-extra-choice="no">No</button>
+                    <button class="decision-option" type="button" data-extra-field="furnitureDecision" data-extra-choice="no">No</button>
                     <button class="decision-option" type="button" data-extra-field="furnitureDecision" data-extra-choice="yes">Yes</button>
-                    <button class="decision-option" type="button" data-extra-field="furnitureDecision" data-extra-choice="not_sure">Not sure</button>
+                    <button class="decision-option active" type="button" data-extra-field="furnitureDecision" data-extra-choice="not_sure">Not sure</button>
                   </div>
-                  <input id="furnitureDecision" name="furnitureDecision" type="hidden" value="no">
+                  <input id="furnitureDecision" name="furnitureDecision" type="hidden" value="not_sure">
                   <div class="decision-detail" id="furnitureDetail" hidden>
                     <div class="grid-2">
                       <div class="field">
@@ -3770,7 +4091,7 @@
                   </div>
                   <div class="decision-status" id="furnitureDecisionStatus" hidden></div>
                 </div>
-              </div>
+              </details>
 
               <div class="field">
                 <label for="siteNotes">Job notes</label>
@@ -3792,8 +4113,8 @@
               <div style="display: flex; gap: 12px; align-items: flex-start;">
                 <span class="step-badge">7</span>
                 <div>
-                  <h3>Review your estimate</h3>
-                  <p class="helper">Review the estimate, then submit it for follow-up and confirmation.</p>
+                  <h3>Estimate preview and submit</h3>
+                  <p class="helper">Review the estimate status, add contact details if needed, then submit it for follow-up and confirmation.</p>
                 </div>
               </div>
             </div>
@@ -3840,7 +4161,7 @@
         <aside class="summary-card" id="quoteSummaryCard" hidden>
           <div class="estimate-hero">
             <h3 id="summaryHeadline">Your flooring estimate</h3>
-            <div class="summary-total" id="summaryTotal">$0</div>
+            <div class="summary-total" id="summaryTotal">Your estimate will appear after flooring type and area are added.</div>
             <div class="estimate-status" id="summaryCaption">Estimate only · final confirmation after site review</div>
             <div class="estimate-status" id="summaryPricingRangeNote" hidden></div>
             <p>Review the details, then send the request for confirmation.</p>
@@ -3852,19 +4173,19 @@
               <div class="summary-row"><span>Product</span><strong id="summarySelectedProduct">Category estimate</strong></div>
               <div class="summary-row"><span>Quote type</span><strong id="summaryScope">Installation only</strong></div>
               <div class="summary-row"><span>Measurement source</span><strong id="summaryMeasurement">Enter total area</strong></div>
-              <div class="summary-row"><span>Area</span><strong id="summaryRealArea">0.0 m²</strong></div>
-              <div class="summary-row" id="summaryChargeableAreaRow"><span id="summaryChargeableAreaLabel">Estimated area</span><strong id="summaryChargeableArea">0.0 m²</strong></div>
+              <div class="summary-row"><span>Area</span><strong id="summaryRealArea">Add area</strong></div>
+              <div class="summary-row" id="summaryChargeableAreaRow"><span id="summaryChargeableAreaLabel">Estimated area</span><strong id="summaryChargeableArea">Add area</strong></div>
             </div>
-            <span id="summaryConfidence" hidden>Low</span>
+            <span id="summaryConfidence" hidden>Not ready</span>
             <span id="summaryConfidenceText" hidden>Confidence improves as area, product and site details become clearer.</span>
           </div>
 
           <div class="summary-box">
-            <h3>Included item totals</h3>
+            <h3>Included in estimate</h3>
             <ul class="summary-priced-list" id="summaryIncludedScopeList"></ul>
             <div class="summary-priced-totals">
-              <div><span>Subtotal ex GST</span><strong id="summarySubtotal">$0</strong></div>
-              <div><span>Estimated total inc GST</span><strong id="summaryTotalSecondary">$0</strong></div>
+              <div><span>Subtotal ex GST</span><strong id="summarySubtotal">Pending</strong></div>
+              <div><span>Estimated total inc GST</span><strong id="summaryTotalSecondary">Pending</strong></div>
             </div>
           </div>
 
@@ -3883,7 +4204,7 @@
             </div>
           </div>
 
-          <span id="summaryGst" hidden>$0</span>
+          <span id="summaryGst" hidden>Pending</span>
           <span id="summaryCoverage" hidden>Installation labour</span>
           <span id="summaryQuotePath" hidden>Supply and install selected</span>
           <span id="summaryProductPricing" hidden>Category estimate</span>
@@ -3912,8 +4233,8 @@
           <span>Choose the quote path that fits the job.</span>
         </div>
         <div>
-          <strong>Review first</strong>
-          <span>Review first, confirm when ready.</span>
+          <strong>Confirm later</strong>
+          <span>Start online, then confirm final site details.</span>
         </div>
       </div>
     </section>
@@ -3923,20 +4244,24 @@
         <h2>How the quote works</h2>
         <div class="steps">
           <div class="step">
-            <strong>1. Details</strong>
-            <span>Site and contact basics.</span>
+            <strong>1. Basics</strong>
+            <span>Suburb, property type and quote mode.</span>
           </div>
           <div class="step">
-            <strong>2. Flooring</strong>
-            <span>Category, product path and quote mode.</span>
+            <strong>2. Flooring & area</strong>
+            <span>Choose flooring direction and area method.</span>
           </div>
           <div class="step">
-            <strong>3. Area</strong>
-            <span>Total area, rooms or floor plan.</span>
+            <strong>3. Scope</strong>
+            <span>Removal, stairs and key site items.</span>
           </div>
           <div class="step">
-            <strong>4. Review</strong>
-            <span>Check, submit and confirm later.</span>
+            <strong>4. Estimate</strong>
+            <span>Preview estimate status and review items.</span>
+          </div>
+          <div class="step">
+            <strong>5. Submit</strong>
+            <span>Add contact details when ready to send.</span>
           </div>
         </div>
       </div>
@@ -3944,16 +4269,6 @@
 
     <section class="product-entry">
       <div class="container">
-        <div class="section-card" style="margin-bottom: 24px;">
-          <h2 style="font-size: clamp(1.6rem, 2.4vw, 2rem);">Already have a flooring quote?</h2>
-          <p class="helper" style="margin-top: 12px; max-width: 62ch;">
-            Use the separate review page to check scope, understand what is included, and spot common missing items before you commit.
-          </p>
-          <div class="hero-actions" style="justify-content: flex-start; margin-top: 18px; margin-bottom: 0;">
-            <a class="button-secondary" href="quote-review.html">Review your quote</a>
-          </div>
-        </div>
-
         <h2>Choose your flooring type</h2>
         <div class="link-grid">
           <a class="link-card" href="products.html?category=hybrid">
@@ -4037,7 +4352,14 @@
     <div class="container footer-grid">
       <div class="footer-col">
         <h3>Operon Flooring</h3>
-        <p>Premium laminate, hybrid and engineered timber flooring quotes for Sydney homes.</p>
+        <p>Sydney flooring quotes and installation support.</p>
+        <ul class="footer-contact-list">
+          <li><strong>Phone:</strong> <a href="tel:04XXXXXXXX">04XX XXX XXX</a></li>
+          <li><strong>Email:</strong> <a href="mailto:quotes@operonflooring.com.au">quotes@operonflooring.com.au</a></li>
+          <li><strong>Hours:</strong> Mon-Fri 8:00am-5:30pm, Sat 9:00am-2:00pm</li>
+          <li><strong>Online quotes:</strong> Available 24/7</li>
+          <li><strong>Service area:</strong> Sydney and surrounding suburbs</li>
+        </ul>
       </div>
       <div class="footer-col">
         <h4>Products</h4>
@@ -4062,7 +4384,9 @@
         <h4>Actions</h4>
         <ul>
           <li><a href="quote.html">Start Quote</a></li>
+          <li><a href="quote-review.html">Quote Review</a></li>
           <li><a href="floorplan.html">Upload Floor Plan</a></li>
+          <li><a href="products.html">Flooring Products</a></li>
           <li><a href="blog/index.html">Guides</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -4148,6 +4472,7 @@
     const wizardValidationMessage = document.getElementById("wizardValidationMessage");
     const quoteStepCounter = document.getElementById("quoteStepCounter");
     const quoteStepTitle = document.getElementById("quoteStepTitle");
+    const quoteBuildStatusPanel = document.getElementById("quoteBuildStatusPanel");
     const wizardBackButton = document.getElementById("wizardBackButton");
     const wizardNextButton = document.getElementById("wizardNextButton");
     const wizardSubmitButton = document.getElementById("wizardSubmitButton");
@@ -4231,13 +4556,19 @@
       pageStatus.hidden = false;
     }
 
+    function trackQuoteEvent(name, payload) {
+      if (window.OperonTracking && typeof window.OperonTracking.trackEvent === "function") {
+        window.OperonTracking.trackEvent(name, payload || {});
+      }
+    }
+
     function renderQuoteAdvisorHandoff() {
       if (!quoteAdvisorHandoffCard || !quoteAdvisorHandoffText || !quoteAdvisorHandoffMeta) {
         return;
       }
 
       const payload = readLatestQuoteReviewPayload();
-      if (!payload) {
+      if (!hasMeaningfulQuoteReviewPayload(payload)) {
         quoteAdvisorHandoffCard.classList.remove("active");
         quoteAdvisorHandoffMeta.innerHTML = "";
         return;
@@ -4254,11 +4585,53 @@
         clarityScore !== "" && clarityScore !== null && typeof clarityScore !== "undefined" ? "Clarity: " + clarityScore + "/100" : ""
       ].filter(Boolean);
 
-      quoteAdvisorHandoffText.textContent = "Your Quote Advisor review is attached to this request. Continue the structured estimate; no visible fields have been changed automatically.";
+      quoteAdvisorHandoffText.textContent = "We’ll use this during follow-up to check scope and missing details.";
       quoteAdvisorHandoffMeta.innerHTML = meta.map(function (item) {
         return "<span>" + escapeHtml(item) + "</span>";
       }).join("");
       quoteAdvisorHandoffCard.classList.add("active");
+      if (state.lastQuoteReviewContextSignature !== meta.join("|")) {
+        state.lastQuoteReviewContextSignature = meta.join("|");
+        trackQuoteEvent("quote_review_context_attached", {
+          review_mode: mode || "review"
+        });
+      }
+    }
+
+    function hasMeaningfulQuoteReviewPayload(payload) {
+      if (!payload || typeof payload !== "object") {
+        return false;
+      }
+
+      const meaningfulKeys = [
+        "review_mode",
+        "reviewMode",
+        "risk_level",
+        "riskLevel",
+        "confidence_level",
+        "confidenceLevel",
+        "clarity_score",
+        "clarityScore",
+        "summary",
+        "result",
+        "missing_items",
+        "missingItems",
+        "questions",
+        "documentType",
+        "businessShownOnDocument",
+        "totalIncGst"
+      ];
+
+      return meaningfulKeys.some(function (key) {
+        const value = payload[key];
+        if (Array.isArray(value)) {
+          return value.length > 0;
+        }
+        if (value && typeof value === "object") {
+          return Object.keys(value).length > 0;
+        }
+        return value !== "" && value !== null && typeof value !== "undefined";
+      });
     }
     const unknownMeasurementChoices = document.getElementById("unknownMeasurementChoices");
     const unknownAddressField = document.getElementById("unknownAddressField");
@@ -4274,6 +4647,7 @@
       lastQuoteId: "",
       lastSavedDraftSignature: "",
       floorplanSource: "",
+      floorplanMeasurementMode: "",
       floorplanRooms: [],
       pendingHandoffMessage: "",
       productHandoffActive: false,
@@ -4282,6 +4656,7 @@
       productSelectionLoadedFromCatalogue: false,
       currentQuoteResult: null,
       lastSummaryViewSignature: "",
+      lastQuoteReviewContextSignature: "",
       quoteRefreshToken: 0,
       pricingOptimizationCache: {},
       privateQuoteRuntimeAvailable: true,
@@ -4291,7 +4666,8 @@
         checked: false,
         quoteSaveReady: true,
         emailReady: true
-      }
+      },
+      expressFlowReady: false
     };
 
     let currentQuoteStep = 0;
@@ -4532,15 +4908,26 @@
       return Array.from(document.querySelectorAll("[data-quote-step]"));
     }
 
+    function syncQuoteStepVisibility() {
+      const steps = getQuoteSteps();
+      if (!steps.length) {
+        return steps;
+      }
+
+      currentQuoteStep = Math.max(0, Math.min(currentQuoteStep, steps.length - 1));
+      steps.forEach(function (step, stepIndex) {
+        step.classList.toggle("active", stepIndex === currentQuoteStep);
+      });
+      return steps;
+    }
+
     function getQuoteStepMeta() {
       return [
-        { title: "Customer details", shortLabel: "1 Details", trackingName: "customer_details" },
-        { title: "Property details", shortLabel: "2 Property", trackingName: "property" },
-        { title: "Job type & flooring", shortLabel: "3 Flooring", trackingName: "flooring_type" },
-        { title: "Area measurement", shortLabel: "4 Area", trackingName: "area" },
-        { title: "Stairs", shortLabel: "5 Stairs", trackingName: "stairs" },
-        { title: "Extras", shortLabel: "6 Extras", trackingName: "extras" },
-        { title: "Quote summary", shortLabel: "7 Summary", trackingName: "summary" }
+        { title: "Project basics", shortLabel: "1 Basics", trackingName: "project_basics" },
+        { title: "Flooring and area", shortLabel: "2 Flooring & Area", trackingName: "flooring_area" },
+        { title: "Main scope", shortLabel: "3 Scope", trackingName: "main_scope" },
+        { title: "Estimate preview", shortLabel: "4 Estimate", trackingName: "estimate_preview" },
+        { title: "Contact and submit", shortLabel: "5 Submit", trackingName: "contact_submit" }
       ];
     }
 
@@ -4552,6 +4939,120 @@
     function showWizardValidationMessage(message) {
       wizardValidationMessage.textContent = message;
       wizardValidationMessage.classList.add("active");
+    }
+
+    function appendToExpress(targetId, node) {
+      const target = document.getElementById(targetId);
+      if (target && node) {
+        target.appendChild(node);
+      }
+    }
+
+    function getFieldWrapper(id) {
+      const element = document.getElementById(id);
+      return element ? element.closest(".field") || element : null;
+    }
+
+    function createExpressQuoteFlow() {
+      if (state.expressFlowReady) {
+        return;
+      }
+
+      const legacySteps = Array.from(document.querySelectorAll(".quote-step[data-quote-step]"));
+      if (!legacySteps.length) {
+        return;
+      }
+
+      const wrapper = document.createElement("div");
+      wrapper.id = "expressQuoteSteps";
+      wrapper.innerHTML = [
+        '<section class="step-card quote-step" data-quote-step="0" style="margin-top: 14px;">',
+        '  <div class="step-head"><div style="display: flex; gap: 12px; align-items: flex-start;"><span class="step-badge">1</span><div><h3>Project basics</h3><p class="helper">Start with the job location, property type and quote mode. Contact details come later.</p></div></div></div>',
+        '  <div class="express-step-shell"><div class="form-grid" id="expressBasicsGrid"></div><div class="express-subsection" id="expressQuoteModeGroup"></div></div>',
+        '</section>',
+        '<section class="step-card quote-step" data-quote-step="1">',
+        '  <div class="step-head"><div style="display: flex; gap: 12px; align-items: flex-start;"><span class="step-badge">2</span><div><h3>Flooring and area</h3><p class="helper">Choose the flooring direction and the easiest way to provide area.</p></div></div></div>',
+        '  <div class="express-step-shell"><div class="express-subsection" id="expressProductGroup"></div><div class="express-subsection" id="expressMeasurementGroup"></div></div>',
+        '</section>',
+        '<section class="step-card quote-step" data-quote-step="2">',
+        '  <div class="step-head"><div style="display: flex; gap: 12px; align-items: flex-start;"><span class="step-badge">3</span><div><h3>Main scope</h3><p class="helper">Answer only the high-impact items. Choose Not sure if the site needs review.</p></div></div></div>',
+        '  <div class="decision-stack" id="expressMainScopeGroup"></div>',
+        '</section>',
+        '<section class="step-card quote-step" data-quote-step="3">',
+        '  <div class="step-head"><div style="display: flex; gap: 12px; align-items: flex-start;"><span class="step-badge">4</span><div><h3>Estimate preview</h3><p class="helper">Preview the estimate status before adding optional advanced details.</p></div></div></div>',
+        '  <div class="measurement-helper-card"><strong>Online estimate preview</strong><p>Check whether your estimate is ready, pending, or needs review. You can add optional details if you know them, or continue and let Operon confirm the remaining scope.</p></div>',
+        '  <details class="express-advanced-details" id="expressAdvancedDetails"><summary><span class="advanced-toggle-copy"><span class="advanced-toggle-row"><span class="advanced-toggle-title">Add advanced details</span><span class="advanced-toggle-pill">Optional</span></span><span class="advanced-toggle-helper">Underlay, trims, stairs, access, furniture and site prep.</span></span><span class="advanced-toggle-icon" aria-hidden="true"></span></summary><div class="advanced-group" id="advancedFinishingGroup"><h4>Finishing</h4></div><div class="advanced-group" id="advancedSitePrepGroup"><h4>Site preparation</h4></div><div class="advanced-group" id="advancedAccessFurnitureGroup"><h4>Access and furniture</h4></div><div class="advanced-group" id="advancedStairsGroup"><h4>Detailed stairs</h4></div><div class="advanced-group" id="advancedUnderlayDisposalGroup"><h4>Underlay and disposal</h4></div><div class="advanced-group" id="advancedNotesGroup"><h4>Notes</h4></div></details>',
+        '</section>',
+        '<section class="step-card quote-step" data-quote-step="4">',
+        '  <div class="step-head"><div style="display: flex; gap: 12px; align-items: flex-start;"><span class="step-badge">5</span><div><h3>Contact and submit</h3><p class="helper">Add contact details so Operon can review and follow up.</p></div></div></div>',
+        '  <div class="form-grid" id="expressContactGrid"></div><div class="express-subsection" id="expressSubmitNotesGroup"></div>',
+        '</section>'
+      ].join("");
+
+      legacySteps[0].parentNode.insertBefore(wrapper, legacySteps[0]);
+
+      appendToExpress("expressBasicsGrid", getFieldWrapper("suburb"));
+      appendToExpress("expressBasicsGrid", getFieldWrapper("postcode"));
+      appendToExpress("expressBasicsGrid", getFieldWrapper("propertyType"));
+      appendToExpress("expressBasicsGrid", getFieldWrapper("level"));
+      appendToExpress("expressBasicsGrid", getFieldWrapper("hasLift"));
+      appendToExpress("expressBasicsGrid", getFieldWrapper("parkingAccess"));
+      appendToExpress("expressQuoteModeGroup", document.getElementById("quoteModeChoices") ? document.getElementById("quoteModeChoices").closest(".field") : null);
+
+      appendToExpress("expressProductGroup", getFieldWrapper("selectedProductCategory"));
+      appendToExpress("expressProductGroup", document.querySelector(".product-choice-panel"));
+      appendToExpress("expressProductGroup", document.getElementById("patternTypeField") ? document.getElementById("patternTypeField").closest(".grid-2") : null);
+      appendToExpress("expressProductGroup", document.getElementById("installationPathHelper"));
+      appendToExpress("expressMeasurementGroup", document.getElementById("measurementChoices"));
+      appendToExpress("expressMeasurementGroup", document.getElementById("measurementMethod"));
+      appendToExpress("expressMeasurementGroup", document.getElementById("unknownMeasurementNextStep"));
+      appendToExpress("expressMeasurementGroup", document.getElementById("manual_total_panel"));
+      appendToExpress("expressMeasurementGroup", document.getElementById("room_by_room_panel"));
+      appendToExpress("expressMeasurementGroup", document.getElementById("floorplan_upload_panel"));
+      appendToExpress("expressMeasurementGroup", document.getElementById("unknown_panel"));
+      appendToExpress("expressMeasurementGroup", document.getElementById("unknownMeasurementStatus"));
+      appendToExpress("expressMeasurementGroup", document.getElementById("measurementMetricGrid"));
+
+      appendToExpress("expressMainScopeGroup", document.getElementById("removalDecisionButtons") ? document.getElementById("removalDecisionButtons").closest(".decision-card") : null);
+      appendToExpress("expressMainScopeGroup", document.getElementById("stairsChoiceButtons") ? document.getElementById("stairsChoiceButtons").closest(".decision-card") : null);
+      appendToExpress("expressMainScopeGroup", document.getElementById("floorPrepDecisionButtons") ? document.getElementById("floorPrepDecisionButtons").closest(".decision-card") : null);
+
+      appendToExpress("advancedFinishingGroup", document.getElementById("finishDecisionButtons") ? document.getElementById("finishDecisionButtons").closest(".decision-card") : null);
+      appendToExpress("advancedFinishingGroup", document.getElementById("doorDecisionButtons") ? document.getElementById("doorDecisionButtons").closest(".decision-card") : null);
+      appendToExpress("advancedSitePrepGroup", document.getElementById("floorPrepDetail"));
+      appendToExpress("advancedSitePrepGroup", document.getElementById("moistureBarrierButtons") ? document.getElementById("moistureBarrierButtons").closest(".decision-card") : null);
+      appendToExpress("advancedAccessFurnitureGroup", getFieldWrapper("level"));
+      appendToExpress("advancedAccessFurnitureGroup", getFieldWrapper("hasLift"));
+      appendToExpress("advancedAccessFurnitureGroup", getFieldWrapper("parkingAccess"));
+      appendToExpress("advancedAccessFurnitureGroup", document.getElementById("furnitureDecisionButtons") ? document.getElementById("furnitureDecisionButtons").closest(".decision-card") : null);
+      appendToExpress("advancedStairsGroup", document.getElementById("stairsCountDetail"));
+      appendToExpress("advancedUnderlayDisposalGroup", document.getElementById("underlayDecisionButtons") ? document.getElementById("underlayDecisionButtons").closest(".decision-card") : null);
+      appendToExpress("advancedUnderlayDisposalGroup", document.getElementById("removalDetail"));
+      appendToExpress("advancedNotesGroup", getFieldWrapper("siteNotes"));
+
+      appendToExpress("expressContactGrid", getFieldWrapper("fullName"));
+      appendToExpress("expressContactGrid", getFieldWrapper("phone"));
+      appendToExpress("expressContactGrid", getFieldWrapper("email"));
+      appendToExpress("expressContactGrid", getFieldWrapper("siteAddress"));
+      appendToExpress("expressSubmitNotesGroup", getFieldWrapper("customerNotes"));
+      appendToExpress("expressSubmitNotesGroup", document.getElementById("resetQuoteButton") ? document.getElementById("resetQuoteButton").closest(".action-row") : null);
+
+      legacySteps.forEach(function (step) {
+        step.removeAttribute("data-quote-step");
+        step.classList.remove("active");
+        step.classList.add("quote-step-legacy");
+        step.hidden = true;
+        step.setAttribute("aria-hidden", "true");
+      });
+
+      const quoteReviewSection = document.getElementById("quoteReview");
+      if (quoteReviewSection) {
+        quoteReviewSection.hidden = true;
+        quoteReviewSection.setAttribute("aria-hidden", "true");
+      }
+
+      state.expressFlowReady = true;
+      syncQuoteStepVisibility();
     }
 
     function getHeaderOffset() {
@@ -4584,7 +5085,7 @@
     }
 
     function buildFloorplanToolUrl() {
-      return "floorplan.html?returnStep=3&returnTo=quote.html";
+      return "floorplan.html?returnStep=1&returnTo=quote.html";
     }
 
     function hasQuoteProgress() {
@@ -4605,32 +5106,24 @@
     function getWizardAssistCopy(stepIndex) {
       const copy = [
         {
-          title: "Start with the job basics",
-          text: "Add contact and site basics to start."
+          title: "Start with project basics",
+          text: "Suburb and postcode are enough to begin."
         },
         {
-          title: "We only ask what matters",
-          text: "Site details are reviewed before final confirmation."
+          title: "Choose flooring and area",
+          text: "Pick a flooring direction and use the clearest area method you have."
         },
         {
-          title: "Choose the flooring path",
-          text: "Choose category, quote mode and product path."
+          title: "Keep scope short",
+          text: "Choose Not sure where the site still needs review."
         },
         {
-          title: "Use the clearest area you have",
-          text: "Use the quickest area method you trust."
+          title: "Preview before contact",
+          text: "Check estimate status before adding advanced details or contact."
         },
         {
-          title: "Flag stairs early",
-          text: "Stairs are treated as scope, not instant stair pricing."
-        },
-        {
-          title: "Add only the real extras",
-          text: "Use guided extras and keep the estimate moving."
-        },
-        {
-          title: "Review the estimate clearly",
-          text: "Check scope, then submit when ready."
+          title: "Send for review",
+          text: "Add contact details when you are ready to send the request."
         }
       ];
       return copy[stepIndex] || copy[0];
@@ -4638,47 +5131,220 @@
 
     function getStepMicroConfirmation(stepIndex) {
       const messages = [
-        "Details ready.",
-        "Property details ready.",
-        "Flooring choices ready.",
-        "Area step ready.",
-        "Stair details ready.",
-        "Extras ready.",
-        "Review step ready."
+        "Project basics ready.",
+        "Flooring and area ready.",
+        "Main scope ready.",
+        "Estimate preview ready.",
+        "Contact step ready."
       ];
       return messages[stepIndex] || "Step ready.";
     }
 
+    function shouldConfirmProductPrice(result) {
+      if (!result) {
+        return false;
+      }
+      if (result.pricePending) {
+        return true;
+      }
+      if (result.pricingMode !== "fallback") {
+        return false;
+      }
+      return result.quoteMode === "supply_install" && !(Number(result.materialTotal || 0) > 0);
+    }
+
+    function getProductPricingSummary(result) {
+      if (!result) {
+        return "Pricing pending";
+      }
+      if (result.pricingMode === "product") {
+        return "Based on selected product pricing";
+      }
+      if (shouldConfirmProductPrice(result)) {
+        return "Product price needs review";
+      }
+      if (result.pricingMode === "fallback") {
+        return "Based on available product pricing";
+      }
+      return "Based on entry-level category pricing";
+    }
+
+    function hasConcreteProductSelection() {
+      const selection = getResolvedQuoteSelection();
+      return !!(selection && (selection.productId || selection.rangeId));
+    }
+
+    function getScopeUncertaintyItems(input, measurement, result) {
+      const items = [];
+      const category = getSelectedProductCategory();
+      const productChoiceMode = input.productChoiceMode || getProductChoiceMode();
+      const quoteMode = input.quoteMode || "supply_install";
+
+      if (!category || input.flooringCategoryUncertain === "yes") {
+        items.push("flooring type");
+      }
+      if (quoteMode === "supply_install" && productChoiceMode !== "choose_range") {
+        items.push("product range or colour");
+      }
+      if (!measurement || measurement.measurementStatus === "unknown" || !(measurement.realArea > 0)) {
+        items.push("floor area");
+      }
+      if (measurement && measurement.method === "floorplan_upload" && state.floorplanMeasurementMode && state.floorplanMeasurementMode !== "manual_trace") {
+        items.push("floorplan area confirmation");
+      }
+      [
+        ["removalDecision", "removal"],
+        ["underlayDecision", "underlay/acoustic layer"],
+        ["finishDecision", "skirting, scotia or trims"],
+        ["floorPrepDecision", "floor preparation"],
+        ["moistureBarrier", "moisture protection"],
+        ["doorDecision", "door trimming"],
+        ["furnitureDecision", "furniture moving"]
+      ].forEach(function (entry) {
+        if (input[entry[0]] === "not_sure") {
+          items.push(entry[1]);
+        }
+      });
+      [
+        ["removalDecision", "removal"],
+        ["floorPrepDecision", "floor preparation"]
+      ].forEach(function (entry) {
+        if (!input[entry[0]]) {
+          items.push(entry[1]);
+        }
+      });
+      if (input.removalDecision === "yes" && !input.removalDisposal) {
+        items.push("disposal");
+      }
+      if (input.subfloorCondition === "not_sure" || input.floorPrepType === "manual" || input.floorPrepType === "unsure") {
+        items.push("subfloor condition");
+      }
+      if (!input.stairs || input.stairs === "yes" || input.stairs === "not_sure") {
+        items.push(input.stairs === "yes" ? "stair details" : "stairs or step areas");
+      }
+      if (input.propertyType === "unit_apartment" || input.parkingAccess === "unsure" || input.parkingAccess === "difficult") {
+        if (input.hasLift === "" || input.hasLift === "no" || input.parkingAccess === "unsure" || input.parkingAccess === "difficult") {
+          items.push("apartment access");
+        }
+      }
+      if (shouldConfirmProductPrice(result)) {
+        items.push("product price");
+      }
+
+      return Array.from(new Set(items));
+    }
+
+    function getEstimateConfidenceModel(input, measurement, result) {
+      const source = input || getFormInput();
+      const activeMeasurement = measurement || getMeasurementState();
+      const activeResult = result || getCurrentQuoteResult();
+      const reasons = [];
+      const uncertaintyItems = getScopeUncertaintyItems(source, activeMeasurement, activeResult);
+      let level = "not_ready";
+
+      if (!activeMeasurement || activeMeasurement.measurementStatus === "unknown" || !(activeMeasurement.realArea > 0)) {
+        reasons.push("area is missing or marked for follow-up");
+      }
+      if (!getSelectedProductCategory()) {
+        reasons.push("flooring type is missing");
+      }
+      if (reasons.length) {
+        return {
+          level: "not_ready",
+          label: "Not ready",
+          reasons: reasons,
+          reviewRequired: true,
+          uncertaintyItems: uncertaintyItems
+        };
+      }
+
+      if (uncertaintyItems.length) {
+        level = uncertaintyItems.length > 3 ? "low" : "medium";
+        reasons.push("needs confirmation: " + uncertaintyItems.slice(0, 4).join(", "));
+      } else {
+        level = "high";
+        reasons.push("area, flooring direction and main scope are clear");
+      }
+
+      if (source.productChoiceMode !== "choose_range" && !hasConcreteProductSelection() && level === "high") {
+        level = "medium";
+        reasons.push("product range can still be confirmed later");
+      }
+
+      return {
+        level: level,
+        label: level === "high" ? "High" : (level === "medium" ? "Medium" : "Low"),
+        reasons: reasons,
+        reviewRequired: uncertaintyItems.length > 0 || level !== "high",
+        uncertaintyItems: uncertaintyItems
+      };
+    }
+
     function getEstimateConfidence(measurement, result) {
-      if (measurement.measurementStatus === "unknown" || result.measurementStatus === "unknown") {
-        return "Low";
-      }
-      if (measurement.method === "floorplan_upload" && result.realArea > 0) {
-        return "High";
-      }
-      if (measurement.method === "room_by_room" && result.realArea > 0) {
-        return "Medium";
-      }
-      if (measurement.method === "manual_total" && result.realArea > 0) {
-        return "Medium";
-      }
-      return "Low";
+      return getEstimateConfidenceModel(getFormInput(), measurement, result).label;
     }
 
     function getEstimateConfidenceText(confidence) {
-      if (confidence === "High") {
-        return "High confidence because the area and main scope details are clear.";
+      const model = typeof confidence === "object"
+        ? confidence
+        : { level: String(confidence || "").toLowerCase().replace(/\s+/g, "_"), label: confidence, reasons: [] };
+      if (model.level === "high") {
+        return "High confidence because area, flooring direction and main scope are clear. Final site details are still confirmed before installation.";
       }
-      if (confidence === "Medium") {
-        return "Medium confidence because the estimate can still change after final product or site details are confirmed.";
+      if (model.level === "medium") {
+        return model.reasons && model.reasons.length
+          ? "Medium confidence because " + model.reasons[0] + "."
+          : "Medium confidence because some product or site details still need review.";
       }
-      return "Low confidence because measurement or site details still need confirmation.";
+      if (model.level === "low") {
+        return model.reasons && model.reasons.length
+          ? "Review required because " + model.reasons[0] + "."
+          : "Scope review is needed before final pricing.";
+      }
+      return "Estimate pending because area and flooring details are not complete yet.";
+    }
+
+    function setTextIfPresent(id, text) {
+      const element = document.getElementById(id);
+      if (element) {
+        element.textContent = text;
+      }
+    }
+
+    function renderQuoteBuildStatus(result) {
+      const input = getFormInput();
+      const measurement = getMeasurementState();
+      const activeResult = result || getCurrentQuoteResult();
+      const confidence = getEstimateConfidenceModel(input, measurement, activeResult);
+      const categoryMeta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(getSelectedProductCategory()) : null;
+      const productLabel = categoryMeta ? categoryMeta.label : "Pending";
+      const areaReady = measurement.measurementStatus !== "unknown" && measurement.realArea > 0;
+      const estimateReady = areaReady && !!getSelectedProductCategory();
+      const scopeLabel = confidence.reviewRequired ? "Needs review" : "Clear";
+      const nextStep = !getSelectedProductCategory()
+        ? "Choose flooring"
+        : (!areaReady
+          ? "Add area"
+          : (confidence.reviewRequired ? "Confirm scope" : "Review estimate"));
+
+      setTextIfPresent("quoteBuildProduct", productLabel);
+      setTextIfPresent("quoteBuildArea", areaReady ? formatArea(measurement.realArea) : "Pending");
+      setTextIfPresent("quoteBuildScope", scopeLabel);
+      setTextIfPresent("quoteBuildEstimate", estimateReady ? "Ready" : "Pending");
+      setTextIfPresent("quoteBuildConfidence", confidence.label);
+      setTextIfPresent("quoteBuildNextStep", nextStep);
     }
 
     function focusQuoteFlow() {
       if (window.OperonTracking) {
         window.OperonTracking.trackQuoteStart();
       }
+      trackQuoteEvent("quote_started", {
+        source_page: "quote.html"
+      });
+      trackQuoteEvent("quote_express_mode_started", {
+        source_page: "quote.html"
+      });
       showQuoteStep(currentQuoteStep, { scrollMode: "top" });
     }
 
@@ -4696,7 +5362,7 @@
       if (started) {
         buttonLabel = inSummary ? "Review quote" : "Continue quote";
         stickyTitle = "Continue your quote";
-        stickyText = "You are on Step " + (currentQuoteStep + 1) + " of 7: " + activeMeta.title + ".";
+        stickyText = "You are on Step " + (currentQuoteStep + 1) + " of " + getQuoteSteps().length + ": " + activeMeta.title + ".";
       }
 
       if (isComplete) {
@@ -4739,13 +5405,11 @@
       }
 
       const focusTargets = {
-        0: ["fullName", "phone", "siteAddress", "suburb", "postcode"],
-        1: ["propertyType", "level", "hasLift", "parkingAccess"],
-        2: ["productRangeSelect", "productColourSelect", "installMethod", "patternType"],
-        3: ["totalAreaM2", "confirmedFloorplanArea", "room-name-" + (state.rooms[0] && state.rooms[0].id ? state.rooms[0].id : "")],
-        4: ["stairs"],
-        5: ["removalType", "floorPrepType", "siteNotes"],
-        6: ["quoteDeliveryEmail", "emailQuoteCopy", "customerNotes"]
+        0: ["suburb", "postcode", "propertyType", "quoteMode"],
+        1: ["selectedProductCategory", "totalAreaM2", "confirmedFloorplanArea", "productRangeSelect", "productColourSelect", "room-name-" + (state.rooms[0] && state.rooms[0].id ? state.rooms[0].id : "")],
+        2: ["removalDecision", "stairs", "floorPrepDecision"],
+        3: ["expressAdvancedDetails"],
+        4: ["fullName", "phone", "email", "quoteDeliveryEmail", "customerNotes"]
       };
 
       const targets = focusTargets[stepIndex] || [];
@@ -4793,16 +5457,19 @@
         emailQuoteCopyControls.hidden = !isFinalStep;
         emailQuoteCopyControls.setAttribute("aria-hidden", isFinalStep ? "false" : "true");
       }
-      quoteSummaryCard.hidden = currentQuoteStep !== steps.length - 1;
-      quoteLayout.classList.toggle("layout-single", currentQuoteStep !== steps.length - 1);
+      if (quoteBuildStatusPanel) {
+        const showBuildStatus = currentQuoteStep === 3;
+        quoteBuildStatusPanel.hidden = !showBuildStatus;
+        quoteBuildStatusPanel.setAttribute("aria-hidden", showBuildStatus ? "false" : "true");
+      }
+      quoteSummaryCard.hidden = !(currentQuoteStep === 3 || isFinalStep);
+      quoteLayout.classList.toggle("layout-single", !(currentQuoteStep === 3 || isFinalStep));
       quoteForm.classList.add("quote-form-compact");
       const nextLabels = {
-        0: "Continue to property",
-        1: "Continue to flooring",
-        2: "Continue to area",
-        3: "Continue to stairs",
-        4: "Continue to extras",
-        5: "Review estimate"
+        0: "Continue to flooring & area",
+        1: "Continue to scope",
+        2: "Preview estimate",
+        3: "Continue to contact"
       };
       wizardNextButton.textContent = nextLabels[currentQuoteStep] || "Next";
       if (state.submitState === "idle") {
@@ -4815,9 +5482,7 @@
       const settings = Object.assign({ scrollMode: "top" }, options || {});
       const steps = getQuoteSteps();
       currentQuoteStep = Math.max(0, Math.min(index, steps.length - 1));
-      steps.forEach(function (step, stepIndex) {
-        step.classList.toggle("active", stepIndex === currentQuoteStep);
-      });
+      syncQuoteStepVisibility();
       clearWizardValidationMessage();
       updateStepProgress();
       saveDraft();
@@ -4827,9 +5492,14 @@
           currentQuoteStep + 1,
           activeMeta ? activeMeta.trackingName : "step_" + (currentQuoteStep + 1)
         );
+        trackQuoteEvent("quote_step_viewed", {
+          step_index: currentQuoteStep + 1,
+          step_name: activeMeta ? activeMeta.trackingName : "step_" + (currentQuoteStep + 1)
+        });
         if (currentQuoteStep === steps.length - 1) {
           const result = getCurrentQuoteResult();
           const measurement = getMeasurementState();
+          const confidence = getEstimateConfidenceModel(getFormInput(), measurement, result);
           const signature = [
             result && result.totalIncGst || 0,
             result && result.realArea || 0,
@@ -4844,6 +5514,15 @@
               measurement_status: measurement && measurement.measurementStatus || "",
               quote_confidence: measurement && measurement.quoteConfidence || ""
             });
+            trackQuoteEvent("quote_summary_viewed", {
+              measurement_method: measurement && measurement.method || "",
+              confidence_level: confidence.level,
+              review_required: !!confidence.reviewRequired
+            });
+            trackQuoteEvent(measurement && measurement.measurementStatus === "unknown" ? "quote_estimate_pending" : "quote_estimate_ready", {
+              confidence_level: confidence.level,
+              review_required: !!confidence.reviewRequired
+            });
           }
         }
       }
@@ -4853,6 +5532,11 @@
     }
 
     async function goToNextQuoteStep() {
+      const activeMetaForClick = getQuoteStepMeta()[currentQuoteStep];
+      trackQuoteEvent("quote_step_clicked", {
+        step_index: currentQuoteStep + 1,
+        step_name: activeMetaForClick ? activeMetaForClick.trackingName : "step_" + (currentQuoteStep + 1)
+      });
       const validation = validateCurrentQuoteStep();
       if (!validation.valid) {
         showWizardValidationMessage(validation.message);
@@ -4865,6 +5549,11 @@
             validation.message,
             "step_validation"
           );
+          trackQuoteEvent("quote_step_missing_info_shown", {
+            step_index: currentQuoteStep + 1,
+            step_name: activeMeta ? activeMeta.trackingName : "step_" + (currentQuoteStep + 1),
+            source: "step_validation"
+          });
         }
         return;
       }
@@ -4874,9 +5563,13 @@
           currentQuoteStep + 1,
           activeMeta ? activeMeta.trackingName : "step_" + (currentQuoteStep + 1)
         );
+        trackQuoteEvent("quote_step_completed", {
+          step_index: currentQuoteStep + 1,
+          step_name: activeMeta ? activeMeta.trackingName : "step_" + (currentQuoteStep + 1)
+        });
       }
 
-      if (currentQuoteStep === 5) {
+      if (currentQuoteStep === 3) {
         clearQuoteSubmitMessage();
         if (shouldUseLocalReviewOnlyMode()) {
           clearQuoteSubmitMessage();
@@ -4905,14 +5598,19 @@
 
     function buildProducts() {
       const selectedCategory = getSelectedProductCategory();
+      const isUncertain = getInputValue("flooringCategoryUncertain") === "yes";
       productGrid.innerHTML = PRODUCT_CATEGORIES.map(function (category) {
-        const active = selectedCategory === category.id ? "active" : "";
+        const active = !isUncertain && selectedCategory === category.id ? "active" : "";
         return `
           <button class="product-card ${active}" type="button" data-product-category="${category.id}">
             <strong>${category.label}</strong>
           </button>
         `;
-      }).join("");
+      }).join("") + `
+        <button class="product-card ${isUncertain ? "active" : ""}" type="button" data-product-category="not_sure">
+          <strong>Not sure yet</strong>
+        </button>
+      `;
     }
 
     function buildRooms() {
@@ -5003,7 +5701,7 @@
           return option.id === "acoustic-rubber-underlay-5mm";
         });
         return rubberUnderlay
-          ? [Object.assign({}, rubberUnderlay, { name: "Rubber Underlay 5mm", suitableCategories: ["hybrid"] })]
+          ? [Object.assign({}, rubberUnderlay, { suitableCategories: ["hybrid"] })]
           : [];
       }
       return window.OperonUnderlay.list().filter(function (option) {
@@ -5098,6 +5796,10 @@
       }, 0);
     }
 
+    function getStairApproxCount() {
+      return Math.max(0, Math.round(parsePositiveNumber(getInputValue("stairApproxCount"))));
+    }
+
     function getStairDetailsPayload() {
       const counts = getStairDetailCounts();
       return STAIR_DETAIL_FIELDS.map(function (field) {
@@ -5117,18 +5819,22 @@
       setInputValue("stairWidthMm", "");
       setInputValue("stairsCountRange", "");
       setInputValue("stairsCount", "0");
+      setInputValue("stairApproxCount", "");
     }
 
     function setStairsChoice(choice) {
-      const value = choice || "no";
+      const value = choice || "";
       setInputValue("stairs", value);
       if (value !== "yes") {
         clearStairDetails();
+        setInputValue("stairsRequiresReview", value === "not_sure" ? "yes" : (value === "no" ? "no" : ""));
       } else {
-        setInputValue("stairsCount", String(getTotalStairDetailCount()));
-        setInputValue("stairsCountRange", "detailed");
+        const detailedCount = getTotalStairDetailCount();
+        const approxCount = getStairApproxCount();
+        setInputValue("stairsCount", String(detailedCount || approxCount || 0));
+        setInputValue("stairsCountRange", detailedCount > 0 ? "detailed" : (approxCount > 0 ? "approximate" : ""));
+        setInputValue("stairsRequiresReview", "yes");
       }
-      setInputValue("stairsRequiresReview", value === "yes" ? "yes" : "no");
     }
 
     function setStairWidthKnown(choice) {
@@ -5143,6 +5849,9 @@
       const total = getTotalStairDetailCount();
       setInputValue("stairsCount", String(total));
       setInputValue("stairsCountRange", total > 0 ? "detailed" : "");
+      if (total > 0) {
+        setInputValue("stairApproxCount", "");
+      }
       if (getInputValue("stairs") !== "yes") {
         setInputValue("stairs", "yes");
       }
@@ -5151,6 +5860,54 @@
 
     function setExtraDecision(fieldName, value) {
       setInputValue(fieldName, value);
+    }
+
+    function handleDecisionOptionClick(button) {
+      if (!button || button.disabled) {
+        return false;
+      }
+
+      const stairsChoice = button.getAttribute("data-stairs-choice");
+      if (stairsChoice) {
+        setActiveCards("[data-stairs-choice]", stairsChoice, "data-stairs-choice");
+        setStairsChoice(stairsChoice);
+        if (stairsChoice === "yes") {
+          trackQuoteEvent("quote_stairs_yes", {});
+        }
+        if (stairsChoice === "not_sure") {
+          trackQuoteEvent("quote_stairs_not_sure", {});
+        }
+        renderAll();
+        return true;
+      }
+
+      const extraField = button.getAttribute("data-extra-field");
+      const extraChoice = button.getAttribute("data-extra-choice");
+      if (extraField && extraChoice) {
+        setActiveCards("[data-extra-field='" + extraField + "']", extraChoice, "data-extra-choice");
+        setExtraDecision(extraField, extraChoice);
+        if (extraChoice === "not_sure") {
+          trackQuoteEvent("quote_scope_not_sure", {
+            field: extraField
+          });
+        }
+        renderAll();
+        return true;
+      }
+
+      return false;
+    }
+
+    function applyDefaultMainScopeChoices() {
+      if (!getInputValue("removalDecision")) {
+        setExtraDecision("removalDecision", "not_sure");
+      }
+      if (!getInputValue("floorPrepDecision")) {
+        setExtraDecision("floorPrepDecision", "not_sure");
+      }
+      if (!getInputValue("stairs")) {
+        setStairsChoice("not_sure");
+      }
     }
 
     function applyStandardExtrasSetup() {
@@ -5233,9 +5990,10 @@
     }
 
     function renderStairsStep() {
-      const stairsChoice = getInputValue("stairs") || "no";
+      const stairsChoice = getInputValue("stairs");
       const stairWidthKnown = getInputValue("stairWidthKnown") || "no";
       const totalStairCount = getTotalStairDetailCount();
+      const approxStairCount = getStairApproxCount();
       setActiveCards("[data-stairs-choice]", stairsChoice, "data-stairs-choice");
       setActiveCards("[data-stair-width-known]", stairWidthKnown, "data-stair-width-known");
 
@@ -5253,11 +6011,17 @@
           : " Stair size can be confirmed later.";
         status.textContent = totalStairCount > 0
           ? totalStairCount + " stair item" + (totalStairCount === 1 ? "" : "s") + " noted." + widthNote
-          : "Stairs included. Add the stair quantities you know, or leave them as 0 for site confirmation.";
+          : (approxStairCount > 0
+            ? approxStairCount + " approximate step" + (approxStairCount === 1 ? "" : "s") + " noted. " + "Final stair detail to confirm."
+            : "Stairs included. Add an approximate count if known, or leave it blank for site confirmation.");
         return;
       }
       if (stairsChoice === "not_sure") {
-        status.textContent = "No problem — this can be confirmed later.";
+        status.textContent = "Final stair detail to confirm.";
+        return;
+      }
+      if (!stairsChoice) {
+        status.textContent = "Choose No, Yes, or Not sure.";
         return;
       }
       status.textContent = "No stairs included in the current scope.";
@@ -5266,8 +6030,8 @@
     function renderExtrasStep() {
       const underlayOptions = renderUnderlayOptions();
       const lockUnderlay = shouldLockUnderlayDecision();
-      setActiveCards("[data-extra-field='removalDecision']", getInputValue("removalDecision") || "no", "data-extra-choice");
-      setActiveCards("[data-extra-field='floorPrepDecision']", getInputValue("floorPrepDecision") || "no", "data-extra-choice");
+      setActiveCards("[data-extra-field='removalDecision']", getInputValue("removalDecision"), "data-extra-choice");
+      setActiveCards("[data-extra-field='floorPrepDecision']", getInputValue("floorPrepDecision"), "data-extra-choice");
       setActiveCards("[data-extra-field='moistureBarrier']", getInputValue("moistureBarrier") || "no", "data-extra-choice");
       setActiveCards("[data-extra-field='underlayDecision']", getInputValue("underlayDecision") || "no", "data-extra-choice");
       setActiveCards("[data-extra-field='finishDecision']", getInputValue("finishDecision") || "no", "data-extra-choice");
@@ -5282,8 +6046,8 @@
       setConditionalFieldVisibility("furnitureDetail", (getInputValue("furnitureDecision") || "no") === "yes");
 
       document.querySelectorAll("[data-extra-field='underlayDecision']").forEach(function (button) {
-        button.disabled = lockUnderlay;
-        button.setAttribute("aria-disabled", lockUnderlay ? "true" : "false");
+        button.disabled = false;
+        button.setAttribute("aria-disabled", "false");
       });
 
       const previewList = document.getElementById("extrasScopePreviewList");
@@ -5295,8 +6059,8 @@
 
       const removalStatus = document.getElementById("removalDecisionStatus");
       if (removalStatus) {
-        const value = getInputValue("removalDecision") || "no";
-        removalStatus.hidden = value === "no";
+        const value = getInputValue("removalDecision");
+        removalStatus.hidden = value === "no" || !value;
         removalStatus.textContent = value === "yes"
           ? "Included."
           : (value === "not_sure" ? "To confirm." : "");
@@ -5304,8 +6068,8 @@
 
       const floorPrepStatus = document.getElementById("floorPrepDecisionStatus");
       if (floorPrepStatus) {
-        const value = getInputValue("floorPrepDecision") || "no";
-        floorPrepStatus.hidden = value === "no";
+        const value = getInputValue("floorPrepDecision");
+        floorPrepStatus.hidden = value === "no" || !value;
         floorPrepStatus.textContent = value === "yes"
           ? "Included."
           : (value === "not_sure" ? "To confirm." : "");
@@ -5356,6 +6120,24 @@
           ? "Included."
           : (value === "not_sure" ? "To confirm." : "");
       }
+
+      const mainScopeValues = [
+        getInputValue("removalDecision") || "no",
+        getInputValue("underlayDecision") || "no",
+        getInputValue("finishDecision") || "no"
+      ];
+      const siteRiskValues = [
+        getInputValue("floorPrepDecision") || "no",
+        getInputValue("moistureBarrier") || "no",
+        getInputValue("doorDecision") || "no",
+        getInputValue("furnitureDecision") || "no"
+      ];
+      setTextIfPresent("mainScopeStatus", mainScopeValues.indexOf("not_sure") >= 0
+        ? "Needs review"
+        : (mainScopeValues.some(function (value) { return value === "yes"; }) ? "Clear" : "Not started"));
+      setTextIfPresent("siteRiskStatus", siteRiskValues.indexOf("not_sure") >= 0
+        ? "Needs review"
+        : (siteRiskValues.some(function (value) { return value === "yes"; }) ? "Clear" : "Not started"));
     }
 
     function getAutoPatternTypeForSelectedRange() {
@@ -5381,7 +6163,7 @@
     }
 
     function shouldShowSelectedProductBanner() {
-      return shouldShowProductChoicePanel() && getProductChoiceMode() !== "choose_range";
+      return shouldShowProductChoicePanel() && getProductChoiceMode() === "recommend";
     }
 
     function shouldLockPatternTypeToSelectedRange() {
@@ -5544,6 +6326,15 @@
       const patternFieldVisible = isEngineered && isInstallOnly;
       const shouldLockInstallMethod = isEngineered && (currentPatternType === "herringbone" || currentPatternType === "chevron");
 
+      if (!isEngineered) {
+        setInputValue("patternType", "standard");
+        setInputValue("installMethod", "floating");
+      } else if (shouldLockInstallMethod) {
+        setInputValue("installMethod", "direct_glue");
+      } else if (!getInputValue("installMethod")) {
+        setInputValue("installMethod", "floating");
+      }
+
       if (patternTypeLabel) {
         patternTypeLabel.textContent = isEngineered && isInstallOnly
           ? "Board pattern"
@@ -5589,8 +6380,6 @@
       }
 
       if (!isEngineered) {
-        setInputValue("patternType", "standard");
-        setInputValue("installMethod", "floating");
         if (isInstallOnly) {
           installationPathHelper.textContent = selectedCategory === "hybrid"
             ? "Hybrid installation-only quotes use floating-floor installation."
@@ -5606,14 +6395,15 @@
           ? "Herringbone and chevron engineered timber are installed as glued down only."
           : "Herringbone and chevron engineered timber are quoted as direct glue installation only.";
       } else {
-        if (!getInputValue("installMethod")) {
-          setInputValue("installMethod", "floating");
-        }
         installationPathHelper.textContent = isInstallOnly
           ? "Choose the board pattern first, then confirm floating floor or glued down for straight-plank engineered timber."
           : "Engineered timber standard planks can be quoted as floating or direct glue installation.";
       }
 
+      if (installationPathHelper) {
+        installationPathHelper.hidden = !isEngineered;
+        installationPathHelper.setAttribute("aria-hidden", isEngineered ? "false" : "true");
+      }
       setConditionalFieldVisibility("installMethodField", installMethodFieldVisible);
       setConditionalFieldVisibility("patternTypeField", patternFieldVisible);
       syncUnderlayForCurrentScope();
@@ -5627,6 +6417,15 @@
 
     function setMeasurementMethod(method) {
       setInputValue("measurementMethod", method);
+      trackQuoteEvent("quote_area_method_selected", {
+        measurement_method: method
+      });
+      if (method === "floorplan_upload") {
+        trackQuoteEvent("quote_floorplan_selected", {});
+      }
+      if (method === "unknown") {
+        trackQuoteEvent("quote_unknown_area_selected", {});
+      }
       setActiveCards("[data-measurement]", method, "data-measurement");
       document.querySelectorAll(".measure-panel").forEach(function (panel) {
         panel.classList.toggle("active", panel.id === method + "_panel");
@@ -5931,12 +6730,14 @@
 
     function setSelectedCategory(category, options) {
       const settings = Object.assign({ preserveProduct: false, trackStartFromProduct: false }, options || {});
-      const meta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(category) : null;
+      const uncertain = category === "not_sure";
+      const meta = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getCategoryMeta(uncertain ? "hybrid" : category) : null;
       const normalisedCategory = meta ? meta.id : "hybrid";
       const currentRange = getInputValue("selectedRangeId");
       const currentRangeRecord = getRangeRecordById(normalisedCategory, currentRange);
 
       setInputValue("selectedProductCategory", normalisedCategory);
+      setInputValue("flooringCategoryUncertain", uncertain ? "yes" : "");
 
       if (!settings.preserveProduct || !currentRangeRecord) {
         setInputValue("selectedProduct", "");
@@ -5947,6 +6748,9 @@
       }
 
       PRODUCT_LIBRARY.saveSelectedCategory(normalisedCategory);
+      trackQuoteEvent("quote_product_selected", {
+        product_category: normalisedCategory
+      });
 
       if (settings.trackStartFromProduct && window.OperonTracking) {
         window.OperonTracking.trackEvent("quote_start_from_product", {
@@ -6115,12 +6919,18 @@
         }
         if (selectedProductBanner) {
           selectedProductBanner.hidden = true;
+          selectedProductBanner.setAttribute("aria-hidden", "true");
         }
         return;
       }
 
       const currentMode = getProductChoiceMode();
       setInputValue("productChoiceMode", currentMode);
+      if (selectedProductBanner) {
+        const showSelectedBanner = shouldShowSelectedProductBanner();
+        selectedProductBanner.hidden = !showSelectedBanner;
+        selectedProductBanner.setAttribute("aria-hidden", showSelectedBanner ? "false" : "true");
+      }
       if (isAutomaticProductChoiceMode(currentMode) && PRODUCT_SELECTION && PRODUCT_LIBRARY) {
         const automaticRange = getAutomaticRangeForProductChoiceMode(getSelectedProductCategory(), currentMode);
         if (automaticRange && getInputValue("selectedRangeId") !== automaticRange.rangeId) {
@@ -6251,10 +7061,12 @@
 
       if (!shouldShowSelectedProductBanner()) {
         selectedProductBanner.hidden = true;
+        selectedProductBanner.setAttribute("aria-hidden", "true");
         return;
       }
 
       selectedProductBanner.hidden = false;
+      selectedProductBanner.setAttribute("aria-hidden", "false");
       syncSelectedProductState();
       const selection = getResolvedQuoteSelection();
       const category = selection.category || getSelectedProductCategory();
@@ -6364,6 +7176,9 @@
         sourceLabel = "Enter total area";
         if (!realArea) {
           warnings.push("Total area is missing.");
+          measurementStatus = "unknown";
+          estimateReady = false;
+          quoteConfidence = "low";
         }
       } else if (method === "room_by_room") {
         realArea = validRooms.reduce(function (sum, room) {
@@ -6373,6 +7188,9 @@
         sourceLabel = "Add rooms";
         if (!realArea) {
           warnings.push("Add at least one valid room measurement.");
+          measurementStatus = "unknown";
+          estimateReady = false;
+          quoteConfidence = "low";
         }
       } else if (method === "unknown") {
         realArea = 0;
@@ -6390,6 +7208,9 @@
         sourceLabel = "Use floor plan";
         if (!realArea) {
           warnings.push("Measured floor plan area is still missing.");
+          measurementStatus = "unknown";
+          estimateReady = false;
+          quoteConfidence = "low";
         }
       }
 
@@ -6422,13 +7243,11 @@
       const settings = Object.assign({ requireDeliveryEmail: false }, options || {});
       const errors = [];
       if (!getInputValue("fullName").trim()) errors.push("Full name is required.");
-      if (!getInputValue("phone").trim()) errors.push("Phone is required.");
       const emailValue = getDeliveryEmailAddress(input);
+      if (!getInputValue("phone").trim() && !emailValue) errors.push("Phone or email is required.");
       if (emailValue && !/.+@.+\..+/.test(emailValue)) errors.push("Email format looks invalid.");
       if (settings.requireDeliveryEmail && !emailValue) errors.push("Please enter an email address to receive a copy of the estimate.");
-      if (!getInputValue("siteAddress").trim() && !(getInputValue("suburb").trim() && getInputValue("postcode").trim())) {
-        errors.push("Please enter the site address, or provide suburb and postcode.");
-      }
+      if (!getInputValue("suburb").trim()) errors.push("Suburb is required.");
       if (!getInputValue("postcode").trim()) errors.push("Postcode is required.");
 
       const measurement = getMeasurementState();
@@ -6486,40 +7305,21 @@
       const input = getFormInput();
 
       if (currentQuoteStep === 0) {
-        const hasName = !!getInputValue("fullName").trim();
-        const hasPhone = !!getInputValue("phone").trim();
-        const hasSiteAddress = !!getInputValue("siteAddress").trim();
         const hasSuburbPostcode = !!getInputValue("suburb").trim() && !!getInputValue("postcode").trim();
 
-        if (!hasName) {
-          return { valid: false, message: "Please enter the customer name." };
+        if (!hasSuburbPostcode) {
+          return { valid: false, message: "Please enter suburb and postcode to start." };
         }
-        if (!hasPhone) {
-          return { valid: false, message: "Please enter a phone number." };
+        if (!getInputValue("propertyType")) {
+          return { valid: false, message: "Please choose the property type." };
         }
-        if (!hasSiteAddress && !hasSuburbPostcode) {
-          return { valid: false, message: "Please enter the site address, or provide suburb and postcode." };
+        if (!getInputValue("quoteMode")) {
+          return { valid: false, message: "Please choose a quote mode." };
         }
         return { valid: true, message: "" };
       }
 
       if (currentQuoteStep === 1) {
-        if (!getInputValue("propertyType")) {
-          return { valid: false, message: "Please choose the property type." };
-        }
-        if (!document.getElementById("propertyLevelField").hidden && !getInputValue("level")) {
-          return { valid: false, message: "Please choose the property level." };
-        }
-        if (!document.getElementById("hasLiftField").hidden && !getInputValue("hasLift")) {
-          return { valid: false, message: "Please choose the lift detail." };
-        }
-        return { valid: true, message: "" };
-      }
-
-      if (currentQuoteStep === 2) {
-        if (!getInputValue("quoteMode")) {
-          return { valid: false, message: "Please choose a quote mode." };
-        }
         if (!getInputValue("selectedProductCategory")) {
           return { valid: false, message: "Please choose a flooring category." };
         }
@@ -6542,10 +7342,6 @@
           && !getInputValue("installMethod")) {
           return { valid: false, message: "Please choose the engineered timber installation method." };
         }
-        return { valid: true, message: "" };
-      }
-
-      if (currentQuoteStep === 3) {
         if (!getInputValue("measurementMethod")) {
           return { valid: false, message: "Please choose a measurement method." };
         }
@@ -6564,27 +7360,24 @@
         return { valid: true, message: "" };
       }
 
-      if (currentQuoteStep === 4) {
+      if (currentQuoteStep === 2) {
         if (!getInputValue("stairs")) {
           return { valid: false, message: "Please choose whether the project includes stairs." };
         }
-        return { valid: true, message: "" };
-      }
-
-      if (currentQuoteStep === 5) {
-        if (input.removalDecision === "yes" && isRemovalSelected(input.existingFloorToRemove) && !input.removalDisposal) {
-          return { valid: false, message: "Please choose whether disposal of removed flooring is included." };
+        if (!getInputValue("removalDecision")) {
+          return { valid: false, message: "Please choose removal, or choose Not sure." };
         }
-        if (input.furnitureDecision === "yes" && shouldShowFurnitureRoomCount(input.furnitureType) && !Math.max(0, Math.round(parsePositiveNumber(input.furnitureRoomCount)))) {
-          return { valid: false, message: "Please enter how many furnished rooms need to be moved." };
-        }
-        if (input.doorDecision === "yes" && input.doorTrimming === "yes" && !Math.max(0, Math.round(parsePositiveNumber(input.doorCount)))) {
-          return { valid: false, message: "Please enter the door quantity." };
+        if (!getInputValue("floorPrepDecision")) {
+          return { valid: false, message: "Please choose floor preparation, or choose Not sure." };
         }
         return { valid: true, message: "" };
       }
 
-      if (currentQuoteStep === 6) {
+      if (currentQuoteStep === 3) {
+        return { valid: true, message: "" };
+      }
+
+      if (currentQuoteStep === 4) {
         const errors = validateQuoteInput(input);
         const summaryIssues = getQuoteSummaryConsistencyIssues(input, getCurrentQuoteResult());
         return {
@@ -6869,6 +7662,7 @@
         state.currentQuoteResult = pendingResult;
         if (config.render !== false) {
           renderQuoteSummary(pendingResult);
+          renderQuoteBuildStatus(pendingResult);
         }
         return pendingResult;
       }
@@ -6877,6 +7671,7 @@
 
       if (config.render !== false) {
         renderQuoteSummary(localResult);
+        renderQuoteBuildStatus(localResult);
       }
 
       if (!canUsePrivateQuoteRuntime()) {
@@ -6894,6 +7689,7 @@
         state.currentQuoteResult = privateResult;
         if (config.render !== false) {
           renderQuoteSummary(privateResult);
+          renderQuoteBuildStatus(privateResult);
         }
         if (config.track !== false) {
           trackCalculatedQuote(privateResult);
@@ -6937,6 +7733,7 @@
         quoteMode: getInputValue("quoteMode"),
         selectedProductCategory: getSelectedProductCategory(),
         selectedProduct: getInputValue("selectedProduct"),
+        flooringCategoryUncertain: getInputValue("flooringCategoryUncertain"),
         selectedRangeId: getInputValue("selectedRangeId"),
         selectedColour: getInputValue("selectedColour"),
         productSelectionMode: getInputValue("productSelectionMode"),
@@ -6957,6 +7754,7 @@
         stairsChoice: getInputValue("stairs"),
         stairsCountRange: getInputValue("stairsCountRange"),
         stairsRequiresReview: getInputValue("stairsRequiresReview"),
+        stairApproxCount: getInputValue("stairApproxCount"),
         stairWidthKnown: getInputValue("stairWidthKnown"),
         stairWidthMm: getInputValue("stairWidthMm"),
         removalDecision: getInputValue("removalDecision"),
@@ -7160,26 +7958,33 @@
 
     function readLatestQuoteReviewPayload() {
       const params = new URLSearchParams(window.location.search);
-      const fromQuoteAdvisor = params.get("source") === "quote_review";
-      if (!fromQuoteAdvisor) {
-        return null;
-      }
+      const fromQuoteReview = params.get("source") === "quote_review";
 
       try {
+        const hiddenPayload = leadQuoteReviewPayloadInput && leadQuoteReviewPayloadInput.value
+          ? JSON.parse(leadQuoteReviewPayloadInput.value)
+          : null;
         const saved = JSON.parse(
           localStorage.getItem(LATEST_QUOTE_REVIEW_KEY)
             || localStorage.getItem(QUOTE_REVIEW_INTELLIGENCE_KEY)
             || "null"
         );
+        const basePayload = hasMeaningfulQuoteReviewPayload(hiddenPayload)
+          ? hiddenPayload
+          : (hasMeaningfulQuoteReviewPayload(saved) ? saved : null);
 
-        if (!saved || typeof saved !== "object") {
+        if (!basePayload) {
           return null;
         }
 
-        return Object.assign({}, saved, {
-          next_step_taken: saved.next_step_taken || "quote.html",
+        if (!fromQuoteReview && !hasMeaningfulQuoteReviewPayload(hiddenPayload) && !hasMeaningfulQuoteReviewPayload(saved)) {
+          return null;
+        }
+
+        return Object.assign({}, basePayload, {
+          next_step_taken: basePayload.next_step_taken || "quote.html",
           converted_to_quote: true,
-          handoff_source: "quote_review"
+          handoff_source: fromQuoteReview ? "quote_review" : (basePayload.handoff_source || "stored_quote_review")
         });
       } catch (error) {
         return null;
@@ -7479,11 +8284,11 @@
       const summaryIssues = getQuoteSummaryConsistencyIssues(input, result);
       const summaryHeadline = document.getElementById("summaryHeadline");
       const pendingMeasurement = measurement.measurementStatus === "unknown" || result.measurementStatus === "unknown";
-      const confidence = getEstimateConfidence(measurement, result);
+      const confidence = getEstimateConfidenceModel(input, measurement, result);
 
       if (pendingMeasurement) {
         summaryHeadline.textContent = "Your flooring estimate";
-        document.getElementById("summaryTotal").textContent = "Pending";
+        document.getElementById("summaryTotal").textContent = "Your estimate will appear after flooring type and area are added.";
         document.getElementById("summaryPricingRangeNote").hidden = true;
         document.getElementById("summaryPricingRangeNote").textContent = "";
         document.getElementById("summaryTotalSecondary").textContent = "Pending";
@@ -7498,12 +8303,12 @@
         document.getElementById("summaryChargeableAreaLabel").textContent = "Next step status";
         document.getElementById("summaryChargeableArea").textContent = "Pending";
         document.getElementById("summaryChargeableAreaRow").hidden = false;
-        document.getElementById("summaryCaption").textContent = "Estimate only · final confirmation after site review";
+        document.getElementById("summaryCaption").textContent = "Estimate pending · final confirmation after site review";
         document.getElementById("summaryScope").textContent = result.quoteMode === "supply_install"
           ? "Supply & install"
           : "Installation only";
         document.getElementById("summaryMeasurement").textContent = measurement.sourceLabel;
-        document.getElementById("summaryConfidence").textContent = confidence;
+        document.getElementById("summaryConfidence").textContent = confidence.label;
         document.getElementById("summaryConfidenceText").textContent = getEstimateConfidenceText(confidence);
         document.getElementById("summaryCoverage").textContent = measurement.nextStepRequired
           ? ("Next step selected · " + getUnknownMeasurementNextStepLabel(measurement.nextStepRequired))
@@ -7561,12 +8366,14 @@
         ? formatArea(result.chargeableArea)
         : "Not used";
       document.getElementById("summaryChargeableAreaRow").hidden = isInstallOnly;
-      document.getElementById("summaryCaption").textContent = "Estimate only · final confirmation after site review";
+        document.getElementById("summaryCaption").textContent = confidence.reviewRequired
+          ? "Estimate only · scope review needed before final price"
+          : "Estimate only · final confirmation after site review";
       document.getElementById("summaryScope").textContent = result.quoteMode === "supply_install"
         ? "Supply & install"
         : "Installation only";
       document.getElementById("summaryMeasurement").textContent = measurement.sourceLabel;
-      document.getElementById("summaryConfidence").textContent = confidence;
+      document.getElementById("summaryConfidence").textContent = confidence.label;
       document.getElementById("summaryConfidenceText").textContent = getEstimateConfidenceText(confidence);
       document.getElementById("summaryCoverage").textContent = result.quoteLines.length
         ? ((categoryMeta ? categoryMeta.label : "Flooring") + " · " + result.quoteLines.map(function (line) { return line.label; }).join(" · "))
@@ -7574,16 +8381,14 @@
       document.getElementById("summaryQuotePath").textContent = result.quoteMode === "supply_install"
         ? "Supply and install selected"
         : "Installation only selected";
-      document.getElementById("summaryProductPricing").textContent = result.pricingMode === "product"
-        ? "Based on selected product pricing"
-        : (result.pricingMode === "fallback"
-          ? "Product price needs review"
-          : "Based on entry-level category pricing");
+      document.getElementById("summaryProductPricing").textContent = getProductPricingSummary(result);
       document.getElementById("summaryNextStep").textContent = summaryIssues.length
         ? "Check the quote details first"
-        : (result.pricingMode === "fallback"
-          ? "Submit for product price review"
-          : "Submit for final review and confirmation");
+        : (confidence.reviewRequired
+          ? "Submit for scope review"
+          : (shouldConfirmProductPrice(result)
+            ? "Submit for product price review"
+            : "Submit for final review and confirmation"));
       document.getElementById("measurementSourceLabel").textContent = measurement.sourceLabel;
       document.getElementById("realAreaMetric").textContent = formatArea(result.realArea);
       document.getElementById("chargeableAreaMetric").textContent = isInstallOnly
@@ -7596,8 +8401,12 @@
 
       renderEstimateBreakdown(result);
       renderPricedIncludedItems("summaryIncludedScopeList", result);
-      document.getElementById("summaryNextStepText").textContent = "Submit the quote request and we will review the details before confirming the final quote.";
-      renderWarnings(getSummaryWarnings(result.warnings));
+      document.getElementById("summaryNextStepText").textContent = confidence.reviewRequired
+        ? "Submit the quote request and we will review the uncertain scope items before confirming the final price."
+        : "Submit the quote request and we will review the details before confirming the final quote.";
+      renderWarnings(getSummaryWarnings(result.warnings).concat(confidence.uncertaintyItems.map(function (item) {
+        return "Needs confirmation: " + item + ".";
+      })));
 
       if (DEBUG_VIEW) {
         debugPanel.hidden = false;
@@ -7721,15 +8530,11 @@
         return;
       }
 
-      if (!getQuoteReviewMode()) {
-        setQuoteReviewMode("upload");
-      }
-
-      renderQuoteReview();
+      showPageStatus("Already have a written quote? Use the separate quote-review page so the normal quote flow stays focused on your Operon estimate.");
       window.requestAnimationFrame(function () {
-        const reviewSection = document.getElementById("quoteReview");
-        if (reviewSection) {
-          reviewSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        const reviewLink = document.querySelector(".hero-secondary-action a[href='quote-review.html']");
+        if (reviewLink) {
+          reviewLink.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       });
     }
@@ -7748,8 +8553,9 @@
       setMeasurementMethod("manual_total");
       setQuoteMode("supply_install");
       setProductChoiceMode("recommend", { track: false });
-      setStairsChoice("no");
-      applyStandardExtrasSetup();
+      setStairsChoice("not_sure");
+      setExtraDecision("removalDecision", "not_sure");
+      setExtraDecision("floorPrepDecision", "not_sure");
       currentQuoteStep = 0;
       state.pendingHandoffMessage = "";
       state.currentQuoteResult = null;
@@ -7774,6 +8580,7 @@
       let savedArea = 0;
       let savedRooms = [];
       let savedSource = "";
+      let savedMeasurementMode = "";
 
       try {
         const structured = JSON.parse(localStorage.getItem(FLOORPLAN_QUOTE_HANDOFF_KEY) || "null");
@@ -7781,6 +8588,7 @@
           savedArea = parsePositiveNumber(structured.realArea);
           savedRooms = Array.isArray(structured.rooms) ? structured.rooms : [];
           savedSource = structured.source || "";
+          savedMeasurementMode = structured.measurementMode || "";
         }
 
         if (!(savedArea > 0)) {
@@ -7789,12 +8597,24 @@
           );
           savedRooms = JSON.parse(localStorage.getItem(FLOORPLAN_ROOMS_KEY) || "[]");
           savedSource = localStorage.getItem(FLOORPLAN_SOURCE_KEY) || "";
+          savedMeasurementMode = savedSource === "suggest_all_mode"
+            ? "suggest_all"
+            : savedSource === "quick_room_mode"
+              ? "quick_room"
+              : "manual_trace";
         }
 
         if (savedArea > 0) {
+          const normalizedMeasurementMode = savedMeasurementMode || (savedSource === "suggest_all_mode"
+            ? "suggest_all"
+            : savedSource === "quick_room_mode"
+              ? "quick_room"
+              : "manual_trace");
           const payload = {
             realArea: savedArea,
             rooms: Array.isArray(savedRooms) ? savedRooms : [],
+            measurementSource: "floorplan",
+            measurementMode: normalizedMeasurementMode,
             source: savedSource || "",
             savedAt: new Date().toISOString()
           };
@@ -7807,15 +8627,22 @@
       } catch (error) {
         savedRooms = [];
         savedSource = "";
+        savedMeasurementMode = "";
       }
 
       state.floorplanRooms = Array.isArray(savedRooms) ? savedRooms : [];
       state.floorplanSource = savedSource;
+      state.floorplanMeasurementMode = savedMeasurementMode || (savedSource === "suggest_all_mode"
+        ? "suggest_all"
+        : savedSource === "quick_room_mode"
+          ? "quick_room"
+          : "manual_trace");
 
       return {
         savedArea: savedArea,
         savedRooms: state.floorplanRooms,
-        savedSource: state.floorplanSource
+        savedSource: state.floorplanSource,
+        savedMeasurementMode: state.floorplanMeasurementMode
       };
     }
 
@@ -7831,12 +8658,26 @@
       const storedSelectionState = PRODUCT_LIBRARY ? PRODUCT_LIBRARY.getStoredSelectionState() : null;
 
       if (fromFloorplan && floorplanState.savedArea > 0) {
-        setMeasurementMethod("floorplan_upload");
-        setInputValue("confirmedFloorplanArea", String(floorplanState.savedArea));
-        if (window.OperonTracking) {
-          window.OperonTracking.trackFloorplanAreaUsed(floorplanState.savedArea);
+        const currentMethod = getInputValue("measurementMethod");
+        const currentFloorplanArea = parsePositiveNumber(getInputValue("confirmedFloorplanArea"));
+        const currentManualArea = parsePositiveNumber(getInputValue("totalAreaM2"));
+        const hasExistingArea = (currentFloorplanArea > 0 || currentManualArea > 0)
+          && Math.abs((currentFloorplanArea || currentManualArea) - floorplanState.savedArea) > 0.01;
+        const shouldReplace = !hasExistingArea || window.confirm("Replace the existing quote area with the measured floor plan area?");
+
+        if (shouldReplace) {
+          setMeasurementMethod("floorplan_upload");
+          setInputValue("confirmedFloorplanArea", String(floorplanState.savedArea));
+          if (window.OperonTracking) {
+            window.OperonTracking.trackFloorplanAreaUsed(floorplanState.savedArea);
+          }
+          state.pendingHandoffMessage = "Floor plan area loaded: " + formatArea(floorplanState.savedArea) + ". This area came from the floor plan tool. Final site details may still be confirmed before installation.";
+        } else {
+          if (!currentMethod) {
+            setMeasurementMethod("manual_total");
+          }
+          state.pendingHandoffMessage = "Floor plan area is available but was not applied. You can choose it in the area step.";
         }
-        state.pendingHandoffMessage = "Floor plan area loaded: " + formatArea(floorplanState.savedArea) + ".";
       }
 
       if (fromProduct && ((storedProduct && PRODUCT_LIBRARY.getProductById(storedProduct.id)) || (storedSelectionState && storedSelectionState.selectedRangeId))) {
@@ -7846,13 +8687,13 @@
       }
 
       if (fromQuoteAdvisor && readLatestQuoteReviewPayload()) {
-        state.pendingHandoffMessage = "Quote Advisor context saved with this request. Continue the structured estimate when ready.";
+        state.pendingHandoffMessage = "Quote review details are ready to use with this request. Continue the quote when ready.";
       }
 
       if (fromFloorplan && floorplanState.savedArea > 0) {
-        currentQuoteStep = 3;
+        currentQuoteStep = 1;
       } else if (Number.isInteger(requestedStep) && requestedStep >= 0) {
-        currentQuoteStep = Math.min(requestedStep, 6);
+        currentQuoteStep = Math.min(requestedStep, 4);
       } else {
         currentQuoteStep = 0;
       }
@@ -7921,7 +8762,8 @@
             widthM: room.widthM || room.width || null,
             areaM2: room.areaM2 || room.area || null,
             included: room.includeInQuote !== false && room.included !== false,
-            source: state.floorplanSource || "floorplan"
+            source: room.source || state.floorplanSource || "floorplan",
+            measurementMode: state.floorplanMeasurementMode || ""
           };
         });
       }
@@ -8134,6 +8976,7 @@
         job: {
           quoteMode: input.quoteMode,
           productCategory: product.category,
+          flooringCategoryUncertain: input.flooringCategoryUncertain === "yes",
           productChoiceMode: input.productChoiceMode,
           selectedRangeId: input.selectedRangeId || null,
           selectedColour: input.selectedColour || null,
@@ -8142,6 +8985,9 @@
           productBrand: product.brand,
           productRange: product.rangeLabel || product.range,
           productColour: input.selectedColour || (product.selectionMode === "range_then_colour" ? product.colour : ""),
+          productScopeMetadata: PRODUCT_LIBRARY && typeof PRODUCT_LIBRARY.getProductScopeMetadata === "function"
+            ? PRODUCT_LIBRARY.getProductScopeMetadata(product)
+            : null,
           flooringPattern: input.patternType,
           installationMethod: input.installMethod || (product.category === "engineered" ? "floating" : "floating"),
           existingFloorToRemove: input.existingFloorToRemove || "",
@@ -8169,10 +9015,12 @@
           roomCount: pricing.roomCount,
           sourceLabel: pricing.measurementSource,
           floorplanSource: floorplanState.savedSource || "",
+          floorplanMeasurementMode: floorplanState.savedMeasurementMode || "",
           floorplanAreaFound: floorplanState.savedArea,
           rooms: rooms
         },
         extras: getSelectedExtrasForPayload(pricing),
+        scopeSignals: pricing.scopeSignals || null,
         pricing: Object.assign({}, pricing, {
           lineItems: buildQuoteItemsFromPricing(pricing)
         }),
@@ -8278,6 +9126,7 @@
         quoteConfidence: payload.measurement.quoteConfidence,
         nextStepRequired: payload.measurement.nextStepRequired || "",
         floorplanLookupAddress: payload.measurement.lookupAddress || "",
+        scopeSignals: payload.scopeSignals || (payload.pricing && payload.pricing.scopeSignals) || null,
         quoteReview: quoteReview
       };
 
@@ -8747,8 +9596,12 @@
         const summaryIssues = getQuoteSummaryConsistencyIssues(input, getCurrentQuoteResult());
         if (errors.length || summaryIssues.length) {
           const submitValidationMessage = errors[0] || summaryIssues[0] || "Please review the quote details and try again.";
+          const shouldReturnToBasics = /full name|phone|postcode|site address|suburb/i.test(submitValidationMessage);
+          if (shouldReturnToBasics) {
+            showQuoteStep(0, { scrollMode: "top" });
+          }
           showWizardValidationMessage(submitValidationMessage);
-          focusFirstInvalidField(currentQuoteStep);
+          focusFirstInvalidField(shouldReturnToBasics ? 0 : currentQuoteStep);
           if (window.OperonTracking) {
             window.OperonTracking.trackQuoteStepError(7, "summary", submitValidationMessage, "submit_validation");
           }
@@ -8766,6 +9619,12 @@
             leadPayload.realArea
           );
         }
+        trackQuoteEvent("quote_submitted", {
+          quote_mode: submitPayload.job.quoteMode,
+          measurement_method: submitPayload.measurement.method,
+          confidence_level: getEstimateConfidenceModel(input, getMeasurementState(), submitPayload.pricing).level,
+          review_required: !!submitPayload.manualReviewRequired
+        });
         window.__operonSuppressAbandon = true;
         localStorage.setItem("operon_last_quote_value", String(submitPayload.pricing.totalIncGst || 0));
         localStorage.setItem("operon_last_quote_type", submitPayload.job.quoteMode || "");
@@ -8793,6 +9652,12 @@
 
         const deliveryEmail = getDeliveryEmailAddress(input);
         const shouldSendEmailCopy = !!(deliveryEmail && input.emailQuoteCopy && (!state.quoteRuntimeHealth.checked || state.quoteRuntimeHealth.emailReady));
+        if (shouldSendEmailCopy) {
+          trackQuoteEvent("quote_email_copy_requested", {
+            quote_mode: submitPayload.job.quoteMode,
+            area_method: submitPayload.measurement.method
+          });
+        }
         let submitUpdateResult = null;
         let leadFormSubmitted = false;
         let submitUpdateError = null;
@@ -8935,6 +9800,18 @@
         }
       });
 
+      document.querySelectorAll(".decision-options").forEach(function (group) {
+        group.addEventListener("click", function (event) {
+          const button = event.target.closest(".decision-option");
+          if (!button || !group.contains(button)) {
+            return;
+          }
+          if (handleDecisionOptionClick(button)) {
+            event.preventDefault();
+          }
+        });
+      });
+
       quoteReviewModeChoices.addEventListener("click", function (event) {
         const button = event.target.closest("[data-review-mode]");
         if (!button) {
@@ -8996,8 +9873,7 @@
           if (!button) {
             return;
           }
-          setStairsChoice(button.getAttribute("data-stairs-choice"));
-          renderAll();
+          event.preventDefault();
         });
       }
 
@@ -9029,8 +9905,7 @@
         if (!button) {
           return;
         }
-        setExtraDecision(button.getAttribute("data-extra-field"), button.getAttribute("data-extra-choice"));
-        renderAll();
+        event.preventDefault();
       });
 
       const extrasStandardSetupButton = document.getElementById("extrasStandardSetupButton");
@@ -9069,6 +9944,17 @@
         if (window.OperonTracking) {
           window.OperonTracking.trackQuoteStart();
         }
+        trackQuoteEvent("quote_started", {
+          source_page: "quote.html"
+        });
+        if (event.target.id === "stairApproxCount") {
+          const approxCount = getStairApproxCount();
+          if (getInputValue("stairs") === "yes" && getTotalStairDetailCount() === 0) {
+            setInputValue("stairsCount", String(approxCount || 0));
+            setInputValue("stairsCountRange", approxCount > 0 ? "approximate" : "");
+            setInputValue("stairsRequiresReview", "yes");
+          }
+        }
         clearWizardValidationMessage();
         updateConditionalQuoteFields();
         renderQuoteReview();
@@ -9089,7 +9975,7 @@
       });
 
       leadRecoveryButton.addEventListener("click", function () {
-        showQuoteStep(6, { scrollMode: "top" });
+        showQuoteStep(4, { scrollMode: "top" });
       });
 
       const resetQuoteButton = document.getElementById("resetQuoteButton");
@@ -9099,7 +9985,7 @@
       const summaryEditButton = document.getElementById("summaryEditButton");
       if (summaryEditButton) {
         summaryEditButton.addEventListener("click", function () {
-          showQuoteStep(5, { scrollMode: "top" });
+          showQuoteStep(2, { scrollMode: "top" });
         });
       }
       wizardBackButton.addEventListener("click", goToPreviousQuoteStep);
@@ -9132,6 +10018,7 @@
     async function initialise() {
       debugPanel.hidden = !DEBUG_VIEW;
       setFloorplanLinks();
+      createExpressQuoteFlow();
       if (window.OperonTracking && (false || window.location.search.indexOf("quoteStep=") >= 0)) {
         window.OperonTracking.trackQuoteStart();
       }
@@ -9140,6 +10027,7 @@
 
       state.rooms = [createEmptyRoom("Living room")];
       loadDraft();
+      applyDefaultMainScopeChoices();
 
       if (!state.rooms.length) {
         state.rooms = [createEmptyRoom("Living room")];
@@ -9174,14 +10062,8 @@
       applyQuotePageHandoffState();
       setMeasurementMethod(measurementMethod);
       setQuoteMode(quoteMode);
-      setSelectedCategory(selectedProductCategory, { preserveProduct: true });
+      setSelectedCategory(getInputValue("flooringCategoryUncertain") === "yes" ? "not_sure" : selectedProductCategory, { preserveProduct: true });
       setProductChoiceMode(productChoiceMode, { track: false });
-      if (!getInputValue("stairs")) {
-        setStairsChoice("no");
-      }
-      if (!getInputValue("removalDecision")) {
-        applyStandardExtrasSetup();
-      }
       if (selectedProduct) {
         setSelectedProductById(selectedProduct, {
           persist: false,

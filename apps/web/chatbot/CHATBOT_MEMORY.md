@@ -45,13 +45,15 @@ Important pages:
 
 ## Quote Flow
 
-The quote journey is:
+The current quote journey has a customer-facing express presentation over the preserved full-scope data model:
 
 ```text
-product/category -> area -> extras -> estimate -> review
+project basics -> flooring and area -> main scope -> estimate preview -> contact and submit
 ```
 
 The chatbot should help customers understand this flow, but the quote page owns the actual quote process.
+
+Contact details are now in the final customer-facing step: suburb/postcode can start the quote, while name and phone or email are required before final submission. Advanced scope is still available inside estimate preview, but uncertain items can be marked `Not sure` and reviewed before final pricing.
 
 ## Product Logic
 
@@ -83,12 +85,12 @@ The chatbot must never calculate a final price or expose internal pricing logic.
 
 ## Quote Advisor / Quote Validation
 
-Quote review is about scope clarity and decision guidance, not quote ranking.
+Quote review is about scope clarity and decision guidance, not quote ranking or price beating.
 
 The current Quote Advisor has two modes:
 
-- Quick scope check: low-friction checkbox review, no upload required.
-- Detailed quote review: richer assessment when the user adds a quote file reference, quote total context, provider name, suburb/postcode, notes, or contact details.
+- Quick quote completeness check: no-file check based only on customer-entered or ticked information. It checks whether product, area, inclusions, exclusions and assumptions are clear enough to compare. It must not claim document review, price fairness, product matching, or an Operon comparable estimate.
+- Document-based quote review: strongest review path for an uploaded or written quote. It may extract visible document details such as price basis, product line, area, GST, total and missing scope. It must not call itself final price advice, say another installer is wrong, or claim Operon is cheaper.
 
 Quote Advisor creates a structured `latestQuoteReview` payload with:
 
@@ -100,7 +102,7 @@ Quote Advisor creates a structured `latestQuoteReview` payload with:
 - high / medium / low risk items
 - non-pricing clarity score
 - risk level
-- confidence level
+- extraction confidence, comparison level and decision confidence, each explained separately
 - recommended next step
 
 The chatbot may explain or route to this advisor, but it must not calculate, rank, or judge another quote total.
@@ -117,7 +119,7 @@ The chatbot should help check:
 - apartment access, lift, parking, and level
 - trims such as skirting or scotia
 
-When a user already has another quote, the preferred route is:
+When a user already has an uploaded quote, the preferred route is:
 
 ```text
 quote-review.html -> quote.html?source=quote_review
@@ -134,7 +136,7 @@ When users are unsure, guide them through one scope area at a time:
 - product definition
 - area and measurement
 - installation scope
-- site and access
+- site details
 - risk and preparation
 - finishing and accessories
 - commercial clarity
@@ -143,7 +145,7 @@ When users are unsure, guide them through one scope area at a time:
 
 Use plain customer language:
 
-- "Let’s check what is included."
+- "Let's check what is included."
 - "The next useful step is confirming the scope."
 - "Price is easier to compare once the same work is described."
 - "A cheaper quote may not describe the same job."
@@ -152,6 +154,8 @@ Avoid:
 
 - saying "Operon Scope Standard" unless asked internally
 - ranking competitor quotes
+- showing product match as likely below threshold
+- showing high comparison confidence when the comparison is category-level only
 - saying another installer is wrong
 - calculating price
 - asking multiple questions at once
@@ -168,7 +172,7 @@ The chatbot may direct users to educational content categories in a general way,
 - `quote.html`
 - `quote-review.html`
 
-If area is unclear, the chatbot should route into `quote.html` and keep floor plan measurement as context inside the quote journey rather than sending the user down a separate path.
+If area is generally unclear, the chatbot should route into `quote.html`. If the user specifically says they have a floor plan or wants measurement from a plan, `floorplan.html` is an approved route suggestion for measurement help only.
 
 ## Strategic Assistant Boundary
 
@@ -204,6 +208,13 @@ The chatbot should not behave like a generic content assistant. It should be a c
 - The chatbot should route quote-scope uncertainty to `quote-review.html` only when the user already has a written quote or is comparing inclusions.
 - The chatbot should route estimate-ready users to `quote.html`.
 - The chatbot should route product-choice uncertainty to `products.html` or category pages only when browsing is the next useful step.
-- The chatbot should treat area uncertainty as a quote-flow support issue, with floor plan measurement as an option inside the quote journey.
+- The chatbot should treat general area uncertainty as a quote-flow support issue, and route to `floorplan.html` only when the user specifically has a floor plan or wants measurement from a plan.
 - The chatbot should not name the internal Scope Standard publicly unless asked by the owner/developer.
 - The best safe phrase is: "Price is easier to compare once both quotes describe the same job."
+
+## Latest Chatbot Safety/Conversion Update - 2026-05-09
+
+- Added scope-first conversion triage for broad or overwhelmed users: identify whether product, area, existing floor, site details, or an existing quote is the blocker, then route to the smallest useful structured step.
+- Reinforced no-price-calculation refusal patterns: the chatbot should not calculate quote totals, rates, wastage, chargeable area, stair charges, removal, disposal, preparation, underlay, trims, access, or site adjustments.
+- Clarified floorplan guidance: route to `floorplan.html` only for measurement help when the customer has a plan or asks to measure from one; never calculate area or pricing in chat.
+- Expanded QA expectations for quote review and scope-first conversion: cheaper-looking quotes with missing prep should be handled as scope completeness, not price judgment.

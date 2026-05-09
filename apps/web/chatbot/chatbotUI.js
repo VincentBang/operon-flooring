@@ -185,6 +185,7 @@
       ".operon-chatbot-operator[hidden] { display: none; }",
       ".operon-chatbot-operator strong { font-size: 0.84rem; }",
       ".operon-chatbot-operator p { margin: 0; color: var(--operon-chatbot-muted); font-size: 0.8rem; line-height: 1.42; }",
+      ".operon-chatbot-operator-privacy { color: var(--operon-chatbot-muted); font-size: 0.76rem; }",
       ".operon-chatbot-operator-form { display: grid; gap: 7px; }",
       ".operon-chatbot-operator-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }",
       ".operon-chatbot-operator-field { display: grid; gap: 4px; }",
@@ -389,6 +390,7 @@
     operatorSection.hidden = true;
     const operatorTitle = createElement("strong", "", "Need a person?");
     const operatorCopy = createElement("p", "", "");
+    const operatorPrivacy = createElement("p", "operon-chatbot-operator-privacy", "");
     const operatorForm = createElement("form", "operon-chatbot-operator-form");
     const operatorGrid = createElement("div", "operon-chatbot-operator-grid");
     const operatorNameField = createElement("div", "operon-chatbot-operator-field");
@@ -432,6 +434,7 @@
     operatorForm.appendChild(operatorButton);
     operatorSection.appendChild(operatorTitle);
     operatorSection.appendChild(operatorCopy);
+    operatorSection.appendChild(operatorPrivacy);
     operatorSection.appendChild(operatorForm);
 
     const inputWrap = createElement("form", "operon-chatbot-input-wrap");
@@ -475,6 +478,7 @@
     }
 
     function setOpen(next) {
+      const wasOpen = isOpen;
       isOpen = !!next;
       panel.setAttribute("data-open", isOpen ? "true" : "false");
       panel.setAttribute("aria-hidden", isOpen ? "false" : "true");
@@ -491,6 +495,11 @@
         lastFocusedBeforeOpen.focus();
       }
       settings.onToggle(isOpen);
+      if (!wasOpen && isOpen && window.OperonTracking && typeof window.OperonTracking.trackEvent === "function") {
+        window.OperonTracking.trackEvent("chatbot_opened", {
+          source: "chatbot_toggle"
+        });
+      }
     }
 
     function render(snapshot) {
@@ -534,7 +543,8 @@
       route.hidden = !!operatorHandoff;
       if (operatorHandoff) {
         operatorTitle.textContent = operatorHandoff.title || "Need a person?";
-        operatorCopy.textContent = operatorHandoff.copy || "Send your contact details and project note so the team can follow up.";
+        operatorCopy.textContent = operatorHandoff.copy || "Send your contact details and project note so Operon can follow up. This is not a live chat.";
+        operatorPrivacy.textContent = operatorHandoff.privacyCopy || "Your message and recent chat context may be sent to support this follow-up request.";
         operatorButton.textContent = operatorHandoff.primaryLabel || "Send operator request";
       }
 
@@ -715,6 +725,12 @@
 
     routeLink.addEventListener("click", function (event) {
       const focusId = routeLink.getAttribute("data-chatbot-focus-id") || "";
+      if (window.OperonTracking && typeof window.OperonTracking.trackEvent === "function") {
+        window.OperonTracking.trackEvent("chatbot_route_clicked", {
+          source: "chatbot_route",
+          event_context: routeLink.textContent || "route"
+        });
+      }
       const routeUrl = new URL(routeLink.href, window.location.href);
       const currentUrl = new URL(window.location.href);
       const samePage = routeUrl.pathname === currentUrl.pathname && routeUrl.origin === currentUrl.origin;

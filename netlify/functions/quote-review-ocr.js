@@ -1363,7 +1363,7 @@ async function compareAgainstOperonDatabase(fields, ocrResult) {
   if (!fields || fields.status === "no_text") {
     return {
       status: "not_ready",
-      notes: "No extracted quote text is available for Operon comparison.",
+      notes: "Readable uploaded quote text is not available for Operon comparison.",
       productMatches: [],
       priceGuide: null,
       scopeComparison: []

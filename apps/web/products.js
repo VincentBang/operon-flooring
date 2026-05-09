@@ -13389,6 +13389,52 @@
     };
   }
 
+  function getProductScopeMetadata(productOrId) {
+    const product = typeof productOrId === "string" ? getProductById(productOrId) : productOrId;
+    if (!product) {
+      return null;
+    }
+    const rangeContent = product.rangeContent || {};
+    const technical = Array.isArray(rangeContent.technical) ? rangeContent.technical : [];
+    const technicalValue = function (labels) {
+      const wanted = labels.map(function (label) { return String(label).toLowerCase(); });
+      const row = technical.find(function (item) {
+        return wanted.indexOf(String(item.label || "").toLowerCase()) >= 0;
+      });
+      return row ? row.value : "";
+    };
+    const category = product.category || "";
+    const installMethod = technicalValue(["Installation", "Installation Method"]);
+    const warranty = technicalValue(["Warranty"]);
+    const boardSize = technicalValue(["Board Size", "Plank Size", "Panel Size"]);
+
+    return {
+      category: category,
+      rangeId: product.rangeId || "",
+      rangeLabel: product.rangeLabel || product.range || "",
+      selectionMode: product.selectionMode || "",
+      colour: product.colour || "",
+      thickness: product.thickness || technicalValue(["Total Thickness", "Thickness"]),
+      boardSize: boardSize,
+      warranty: warranty,
+      customerScopeNotes: [
+        category === "engineered" ? "Confirm colour, pattern and installation method before final pricing." : "Confirm final colour before installation.",
+        installMethod ? "Supplier installation note: " + installMethod + "." : "",
+        boardSize ? "Board or plank size is available for final product confirmation." : "",
+        warranty ? "Warranty should be confirmed with the selected product and installation method." : ""
+      ].filter(Boolean),
+      quoteScopePrompts: [
+        "product_range",
+        category === "engineered" ? "colour_and_pattern" : "colour_confirmation",
+        "underlay_or_acoustic_layer",
+        "subfloor_preparation",
+        "trims_and_transitions",
+        "stairs_if_applicable",
+        "access_and_site_conditions"
+      ]
+    };
+  }
+
   window.OPERON_PRODUCTS = PRODUCTS;
   window.OperonProducts = {
     STORAGE_KEY: STORAGE_KEY,
@@ -13422,6 +13468,7 @@
     saveSelectedProduct: saveSelectedProduct,
     saveSelectionState: saveSelectionState,
     clearSelectedProduct: clearSelectedProduct,
+    getProductScopeMetadata: getProductScopeMetadata,
     formatProductRate: formatProductRate,
     getProductStatusLabel: getProductStatusLabel,
     openCatalogueLightbox: openCatalogueLightbox,
