@@ -24,7 +24,7 @@ Set these in Netlify production:
 
 - `OPERON_RATE_LIMIT_SALT`: long random value used to hash client IPs for rate limiting.
 - `OPERON_TURNSTILE_SECRET`: Cloudflare Turnstile secret key.
-- `OPERON_ALLOWED_ORIGINS`: comma-separated production origins, for example `https://operonflooring.com.au,https://www.operonflooring.com.au`.
+- `OPERON_ALLOWED_ORIGINS`: comma-separated production origins, for example `https://your-primary-domain.example,https://www.your-primary-domain.example`.
 
 Existing required server secrets still apply:
 
@@ -84,4 +84,3 @@ After deploying:
 8. Confirm unauthorised admin requests return `401`.
 9. Confirm repeated abuse returns `429`.
 10. Confirm no personal data appears in `operon_rate_limits`.
-
