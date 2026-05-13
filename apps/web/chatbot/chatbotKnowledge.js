@@ -25,18 +25,45 @@
     }
   };
 
-  const QUOTE_EXPLANATION = "The online result is a guided starting estimate, not the final confirmed quote. The quote gathers contact details, property details, product direction, measured area, stairs, removal, disposal, preparation, trims, furniture, and notes so Operon can review the real scope before confirmation.";
+  const QUOTE_FLOW_STEPS = [
+    {
+      key: "project_basics",
+      label: "Project basics",
+      customerCopy: "Suburb, postcode, property type, and quote mode. Contact details can wait until submit."
+    },
+    {
+      key: "flooring_area",
+      label: "Flooring and area",
+      customerCopy: "Choose the flooring direction, range or colour where relevant, then add area by total, rooms, floor plan, or mark it as unknown."
+    },
+    {
+      key: "main_scope",
+      label: "Main scope",
+      customerCopy: "Confirm high-impact items: stairs, existing floor removal, disposal, and floor preparation. Use Not sure where site review is needed."
+    },
+    {
+      key: "estimate_preview",
+      label: "Estimate preview",
+      customerCopy: "Review the starting estimate. Advanced details such as underlay, trims, moisture, doors, furniture, and notes are optional."
+    },
+    {
+      key: "contact_submit",
+      label: "Contact and submit",
+      customerCopy: "Add name and phone, optionally email yourself a copy, then submit for Operon review."
+    }
+  ];
+
+  const QUOTE_EXPLANATION = "The online quote is a guided starting estimate, not the final confirmed quote. It now follows five customer-facing steps: project basics, flooring and area, main scope, estimate preview, then contact and submit. Contact details are completed near the end, and an emailed copy is optional.";
   const FACTORS = [
-    "measured area",
-    "flooring category and product path",
+    "flooring category, range, colour, and pattern where relevant",
+    "measurement method and area",
+    "stairs",
     "existing floor to remove",
     "take-away disposal",
     "subfloor preparation",
     "underlay or acoustic layer",
-    "apartment parking and lift details",
-    "stairs or manual review items",
-    "skirting, scotia, transition trims, furniture, and door trimming",
-    "warranty, exclusions, and final confirmation"
+    "skirting, scotia, transition trims, moisture protection, door trimming, furniture, and notes",
+    "final site scope confirmation before booking"
   ];
 
   const SCOPE_CHECKS = [
@@ -149,6 +176,12 @@
     return "The main estimate factors are " + FACTORS.join(", ") + ".";
   }
 
+  function getQuoteFlowSteps() {
+    return QUOTE_FLOW_STEPS.map(function (item) {
+      return Object.assign({}, item);
+    });
+  }
+
   function getScopeChecks() {
     return SCOPE_CHECKS.map(function (item) {
       return Object.assign({}, item);
@@ -197,12 +230,14 @@
   window.OperonChatbotKnowledge = {
     categoryGuidance: CATEGORY_GUIDANCE,
     factors: FACTORS.slice(),
+    quoteFlowSteps: getQuoteFlowSteps(),
     scopeChecks: getScopeChecks(),
     playbooks: PLAYBOOKS,
     getCategoryGuidance: getCategoryGuidance,
     getRecommendationSummary: getRecommendationSummary,
     getQuoteExplanation: getQuoteExplanation,
     getPriceFactorsCopy: getPriceFactorsCopy,
+    getQuoteFlowSteps: getQuoteFlowSteps,
     getScopeChecks: getScopeChecks,
     getScopeCheckCopy: getScopeCheckCopy,
     getRangeGuidance: getRangeGuidance,

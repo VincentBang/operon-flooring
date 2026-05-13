@@ -176,15 +176,15 @@
   }
 
   function getExtractionConfidence(normalized) {
-    const hasCore = Boolean(
-      normalized.documentType &&
-      normalized.productScopeLine &&
+    const hasCompletePriceBasis = Boolean(
       normalized.quantityM2 &&
       normalized.unitPriceExGst &&
-      (normalized.subtotalExGst || normalized.totalIncGst)
+      normalized.subtotalExGst &&
+      normalized.gstAmount &&
+      normalized.totalIncGst
     );
-    if (hasCore) return "High";
-    if (normalized.quantityM2 || normalized.unitPriceExGst || normalized.totalIncGst) return "Medium";
+    if (hasCompletePriceBasis) return "High";
+    if (normalized.quantityM2 || normalized.unitPriceExGst || normalized.subtotalExGst || normalized.totalIncGst) return "Medium";
     return "Low";
   }
 
@@ -323,7 +323,8 @@
 
   function buildSummary(normalized) {
     if (normalized.quantityM2 && normalized.unitPriceExGst && normalized.totalIncGst) {
-      return "The uploaded document shows a price basis for " +
+      const basisText = normalized.extractionConfidence === "High" ? "shows a price basis" : "shows a partial price basis";
+      return "The uploaded document " + basisText + " for " +
         normalized.flooringTypeLabel + (normalized.thicknessMm ? " " + normalized.thicknessMm + "mm" : "") +
         " flooring at " + normalized.quantityM2 + " m² × " + money(normalized.unitPriceExGst) +
         "/m² ex GST, with a total of " + money(normalized.totalIncGst) +

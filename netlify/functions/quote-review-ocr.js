@@ -2,6 +2,7 @@
 
 const crypto = require("crypto");
 const sharp = require("sharp");
+const Security = require("./_security");
 const { loadPricingLibrary } = require("./_supabasePricing");
 
 const MAX_FILE_BYTES = 6 * 1024 * 1024;
@@ -11,23 +12,20 @@ const ALLOWED_MIME_TYPES = new Set([
   "application/pdf",
   "image/jpeg",
   "image/png",
-  "image/webp",
-  "image/heic",
-  "image/heif"
+  "image/webp"
 ]);
+const MIME_EXTENSIONS = {
+  "application/pdf": [".pdf"],
+  "image/jpeg": [".jpg", ".jpeg"],
+  "image/png": [".png"],
+  "image/webp": [".webp"]
+};
 
-function jsonResponse(statusCode, payload) {
-  return {
-    statusCode: statusCode,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "content-type",
-      "Access-Control-Allow-Methods": "POST, OPTIONS"
-    },
-    body: JSON.stringify(payload)
-  };
+function jsonResponse(event, statusCode, payload) {
+  return Security.jsonResponse(event, statusCode, payload, {
+    methods: "POST, OPTIONS",
+    allowHeaders: "content-type"
+  });
 }
 
 function toSafeFileName(value) {
@@ -47,9 +45,42 @@ function normaliseMimeType(value, fileName) {
   if (name.endsWith(".jpg") || name.endsWith(".jpeg")) return "image/jpeg";
   if (name.endsWith(".png")) return "image/png";
   if (name.endsWith(".webp")) return "image/webp";
-  if (name.endsWith(".heic")) return "image/heic";
-  if (name.endsWith(".heif")) return "image/heif";
   return "";
+}
+
+function extensionMatchesMimeType(fileName, mimeType) {
+  const name = String(fileName || "").toLowerCase();
+  const extensions = MIME_EXTENSIONS[mimeType] || [];
+  return extensions.some(function (extension) {
+    return name.endsWith(extension);
+  });
+}
+
+function hasAllowedFileSignature(buffer, mimeType) {
+  if (!Buffer.isBuffer(buffer) || buffer.length < 4) return false;
+  if (mimeType === "application/pdf") {
+    return buffer.subarray(0, 5).toString("ascii") === "%PDF-";
+  }
+  if (mimeType === "image/jpeg") {
+    return buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff;
+  }
+  if (mimeType === "image/png") {
+    return buffer.length >= 8
+      && buffer[0] === 0x89
+      && buffer[1] === 0x50
+      && buffer[2] === 0x4e
+      && buffer[3] === 0x47
+      && buffer[4] === 0x0d
+      && buffer[5] === 0x0a
+      && buffer[6] === 0x1a
+      && buffer[7] === 0x0a;
+  }
+  if (mimeType === "image/webp") {
+    return buffer.length >= 12
+      && buffer.subarray(0, 4).toString("ascii") === "RIFF"
+      && buffer.subarray(8, 12).toString("ascii") === "WEBP";
+  }
+  return false;
 }
 
 function getFilePayload(body) {
@@ -1533,40 +1564,73 @@ async function extractTextWithOpenAi(fileName, mimeType, buffer) {
 
 exports.handler = async function (event) {
   if (event.httpMethod === "OPTIONS") {
-    return jsonResponse(204, {});
+    return Security.optionsResponse(event, {
+      methods: "POST, OPTIONS",
+      allowHeaders: "content-type"
+    });
   }
 
   if (event.httpMethod !== "POST") {
-    return jsonResponse(405, { ok: false, error: "Method not allowed." });
+    return jsonResponse(event, 405, { ok: false, error: "Method not allowed." });
   }
 
   try {
+    const largeBodyResponse = Security.rejectLargeBody(event, 9 * 1024 * 1024);
+    if (largeBodyResponse) return largeBodyResponse;
+
+    const rateLimit = await Security.checkDurableRateLimit(event, {
+      scope: "quote-review-ocr",
+      limit: 10,
+      windowMs: 60 * 60 * 1000
+    });
+    if (!rateLimit.allowed) {
+      return Security.rateLimitResponse(event, rateLimit);
+    }
+
     const body = JSON.parse(event.body || "{}");
+    const turnstile = await Security.verifyTurnstile(event, body.turnstileToken || body.turnstile_token || "");
+    if (!turnstile.ok) {
+      return Security.botChallengeResponse(event, turnstile);
+    }
     const file = getFilePayload(body);
     const fileName = toSafeFileName(file.name || file.fileName);
     const mimeType = normaliseMimeType(file.type || file.mimeType, fileName);
     const base64 = stripDataUrlPrefix(file.dataBase64 || file.base64 || "");
 
     if (!base64) {
-      return jsonResponse(400, { ok: false, error: "Quote file data is required." });
+      return jsonResponse(event, 400, { ok: false, error: "Quote file data is required." });
     }
 
     if (!ALLOWED_MIME_TYPES.has(mimeType)) {
-      return jsonResponse(400, {
+      return jsonResponse(event, 400, {
         ok: false,
-        error: "Unsupported quote file type. Use PDF, JPG, PNG, WEBP or HEIC."
+        error: "Unsupported quote file type. Use PDF, JPG, PNG or WEBP."
+      });
+    }
+
+    if (!extensionMatchesMimeType(fileName, mimeType)) {
+      return jsonResponse(event, 400, {
+        ok: false,
+        error: "Quote file extension does not match the uploaded file type."
       });
     }
 
     const buffer = Buffer.from(base64, "base64");
     if (!buffer.length) {
-      return jsonResponse(400, { ok: false, error: "Quote file could not be read." });
+      return jsonResponse(event, 400, { ok: false, error: "Quote file could not be read." });
     }
 
     if (buffer.length > MAX_FILE_BYTES) {
-      return jsonResponse(413, {
+      return jsonResponse(event, 413, {
         ok: false,
         error: "Quote file is too large. Use a file under 6 MB for online review."
+      });
+    }
+
+    if (!hasAllowedFileSignature(buffer, mimeType)) {
+      return jsonResponse(event, 400, {
+        ok: false,
+        error: "Quote file signature could not be verified. Use a valid PDF, JPG, PNG or WEBP file."
       });
     }
 
@@ -1579,7 +1643,7 @@ exports.handler = async function (event) {
     const operonComparison = buildOperonComparison(extractedFields, databaseComparison, scopeClassification);
     const decisionReport = buildDecisionReport(extractedFields, scopeClassification, operonComparison);
 
-    return jsonResponse(200, {
+    return jsonResponse(event, 200, {
       ok: true,
       pipeline: {
         model: getOcrConfig().model,
@@ -1597,7 +1661,6 @@ exports.handler = async function (event) {
         name: fileName,
         mimeType: mimeType,
         sizeBytes: buffer.length,
-        contentHash: contentHash,
         reference: contentHash.slice(0, 12) + "-" + fileName
       },
       ocr: ocrResult,
@@ -1611,7 +1674,7 @@ exports.handler = async function (event) {
         : "ocr_review"
     });
   } catch (error) {
-    return jsonResponse(500, {
+    return jsonResponse(event, 500, {
       ok: false,
       error: error && error.message ? error.message : "Quote file handoff failed."
     });

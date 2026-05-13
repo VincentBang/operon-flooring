@@ -1,10 +1,30 @@
 "use strict";
 
 const { jsonResponse, calculatePrivateQuote } = require("./_supabasePricing");
+const Security = require("./_security");
 
 exports.handler = async function (event) {
+  if (event.httpMethod === "OPTIONS") {
+    return Security.optionsResponse(event, {
+      methods: "POST, OPTIONS",
+      allowHeaders: "content-type"
+    });
+  }
+
   if (event.httpMethod !== "POST") {
     return jsonResponse(405, { error: "Method not allowed." });
+  }
+
+  const largeBodyResponse = Security.rejectLargeBody(event, 250 * 1024);
+  if (largeBodyResponse) return largeBodyResponse;
+
+  const rateLimit = await Security.checkDurableRateLimit(event, {
+    scope: "calculate-private-quote",
+    limit: 120,
+    windowMs: 10 * 60 * 1000
+  });
+  if (!rateLimit.allowed) {
+    return Security.rateLimitResponse(event, rateLimit);
   }
 
   let payload;

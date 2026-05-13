@@ -98,10 +98,12 @@ Implementation rules:
 
 ## Data Collected
 
-The frontend builds a `quoteReviewPayload` and saves it locally as:
+The frontend builds quote-review state separately from quote-request state:
 
-- `latestQuoteReview`
-- `operon-quote-intelligence-v1`
+- `operon_quote_review_state_v2`
+- `operon_quote_review_latest_v1`
+- `operon_quote_review_intelligence_v1`
+- `operon_quote_review_handoff_v1`
 
 Payload fields:
 

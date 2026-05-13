@@ -121,12 +121,19 @@
         });
       }
 
-      return window.fetch(OPERATOR_REQUEST_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
+      const challengePromise = typeof window.operonGetTurnstileToken === "function"
+        ? window.operonGetTurnstileToken("operator_request")
+        : Promise.resolve("");
+
+      return challengePromise.then(function (turnstileToken) {
+        payload.turnstileToken = turnstileToken || "";
+        return window.fetch(OPERATOR_REQUEST_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
       }).then(function (response) {
         return response.json().catch(function () {
           return null;

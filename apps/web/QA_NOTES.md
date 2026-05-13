@@ -215,7 +215,7 @@ Scope: safe non-core SEO, content structure, internal links, sitemap consistency
 ## 2026-05-09 Continue Execution Overnight
 
 - Scope: completed a safe continuation batch focused on chatbot guidance and compact guide-page scope confirmation.
-- Chatbot QA: Quote Advisor result awareness now has isolated tests confirming read-only page state, no price calculation, no competitor judgment, and correct routing to `quote.html?from=quote-review`.
+- Chatbot QA: Quote review result awareness now has isolated tests confirming read-only page state, no price calculation, no competitor judgment, and correct routing to `quote.html?source=quote_review`.
 - Guide QA: refreshed `blog/floor-repair-or-replace.html`, `blog/why-is-my-floor-lifting.html`, `blog/laminate-floor-water-damage.html`, and `blog/hybrid-flooring-problems.html` with concise scope-check sections and quote-review/preparation/gaps guide routes.
 - Suburb QA: Parramatta, Liverpool, Auburn, Blacktown and Miranda pages now include compact local scope-check sections with quote-review and practical guide routes; generic or clipped snippets found during review were corrected.
 - Product/commercial QA: hybrid, laminate and engineered money pages plus installation-cost, products and quote-review pages now have tighter scope-first guidance without exposing rates or changing product/pricing logic.

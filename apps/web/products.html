@@ -21,6 +21,7 @@
   <script src="tracking.js"></script>
   <script src="pricingSourceConfig.js"></script>
   <script src="pricingSource.js"></script>
+  <script src="preference-floors-import.js"></script>
   <script src="products.js"></script>
   <script src="productSelection.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2LEXZJM3Q"></script>
@@ -34,11 +35,11 @@
 <body class="has-mobile-sticky-cta">
   <header class="site-header">
     <div class="shell nav">
-      <a class="brand" href="index.html#top">
+      <a class="brand" href="index.html#top" aria-label="Operon Flooring home">
         <span class="brand-mark" aria-hidden="true"></span>
-        Operon Flooring
+        <span>Operon Flooring</span>
       </a>
-      <nav class="nav-links">
+      <nav class="nav-links" aria-label="Primary">
         <a href="index.html#top">Home</a>
         <a href="quote.html">Quote</a>
         <a href="products.html">Flooring Products</a>
@@ -52,7 +53,7 @@
       </button>
       <div class="header-actions">
         <a class="header-phone" href="tel:04XXXXXXXX" data-track-cta="click_call_header">Call 04XX XXX XXX</a>
-        <a class="button" href="quote.html" data-track-cta="click_start_quote_header">Start quote</a>
+        <a class="button header-quote-button" href="quote.html">Start quote</a>
       </div>
     </div>
   </header>
@@ -82,11 +83,11 @@
                 <span class="pill">3 Continue to quote</span>
               </div>
             </div>
-            <div class="stat-stack">
-              <div class="stat-card">
-                <strong>Fastest path into a quote</strong>
-                Pick a flooring type, save the right range, then continue with that choice already carried into the quote.
-              </div>
+              <div class="stat-stack">
+                <div class="stat-card">
+                  <strong>Fastest path into a quote</strong>
+                  Pick a flooring type, choose a product direction, then continue with that context carried into the quote.
+                </div>
               <div class="stat-card">
                 <strong>Sydney quote support</strong>
                 Product, area, removal, stairs, trims and access can all affect the final scope.
@@ -105,23 +106,33 @@
       <div class="shell">
         <article class="section-card">
           <span class="eyebrow">Product Guidance</span>
-          <h2 style="margin-top: 18px;">Start with the product type that fits the project</h2>
-          <p>Use these paths as a practical starting point before filtering the live catalogue.</p>
-          <div class="decision-card-grid">
+          <h2 style="margin-top: 18px;">Choose your flooring type</h2>
+          <p>Start with the flooring category that fits the property, use case and quote path. You can still confirm the final range later.</p>
+          <div class="catalogue-category-cards" id="catalogueCategoryCards"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <article class="section-card">
+          <span class="eyebrow">Compare Categories</span>
+          <h2 style="margin-top: 18px;">Compare flooring types before browsing</h2>
+          <div class="grid-3" style="margin-top: 24px;">
             <article class="decision-guide-card">
               <h3>Hybrid flooring</h3>
               <p><strong>Best for:</strong> practical family homes, apartments, water-resistant needs and low maintenance.</p>
-              <a class="button-secondary" href="products.html?category=hybrid">View hybrid flooring</a>
+              <p><strong>Watch-outs:</strong> subfloor and acoustic layer still need review. Product thickness and range can affect the quote.</p>
             </article>
             <article class="decision-guide-card">
               <h3>Laminate flooring</h3>
-              <p><strong>Best for:</strong> cost-conscious renovations, rental upgrades and clean internal spaces.</p>
-              <a class="button-secondary" href="products.html?category=laminate">View laminate flooring</a>
+              <p><strong>Best for:</strong> cost-conscious renovations, rental upgrades and dry internal spaces.</p>
+              <p><strong>Watch-outs:</strong> not the first choice for wet-prone areas. Product quality and underlay still matter.</p>
             </article>
             <article class="decision-guide-card">
               <h3>Engineered timber</h3>
-              <p><strong>Best for:</strong> premium timber feel, higher-spec renovations and natural timber appearance.</p>
-              <a class="button-secondary" href="products.html?category=engineered">View engineered timber</a>
+              <p><strong>Best for:</strong> premium timber feel, higher-spec renovations and feature areas.</p>
+              <p><strong>Watch-outs:</strong> range, colour and installation method can affect the quote more. Herringbone or feature patterns need review.</p>
             </article>
           </div>
         </article>
@@ -131,20 +142,10 @@
     <section class="section">
       <div class="shell">
         <article class="section-card">
-          <span class="eyebrow">Choose Your Flooring Type</span>
-          <h2 style="margin-top: 18px;">Start with the right category</h2>
-          <p>Choose a category, then filter the live catalogue.</p>
-          <div class="catalogue-category-cards" id="catalogueCategoryCards"></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="shell">
-        <article class="section-card">
-          <span class="eyebrow">Product Filters</span>
-          <h2 style="margin-top: 18px;">Filter the catalogue</h2>
-          <p>Use category first, then narrow by brand, colour or thickness.</p>
+          <span class="eyebrow">Live Catalogue</span>
+          <h2 style="margin-top: 18px;">Browse the live catalogue</h2>
+          <p>Filter by category, range, colour or thickness. Choose a range if you know it, or continue to the quote undecided.</p>
+          <p class="catalogue-guidance-note">Choosing a product category or range is enough to start most quotes. Final colour can often be confirmed later. Engineered timber or feature patterns may need more detail before final pricing.</p>
 
           <div class="catalogue-toolbar">
             <div class="catalogue-category-row" id="catalogueCategoryRow"></div>
@@ -168,11 +169,12 @@
           </div>
 
           <div class="catalogue-selection-banner" id="catalogueSelectionBanner">
-            <strong id="catalogueSelectionTitle">No flooring product selected yet</strong>
-            <p id="catalogueSelectionText">Choose a flooring product here, then continue into the quote with that selection already saved.</p>
+            <strong id="catalogueSelectionTitle">No product direction selected yet</strong>
+            <p id="catalogueSelectionText">Choose a range if you know it, or start with a category if you are still comparing products.</p>
+            <p class="catalogue-selection-meta" id="catalogueSelectionMeta">Product direction can be attached to the quote without locking the final colour too early.</p>
             <div class="catalogue-selection-actions">
               <a class="button" id="catalogueContinueQuote" href="quote.html?from=product">Continue to quote</a>
-              <button class="button-secondary" id="catalogueClearSelection" type="button">Clear selected product</button>
+              <button class="button-secondary" id="catalogueClearSelection" type="button">Clear selection</button>
             </div>
             <div class="catalogue-context-links" id="catalogueContextLinks"></div>
           </div>
@@ -182,7 +184,7 @@
               <h2 style="margin: 0;">Available flooring products</h2>
               <p id="catalogueResultsSummary">Loading flooring products...</p>
             </div>
-            <a class="button-quiet" href="quote.html?from=product">Skip to quote</a>
+            <a class="button-quiet" id="catalogueSkipToQuote" href="quote.html?from=product">Start quote undecided</a>
           </div>
 
           <div class="catalogue-grid" id="catalogueProductsGrid"></div>
@@ -195,10 +197,10 @@
       <div class="shell">
         <article class="section-card">
           <span class="eyebrow">Not Sure Yet?</span>
-          <h2 style="margin-top: 18px;">You can start the quote undecided</h2>
-          <p>If you are still comparing products, start the quote with the closest category and note that the final range is undecided. Operon can review product fit alongside area, removal, stairs, trims and site conditions.</p>
+          <h2 style="margin-top: 18px;">Not sure what to choose yet?</h2>
+          <p>If you are still comparing products, start the quote with the closest category or leave the final range undecided. Operon can review product fit alongside area, removal, stairs, trims and site details.</p>
           <div class="hero-actions" style="margin-top: 24px;">
-            <a class="button" href="quote.html">Start quote with undecided product</a>
+            <a class="button" id="startQuoteUndecidedButton" href="quote.html">Start quote undecided</a>
             <a class="button-secondary" href="blog/index.html">Read comparison guides</a>
           </div>
         </article>
@@ -232,19 +234,14 @@
       </div>
     </section>
   </main>
-
   <footer class="site-footer footer-contained">
     <div class="container footer-grid">
-      <div class="footer-col">
-        <h3>Operon Flooring</h3>
-        <p>Sydney flooring quotes and installation support.</p>
-        <ul class="footer-contact-list">
-          <li><strong>Phone:</strong> <a href="tel:04XXXXXXXX">04XX XXX XXX</a></li>
-          <li><strong>Email:</strong> <a href="mailto:quotes@operonflooring.com.au">quotes@operonflooring.com.au</a></li>
-          <li><strong>Hours:</strong> Mon-Fri 8:00am-5:30pm, Sat 9:00am-2:00pm</li>
-          <li><strong>Online quotes:</strong> Available 24/7</li>
-          <li><strong>Service area:</strong> Sydney and surrounding suburbs</li>
-        </ul>
+      <div class="footer-col footer-brand-block">
+        <a class="footer-logo" href="index.html" aria-label="Operon Flooring home">
+          <img src="assets/operon-logo-final.png" alt="Operon Flooring logo" width="154" height="49">
+        </a>
+        <p class="footer-brand-copy">Flooring quotes and installation guidance for Sydney projects.</p>
+        <a class="footer-brand-cta" href="quote.html">Start quote</a>
       </div>
       <div class="footer-col">
         <h4>Products</h4>
@@ -252,37 +249,42 @@
           <li><a href="hybrid-flooring-sydney.html">Hybrid Flooring Sydney</a></li>
           <li><a href="laminate-flooring-sydney.html">Laminate Flooring Sydney</a></li>
           <li><a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring Sydney</a></li>
-          <li><a href="products.html">Products page</a></li>
+          <li><a href="products.html">Flooring Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Quote &amp; Tools</h4>
+        <ul>
+          <li><a href="quote.html">Start Quote</a></li>
+          <li><a href="quote-review.html">Quote Review</a></li>
+          <li><a href="floorplan.html">Upload Floor Plan</a></li>
+          <li><a href="blog/index.html">Flooring Guides</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Locations</h4>
         <ul>
-          <li><a href="parramatta-flooring.html">Parramatta</a></li>
-          <li><a href="liverpool-flooring.html">Liverpool</a></li>
-          <li><a href="auburn-flooring.html">Auburn</a></li>
-          <li><a href="blacktown-flooring.html">Blacktown</a></li>
-          <li><a href="miranda-flooring.html">Miranda</a></li>
+          <li><a href="flooring-edmondson-park.html">Edmondson Park</a></li>
+          <li><a href="flooring-liverpool.html">Liverpool</a></li>
+          <li><a href="flooring-leppington.html">Leppington</a></li>
+          <li><a href="flooring-camden.html">Camden</a></li>
+          <li><a href="flooring-campbelltown.html">Campbelltown</a></li>
+          <li><a href="flooring-parramatta.html">Parramatta</a></li>
+          <li><a href="flooring-bankstown.html">Bankstown</a></li>
+          <li><a href="flooring-auburn.html">Auburn</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Actions</h4>
+        <h4>Company</h4>
         <ul>
-          <li><a href="quote.html">Start Quote</a></li>
-          <li><a href="quote-review.html">Quote Review</a></li>
-          <li><a href="floorplan.html">Upload Floor Plan</a></li>
-          <li><a href="products.html">Flooring Products</a></li>
-          <li><a href="blog/index.html">Guides</a></li>
           <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms</a></li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>&copy; 2026 Operon Flooring. All rights reserved.</p>
-      <div class="footer-legal">
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="terms.html">Terms</a>
-      </div>
+      <p>&copy; 2026 Operon Flooring</p>
     </div>
   </footer>
 
@@ -311,10 +313,13 @@
       const selectionBanner = document.getElementById("catalogueSelectionBanner");
       const selectionTitle = document.getElementById("catalogueSelectionTitle");
       const selectionText = document.getElementById("catalogueSelectionText");
+      const selectionMeta = document.getElementById("catalogueSelectionMeta");
       const continueQuoteLink = document.getElementById("catalogueContinueQuote");
       const clearSelectionButton = document.getElementById("catalogueClearSelection");
       const contextLinks = document.getElementById("catalogueContextLinks");
       const resetFiltersButton = document.getElementById("catalogueResetFilters");
+      const skipToQuoteLink = document.getElementById("catalogueSkipToQuote");
+      const startQuoteUndecidedButton = document.getElementById("startQuoteUndecidedButton");
 
       const filters = {
         brand: document.getElementById("catalogueBrandFilter"),
@@ -350,6 +355,18 @@
         if (window.OperonTracking) {
           window.OperonTracking.trackEvent(eventName, payload || {});
         }
+      }
+
+      function buildSelectionTrackingPayload(selection, source, extra) {
+        return Object.assign({
+          category: selection && selection.category ? selection.category : getPreferredQuoteCategory(),
+          brand: selection && selection.brand ? selection.brand : "",
+          range: selection && (selection.rangeLabel || selection.range) ? (selection.rangeLabel || selection.range) : "",
+          range_id: selection && selection.rangeId ? selection.rangeId : "",
+          product_id: selection && selection.id ? selection.id : "",
+          selection_mode: selection && selection.selectionMode ? selection.selectionMode : "",
+          source: source || "catalogue"
+        }, extra || {});
       }
 
       function trackCatalogueView() {
@@ -392,23 +409,7 @@
         if (!product) {
           return;
         }
-
-        const details = {
-          category: product.category,
-          brand: product.brand,
-          range: product.range,
-          colour: product.colour,
-          pricePerM2: product.pricePerM2,
-          source: source || "catalogue"
-        };
-
-        if (window.OperonTracking && typeof window.OperonTracking.trackProductSelect === "function") {
-          window.OperonTracking.trackProductSelect(details);
-          return;
-        }
-
-        track("product_selected", details);
-        track("product_select", details);
+        track("product_selected", buildSelectionTrackingPayload(product, source));
       }
 
       function escapeHtml(value) {
@@ -459,8 +460,8 @@
           rangeContent: range.rangeContent || null,
           statusLabel: representativeProduct ? PRODUCT_LIBRARY.getProductStatusLabel(representativeProduct) : "",
           cardNote: range.selectionMode === "range_then_colour"
-            ? "Choose colour in the quote flow."
-            : "Colour can be confirmed later."
+            ? "Final colour can often be reviewed later."
+            : "Final colour can often be confirmed later."
         };
       }
 
@@ -637,6 +638,27 @@
       }
 
       function renderCategoryCards() {
+        const cardCopy = {
+          hybrid: {
+            bestFor: "Practical family homes, apartments, water-resistant needs and lower-maintenance living.",
+            watchOuts: "Subfloor condition and acoustic layers still need review. Thickness and range can affect the quote path.",
+            quoteNote: "Usually a straightforward category to start quoting from before the final colour is confirmed.",
+            cta: "Browse hybrid flooring"
+          },
+          laminate: {
+            bestFor: "Cost-conscious renovations, rental upgrades and dry internal spaces.",
+            watchOuts: "Not the first choice for wet-prone areas. Underlay and product quality still matter.",
+            quoteNote: "A strong starting category when budget and dry internal use are the priority.",
+            cta: "Browse laminate flooring"
+          },
+          engineered: {
+            bestFor: "Premium timber feel, higher-spec renovations and feature-led interiors.",
+            watchOuts: "Range, colour and installation method can change the quote more. Herringbone and feature patterns need review.",
+            quoteNote: "Often enough to start the quote, but final pricing may need a clearer range or pattern decision.",
+            cta: "Browse engineered timber"
+          }
+        };
+
         const cards = getCategoryMetaList().map(function (item) {
           const stats = PRODUCT_LIBRARY.getCategoryStats(item.id);
           const rangeCount = PRODUCT_SELECTION.getRangesByCategory(item.id).length;
@@ -644,21 +666,24 @@
           const countText = visibleCount > 0
             ? visibleCount + " live option" + (visibleCount === 1 ? "" : "s")
             : "Quote path ready";
+          const copy = cardCopy[item.id] || {};
           const pricingText = stats.liveProductCount > 0
-            ? "Product options available"
-            : "Range and colour confirmed in quote";
+            ? "Catalogue and quote path ready"
+            : "Category guidance available";
 
           return (
             '<article class="catalogue-category-card' + (state.category === item.id ? " is-active" : "") + '">' +
               '<span class="catalogue-category-card-label">' + escapeHtml(item.label) + "</span>" +
-              '<h3>' + escapeHtml(item.shortDescription || item.label) + "</h3>" +
-              '<p>Choose the category first, then confirm the final range, colour and site scope during the quote process.</p>' +
+              '<h3>' + escapeHtml(item.label) + "</h3>" +
+              '<p><strong>Best for:</strong> ' + escapeHtml(copy.bestFor || item.shortDescription || item.label) + "</p>" +
+              '<p><strong>Watch-outs:</strong> ' + escapeHtml(copy.watchOuts || "Product and site review still matter before final confirmation.") + "</p>" +
+              '<p><strong>Quote note:</strong> ' + escapeHtml(copy.quoteNote || "You can start with the category now and confirm the final range later.") + "</p>" +
               '<div class="catalogue-category-card-meta">' +
                 '<span class="catalogue-pill">' + escapeHtml(countText) + "</span>" +
                 '<span class="catalogue-pill">' + escapeHtml(pricingText) + "</span>" +
               "</div>" +
               '<div class="catalogue-category-card-actions">' +
-                '<button class="button-secondary" type="button" data-category-card-filter="' + escapeHtml(item.id) + '">Browse ' + escapeHtml(item.label.toLowerCase()) + "</button>" +
+                '<button class="button-secondary" type="button" data-category-card-filter="' + escapeHtml(item.id) + '">' + escapeHtml(copy.cta || ("Browse " + item.label.toLowerCase())) + "</button>" +
                 '<a class="button-quiet" href="' + escapeHtml(item.pageUrl) + '">Open guide</a>' +
               "</div>" +
             "</article>"
@@ -697,42 +722,49 @@
               return item.type === "range" && item.rangeId === storedSelectionState.selectedRangeId;
             })
           : null;
-        selectionBanner.classList.toggle("is-selected", !!activeProduct);
+        selectionBanner.classList.toggle("is-selected", !!activeProduct || !!activeRange);
         continueQuoteLink.setAttribute("href", getContinueQuoteUrl());
+        if (skipToQuoteLink) {
+          skipToQuoteLink.setAttribute("href", getContinueQuoteUrl());
+        }
+        if (startQuoteUndecidedButton) {
+          startQuoteUndecidedButton.setAttribute("href", getContinueQuoteUrl());
+        }
 
         if (!activeProduct && !activeRange) {
-          selectionTitle.textContent = "No flooring product selected yet";
+          selectionTitle.textContent = "No product direction selected yet";
           selectionText.textContent = state.category !== "all"
-            ? "You can keep browsing this category, or continue straight into the quote using the " + getCategoryLabel(getPreferredQuoteCategory()).toLowerCase() + " estimate."
-            : "Choose a flooring product first, or continue straight into the quote and keep the category estimate for now.";
+            ? "Keep browsing this category, or continue into the quote using the " + getCategoryLabel(getPreferredQuoteCategory()).toLowerCase() + " category as the starting point."
+            : "Choose a range if you know it, or start with a category if you are still comparing products.";
+          selectionMeta.textContent = "Choosing a product category or range is enough to start most quotes.";
           contextLinks.innerHTML = getCategoryMetaList().map(function (item) {
             return '<a class="button-quiet" href="' + escapeHtml(item.pageUrl) + '">View ' + escapeHtml(item.label.toLowerCase()) + " guide</a>";
           }).join("");
           continueQuoteLink.textContent = state.category !== "all" ? "Start " + getCategoryLabel(getPreferredQuoteCategory()).toLowerCase() + " quote" : "Continue to quote";
+          clearSelectionButton.hidden = true;
           return;
         }
 
         if (activeRange) {
-          selectionBanner.classList.add("is-selected");
-          selectionTitle.textContent = "Selected range: " + (activeRange.rangeLabel || activeRange.range);
-          selectionText.textContent = activeRange.selectionMode === "range_then_colour"
-            ? getCategoryLabel(activeRange.category) + " · Colour will be chosen in the quote flow."
-            : getCategoryLabel(activeRange.category) + " · Colour can be confirmed later.";
+          selectionTitle.textContent = "Selected product direction: " + (activeRange.rangeLabel || activeRange.range);
+          selectionText.textContent = "This selection will be carried into the quote so product, area and scope can be reviewed together.";
+          selectionMeta.textContent = "Final colour can be confirmed later if needed.";
           continueQuoteLink.textContent = "Continue to quote";
           contextLinks.innerHTML =
             '<a class="button-quiet" href="' + escapeHtml(getCategoryPageUrl(activeRange.category)) + '">Back to ' + escapeHtml(getCategoryLabel(activeRange.category).toLowerCase()) + " guide</a>";
+          clearSelectionButton.hidden = false;
           return;
         }
 
-        selectionTitle.textContent = activeProduct.selectionMode === "range_only"
-          ? "Selected range: " + PRODUCT_LIBRARY.getProductLabel(activeProduct)
-          : "Selected product: " + PRODUCT_LIBRARY.getProductLabel(activeProduct);
-        selectionText.textContent = activeProduct.pricePerM2 > 0
-          ? getCategoryLabel(activeProduct.category) + " · ready for quote."
-          : getCategoryLabel(activeProduct.category) + " · final product details confirmed during review.";
+        selectionTitle.textContent = "Selected product direction: " + PRODUCT_LIBRARY.getProductLabel(activeProduct);
+        selectionText.textContent = "This selection will be carried into the quote so product, area and scope can be reviewed together.";
+        selectionMeta.textContent = activeProduct.selectionMode === "range_only"
+          ? "Final colour can be confirmed later if needed."
+          : "Selected colour will be attached to the quote.";
         continueQuoteLink.textContent = "Continue to quote";
         contextLinks.innerHTML =
           '<a class="button-quiet" href="' + escapeHtml(getCategoryPageUrl(activeProduct.category)) + '">Back to ' + escapeHtml(getCategoryLabel(activeProduct.category).toLowerCase()) + " guide</a>";
+        clearSelectionButton.hidden = false;
       }
 
       function buildProductCard(product) {
@@ -831,12 +863,9 @@
           state.selectedProductId = "";
           state.selectedRangeId = "";
           renderAll();
-          track("product_selection_clear", {
-            category: product ? product.category : rangeCategory,
-            range_id: rangeRecord ? rangeRecord.rangeId : "",
-            product_id: product ? product.id : "",
-            source: settings.source
-          });
+          track("product_selection_cleared", buildSelectionTrackingPayload(product || rangeRecord || {
+            category: product ? product.category : rangeCategory
+          }, settings.source));
           return;
         }
 
@@ -867,18 +896,9 @@
           state.selectedProductId = resolvedSelection.productId || "";
           state.selectedRangeId = resolvedSelection.rangeId || "";
           PRODUCT_LIBRARY.saveSelectedCategory(rangeCategory);
-          track("product_range_select", {
-            category: rangeCategory,
-            range_id: rangeRecord.rangeId,
-            range_label: rangeRecord.rangeLabel,
-            source: settings.source
-          });
-          track("product_selection_mode", {
-            category: rangeCategory,
-            mode: "choose_range",
-            selection_mode: rangeRecord.selectionMode,
-            source: settings.source
-          });
+          track("product_range_selected", buildSelectionTrackingPayload(rangeRecord, settings.source, {
+            category: rangeCategory
+          }));
         } else {
           return;
         }
@@ -886,6 +906,9 @@
         renderAll();
 
         if (settings.redirect) {
+          track("product_continue_to_quote", buildSelectionTrackingPayload(product || rangeRecord, settings.source, {
+            category: resolvedSelection.category || rangeCategory
+          }));
           window.location.href = "quote.html?from=product&category=" + encodeURIComponent(resolvedSelection.category || rangeCategory);
         }
       }
@@ -913,6 +936,10 @@
         state.expandedRangeId = "";
         syncQueryString();
         renderAll();
+        track("product_category_selected", {
+          category: state.category,
+          source: "category_tab"
+        });
         trackFilterChange({
           source_filter: "category",
           value: state.category
@@ -933,6 +960,10 @@
         state.expandedRangeId = "";
         syncQueryString();
         renderAll();
+        track("product_category_selected", {
+          category: state.category,
+          source: "category_card"
+        });
         trackFilterChange({
           source_filter: "category_card",
           value: state.category
@@ -998,11 +1029,49 @@
       });
 
       clearSelectionButton.addEventListener("click", function () {
+        const storedProduct = PRODUCT_LIBRARY.getStoredProduct();
+        const storedSelectionState = PRODUCT_LIBRARY.getStoredSelectionState() || {};
+        track("product_selection_cleared", buildSelectionTrackingPayload(storedProduct || {
+          category: getPreferredQuoteCategory(),
+          rangeId: storedSelectionState.selectedRangeId || "",
+          selectionMode: storedSelectionState.selectionMode || ""
+        }, "selection_banner_clear"));
         PRODUCT_LIBRARY.clearSelectedProduct();
         state.selectedProductId = "";
         state.selectedRangeId = "";
         renderAll();
       });
+
+      continueQuoteLink.addEventListener("click", function () {
+        const storedProduct = PRODUCT_LIBRARY.getStoredProduct();
+        const storedSelectionState = PRODUCT_LIBRARY.getStoredSelectionState() || {};
+        const activeRange = !storedProduct && storedSelectionState.selectedRangeId
+          ? getCatalogueProducts().find(function (item) {
+              return item.type === "range" && item.rangeId === storedSelectionState.selectedRangeId;
+            })
+          : null;
+        track("product_continue_to_quote", buildSelectionTrackingPayload(storedProduct || activeRange || {
+          category: getPreferredQuoteCategory()
+        }, "selection_banner_continue"));
+      });
+
+      if (skipToQuoteLink) {
+        skipToQuoteLink.addEventListener("click", function () {
+          track("product_start_quote_undecided", {
+            category: getPreferredQuoteCategory(),
+            source: "catalogue_skip_link"
+          });
+        });
+      }
+
+      if (startQuoteUndecidedButton) {
+        startQuoteUndecidedButton.addEventListener("click", function () {
+          track("product_start_quote_undecided", {
+            category: getPreferredQuoteCategory(),
+            source: "undecided_section"
+          });
+        });
+      }
 
       resetFiltersButton.addEventListener("click", function () {
         state.filters.brand = "";

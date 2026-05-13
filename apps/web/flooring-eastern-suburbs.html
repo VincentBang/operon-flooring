@@ -41,11 +41,11 @@
 <body>
   <header class="site-header">
     <div class="shell nav">
-      <a class="brand" href="index.html#top">
+      <a class="brand" href="index.html#top" aria-label="Operon Flooring home">
         <span class="brand-mark" aria-hidden="true"></span>
-        Operon Flooring
+        <span>Operon Flooring</span>
       </a>
-      <nav class="nav-links">
+      <nav class="nav-links" aria-label="Primary">
         <a href="index.html#top">Home</a>
         <a href="quote.html">Quote</a>
         <a href="products.html">Flooring Products</a>
@@ -57,7 +57,10 @@
         <span></span>
         <span></span>
       </button>
-      <a class="button" href="quote.html">Start quote</a>
+      <div class="header-actions">
+        <a class="header-phone" href="tel:04XXXXXXXX" data-track-cta="click_call_header">Call 04XX XXX XXX</a>
+        <a class="button header-quote-button" href="quote.html">Start quote</a>
+      </div>
     </div>
   </header>
 
@@ -210,12 +213,14 @@
       </div>
     </section>
   </main>
-
-  <footer class="site-footer">
+  <footer class="site-footer footer-contained">
     <div class="container footer-grid">
-      <div class="footer-col">
-        <h3>Operon Flooring</h3>
-        <p>Premium laminate, hybrid and engineered timber flooring quotes for Sydney homes.</p>
+      <div class="footer-col footer-brand-block">
+        <a class="footer-logo" href="index.html" aria-label="Operon Flooring home">
+          <img src="assets/operon-logo-final.png" alt="Operon Flooring logo" width="154" height="49">
+        </a>
+        <p class="footer-brand-copy">Flooring quotes and installation guidance for Sydney projects.</p>
+        <a class="footer-brand-cta" href="quote.html">Start quote</a>
       </div>
       <div class="footer-col">
         <h4>Products</h4>
@@ -223,35 +228,42 @@
           <li><a href="hybrid-flooring-sydney.html">Hybrid Flooring Sydney</a></li>
           <li><a href="laminate-flooring-sydney.html">Laminate Flooring Sydney</a></li>
           <li><a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring Sydney</a></li>
-          <li><a href="products.html">Products page</a></li>
+          <li><a href="products.html">Flooring Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Quote &amp; Tools</h4>
+        <ul>
+          <li><a href="quote.html">Start Quote</a></li>
+          <li><a href="quote-review.html">Quote Review</a></li>
+          <li><a href="floorplan.html">Upload Floor Plan</a></li>
+          <li><a href="blog/index.html">Flooring Guides</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Locations</h4>
         <ul>
-          <li><a href="parramatta-flooring.html">Parramatta</a></li>
-          <li><a href="liverpool-flooring.html">Liverpool</a></li>
-          <li><a href="auburn-flooring.html">Auburn</a></li>
-          <li><a href="blacktown-flooring.html">Blacktown</a></li>
-          <li><a href="miranda-flooring.html">Miranda</a></li>
+          <li><a href="flooring-edmondson-park.html">Edmondson Park</a></li>
+          <li><a href="flooring-liverpool.html">Liverpool</a></li>
+          <li><a href="flooring-leppington.html">Leppington</a></li>
+          <li><a href="flooring-camden.html">Camden</a></li>
+          <li><a href="flooring-campbelltown.html">Campbelltown</a></li>
+          <li><a href="flooring-parramatta.html">Parramatta</a></li>
+          <li><a href="flooring-bankstown.html">Bankstown</a></li>
+          <li><a href="flooring-auburn.html">Auburn</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Actions</h4>
+        <h4>Company</h4>
         <ul>
-          <li><a href="quote.html">Start Quote</a></li>
-          <li><a href="floorplan.html">Upload Floor Plan</a></li>
-          <li><a href="blog/index.html">Guides</a></li>
           <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms</a></li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>&copy; 2026 Operon Flooring. All rights reserved.</p>
-      <div class="footer-legal">
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="terms.html">Terms</a>
-      </div>
+      <p>&copy; 2026 Operon Flooring</p>
     </div>
   </footer>
   <script src="mobile-nav.js"></script>

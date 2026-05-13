@@ -24,6 +24,8 @@ Do not build SaaS features, marketplace logic, backend email changes, pricing lo
 
 ## Mandatory Read Order
 
+Before editing quote, upload, storage, email, OpenAI, analytics, admin or security-sensitive code, read `docs/security/SECURITY_POLICY.md`.
+
 When the user says `continue execution`, always read these files first:
 
 1. `apps/web/AGENTS.md`

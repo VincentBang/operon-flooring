@@ -4,16 +4,14 @@ const fs = require("fs");
 const path = require("path");
 const { PDFDocument, StandardFonts, rgb } = require("pdf-lib");
 const { getSupabaseTables } = require("./_supabaseTables");
+const Security = require("./_security");
+const LeadQualification = require("../../apps/web/leadQualification.js");
 
-function jsonResponse(statusCode, payload) {
-  return {
-    statusCode: statusCode,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store"
-    },
-    body: JSON.stringify(payload)
-  };
+function jsonResponse(event, statusCode, payload) {
+  return Security.jsonResponse(event, statusCode, payload, {
+    methods: "POST, OPTIONS",
+    allowHeaders: "content-type"
+  });
 }
 
 function getSupabaseConfig() {
@@ -207,6 +205,94 @@ function getMissingScopeItems(payload) {
   return Array.isArray(items) ? items.filter(Boolean) : [];
 }
 
+function hasMeaningfulObject(value) {
+  if (!value) return false;
+  if (typeof value === "string") return value.trim() !== "" && value.trim() !== "{}";
+  if (Array.isArray(value)) return value.length > 0;
+  if (typeof value === "object") return Object.keys(value).length > 0;
+  return true;
+}
+
+function getLeadQualificationSource(payload) {
+  const measurement = payload.measurement || {};
+  const job = payload.job || {};
+  const property = payload.property || {};
+  const extras = payload.extras || {};
+  const pricing = payload.pricing || {};
+  const qualification = payload.leadQualification || payload.lead_qualification || {};
+  const fields = qualification.qualificationFields || qualification.qualification_fields || {};
+  return {
+    suburb: payload.customer && payload.customer.suburb || "",
+    postcode: payload.customer && payload.customer.postcode || "",
+    quoteMode: job.quoteMode || "",
+    category: job.productCategory || "",
+    selectedProduct: job.productName || "",
+    realArea: measurement.realArea,
+    measurementMethod: measurement.method || "",
+    measurementStatus: measurement.status || "",
+    floorplanSource: measurement.floorplanSource || "",
+    floorplanMeasurementMode: measurement.floorplanMeasurementMode || "",
+    floorplanAreaFound: measurement.floorplanAreaFound || 0,
+    removalStatus: job.existingFloorToRemove || extras.removal && extras.removal.type || "",
+    stairsStatus: job.stairsIncluded ? "yes" : job.stairsNeedsConfirmation ? "not_sure" : "no",
+    propertyType: property.type || "",
+    level: property.level || "",
+    hasLift: property.hasLift || "",
+    parkingAccess: property.parking || "",
+    floorPrepRisk: job.subfloorCondition || extras.floorPrep && extras.floorPrep.type || "",
+    timeframe: payload.leadStage || payload.lead_stage || payload.leadAutomation && payload.leadAutomation.leadStage || "",
+    quoteTotal: measurement.status === "unknown" ? 0 : pricing.totalIncGst || 0,
+    quoteRangeLow: pricing.pricingAdjustment && pricing.pricingAdjustment.range_low || 0,
+    quoteRangeHigh: pricing.pricingAdjustment && pricing.pricingAdjustment.range_high || 0,
+    quoteConfidence: measurement.quoteConfidence || fields.confidenceLevel || "",
+    nextStepRequired: measurement.nextStepRequired || "",
+    floorplanLookupAddress: measurement.lookupAddress || "",
+    customerAcceptedRange: Boolean(fields.customerAcceptedRange || measurement.estimateReady || pricing.totalIncGst),
+    leadSource: payload.sourcePage || "quote.html",
+    reviewRequired: Boolean(payload.manualReviewRequired),
+    manualReviewRequired: Boolean(payload.manualReviewRequired),
+    scopeSignals: getPayloadScopeSignals(payload),
+    quoteReview: payload.quoteReview || payload.quote_review || {},
+    name: payload.customer && payload.customer.name || "",
+    phone: payload.customer && payload.customer.phone || "",
+    email: payload.customer && payload.customer.email || "",
+    notes: [
+      payload.notes && payload.notes.site || "",
+      payload.notes && payload.notes.customer || ""
+    ].filter(Boolean).join(" | ")
+  };
+}
+
+function getLeadQualification(payload) {
+  const existing = payload.leadQualification || payload.lead_qualification;
+  if (existing && typeof existing === "object" && existing.status && existing.priority) {
+    return existing;
+  }
+  return LeadQualification.qualifyLead(getLeadQualificationSource(payload));
+}
+
+function getLeadQualificationColumns(payload) {
+  const qualification = getLeadQualification(payload);
+  const fields = qualification.qualificationFields || {};
+  return {
+    lead_status: qualification.status || "New",
+    lead_priority: qualification.priority || "B",
+    lead_qualification: qualification,
+    lead_qualification_fields: fields,
+    lead_risk_flags: Array.isArray(qualification.riskFlags) ? qualification.riskFlags : [],
+    lead_missing_fields: Array.isArray(qualification.missingFields) ? qualification.missingFields : [],
+    lead_next_action: qualification.nextAction || "",
+    lead_followup_template_key: qualification.followUpTemplateKey || "",
+    customer_accepted_range: Boolean(fields.customerAcceptedRange),
+    floorplan_attached: fields.floorplanStatus === "attached",
+    quote_review_attached: Boolean(fields.quoteReviewAttached || hasMeaningfulObject(payload.quoteReview || payload.quote_review)),
+    estimated_job_size: Number(fields.estimatedJobSize || 0) || null,
+    confidence_level: fields.confidenceLevel || "",
+    review_required: Boolean(fields.reviewRequired || payload.manualReviewRequired),
+    lead_status_updated_at: new Date().toISOString()
+  };
+}
+
 function getQuoteRow(quoteId, payload, status) {
   const now = new Date().toISOString();
   const leadAutomation = payload.leadAutomation || payload.lead_automation || {};
@@ -222,8 +308,9 @@ function getQuoteRow(quoteId, payload, status) {
   const rawPayload = Object.assign({}, payload, {
     scopeSignals: getPayloadScopeSignals(payload)
   });
+  const leadQualificationColumns = getLeadQualificationColumns(payload);
 
-  return {
+  return Object.assign({
     id: quoteId,
     customer_name: payload.customer && payload.customer.name || "",
     phone: payload.customer && payload.customer.phone || "",
@@ -264,7 +351,7 @@ function getQuoteRow(quoteId, payload, status) {
     last_activity: now,
     last_action: status === "emailed" ? "quote_submit" : "summary_view",
     raw_payload: rawPayload
-  };
+  }, leadQualificationColumns);
 }
 
 function getRoomRows(quoteId, rooms) {
@@ -1287,15 +1374,34 @@ async function safelySendQuoteEmails(emailTo, payload, quoteId, quoteReference) 
 }
 
 exports.handler = async function (event) {
+  if (event.httpMethod === "OPTIONS") {
+    return Security.optionsResponse(event, {
+      methods: "POST, OPTIONS",
+      allowHeaders: "content-type"
+    });
+  }
+
   if (event.httpMethod !== "POST") {
-    return jsonResponse(405, { ok: false, error: "Method not allowed." });
+    return jsonResponse(event, 405, { ok: false, error: "Method not allowed." });
+  }
+
+  const largeBodyResponse = Security.rejectLargeBody(event, 750 * 1024);
+  if (largeBodyResponse) return largeBodyResponse;
+
+  const quoteRateLimit = await Security.checkDurableRateLimit(event, {
+    scope: "save-quote-request",
+    limit: 60,
+    windowMs: 10 * 60 * 1000
+  });
+  if (!quoteRateLimit.allowed) {
+    return Security.rateLimitResponse(event, quoteRateLimit);
   }
 
   let body;
   try {
     body = JSON.parse(event.body || "{}");
   } catch (error) {
-    return jsonResponse(400, { ok: false, error: "Invalid JSON payload." });
+    return jsonResponse(event, 400, { ok: false, error: "Invalid JSON payload." });
   }
 
   const allowedMode = String(body.mode || "").trim();
@@ -1303,12 +1409,28 @@ exports.handler = async function (event) {
   const payload = body.payload || null;
   const emailTo = String(body.emailTo || (payload && payload.customer && payload.customer.email) || "").trim();
 
+  if (mode === "email_quote" || mode === "submit_quote") {
+    const submitRateLimit = await Security.checkDurableRateLimit(event, {
+      scope: "quote-submit-or-email",
+      limit: 10,
+      windowMs: 10 * 60 * 1000
+    });
+    if (!submitRateLimit.allowed) {
+      return Security.rateLimitResponse(event, submitRateLimit);
+    }
+
+    const turnstile = await Security.verifyTurnstile(event, body.turnstileToken || body.turnstile_token || "");
+    if (!turnstile.ok) {
+      return Security.botChallengeResponse(event, turnstile);
+    }
+  }
+
   if (!payload || typeof payload !== "object") {
-    return jsonResponse(400, { ok: false, error: "Quote payload is required." });
+    return jsonResponse(event, 400, { ok: false, error: "Quote payload is required." });
   }
 
   if (mode === "email_quote" && (!emailTo || !/.+@.+\..+/.test(emailTo))) {
-    return jsonResponse(400, { ok: false, error: "A valid email address is required to send the quote." });
+    return jsonResponse(event, 400, { ok: false, error: "A valid email address is required to send the quote." });
   }
 
   const quoteId = String(body.quoteId || payload.id || "").trim() || createQuoteUuid();
@@ -1353,7 +1475,7 @@ exports.handler = async function (event) {
             internalNotificationError: ""
           };
 
-      return jsonResponse(200, {
+      return jsonResponse(event, 200, {
         ok: true,
         mode: mode,
         quoteId: quoteId,
@@ -1376,7 +1498,7 @@ exports.handler = async function (event) {
       const emailResult = await sendQuoteEmails(emailTo, payload, quoteId, quoteReference);
       const followupResult = await safelyQueueFollowupsForQuote(quoteId, row);
       const immediateFollowupEmailResult = await safelySendImmediateFollowupEmailsForQuote(quoteId);
-      return jsonResponse(200, {
+      return jsonResponse(event, 200, {
         ok: true,
         mode: mode,
         quoteId: quoteId,
@@ -1388,7 +1510,7 @@ exports.handler = async function (event) {
       });
     }
   } catch (error) {
-    return jsonResponse(500, {
+    return jsonResponse(event, 500, {
       ok: false,
       error: error && error.message ? error.message : "Quote save failed."
     });

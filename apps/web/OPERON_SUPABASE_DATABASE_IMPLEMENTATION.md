@@ -211,9 +211,9 @@ Migration:
 
 Frontend capture:
 
-- `apps/web/quote-review.html` saves `latestQuoteReview` and `operon-quote-intelligence-v1` in localStorage.
+- `apps/web/quote-review.html` saves quote-review state under `operon_quote_review_*` localStorage keys.
 - Clicking `Get structured estimate` routes to `quote.html?source=quote_review`.
-- `quote.html` reads `latestQuoteReview` into the hidden `quote_review_payload_json` lead field without auto-filling customer-visible form fields.
+- `quote.html` reads only the compact `operon_quote_review_handoff_v1` summary into the hidden `quote_review_payload_json` lead field without rendering the full quote-review UI or auto-filling customer-visible form fields.
 
 Server-side save path:
 

@@ -316,7 +316,7 @@ Follow-up:
 Which unclear item do you want to confirm first?
 
 Route:
-`quote.html?from=quote-review` when the customer wants a structured Operon estimate, or stay on `quote-review.html` if they are still reading the review.
+`quote.html?source=quote_review` when the customer wants a structured Operon estimate, or stay on `quote-review.html` if they are still reading the review.
 
 Guidance:
 - If a result is visible, reference the customer-facing status and one missing or unclear scope item.

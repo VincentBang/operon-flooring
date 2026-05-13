@@ -26,6 +26,8 @@
     gtag('config', 'G-T2LEXZJM3Q');
   </script>
   <script src="tracking.js"></script>
+  <script src="security-config.js"></script>
+  <script src="security.js"></script>
   <script src="quoteReviewReport.js"></script>
   <script type="application/ld+json">
   {
@@ -89,13 +91,16 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    [hidden] { display: none !important; }
+    html { scroll-behavior: smooth; max-width: 100%; overflow-x: clip; }
     body {
       margin: 0;
       font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text);
       background: var(--bg);
       line-height: 1.5;
+      max-width: 100%;
+      overflow-x: clip;
     }
 
     a { color: inherit; text-decoration: none; }
@@ -103,32 +108,65 @@
     button, input, select, textarea { font: inherit; }
     button { cursor: pointer; }
 
+    .shell {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
     .site-header {
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(216, 226, 223, 0.86);
+      border-bottom: 1px solid var(--line);
     }
 
     .nav {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 14px 22px;
+      min-height: 74px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
+      gap: 16px;
     }
 
-    .brand { display: flex; align-items: center; gap: 14px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
-    .brand img { height: 54px; width: auto; }
-    .nav-links { display: flex; align-items: center; gap: 22px; font-size: 0.95rem; color: var(--muted); flex-wrap: nowrap; }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      width: clamp(232px, 22vw, 340px);
+      min-height: 52px;
+      background: left center / auto 100% no-repeat url("assets/operon-logo-final.png");
+      color: transparent;
+      font-size: 0;
+      letter-spacing: 0;
+      text-transform: none;
+      line-height: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      gap: 0;
+      flex: none;
+    }
+    .brand-mark { display: none; }
+    .nav-links { display: flex; align-items: center; gap: 22px; font-size: 0.95rem; color: var(--muted); font-weight: 600; flex-wrap: nowrap; }
     .nav-links a { white-space: nowrap; }
     .nav-links a:hover,
     .nav-links a[aria-current="page"] { color: var(--text); }
-    .menu-toggle { display: none; border: 0; background: transparent; font-size: 1.6rem; padding: 8px; }
+    .nav-toggle {
+      display: none;
+      width: 50px;
+      height: 50px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent url("assets/mobile-menu-icon.png") center / 34px 34px no-repeat;
+      color: var(--text);
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-toggle span { display: none; }
+    .header-quote-button { min-width: 132px; white-space: nowrap; }
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .header-phone { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 12px 16px; border-radius: 14px; border: 1px solid var(--line); color: var(--primary); background: rgba(255,255,255,.76); font-weight: 800; white-space: nowrap; }
 
     .button,
     .button-secondary {
@@ -521,6 +559,34 @@
     .inclusion-sections {
       display: grid;
       gap: 18px;
+    }
+
+    .quick-check-details {
+      border: 1px solid rgba(216, 226, 223, 0.9);
+      border-radius: 16px;
+      background: #fff;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .quick-check-details summary {
+      padding: 14px 16px;
+      background: var(--soft);
+    }
+
+    .quick-check-details .inclusion-sections {
+      padding: 16px;
+    }
+
+    .optional-quote-details summary {
+      padding: 14px 16px;
+      border: 1px solid rgba(216, 226, 223, 0.9);
+      border-radius: 16px;
+      background: var(--soft);
+    }
+
+    .optional-quote-details .field-grid {
+      margin-top: 12px;
     }
 
     .check-option {
@@ -1129,73 +1195,114 @@
     .site-footer {
       background: var(--primary);
       color: #fff;
-      padding: 72px 0 22px;
+      padding: 64px 0 20px;
     }
 
     .site-footer.footer-contained {
       width: min(1360px, calc(100% - 80px));
-      margin: 72px auto 28px;
-      border-radius: 28px 28px 0 0;
+      margin: 64px auto 80px;
+      border-radius: 30px;
       overflow: hidden;
       box-shadow: 0 18px 48px rgba(23, 49, 58, 0.16);
     }
 
     .footer-grid {
       display: grid;
-      grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
-      gap: 40px;
+      grid-template-columns: minmax(0, 1.35fr) repeat(4, minmax(0, 0.9fr));
+      gap: 28px 36px;
+      align-items: start;
+    }
+
+    .footer-brand-block {
+      display: grid;
+      gap: 16px;
+      max-width: 300px;
+    }
+
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 188px;
+      min-height: 58px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: inset 0 0 0 1px rgba(17, 24, 32, 0.06);
+    }
+
+    .footer-logo img {
+      display: block;
+      width: 154px;
+      height: auto;
+    }
+
+    .footer-brand-copy {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .footer-brand-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+
+    .footer-brand-cta:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.28);
+      color: #ffffff;
     }
 
     .footer-col h3,
     .footer-col h4 {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       color: #fff;
-      font-weight: 600;
+      font-size: 1rem;
+      font-weight: 700;
       letter-spacing: normal;
     }
 
-    .footer-col h3 {
-      font-size: 1.1rem;
-      text-transform: none;
-    }
-
-    .footer-col h3::before {
-      content: "";
-      display: block;
-      width: 190px;
-      height: 58px;
-      margin: 0 0 16px;
-      border-radius: 18px;
-      background: #fff url("assets/operon-logo-final.png") center / 156px auto no-repeat;
-    }
-
-    .footer-col h4 {
-      font-size: 1rem;
-      text-transform: none;
-    }
-
     .footer-col p {
-      margin: 0 0 12px;
-      color: rgba(255, 255, 255, 0.72);
-      font-size: 14px;
-      line-height: 1.6;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 0.95rem;
+      line-height: 1.7;
     }
 
     .footer-col ul {
       margin: 0;
       padding: 0;
       list-style: none;
+      display: grid;
+      gap: 10px;
     }
 
     .footer-col li {
-      margin-bottom: 8px;
+      margin: 0;
     }
 
     .footer-col a,
     .footer-legal a {
-      color: rgba(255, 255, 255, 0.72);
+      color: rgba(255, 255, 255, 0.8);
       text-decoration: none;
-      font-size: 14px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.45;
+      transition: color 0.18s ease, opacity 0.18s ease;
     }
 
     .footer-col a:hover,
@@ -1205,25 +1312,26 @@
 
     .footer-bottom {
       border-top: 1px solid rgba(255, 255, 255, 0.16);
-      margin-top: 40px;
-      padding-top: 20px;
+      margin-top: 36px;
+      padding-top: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      color: rgba(255, 255, 255, 0.64);
-      font-size: 13px;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.84rem;
     }
 
     .footer-bottom p {
       margin: 0;
-      color: rgba(255, 255, 255, 0.64);
+      color: rgba(255, 255, 255, 0.62);
     }
 
     .footer-legal {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+      flex-wrap: wrap;
     }
 
     @media (max-width: 960px) {
@@ -1247,29 +1355,74 @@
     }
 
     @media (max-width: 900px) {
-      .menu-toggle { display: inline-flex; }
+      .nav {
+        min-height: 68px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        padding: 12px 0;
+      }
+      .brand {
+        width: clamp(220px, 42vw, 320px);
+        min-height: 44px;
+      }
+      .nav-toggle {
+        display: inline-flex;
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        align-self: center;
+      }
       .nav-links {
         display: none;
-        position: absolute;
-        left: 16px;
-        right: 16px;
-        top: 82px;
+        width: 100%;
+        grid-column: 1 / -1;
+        grid-row: 2;
         flex-direction: column;
         align-items: stretch;
-        gap: 0;
-        padding: 12px;
-        background: white;
-        border: 1px solid var(--line);
-        border-radius: 22px;
-        box-shadow: var(--shadow);
+        gap: 8px;
+        padding-top: 12px;
       }
-      .nav-links.is-open { display: flex; }
-      .nav-links a { padding: 14px 16px; }
-      .nav .button { display: none; }
+      .site-header.mobile-nav-open .nav-links { display: flex; }
+      .nav-links a {
+        white-space: normal;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(16, 24, 40, 0.08);
+      }
+      .nav-toggle[aria-expanded="true"] {
+        background: transparent;
+        position: relative;
+      }
+      .nav-toggle[aria-expanded="true"]::before,
+      .nav-toggle[aria-expanded="true"]::after {
+        content: "";
+        position: absolute;
+        width: 28px;
+        height: 2.5px;
+        border-radius: 999px;
+        background: #111820;
+        top: 50%;
+        left: 50%;
+        transform-origin: center;
+      }
+      .nav-toggle[aria-expanded="true"]::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      .nav-toggle[aria-expanded="true"]::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+      .header-quote-button,
+      .header-actions { display: none; }
     }
 
     @media (max-width: 720px) {
       .section { padding: 34px 16px; }
+      .brand {
+        width: clamp(188px, 60vw, 260px);
+        min-height: 38px;
+      }
       .field-grid,
       .mode-grid {
         grid-template-columns: 1fr;
@@ -1321,13 +1474,19 @@
       }
       .site-footer.footer-contained {
         width: calc(100% - 24px);
-        margin: 44px auto 12px;
-        border-radius: 22px 22px 0 0;
+        margin: 44px auto 24px;
+        border-radius: 22px;
       }
       .footer-grid {
         grid-template-columns: 1fr 1fr;
         gap: 28px;
       }
+
+      .footer-brand-block {
+        grid-column: 1 / -1;
+        max-width: 420px;
+      }
+
       .footer-bottom {
         flex-direction: column;
         align-items: flex-start;
@@ -1348,6 +1507,28 @@
     }
 
     @media (max-width: 480px) {
+      .site-footer {
+        padding: 52px 0 18px;
+      }
+
+      .site-footer.footer-contained {
+        width: calc(100% - 24px);
+        margin: 44px auto 24px;
+        border-radius: 22px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-brand-block {
+        max-width: none;
+      }
+
+      .footer-bottom {
+        gap: 10px;
+      }
+
       .section {
         padding: 26px 12px;
       }
@@ -1359,11 +1540,6 @@
 
       .nav {
         min-height: 66px;
-      }
-
-      .brand img {
-        width: 180px;
-        height: auto;
       }
 
       .mode-card,
@@ -1403,20 +1579,28 @@
 </head>
 <body>
   <header class="site-header">
-    <nav class="nav" aria-label="Main navigation">
-      <a class="brand" href="index.html" aria-label="Operon Flooring home">
-        <img src="assets/operon-logo-final.png" alt="Operon Flooring logo" width="220" height="70">
+    <div class="shell nav">
+      <a class="brand" href="index.html#top" aria-label="Operon Flooring home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Operon Flooring</span>
       </a>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navLinks">☰</button>
-      <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="index.html#top">Home</a>
         <a href="quote.html">Quote</a>
         <a href="products.html">Flooring Products</a>
         <a href="floorplan.html">Floor Plan</a>
         <a href="blog/index.html">Guides</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="header-actions">
+        <a class="header-phone" href="tel:04XXXXXXXX">Call 04XX XXX XXX</a>
+        <a class="button header-quote-button" href="quote.html">Start quote</a>
       </div>
-      <a class="button" href="quote.html">Start quote</a>
-    </nav>
+    </div>
   </header>
 
   <main>
@@ -1427,7 +1611,7 @@
           <h1>Review a flooring quote</h1>
           <p class="lead">Check whether the quote is complete enough to compare before you accept the price.</p>
           <div class="hero-actions">
-            <a class="button" href="#reviewForm" data-track-cta="quote_review_start">Start quote review</a>
+            <a class="button" href="#reviewForm" id="quoteReviewStartLink">Start quote review</a>
             <a class="button-secondary quote-review-to-quote" href="quote.html?source=quote_review">Get structured Operon estimate</a>
           </div>
           <p class="hero-note">Upload the written quote for the strongest review. If you do not have the file ready, use the quick completeness check to see what may be missing.</p>
@@ -1508,7 +1692,7 @@
             </label>
           </div>
 
-          <div id="quickScopeDetails">
+          <div id="quickScopeDetails" hidden>
             <div class="section-head">
               <p class="eyebrow">Quote details</p>
               <h2>Quick quote completeness check</h2>
@@ -1580,9 +1764,10 @@
             </div>
 
             <div class="input-section">
-              <h3>What is clearly written?</h3>
-              <p>Leave unclear items unticked. Unticked means unknown, not excluded.</p>
-              <div class="inclusion-sections" id="inclusionGrid">
+              <details class="quick-check-details">
+                <summary>What is written on the quote?</summary>
+                <p>Leave unclear items unticked. Unticked means unknown, not excluded.</p>
+                <div class="inclusion-sections" id="inclusionGrid">
                 <div>
                   <div class="check-heading">Product detail shown?</div>
                   <div class="check-grid">
@@ -1623,13 +1808,15 @@
                   </div>
                 </div>
               </div>
+              </details>
             </div>
 
             <div class="input-section">
-              <h3>Optional wording</h3>
-              <div class="field-grid">
+              <details class="optional-quote-details">
+                <summary>Optional quote wording and notes</summary>
+                <div class="field-grid">
                 <div class="field full-span">
-                  <label for="reviewQuoteWording">Paste quote wording</label>
+                  <label for="reviewQuoteWording">Paste quote wording (optional)</label>
                   <textarea id="reviewQuoteWording" name="reviewQuoteWording" placeholder="Paste the line items or description from the quote if you do not want to upload a file."></textarea>
                 </div>
                 <div class="field full-span">
@@ -1637,21 +1824,22 @@
                   <textarea id="reviewNotes" name="reviewNotes" placeholder="Anything unclear, such as product, stairs, prep or moisture."></textarea>
                 </div>
               </div>
+              </details>
             </div>
           </div>
 
-          <div class="placeholder-upload detailed-only" id="detailedReviewUploadPanel" aria-label="Quote upload" hidden>
+          <div class="placeholder-upload detailed-only" id="detailedReviewUploadPanel" aria-label="Quote upload">
             <strong id="detailedReviewUploadTitle">Upload your quote to continue</strong>
             <span id="detailedReviewUploadCopy">Upload the written quote to continue. Without the document, use the quick quote completeness check.</span>
             <button class="button-secondary" type="button" id="detailedReviewUploadCta">Upload quote to continue</button>
-            <input id="reviewQuoteFile" name="reviewQuoteFile" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx">
+            <input id="reviewQuoteFile" name="reviewQuoteFile" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp">
             <p class="field-help" id="uploadedQuoteReference">No quote file selected.</p>
             <p class="field-help" id="quoteOcrStatus" hidden>Quote file not checked yet.</p>
             <p class="field-help">Uploaded quotes are used to extract flooring scope and pricing details for review. Files are processed securely and may be stored temporarily to support the review. Structured quote details may be retained to improve Operon’s quoting system. See our <a href="privacy-policy.html">privacy policy</a>.</p>
           </div>
         </div>
 
-        <aside class="summary-card" id="reviewOutputPanel">
+        <aside class="summary-card" id="reviewOutputPanel" hidden>
           <div class="section-head">
             <p class="eyebrow">Results</p>
             <h2 id="reviewOutputTitle" style="font-size: clamp(1.35rem, 2.5vw, 1.75rem);">Quick quote completeness check</h2>
@@ -1717,7 +1905,7 @@
                   <h3>Why this matters</h3>
                   <div class="risk-card">
                     <strong>A lower total is not always a better quote.</strong>
-                    <span>Flooring quotes can look cheaper when preparation, removal, disposal, trims or underlay are excluded. Compare the written scope before comparing price.</span>
+                    <span>Flooring quotes can look lower when preparation, removal, disposal, trims or underlay are excluded. Compare the written scope before comparing price.</span>
                   </div>
                 </div>
               </div>
@@ -1727,7 +1915,7 @@
                 <p>For stronger feedback, upload the written quote. If you want an Operon estimate, continue into the structured quote path with the details you have.</p>
                 <div class="cta-actions" style="justify-content: flex-start;">
                   <button class="button-secondary" type="button" id="quickUploadQuoteButton">Upload written quote for stronger review</button>
-                  <a class="button-secondary quote-review-to-quote" href="quote.html?source=quote_review">Get structured Operon estimate</a>
+                  <a class="button-secondary quote-review-to-quote" href="quote.html?source=quote_review">Start structured quote</a>
                   <a class="button-secondary" href="contact.html">Contact Operon</a>
                 </div>
               </div>
@@ -1777,10 +1965,10 @@
 
               <div class="summary-box" id="databaseComparisonBox" hidden>
                 <div class="risk-group">
-                  <h3>Operon comparable estimate</h3>
+                  <h3>Comparison guide</h3>
                   <span class="risk-tag medium" id="databaseComparisonTag">Comparison guide</span>
                   <div id="databaseComparisonList">
-                    <div class="risk-card"><strong>No comparable estimate yet.</strong><span>Upload a quote and generate the document-based review.</span></div>
+                    <div class="risk-card"><strong>No comparison guide yet.</strong><span>Upload a quote and generate the document-based review.</span></div>
                   </div>
                 </div>
               </div>
@@ -1819,7 +2007,7 @@
                 <h3>Next step</h3>
                 <p id="decisionGuidance">Upload the written quote for the strongest review.</p>
                 <div class="cta-actions" style="justify-content: flex-start;">
-                  <a class="button-secondary quote-review-to-quote" href="quote.html?source=quote_review">Get structured Operon estimate</a>
+                  <a class="button-secondary quote-review-to-quote" href="quote.html?source=quote_review">Get an Operon comparison quote</a>
                   <a class="button-secondary" href="products.html">Browse products</a>
                 </div>
               </div>
@@ -1835,7 +2023,7 @@
           <p>Start a structured quote with product, area and site details in one place.</p>
         </div>
         <div class="cta-actions">
-          <a class="button quote-review-to-quote" href="quote.html?source=quote_review" id="reviewEstimateCta">Get structured Operon estimate</a>
+          <a class="button quote-review-to-quote" href="quote.html?source=quote_review" id="reviewEstimateCta">Get an Operon comparison quote</a>
           <a class="button-secondary" href="products.html">Browse flooring products</a>
         </div>
       </div>
@@ -1878,12 +2066,14 @@
       </div>
     </section>
   </main>
-
   <footer class="site-footer footer-contained">
     <div class="container footer-grid">
-      <div class="footer-col">
-        <h3>Operon Flooring</h3>
-        <p>Premium laminate, hybrid and engineered timber flooring quotes for Sydney homes.</p>
+      <div class="footer-col footer-brand-block">
+        <a class="footer-logo" href="index.html" aria-label="Operon Flooring home">
+          <img src="assets/operon-logo-final.png" alt="Operon Flooring logo" width="154" height="49">
+        </a>
+        <p class="footer-brand-copy">Flooring quotes and installation guidance for Sydney projects.</p>
+        <a class="footer-brand-cta" href="quote.html">Start quote</a>
       </div>
       <div class="footer-col">
         <h4>Products</h4>
@@ -1891,40 +2081,50 @@
           <li><a href="hybrid-flooring-sydney.html">Hybrid Flooring Sydney</a></li>
           <li><a href="laminate-flooring-sydney.html">Laminate Flooring Sydney</a></li>
           <li><a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring Sydney</a></li>
-          <li><a href="products.html">Products page</a></li>
+          <li><a href="products.html">Flooring Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Quote &amp; Tools</h4>
+        <ul>
+          <li><a href="quote.html">Start Quote</a></li>
+          <li><a href="quote-review.html">Quote Review</a></li>
+          <li><a href="floorplan.html">Upload Floor Plan</a></li>
+          <li><a href="blog/index.html">Flooring Guides</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Locations</h4>
         <ul>
-          <li><a href="parramatta-flooring.html">Parramatta</a></li>
-          <li><a href="liverpool-flooring.html">Liverpool</a></li>
-          <li><a href="auburn-flooring.html">Auburn</a></li>
-          <li><a href="blacktown-flooring.html">Blacktown</a></li>
-          <li><a href="miranda-flooring.html">Miranda</a></li>
+          <li><a href="flooring-edmondson-park.html">Edmondson Park</a></li>
+          <li><a href="flooring-liverpool.html">Liverpool</a></li>
+          <li><a href="flooring-leppington.html">Leppington</a></li>
+          <li><a href="flooring-camden.html">Camden</a></li>
+          <li><a href="flooring-campbelltown.html">Campbelltown</a></li>
+          <li><a href="flooring-parramatta.html">Parramatta</a></li>
+          <li><a href="flooring-bankstown.html">Bankstown</a></li>
+          <li><a href="flooring-auburn.html">Auburn</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Actions</h4>
+        <h4>Company</h4>
         <ul>
-          <li><a href="quote.html">Start Quote</a></li>
-          <li><a href="floorplan.html">Upload Floor Plan</a></li>
-          <li><a href="blog/index.html">Guides</a></li>
           <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms</a></li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>&copy; <span id="year"></span> Operon Flooring. All rights reserved.</p>
-      <div class="footer-legal">
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="terms.html">Terms</a>
-      </div>
+      <p>&copy; 2026 Operon Flooring</p>
     </div>
   </footer>
 
   <script>
-    const QUOTE_REVIEW_STORAGE_KEY = "operon-quote-review-v2";
+    const QUOTE_REVIEW_STORAGE_KEY = "operon_quote_review_state_v2";
+    const QUOTE_REVIEW_LATEST_KEY = "operon_quote_review_latest_v1";
+    const QUOTE_REVIEW_INTELLIGENCE_KEY = "operon_quote_review_intelligence_v1";
+    const QUOTE_REVIEW_HANDOFF_KEY = "operon_quote_review_handoff_v1";
     const CATEGORY_LABELS = {
       hybrid: "Hybrid flooring",
       laminate: "Laminate flooring",
@@ -1989,6 +2189,13 @@
 
     const QUOTE_REVIEW_OCR_ENDPOINT = "/.netlify/functions/quote-review-ocr";
 
+    async function getSecurityChallengeToken(action) {
+      if (typeof window.operonGetTurnstileToken === "function") {
+        return window.operonGetTurnstileToken(action);
+      }
+      return "";
+    }
+
     function escapeHtml(value) {
       return String(value || "")
         .replace(/&/g, "&amp;")
@@ -2013,7 +2220,7 @@
         ? quoteFile.files[0].name
         : "";
       return {
-        mode: modeInput ? modeInput.value : "quick",
+        mode: modeInput ? modeInput.value : "detailed",
         category: document.getElementById("reviewCategory").value,
         area: document.getElementById("reviewArea").value,
         quoteTotal: document.getElementById("reviewTotal").value,
@@ -2315,6 +2522,26 @@
       return quoteFile && quoteFile.files && quoteFile.files[0] ? quoteFile.files[0] : null;
     }
 
+    function getQuoteReviewFileValidationError(file) {
+      const allowedTypes = ["application/pdf", "image/jpeg", "image/png", "image/webp"];
+      const allowedExtensions = [".pdf", ".jpg", ".jpeg", ".png", ".webp"];
+      const maxBytes = 6 * 1024 * 1024;
+      if (!file) {
+        return "";
+      }
+      const name = String(file.name || "").toLowerCase();
+      const hasAllowedExtension = allowedExtensions.some(function (extension) {
+        return name.endsWith(extension);
+      });
+      if (!hasAllowedExtension || allowedTypes.indexOf(String(file.type || "").toLowerCase()) < 0) {
+        return "Use a PDF, JPG, PNG or WEBP quote file.";
+      }
+      if (file.size > maxBytes) {
+        return "Use a quote file under 6 MB for online review.";
+      }
+      return "";
+    }
+
     function resetUploadedQuoteState(input, clearFile) {
       if (!input) {
         return;
@@ -2362,6 +2589,7 @@
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          turnstileToken: await getSecurityChallengeToken("quote_review_upload"),
           file: {
             name: file.name,
             type: file.type,
@@ -2397,11 +2625,9 @@
         if (saved.category) {
           document.getElementById("reviewCategory").value = saved.category;
         }
-        if (saved.mode) {
-          const modeInput = document.querySelector('input[name="reviewMode"][value="' + saved.mode + '"]');
-          if (modeInput) {
-            modeInput.checked = true;
-          }
+        const detailedModeInput = document.querySelector('input[name="reviewMode"][value="detailed"]');
+        if (detailedModeInput) {
+          detailedModeInput.checked = true;
         }
         if (saved.area) {
           document.getElementById("reviewArea").value = saved.area;
@@ -2754,8 +2980,8 @@
       }
       if (fields.comparisonStatus === "COMPARABLE_WITH_CAUTION") {
         observations.push({
-          title: "Price and area are readable",
-          consequence: "This can be reviewed at category level, but the written scope is too thin for an exact product comparison."
+          title: "Price basis needs scope context",
+          consequence: "Some price or area information appears readable, but the written scope is still too thin for an exact product comparison."
         });
       }
       if (area && unitPrice) {
@@ -3726,6 +3952,81 @@
       return Number.isFinite(number) && number > 0 ? number.toFixed(number % 1 === 0 ? 0 : 1) + " m²" : "Not clearly shown";
     }
 
+    function hasDocumentNumber(value) {
+      const number = Number(value || 0);
+      return Number.isFinite(number) && number > 0;
+    }
+
+    function getDocumentPriceBasisState(normalized) {
+      const hasArea = hasDocumentNumber(normalized && normalized.quantityM2);
+      const hasUnitRate = hasDocumentNumber(normalized && normalized.unitPriceExGst);
+      const hasSubtotal = hasDocumentNumber(normalized && normalized.subtotalExGst);
+      const hasGst = hasDocumentNumber(normalized && normalized.gstAmount);
+      const hasTotal = hasDocumentNumber(normalized && normalized.totalIncGst);
+
+      if (hasArea && hasUnitRate && hasSubtotal && hasGst && hasTotal) {
+        return {
+          priceBasis: "Readable",
+          extractionConfidence: "High",
+          copy: "Area, unit rate, subtotal, GST and total are visible on the uploaded document."
+        };
+      }
+
+      if (hasTotal && (!hasArea || !hasUnitRate)) {
+        return {
+          priceBasis: "Partial",
+          extractionConfidence: "Medium",
+          copy: "The total is visible, but area or rate is missing."
+        };
+      }
+
+      if (hasArea && (!hasUnitRate || !hasSubtotal || !hasTotal)) {
+        return {
+          priceBasis: "Partial",
+          extractionConfidence: "Medium",
+          copy: "The area is visible, but the price basis is incomplete."
+        };
+      }
+
+      if (hasUnitRate || hasSubtotal || hasGst || hasTotal) {
+        return {
+          priceBasis: "Partial",
+          extractionConfidence: "Medium",
+          copy: "Some price details are visible, but the price basis is incomplete."
+        };
+      }
+
+      return {
+        priceBasis: "Needs review",
+        extractionConfidence: "Low",
+        copy: "The document could not be read clearly enough for a reliable price-basis summary."
+      };
+    }
+
+    function getDocumentSummaryCopy(normalized, priceBasisState) {
+      if (!priceBasisState || priceBasisState.extractionConfidence === "High") {
+        return normalized.summary;
+      }
+      return priceBasisState.copy + " Use this as a scope review and confirm product, area, price and inclusions before comparing totals.";
+    }
+
+    function buildDocumentReportSummaryText(normalized, priceBasisState, summaryCopy) {
+      const missingItems = normalized.missingScopeItems.map(function (item) {
+        return item.label;
+      }).join(", ");
+      return [
+        "Operon quote review summary",
+        normalized.statusHeadline,
+        summaryCopy,
+        "Price basis: " + priceBasisState.priceBasis,
+        "Extraction confidence: " + priceBasisState.extractionConfidence,
+        "Comparison level: " + normalized.comparisonLevel,
+        "Decision confidence: " + normalized.decisionConfidence,
+        missingItems ? "Missing or unclear items: " + missingItems : "Missing or unclear items: none flagged in this review.",
+        normalized.questionsToAsk.length ? "Questions to confirm:\n" + normalized.questionsToAsk.join("\n") : ""
+      ].filter(Boolean).join("\n\n");
+    }
+
     function renderPriceBasisRow(label, value) {
       if (!value) {
         return "";
@@ -3756,6 +4057,10 @@
         normalized.flooringTypeLabel,
         normalized.thicknessMm ? normalized.thicknessMm + "mm" : ""
       ].filter(Boolean).join(" ");
+      const priceBasisState = getDocumentPriceBasisState(normalized);
+      normalized.extractionConfidence = priceBasisState.extractionConfidence;
+      const summaryCopy = getDocumentSummaryCopy(normalized, priceBasisState);
+      const reportSummaryText = buildDocumentReportSummaryText(normalized, priceBasisState, summaryCopy);
       const priceBasisRows = [
         ["Document type", normalized.documentType],
         ["Business shown on document", normalized.businessShownOnDocument],
@@ -3791,10 +4096,10 @@
             "<div class=\"document-report-head\">" +
               "<p class=\"eyebrow\">Document quote review</p>" +
               "<h3>" + escapeHtml(normalized.statusHeadline) + "</h3>" +
-              "<p>" + escapeHtml(normalized.summary) + "</p>" +
+              "<p>" + escapeHtml(summaryCopy) + "</p>" +
             "</div>" +
             "<div class=\"summary-chip-grid\">" +
-              "<div class=\"summary-chip\"><span>Price basis</span><strong>Readable</strong></div>" +
+              "<div class=\"summary-chip\"><span>Price basis</span><strong>" + escapeHtml(priceBasisState.priceBasis) + "</strong></div>" +
               "<div class=\"summary-chip\"><span>Scope completeness</span><strong>" + (normalized.missingScopeItems.length ? "Incomplete" : "Mostly clear") + "</strong></div>" +
               "<div class=\"summary-chip\"><span>Comparison level</span><strong>" + escapeHtml(normalized.comparisonLevel) + "</strong></div>" +
             "</div>" +
@@ -3815,7 +4120,7 @@
               "<p>" + escapeHtml(normalized.productMatchText) + "</p>" +
             "</div>" +
             "<div class=\"confidence-grid\">" +
-              "<div class=\"confidence-card\"><span>Extraction confidence</span><strong>" + escapeHtml(normalized.extractionConfidence) + "</strong><p>Price and area are readable from the uploaded document.</p></div>" +
+              "<div class=\"confidence-card\"><span>Extraction confidence</span><strong>" + escapeHtml(priceBasisState.extractionConfidence) + "</strong><p>" + escapeHtml(priceBasisState.copy) + "</p></div>" +
               "<div class=\"confidence-card\"><span>Comparison level</span><strong>" + escapeHtml(normalized.comparisonLevel) + "</strong><p>Exact product and scope are not complete enough for a like-for-like price comparison.</p></div>" +
               "<div class=\"confidence-card\"><span>Decision confidence</span><strong>" + escapeHtml(normalized.decisionConfidence) + "</strong><p>Use this as a scope review until missing items are confirmed.</p></div>" +
             "</div>" +
@@ -3868,14 +4173,16 @@
             "<div class=\"document-report-head\">" +
               "<p class=\"eyebrow\">Next step</p>" +
               "<h3>Get a structured Operon comparison quote</h3>" +
-              "<p>Use the extracted area and scope gaps as context, then build a structured Operon quote or request site confirmation.</p>" +
+              "<p>Use the extracted area and scope gaps as context, then build a structured Operon quote before any site confirmation is requested.</p>" +
             "</div>" +
             "<div class=\"cta-actions\" style=\"justify-content: flex-start; margin-top: 16px;\">" +
               "<a class=\"button-secondary quote-review-to-quote\" href=\"quote.html?source=quote_review\">Get an Operon comparison quote</a>" +
-              "<a class=\"button-secondary quote-review-to-quote\" href=\"quote.html?source=quote_review&next=site_confirmation\">Book site confirmation</a>" +
-              "<a class=\"button-secondary\" href=\"mailto:quotes@operonflooring.com.au?subject=Flooring quote review\">Email this review</a>" +
+              "<a class=\"button-secondary quote-review-to-quote\" href=\"quote.html?source=quote_review&next=site_confirmation\">Request site confirmation</a>" +
+              "<button class=\"button-secondary\" type=\"button\" id=\"copyDocumentSummaryButton\">Copy report summary</button>" +
+              "<a class=\"button-secondary\" href=\"mailto:quotes@operonflooring.com.au?subject=Flooring quote review\">Email Operon about this review</a>" +
               "<button class=\"button-secondary\" type=\"button\" id=\"uploadAnotherQuoteButton\">Upload another quote</button>" +
             "</div>" +
+            "<p class=\"copy-status\" id=\"copyDocumentSummaryStatus\" aria-live=\"polite\"></p>" +
           "</section>" +
         "</div>";
 
@@ -3895,6 +4202,28 @@
         });
       }
 
+      const copySummaryButton = document.getElementById("copyDocumentSummaryButton");
+      if (copySummaryButton) {
+        copySummaryButton.addEventListener("click", async function () {
+          const status = document.getElementById("copyDocumentSummaryStatus");
+          try {
+            await navigator.clipboard.writeText(reportSummaryText);
+            if (status) status.textContent = "Report summary copied.";
+            trackQuoteReviewEvent("quote_review_summary_copied", {
+              review_mode: "detailed",
+              comparison_level: normalized.comparisonLevel,
+              decision_confidence: normalized.decisionConfidence,
+              extraction_confidence: priceBasisState.extractionConfidence,
+              missing_scope_count: normalized.missingScopeItems.length,
+              has_uploaded_file: true,
+              generated_report: true
+            });
+          } catch (error) {
+            if (status) status.textContent = "Copy unavailable. Select the report text above.";
+          }
+        });
+      }
+
       const uploadAnother = document.getElementById("uploadAnotherQuoteButton");
       if (uploadAnother) {
         uploadAnother.addEventListener("click", function () {
@@ -3910,28 +4239,70 @@
       documentReport.querySelectorAll(".quote-review-to-quote").forEach(function (button) {
         button.addEventListener("click", function () {
           try {
-            const saved = JSON.parse(localStorage.getItem("latestQuoteReview") || "{}");
+            const saved = JSON.parse(localStorage.getItem(QUOTE_REVIEW_LATEST_KEY) || "{}");
             saved.next_step_taken = button.getAttribute("href") || "quote.html?source=quote_review";
             saved.converted_to_quote = true;
-            localStorage.setItem("latestQuoteReview", JSON.stringify(saved));
+            localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(saved));
+            if (saveQuoteReviewHandoff(saved)) {
+              trackQuoteReviewEvent("quote_review_handoff_attached", {
+                review_mode: saved.review_mode || "",
+                source: "quote_review"
+              });
+            }
           } catch (error) {
             // Navigation must not depend on local storage.
           }
-          trackQuoteReviewEvent("quote_review_to_quote_click", {
-            destination: button.getAttribute("href") || "quote.html",
+          trackQuoteReviewEvent("quote_review_to_quote_clicked", {
             comparison_level: normalized.comparisonLevel,
-            decision_confidence: normalized.decisionConfidence
+            decision_confidence: normalized.decisionConfidence,
+            extraction_confidence: priceBasisState.extractionConfidence,
+            missing_scope_count: normalized.missingScopeItems.length,
+            has_uploaded_file: true,
+            generated_report: true
           });
         });
       });
     }
 
+    function sanitizeQuoteReviewAnalytics(metadata) {
+      const input = metadata && typeof metadata === "object" ? metadata : {};
+      const safe = {};
+      if (input.review_mode) {
+        safe.review_mode = String(input.review_mode);
+      }
+      if (input.comparison_level) {
+        safe.comparison_level = String(input.comparison_level);
+      }
+      if (input.decision_confidence) {
+        safe.decision_confidence = String(input.decision_confidence);
+      }
+      if (input.extraction_confidence || input.confidence_level) {
+        safe.extraction_confidence = String(input.extraction_confidence || input.confidence_level);
+      }
+      if (typeof input.missing_scope_count !== "undefined") {
+        const count = Number(input.missing_scope_count);
+        if (Number.isFinite(count)) {
+          safe.missing_scope_count = count;
+        }
+      }
+      if (typeof input.has_uploaded_file !== "undefined") {
+        safe.has_uploaded_file = Boolean(input.has_uploaded_file);
+      } else if (typeof input.has_file !== "undefined") {
+        safe.has_uploaded_file = Boolean(input.has_file);
+      }
+      if (typeof input.generated_report !== "undefined") {
+        safe.generated_report = Boolean(input.generated_report);
+      }
+      return safe;
+    }
+
     function trackQuoteReviewEvent(eventName, metadata) {
       try {
+        const safeMetadata = sanitizeQuoteReviewAnalytics(metadata);
         if (window.OperonTracking && typeof window.OperonTracking.trackEvent === "function") {
-          window.OperonTracking.trackEvent(eventName, metadata || {});
+          window.OperonTracking.trackEvent(eventName, safeMetadata);
         } else if (typeof window.operonTrack === "function") {
-          window.operonTrack(eventName, metadata || {});
+          window.operonTrack(eventName, safeMetadata);
         }
       } catch (error) {
         // Analytics is optional and must not block review flow.
@@ -3956,38 +4327,61 @@
       );
     }
 
+    function buildQuoteReviewHandoff(payload) {
+      if (!payload || typeof payload !== "object") {
+        return null;
+      }
+
+      const normalized = payload.normalized_document_review || null;
+      const missingScopeItems = normalized && Array.isArray(normalized.missingScopeItems)
+        ? normalized.missingScopeItems.map(function (item) { return item.key || item.label || ""; }).filter(Boolean)
+        : (Array.isArray(payload.missing_items) ? payload.missing_items.slice(0, 12) : []);
+      const questionsToAsk = normalized && Array.isArray(normalized.questionsToAsk)
+        ? normalized.questionsToAsk.slice(0, 8)
+        : (Array.isArray(payload.questions_to_ask) ? payload.questions_to_ask.slice(0, 8) : []);
+
+      return {
+        hasReviewContext: true,
+        reviewId: payload.review_id || "",
+        reviewMode: payload.review_mode || "",
+        extractedFlooringType: normalized ? normalized.flooringType : (payload.flooring_type || ""),
+        extractedAreaM2: normalized ? normalized.quantityM2 : (payload.area_m2 || null),
+        businessShownOnDocument: normalized ? normalized.businessShownOnDocument : (payload.quote_provider_name || ""),
+        missingScopeItems: missingScopeItems,
+        comparisonLevel: normalized ? normalized.comparisonLevel : (payload.risk_level || ""),
+        questionsToAsk: questionsToAsk,
+        createdAt: payload.created_at || new Date().toISOString()
+      };
+    }
+
+    function saveQuoteReviewHandoff(payload) {
+      const handoff = buildQuoteReviewHandoff(payload);
+      if (!handoff) {
+        return null;
+      }
+      localStorage.setItem(QUOTE_REVIEW_HANDOFF_KEY, JSON.stringify(handoff));
+      return handoff;
+    }
+
     function saveQuoteIntelligencePayload(payload) {
       try {
-        localStorage.setItem("latestQuoteReview", JSON.stringify(payload));
-        localStorage.setItem("operon-quote-intelligence-v1", JSON.stringify(payload));
-        if (payload && payload.normalized_document_review) {
-          const review = payload.normalized_document_review;
-          localStorage.setItem("operonQuoteReviewPrefill", JSON.stringify({
-            source: "quote_review",
-            flooringType: review.flooringType,
-            areaM2: review.quantityM2,
-            uploadedQuoteRateExGst: review.unitPriceExGst,
-            uploadedQuoteTotalIncGst: review.totalIncGst,
-            jobAddress: review.jobAddress,
-            documentReference: review.invoiceOrQuoteNumber || payload.uploaded_quote_reference || "",
-            missingScopeFlags: review.missingScopeItems.map(function (item) { return item.key; }),
-            createdAt: new Date().toISOString()
-          }));
-          // quote.html can later offer user-confirmed prefill from this object.
-        }
+        localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(payload));
+        localStorage.setItem(QUOTE_REVIEW_INTELLIGENCE_KEY, JSON.stringify(payload));
         if (hasPayloadInput(payload)) {
           trackQuoteReviewEvent("quote_review_payload_saved", {
             review_mode: payload.review_mode,
-            risk_level: payload.risk_level,
-            clarity_score: payload.clarity_score
+            comparison_level: payload.normalized_document_review ? payload.normalized_document_review.comparisonLevel : "",
+            decision_confidence: payload.normalized_document_review ? payload.normalized_document_review.decisionConfidence : payload.confidence_level,
+            extraction_confidence: payload.normalized_document_review ? payload.normalized_document_review.extractionConfidence : payload.confidence_level,
+            missing_scope_count: payload.missing_items ? payload.missing_items.length : 0,
+            has_uploaded_file: Boolean(payload.uploaded_quote_reference),
+            generated_report: Boolean(payload.normalized_document_review || payload.included_items.length)
           });
         }
         return true;
       } catch (error) {
         // Future Supabase storage can use this payload shape server-side.
-        trackQuoteReviewEvent("quote_review_payload_save_error", {
-          message: error && error.message ? error.message : "local_storage_failed"
-        });
+        trackQuoteReviewEvent("quote_review_payload_save_error", {});
         return false;
       }
     }
@@ -3999,7 +4393,10 @@
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ quoteReviewPayload: payload })
+          body: JSON.stringify({
+            quoteReviewPayload: payload,
+            turnstileToken: await getSecurityChallengeToken("quote_review_save")
+          })
         });
 
         if (!response.ok) {
@@ -4012,18 +4409,14 @@
 
         if (result && result.review_id) {
           payload.review_id = result.review_id;
-          localStorage.setItem("latestQuoteReview", JSON.stringify(payload));
+          localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(payload));
         }
         if (result && result.ok === false) {
-          trackQuoteReviewEvent("quote_review_payload_save_error", {
-            message: result.message || result.warning || "function_unavailable"
-          });
+          trackQuoteReviewEvent("quote_review_payload_save_error", {});
         }
         return result;
       } catch (error) {
-        trackQuoteReviewEvent("quote_review_payload_save_error", {
-          message: error && error.message ? error.message : "function_unavailable"
-        });
+        trackQuoteReviewEvent("quote_review_payload_save_error", {});
         return null;
       }
     }
@@ -4137,8 +4530,14 @@
         const eventName = element.tagName === "SELECT" || element.type === "checkbox" ? "change" : "input";
         if (element.id === "reviewQuoteFile") {
           element.addEventListener("change", function () {
-            const selectedReference = element.files && element.files[0] ? element.files[0].name : "";
+            const selectedFile = element.files && element.files[0] ? element.files[0] : null;
+            const validationError = getQuoteReviewFileValidationError(selectedFile);
+            const selectedReference = selectedFile && !validationError ? selectedFile.name : "";
             resetUploadedQuoteState(element, false);
+            if (validationError) {
+              resetUploadedQuoteState(element, true);
+              setQuoteOcrStatus(validationError, true);
+            }
             element.dataset.savedReference = selectedReference;
             quickScopeCheckState = null;
             documentReviewState = null;
@@ -4147,7 +4546,7 @@
               : "No quote file selected.";
             setQuoteOcrStatus("", false);
             trackQuoteReviewEvent("quote_review_upload_attempt", {
-              has_file: Boolean(element.dataset.savedReference)
+              has_uploaded_file: Boolean(element.dataset.savedReference)
             });
             renderReview();
           });
@@ -4177,13 +4576,13 @@
         });
       });
 
-      const startReviewLink = document.querySelector('[data-track-cta="quote_review_start"]');
+      const startReviewLink = document.getElementById("quoteReviewStartLink");
       const nextStepButtons = document.querySelectorAll(".quote-review-to-quote");
 
       if (startReviewLink) {
         startReviewLink.addEventListener("click", function () {
-          trackQuoteReviewEvent("quote_review_start", { destination: "#reviewForm" });
-          trackQuoteReviewEvent("cta_click", { cta: "quote_review_start", destination: "#reviewForm" });
+          trackQuoteReviewEvent("quote_review_start", { review_mode: getReviewState().mode });
+          trackQuoteReviewEvent("cta_click", { review_mode: getReviewState().mode });
         });
       }
 
@@ -4200,15 +4599,29 @@
           saveQuoteIntelligencePayload(payload);
           trackQuoteReviewEvent("quote_review_complete", {
             review_mode: payload.review_mode,
-            risk_level: payload.risk_level,
-            clarity_score: payload.clarity_score
+            comparison_level: payload.normalized_document_review ? payload.normalized_document_review.comparisonLevel : "",
+            decision_confidence: payload.normalized_document_review ? payload.normalized_document_review.decisionConfidence : payload.confidence_level,
+            extraction_confidence: payload.normalized_document_review ? payload.normalized_document_review.extractionConfidence : payload.confidence_level,
+            missing_scope_count: payload.missing_items ? payload.missing_items.length : 0,
+            has_uploaded_file: Boolean(payload.uploaded_quote_reference),
+            generated_report: true
           });
-          trackQuoteReviewEvent("quote_review_to_quote_click", {
-            destination: "quote.html",
-            risk_level: payload.risk_level,
-            clarity_score: payload.clarity_score
+          trackQuoteReviewEvent("quote_review_to_quote_clicked", {
+            review_mode: payload.review_mode,
+            comparison_level: payload.normalized_document_review ? payload.normalized_document_review.comparisonLevel : "",
+            decision_confidence: payload.normalized_document_review ? payload.normalized_document_review.decisionConfidence : payload.confidence_level,
+            extraction_confidence: payload.normalized_document_review ? payload.normalized_document_review.extractionConfidence : payload.confidence_level,
+            missing_scope_count: payload.missing_items ? payload.missing_items.length : 0,
+            has_uploaded_file: Boolean(payload.uploaded_quote_reference),
+            generated_report: true
           });
           await trySaveQuoteReviewToFunction(payload);
+          if (saveQuoteReviewHandoff(payload)) {
+            trackQuoteReviewEvent("quote_review_handoff_attached", {
+              review_mode: payload.review_mode,
+              source: "quote_review"
+            });
+          }
           window.location.href = "quote.html?source=quote_review";
         });
       });
@@ -4259,6 +4672,12 @@
           const quoteFile = document.getElementById("reviewQuoteFile");
           const file = getQuoteReviewFile();
           if (file) {
+            const validationError = getQuoteReviewFileValidationError(file);
+            if (validationError) {
+              resetUploadedQuoteState(quoteFile, true);
+              setQuoteOcrStatus(validationError, true);
+              return;
+            }
             detailedUploadCta.disabled = true;
             detailedUploadCta.textContent = "Checking uploaded quote...";
             setQuoteOcrStatus("Reviewing uploaded quote...", true);
@@ -4278,8 +4697,9 @@
               if (quoteFile.dataset.ocrStatus === "text_extracted") {
                 setQuoteOcrStatus("Quote details extracted. Generating review...", true);
                 trackQuoteReviewEvent("quote_review_document_uploaded", {
-                  source: "quote_review",
-                  confidence_level: quoteFile.dataset.ocrConfidence ? "available" : "unknown"
+                  review_mode: "detailed",
+                  extraction_confidence: quoteFile.dataset.ocrConfidence ? "Medium" : "Low",
+                  has_uploaded_file: true
                 });
               } else if (quoteFile.dataset.ocrStatus === "engine_not_configured") {
                 setQuoteOcrStatus("Document review is not configured yet.", true);
@@ -4304,11 +4724,13 @@
               }
             }
             trackQuoteReviewEvent("quote_review_document_review_generate", {
-              has_file: true,
-              ocr_status: quoteFile.dataset.ocrStatus || "",
+              has_uploaded_file: true,
               review_mode: payload ? payload.review_mode : "detailed",
-              risk_level: payload ? payload.risk_level : "",
-              saved_for_followup: !!(saveResult && saveResult.ok)
+              comparison_level: payload && payload.normalized_document_review ? payload.normalized_document_review.comparisonLevel : "",
+              decision_confidence: payload && payload.normalized_document_review ? payload.normalized_document_review.decisionConfidence : "",
+              extraction_confidence: payload && payload.normalized_document_review ? payload.normalized_document_review.extractionConfidence : "",
+              missing_scope_count: payload && payload.missing_items ? payload.missing_items.length : 0,
+              generated_report: Boolean(payload)
             });
             const outputPanel = document.getElementById("reviewOutputPanel");
             if (outputPanel) {
@@ -4323,14 +4745,13 @@
         });
       }
     }
-
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    const toggle = document.querySelector(".menu-toggle");
-    const navLinks = document.getElementById("navLinks");
+    const header = document.querySelector(".site-header");
+    const toggle = document.querySelector(".nav-toggle");
+    const navLinks = document.querySelector(".nav-links");
     if (toggle && navLinks) {
       toggle.addEventListener("click", function () {
-        const open = navLinks.classList.toggle("is-open");
+        const open = header ? header.classList.toggle("mobile-nav-open") : navLinks.classList.toggle("is-open");
+        navLinks.classList.toggle("is-open", open);
         toggle.setAttribute("aria-expanded", open ? "true" : "false");
       });
     }

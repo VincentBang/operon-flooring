@@ -11940,8 +11940,33 @@
       .replace(/^-+|-+$/g, "");
   }
 
+  function getPreferenceFloorsImport() {
+    const payload = window.PREFERENCE_FLOORS_IMPORT;
+    if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+      return { ranges: {}, products: {} };
+    }
+    return payload;
+  }
+
+  function getMergedRangeConfig() {
+    const importedRanges = getPreferenceFloorsImport().ranges || {};
+    return {
+      laminate: Object.assign({}, RANGE_CONFIG.laminate || {}, importedRanges.laminate || {}),
+      hybrid: Object.assign({}, RANGE_CONFIG.hybrid || {}, importedRanges.hybrid || {}),
+      engineered: Object.assign({}, RANGE_CONFIG.engineered || {}, importedRanges.engineered || {})
+    };
+  }
+
+  function mergeProductCollections(base, imported) {
+    return {
+      laminate: (base && base.laminate ? base.laminate : []).concat(imported && imported.laminate ? imported.laminate : []),
+      hybrid: (base && base.hybrid ? base.hybrid : []).concat(imported && imported.hybrid ? imported.hybrid : []),
+      engineered: (base && base.engineered ? base.engineered : []).concat(imported && imported.engineered ? imported.engineered : [])
+    };
+  }
+
   function getRangeConfigEntry(product, category) {
-    const config = RANGE_CONFIG[category || product.category] || {};
+    const config = getMergedRangeConfig()[category || product.category] || {};
     return config[product.brand] || config[product.range] || null;
   }
 
@@ -12011,11 +12036,13 @@
   }
 
   function getProductsSource() {
+    const importedProducts = getPreferenceFloorsImport().products || {};
+    const fallbackSource = mergeProductCollections(PRODUCTS, importedProducts);
     const source = window.OperonPricingSource ? window.OperonPricingSource.getTable("products") : null;
     if (!source || typeof source !== "object" || Array.isArray(source) || !Object.keys(source).length) {
-      return PRODUCTS;
+      return fallbackSource;
     }
-    return source;
+    return mergeProductCollections(source, importedProducts);
   }
 
   function normaliseProduct(product, fallbackCategory) {
@@ -12101,49 +12128,8 @@
   }
 
   function applyRangeGalleryFallback(products) {
-    const grouped = {};
-
-    products.forEach(function (product) {
-      if (!product.rangeId) {
-        return;
-      }
-
-      if (!grouped[product.rangeId]) {
-        grouped[product.rangeId] = {
-          galleryPool: []
-        };
-      }
-
-      (product.galleryImages || []).forEach(function (imageUrl) {
-        if (!imageUrl || grouped[product.rangeId].galleryPool.indexOf(imageUrl) >= 0) {
-          return;
-        }
-        grouped[product.rangeId].galleryPool.push(imageUrl);
-      });
-    });
-
-    return products.map(function (product) {
-      const existingImages = Array.isArray(product.galleryImages) ? product.galleryImages.slice() : [];
-      if (existingImages.length >= 2 || !product.rangeId || !grouped[product.rangeId]) {
-        return product;
-      }
-
-      const enrichedImages = existingImages.slice();
-      grouped[product.rangeId].galleryPool.forEach(function (imageUrl) {
-        if (!imageUrl || enrichedImages.indexOf(imageUrl) >= 0) {
-          return;
-        }
-        enrichedImages.push(imageUrl);
-      });
-
-      if (enrichedImages.length === existingImages.length) {
-        return product;
-      }
-
-      return Object.assign({}, product, {
-        galleryImages: enrichedImages.slice(0, 3)
-      });
-    });
+    // Keep colour previews colour-specific. Pooling range images can show a different colour in the popup.
+    return products;
   }
 
   function listAllProducts() {
@@ -12616,9 +12602,14 @@
 
   const categoryRangeInfoTabs = {};
 
+  function isCustomerVisibleTechnicalRow(item) {
+    const label = String(item && item.label ? item.label : "").toLowerCase();
+    return label !== "product code" && label.indexOf("supplier") < 0;
+  }
+
   function buildCategoryRangeInfoModalBody(content, activeTab) {
     if (activeTab === "description") {
-      return (content.description || []).slice(0, 3).map(function (paragraph) {
+      return (content.description || []).slice(0, 5).map(function (paragraph) {
         return "<p>" + escapeHtml(paragraph) + "</p>";
       }).join("");
     }
@@ -12636,9 +12627,7 @@
 
     return (
       '<div class="catalogue-range-specs">' +
-        (content.technical || []).filter(function (item) {
-          return item.label !== "Product Code";
-        }).slice(0, 8).map(function (item) {
+        (content.technical || []).filter(isCustomerVisibleTechnicalRow).slice(0, 12).map(function (item) {
           return '<div class="catalogue-range-spec"><span>' + escapeHtml(item.label) + "</span><strong>" + escapeHtml(item.value) + "</strong></div>";
         }).join("") +
       "</div>"
@@ -13027,7 +13016,8 @@
           const trackingPayload = {
             category: range.category,
             range: range.rangeLabel,
-            rangeId: range.rangeId
+            range_id: range.rangeId,
+            selection_mode: range.selectionMode || "range_only"
           };
           if (typeof window.OperonTracking.trackProductSelect === "function") {
             window.OperonTracking.trackProductSelect(trackingPayload);
@@ -13304,8 +13294,9 @@
             category: product.category,
             brand: product.brand,
             range: product.range,
-            colour: product.colour,
-            pricePerM2: product.pricePerM2
+            range_id: product.rangeId || "",
+            product_id: product.id || "",
+            selection_mode: product.selectionMode || ""
           };
           if (typeof window.OperonTracking.trackProductSelect === "function") {
             window.OperonTracking.trackProductSelect(trackingPayload);

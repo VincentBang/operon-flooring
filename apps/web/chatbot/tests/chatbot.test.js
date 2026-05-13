@@ -1171,7 +1171,7 @@ test("quote review result guidance stays scope-first and routes to estimate", fu
   const text = lastAssistantText(snapshot);
   assert.strictEqual(snapshot.siteState.flow, "quote_review_result");
   assert.strictEqual(snapshot.structuredOutput.intent, "quote_review_result_explanation");
-  assert.strictEqual(snapshot.routeSuggestion.href, "quote.html?from=quote-review");
+  assert.strictEqual(snapshot.routeSuggestion.href, "quote.html?source=quote_review");
   assert.match(text, /scope|Underlay|Confirm/i);
   assert.doesNotMatch(text, /\$\s*\d|cheaper|bad quote|calculator|formula/i);
 });

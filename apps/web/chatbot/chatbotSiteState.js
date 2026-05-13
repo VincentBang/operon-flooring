@@ -368,7 +368,7 @@
         : "Use the review page to check scope items like removal, prep, trims, and installation before starting a structured estimate.",
       next: {
         label: "Get structured estimate",
-        href: "quote.html?from=quote-review",
+        href: "quote.html?source=quote_review",
         focusId: ""
       }
     };

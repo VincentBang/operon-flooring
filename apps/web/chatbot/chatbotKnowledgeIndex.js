@@ -64,10 +64,10 @@
   const QUOTE_FLOW = {
     key: "quote_flow",
     label: "Quote flow",
-    summary: "The quote path moves from contact details to property, product direction, area, stairs, extras, estimate review, then submit. The online result is a starting estimate, not the final confirmed quote.",
-    steps: ["customer details", "property details", "product direction", "area", "stairs", "extras and site scope", "estimate review", "submit for confirmation"],
+    summary: "The quote path is a five-step express flow: project basics, flooring and area, main scope, estimate preview, then contact and submit. The online result is a starting estimate, not the final confirmed quote.",
+    steps: ["project basics", "flooring and area", "main scope", "estimate preview", "contact and submit"],
     route: { label: "Start quote", href: "quote.html" },
-    terms: ["quote flow", "how quote works", "quote process", "estimate", "submit", "email copy", "quote submitted"]
+    terms: ["quote flow", "how quote works", "quote process", "project basics", "flooring and area", "main scope", "estimate preview", "contact and submit", "advanced details", "not sure", "estimate", "submit", "email copy", "email me a copy", "quote submitted"]
   };
 
   const QUOTE_SCOPE = {

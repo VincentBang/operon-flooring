@@ -2,7 +2,7 @@
 
 Source-of-truth status: active SEO execution layer aligned to the business brief and current page set.
 
-Last updated: 2026-04-29  
+Last updated: 2026-05-12
 Primary owner: Operon Flooring website / quote system  
 Primary goal: generate high-intent flooring quote leads in Sydney
 
@@ -14,6 +14,24 @@ It converts strategy into practical, high-ROI actions.
 
 This is not a generic content plan.
 It is a lead generation operating plan.
+
+## 2026-05-12 Architecture Upgrade
+
+The live SEO structure now prioritises high-intent quote and utility paths rather than generic blog filler.
+
+- Core money pages: `/flooring-quote-sydney.html`, `/hybrid-flooring-sydney.html`, `/laminate-flooring-sydney.html`, `/engineered-timber-flooring-sydney.html`, `/flooring-installation-cost-sydney.html`, `/apartment-flooring-sydney.html`
+- Local pages: 20 canonical suburb quote pages using `/flooring-[suburb].html`
+- Utility pages: `/quote.html`, `/quote-review.html`, `/floorplan.html`, `/products.html`
+- Guide cluster: quote variation, hidden costs, product comparisons, scotia/skirting, acoustic underlay, floor preparation and stairs
+- Measurement: `docs/seo/SEO_MEASUREMENT_PLAN.md`
+- Keyword planning handoff: `apps/web/seo-keyword-plan.csv`
+
+Policy guardrails:
+
+- Do not create suburb pages by swapping only the suburb name.
+- Do not claim final fixed pricing from online estimates.
+- Do not add fake reviews, ratings, licences, address claims or project proof.
+- Do not send personal data to analytics.
 
 ## Source Inputs
 

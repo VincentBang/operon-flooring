@@ -95,7 +95,7 @@ Document review output:
   "decision_confidence": "low to medium",
   "product_match_status": "Product match not confirmed",
   "missing_items_to_check": ["brand/range", "underlay", "floor preparation", "trims"],
-  "recommended_next_step": "quote.html?from=quote-review"
+  "recommended_next_step": "quote.html?source=quote_review"
 }
 ```
 

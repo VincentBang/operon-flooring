@@ -1,16 +1,13 @@
 "use strict";
 
 const { getSupabaseTables } = require("./_supabaseTables");
+const Security = require("./_security");
 
-function jsonResponse(statusCode, payload) {
-  return {
-    statusCode: statusCode,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store"
-    },
-    body: JSON.stringify(payload)
-  };
+function jsonResponse(event, statusCode, payload) {
+  return Security.jsonResponse(event, statusCode, payload, {
+    methods: "POST, OPTIONS",
+    allowHeaders: "content-type"
+  });
 }
 
 function getSupabaseConfig() {
@@ -188,22 +185,45 @@ async function insertQuoteReview(row) {
 }
 
 exports.handler = async function (event) {
+  if (event.httpMethod === "OPTIONS") {
+    return Security.optionsResponse(event, {
+      methods: "POST, OPTIONS",
+      allowHeaders: "content-type"
+    });
+  }
+
   if (event.httpMethod !== "POST") {
-    return jsonResponse(405, { error: "Method not allowed" });
+    return jsonResponse(event, 405, { error: "Method not allowed" });
+  }
+
+  const largeBodyResponse = Security.rejectLargeBody(event, 950 * 1024);
+  if (largeBodyResponse) return largeBodyResponse;
+
+  const rateLimit = await Security.checkDurableRateLimit(event, {
+    scope: "save-quote-review",
+    limit: 30,
+    windowMs: 10 * 60 * 1000
+  });
+  if (!rateLimit.allowed) {
+    return Security.rateLimitResponse(event, rateLimit);
   }
 
   try {
     const body = JSON.parse(event.body || "{}");
+    const turnstile = await Security.verifyTurnstile(event, body.turnstileToken || body.turnstile_token || "");
+    if (!turnstile.ok) {
+      return Security.botChallengeResponse(event, turnstile);
+    }
     const payload = body.quoteReviewPayload || body;
     const row = buildQuoteReviewRow(payload);
     const inserted = await insertQuoteReview(row);
-    return jsonResponse(200, {
+    return jsonResponse(event, 200, {
       ok: true,
       review_id: inserted && inserted.id || null
     });
   } catch (error) {
     console.warn("Quote review save unavailable", error && error.message ? error.message : error);
-    return jsonResponse(200, {
+    return jsonResponse(event, 200, {
       ok: false,
       warning: "Quote review was kept locally. Server save is unavailable.",
       message: "server_save_unavailable"

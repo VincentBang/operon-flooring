@@ -1,19 +1,13 @@
 "use strict";
 
 const { getSupabaseTables } = require("./_supabaseTables");
+const Security = require("./_security");
 
-function jsonResponse(statusCode, payload) {
-  return {
-    statusCode: statusCode,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "authorization, content-type, x-operon-admin-token",
-      "Access-Control-Allow-Methods": "GET, POST, OPTIONS"
-    },
-    body: JSON.stringify(payload)
-  };
+function jsonResponse(event, statusCode, payload) {
+  return Security.jsonResponse(event, statusCode, payload, {
+    methods: "GET, POST, OPTIONS",
+    allowHeaders: "authorization, content-type, x-operon-admin-token"
+  });
 }
 
 function getSupabaseConfig() {
@@ -213,23 +207,44 @@ async function cancelMessage(messageId) {
 
 exports.handler = async function (event) {
   if (event.httpMethod === "OPTIONS") {
-    return jsonResponse(204, {});
+    return Security.optionsResponse(event, {
+      methods: "GET, POST, OPTIONS",
+      allowHeaders: "authorization, content-type, x-operon-admin-token"
+    });
+  }
+
+  const rateLimit = await Security.checkDurableRateLimit(event, {
+    scope: "followup-admin",
+    limit: 120,
+    windowMs: 10 * 60 * 1000
+  });
+  if (!rateLimit.allowed) {
+    return Security.rateLimitResponse(event, rateLimit, {
+      methods: "GET, POST, OPTIONS",
+      allowHeaders: "authorization, content-type, x-operon-admin-token"
+    });
   }
 
   const admin = requireAdmin(event);
   if (!admin.ok) {
-    return jsonResponse(admin.status, { ok: false, error: admin.error });
+    return jsonResponse(event, admin.status, { ok: false, error: admin.error });
   }
 
   try {
     if (event.httpMethod === "GET") {
       const payload = await listFollowups(event);
-      return jsonResponse(200, Object.assign({ ok: true }, payload));
+      return jsonResponse(event, 200, Object.assign({ ok: true }, payload));
     }
 
     if (event.httpMethod !== "POST") {
-      return jsonResponse(405, { ok: false, error: "Method not allowed." });
+      return jsonResponse(event, 405, { ok: false, error: "Method not allowed." });
     }
+
+    const largeBodyResponse = Security.rejectLargeBody(event, 64 * 1024, {
+      methods: "GET, POST, OPTIONS",
+      allowHeaders: "authorization, content-type, x-operon-admin-token"
+    });
+    if (largeBodyResponse) return largeBodyResponse;
 
     const body = JSON.parse(event.body || "{}");
     const action = String(body.action || "").trim();
@@ -237,25 +252,25 @@ exports.handler = async function (event) {
     const messageId = String(body.message_id || body.messageId || "").trim();
 
     if ((action === "pause_quote" || action === "resume_quote") && !isUuid(quoteRequestId)) {
-      return jsonResponse(400, { ok: false, error: "A valid quote_request_id is required." });
+      return jsonResponse(event, 400, { ok: false, error: "A valid quote_request_id is required." });
     }
     if (action === "cancel_message" && !isUuid(messageId)) {
-      return jsonResponse(400, { ok: false, error: "A valid message_id is required." });
+      return jsonResponse(event, 400, { ok: false, error: "A valid message_id is required." });
     }
 
     if (action === "pause_quote") {
-      return jsonResponse(200, Object.assign({ ok: true }, await pauseQuote(quoteRequestId)));
+      return jsonResponse(event, 200, Object.assign({ ok: true }, await pauseQuote(quoteRequestId)));
     }
     if (action === "resume_quote") {
-      return jsonResponse(200, Object.assign({ ok: true }, await resumeQuote(quoteRequestId)));
+      return jsonResponse(event, 200, Object.assign({ ok: true }, await resumeQuote(quoteRequestId)));
     }
     if (action === "cancel_message") {
-      return jsonResponse(200, Object.assign({ ok: true }, await cancelMessage(messageId)));
+      return jsonResponse(event, 200, Object.assign({ ok: true }, await cancelMessage(messageId)));
     }
 
-    return jsonResponse(400, { ok: false, error: "Unknown follow-up admin action." });
+    return jsonResponse(event, 400, { ok: false, error: "Unknown follow-up admin action." });
   } catch (error) {
-    return jsonResponse(500, {
+    return jsonResponse(event, 500, {
       ok: false,
       error: error && error.message ? error.message : "Follow-up admin request failed."
     });

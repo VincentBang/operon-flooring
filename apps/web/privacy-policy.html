@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy | Operon Flooring</title>
-  <meta name="description" content="Read the Operon Flooring privacy policy for quote requests, floor plan uploads and website data handling.">
+  <meta name="description" content="Read the Operon Flooring privacy policy for quote requests, floor plan uploads, quote review uploads, website analytics and customer information handling.">
   <link rel="icon" href="assets/Operon favicon.png" type="image/png">
   <link rel="canonical" href="https://operonflooring.com.au/privacy-policy.html">
   <meta name="robots" content="index,follow">
@@ -16,12 +16,42 @@
     gtag('js', new Date());
     gtag('config', 'G-T2LEXZJM3Q');
   </script>
+  <style>
+    .legal-shell { width: min(980px, calc(100% - 32px)); margin: 0 auto; }
+    .legal-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
+    .legal-card { background: var(--surface, #fff); border: 1px solid var(--line, #d8e2df); border-radius: 22px; padding: clamp(22px, 3vw, 34px); box-shadow: var(--shadow, 0 10px 28px rgba(23,35,45,.06)); }
+    .legal-card h2 { margin-top: 0; margin-bottom: 12px; font-size: clamp(1.25rem, 2vw, 1.55rem); }
+    .legal-card h3 { margin-top: 22px; margin-bottom: 8px; font-size: 1.05rem; }
+    .legal-card p, .legal-card li { color: var(--muted, #5e6a74); line-height: 1.7; }
+    .legal-card ul { padding-left: 1.2rem; margin-top: 10px; }
+    .legal-card li + li { margin-top: 6px; }
+    .legal-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+    .legal-summary div { border: 1px solid var(--line, #d8e2df); border-radius: 16px; padding: 16px; background: rgba(244,247,246,.64); }
+    .legal-summary strong { display: block; margin-bottom: 6px; }
+    .legal-note { border-left: 4px solid var(--accent, #b56e52); padding: 14px 16px; border-radius: 12px; background: rgba(181,110,82,.08); color: var(--text, #17232d); }
+    .legal-meta { color: var(--muted, #5e6a74); font-weight: 600; margin-top: 12px; }
+    .legal-table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+    .legal-table th, .legal-table td { text-align: left; vertical-align: top; border: 1px solid var(--line, #d8e2df); padding: 12px; line-height: 1.55; }
+    .legal-table th { color: var(--text, #17232d); background: rgba(244,247,246,.7); }
+    @media (max-width: 760px) {
+      .legal-summary { grid-template-columns: 1fr; }
+      .legal-card { padding: 20px; }
+      .legal-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
     <div class="shell nav">
-      <a class="brand" href="index.html#top"><span class="brand-mark" aria-hidden="true"></span>Operon Flooring</a>
-      <nav class="nav-links">
+      <a class="brand" href="index.html#top" aria-label="Operon Flooring home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Operon Flooring</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
         <a href="index.html#top">Home</a>
         <a href="quote.html">Quote</a>
         <a href="products.html">Flooring Products</a>
@@ -33,7 +63,10 @@
         <span></span>
         <span></span>
       </button>
-      <a class="button" href="quote.html">Start quote</a>
+      <div class="header-actions">
+        <a class="header-phone" href="tel:04XXXXXXXX" data-track-cta="click_call_header">Call 04XX XXX XXX</a>
+        <a class="button header-quote-button" href="quote.html">Start quote</a>
+      </div>
     </div>
   </header>
   <main>
@@ -42,28 +75,185 @@
         <article class="hero-card">
           <span class="eyebrow">Legal</span>
           <h1>Privacy Policy</h1>
-          <p>This policy explains how Operon Flooring handles quote enquiries, floor plan uploads, quote-review uploads and website contact details.</p>
+          <p>This policy explains how Operon Flooring handles quote enquiries, floor plan uploads, quote-review uploads, contact details, website analytics and related customer information.</p>
+          <p class="legal-meta">Last updated: May 2026</p>
         </article>
       </div>
     </section>
+
     <section class="section">
-      <div class="shell grid-2">
-        <article class="section-card">
-          <h2>What we collect</h2>
-          <p>We may collect details you choose to provide when requesting a flooring quote, contacting us, uploading a floor plan, or submitting a quote for review. This can include contact details, suburb, project notes, flooring preferences, measurements, uploaded files and written quote details.</p>
+      <div class="legal-shell legal-layout">
+        <article class="legal-card">
+          <h2>1. About this policy</h2>
+          <p>Operon Flooring operates this website to provide flooring quote support, product guidance, floor plan measurement tools, quote review tools and customer enquiry pathways for flooring projects in Sydney and surrounding areas.</p>
+          <p>This policy explains how we collect, use, store and disclose personal information when you use our website, request a quote, upload a floor plan, submit an existing quote for review, contact us, or interact with our online tools.</p>
+          <p>Where applicable, we handle personal information in line with Australian privacy requirements, including the Privacy Act 1988 (Cth) and the Australian Privacy Principles.</p>
+          <div class="legal-summary">
+            <div><strong>What we collect</strong><span>Contact, project, quote, measurement, upload and website-use information.</span></div>
+            <div><strong>Why we collect it</strong><span>To respond, review scope, prepare quotes, improve tools and support follow-up.</span></div>
+            <div><strong>Your control</strong><span>You can contact us to request access, correction or deletion where available.</span></div>
+          </div>
         </article>
-        <article class="section-card">
-          <h2>How we use it</h2>
-          <p>We use this information to respond to enquiries, prepare or review flooring quote scope, support measurement workflows and improve Operon Flooring's quoting process. Uploaded quote-review files are used for scope review and may be stored temporarily to support follow-up.</p>
+
+        <article class="legal-card">
+          <h2>2. Information we may collect</h2>
+          <p>We collect information you provide directly, information created through your use of our tools, and limited technical information about website use.</p>
+          <h3>Contact and enquiry information</h3>
+          <ul>
+            <li>name, phone number, email address and preferred contact method;</li>
+            <li>suburb, postcode, service area and project location details you provide;</li>
+            <li>messages, notes, questions, photos or other information you submit.</li>
+          </ul>
+          <h3>Quote and project information</h3>
+          <ul>
+            <li>flooring type, product category, range or colour preferences;</li>
+            <li>property type, apartment/access details, stairs, floor preparation, furniture, removal, disposal, trims, skirting, scotia, underlay and site-condition information;</li>
+            <li>quote mode, floor area, room details, measurement method, quote confidence and scope-review notes.</li>
+          </ul>
+          <h3>Uploaded files and tool data</h3>
+          <ul>
+            <li>floor plans, images, PDFs or drawings uploaded for measurement support;</li>
+            <li>written quotes or invoices uploaded for quote-review support;</li>
+            <li>document text, line items, prices, product descriptions, area, GST and scope details extracted from uploaded documents;</li>
+            <li>floor plan measurement results, room labels, selected areas and confidence flags.</li>
+          </ul>
+          <h3>Website and analytics information</h3>
+          <ul>
+            <li>pages visited, buttons clicked, quote-step progress, floor plan tool usage, quote review usage and other funnel events;</li>
+            <li>browser type, device type, approximate location, referral source, timestamp and IP-related technical information;</li>
+            <li>cookies and similar technologies used for analytics, site performance and basic functionality.</li>
+          </ul>
+        </article>
+
+        <article class="legal-card">
+          <h2>3. How we collect information</h2>
+          <ul>
+            <li>when you fill in quote, contact or review forms;</li>
+            <li>when you upload a floor plan, quote, invoice, image or document;</li>
+            <li>when you use the quote calculator, floor plan tool, quote-review tool, chatbot or product pages;</li>
+            <li>when you call, email, message or otherwise communicate with us;</li>
+            <li>through analytics, tracking events, cookies and security tools used on the website.</li>
+          </ul>
+          <p>If you provide information about another person, such as a property owner, tenant, partner or project contact, you should only do so if you have authority or a reasonable basis to provide that information.</p>
+        </article>
+
+        <article class="legal-card">
+          <h2>4. How we use information</h2>
+          <p>We use collected information for purposes connected to flooring enquiries, quote support, installation planning and website improvement, including to:</p>
+          <ul>
+            <li>respond to enquiries and contact you about your project;</li>
+            <li>prepare, review or explain flooring quote scope;</li>
+            <li>support quote estimates, floor area measurement and product guidance;</li>
+            <li>review uploaded quotes for visible inclusions, missing scope and comparison readiness;</li>
+            <li>review uploaded floor plans and measurement details;</li>
+            <li>arrange follow-up, site confirmation, installation planning or product discussion;</li>
+            <li>send quote confirmations, review summaries, requested email copies or service-related messages;</li>
+            <li>improve our website, quote flow, floor plan tool, quote-review system, product catalogue and customer communication;</li>
+            <li>measure traffic, conversion, quote starts, quote completions, floor plan usage, quote-review usage and other operational metrics;</li>
+            <li>protect the website from spam, misuse, technical errors, fraud or security risks;</li>
+            <li>comply with legal, accounting, tax, insurance, dispute-resolution and regulatory obligations.</li>
+          </ul>
+        </article>
+
+        <article class="legal-card">
+          <h2>5. Uploaded floor plans, images and quote documents</h2>
+          <p>Uploaded files may contain personal or property information, including names, addresses, project details, measurements, invoice numbers, quote numbers, prices and floor plan layouts.</p>
+          <p>We use uploaded files only for the relevant workflow, such as measuring floor area, reviewing visible quote details, identifying unclear scope, supporting follow-up, or improving our quoting process.</p>
+          <p>You should not upload files containing unnecessary sensitive information. If a document contains information unrelated to the flooring project, you may choose to remove or obscure that information before uploading where practical.</p>
+          <p>Uploaded files and extracted information may be stored temporarily or for a reasonable period to support your enquiry, quote review, customer follow-up, operational improvement, dispute handling, security or legal record-keeping.</p>
+        </article>
+
+        <article class="legal-card">
+          <h2>6. Chatbot and automated guidance</h2>
+          <p>The website may include an assistant or chatbot that provides general flooring guidance, quote-scope explanation and navigation support. The chatbot is not a final quoting system, installer, lawyer, certifier or building professional.</p>
+          <p>Information you enter into the chatbot may be used to respond to your enquiry, suggest a website pathway, prepare draft context, support follow-up where requested and improve the assistant. The chatbot should not be used to submit sensitive personal information.</p>
+        </article>
+
+        <article class="legal-card">
+          <h2>7. Cookies, analytics and website tracking</h2>
+          <p>We may use cookies, Google Analytics and similar tools to understand how visitors use the website and to improve quote, product, floor plan and quote-review workflows.</p>
+          <p>Analytics events may include page views, quote starts, quote step progress, product category choices, area-method choices, floor plan tool actions, quote-review actions, call clicks, email clicks and chatbot interactions. We aim to avoid sending names, phone numbers, email addresses, full addresses, uploaded file contents or raw quote notes to analytics platforms.</p>
+          <p>You can disable cookies through your browser settings, although some website functionality may not work as intended.</p>
+        </article>
+
+        <article class="legal-card">
+          <h2>8. Marketing and service messages</h2>
+          <p>We may send service-related messages about your enquiry, quote, project, uploaded file or requested follow-up. These messages are part of responding to your request.</p>
+          <p>If we send marketing emails or SMS messages, we will do so where we have your consent or another lawful basis, and we will provide a way to unsubscribe where required. We do not intend to use a one-off quote enquiry as automatic consent to unrelated marketing.</p>
+        </article>
+
+        <article class="legal-card">
+          <h2>9. Disclosure of information</h2>
+          <p>We may disclose information to third parties where reasonably necessary for the purposes described in this policy, including:</p>
+          <ul>
+            <li>installers, subcontractors, suppliers or service partners involved in responding to or delivering your flooring project;</li>
+            <li>hosting, website, form, email, analytics, security, storage, CRM and automation providers;</li>
+            <li>payment, accounting, bookkeeping, insurance, legal or professional advisers;</li>
+            <li>government, regulatory or law-enforcement bodies where required by law;</li>
+            <li>another party where necessary to protect our legal rights, manage disputes, investigate misuse or respond to safety/security issues.</li>
+          </ul>
+          <p>We do not sell your personal information.</p>
+        </article>
+
+        <article class="legal-card">
+          <h2>10. Overseas services and cloud providers</h2>
+          <p>Some website, analytics, hosting, storage, email or automation providers may process or store information outside Australia. Where practical, we use reputable service providers and take reasonable steps to protect information handled through those services.</p>
+        </article>
+
+        <article class="legal-card">
+          <h2>11. Security and retention</h2>
+          <p>We take reasonable steps to protect personal information from misuse, interference, loss, unauthorised access, modification and disclosure. Security measures may include restricted access, secure hosting, encrypted transmission where available, file-handling controls, spam protection and operational procedures.</p>
+          <p>No website or internet transmission is completely secure. You should avoid uploading unnecessary sensitive information.</p>
+          <p>We keep information for as long as reasonably required for the purposes described in this policy, including responding to enquiries, preparing or reviewing quotes, managing jobs, improving systems, keeping business records, resolving disputes and meeting legal obligations. When information is no longer required, we may delete, de-identify or archive it where appropriate.</p>
+        </article>
+
+        <article class="legal-card">
+          <h2>12. Access, correction and deletion requests</h2>
+          <p>You may contact us to request access to personal information we hold about you, ask us to correct inaccurate information, or request deletion of information where reasonably available and not required for legal, operational or record-keeping purposes.</p>
+          <p>We may need to verify your identity before responding. Some requests may be limited where information relates to another person, legal obligations, dispute handling, fraud prevention, security or business records.</p>
+        </article>
+
+        <article class="legal-card">
+          <h2>13. Data breaches</h2>
+          <p>If a data breach occurs, we will assess the situation and take reasonable steps to contain, investigate and respond. Where privacy law requires notification because a breach is likely to result in serious harm, we will notify affected individuals and the relevant regulator as required.</p>
+        </article>
+
+        <article class="legal-card">
+          <h2>14. Third-party links and tools</h2>
+          <p>The website may link to external websites, tools, social platforms, suppliers or service providers. We are not responsible for the privacy practices or content of third-party websites. You should review their privacy policies before providing information to them.</p>
+        </article>
+
+        <article class="legal-card">
+          <h2>15. Children</h2>
+          <p>This website is intended for property owners, renovators, tenants, investors, builders and other adults involved in flooring projects. It is not directed to children. If you believe a child has provided personal information through the website, contact us so we can review it.</p>
+        </article>
+
+        <article class="legal-card">
+          <h2>16. Changes to this policy</h2>
+          <p>We may update this policy from time to time to reflect changes in website functionality, quote workflows, legal requirements or business operations. The updated version will be published on this page with a revised update date.</p>
+        </article>
+
+        <article class="legal-card">
+          <h2>17. Contact and complaints</h2>
+          <p>For privacy questions, access/correction requests or complaints, contact Operon Flooring:</p>
+          <ul>
+            <li>Email: <a href="mailto:quotes@operonflooring.com.au">quotes@operonflooring.com.au</a></li>
+            <li>Phone: <a href="tel:04XXXXXXXX">04XX XXX XXX</a></li>
+            <li>Website: <a href="contact.html">Contact page</a></li>
+          </ul>
+          <p>We will review privacy complaints and respond within a reasonable time. If you are not satisfied with our response, you may be able to contact the Office of the Australian Information Commissioner or another relevant authority.</p>
         </article>
       </div>
     </section>
   </main>
-  <footer class="site-footer">
+  <footer class="site-footer footer-contained">
     <div class="container footer-grid">
-      <div class="footer-col">
-        <h3>Operon Flooring</h3>
-        <p>Premium laminate, hybrid and engineered timber flooring quotes for Sydney homes.</p>
+      <div class="footer-col footer-brand-block">
+        <a class="footer-logo" href="index.html" aria-label="Operon Flooring home">
+          <img src="assets/operon-logo-final.png" alt="Operon Flooring logo" width="154" height="49">
+        </a>
+        <p class="footer-brand-copy">Flooring quotes and installation guidance for Sydney projects.</p>
+        <a class="footer-brand-cta" href="quote.html">Start quote</a>
       </div>
       <div class="footer-col">
         <h4>Products</h4>
@@ -71,35 +261,42 @@
           <li><a href="hybrid-flooring-sydney.html">Hybrid Flooring Sydney</a></li>
           <li><a href="laminate-flooring-sydney.html">Laminate Flooring Sydney</a></li>
           <li><a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring Sydney</a></li>
-          <li><a href="products.html">Products page</a></li>
+          <li><a href="products.html">Flooring Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Quote &amp; Tools</h4>
+        <ul>
+          <li><a href="quote.html">Start Quote</a></li>
+          <li><a href="quote-review.html">Quote Review</a></li>
+          <li><a href="floorplan.html">Upload Floor Plan</a></li>
+          <li><a href="blog/index.html">Flooring Guides</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Locations</h4>
         <ul>
-          <li><a href="parramatta-flooring.html">Parramatta</a></li>
-          <li><a href="liverpool-flooring.html">Liverpool</a></li>
-          <li><a href="auburn-flooring.html">Auburn</a></li>
-          <li><a href="blacktown-flooring.html">Blacktown</a></li>
-          <li><a href="miranda-flooring.html">Miranda</a></li>
+          <li><a href="flooring-edmondson-park.html">Edmondson Park</a></li>
+          <li><a href="flooring-liverpool.html">Liverpool</a></li>
+          <li><a href="flooring-leppington.html">Leppington</a></li>
+          <li><a href="flooring-camden.html">Camden</a></li>
+          <li><a href="flooring-campbelltown.html">Campbelltown</a></li>
+          <li><a href="flooring-parramatta.html">Parramatta</a></li>
+          <li><a href="flooring-bankstown.html">Bankstown</a></li>
+          <li><a href="flooring-auburn.html">Auburn</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Actions</h4>
+        <h4>Company</h4>
         <ul>
-          <li><a href="quote.html">Start Quote</a></li>
-          <li><a href="floorplan.html">Upload Floor Plan</a></li>
-          <li><a href="blog/index.html">Guides</a></li>
           <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms</a></li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>&copy; 2026 Operon Flooring. All rights reserved.</p>
-      <div class="footer-legal">
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="terms.html">Terms</a>
-      </div>
+      <p>&copy; 2026 Operon Flooring</p>
     </div>
   </footer>
   <script src="mobile-nav.js"></script>

@@ -1,14 +1,12 @@
 "use strict";
 
-function jsonResponse(statusCode, payload) {
-  return {
-    statusCode: statusCode,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store"
-    },
-    body: JSON.stringify(payload)
-  };
+const Security = require("./_security");
+
+function jsonResponse(event, statusCode, payload) {
+  return Security.jsonResponse(event, statusCode, payload, {
+    methods: "POST, OPTIONS",
+    allowHeaders: "content-type"
+  });
 }
 
 function getEmailConfig() {
@@ -155,15 +153,39 @@ async function sendResendEmail(message) {
 }
 
 exports.handler = async function (event) {
+  if (event.httpMethod === "OPTIONS") {
+    return Security.optionsResponse(event, {
+      methods: "POST, OPTIONS",
+      allowHeaders: "content-type"
+    });
+  }
+
   if (event.httpMethod !== "POST") {
-    return jsonResponse(405, { ok: false, error: "Method not allowed." });
+    return jsonResponse(event, 405, { ok: false, error: "Method not allowed." });
+  }
+
+  const largeBodyResponse = Security.rejectLargeBody(event, 150 * 1024);
+  if (largeBodyResponse) return largeBodyResponse;
+
+  const rateLimit = await Security.checkDurableRateLimit(event, {
+    scope: "operator-chat-request",
+    limit: 8,
+    windowMs: 10 * 60 * 1000
+  });
+  if (!rateLimit.allowed) {
+    return Security.rateLimitResponse(event, rateLimit);
   }
 
   let body;
   try {
     body = JSON.parse(event.body || "{}");
   } catch (error) {
-    return jsonResponse(400, { ok: false, error: "Invalid JSON payload." });
+    return jsonResponse(event, 400, { ok: false, error: "Invalid JSON payload." });
+  }
+
+  const turnstile = await Security.verifyTurnstile(event, body.turnstileToken || body.turnstile_token || "");
+  if (!turnstile.ok) {
+    return Security.botChallengeResponse(event, turnstile);
   }
 
   const customer = body.customer || {};
@@ -173,15 +195,15 @@ exports.handler = async function (event) {
   const message = toParagraph(body.message);
 
   if (!name) {
-    return jsonResponse(400, { ok: false, error: "Name is required." });
+    return jsonResponse(event, 400, { ok: false, error: "Name is required." });
   }
 
   if (!phone && !email) {
-    return jsonResponse(400, { ok: false, error: "Phone or email is required." });
+    return jsonResponse(event, 400, { ok: false, error: "Phone or email is required." });
   }
 
   if (email && !isValidEmail(email)) {
-    return jsonResponse(400, { ok: false, error: "Email format looks invalid." });
+    return jsonResponse(event, 400, { ok: false, error: "Email format looks invalid." });
   }
 
   const requestId = "operator-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8);
@@ -217,14 +239,14 @@ exports.handler = async function (event) {
       customerEmailSent = true;
     }
 
-    return jsonResponse(200, {
+    return jsonResponse(event, 200, {
       ok: true,
       requestId: requestId,
       internalNotificationSent: true,
       customerEmailSent: customerEmailSent
     });
   } catch (error) {
-    return jsonResponse(500, {
+    return jsonResponse(event, 500, {
       ok: false,
       error: error && error.message ? error.message : "Operator request failed."
     });

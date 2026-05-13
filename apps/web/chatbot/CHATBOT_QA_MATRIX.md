@@ -22,7 +22,7 @@ node apps/web/chatbot/tests/chatbot.test.js
 | My quote only says supply and install | quick_quote_completeness | quote-review.html | Must explain no-file quick check and avoid document-report claims |
 | I want a human to call me | operator_handoff | quote.html?from=chatbot&support=operator | Must show explicit follow-up flow, not live chat |
 | Can you give final price? | quote_explanation | quote.html | Must explain estimate vs confirmation without prices |
-| What does this quote review mean? | quote_review_result_explanation | quote-review.html or quote.html?from=quote-review | Must explain visible scope result only |
+| What does this quote review mean? | quote_review_result_explanation | quote-review.html or quote.html?source=quote_review | Must explain visible scope result only |
 | It says product match 35% | quote_review_result_explanation | quote-review.html | Must say low match is not confirmed, without exposing internal match labels |
 | I live in an apartment no lift | scope_validation | quote-review.html | Must flag access/site details without pricing |
 | Can you calculate my quote if I tell you the rooms? | quote_explanation | quote.html | Must refuse chat calculation and route to the quote flow |

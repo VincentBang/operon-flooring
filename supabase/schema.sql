@@ -143,7 +143,7 @@ select
   'quote-files',
   false,
   6291456,
-  array['application/pdf', 'image/jpeg', 'image/png']
+  array['application/pdf', 'image/jpeg', 'image/png', 'image/webp']
 where not exists (
   select 1 from storage.buckets where id = 'quote-files'
 );

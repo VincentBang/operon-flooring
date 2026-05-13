@@ -32,6 +32,7 @@
       "  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;",
       "  color: var(--operon-chatbot-text);",
       "  pointer-events: none;",
+      "  transition: bottom 0.18s ease;",
       "}",
       "#" + ROOT_ID + " *,",
       "#" + ROOT_ID + " *::before,",
@@ -53,6 +54,12 @@
       "  pointer-events: auto;",
       "}",
       ".operon-chatbot-nudge[data-visible='true'] { display: block; }",
+      "#" + ROOT_ID + "[data-near-footer='true'] {",
+      "  bottom: calc(28px + env(safe-area-inset-bottom, 0px));",
+      "}",
+      "#" + ROOT_ID + "[data-near-footer='true'] .operon-chatbot-nudge {",
+      "  display: none !important;",
+      "}",
       ".operon-chatbot-toggle {",
       "  display: inline-flex;",
       "  align-items: center;",
@@ -279,6 +286,9 @@
       "    bottom: calc(12px + env(safe-area-inset-bottom, 0px));",
       "    width: auto;",
       "  }",
+      "  body.has-mobile-sticky-cta #" + ROOT_ID + " {",
+      "    bottom: calc(88px + env(safe-area-inset-bottom, 0px));",
+      "  }",
       "  .operon-chatbot-panel {",
       "    max-height: min(62vh, 520px);",
       "  }",
@@ -294,7 +304,9 @@
       "  .operon-chatbot-panel, .operon-chatbot-toggle { transition: none; }",
       "}",
       "@media (max-width: 420px) {",
-      "  .operon-chatbot-toggle { width: 100%; justify-content: center; }",
+      "  .operon-chatbot-shell { justify-items: end; }",
+      "  .operon-chatbot-toggle { width: auto; min-width: 48px; padding: 0 13px; justify-content: center; }",
+      "  .operon-chatbot-toggle span:last-child { display: none; }",
       "  .operon-chatbot-message { max-width: 100%; }",
       "  .operon-chatbot-panel { max-height: min(60vh, 500px); }",
       "  .operon-chatbot-head { padding: 13px 12px 10px; }",
@@ -470,6 +482,24 @@
     let isOpen = false;
     let lastFocusedBeforeOpen = null;
 
+    function syncFooterProximity() {
+      const footer = document.querySelector(".site-footer");
+      if (!footer) {
+        if (typeof root.removeAttribute === "function") {
+          root.removeAttribute("data-near-footer");
+        }
+        return;
+      }
+      const footerRect = footer.getBoundingClientRect();
+      const nearFooter = footerRect.top < (window.innerHeight - 140);
+      if (typeof root.setAttribute === "function") {
+        root.setAttribute("data-near-footer", nearFooter ? "true" : "false");
+      }
+      if (nearFooter && !isOpen) {
+        nudge.setAttribute("data-visible", "false");
+      }
+    }
+
     function getFocusableElements() {
       return Array.from(panel.querySelectorAll("button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"))
         .filter(function (item) {
@@ -561,6 +591,7 @@
       }
 
       messages.scrollTop = messages.scrollHeight;
+      syncFooterProximity();
     }
 
     function buildSummary(structured, siteState) {
@@ -623,6 +654,12 @@
     nudge.addEventListener("click", function () {
       setOpen(true);
     });
+
+    if (typeof window.addEventListener === "function") {
+      window.addEventListener("scroll", syncFooterProximity, { passive: true });
+      window.addEventListener("resize", syncFooterProximity);
+    }
+    syncFooterProximity();
 
     close.addEventListener("click", function () {
       setOpen(false);

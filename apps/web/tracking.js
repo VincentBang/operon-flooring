@@ -21,9 +21,10 @@
     "has_floorplan",
     "has_stairs",
     "has_quote_review",
+    "missing_scope_count",
+    "file_uploaded",
     "event_context"
   ];
-  const GA_BLOCKED_KEY_PATTERN = /(name|phone|email|address|note|message|file|upload|payload|formula|rate|price|pricing|total|amount|cost|suburb|postcode|contractor|provider|customer|raw|quote_text|wording)/i;
   const CTA_EVENT_ALIASES = {
     click_hero_start_quote: "hero_start_quote_click",
     hero_instant_quote: "hero_start_quote_click",
@@ -31,6 +32,7 @@
     hero_validate_quote: "hero_quote_review_click",
     click_start_quote_header: "header_start_quote_click",
     header_quote: "header_start_quote_click",
+    click_quote_review_link: "quote_review_link_clicked",
     click_contact_email: "email_click"
   };
   const GA_EVENT_ALIASES = {
@@ -206,13 +208,12 @@
       has_floorplan: firstDefined(source.has_floorplan, source.hasFloorplan),
       has_stairs: firstDefined(source.has_stairs, source.hasStairs),
       has_quote_review: firstDefined(source.has_quote_review, source.hasQuoteReview),
+      missing_scope_count: firstDefined(source.missing_scope_count, source.missingScopeCount),
+      file_uploaded: firstDefined(source.file_uploaded, source.has_uploaded_file, source.hasUploadedFile, source.has_file),
       event_context: firstDefined(source.event_context, source.cta, source.label, source.action_id, source.interaction_type, source.review_mode)
     };
     const safe = {};
     GA_ALLOWED_PARAM_KEYS.forEach(function (key) {
-      if (GA_BLOCKED_KEY_PATTERN.test(key)) {
-        return;
-      }
       const value = cleanAnalyticsValue(mapped[key]);
       if (typeof value !== "undefined") {
         safe[key] = value;
@@ -412,16 +413,18 @@
       category: "",
       brand: "",
       range: "",
-      colour: "",
-      pricePerM2: 0,
+      range_id: "",
+      product_id: "",
+      selection_mode: "",
       source: ""
     }, payload || {});
     const signature = [
       details.category,
       details.brand,
       details.range,
-      details.colour,
-      details.pricePerM2,
+      details.range_id,
+      details.product_id,
+      details.selection_mode,
       details.source
     ].join("|");
     if (shouldSkipRapidDuplicate("product_select", signature)) {
@@ -683,7 +686,7 @@
             event_context: eventName
           });
         }
-        if (/^click_|^guide_to_quote_clicked$|^floor_plan_tool_clicked$/.test(eventName)) {
+        if (/^click_|^guide_to_quote_clicked$|^guide_to_quote_click$|^floor_plan_tool_clicked$|^suburb_page_quote_click$|^product_continue_to_quote$/.test(eventName)) {
           trackEvent(eventName, payload);
         }
       });

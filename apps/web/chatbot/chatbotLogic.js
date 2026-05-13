@@ -306,7 +306,7 @@
         reason: "quote review result guidance",
         missing_items_to_check: siteState && siteState.reviewMissingScope ? siteState.reviewMissingScope.slice(0, 5) : []
       });
-      setRoute("Get structured estimate", siteState && siteState.next ? siteState.next.href : "quote.html?from=quote-review");
+      setRoute("Get structured estimate", siteState && siteState.next ? siteState.next.href : "quote.html?source=quote_review");
       pushGuided(answer, insight, nextStep, prompts.actions.nextSteps);
       state.stage = "quote_review_result";
     }
@@ -435,7 +435,7 @@
           reason: "quote review page guidance",
           missing_items_to_check: ["installation method", "disposal", "floor preparation", "skirting", "site details"]
         });
-        setRoute("Get structured estimate", "quote.html?from=quote-review");
+        setRoute("Get structured estimate", "quote.html?source=quote_review");
         pushTrigger(
           triggerId,
           "Review what is included before moving forward.",

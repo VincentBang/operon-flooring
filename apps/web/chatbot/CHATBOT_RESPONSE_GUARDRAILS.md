@@ -115,7 +115,7 @@ Allowed:
 - mention one extracted detail if it is shown on the page
 - mention one missing or unclear scope item
 - suggest one contractor question from the visible review
-- route to `quote.html?from=quote-review` for a structured Operon estimate
+- route to `quote.html?source=quote_review` for a structured Operon estimate
 - explain quick check as high-level only when no document is uploaded
 - explain document review as stronger because visible quote details can be checked
 

@@ -1,6 +1,8 @@
 (function () {
   const DEFAULT_SCRIPT_PATH = "chatbot/";
   const MODULE_FILES = [
+    "../security-config.js",
+    "../security.js",
     "chatbotPrompts.js",
     "chatbotPolicy.js",
     "chatbotKnowledgeIndex.js",
@@ -43,7 +45,7 @@
       subtitle: "Check inclusions",
       welcomeText: "Check product, area, inclusions, missing scope items, and the questions worth clarifying.",
       initialRouteLabel: "Get structured estimate",
-      initialRouteHref: "quote.html?from=quote-review"
+      initialRouteHref: "quote.html?source=quote_review"
     },
     "thank-you": {
       pageKey: "thank-you",

@@ -69,6 +69,8 @@
 
     html {
       scroll-behavior: smooth;
+      max-width: 100%;
+      overflow-x: clip;
     }
 
     body {
@@ -77,6 +79,8 @@
       font-family: "Inter", "Segoe UI", BlinkMacSystemFont, -apple-system, sans-serif;
       background: var(--bg);
       min-height: 100vh;
+      max-width: 100%;
+      overflow-x: clip;
     }
 
     a {
@@ -643,9 +647,7 @@
     }
 
     .site-footer {
-      padding: 22px 0 42px;
-      color: var(--muted);
-      font-size: 0.95rem;
+      padding: 64px 0 20px;
     }
 
     @media (max-width: 1180px) {
@@ -691,6 +693,15 @@
       .catalog-panel {
         padding: 22px;
       }
+
+      .button,
+      .button-primary,
+      .button-secondary,
+      .button-ghost,
+      .save-actions a,
+      .save-actions button {
+        width: 100%;
+      }
     }
   </style>
   <link rel="stylesheet" href="theme.css">
@@ -712,10 +723,19 @@
       <nav class="nav-links" aria-label="Primary">
         <a href="index.html#top">Home</a>
         <a href="quote.html">Quote</a>
-        <a href="floorplan.html">Floorplan</a>
-        <a href="visualiser.html">Visualiser</a>
+        <a href="products.html">Flooring Products</a>
+        <a href="floorplan.html">Floor Plan</a>
+        <a href="blog/index.html">Guides</a>
       </nav>
-      <a class="button button-primary" href="quote.html">Open quote</a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="header-actions">
+        <a class="header-phone" href="tel:04XXXXXXXX" data-track-cta="click_call_header">Call 04XX XXX XXX</a>
+        <a class="button header-quote-button" href="quote.html">Start quote</a>
+      </div>
     </div>
   </header>
 
@@ -1035,14 +1055,62 @@
       </div>
     </section>
   </main>
-
-  <footer class="site-footer">
-    <div class="shell">
-      Operon Flooring visualiser. Preview finishes, compare options, and move your selection into quote.
+  <footer class="site-footer footer-contained">
+    <div class="container footer-grid">
+      <div class="footer-col footer-brand-block">
+        <a class="footer-logo" href="index.html" aria-label="Operon Flooring home">
+          <img src="assets/operon-logo-final.png" alt="Operon Flooring logo" width="154" height="49">
+        </a>
+        <p class="footer-brand-copy">Flooring quotes and installation guidance for Sydney projects.</p>
+        <a class="footer-brand-cta" href="quote.html">Start quote</a>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="hybrid-flooring-sydney.html">Hybrid Flooring Sydney</a></li>
+          <li><a href="laminate-flooring-sydney.html">Laminate Flooring Sydney</a></li>
+          <li><a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring Sydney</a></li>
+          <li><a href="products.html">Flooring Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Quote &amp; Tools</h4>
+        <ul>
+          <li><a href="quote.html">Start Quote</a></li>
+          <li><a href="quote-review.html">Quote Review</a></li>
+          <li><a href="floorplan.html">Upload Floor Plan</a></li>
+          <li><a href="blog/index.html">Flooring Guides</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Locations</h4>
+        <ul>
+          <li><a href="flooring-edmondson-park.html">Edmondson Park</a></li>
+          <li><a href="flooring-liverpool.html">Liverpool</a></li>
+          <li><a href="flooring-leppington.html">Leppington</a></li>
+          <li><a href="flooring-camden.html">Camden</a></li>
+          <li><a href="flooring-campbelltown.html">Campbelltown</a></li>
+          <li><a href="flooring-parramatta.html">Parramatta</a></li>
+          <li><a href="flooring-bankstown.html">Bankstown</a></li>
+          <li><a href="flooring-auburn.html">Auburn</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Operon Flooring</p>
     </div>
   </footer>
 
   <script src="visualiser-app.js"></script>
+  <script src="mobile-nav.js"></script>
   <script src="tracking.js"></script>
 </body>
 </html>

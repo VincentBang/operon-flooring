@@ -92,7 +92,7 @@ The current Quote Advisor has two modes:
 - Quick quote completeness check: no-file check based only on customer-entered or ticked information. It checks whether product, area, inclusions, exclusions and assumptions are clear enough to compare. It must not claim document review, price fairness, product matching, or an Operon comparable estimate.
 - Document-based quote review: strongest review path for an uploaded or written quote. It may extract visible document details such as price basis, product line, area, GST, total and missing scope. It must not call itself final price advice, say another installer is wrong, or claim Operon is cheaper.
 
-Quote Advisor creates a structured `latestQuoteReview` payload with:
+Quote review creates a structured `operon_quote_review_handoff_v1` summary for the quote flow with:
 
 - review mode
 - flooring type

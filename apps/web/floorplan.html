@@ -118,6 +118,8 @@
 
     html {
       scroll-behavior: smooth;
+      max-width: 100%;
+      overflow-x: clip;
     }
 
     body {
@@ -126,6 +128,8 @@
       font-family: var(--font-sans);
       background: var(--bg);
       min-height: 100vh;
+      max-width: 100%;
+      overflow-x: clip;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
     }
@@ -223,6 +227,30 @@
 
     .nav-toggle span {
       display: none;
+    }
+
+    .header-quote-button {
+      min-width: 132px;
+      white-space: nowrap;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-phone {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      color: var(--brand);
+      font-weight: 700;
+      white-space: nowrap;
     }
 
     .site-header .button {
@@ -1019,7 +1047,7 @@
     .site-footer {
       background: var(--brand);
       color: #ffffff;
-      padding: 72px 0 22px;
+      padding: 64px 0 20px;
     }
 
     .site-footer .container {
@@ -1029,65 +1057,108 @@
 
     .site-footer.footer-contained {
       width: min(1360px, calc(100% - 80px));
-      margin: 72px auto 28px;
-      border-radius: 28px 28px 0 0;
+      margin: 64px auto 80px;
+      border-radius: 30px;
       overflow: hidden;
       box-shadow: 0 18px 48px rgba(23, 49, 58, 0.16);
     }
 
     .footer-grid {
       display: grid;
-      grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
-      gap: 40px;
+      grid-template-columns: minmax(0, 1.35fr) repeat(4, minmax(0, 0.9fr));
+      gap: 28px 36px;
+      align-items: start;
+    }
+
+    .footer-brand-block {
+      display: grid;
+      gap: 16px;
+      max-width: 300px;
+    }
+
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 188px;
+      min-height: 58px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: inset 0 0 0 1px rgba(17, 24, 32, 0.06);
+    }
+
+    .footer-logo img {
+      display: block;
+      width: 154px;
+      height: auto;
+    }
+
+    .footer-brand-copy {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .footer-brand-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+
+    .footer-brand-cta:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.28);
+      color: #ffffff;
     }
 
     .footer-col h3,
     .footer-col h4 {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       color: #ffffff;
-      font-weight: 600;
-    }
-
-    .footer-col h3 {
-      font-size: 1.1rem;
-    }
-
-    .footer-col h3::before {
-      content: "";
-      display: block;
-      width: 190px;
-      height: 58px;
-      margin: 0 0 16px;
-      border-radius: 18px;
-      background: #ffffff url("assets/operon-logo-final.png") center / 156px auto no-repeat;
-    }
-
-    .footer-col h4 {
       font-size: 1rem;
+      font-weight: 700;
     }
 
     .footer-col p {
-      margin: 0 0 12px;
-      color: rgba(255, 255, 255, 0.72);
-      font-size: 14px;
-      line-height: 1.6;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 0.95rem;
+      line-height: 1.7;
     }
 
     .footer-col ul {
       margin: 0;
       padding: 0;
       list-style: none;
+      display: grid;
+      gap: 10px;
     }
 
     .footer-col li {
-      margin-bottom: 8px;
+      margin: 0;
     }
 
     .footer-col a,
     .footer-legal a {
-      color: rgba(255, 255, 255, 0.72);
+      color: rgba(255, 255, 255, 0.8);
       text-decoration: none;
-      font-size: 14px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.45;
+      transition: color 0.18s ease, opacity 0.18s ease;
     }
 
     .footer-col a:hover,
@@ -1097,25 +1168,26 @@
 
     .footer-bottom {
       border-top: 1px solid rgba(255, 255, 255, 0.16);
-      margin-top: 40px;
-      padding-top: 20px;
+      margin-top: 36px;
+      padding-top: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      color: rgba(255, 255, 255, 0.64);
-      font-size: 13px;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.84rem;
     }
 
     .footer-bottom p {
       margin: 0;
-      color: rgba(255, 255, 255, 0.64);
+      color: rgba(255, 255, 255, 0.62);
     }
 
     .footer-legal {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+      flex-wrap: wrap;
     }
 
     .tool-section,
@@ -1259,7 +1331,7 @@
     }
 
     body.floorplan-workspace-active .workspace-card {
-      height: clamp(616px, calc((100dvh - 205px) * 1.1), 792px);
+      height: clamp(659px, calc((100dvh - 205px) * 1.177), 847px);
       min-height: 0;
     }
 
@@ -1404,6 +1476,10 @@
         min-height: 46px;
         padding: 12px 18px;
       }
+
+      .header-phone {
+        padding-inline: 14px;
+      }
     }
 
     @media (max-width: 1080px) {
@@ -1422,10 +1498,15 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .footer-brand-block {
+        grid-column: 1 / -1;
+        max-width: 420px;
+      }
+
       .site-footer.footer-contained {
         width: calc(100% - 24px);
-        margin: 44px auto 12px;
-        border-radius: 22px 22px 0 0;
+        margin: 44px auto 24px;
+        border-radius: 22px;
       }
 
       .hero-content-row {
@@ -1549,6 +1630,10 @@
         display: none;
       }
 
+      .header-actions {
+        display: none;
+      }
+
       canvas {
         min-width: 0;
       }
@@ -1655,6 +1740,19 @@
         grid-template-columns: 1fr;
       }
 
+      .site-footer {
+        padding: 52px 0 18px;
+      }
+
+      .site-footer.footer-contained {
+        margin: 44px auto 24px;
+        border-radius: 22px;
+      }
+
+      .footer-brand-block {
+        max-width: none;
+      }
+
       .workspace-main {
         grid-template-columns: 1fr;
         gap: 14px;
@@ -1709,13 +1807,13 @@
 
       .footer-bottom {
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         gap: 10px;
-        text-align: center;
+        text-align: left;
       }
 
       .footer-legal {
-        justify-content: center;
+        justify-content: flex-start;
         flex-wrap: wrap;
       }
 
@@ -1806,7 +1904,10 @@
         <span></span>
         <span></span>
       </button>
-      <a class="button" data-quote-return-link href="quote.html">Start quote</a>
+      <div class="header-actions">
+        <a class="header-phone" href="tel:04XXXXXXXX" data-track-cta="click_call_header">Call 04XX XXX XXX</a>
+        <a class="button header-quote-button" data-quote-return-link href="quote.html">Start quote</a>
+      </div>
     </div>
   </header>
 
@@ -1920,26 +2021,6 @@
                     <h3 class="tool-subsection-title">2. Set scale and trace</h3>
                     <p class="helper" style="margin: 0;">Use the longest labelled wall dimension available for best results.</p>
                   </div>
-                  <div class="room-label-row">
-                    <div class="field">
-                      <label for="traceRoomLabel">Room label</label>
-                      <select id="traceRoomLabel">
-                        <option value="Living">Living</option>
-                        <option value="Bedroom">Bedroom</option>
-                        <option value="Kitchen">Kitchen</option>
-                        <option value="Dining">Dining</option>
-                        <option value="Hallway">Hallway</option>
-                        <option value="Study">Study</option>
-                        <option value="Rumpus">Rumpus</option>
-                        <option value="Other">Other room</option>
-                      </select>
-                    </div>
-                    <div class="field">
-                      <label for="traceRoomName">Custom room name</label>
-                      <input id="traceRoomName" type="text" placeholder="Optional, e.g. Master bedroom">
-                    </div>
-                  </div>
-
                   <div class="tool-button-row compact">
                     <button class="button-secondary" id="setScaleButton" type="button">Step 1. Set scale</button>
                     <button class="button-secondary" id="resetScaleButton" type="button">Reset scale</button>
@@ -2154,9 +2235,12 @@
 
   <footer class="site-footer footer-contained">
     <div class="container footer-grid">
-      <div class="footer-col">
-        <h3>Operon Flooring</h3>
-        <p>Premium laminate, hybrid and engineered timber flooring quotes for Sydney homes.</p>
+      <div class="footer-col footer-brand-block">
+        <a class="footer-logo" href="index.html" aria-label="Operon Flooring home">
+          <img src="assets/operon-logo-final.png" alt="Operon Flooring logo" width="154" height="49">
+        </a>
+        <p class="footer-brand-copy">Flooring quotes and installation guidance for Sydney projects.</p>
+        <a class="footer-brand-cta" href="quote.html">Start quote</a>
       </div>
       <div class="footer-col">
         <h4>Products</h4>
@@ -2164,35 +2248,42 @@
           <li><a href="hybrid-flooring-sydney.html">Hybrid Flooring Sydney</a></li>
           <li><a href="laminate-flooring-sydney.html">Laminate Flooring Sydney</a></li>
           <li><a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring Sydney</a></li>
-          <li><a href="products.html">Products page</a></li>
+          <li><a href="products.html">Flooring Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Quote &amp; Tools</h4>
+        <ul>
+          <li><a href="quote.html">Start Quote</a></li>
+          <li><a href="quote-review.html">Quote Review</a></li>
+          <li><a href="floorplan.html">Upload Floor Plan</a></li>
+          <li><a href="blog/index.html">Flooring Guides</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Locations</h4>
         <ul>
-          <li><a href="parramatta-flooring.html">Parramatta</a></li>
-          <li><a href="liverpool-flooring.html">Liverpool</a></li>
-          <li><a href="auburn-flooring.html">Auburn</a></li>
-          <li><a href="blacktown-flooring.html">Blacktown</a></li>
-          <li><a href="miranda-flooring.html">Miranda</a></li>
+          <li><a href="flooring-edmondson-park.html">Edmondson Park</a></li>
+          <li><a href="flooring-liverpool.html">Liverpool</a></li>
+          <li><a href="flooring-leppington.html">Leppington</a></li>
+          <li><a href="flooring-camden.html">Camden</a></li>
+          <li><a href="flooring-campbelltown.html">Campbelltown</a></li>
+          <li><a href="flooring-parramatta.html">Parramatta</a></li>
+          <li><a href="flooring-bankstown.html">Bankstown</a></li>
+          <li><a href="flooring-auburn.html">Auburn</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Actions</h4>
+        <h4>Company</h4>
         <ul>
-          <li><a href="quote.html">Start Quote</a></li>
-          <li><a href="floorplan.html">Upload Floor Plan</a></li>
-          <li><a href="blog/index.html">Guides</a></li>
           <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms</a></li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>© 2026 Operon Flooring. All rights reserved.</p>
-      <div class="footer-legal">
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="terms.html">Terms</a>
-      </div>
+      <p>&copy; 2026 Operon Flooring</p>
     </div>
   </footer>
 
@@ -4467,7 +4558,7 @@
           state.scaleStatus = "verified";
           state.scaleVerified = true;
           state.scaleWarnings = [];
-          setTraceStatus({ next: true, text: "Scale verified. Review rooms and include only flooring areas." });
+          setTraceStatus({ next: true, text: "Scale verified. Press Step 2. Trace room to start tracing." });
           setCanvasStatus("Scale verified against another wall.");
           setGlobalStatus("Scale verified.");
         } else {
@@ -4606,7 +4697,7 @@
       }
 
       const roomLabel = getSelectedRoomLabel();
-      const preferredName = dom.traceRoomName.value.trim();
+      const preferredName = dom.traceRoomName ? dom.traceRoomName.value.trim() : "";
       const roomName = preferredName || (roomLabel === "Other" ? "Other room" : getNextRoomLabelName(roomLabel)) || getNextRoomName();
       const roomType = "flooring";
 
@@ -4629,7 +4720,9 @@
 
       state.tracePoints = [];
       state.activeTool = "trace";
-      dom.traceRoomName.value = "";
+      if (dom.traceRoomName) {
+        dom.traceRoomName.value = "";
+      }
       state.roomCounter += 1;
       selectRoom(state.rooms[state.rooms.length - 1].id);
       renderCanvas();
