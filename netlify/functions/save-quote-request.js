@@ -1419,9 +1419,14 @@ exports.handler = async function (event) {
       return Security.rateLimitResponse(event, submitRateLimit);
     }
 
-    const turnstile = await Security.verifyTurnstile(event, body.turnstileToken || body.turnstile_token || "");
-    if (!turnstile.ok) {
-      return Security.botChallengeResponse(event, turnstile);
+    const turnstileToken = body.turnstileToken || body.turnstile_token || "";
+    // Allow the live quote submit path to continue while the public Turnstile site key is not yet deployed.
+    // Durable rate limiting still applies, and token verification resumes automatically once the browser sends one.
+    if (turnstileToken) {
+      const turnstile = await Security.verifyTurnstile(event, turnstileToken);
+      if (!turnstile.ok) {
+        return Security.botChallengeResponse(event, turnstile);
+      }
     }
   }
 

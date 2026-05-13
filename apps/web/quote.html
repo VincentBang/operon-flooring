@@ -27,6 +27,7 @@
 
     gtag('config', 'G-T2LEXZJM3Q');
   </script>
+  <script src="siteConfig.js"></script>
   <script src="tracking.js"></script>
   <script src="security-config.js"></script>
   <script src="security.js"></script>
@@ -42,6 +43,7 @@
   <script src="locationZones.js"></script>
   <script src="pricingRules.js"></script>
   <script src="stairRates.js"></script>
+  <script src="quoteConfidence.js"></script>
   <script src="quoteCalculator.js"></script>
   <script src="pricingAdjustment.js"></script>
   <script type="application/ld+json">
@@ -2952,6 +2954,22 @@
       </div>
     </section>
 
+    <section class="quote-section" aria-labelledby="quoteScopeClarityTitle">
+      <div class="container">
+        <article class="section-card">
+          <p class="eyebrow">Scope clarity</p>
+          <h2 id="quoteScopeClarityTitle" style="margin-top: 12px;">Clear scope before the job is booked</h2>
+          <p class="hero-sub" style="margin-top: 10px;">Operon helps Sydney customers review the details that usually change flooring work before installation is confirmed.</p>
+          <div class="trust-grid" style="margin-top: 18px;">
+            <div><strong>Product and area checked</strong><span>Flooring type, selected range and measured area are reviewed before final confirmation.</span></div>
+            <div><strong>Removal, trims and stairs clarified</strong><span>Removal, disposal, scotia, skirting, trims and stair details are checked so the scope is easier to compare.</span></div>
+            <div><strong>Site conditions reviewed</strong><span>Access, parking, apartment requirements, subfloor preparation and moisture-related items are confirmed where relevant.</span></div>
+            <div><strong>Written assumptions</strong><span>The aim is to make product, scope and site assumptions visible before the job is booked.</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section class="quote-section">
       <div class="shell layout" id="quoteLayout">
         <form id="quoteForm" class="section-card" name="quote-request" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
@@ -3178,7 +3196,7 @@
                 <p id="selectedProductSummary">We’ll use a practical starting range for this estimate. Final product and colour can be reviewed later.</p>
                 <div class="selected-product-actions">
                   <a class="button-quiet" id="browseCategoryLink" href="hybrid-flooring-sydney.html">View hybrid products</a>
-                  <button class="button-secondary" id="clearSelectedProductButton" type="button">Use category-based estimate instead</button>
+                  <button class="button-secondary" id="clearSelectedProductButton" type="button">Use practical range estimate instead</button>
                 </div>
               </div>
             </div>
@@ -3720,7 +3738,7 @@
           <div class="summary-box summary-key-card">
             <h3>Key details</h3>
             <div class="summary-grid estimate-detail-grid">
-              <div class="summary-row"><span>Product</span><strong id="summarySelectedProduct">Category-based estimate</strong></div>
+              <div class="summary-row"><span>Product</span><strong id="summarySelectedProduct">Product pending</strong></div>
               <div class="summary-row"><span>Quote type</span><strong id="summaryScope">Installation only</strong></div>
               <div class="summary-row"><span>Measurement source</span><strong id="summaryMeasurement">Enter total area</strong></div>
               <div class="summary-row"><span>Area</span><strong id="summaryRealArea">Add area</strong></div>
@@ -3764,14 +3782,13 @@
 
           <span id="summaryGst" hidden>$0</span>
           <span id="summaryCoverage" hidden>Installation labour</span>
-          <span id="summaryQuotePath" hidden>Supply and install selected</span>
-          <span id="summaryProductPricing" hidden>Category-based estimate</span>
+          <span id="summaryQuotePath" hidden>Supply and install</span>
+          <span id="summaryProductPricing" hidden>Product basis pending</span>
           <span id="summaryNextStep" hidden>Submit for confirmation</span>
 
-          <details class="summary-box admin-panel" id="debugPanel" hidden>
-            <summary class="details-summary">Quote diagnostics</summary>
+          <div class="summary-box admin-panel" id="debugPanel" hidden aria-hidden="true">
             <div class="debug-grid" id="debugGrid"></div>
-          </details>
+          </div>
         </aside>
       </div>
     </section>
@@ -3944,8 +3961,7 @@
     const FLOORPLAN_SOURCE_KEY = "operon_floorplan_source";
     const FLOORPLAN_QUOTE_HANDOFF_KEY = "operon_floorplan_quote_handoff_v1";
     const DEBUG_HOSTS = ["", "localhost", "127.0.0.1", "::1"];
-    const DEBUG_VIEW = window.location.search.indexOf("debug=1") >= 0
-      && DEBUG_HOSTS.indexOf(window.location.hostname) >= 0;
+    const DEBUG_VIEW = false;
     const currency = new Intl.NumberFormat("en-AU", {
       style: "currency",
       currency: "AUD",
@@ -4411,22 +4427,96 @@
     }
 
     function getEstimateConfidence(measurement, result) {
-      if (getScopeConfirmationItems(getFormInput()).length) {
-        return "Low";
+      return getEstimateConfidenceState(measurement, result).label;
+    }
+
+    function getEstimateConfidenceState(measurement, result, input) {
+      const sourceInput = Object.assign({}, input || getFormInput(), {
+        measurementMethod: measurement && measurement.method || "",
+        realArea: measurement && measurement.realArea || result && result.realArea || 0,
+        quoteMode: result && result.quoteMode || input && input.quoteMode || getInputValue("quoteMode")
+      });
+
+      if (window.OperonQuoteConfidence && typeof window.OperonQuoteConfidence.calculateEstimateConfidence === "function") {
+        return window.OperonQuoteConfidence.calculateEstimateConfidence(sourceInput, result || {});
+      }
+
+      const confirmationItems = getScopeConfirmationItems(getFormInput());
+      const highRiskConfirmationItems = confirmationItems.filter(function (item) {
+        return /stairs|removal|disposal|floor preparation|subfloor|underlay|parking|access|lift/i.test(item);
+      });
+
+      if (highRiskConfirmationItems.length || confirmationItems.length >= 3) {
+        return { status: "low", score: 50, label: "Low", message: getEstimateConfidenceText("Low"), blockers: highRiskConfirmationItems, assumptions: confirmationItems };
       }
       if (measurement.measurementStatus === "unknown" || result.measurementStatus === "unknown") {
-        return "Low";
+        return { status: "not_ready", score: 0, label: "Estimate pending", message: getEstimateConfidenceText("Estimate pending"), blockers: ["Add flooring area."], assumptions: [] };
       }
       if (measurement.method === "floorplan_upload" && result.realArea > 0) {
-        return "High";
+        return { status: "high", score: 90, label: "High", message: getEstimateConfidenceText("High"), blockers: [], assumptions: [] };
       }
       if (measurement.method === "room_by_room" && result.realArea > 0) {
-        return "Medium";
+        return { status: "medium", score: 75, label: "Medium", message: getEstimateConfidenceText("Medium"), blockers: [], assumptions: [] };
       }
       if (measurement.method === "manual_total" && result.realArea > 0) {
-        return "Medium";
+        return { status: "medium", score: 75, label: "Medium", message: getEstimateConfidenceText("Medium"), blockers: [], assumptions: [] };
       }
-      return "Low";
+      return { status: "low", score: 50, label: "Low", message: getEstimateConfidenceText("Low"), blockers: [], assumptions: [] };
+    }
+
+    function getStairDetailCountFromInput(input) {
+      const source = input || {};
+      if (Array.isArray(source.stairDetails)) {
+        return source.stairDetails.reduce(function (total, item) {
+          return total + Math.max(0, Math.round(parsePositiveNumber(item.quantity)));
+        }, 0);
+      }
+      if (typeof source.stairsCount !== "undefined") {
+        return Math.max(0, Math.round(parsePositiveNumber(source.stairsCount)));
+      }
+      return getTotalStairDetailCount();
+    }
+
+    function isStairWidthProvided(input) {
+      const source = input || {};
+      const widthKnown = typeof source.stairWidthKnown !== "undefined"
+        ? source.stairWidthKnown
+        : getInputValue("stairWidthKnown");
+      const widthMm = typeof source.stairWidthMm !== "undefined"
+        ? source.stairWidthMm
+        : getInputValue("stairWidthMm");
+      return widthKnown === "yes" && parsePositiveNumber(widthMm) > 0;
+    }
+
+    function isStairScopeReviewRequired(input) {
+      const source = input || getFormInput();
+      if (!source.stairs) {
+        return true;
+      }
+      if (source.stairs === "not_sure") {
+        return true;
+      }
+      if (source.stairs !== "yes") {
+        return false;
+      }
+      return getStairDetailCountFromInput(source) <= 0 || !isStairWidthProvided(source);
+    }
+
+    function getStairReviewNote(input) {
+      const source = input || getFormInput();
+      const countProvided = getStairDetailCountFromInput(source) > 0;
+      const widthProvided = isStairWidthProvided(source);
+
+      if (countProvided && widthProvided) {
+        return "Stairs included based on provided width and item count; final site check still applies.";
+      }
+      if (countProvided) {
+        return "Stair width needs final confirmation.";
+      }
+      if (widthProvided) {
+        return "Stair item count needs final confirmation.";
+      }
+      return "Stair details need final confirmation, including width and item count.";
     }
 
     function getScopeConfirmationItems(input) {
@@ -4438,7 +4528,7 @@
         }
       };
 
-      if (!getInputValue("stairs") || getInputValue("stairs") === "not_sure" || getInputValue("stairsRequiresReview") === "yes") {
+      if (isStairScopeReviewRequired(source)) {
         add("stairs");
       }
       if (!source.removalDecision || source.removalDecision === "not_sure") {
@@ -4486,12 +4576,25 @@
 
     function getEstimateConfidenceText(confidence) {
       if (confidence === "High") {
-        return "High confidence because the area and main scope details are clear.";
+        return "High estimate confidence. Product, area and main scope details are clear enough for a strong starting estimate. Final site-sensitive items are still reviewed before booking.";
       }
       if (confidence === "Medium") {
-        return "Medium confidence because the estimate can still change after final product or site details are confirmed.";
+        return "Medium estimate confidence. The estimate is useful for planning, but some scope or site details should be confirmed before relying on the final price.";
       }
-      return "Low confidence because measurement or site details still need confirmation.";
+      if (confidence === "Estimate pending" || confidence === "Not ready") {
+        return "Estimate pending. Add flooring type and area before we calculate a useful estimate.";
+      }
+      return "Low estimate confidence. This is not reliable enough for price comparison yet. Confirm the missing product, area or site details first.";
+    }
+
+    function getQuoteTypeLabel(quoteMode) {
+      if (quoteMode === "install_only") {
+        return "Installation only";
+      }
+      if (quoteMode === "supply_only") {
+        return "Supply only";
+      }
+      return "Supply and install";
     }
 
     function setTextIfPresent(id, text) {
@@ -5045,7 +5148,7 @@
         setInputValue("stairsCount", String(getTotalStairDetailCount()));
         setInputValue("stairsCountRange", "detailed");
       }
-      setInputValue("stairsRequiresReview", value === "no" ? "no" : "yes");
+      setInputValue("stairsRequiresReview", isStairScopeReviewRequired({ stairs: value }) ? "yes" : "no");
       if (value === "not_sure" && window.OperonTracking) {
         window.OperonTracking.trackEvent("quote_stairs_not_sure", {
           step_name: "stairs",
@@ -5060,6 +5163,7 @@
       if (value !== "yes") {
         setInputValue("stairWidthMm", "");
       }
+      setInputValue("stairsRequiresReview", isStairScopeReviewRequired(getFormInput()) ? "yes" : "no");
     }
 
     function syncStairDetailCounts() {
@@ -5069,7 +5173,7 @@
       if (getInputValue("stairs") !== "yes") {
         setInputValue("stairs", "yes");
       }
-      setInputValue("stairsRequiresReview", "yes");
+      setInputValue("stairsRequiresReview", isStairScopeReviewRequired(getFormInput()) ? "yes" : "no");
     }
 
     function setExtraDecision(fieldName, value) {
@@ -5447,9 +5551,9 @@
       setConditionalFieldVisibility("quoteDeliveryEmailField", showQuoteDeliveryEmail);
 
       if (getInputValue("stairs") === "yes") {
-        setInputValue("stairsRequiresReview", "yes");
         setInputValue("stairsCount", String(getTotalStairDetailCount()));
         setInputValue("stairsCountRange", getTotalStairDetailCount() > 0 ? "detailed" : "");
+        setInputValue("stairsRequiresReview", isStairScopeReviewRequired(getFormInput()) ? "yes" : "no");
       } else {
         setInputValue("stairsRequiresReview", getInputValue("stairs") === "not_sure" ? "yes" : "no");
         if (getInputValue("stairs") !== "not_sure") {
@@ -6063,15 +6167,15 @@
           : "We’ll use the " + getCategoryEstimateLabel(category) + " until a practical range is chosen.";
         browseCategoryLink.textContent = "Change range";
         browseCategoryLink.dataset.behavior = "change-range";
-        clearSelectedProductButton.textContent = "Use category-based estimate instead";
+        clearSelectedProductButton.textContent = "Use practical range estimate instead";
         clearSelectedProductButton.hidden = false;
         return;
       }
 
       if (!selection.rangeId) {
-        selectedProductHeadline.textContent = "Category-based estimate";
+        selectedProductHeadline.textContent = "Practical range estimate";
         selectedProductSummary.textContent = "Using the " + getCategoryEstimateLabel(category) + ". Final product and colour can be reviewed later.";
-        clearSelectedProductButton.textContent = "Using category-based estimate";
+        clearSelectedProductButton.textContent = "Using practical range estimate";
         clearSelectedProductButton.hidden = true;
         return;
       }
@@ -6081,7 +6185,7 @@
         selectedProductSummary.textContent = "Using " + (product.rangeLabel || product.range || "") + " — " + (product.colour || "") + ".";
         browseCategoryLink.textContent = "Change range";
         browseCategoryLink.dataset.behavior = "change-range";
-        clearSelectedProductButton.textContent = "Use category-based estimate instead";
+        clearSelectedProductButton.textContent = "Use practical range estimate instead";
         clearSelectedProductButton.hidden = false;
         return;
       }
@@ -6090,7 +6194,7 @@
       selectedProductSummary.textContent = "Using " + (rangeRecord ? rangeRecord.rangeLabel : (product ? (product.rangeLabel || product.range) : "selected range")) + ". Colour can be confirmed later.";
       browseCategoryLink.textContent = "Change range";
       browseCategoryLink.dataset.behavior = "change-range";
-      clearSelectedProductButton.textContent = "Use category-based estimate instead";
+      clearSelectedProductButton.textContent = "Use practical range estimate instead";
       clearSelectedProductButton.hidden = false;
     }
 
@@ -6298,7 +6402,7 @@
       }
 
       if (selectedProductId && !selectedProduct) {
-        issues.push("The saved flooring product is no longer available. Re-select the product or use the category-based estimate.");
+        issues.push("The saved flooring product is no longer available. Re-select the product or use the practical range estimate.");
       }
 
       if (selectedProduct && selectedProduct.category !== selectedCategory) {
@@ -6345,7 +6449,7 @@
         }
         if (getProductChoiceMode() === "choose_range") {
           if (productRangeSelect.disabled) {
-            return { valid: false, message: "Live product ranges are not published for this category yet. Use the recommendation or category-based estimate for now." };
+            return { valid: false, message: "Live product ranges are not published for this category yet. Use the recommendation for now." };
           }
           if (!getInputValue("selectedRangeId")) {
             return { valid: false, message: "Please choose a product range." };
@@ -6507,7 +6611,7 @@
           manualReviewRequired: true,
           warnings: ["Quote calculator is not available."],
           productCategory: getSelectedProductCategory(),
-          productLabel: "Category-based estimate",
+          productLabel: "Practical range estimate",
           measurementSource: measurement.sourceLabel,
           pricePending: false,
           pricingMode: "fallback",
@@ -6825,13 +6929,11 @@
     function renderWarnings(warnings) {
       const warningsCard = document.getElementById("warningsCard");
       const warningsList = document.getElementById("warningsList");
-      if (!warnings.length) {
-        warningsCard.hidden = true;
-        warningsList.innerHTML = "";
-        return;
-      }
+      const safeWarnings = Array.isArray(warnings) && warnings.length
+        ? warnings
+        : ["Estimate is ready for review. Final site-sensitive items are still checked before booking."];
       warningsCard.hidden = false;
-      warningsList.innerHTML = warnings.map(function (warning) {
+      warningsList.innerHTML = safeWarnings.map(function (warning) {
         return "<li>" + escapeHtml(warning) + "</li>";
       }).join("");
     }
@@ -6849,7 +6951,7 @@
 
         if (/stair/i.test(text)) {
           if (!stairConfirmationAdded) {
-            summaryWarnings.push("Stair details need final confirmation, including width and item count.");
+            summaryWarnings.push(getStairReviewNote(getFormInput()));
             stairConfirmationAdded = true;
           }
           return;
@@ -6892,9 +6994,27 @@
       return notes.join(" ");
     }
 
+    function getQuoteSummaryReviewNotes(input, result, confidenceState) {
+      const measurement = getMeasurementState();
+      const sourceInput = Object.assign({}, input || getFormInput(), {
+        realArea: result && result.realArea || measurement.realArea,
+        category: getSelectedProductCategory(),
+        measurementMethod: measurement.method
+      });
+
+      if (window.OperonQuoteConfidence && typeof window.OperonQuoteConfidence.generateQuoteReviewNotes === "function") {
+        return window.OperonQuoteConfidence.generateQuoteReviewNotes(sourceInput, result || {}, confidenceState || null);
+      }
+
+      const fallbackNotes = getSummaryWarnings((result && result.warnings) || []);
+      return fallbackNotes.length ? fallbackNotes : ["Estimate is ready for review. Final site-sensitive items are still checked before booking."];
+    }
+
     function renderEstimateBreakdown(result) {
       const quoteLines = document.getElementById("quoteLines");
-      const lines = Array.isArray(result.quoteLines) ? result.quoteLines : [];
+      const lines = Array.isArray(result.quoteLines)
+        ? result.quoteLines.filter(function (line) { return Number(line && line.amount || 0) > 0; })
+        : [];
 
       if (!lines.length) {
         quoteLines.innerHTML = "<div class=\"quote-line\"><div><strong>Estimate pending</strong><span class=\"quote-line-note\">Complete the required scope details to show item totals.</span></div><span class=\"quote-line-qty\">Pending</span><strong class=\"quote-line-total\">Pending</strong></div>";
@@ -6906,7 +7026,7 @@
           ? "<span class=\"quote-line-note\">" + escapeHtml(line.note) + "</span>"
           : "";
         const quantity = line.quantity || line.qty || "Included";
-        const lineAmount = Number(line.amount || 0) > 0 ? formatCurrency(line.amount) : "Included";
+        const lineAmount = formatCurrency(line.amount);
         return "<div class=\"quote-line\">"
           + "<div><strong>" + escapeHtml(line.label || "Quote item") + "</strong>" + note + "</div>"
           + "<span class=\"quote-line-qty\">" + escapeHtml(quantity) + "</span>"
@@ -6917,7 +7037,9 @@
 
     function renderSummaryPricedList(result) {
       const list = document.getElementById("summaryIncludedScopeList");
-      const lines = Array.isArray(result.quoteLines) ? result.quoteLines : [];
+      const lines = Array.isArray(result.quoteLines)
+        ? result.quoteLines.filter(function (line) { return Number(line && line.amount || 0) > 0; })
+        : [];
 
       if (!list) {
         return;
@@ -6933,7 +7055,7 @@
         const note = quantity
           ? "<small class=\"summary-priced-note\">" + escapeHtml(quantity) + "</small>"
           : "";
-        const lineAmount = Number(line.amount || 0) > 0 ? formatCurrency(line.amount) : "Included";
+        const lineAmount = formatCurrency(line.amount);
         return "<li class=\"summary-priced-item\">"
           + "<span>" + escapeHtml(line.label || "Quote item") + note + "</span>"
           + "<strong>" + escapeHtml(lineAmount) + "</strong>"
@@ -7092,7 +7214,9 @@
       const summaryHeadline = document.getElementById("summaryHeadline");
       const estimateReady = measurement.measurementStatus !== "unknown" && result.measurementStatus !== "unknown" && result.realArea > 0 && !!selection.category;
       const pendingMeasurement = !estimateReady;
-      const confidence = getEstimateConfidence(measurement, result);
+      const confidenceState = getEstimateConfidenceState(measurement, result, input);
+      const confidence = confidenceState.label;
+      const reviewNotes = getQuoteSummaryReviewNotes(input, result, confidenceState);
       const pendingEstimateCard = document.getElementById("summaryPendingEstimateCard");
       const estimateDetailsBox = document.getElementById("summaryEstimateDetailsBox");
       renderQuoteBuildStatus(result);
@@ -7107,7 +7231,7 @@
         document.getElementById("summarySubtotal").textContent = "Pending";
         document.getElementById("summaryGst").textContent = "Pending";
         document.getElementById("summarySelectedProduct").textContent = !selection.rangeId
-          ? ((categoryMeta ? categoryMeta.label : "Flooring") + " category-based estimate")
+          ? ((categoryMeta ? categoryMeta.label : "Flooring") + " practical range estimate")
           : (selection.selectionMode === "range_then_colour" && selection.selectedColour
             ? ((rangeRecord ? rangeRecord.rangeLabel : result.productLabel) + " — " + selection.selectedColour)
             : ((rangeRecord ? rangeRecord.rangeLabel : result.productLabel) + (selection.selectionMode === "range_only" ? " · colour to confirm" : "")));
@@ -7116,12 +7240,10 @@
         document.getElementById("summaryChargeableArea").textContent = "Pending";
         document.getElementById("summaryChargeableAreaRow").hidden = false;
         document.getElementById("summaryCaption").textContent = "Add flooring type and area to calculate";
-        document.getElementById("summaryScope").textContent = result.quoteMode === "supply_install"
-          ? "Supply & install"
-          : "Installation only";
+        document.getElementById("summaryScope").textContent = getQuoteTypeLabel(result.quoteMode);
         document.getElementById("summaryMeasurement").textContent = "Measurement pending";
         document.getElementById("summaryConfidence").textContent = confidence;
-        document.getElementById("summaryConfidenceText").textContent = getEstimateConfidenceText(confidence);
+        document.getElementById("summaryConfidenceText").textContent = confidenceState.message || getEstimateConfidenceText(confidence);
         document.getElementById("summaryCoverage").textContent = measurement.nextStepRequired
           ? ("Next step selected · " + getUnknownMeasurementNextStepLabel(measurement.nextStepRequired))
           : "Choose a next step to keep the estimate moving";
@@ -7136,7 +7258,7 @@
         document.getElementById("chargeableAreaMetricLabel").textContent = "Estimate status";
         document.getElementById("chargeableAreaMetricCard").hidden = false;
 
-        document.getElementById("manualReviewNotice").textContent = buildEstimateNote(result, measurement);
+        document.getElementById("manualReviewNotice").textContent = confidenceState.message || buildEstimateNote(result, measurement);
         renderEstimateBreakdown(result);
         renderSummaryPricedList(result);
         renderSummaryChecklist("summaryFinalPriceFactorsList", buildFinalPriceFactors(result, measurement, input));
@@ -7149,7 +7271,7 @@
         if (estimateDetailsBox) {
           estimateDetailsBox.hidden = true;
         }
-        renderWarnings(getSummaryWarnings((measurement.warnings || []).concat(confirmationWarnings)));
+        renderWarnings(reviewNotes);
 
         if (DEBUG_VIEW) {
           debugPanel.hidden = false;
@@ -7183,7 +7305,7 @@
       document.getElementById("summarySubtotal").textContent = formatCurrency(result.subtotalExGst);
       document.getElementById("summaryGst").textContent = formatCurrency(result.gst);
       document.getElementById("summarySelectedProduct").textContent = !selection.rangeId
-        ? ((categoryMeta ? categoryMeta.label : "Flooring") + " category-based estimate")
+        ? ((categoryMeta ? categoryMeta.label : "Flooring") + " practical range estimate")
         : (selection.selectionMode === "range_then_colour" && selection.selectedColour
           ? ((rangeRecord ? rangeRecord.rangeLabel : result.productLabel) + " — " + selection.selectedColour)
           : ((rangeRecord ? rangeRecord.rangeLabel : result.productLabel) + (selection.selectionMode === "range_only" ? " · colour to confirm" : "")));
@@ -7193,23 +7315,19 @@
         : "Not used";
       document.getElementById("summaryChargeableAreaRow").hidden = isInstallOnly;
       document.getElementById("summaryCaption").textContent = "Starting estimate · Final site confirmation required";
-      document.getElementById("summaryScope").textContent = result.quoteMode === "supply_install"
-        ? "Supply & install"
-        : "Installation only";
+      document.getElementById("summaryScope").textContent = getQuoteTypeLabel(result.quoteMode);
       document.getElementById("summaryMeasurement").textContent = measurement.sourceLabel + " · " + formatArea(result.realArea);
       document.getElementById("summaryConfidence").textContent = confidence;
-      document.getElementById("summaryConfidenceText").textContent = getEstimateConfidenceText(confidence);
+      document.getElementById("summaryConfidenceText").textContent = confidenceState.message || getEstimateConfidenceText(confidence);
       document.getElementById("summaryCoverage").textContent = result.quoteLines.length
         ? ((categoryMeta ? categoryMeta.label : "Flooring") + " · " + result.quoteLines.map(function (line) { return line.label; }).join(" · "))
         : "Estimate items update here";
-      document.getElementById("summaryQuotePath").textContent = result.quoteMode === "supply_install"
-        ? "Supply and install selected"
-        : "Installation only selected";
+      document.getElementById("summaryQuotePath").textContent = getQuoteTypeLabel(result.quoteMode);
       document.getElementById("summaryProductPricing").textContent = result.pricingMode === "product"
         ? "Based on selected product pricing"
         : (result.pricingMode === "fallback"
           ? "Product price needs review"
-          : "Based on category-based pricing");
+          : "Category-level product estimate");
       document.getElementById("summaryNextStep").textContent = summaryIssues.length
         ? "Check the quote details first"
         : (confirmationItems.length
@@ -7230,13 +7348,13 @@
       document.getElementById("manualReviewNotice").textContent = summaryIssues.length
         ? summaryIssues[0]
         : (confirmationItems.length
-          ? "Some scope items still need review."
+          ? "Some scope items still need confirmation before final pricing."
           : buildEstimateNote(result, measurement));
       renderEstimateBreakdown(result);
       renderSummaryPricedList(result);
       renderSummaryChecklist("summaryFinalPriceFactorsList", buildFinalPriceFactors(result, measurement, input));
       document.getElementById("summaryNextStepText").textContent = "Submit the quote request and we will review the details before confirming the final quote.";
-      renderWarnings(getSummaryWarnings((result.warnings || []).concat(confirmationWarnings)));
+      renderWarnings(reviewNotes);
 
       if (DEBUG_VIEW) {
         debugPanel.hidden = false;
@@ -7781,7 +7899,7 @@
           stairWidthMm: Math.max(0, Math.round(parsePositiveNumber(input.stairWidthMm))),
           stairDetails: Array.isArray(input.stairDetails) ? input.stairDetails : [],
           stairsIncluded: input.stairs === "yes",
-          stairsNeedsConfirmation: input.stairs === "yes" || input.stairs === "not_sure"
+          stairsNeedsConfirmation: isStairScopeReviewRequired(input)
         },
         measurement: {
           method: measurementMethod,
@@ -7974,44 +8092,43 @@
       leadPayloadJsonInput.value = JSON.stringify(leadPayload);
     }
 
-    async function submitLeadToNetlifyForm(leadPayload) {
+    async function submitLeadToNetlifyForm(leadPayload, submitPayload) {
       if (!canUseLeadCaptureRuntime()) {
         throw new Error("Lead capture is unavailable in local file mode.");
       }
 
       syncLeadFormFields(leadPayload);
 
-      const formData = new FormData(quoteForm);
-      const params = new URLSearchParams();
-      params.set("form-name", LEAD_FORM_NAME);
-
-      // Future: this is the same clean lead payload that can be inserted into Supabase later.
-      // Future: this payload can also be passed into a Resend email workflow once outbound email is ready.
-      for (const entry of formData.entries()) {
-        const key = entry[0];
-        const value = entry[1];
-        if (key === "form-name") {
-          continue;
-        }
-        if (value instanceof File) {
-          continue;
-        }
-        params.append(key, value);
-      }
-
-      const response = await window.fetch("/", {
+      const deliveryEmail = getDeliveryEmailAddress(getFormInput());
+      const response = await window.fetch(SAVE_QUOTE_REQUEST_ENDPOINT, {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
+          "Content-Type": "application/json"
         },
-        body: params.toString()
+        body: JSON.stringify({
+          mode: "submit_quote",
+          quoteId: state.lastQuoteId || "",
+          payload: submitPayload,
+          emailTo: deliveryEmail,
+          sendCustomerCopy: false,
+          turnstileToken: await getSecurityChallengeToken("quote_submit")
+        })
+      });
+
+      const result = await response.json().catch(function () {
+        return null;
       });
 
       if (!response.ok) {
-        throw new Error("Netlify form submission failed.");
+        throw createSubmitStageError("runtime_submit", new Error(result && result.error ? result.error : "Quote submission failed."));
       }
 
-      return true;
+      if (!result || !result.ok || !result.quoteId) {
+        throw createSubmitStageError("runtime_submit", new Error("Quote submission failed."));
+      }
+
+      state.lastQuoteId = result.quoteId;
+      return result;
     }
 
     async function sendQuoteEmailCopy(payload, emailTo) {
@@ -8411,7 +8528,7 @@
           console.error("Quote draft save failed before final submit", draftError);
         }
 
-        await submitLeadToNetlifyForm(leadPayload);
+        await submitLeadToNetlifyForm(leadPayload, submitPayload);
 
         const deliveryEmail = getDeliveryEmailAddress(input);
         let successMessage = "Quote submitted. We will review the details and contact you shortly.";
