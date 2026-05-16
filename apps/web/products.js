@@ -6,16 +6,16 @@
   const COLOUR_STORAGE_KEY = "operon_selected_colour";
   const SELECTION_MODE_STORAGE_KEY = "operon_selected_product_selection_mode";
   const ETF_HYBRID_RANGE_DESCRIPTION = [
-    "ETF Hybrid Flooring is a premium SPC hybrid range designed for Sydney and NSW homes that want the look of timber with the practicality of a modern waterproof floor.",
-    "Hybrid SPC flooring blends the best of laminate and vinyl flooring into a next-generation, multi-layered floating floor system. It is built to handle moisture, heat, and daily wear while staying suitable for most rooms in the house, including kitchens.",
-    "This range is made for busy households that want a cost-effective flooring solution with realistic timber visuals, a stable rigid core, and a cleaner installation path."
+    "ETF Hybrid Flooring is an SPC hybrid range for Sydney and NSW homes that want a timber-look floor with practical floating-floor performance.",
+    "Hybrid SPC flooring combines a rigid core, decorative timber-look surface and click installation. Wet-area suitability still depends on manufacturer requirements, subfloor, trims and installation details.",
+    "This range is made for busy households that want realistic timber visuals, stable board construction and a cleaner installation path."
   ];
   const ETF_HYBRID_RANGE_FEATURES = [
-    "100% waterproof performance for bedrooms, living spaces, and kitchens.",
+    "Supplier-listed waterproof board construction for internal residential areas.",
     "Highly resilient against scratches, dents, stains, and everyday family traffic.",
     "Rigid SPC core for dimensional stability and dependable floating-floor performance.",
     "Pre-attached acoustic underlay for softer underfoot comfort and reduced noise.",
-    "DIY-friendly click-lock installation with no glue or nails required."
+    "Click-lock floating-floor installation; final installation method should be confirmed for the site."
   ];
   const ETF_LAMINATE_RANGE_DESCRIPTION = [
     "ETF Laminate Flooring gives Sydney and NSW projects the look of real timber without the higher maintenance or cost that comes with traditional hardwood.",
@@ -35,6 +35,21 @@
       description: ETF_HYBRID_RANGE_DESCRIPTION.slice(),
       featuresIntro: "Why homeowners love ETF Hybrid SPC flooring",
       features: ETF_HYBRID_RANGE_FEATURES.slice(),
+      bestFor: [
+        "Family homes",
+        "Apartment projects with acoustic review",
+        "Rental upgrades",
+        "Timber-look floating floors"
+      ],
+      notBestFor: [
+        "Wet-area work unless manufacturer and installation requirements support it",
+        "Customers wanting a natural timber surface"
+      ],
+      quoteNotes: [
+        "Final colour and board size should be confirmed before final pricing.",
+        "Apartment jobs may need acoustic or strata confirmation.",
+        "Subfloor flatness, trims and stairs can materially affect the final quote."
+      ],
       technical: technical.slice()
     };
   }
@@ -44,6 +59,22 @@
       description: ETF_LAMINATE_RANGE_DESCRIPTION.slice(),
       featuresIntro: "Why homeowners choose ETF Laminate flooring",
       features: ETF_LAMINATE_RANGE_FEATURES.slice(),
+      bestFor: [
+        "Dry internal rooms",
+        "Budget-conscious renovations",
+        "Rental upgrades",
+        "Low-maintenance timber-look floors"
+      ],
+      notBestFor: [
+        "Wet areas",
+        "Customers needing waterproof flooring",
+        "Heavy moisture or uncertain subfloor conditions"
+      ],
+      quoteNotes: [
+        "Water-resistant laminate is not the same as a waterproof wet-area system.",
+        "Underlay, expansion gaps and subfloor flatness still need confirmation.",
+        "Best used in dry internal areas unless manufacturer guidance says otherwise."
+      ],
       technical: [
         { label: "Brand", value: "ETF Flooring" },
         { label: "Total Thickness", value: "12.3 mm" },
@@ -56,6 +87,109 @@
         { label: "Installation", value: "Floating click-lock system" }
       ]
     };
+  }
+
+  function createPrivateRangeSlug(value) {
+    return String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  function inferPrivateRangeTone(value) {
+    const colour = String(value || "").toLowerCase();
+    if (/black|walnut|vino|jarrah|dark|hickory|espresso|sea/.test(colour)) {
+      return "dark timber";
+    }
+    if (/grey|gray|silver|silfra|mist|lunar/.test(colour)) {
+      return "grey timber";
+    }
+    if (/spotted gum|blackbutt|brushbox|tas oak|oak|california|alaska|arizona|austin|houston|seattle|oakland|orlando/.test(colour)) {
+      return "natural oak";
+    }
+    if (/coast|coastal|bondi|beach|ocean|paris|vienna|crema|bianco|pastel|seashell/.test(colour)) {
+      return "light timber";
+    }
+    if (/caramel|arabica|robusta|misto|raggio|mount|gold|hawaii|pisa|big ben/.test(colour)) {
+      return "warm brown";
+    }
+    return "mid timber";
+  }
+
+  function inferPrivateRangeSwatch(value) {
+    const tone = inferPrivateRangeTone(value);
+    switch (tone) {
+      case "dark timber":
+        return "#6d5444";
+      case "grey timber":
+        return "#a8a39b";
+      case "natural oak":
+        return "#c7a47d";
+      case "light timber":
+        return "#dcc6a8";
+      case "warm brown":
+        return "#b27d56";
+      default:
+        return "#b69270";
+    }
+  }
+
+  function getPrivateRangeFeatures(productType, thickness, boardSize) {
+    const typeLabel = productType === "Engineered Timber" ? "Engineered timber flooring" : productType + " flooring";
+    const details = [];
+    details.push(typeLabel);
+    if (thickness && /^\d/.test(String(thickness))) {
+      details.push(thickness + " total thickness");
+    }
+    if (boardSize) {
+      details.push("Plank size: " + boardSize);
+    }
+    details.push("Timber-look colour palette");
+    details.push("Colour and finish reference");
+    return details;
+  }
+
+  function getPrivateRangeSuitableFor(category) {
+    if (category === "engineered") {
+      return ["Living areas", "Bedrooms", "Premium renovations", "Design-led homes", "Timber-look upgrades"];
+    }
+    if (category === "hybrid") {
+      return ["Living areas", "Family homes", "Apartments", "Kitchens", "Renovation projects"];
+    }
+    return ["Bedrooms", "Living areas", "Study rooms", "Rental properties", "Dry internal renovations"];
+  }
+
+  function createPrivateRangeProductBatch(options) {
+    return (options.items || []).map(function (item) {
+      const colour = String(item.colour || "").trim();
+      const id = "range-" + createPrivateRangeSlug(options.range) + "-" + createPrivateRangeSlug(colour);
+      return {
+        id: id,
+        category: options.category,
+        brand: options.brand || options.range,
+        range: options.range,
+        colour: colour,
+        tone: inferPrivateRangeTone(colour),
+        swatch: inferPrivateRangeSwatch(colour),
+        thickness: options.thickness || null,
+        productType: options.productType,
+        pricePerM2: 0,
+        installRate: null,
+        image: item.image,
+        imageUrl: item.image,
+        galleryImages: Array.isArray(item.galleryImages) && item.galleryImages.length ? item.galleryImages : (item.image ? [item.image] : []),
+        alt: colour + " " + String(options.range || options.productType || "flooring").toLowerCase() + " flooring sample",
+        description: colour + " is a colour option from the " + options.range + " range.",
+        features: getPrivateRangeFeatures(options.productType, options.thickness, options.boardSize),
+        suitableFor: getPrivateRangeSuitableFor(options.category),
+        supplier: options.brand || options.range,
+        supplierUrl: "",
+        pricingStatus: "pending",
+        catalogueStatus: "live",
+        active: true
+      };
+    });
   }
 
   const RANGE_CONFIG = {
@@ -112,6 +246,150 @@
           { label: "Colour Range", value: "14 colours available" }
         ])
       },
+      "Aquabase": {
+        rangeId: "hybrid-aquabase",
+        rangeLabel: "Aquabase",
+        selectionMode: "range_only",
+        representativeProductId: "range-aquabase-ab2501-costal-blackbutt",
+        customerLabel: "Aquabase",
+        rangeContent: {
+          description: [
+            "Aquabase is a hybrid flooring range with practical timber-look colours for homes, apartments and renovation projects.",
+            "The range is designed for a durable floating-floor look with colour options across Australian species and modern oak tones.",
+            "It suits living areas, kitchens and busy household spaces where a low-maintenance surface is important."
+          ],
+          featuresIntro: "Aquabase range highlights",
+          features: [
+            "Eight hybrid colours including Australian species looks and lighter modern oak tones.",
+            "Suitable for kitchens, living zones and renovation projects where a practical rigid floor is preferred.",
+            "Broad colour choice for practical hybrid flooring projects.",
+            "Timber-look visuals with a practical hybrid flooring format."
+          ],
+          technical: [
+            { label: "Brand", value: "Aquabase" },
+            { label: "Category", value: "Hybrid flooring" },
+            { label: "Range", value: "Aquabase" },
+            { label: "Colour Range", value: "8 colours available" },
+            { label: "Installation", value: "Floating floor format" }
+          ]
+        }
+      },
+      "Luxury Hybrid 7mm": {
+        rangeId: "hybrid-luxury-7mm",
+        rangeLabel: "Luxury Hybrid 7mm",
+        selectionMode: "range_only",
+        representativeProductId: "range-luxury-hybrid-7mm-barcelona-1520x230x7mm",
+        customerLabel: "Luxury Hybrid 7mm",
+        rangeContent: {
+          description: [
+            "Luxury Hybrid 7mm is a hybrid flooring range with a practical 7mm plank format and a focused timber-look colour palette.",
+            "The 1520mm x 230mm plank size gives the range a wide-board look for modern homes and apartments.",
+            "It is suitable for living areas, bedrooms and apartment interiors where a clean floating-floor finish is preferred."
+          ],
+          featuresIntro: "Luxury Hybrid 7mm range highlights",
+          features: [
+            "Six colour options across European and Australian timber-inspired looks.",
+            "1520 x 230 x 7mm plank format.",
+            "Hybrid category suits customers looking for a practical floating-floor pathway.",
+            "A focused colour set for simple timber-look selection."
+          ],
+          technical: [
+            { label: "Brand", value: "Luxury Hybrid" },
+            { label: "Category", value: "Hybrid flooring" },
+            { label: "Total Thickness", value: "7.0 mm" },
+            { label: "Board Size", value: "1520mm x 230mm" },
+            { label: "Range", value: "Luxury Hybrid 7mm" },
+            { label: "Colour Range", value: "6 colours available" }
+          ]
+        }
+      },
+      "Luxury Hybrid 8mm": {
+        rangeId: "hybrid-luxury-8mm",
+        rangeLabel: "Luxury Hybrid 8mm",
+        selectionMode: "range_only",
+        representativeProductId: "range-luxury-hybrid-8mm-arcadia-1540x230x8mm",
+        customerLabel: "Luxury Hybrid 8mm",
+        rangeContent: {
+          description: [
+            "Luxury Hybrid 8mm is a hybrid flooring range with a broader timber-look colour library and an 8mm product format.",
+            "It gives homeowners more colour choice while keeping the product category practical for family homes, rentals and apartments.",
+            "The range suits projects where a durable floating-floor look and a wider colour selection are important."
+          ],
+          featuresIntro: "Luxury Hybrid 8mm range highlights",
+          features: [
+            "Twelve hybrid colours covering lighter, darker and Australian species styling.",
+            "Selected colours use a 1540 x 230 plank format.",
+            "Practical hybrid option for family homes, apartments and rental upgrades.",
+            "A good shortlist range where product choice matters as much as colour."
+          ],
+          technical: [
+            { label: "Brand", value: "Luxury Hybrid" },
+            { label: "Category", value: "Hybrid flooring" },
+            { label: "Total Thickness", value: "8.0 mm" },
+            { label: "Range", value: "Luxury Hybrid 8mm" },
+            { label: "Colour Range", value: "12 colours available" },
+            { label: "Installation", value: "Floating floor format" }
+          ]
+        }
+      },
+      "Luxury Hybrid 9mm": {
+        rangeId: "hybrid-luxury-9mm",
+        rangeLabel: "Luxury Hybrid 9mm",
+        selectionMode: "range_only",
+        representativeProductId: "range-luxury-hybrid-9mm-alcazar-1800x230x9mm",
+        customerLabel: "Luxury Hybrid 9mm",
+        rangeContent: {
+          description: [
+            "Luxury Hybrid 9mm is a larger-format hybrid flooring range with 1800mm x 230mm planks.",
+            "The long plank format gives a more continuous timber visual across open living spaces.",
+            "It suits customers comparing hybrid flooring where board size, colour and room use are all important."
+          ],
+          featuresIntro: "Luxury Hybrid 9mm range highlights",
+          features: [
+            "Eight hybrid colours including oak, walnut-look and Australian species directions.",
+            "1800 x 230 x 9mm plank format.",
+            "Useful for larger-format hybrid styling without stepping into engineered timber quoting.",
+            "Designed for rooms where longer planks and a calmer floor visual are preferred."
+          ],
+          technical: [
+            { label: "Brand", value: "Luxury Hybrid" },
+            { label: "Category", value: "Hybrid flooring" },
+            { label: "Total Thickness", value: "9.0 mm" },
+            { label: "Board Size", value: "1800mm x 230mm" },
+            { label: "Range", value: "Luxury Hybrid 9mm" },
+            { label: "Colour Range", value: "8 colours available" }
+          ]
+        }
+      },
+      "Luxury Hybrid PLUS 10mm": {
+        rangeId: "hybrid-luxury-plus-10mm",
+        rangeLabel: "Luxury Hybrid PLUS 10mm",
+        selectionMode: "range_only",
+        representativeProductId: "range-luxury-hybrid-plus-10mm-l102-robusta-1815x196x10mm",
+        customerLabel: "Luxury Hybrid PLUS 10mm",
+        rangeContent: {
+          description: [
+            "Luxury Hybrid PLUS 10mm is a thicker hybrid flooring range for a more substantial plank feel.",
+            "Several colours use an 1815mm x 196mm plank format for a long-board visual.",
+            "It suits projects where product finish, board thickness and a premium hybrid look matter."
+          ],
+          featuresIntro: "Luxury Hybrid PLUS 10mm range highlights",
+          features: [
+            "Twelve hybrid colours with a more premium-feeling 10mm board family.",
+            "Selected colours use an 1815 x 196 x 10mm plank format.",
+            "A thicker hybrid option for a more substantial underfoot feel.",
+            "A strong option for customers wanting a heavier hybrid product family."
+          ],
+          technical: [
+            { label: "Brand", value: "Luxury Hybrid PLUS" },
+            { label: "Category", value: "Hybrid flooring" },
+            { label: "Total Thickness", value: "10.0 mm" },
+            { label: "Range", value: "Luxury Hybrid PLUS 10mm" },
+            { label: "Colour Range", value: "12 colours available" },
+            { label: "Installation", value: "Floating floor format" }
+          ]
+        }
+      },
       "Grande 9.0": {
         rangeId: "hybrid-eco-grande-9mm",
         rangeLabel: "Grande 9.0 Hybrid Flooring",
@@ -120,19 +398,31 @@
         customerLabel: "Grande 9.0 Hybrid Flooring",
         rangeContent: {
           description: [
-            "Ornato Grande Hybrid waterproof flooring is designed to give a genuine timber look and feel while keeping the practical performance of a rigid hybrid floating floor.",
-            "Eco Flooring describes the surface character as a rustic timber visual with varied knots and grains that work as both a visual and tactile representation of real timber.",
-            "The Grande Hybrid collection uses advanced modular plank technology to create a stylish and practical flooring solution for homes and offices, while aiming to reduce maintenance compared with genuine timber.",
-            "Within the supplier brochure, Grande 9.0 is grouped into a European Oak collection and a Timber collection across ten colours: Chalk, Bella, Capri, Hawthorn, Raven, Sand, Sparrow, Northern Spotted Gum, Ghost Gum, and Pacific Blackbutt."
+            "Grande 9.0 is a 9mm rigid hybrid floating-floor range with timber-look colours, a 0.55mm wear layer and attached cushion pad.",
+            "It suits customers comparing a thicker hybrid option for everyday interiors. Wet-area suitability, subfloor flatness, trims and installation details should be confirmed before final quote."
           ],
           featuresIntro: "Supplier-listed Grande 9.0 range highlights",
           features: [
-            "100% waterproof rigid core board construction designed for interior areas including kitchens, bathrooms, laundries, homes, and commercial spaces.",
+            "Supplier-listed waterproof rigid core board construction for internal areas.",
             "Patent click floating-floor system intended to reduce adhesive requirements in most spaces and support quicker installation.",
-            "0.55mm wear layer with supplier claims for scratch resistance, scuff resistance, easy maintenance, and longer floor life with correct care.",
+            "0.55mm wear layer with supplier claims for scratch and scuff resistance with correct care.",
             "LVT top and balance layers combined with a rigid core and cushion pad for improved product stability and added underfoot comfort.",
-            "Slip-resistant, hygienic, quiet, easy to clean, and easy to repair according to the supplier brochure.",
-            "Environment-friendly positioning with supplier claim of 100% recyclable construction."
+            "Micro-bevel edge and floating profile for a cleaner installed finish."
+          ],
+          bestFor: [
+            "Family homes",
+            "Apartments with acoustic review",
+            "Customers wanting a thicker hybrid plank",
+            "Timber-look low-maintenance interiors"
+          ],
+          notBestFor: [
+            "Wet-area work unless manufacturer and installation requirements support it",
+            "Customers wanting a natural timber surface"
+          ],
+          quoteNotes: [
+            "Final colour and board size should be checked before final pricing.",
+            "Wet-area suitability depends on manufacturer requirements and site conditions.",
+            "Subfloor preparation, stairs, trims and apartment acoustic needs can affect final quote."
           ],
           technical: [
             { label: "Supplier System", value: "Ornato Grande Hybrid Waterproof Flooring" },
@@ -162,9 +452,10 @@
         "representativeProductId": "topdeck-avala-blackbutt",
         "customerLabel": "Avala Hybrid Planks",
         "rangeContent": {
-          "description": ["The latest evolution in hybrid flooring, Avala Hybrid Planks feature SPC Rigid Core technology for uncompromising waterproof protection and durability. Designed to elevate modern living, they combine the strength of stone polymer with ultra-realistic timber finishes, delivering a floorboard that\u2019s as beautiful as it is resilient \u2014 ideal for kitchens and high-traffic areas."],
+          "description": ["Avala Hybrid Planks are SPC rigid-core hybrid boards with timber-look finishes and floating-floor click installation.", "This range suits customers looking for a practical hybrid option for everyday rooms. Wet-area suitability and site conditions should be checked before final quote."],
           "featuresIntro": "Supplier-listed highlights for Avala Hybrid Planks",
-          "features": ["SPC rigid core hybrid flooring designed for waterproof durability.", "Timber-look plank visuals for kitchens and other higher-traffic rooms.", "Floating-floor licensed click installation.", "A practical everyday hybrid range with a broad Australian and oak-look palette."],
+          "features": ["SPC rigid core hybrid flooring with supplier-listed waterproof board construction.", "Timber-look plank visuals for busy internal rooms.", "Floating-floor licensed click installation.", "A practical everyday hybrid range with a broad Australian and oak-look palette."],
+          "quoteNotes": ["Final wet-area suitability depends on manufacturer requirements and site conditions.", "Apartment jobs may need acoustic or strata confirmation.", "Subfloor flatness and trims still affect final quote."],
           "technical": [
             {
               "label": "Type",
@@ -196,9 +487,10 @@
         "representativeProductId": "topdeck-lumiere-bellevue-avenue",
         "customerLabel": "Lumiere Ultra HD Hybrid Plank",
         "rangeContent": {
-          "description": ["Lumi\u00e8re Ultra HD brings elevated realism to hybrid flooring with advanced multi-layer RCP core technology. Its dense, waterproof construction resists movement and indentation, while the ultra-matt PU finish and brushed surface deliver the natural look and feel of timber \u2014 with the durability and comfort of modern innovation."],
+          "description": ["Lumiere Ultra HD is a 7mm hybrid plank range with RCP core construction, ultra-matt PU finish and brushed timber-look surface.", "It suits customers wanting a more refined hybrid visual while still using a floating-floor pathway. Final site and wet-area suitability should be confirmed before quote."],
           "featuresIntro": "Supplier-listed highlights for Lumiere Ultra HD Hybrid Plank",
-          "features": ["RCP core hybrid flooring with dense waterproof construction.", "Ultra-matt PU finish and brushed surface for a more natural timber feel.", "Built for improved resistance to movement and indentation according to the supplier.", "Floating-floor licensed click installation."],
+          "features": ["RCP core hybrid flooring with supplier-listed waterproof board construction.", "Ultra-matt PU finish and brushed surface for a more natural timber feel.", "Built for improved resistance to movement and indentation according to the supplier.", "Floating-floor licensed click installation."],
+          "quoteNotes": ["Final wet-area suitability depends on manufacturer requirements and site conditions.", "Apartment jobs may need acoustic or strata confirmation.", "Subfloor flatness and trims still affect final quote."],
           "technical": [
             {
               "label": "Type",
@@ -230,9 +522,10 @@
         "representativeProductId": "topdeck-belle-vie-bellevue-avenue",
         "customerLabel": "Belle Vie Herringbone",
         "rangeContent": {
-          "description": ["Belle Vie fuses natural timber aesthetics with a waterproof core and ultra-matte brushed surface. With 12 elegant designs and non-repeating patterns, it offers elevated realism and effortless installation via Valinge SG Click."],
+          "description": ["Belle Vie Herringbone is a patterned hybrid range with a timber-look surface and Valinge SG Click floating installation.", "It is best treated as a design-led option. Herringbone layouts usually need clearer waste, edge, stair and installation detail before final pricing."],
           "featuresIntro": "Supplier-listed highlights for Belle Vie Herringbone",
-          "features": ["Waterproof hybrid herringbone with ultra-matte brushed timber-look surface.", "Non-repeating pattern claim for more natural visual variation.", "Floating-floor installation via Valinge SG Click.", "Statement patterned hybrid flooring for premium interiors."],
+          "features": ["Supplier-listed waterproof hybrid herringbone board construction.", "Non-repeating pattern claim for more natural visual variation.", "Floating-floor installation via Valinge SG Click.", "Statement patterned hybrid flooring for premium interiors."],
+          "quoteNotes": ["Herringbone layouts usually need more waste allowance, more installation detail and clearer stair or edge confirmation.", "Final wet-area suitability depends on manufacturer requirements and site conditions.", "Subfloor flatness and trims still affect final quote."],
           "technical": [
             {
               "label": "Type",
@@ -264,9 +557,10 @@
         "representativeProductId": "topdeck-storm-askada-grey-wash",
         "customerLabel": "Storm Luxury Hybrid Plank",
         "rangeContent": {
-          "description": ["Storm Luxury blends timber visuals with a robust waterproof core, perfect for high-traffic areas. Featuring Negative Ion surface technology, built-in acoustic backing, and a 5-Star AAAC rating, it delivers elevated performance and well-being in one seamless solution."],
+          "description": ["Storm Luxury Hybrid Plank is a 7mm timber-look hybrid range with built-in acoustic backing and 5G click installation.", "It suits customers comparing a hybrid option for busier interiors or apartment projects where acoustic requirements may need review."],
           "featuresIntro": "Supplier-listed highlights for Storm Luxury Hybrid Plank",
-          "features": ["Waterproof hybrid flooring with built-in acoustic backing.", "Negative Ion surface technology and 5-Star AAAC rating claims from Topdeck.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+          "features": ["Supplier-listed waterproof hybrid flooring with built-in acoustic backing.", "Supplier-listed Negative Ion surface feature and 5-Star AAAC rating claim.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+          "quoteNotes": ["Apartment acoustic performance depends on building, slab, underlay and strata requirements.", "Final wet-area suitability depends on manufacturer requirements and site conditions.", "Subfloor flatness and trims still affect final quote."],
           "technical": [
             {
               "label": "Type",
@@ -298,9 +592,10 @@
         "representativeProductId": "topdeck-artisan-black-maquina",
         "customerLabel": "Artisan Hybrid Tile",
         "rangeContent": {
-          "description": ["Artisan Hybrid Tiles are next-generation hybrid floorboards, crafted with advanced multi-layer composite core technology. They combine the sleek look of tile with the durability, warmth, and easy installation of hybrid flooring \u2014 ideal for modern, stylish interiors."],
+          "description": ["Artisan Hybrid Tile is a tile-look hybrid flooring range using plank-format boards and floating-floor click installation.", "It is not traditional ceramic tile. Wet-area suitability, edge details and expansion requirements should be confirmed before final quote."],
           "featuresIntro": "Supplier-listed highlights for Artisan Hybrid Tile",
-          "features": ["Tile-look hybrid flooring with multi-layer composite core construction.", "Aims to combine the appearance of large-format tiles with warmer hybrid underfoot comfort.", "Floating-floor click installation instead of conventional glued tile laying.", "Suitable for modern interiors that want stone visuals with easier renovation workflow."],
+          "features": ["Tile-look hybrid product, not traditional ceramic tile.", "Multi-layer composite core construction in plank/tile format.", "Floating-floor click installation instead of conventional glued tile laying.", "Suitable for modern interiors that want stone visuals with a hybrid renovation workflow."],
+          "quoteNotes": ["Tile-look hybrid is not ceramic tile.", "Wet-area and edge detail suitability should be confirmed before quoting.", "Subfloor flatness and expansion details still affect final quote."],
           "technical": [
             {
               "label": "Type",
@@ -335,6 +630,91 @@
         isDefaultRecommendation: true,
         customerLabel: "ETF 12mm 24hrs Water Resistant Laminate",
         rangeContent: createEtfLaminateRangeContent()
+      },
+      "Oak Step": {
+        rangeId: "laminate-oak-step",
+        rangeLabel: "Oak Step",
+        selectionMode: "range_only",
+        representativeProductId: "range-oak-step-os101-houston",
+        customerLabel: "Oak Step",
+        rangeContent: {
+          description: [
+            "Oak Step is a laminate flooring range with a timber-look colour palette across oak, walnut and Australian species styles.",
+            "It suits bedrooms, living areas and renovation projects where a practical floating floor is preferred.",
+            "The range is a simple laminate option for customers choosing a timber-look finish."
+          ],
+          featuresIntro: "Oak Step range highlights",
+          features: [
+            "Ten timber-look colour options across warm oak, Australian species and darker walnut-style tones.",
+            "Simple laminate shortlist for customers choosing a timber-look finish.",
+            "Works as a floating-floor planning range for living areas, bedrooms and renovation projects.",
+            "Practical colour range for everyday residential flooring projects."
+          ],
+          technical: [
+            { label: "Brand", value: "Oak Step" },
+            { label: "Category", value: "Laminate flooring" },
+            { label: "Range", value: "Oak Step" },
+            { label: "Colour Range", value: "10 colours available" },
+            { label: "Installation", value: "Floating floor format" }
+          ]
+        }
+      },
+      "Oak Step PLUS": {
+        rangeId: "laminate-oak-step-plus",
+        rangeLabel: "Oak Step PLUS",
+        selectionMode: "range_only",
+        representativeProductId: "range-oak-step-plus-op101-houston-plus",
+        customerLabel: "Oak Step PLUS",
+        rangeContent: {
+          description: [
+            "Oak Step PLUS is a laminate flooring range with oak, walnut and Australian species inspired colour options.",
+            "It gives customers a refined laminate shortlist with a familiar timber-look palette.",
+            "The range works well for living areas, bedrooms and renovation projects."
+          ],
+          featuresIntro: "Oak Step PLUS range highlights",
+          features: [
+            "Ten Oak Step PLUS colours covering oak, walnut and Australian species styling.",
+            "Clear range-based selection for customers comparing laminate options.",
+            "Practical floating-floor format for everyday residential spaces.",
+            "A practical upgrade path for customers refining colour and range preference before booking."
+          ],
+          technical: [
+            { label: "Brand", value: "Oak Step PLUS" },
+            { label: "Category", value: "Laminate flooring" },
+            { label: "Range", value: "Oak Step PLUS" },
+            { label: "Colour Range", value: "10 colours available" },
+            { label: "Installation", value: "Floating floor format" }
+          ]
+        }
+      },
+      "Aqua Wood Plus 12mm": {
+        rangeId: "laminate-aqua-wood-plus-12mm",
+        rangeLabel: "Aqua Wood Plus 12mm",
+        selectionMode: "range_only",
+        representativeProductId: "range-aqua-wood-plus-12mm-blackbutt-p-h",
+        customerLabel: "Aqua Wood Plus 12mm",
+        rangeContent: {
+          description: [
+            "Aqua Wood Plus 12mm is a laminate flooring range with a large colour library and a thicker 12mm product format.",
+            "The 12mm format gives the range a more substantial underfoot feel than thinner laminate categories.",
+            "It suits customers comparing colour choice, product thickness and practical room suitability."
+          ],
+          featuresIntro: "Aqua Wood Plus 12mm range highlights",
+          features: [
+            "Large 24-colour palette spanning Australian species, darker feature tones and lighter oak options.",
+            "12mm laminate format for a more substantial underfoot feel.",
+            "Good for homeowners who want a broad colour shortlist.",
+            "Practical laminate option for living areas, bedrooms and dry internal renovations."
+          ],
+          technical: [
+            { label: "Brand", value: "Aqua Wood Plus" },
+            { label: "Category", value: "Laminate flooring" },
+            { label: "Total Thickness", value: "12.0 mm" },
+            { label: "Range", value: "Aqua Wood Plus 12mm" },
+            { label: "Colour Range", value: "24 colours available" },
+            { label: "Installation", value: "Floating floor format" }
+          ]
+        }
       },
       "Pantora Amor Collection": {
         "rangeId": "laminate-topdeck-pantora-amor",
@@ -479,9 +859,10 @@
         "representativeProductId": "topdeck-luxury-grey-oak",
         "customerLabel": "Prime Luxury Edition",
         "rangeContent": {
-          "description": ["With wide planks and richly detailed textures, the Luxury Edition transforms spaces with a sense of grandeur and openness. AC4 scratch resistance ensures enduring beauty, up to 40 times tougher than standard finishes. Crafted to mirror the depth and warmth of hardwood, it invites everyday luxury\u2014flooring that feels expansive, refined, and timelessly elegant underfoot."],
+          "description": ["Prime Luxury Edition is a wide-board 12.3mm laminate range for customers wanting a larger-format timber-look floor.", "It is best suited to dry internal rooms where the customer wants a more substantial laminate format without moving into engineered timber."],
           "featuresIntro": "Supplier-listed highlights for Prime Luxury Edition",
-          "features": ["Wide-board 12.3mm laminate aimed at more expansive timber-look layouts.", "Supplier-backed AC4 scratch resistance claim for tougher day-to-day use.", "Floating-floor licensed click installation.", "Designed to create a larger-format, more luxurious visual effect in living spaces."],
+          "features": ["Wide-board 12.3mm laminate aimed at more expansive timber-look layouts.", "Supplier-listed AC4 scratch resistance for day-to-day use.", "Floating-floor licensed click installation.", "Designed to create a larger-format visual effect in living spaces."],
+          "quoteNotes": ["Water-resistant laminate is not the same as a waterproof wet-area system.", "Underlay, expansion gaps and subfloor flatness still need confirmation.", "Best used in dry internal areas unless manufacturer guidance says otherwise."],
           "technical": [
             {
               "label": "Type",
@@ -513,9 +894,10 @@
         "representativeProductId": "topdeck-legend-atlantic-oak",
         "customerLabel": "Prime Legend Collection",
         "rangeContent": {
-          "description": ["The Legend Collection embodies strength and beauty, combining Aquashield waterproof technology with lifelike hardwood textures for a floor that protects as much as it inspires. AC5-rated durability withstands even the busiest households, while Negative Ion Technology enhances wellbeing. Designed for bold interiors, Legend creates a stable, enduring foundation\u2014an expression of confidence, comfort, and timeless sophistication in every step."],
+          "description": ["Prime Legend Collection is a large-format 12.3mm laminate range with supplier-listed AC5 wear rating and Aquashield water-resistant positioning.", "It suits dry internal rooms where a stronger laminate specification is preferred. Wet-area use still depends on manufacturer guidance and installation details."],
           "featuresIntro": "Supplier-listed highlights for Prime Legend Collection",
-          "features": ["Aquashield waterproof laminate positioned for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Negative Ion Technology claim from Topdeck for a more wellness-focused range position.", "Large-format 12.3mm boards with floating-floor click installation."],
+          "features": ["Aquashield water-resistant laminate positioning for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Supplier-listed Negative Ion surface feature.", "Large-format 12.3mm boards with floating-floor click installation."],
+          "quoteNotes": ["Water-resistant laminate is not the same as a waterproof wet-area system.", "Underlay, expansion gaps and subfloor flatness still need confirmation.", "Best used in dry internal areas unless manufacturer guidance says otherwise."],
           "technical": [
             {
               "label": "Type",
@@ -542,6 +924,34 @@
       }
     },
     engineered: {
+      "Botanica": {
+        rangeId: "engineered-botanica",
+        rangeLabel: "Botanica",
+        selectionMode: "range_only",
+        representativeProductId: "range-botanica-alaska",
+        customerLabel: "Botanica",
+        rangeContent: {
+          description: [
+            "Botanica is an engineered timber range with a premium oak-look colour palette for design-led renovation projects.",
+            "It suits customers who prefer engineered timber over laminate or hybrid and want a more natural timber look.",
+            "The range works well for living areas, bedrooms and feature spaces."
+          ],
+          featuresIntro: "Botanica range highlights",
+          features: [
+            "Eight engineered timber colours including softer oak-style options and deeper feature tones.",
+            "Useful for customers choosing a timber direction for a more design-led renovation.",
+            "Helps customers compare engineered timber colours with a calm product shortlist.",
+            "A practical range for higher-consideration product decisions where finish matters."
+          ],
+          technical: [
+            { label: "Brand", value: "Botanica" },
+            { label: "Category", value: "Engineered timber" },
+            { label: "Range", value: "Botanica" },
+            { label: "Colour Range", value: "8 colours available" },
+            { label: "Installation", value: "Confirm suitable installation method before booking" }
+          ]
+        }
+      },
       "Swish Oak Natura": {
         rangeId: "engineered-swish-oak-natura",
         rangeLabel: "Swish Oak Natura",
@@ -551,21 +961,32 @@
         customerLabel: "Swish Oak Natura",
         rangeContent: {
           description: [
-            "Oak has been a traditional flooring material used for centuries throughout the world. Oak flooring is desired for its longevity lasting more than 100 years.",
-            "The Swish Oak Natura Flooring range comprises of multidirectional constructed engineered boards that provide all the benefits of being structurally robust. This assembly increases the boards' resistance to expansion and contraction from changes in humidity and temperature reducing warping or cupping. Hence these engineered boards are superior to solid oak flooring in both durability and stability.",
-            "Fabulous attractive wide 190mm planks create the impression of a more spacious interior, whilst adding a sophisticated, warm and inviting feel to your environment.",
-            "All Swish Oak Flooring come pre-finished thus there is no messy and timely on-site sanding or staining required.",
-            "The top layer, or wear layer, is composed of genuine 3mm French oak. It features a variety of captivating finishes, such as natural, brushed, hand-scraped, or stained, allowing you to choose the aesthetic that best complements your space. The natural finish brings out the inherent warmth and character of the oak, while the brushed finish provide a rustic and textured appearance.",
-            "Beneath the wear layer, multiple layers of high-quality plywood are intricately bonded together. This construction creates a stable and robust foundation for the oak veneer, minimizing the expansion and contraction that can occur with solid wood flooring due to changes in humidity and temperature."
+            "Swish Oak Natura is a 14/3mm engineered oak range with a genuine 3mm French oak surface and multi-layer plywood core.",
+            "It gives a real timber finish with improved dimensional stability compared with solid timber in many internal conditions. It is not a waterproof product, so moisture, subfloor condition and installation method should be checked before final confirmation."
           ],
           featuresIntro: "Why choose Swish Oak?",
           features: [
-            "Swish Oak flooring is a harmonious fusion of nature's elegance and modern engineering. With its exquisite appearance, durability, and versatility, it is a timeless choice that can elevate the aesthetic appeal of any interior while providing the functionality and convenience desired in today's homes and commercial spaces. Swish Oak flooring not only enhances its stability but also makes it compatible with underfloor heating systems, expanding its versatility and comfort.",
-            "A grade commercial quality FSC sustainable raw materials",
-            "UV Matt lacquered / Oiled coatings for tough and longer lasting finishes",
-            "Ultra low VOCs that meet EO international standards for high indoor air quality",
-            "ABCD Genuine French Oak",
-            "Comprehensive quality control systems of 23 inspection checks for guarantee of excellence."
+            "Genuine 3mm French oak surface.",
+            "190mm wide board format.",
+            "Prefinished surface in selected colours and finishes.",
+            "Glue-down or floating installation depending on site.",
+            "Natural timber character beyond laminate or hybrid flooring."
+          ],
+          bestFor: [
+            "Premium residential interiors",
+            "Natural timber appearance",
+            "Feature living spaces",
+            "Customers comparing engineered timber"
+          ],
+          notBestFor: [
+            "Wet areas",
+            "Projects where moisture or subfloor condition is unresolved",
+            "Customers needing the lowest-maintenance option"
+          ],
+          quoteNotes: [
+            "Engineered timber pricing can vary by colour, installation method, subfloor preparation and stair or trim details.",
+            "Not a waterproof product.",
+            "Moisture, subfloor preparation and installation method are important."
           ],
           technical: [
             { label: "Type", value: "Engineered Oak Floor" },
@@ -590,17 +1011,30 @@
         customerLabel: "Swish Oak Natura Herringbone",
         rangeContent: {
           description: [
-            "French Oak has been a traditional flooring material used for centuries throughout the world. Oak flooring is desired for its longevity lasting more than 100 years.",
-            "The Swish Oak Flooring herringbone range comprises of multidirectional constructed engineered boards that provide all the benefits of being structurally robust. This assembly increases the boards' resistance to expansion and contraction from changes in humidity and temperature reducing warping or cupping.",
-            "Fabulous attractive 888mm herringbone planks create a more detailed statement floor while still adding a sophisticated, warm and inviting feel to your environment.",
-            "All Swish Oak Flooring come pre-finished thus there is no messy and timely on-site sanding or staining required."
+            "Swish Oak Natura Herringbone is a 14/3mm engineered oak herringbone range with a genuine French oak surface.",
+            "It is suited to feature interiors where the pattern is part of the design. Herringbone layouts need clearer waste, edge, stair and installation detail before final pricing."
           ],
           featuresIntro: "Why choose Swish Oak?",
           features: [
-            "A grade commercial quality FSC sustainable raw materials",
-            "UV Matt lacquered / Oiled coatings for tough and longer lasting finishes",
-            "Ultra low VOCs that meet E1 international standards for high indoor air quality.",
-            "Comprehensive quality control systems of 23 inspection checks for guarantee of excellence."
+            "Genuine French oak surface.",
+            "888mm herringbone plank format.",
+            "Prefinished surface in selected colours and finishes.",
+            "Patterned layout for premium feature spaces."
+          ],
+          bestFor: [
+            "Premium feature spaces",
+            "Herringbone design layouts",
+            "Natural timber appearance"
+          ],
+          notBestFor: [
+            "Wet areas",
+            "Projects where moisture or subfloor condition is unresolved",
+            "Customers needing a simple low-waste installation"
+          ],
+          quoteNotes: [
+            "Patterned layouts usually require higher wastage and more installation time.",
+            "Stair nosing, borders and edge details should be confirmed before final pricing.",
+            "Engineered timber is not a waterproof product."
           ],
           technical: [
             { label: "Type", value: "Engineered Oak Herringbone Floor" },
@@ -939,8 +1373,208 @@
     }
   };
 
+  const OAK_STEP_PRODUCTS = createPrivateRangeProductBatch({
+    category: "laminate",
+    range: "Oak Step",
+    brand: "Oak Step",
+    productType: "Laminate",
+    thickness: null,
+    boardSize: "refer to selected colour",
+    items: [
+      { colour: "OS101 Houston", image: "images/products/laminate/oak-step/os101-houston.jpg", galleryImages: ["images/products/laminate/oak-step/os101-houston.jpg","images/products/laminate/oak-step/os101-houston-gallery-2.jpg","images/products/laminate/oak-step/os101-houston-gallery-3.jpg","images/products/laminate/oak-step/os101-houston-gallery-4.jpg"] },
+      { colour: "OS102 Alaska", image: "images/products/laminate/oak-step/os102-alaska.jpg", galleryImages: ["images/products/laminate/oak-step/os102-alaska.jpg","images/products/laminate/oak-step/os102-alaska-gallery-2.jpg","images/products/laminate/oak-step/os102-alaska-gallery-3.jpg","images/products/laminate/oak-step/os102-alaska-gallery-4.jpg"] },
+      { colour: "OS103 California", image: "images/products/laminate/oak-step/os103-california.jpg", galleryImages: ["images/products/laminate/oak-step/os103-california.jpg","images/products/laminate/oak-step/os103-california-gallery-2.jpg","images/products/laminate/oak-step/os103-california-gallery-3.jpg","images/products/laminate/oak-step/os103-california-gallery-4.jpg"] },
+      { colour: "OS104 Austin", image: "images/products/laminate/oak-step/os104-austin.jpg", galleryImages: ["images/products/laminate/oak-step/os104-austin.jpg","images/products/laminate/oak-step/os104-austin-gallery-2.jpg","images/products/laminate/oak-step/os104-austin-gallery-3.jpg","images/products/laminate/oak-step/os104-austin-gallery-4.jpg"] },
+      { colour: "OS105 NSW Spotted Gum", image: "images/products/laminate/oak-step/os105-nsw-spotted-gum.jpg", galleryImages: ["images/products/laminate/oak-step/os105-nsw-spotted-gum.jpg","images/products/laminate/oak-step/os105-nsw-spotted-gum-gallery-2.jpg","images/products/laminate/oak-step/os105-nsw-spotted-gum-gallery-3.jpg","images/products/laminate/oak-step/os105-nsw-spotted-gum-gallery-4.jpg"] },
+      { colour: "OS106 NSW Blackbutt", image: "images/products/laminate/oak-step/os106-nsw-blackbutt.jpg", galleryImages: ["images/products/laminate/oak-step/os106-nsw-blackbutt.jpg","images/products/laminate/oak-step/os106-nsw-blackbutt-gallery-2.jpg","images/products/laminate/oak-step/os106-nsw-blackbutt-gallery-3.jpg","images/products/laminate/oak-step/os106-nsw-blackbutt-gallery-4.jpg"] },
+      { colour: "OS107 American Walnut", image: "images/products/laminate/oak-step/os107-american-walnut.jpg", galleryImages: ["images/products/laminate/oak-step/os107-american-walnut.jpg","images/products/laminate/oak-step/os107-american-walnut-gallery-2.jpg","images/products/laminate/oak-step/os107-american-walnut-gallery-3.jpg","images/products/laminate/oak-step/os107-american-walnut-gallery-4.jpg"] },
+      { colour: "OS108 Arizona", image: "images/products/laminate/oak-step/os108-arizona.jpg", galleryImages: ["images/products/laminate/oak-step/os108-arizona.jpg","images/products/laminate/oak-step/os108-arizona-gallery-2.jpg","images/products/laminate/oak-step/os108-arizona-gallery-3.jpg","images/products/laminate/oak-step/os108-arizona-gallery-4.jpg"] },
+      { colour: "OS109 Hickory Gray", image: "images/products/laminate/oak-step/os109-hickory-gray.jpg", galleryImages: ["images/products/laminate/oak-step/os109-hickory-gray.jpg","images/products/laminate/oak-step/os109-hickory-gray-gallery-2.jpg","images/products/laminate/oak-step/os109-hickory-gray-gallery-3.jpg","images/products/laminate/oak-step/os109-hickory-gray-gallery-4.jpg"] },
+      { colour: "OS110 Seashell", image: "images/products/laminate/oak-step/os110-seashell.jpg", galleryImages: ["images/products/laminate/oak-step/os110-seashell.jpg","images/products/laminate/oak-step/os110-seashell-gallery-2.jpg","images/products/laminate/oak-step/os110-seashell-gallery-3.jpg","images/products/laminate/oak-step/os110-seashell-gallery-4.jpg"] }
+    ]
+  });
+
+  const OAK_STEP_PLUS_PRODUCTS = createPrivateRangeProductBatch({
+    category: "laminate",
+    range: "Oak Step PLUS",
+    brand: "Oak Step PLUS",
+    productType: "Laminate",
+    thickness: null,
+    boardSize: "refer to selected colour",
+    items: [
+      { colour: "OP101 Houston PLUS", image: "images/products/laminate/oak-step-plus/op101-houston-plus.jpg", galleryImages: ["images/products/laminate/oak-step-plus/op101-houston-plus.jpg","images/products/laminate/oak-step-plus/op101-houston-plus-gallery-2.jpg","images/products/laminate/oak-step-plus/op101-houston-plus-gallery-3.jpg","images/products/laminate/oak-step-plus/op101-houston-plus-gallery-4.jpg"] },
+      { colour: "OP102 Alaska PLUS", image: "images/products/laminate/oak-step-plus/op102-alaska-plus.jpg", galleryImages: ["images/products/laminate/oak-step-plus/op102-alaska-plus.jpg","images/products/laminate/oak-step-plus/op102-alaska-plus-gallery-2.jpg","images/products/laminate/oak-step-plus/op102-alaska-plus-gallery-3.jpg","images/products/laminate/oak-step-plus/op102-alaska-plus-gallery-4.jpg"] },
+      { colour: "OP103 California PLUS", image: "images/products/laminate/oak-step-plus/op103-california-plus.jpg", galleryImages: ["images/products/laminate/oak-step-plus/op103-california-plus.jpg","images/products/laminate/oak-step-plus/op103-california-plus-gallery-2.jpg","images/products/laminate/oak-step-plus/op103-california-plus-gallery-3.jpg","images/products/laminate/oak-step-plus/op103-california-plus-gallery-4.jpg"] },
+      { colour: "OP104 Austin PLUS", image: "images/products/laminate/oak-step-plus/op104-austin-plus.jpg", galleryImages: ["images/products/laminate/oak-step-plus/op104-austin-plus.jpg","images/products/laminate/oak-step-plus/op104-austin-plus-gallery-2.jpg","images/products/laminate/oak-step-plus/op104-austin-plus-gallery-3.jpg","images/products/laminate/oak-step-plus/op104-austin-plus-gallery-4.jpg"] },
+      { colour: "OP105 NSW Spotted Gum PLUS", image: "images/products/laminate/oak-step-plus/op105-nsw-spotted-gum-plus.jpg", galleryImages: ["images/products/laminate/oak-step-plus/op105-nsw-spotted-gum-plus.jpg","images/products/laminate/oak-step-plus/op105-nsw-spotted-gum-plus-gallery-2.jpg","images/products/laminate/oak-step-plus/op105-nsw-spotted-gum-plus-gallery-3.jpg","images/products/laminate/oak-step-plus/op105-nsw-spotted-gum-plus-gallery-4.jpg"] },
+      { colour: "OP106 NSW Blackbutt PLUS", image: "images/products/laminate/oak-step-plus/op106-nsw-blackbutt-plus.jpg", galleryImages: ["images/products/laminate/oak-step-plus/op106-nsw-blackbutt-plus.jpg","images/products/laminate/oak-step-plus/op106-nsw-blackbutt-plus-gallery-2.jpg","images/products/laminate/oak-step-plus/op106-nsw-blackbutt-plus-gallery-3.jpg","images/products/laminate/oak-step-plus/op106-nsw-blackbutt-plus-gallery-4.jpg"] },
+      { colour: "OP107 American Walnut PLUS", image: "images/products/laminate/oak-step-plus/op107-american-walnut-plus.jpg", galleryImages: ["images/products/laminate/oak-step-plus/op107-american-walnut-plus.jpg","images/products/laminate/oak-step-plus/op107-american-walnut-plus-gallery-2.jpg","images/products/laminate/oak-step-plus/op107-american-walnut-plus-gallery-3.jpg","images/products/laminate/oak-step-plus/op107-american-walnut-plus-gallery-4.jpg"] },
+      { colour: "OP108 Arizona PLUS", image: "images/products/laminate/oak-step-plus/op108-arizona-plus.jpg", galleryImages: ["images/products/laminate/oak-step-plus/op108-arizona-plus.jpg","images/products/laminate/oak-step-plus/op108-arizona-plus-gallery-2.jpg","images/products/laminate/oak-step-plus/op108-arizona-plus-gallery-3.jpg","images/products/laminate/oak-step-plus/op108-arizona-plus-gallery-4.jpg"] },
+      { colour: "OP109 Hickory Gray PLUS", image: "images/products/laminate/oak-step-plus/op109-hickory-gray-plus.jpg", galleryImages: ["images/products/laminate/oak-step-plus/op109-hickory-gray-plus.jpg","images/products/laminate/oak-step-plus/op109-hickory-gray-plus-gallery-2.jpg","images/products/laminate/oak-step-plus/op109-hickory-gray-plus-gallery-3.jpg","images/products/laminate/oak-step-plus/op109-hickory-gray-plus-gallery-4.jpg"] },
+      { colour: "OP110 Seashell PLUS", image: "images/products/laminate/oak-step-plus/op110-seashell-plus.jpg", galleryImages: ["images/products/laminate/oak-step-plus/op110-seashell-plus.jpg","images/products/laminate/oak-step-plus/op110-seashell-plus-gallery-2.jpg","images/products/laminate/oak-step-plus/op110-seashell-plus-gallery-3.jpg","images/products/laminate/oak-step-plus/op110-seashell-plus-gallery-4.jpg"] }
+    ]
+  });
+
+  const AQUA_WOOD_PLUS_12MM_PRODUCTS = createPrivateRangeProductBatch({
+    category: "laminate",
+    range: "Aqua Wood Plus 12mm",
+    brand: "Aqua Wood Plus",
+    productType: "Laminate",
+    thickness: "12.0mm",
+    boardSize: "refer to selected colour",
+    items: [
+      { colour: "Blackbutt P&H", image: "images/products/laminate/aqua-wood-plus-12mm/blackbutt-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/blackbutt-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/blackbutt-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/blackbutt-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/blackbutt-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/blackbutt-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/blackbutt-ph-gallery-6.jpg"] },
+      { colour: "Spotted Gum P&H", image: "images/products/laminate/aqua-wood-plus-12mm/spotted-gum-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/spotted-gum-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/spotted-gum-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/spotted-gum-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/spotted-gum-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/spotted-gum-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/spotted-gum-ph-gallery-6.jpg"] },
+      { colour: "Tas Oak", image: "images/products/laminate/aqua-wood-plus-12mm/tas-oak.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/tas-oak.jpg","images/products/laminate/aqua-wood-plus-12mm/tas-oak-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/tas-oak-gallery-3.jpg"] },
+      { colour: "Jarrah", image: "images/products/laminate/aqua-wood-plus-12mm/jarrah.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/jarrah.jpg","images/products/laminate/aqua-wood-plus-12mm/jarrah-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/jarrah-gallery-3.jpg"] },
+      { colour: "Natural Oak P&H", image: "images/products/laminate/aqua-wood-plus-12mm/natural-oak-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/natural-oak-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/natural-oak-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/natural-oak-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/natural-oak-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/natural-oak-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/natural-oak-ph-gallery-6.jpg"] },
+      { colour: "Vienna P&H", image: "images/products/laminate/aqua-wood-plus-12mm/vienna-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/vienna-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/vienna-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/vienna-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/vienna-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/vienna-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/vienna-ph-gallery-6.jpg","images/products/laminate/aqua-wood-plus-12mm/vienna-ph-gallery-7.jpg","images/products/laminate/aqua-wood-plus-12mm/vienna-ph-gallery-8.jpg"] },
+      { colour: "Wall Street P&H", image: "images/products/laminate/aqua-wood-plus-12mm/wall-street-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/wall-street-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/wall-street-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/wall-street-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/wall-street-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/wall-street-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/wall-street-ph-gallery-6.jpg","images/products/laminate/aqua-wood-plus-12mm/wall-street-ph-gallery-7.jpg","images/products/laminate/aqua-wood-plus-12mm/wall-street-ph-gallery-8.jpg"] },
+      { colour: "Opera House P&H", image: "images/products/laminate/aqua-wood-plus-12mm/opera-house-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/opera-house-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/opera-house-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/opera-house-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/opera-house-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/opera-house-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/opera-house-ph-gallery-6.jpg","images/products/laminate/aqua-wood-plus-12mm/opera-house-ph-gallery-7.jpg","images/products/laminate/aqua-wood-plus-12mm/opera-house-ph-gallery-8.jpg"] },
+      { colour: "Gold Coast", image: "images/products/laminate/aqua-wood-plus-12mm/gold-coast.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/gold-coast.jpg","images/products/laminate/aqua-wood-plus-12mm/gold-coast-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/gold-coast-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/gold-coast-gallery-4.jpg"] },
+      { colour: "Merlion", image: "images/products/laminate/aqua-wood-plus-12mm/merlion.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/merlion.jpg","images/products/laminate/aqua-wood-plus-12mm/merlion-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/merlion-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/merlion-gallery-4.jpg"] },
+      { colour: "Mount Fuji", image: "images/products/laminate/aqua-wood-plus-12mm/mount-fuji.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/mount-fuji.jpg","images/products/laminate/aqua-wood-plus-12mm/mount-fuji-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/mount-fuji-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/mount-fuji-gallery-4.jpg"] },
+      { colour: "Victoria P&H", image: "images/products/laminate/aqua-wood-plus-12mm/victoria-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/victoria-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/victoria-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/victoria-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/victoria-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/victoria-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/victoria-ph-gallery-6.jpg","images/products/laminate/aqua-wood-plus-12mm/victoria-ph-gallery-7.jpg","images/products/laminate/aqua-wood-plus-12mm/victoria-ph-gallery-8.jpg"] },
+      { colour: "Habour Bridge P&H", image: "images/products/laminate/aqua-wood-plus-12mm/habour-bridge-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/habour-bridge-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/habour-bridge-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/habour-bridge-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/habour-bridge-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/habour-bridge-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/habour-bridge-ph-gallery-6.jpg","images/products/laminate/aqua-wood-plus-12mm/habour-bridge-ph-gallery-7.jpg","images/products/laminate/aqua-wood-plus-12mm/habour-bridge-ph-gallery-8.jpg"] },
+      { colour: "Black Sea P&H", image: "images/products/laminate/aqua-wood-plus-12mm/black-sea-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/black-sea-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/black-sea-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/black-sea-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/black-sea-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/black-sea-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/black-sea-ph-gallery-6.jpg","images/products/laminate/aqua-wood-plus-12mm/black-sea-ph-gallery-7.jpg","images/products/laminate/aqua-wood-plus-12mm/black-sea-ph-gallery-8.jpg"] },
+      { colour: "Pisa P&H", image: "images/products/laminate/aqua-wood-plus-12mm/pisa-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/pisa-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/pisa-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/pisa-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/pisa-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/pisa-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/pisa-ph-gallery-6.jpg","images/products/laminate/aqua-wood-plus-12mm/pisa-ph-gallery-7.jpg","images/products/laminate/aqua-wood-plus-12mm/pisa-ph-gallery-8.jpg"] },
+      { colour: "Big Ben P&H", image: "images/products/laminate/aqua-wood-plus-12mm/big-ben-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/big-ben-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/big-ben-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/big-ben-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/big-ben-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/big-ben-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/big-ben-ph-gallery-6.jpg","images/products/laminate/aqua-wood-plus-12mm/big-ben-ph-gallery-7.jpg","images/products/laminate/aqua-wood-plus-12mm/big-ben-ph-gallery-8.jpg"] },
+      { colour: "Eiffel Tower", image: "images/products/laminate/aqua-wood-plus-12mm/eiffel-tower.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/eiffel-tower.jpg","images/products/laminate/aqua-wood-plus-12mm/eiffel-tower-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/eiffel-tower-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/eiffel-tower-gallery-4.jpg"] },
+      { colour: "Hawaii P&H", image: "images/products/laminate/aqua-wood-plus-12mm/hawaii-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/hawaii-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/hawaii-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/hawaii-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/hawaii-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/hawaii-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/hawaii-ph-gallery-6.jpg","images/products/laminate/aqua-wood-plus-12mm/hawaii-ph-gallery-7.jpg","images/products/laminate/aqua-wood-plus-12mm/hawaii-ph-gallery-8.jpg"] },
+      { colour: "Bondi P&H", image: "images/products/laminate/aqua-wood-plus-12mm/bondi-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/bondi-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/bondi-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/bondi-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/bondi-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/bondi-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/bondi-ph-gallery-6.jpg","images/products/laminate/aqua-wood-plus-12mm/bondi-ph-gallery-7.jpg","images/products/laminate/aqua-wood-plus-12mm/bondi-ph-gallery-8.jpg"] },
+      { colour: "Blue Mountain P&H", image: "images/products/laminate/aqua-wood-plus-12mm/blue-mountain-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/blue-mountain-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/blue-mountain-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/blue-mountain-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/blue-mountain-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/blue-mountain-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/blue-mountain-ph-gallery-6.jpg","images/products/laminate/aqua-wood-plus-12mm/blue-mountain-ph-gallery-7.jpg","images/products/laminate/aqua-wood-plus-12mm/blue-mountain-ph-gallery-8.jpg"] },
+      { colour: "Brushbox P&H", image: "images/products/laminate/aqua-wood-plus-12mm/brushbox-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/brushbox-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/brushbox-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/brushbox-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/brushbox-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/brushbox-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/brushbox-ph-gallery-6.jpg"] },
+      { colour: "Walnut P&H", image: "images/products/laminate/aqua-wood-plus-12mm/walnut-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/walnut-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/walnut-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/walnut-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/walnut-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/walnut-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/walnut-ph-gallery-6.jpg"] },
+      { colour: "Great Wall P&H", image: "images/products/laminate/aqua-wood-plus-12mm/great-wall-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/great-wall-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/great-wall-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/great-wall-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/great-wall-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/great-wall-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/great-wall-ph-gallery-6.jpg"] },
+      { colour: "Hollywood P&H", image: "images/products/laminate/aqua-wood-plus-12mm/hollywood-ph.jpg", galleryImages: ["images/products/laminate/aqua-wood-plus-12mm/hollywood-ph.jpg","images/products/laminate/aqua-wood-plus-12mm/hollywood-ph-gallery-2.jpg","images/products/laminate/aqua-wood-plus-12mm/hollywood-ph-gallery-3.jpg","images/products/laminate/aqua-wood-plus-12mm/hollywood-ph-gallery-4.jpg","images/products/laminate/aqua-wood-plus-12mm/hollywood-ph-gallery-5.jpg","images/products/laminate/aqua-wood-plus-12mm/hollywood-ph-gallery-6.jpg"] }
+    ]
+  });
+
+  const AQUABASE_PRODUCTS = createPrivateRangeProductBatch({
+    category: "hybrid",
+    range: "Aquabase",
+    brand: "Aquabase",
+    productType: "Hybrid",
+    thickness: null,
+    boardSize: "refer to selected colour",
+    items: [
+      { colour: "AB2501 COSTAL BLACKBUTT", image: "images/products/hybrid/aquabase/ab2501-coastal-blackbutt.jpg", galleryImages: ["images/products/hybrid/aquabase/ab2501-coastal-blackbutt.jpg","images/products/hybrid/aquabase/ab2501-coastal-blackbutt-gallery-2.jpg","images/products/hybrid/aquabase/ab2501-coastal-blackbutt-gallery-3.jpg","images/products/hybrid/aquabase/ab2501-coastal-blackbutt-gallery-4.jpg","images/products/hybrid/aquabase/ab2501-coastal-blackbutt-gallery-5.jpg","images/products/hybrid/aquabase/ab2501-coastal-blackbutt-gallery-6.jpg","images/products/hybrid/aquabase/ab2501-coastal-blackbutt-gallery-7.jpg","images/products/hybrid/aquabase/ab2501-coastal-blackbutt-gallery-8.jpg","images/products/hybrid/aquabase/ab2501-coastal-blackbutt-gallery-9.jpg","images/products/hybrid/aquabase/ab2501-coastal-blackbutt-gallery-10.jpg"] },
+      { colour: "AB2502 QUEENSLAND SPOTTED GUM", image: "images/products/hybrid/aquabase/ab2502-queensland-spotted-gum.jpg", galleryImages: ["images/products/hybrid/aquabase/ab2502-queensland-spotted-gum.jpg","images/products/hybrid/aquabase/ab2502-queensland-spotted-gum-gallery-2.jpg","images/products/hybrid/aquabase/ab2502-queensland-spotted-gum-gallery-3.jpg","images/products/hybrid/aquabase/ab2502-queensland-spotted-gum-gallery-4.jpg","images/products/hybrid/aquabase/ab2502-queensland-spotted-gum-gallery-5.jpg","images/products/hybrid/aquabase/ab2502-queensland-spotted-gum-gallery-6.jpg","images/products/hybrid/aquabase/ab2502-queensland-spotted-gum-gallery-7.jpg","images/products/hybrid/aquabase/ab2502-queensland-spotted-gum-gallery-8.jpg","images/products/hybrid/aquabase/ab2502-queensland-spotted-gum-gallery-9.jpg","images/products/hybrid/aquabase/ab2502-queensland-spotted-gum-gallery-10.jpg"] },
+      { colour: "AB2503 SILFRA", image: "images/products/hybrid/aquabase/ab2503-silfra.jpg", galleryImages: ["images/products/hybrid/aquabase/ab2503-silfra.jpg","images/products/hybrid/aquabase/ab2503-silfra-gallery-2.jpg","images/products/hybrid/aquabase/ab2503-silfra-gallery-3.jpg","images/products/hybrid/aquabase/ab2503-silfra-gallery-4.jpg","images/products/hybrid/aquabase/ab2503-silfra-gallery-5.jpg","images/products/hybrid/aquabase/ab2503-silfra-gallery-6.jpg","images/products/hybrid/aquabase/ab2503-silfra-gallery-7.jpg","images/products/hybrid/aquabase/ab2503-silfra-gallery-8.jpg","images/products/hybrid/aquabase/ab2503-silfra-gallery-9.jpg","images/products/hybrid/aquabase/ab2503-silfra-gallery-10.jpg","images/products/hybrid/aquabase/ab2503-silfra-gallery-11.jpg"] },
+      { colour: "AB2504 NARUKO", image: "images/products/hybrid/aquabase/ab2504-naruko.jpg", galleryImages: ["images/products/hybrid/aquabase/ab2504-naruko.jpg","images/products/hybrid/aquabase/ab2504-naruko-gallery-2.jpg","images/products/hybrid/aquabase/ab2504-naruko-gallery-3.jpg","images/products/hybrid/aquabase/ab2504-naruko-gallery-4.jpg","images/products/hybrid/aquabase/ab2504-naruko-gallery-5.jpg","images/products/hybrid/aquabase/ab2504-naruko-gallery-6.jpg","images/products/hybrid/aquabase/ab2504-naruko-gallery-7.jpg","images/products/hybrid/aquabase/ab2504-naruko-gallery-8.jpg","images/products/hybrid/aquabase/ab2504-naruko-gallery-9.jpg","images/products/hybrid/aquabase/ab2504-naruko-gallery-10.jpg","images/products/hybrid/aquabase/ab2504-naruko-gallery-11.jpg"] },
+      { colour: "AB2505 LUVIA", image: "images/products/hybrid/aquabase/ab2505-luvia.jpg", galleryImages: ["images/products/hybrid/aquabase/ab2505-luvia.jpg","images/products/hybrid/aquabase/ab2505-luvia-gallery-2.jpg","images/products/hybrid/aquabase/ab2505-luvia-gallery-3.jpg","images/products/hybrid/aquabase/ab2505-luvia-gallery-4.jpg","images/products/hybrid/aquabase/ab2505-luvia-gallery-5.jpg","images/products/hybrid/aquabase/ab2505-luvia-gallery-6.jpg","images/products/hybrid/aquabase/ab2505-luvia-gallery-7.jpg","images/products/hybrid/aquabase/ab2505-luvia-gallery-8.jpg","images/products/hybrid/aquabase/ab2505-luvia-gallery-9.jpg","images/products/hybrid/aquabase/ab2505-luvia-gallery-10.jpg"] },
+      { colour: "AB2506 KOTO OAK", image: "images/products/hybrid/aquabase/ab2506-koto-oak.jpg", galleryImages: ["images/products/hybrid/aquabase/ab2506-koto-oak.jpg","images/products/hybrid/aquabase/ab2506-koto-oak-gallery-2.jpg","images/products/hybrid/aquabase/ab2506-koto-oak-gallery-3.jpg","images/products/hybrid/aquabase/ab2506-koto-oak-gallery-4.jpg","images/products/hybrid/aquabase/ab2506-koto-oak-gallery-5.jpg","images/products/hybrid/aquabase/ab2506-koto-oak-gallery-6.jpg","images/products/hybrid/aquabase/ab2506-koto-oak-gallery-7.jpg","images/products/hybrid/aquabase/ab2506-koto-oak-gallery-8.jpg","images/products/hybrid/aquabase/ab2506-koto-oak-gallery-9.jpg","images/products/hybrid/aquabase/ab2506-koto-oak-gallery-10.jpg","images/products/hybrid/aquabase/ab2506-koto-oak-gallery-11.jpg"] },
+      { colour: "AB2507 NIVAN", image: "images/products/hybrid/aquabase/ab2507-nivan.jpg", galleryImages: ["images/products/hybrid/aquabase/ab2507-nivan.jpg","images/products/hybrid/aquabase/ab2507-nivan-gallery-2.jpg","images/products/hybrid/aquabase/ab2507-nivan-gallery-3.jpg","images/products/hybrid/aquabase/ab2507-nivan-gallery-4.jpg","images/products/hybrid/aquabase/ab2507-nivan-gallery-5.jpg","images/products/hybrid/aquabase/ab2507-nivan-gallery-6.jpg","images/products/hybrid/aquabase/ab2507-nivan-gallery-7.jpg","images/products/hybrid/aquabase/ab2507-nivan-gallery-8.jpg","images/products/hybrid/aquabase/ab2507-nivan-gallery-9.jpg","images/products/hybrid/aquabase/ab2507-nivan-gallery-10.jpg"] },
+      { colour: "AB2508 ALIF WALNUT", image: "images/products/hybrid/aquabase/ab2508-alif-walnut.jpg", galleryImages: ["images/products/hybrid/aquabase/ab2508-alif-walnut.jpg","images/products/hybrid/aquabase/ab2508-alif-walnut-gallery-2.jpg","images/products/hybrid/aquabase/ab2508-alif-walnut-gallery-3.jpg","images/products/hybrid/aquabase/ab2508-alif-walnut-gallery-4.jpg","images/products/hybrid/aquabase/ab2508-alif-walnut-gallery-5.jpg","images/products/hybrid/aquabase/ab2508-alif-walnut-gallery-6.jpg","images/products/hybrid/aquabase/ab2508-alif-walnut-gallery-7.jpg","images/products/hybrid/aquabase/ab2508-alif-walnut-gallery-8.jpg","images/products/hybrid/aquabase/ab2508-alif-walnut-gallery-9.jpg","images/products/hybrid/aquabase/ab2508-alif-walnut-gallery-10.jpg"] }
+    ]
+  });
+
+  const LUXURY_HYBRID_7MM_PRODUCTS = createPrivateRangeProductBatch({
+    category: "hybrid",
+    range: "Luxury Hybrid 7mm",
+    brand: "Luxury Hybrid",
+    productType: "Hybrid",
+    thickness: "7.0mm",
+    boardSize: "1520mm x 230mm",
+    items: [
+      { colour: "BARCELONA - 1520x230x7mm", image: "images/products/hybrid/luxury-hybrid-7mm/barcelona.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-7mm/barcelona.jpg"] },
+      { colour: "BLACKBUTT - 1520x230x7mm", image: "images/products/hybrid/luxury-hybrid-7mm/blackbutt.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-7mm/blackbutt.jpg"] },
+      { colour: "OSSA - 1520x230x7mm", image: "images/products/hybrid/luxury-hybrid-7mm/ossa-ocean-breeze.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-7mm/ossa-ocean-breeze.jpg"] },
+      { colour: "PARIS - 1520x230x7mm", image: "images/products/hybrid/luxury-hybrid-7mm/paris.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-7mm/paris.jpg"] },
+      { colour: "SIENA - 1520x230x7mm", image: "images/products/hybrid/luxury-hybrid-7mm/siena.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-7mm/siena.jpg"] },
+      { colour: "SPOTTED GUM - 1520x230x7mm", image: "images/products/hybrid/luxury-hybrid-7mm/spotted-gum.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-7mm/spotted-gum.jpg"] }
+    ]
+  });
+
+  const LUXURY_HYBRID_8MM_PRODUCTS = createPrivateRangeProductBatch({
+    category: "hybrid",
+    range: "Luxury Hybrid 8mm",
+    brand: "Luxury Hybrid",
+    productType: "Hybrid",
+    thickness: "8.0mm",
+    boardSize: "1540mm x 230mm",
+    items: [
+      { colour: "ARCADIA - 1540x230x8mm", image: "images/products/hybrid/luxury-hybrid-8mm/arcadia.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-8mm/arcadia.jpg","images/products/hybrid/luxury-hybrid-8mm/arcadia-gallery-2.png","images/products/hybrid/luxury-hybrid-8mm/arcadia-gallery-3.png","images/products/hybrid/luxury-hybrid-8mm/arcadia-gallery-4.png"] },
+      { colour: "BLACKBUTT - 8mm", image: "images/products/hybrid/luxury-hybrid-8mm/blackbutt.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-8mm/blackbutt.jpg","images/products/hybrid/luxury-hybrid-8mm/blackbutt-gallery-2.jpg","images/products/hybrid/luxury-hybrid-8mm/blackbutt-gallery-3.jpg","images/products/hybrid/luxury-hybrid-8mm/blackbutt-gallery-4.jpg"] },
+      { colour: "CEDAR RIDGE - 8mm", image: "images/products/hybrid/luxury-hybrid-8mm/cedar-ridge.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-8mm/cedar-ridge.jpg","images/products/hybrid/luxury-hybrid-8mm/cedar-ridge-gallery-2.jpg","images/products/hybrid/luxury-hybrid-8mm/cedar-ridge-gallery-3.jpg"] },
+      { colour: "CONWY - 8mm", image: "images/products/hybrid/luxury-hybrid-8mm/conwy.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-8mm/conwy.jpg","images/products/hybrid/luxury-hybrid-8mm/conwy-gallery-2.jpg","images/products/hybrid/luxury-hybrid-8mm/conwy-gallery-3.jpg"] },
+      { colour: "EDENWOOD - 8mm", image: "images/products/hybrid/luxury-hybrid-8mm/edenwood.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-8mm/edenwood.jpg","images/products/hybrid/luxury-hybrid-8mm/edenwood-gallery-2.jpg","images/products/hybrid/luxury-hybrid-8mm/edenwood-gallery-3.jpg"] },
+      { colour: "FOREST HAVEN - 8mm", image: "images/products/hybrid/luxury-hybrid-8mm/forest-haven.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-8mm/forest-haven.jpg","images/products/hybrid/luxury-hybrid-8mm/forest-haven-gallery-2.jpg","images/products/hybrid/luxury-hybrid-8mm/forest-haven-gallery-3.jpg"] },
+      { colour: "GLAMIS - 8mm", image: "images/products/hybrid/luxury-hybrid-8mm/glamis.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-8mm/glamis.jpg","images/products/hybrid/luxury-hybrid-8mm/glamis-gallery-2.jpg","images/products/hybrid/luxury-hybrid-8mm/glamis-gallery-3.jpg","images/products/hybrid/luxury-hybrid-8mm/glamis-gallery-4.jpg"] },
+      { colour: "LUNAR GLOW - 8mm", image: "images/products/hybrid/luxury-hybrid-8mm/lunar-glow.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-8mm/lunar-glow.jpg","images/products/hybrid/luxury-hybrid-8mm/lunar-glow-gallery-2.jpg","images/products/hybrid/luxury-hybrid-8mm/lunar-glow-gallery-3.jpg"] },
+      { colour: "MISTY MOUNTAIN - 1540x230x8mm", image: "images/products/hybrid/luxury-hybrid-8mm/misty-mountain.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-8mm/misty-mountain.jpg"] },
+      { colour: "OCEAN BREEZE - 8mm", image: "images/products/hybrid/luxury-hybrid-8mm/ocean-breeze.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-8mm/ocean-breeze.jpg","images/products/hybrid/luxury-hybrid-8mm/ocean-breeze-gallery-2.jpg"] },
+      { colour: "SILK ROAD - 8mm", image: "images/products/hybrid/luxury-hybrid-8mm/silk-road.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-8mm/silk-road.jpg","images/products/hybrid/luxury-hybrid-8mm/silk-road-gallery-2.jpg"] },
+      { colour: "SPOTTED GUM - 8mm", image: "images/products/hybrid/luxury-hybrid-8mm/spotted-gum.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-8mm/spotted-gum.jpg","images/products/hybrid/luxury-hybrid-8mm/spotted-gum-gallery-2.jpg","images/products/hybrid/luxury-hybrid-8mm/spotted-gum-gallery-3.jpg","images/products/hybrid/luxury-hybrid-8mm/spotted-gum-gallery-4.jpg","images/products/hybrid/luxury-hybrid-8mm/spotted-gum-gallery-5.jpg"] }
+    ]
+  });
+
+  const LUXURY_HYBRID_9MM_PRODUCTS = createPrivateRangeProductBatch({
+    category: "hybrid",
+    range: "Luxury Hybrid 9mm",
+    brand: "Luxury Hybrid",
+    productType: "Hybrid",
+    thickness: "9.0mm",
+    boardSize: "1800mm x 230mm",
+    items: [
+      { colour: "ALCAZAR - 1800x230x9mm", image: "images/products/hybrid/luxury-hybrid-9mm/alcazar.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-9mm/alcazar.jpg","images/products/hybrid/luxury-hybrid-9mm/alcazar-gallery-2.jpg"] },
+      { colour: "BLACKBUTT - 1800x230x9mm", image: "images/products/hybrid/luxury-hybrid-9mm/blackbutt.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-9mm/blackbutt.jpg","images/products/hybrid/luxury-hybrid-9mm/blackbutt-gallery-2.jpg"] },
+      { colour: "CONWY - 1800x230x9mm", image: "images/products/hybrid/luxury-hybrid-9mm/conwy.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-9mm/conwy.jpg","images/products/hybrid/luxury-hybrid-9mm/conwy-gallery-2.jpg"] },
+      { colour: "GLAMIS - 1800x230x9mm", image: "images/products/hybrid/luxury-hybrid-9mm/glamis.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-9mm/glamis.jpg","images/products/hybrid/luxury-hybrid-9mm/glamis-gallery-2.jpg"] },
+      { colour: "MESA - 1800x230x9mm", image: "images/products/hybrid/luxury-hybrid-9mm/mesa.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-9mm/mesa.jpg"] },
+      { colour: "SONOMA - 1800x230x9mm", image: "images/products/hybrid/luxury-hybrid-9mm/sonoma.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-9mm/sonoma.jpg"] },
+      { colour: "SPOTTED GUM - 1800x230x9mm", image: "images/products/hybrid/luxury-hybrid-9mm/spotted-gum.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-9mm/spotted-gum.jpg","images/products/hybrid/luxury-hybrid-9mm/spotted-gum-gallery-2.jpg","images/products/hybrid/luxury-hybrid-9mm/spotted-gum-gallery-3.jpg"] },
+      { colour: "VINO - 1800x230x9mm", image: "images/products/hybrid/luxury-hybrid-9mm/vino-walnut.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-9mm/vino-walnut.jpg","images/products/hybrid/luxury-hybrid-9mm/vino-walnut-gallery-2.jpg","images/products/hybrid/luxury-hybrid-9mm/vino-walnut-gallery-3.jpg"] }
+    ]
+  });
+
+  const LUXURY_HYBRID_PLUS_10MM_PRODUCTS = createPrivateRangeProductBatch({
+    category: "hybrid",
+    range: "Luxury Hybrid PLUS 10mm",
+    brand: "Luxury Hybrid PLUS",
+    productType: "Hybrid",
+    thickness: "10.0mm",
+    boardSize: "1815mm x 196mm",
+    items: [
+      { colour: "L102 ROBUSTA - 1815x196x10mm", image: "images/products/hybrid/luxury-hybrid-plus-10mm/l102-robusta.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-plus-10mm/l102-robusta.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l102-robusta-gallery-2.jpg"] },
+      { colour: "L103 COSTAL BLACKBUTT - 10mm", image: "images/products/hybrid/luxury-hybrid-plus-10mm/l103-coastal-blackbutt.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-plus-10mm/l103-coastal-blackbutt.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l103-coastal-blackbutt-gallery-2.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l103-coastal-blackbutt-gallery-3.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l103-coastal-blackbutt-gallery-4.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l103-coastal-blackbutt-gallery-5.jpg"] },
+      { colour: "L112 KALDI - 1815x196x10mm", image: "images/products/hybrid/luxury-hybrid-plus-10mm/l112-kaldi.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-plus-10mm/l112-kaldi.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l112-kaldi-gallery-2.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l112-kaldi-gallery-3.jpg"] },
+      { colour: "L122 MISTO - 1815x196x10mm", image: "images/products/hybrid/luxury-hybrid-plus-10mm/l122-misto.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-plus-10mm/l122-misto.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l122-misto-gallery-2.jpg"] },
+      { colour: "L203 NSW SPOTTED GUM - 10mm", image: "images/products/hybrid/luxury-hybrid-plus-10mm/l203-nsw-spotted-gum.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-plus-10mm/l203-nsw-spotted-gum.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l203-nsw-spotted-gum-gallery-2.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l203-nsw-spotted-gum-gallery-3.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l203-nsw-spotted-gum-gallery-4.jpg"] },
+      { colour: "L301 VIENNESE - 10mm", image: "images/products/hybrid/luxury-hybrid-plus-10mm/l301-viennese.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-plus-10mm/l301-viennese.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l301-viennese-gallery-2.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l301-viennese-gallery-3.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l301-viennese-gallery-4.jpg"] },
+      { colour: "L402 RAGGIO - 1815x196x10mm", image: "images/products/hybrid/luxury-hybrid-plus-10mm/l402-raggio.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-plus-10mm/l402-raggio.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l402-raggio-gallery-2.jpg"] },
+      { colour: "L503 BIANCO - 1815x196x10mm", image: "images/products/hybrid/luxury-hybrid-plus-10mm/l503-bianco.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-plus-10mm/l503-bianco.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l503-bianco-gallery-2.jpg"] },
+      { colour: "L601 PASTEL - 10mm", image: "images/products/hybrid/luxury-hybrid-plus-10mm/l601-pastel.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-plus-10mm/l601-pastel.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l601-pastel-gallery-2.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l601-pastel-gallery-3.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l601-pastel-gallery-4.jpg"] },
+      { colour: "L702 ARABICA - 1815x196x10mm", image: "images/products/hybrid/luxury-hybrid-plus-10mm/l702-arabica.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-plus-10mm/l702-arabica.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l702-arabica-gallery-2.jpg"] },
+      { colour: "L803 CARAMELLO - 10mm", image: "images/products/hybrid/luxury-hybrid-plus-10mm/l803-caramello.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-plus-10mm/l803-caramello.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l803-caramello-gallery-2.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l803-caramello-gallery-3.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l803-caramello-gallery-4.jpg"] },
+      { colour: "L901 CREMA - 10mm", image: "images/products/hybrid/luxury-hybrid-plus-10mm/l901-crema.jpg", galleryImages: ["images/products/hybrid/luxury-hybrid-plus-10mm/l901-crema.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l901-crema-gallery-2.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l901-crema-gallery-3.jpg","images/products/hybrid/luxury-hybrid-plus-10mm/l901-crema-gallery-4.jpg"] }
+    ]
+  });
+
+  const BOTANICA_PRODUCTS = createPrivateRangeProductBatch({
+    category: "engineered",
+    range: "Botanica",
+    brand: "Botanica",
+    productType: "Engineered Timber",
+    thickness: null,
+    boardSize: "refer to selected colour",
+    items: [
+      { colour: "Alaska", image: "images/products/engineered-timber/botanica/alaska.jpg", galleryImages: ["images/products/engineered-timber/botanica/alaska.jpg"] },
+      { colour: "Arizona", image: "images/products/engineered-timber/botanica/arizona.jpg", galleryImages: ["images/products/engineered-timber/botanica/arizona.jpg"] },
+      { colour: "Austin", image: "images/products/engineered-timber/botanica/austin.jpg", galleryImages: ["images/products/engineered-timber/botanica/austin.jpg"] },
+      { colour: "California", image: "images/products/engineered-timber/botanica/california.jpg", galleryImages: ["images/products/engineered-timber/botanica/california.jpg"] },
+      { colour: "Houston", image: "images/products/engineered-timber/botanica/houston.jpg", galleryImages: ["images/products/engineered-timber/botanica/houston.jpg"] },
+      { colour: "Oakland", image: "images/products/engineered-timber/botanica/oakland.jpg", galleryImages: ["images/products/engineered-timber/botanica/oakland.jpg"] },
+      { colour: "Orlando", image: "images/products/engineered-timber/botanica/orlando.jpg", galleryImages: ["images/products/engineered-timber/botanica/orlando.jpg"] },
+      { colour: "Seattle", image: "images/products/engineered-timber/botanica/seattle.jpg", galleryImages: ["images/products/engineered-timber/botanica/seattle.jpg"] }
+    ]
+  });
+
   const PRODUCTS = {
     laminate: [
+      ...OAK_STEP_PRODUCTS,
+      ...OAK_STEP_PLUS_PRODUCTS,
+      ...AQUA_WOOD_PLUS_12MM_PRODUCTS,
       {
         id: "hrt-12mm-laminate-aspen-oak",
         category: "laminate",
@@ -2327,7 +2961,7 @@
         "image": "images/products/laminate/topdeck-prime-legend/legend-atlantic-oak.webp",
         "alt": "Atlantic Oak laminate flooring swatch",
         "description": "Soft and weathered, Atlantic Oak brings a breezy coastal feel with its sun-washed tones. It evokes relaxation and serenity, perfect for creating a light, airy home.",
-        "features": ["Aquashield waterproof laminate positioned for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Negative Ion Technology claim from Topdeck for a more wellness-focused range position.", "Large-format 12.3mm boards with floating-floor click installation."],
+        "features": ["Aquashield water-resistant laminate positioning for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Supplier-listed Negative Ion surface feature.", "Large-format 12.3mm boards with floating-floor click installation."],
         "suitableFor": ["Living areas", "Bedrooms", "Busy family homes", "Apartments", "Rental properties"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/legend-atlantic-oak",
@@ -2348,7 +2982,7 @@
         "image": "images/products/laminate/topdeck-prime-legend/legend-blackbutt.webp",
         "alt": "Blackbutt laminate flooring swatch",
         "description": "Blackbutt\u2019s golden hues evoke warmth and vitality, glowing with natural radiance. Its smooth finish balances strength with inviting charm, making spaces feel alive.",
-        "features": ["Aquashield waterproof laminate positioned for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Negative Ion Technology claim from Topdeck for a more wellness-focused range position.", "Large-format 12.3mm boards with floating-floor click installation."],
+        "features": ["Aquashield water-resistant laminate positioning for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Supplier-listed Negative Ion surface feature.", "Large-format 12.3mm boards with floating-floor click installation."],
         "suitableFor": ["Living areas", "Bedrooms", "Busy family homes", "Apartments", "Rental properties"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/legend-blackbutt",
@@ -2369,7 +3003,7 @@
         "image": "images/products/laminate/topdeck-prime-legend/legend-empire-oak.webp",
         "alt": "Empire Oak laminate flooring swatch",
         "description": "Empire Oak stands timeless and steady, with classic brown undertones that radiate strength. It brings a sense of heritage and confidence to any space.",
-        "features": ["Aquashield waterproof laminate positioned for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Negative Ion Technology claim from Topdeck for a more wellness-focused range position.", "Large-format 12.3mm boards with floating-floor click installation."],
+        "features": ["Aquashield water-resistant laminate positioning for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Supplier-listed Negative Ion surface feature.", "Large-format 12.3mm boards with floating-floor click installation."],
         "suitableFor": ["Living areas", "Bedrooms", "Busy family homes", "Apartments", "Rental properties"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/legend-empire-oak",
@@ -2390,7 +3024,7 @@
         "image": "images/products/laminate/topdeck-prime-legend/legend-ghost-oak.webp",
         "alt": "Ghost Oak laminate flooring swatch",
         "description": "Mysterious and modern, Ghost Oak carries a smoky elegance with its dark, weathered grey. It evokes bold sophistication, perfect for striking contemporary interiors.",
-        "features": ["Aquashield waterproof laminate positioned for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Negative Ion Technology claim from Topdeck for a more wellness-focused range position.", "Large-format 12.3mm boards with floating-floor click installation."],
+        "features": ["Aquashield water-resistant laminate positioning for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Supplier-listed Negative Ion surface feature.", "Large-format 12.3mm boards with floating-floor click installation."],
         "suitableFor": ["Living areas", "Bedrooms", "Busy family homes", "Apartments", "Rental properties"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/legend-ghost-oak",
@@ -2411,7 +3045,7 @@
         "image": "images/products/laminate/topdeck-prime-legend/legend-hudson-grey.webp",
         "alt": "Hudson Grey laminate flooring swatch",
         "description": "Hudson Grey blends modern sophistication with rustic character. Its cool grey tones ground a space with calm while offering a sleek, contemporary edge.",
-        "features": ["Aquashield waterproof laminate positioned for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Negative Ion Technology claim from Topdeck for a more wellness-focused range position.", "Large-format 12.3mm boards with floating-floor click installation."],
+        "features": ["Aquashield water-resistant laminate positioning for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Supplier-listed Negative Ion surface feature.", "Large-format 12.3mm boards with floating-floor click installation."],
         "suitableFor": ["Living areas", "Bedrooms", "Busy family homes", "Apartments", "Rental properties"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/legend-hudson-grey",
@@ -2432,7 +3066,7 @@
         "image": "images/products/laminate/topdeck-prime-legend/legend-mainland-brown-oak.webp",
         "alt": "Mainland Brown Oak laminate flooring swatch",
         "description": "Deep and earthy, Mainland Brown Oak anchors a room with grounding richness. Its dark chocolate tones add drama, warmth, and timeless depth.",
-        "features": ["Aquashield waterproof laminate positioned for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Negative Ion Technology claim from Topdeck for a more wellness-focused range position.", "Large-format 12.3mm boards with floating-floor click installation."],
+        "features": ["Aquashield water-resistant laminate positioning for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Supplier-listed Negative Ion surface feature.", "Large-format 12.3mm boards with floating-floor click installation."],
         "suitableFor": ["Living areas", "Bedrooms", "Busy family homes", "Apartments", "Rental properties"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/legend-mainland-brown-oak",
@@ -2453,7 +3087,7 @@
         "image": "images/products/laminate/topdeck-prime-legend/legend-sandcastle-oak.webp",
         "alt": "Sandcastle Oak laminate flooring swatch",
         "description": "Golden and inviting, Sandcastle Oak captures the essence of sunlit shores. Its honeyed tones create warmth and happiness, infusing rooms with a welcoming glow.",
-        "features": ["Aquashield waterproof laminate positioned for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Negative Ion Technology claim from Topdeck for a more wellness-focused range position.", "Large-format 12.3mm boards with floating-floor click installation."],
+        "features": ["Aquashield water-resistant laminate positioning for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Supplier-listed Negative Ion surface feature.", "Large-format 12.3mm boards with floating-floor click installation."],
         "suitableFor": ["Living areas", "Bedrooms", "Busy family homes", "Apartments", "Rental properties"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/legend-sandcastle-oak",
@@ -2474,7 +3108,7 @@
         "image": "images/products/laminate/topdeck-prime-legend/legend-southport-oak.webp",
         "alt": "Southport Oak laminate flooring swatch",
         "description": "Rustic and relaxed, Southport Oak carries the beauty of driftwood softened by time. Its textured look adds depth and authenticity, evoking comfort and casual elegance.",
-        "features": ["Aquashield waterproof laminate positioned for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Negative Ion Technology claim from Topdeck for a more wellness-focused range position.", "Large-format 12.3mm boards with floating-floor click installation."],
+        "features": ["Aquashield water-resistant laminate positioning for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Supplier-listed Negative Ion surface feature.", "Large-format 12.3mm boards with floating-floor click installation."],
         "suitableFor": ["Living areas", "Bedrooms", "Busy family homes", "Apartments", "Rental properties"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/legend-southport-oak",
@@ -2495,7 +3129,7 @@
         "image": "images/products/laminate/topdeck-prime-legend/legend-spotted-gum.webp",
         "alt": "Spotted Gum laminate flooring swatch",
         "description": "Rich and dynamic, Spotted Gum celebrates the beauty of natural variation. Its bold character adds energy and vibrance, creating interiors alive with texture and warmth.",
-        "features": ["Aquashield waterproof laminate positioned for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Negative Ion Technology claim from Topdeck for a more wellness-focused range position.", "Large-format 12.3mm boards with floating-floor click installation."],
+        "features": ["Aquashield water-resistant laminate positioning for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Supplier-listed Negative Ion surface feature.", "Large-format 12.3mm boards with floating-floor click installation."],
         "suitableFor": ["Living areas", "Bedrooms", "Busy family homes", "Apartments", "Rental properties"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/legend-spotted-gum",
@@ -2516,7 +3150,7 @@
         "image": "images/products/laminate/topdeck-prime-legend/legend-wheaton-oak.webp",
         "alt": "Wheaton Oak laminate flooring swatch",
         "description": "Warm and gentle, Wheaton Oak radiates natural charm with its golden-beige hue. Its subtle grain adds understated elegance, wrapping interiors in comfort and ease.",
-        "features": ["Aquashield waterproof laminate positioned for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Negative Ion Technology claim from Topdeck for a more wellness-focused range position.", "Large-format 12.3mm boards with floating-floor click installation."],
+        "features": ["Aquashield water-resistant laminate positioning for busier households.", "AC5-rated wear resistance for high-use areas according to the supplier.", "Supplier-listed Negative Ion surface feature.", "Large-format 12.3mm boards with floating-floor click installation."],
         "suitableFor": ["Living areas", "Bedrooms", "Busy family homes", "Apartments", "Rental properties"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/legend-wheaton-oak",
@@ -4578,6 +5212,11 @@
       }
     ],
     hybrid: [
+      ...AQUABASE_PRODUCTS,
+      ...LUXURY_HYBRID_7MM_PRODUCTS,
+      ...LUXURY_HYBRID_8MM_PRODUCTS,
+      ...LUXURY_HYBRID_9MM_PRODUCTS,
+      ...LUXURY_HYBRID_PLUS_10MM_PRODUCTS,
       // TODO: Enter actual sell price per m² for this product.
       {
         id: "hrt-etf-7mm-hybrid-antique-oak",
@@ -6376,7 +7015,7 @@
         "image": "images/products/hybrid/topdeck-storm-luxury/storm-askada-grey-wash.webp",
         "alt": "Askada Grey Wash hybrid flooring swatch",
         "description": "Bold and textured, Askada Grey Wash blends dramatic greys with rustic grain. It evokes a raw, industrial edge, perfect for striking contemporary interiors.",
-        "features": ["Waterproof hybrid flooring with built-in acoustic backing.", "Negative Ion surface technology and 5-Star AAAC rating claims from Topdeck.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+        "features": ["Supplier-listed waterproof hybrid flooring with built-in acoustic backing.", "Supplier-listed Negative Ion surface feature and 5-Star AAAC rating claim.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
         "suitableFor": ["Living areas", "Bedrooms", "Kitchens", "Apartments", "Busy family homes"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/storm-askada-grey-wash",
@@ -6397,7 +7036,7 @@
         "image": "images/products/hybrid/topdeck-storm-luxury/storm-coastal-blackbutt.webp",
         "alt": "Coastal Blackbutt hybrid flooring swatch",
         "description": "Golden and radiant, Coastal Blackbutt channels the vitality of sunlit shores. It brings energy and freshness, making interiors feel vibrant and alive.",
-        "features": ["Waterproof hybrid flooring with built-in acoustic backing.", "Negative Ion surface technology and 5-Star AAAC rating claims from Topdeck.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+        "features": ["Supplier-listed waterproof hybrid flooring with built-in acoustic backing.", "Supplier-listed Negative Ion surface feature and 5-Star AAAC rating claim.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
         "suitableFor": ["Living areas", "Bedrooms", "Kitchens", "Apartments", "Busy family homes"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/storm-coastal-blackbutt",
@@ -6418,7 +7057,7 @@
         "image": "images/products/hybrid/topdeck-storm-luxury/storm-loft-oak.webp",
         "alt": "Loft Oak hybrid flooring swatch",
         "description": "Earthy and grounded, Loft Oak delivers a warm, urban sophistication. Its rich natural tones bring balance and comfort, ideal for modern living.",
-        "features": ["Waterproof hybrid flooring with built-in acoustic backing.", "Negative Ion surface technology and 5-Star AAAC rating claims from Topdeck.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+        "features": ["Supplier-listed waterproof hybrid flooring with built-in acoustic backing.", "Supplier-listed Negative Ion surface feature and 5-Star AAAC rating claim.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
         "suitableFor": ["Living areas", "Bedrooms", "Kitchens", "Apartments", "Busy family homes"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/storm-loft-oak",
@@ -6439,7 +7078,7 @@
         "image": "images/products/hybrid/topdeck-storm-luxury/storm-modern-ice-grey.webp",
         "alt": "Modern Ice Grey hybrid flooring swatch",
         "description": "Cool and refined, Modern Ice Grey adds sleek sophistication to any space. Its frosty tones evoke modern minimalism while remaining effortlessly versatile.",
-        "features": ["Waterproof hybrid flooring with built-in acoustic backing.", "Negative Ion surface technology and 5-Star AAAC rating claims from Topdeck.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+        "features": ["Supplier-listed waterproof hybrid flooring with built-in acoustic backing.", "Supplier-listed Negative Ion surface feature and 5-Star AAAC rating claim.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
         "suitableFor": ["Living areas", "Bedrooms", "Kitchens", "Apartments", "Busy family homes"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/storm-modern-ice-grey",
@@ -6460,7 +7099,7 @@
         "image": "images/products/hybrid/topdeck-storm-luxury/storm-new-england-blackbutt.webp",
         "alt": "New England Blackbutt hybrid flooring swatch",
         "description": "Bright and contemporary, New England Blackbutt glows with golden warmth. Its fresh tones uplift interiors with vitality and effortless charm.",
-        "features": ["Waterproof hybrid flooring with built-in acoustic backing.", "Negative Ion surface technology and 5-Star AAAC rating claims from Topdeck.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+        "features": ["Supplier-listed waterproof hybrid flooring with built-in acoustic backing.", "Supplier-listed Negative Ion surface feature and 5-Star AAAC rating claim.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
         "suitableFor": ["Living areas", "Bedrooms", "Kitchens", "Apartments", "Busy family homes"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/storm-new-england-blackbutt",
@@ -6481,7 +7120,7 @@
         "image": "images/products/hybrid/topdeck-storm-luxury/storm-nsw-spotted-gum.webp",
         "alt": "NSW Spotted Gum hybrid flooring swatch",
         "description": "Richly grained, NSW Spotted Gum radiates strength and natural beauty. Its variation in tone creates a sense of energy and rustic authenticity.",
-        "features": ["Waterproof hybrid flooring with built-in acoustic backing.", "Negative Ion surface technology and 5-Star AAAC rating claims from Topdeck.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+        "features": ["Supplier-listed waterproof hybrid flooring with built-in acoustic backing.", "Supplier-listed Negative Ion surface feature and 5-Star AAAC rating claim.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
         "suitableFor": ["Living areas", "Bedrooms", "Kitchens", "Apartments", "Busy family homes"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/storm-nsw-spotted-gum",
@@ -6502,7 +7141,7 @@
         "image": "images/products/hybrid/topdeck-storm-luxury/storm-oxford-oak.webp",
         "alt": "Oxford Oak hybrid flooring swatch",
         "description": "Calm and sophisticated, Oxford Oak offers classic appeal with its neutral beige tones. It sets a foundation of comfort and timeless elegance.",
-        "features": ["Waterproof hybrid flooring with built-in acoustic backing.", "Negative Ion surface technology and 5-Star AAAC rating claims from Topdeck.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+        "features": ["Supplier-listed waterproof hybrid flooring with built-in acoustic backing.", "Supplier-listed Negative Ion surface feature and 5-Star AAAC rating claim.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
         "suitableFor": ["Living areas", "Bedrooms", "Kitchens", "Apartments", "Busy family homes"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/storm-oxford-oak",
@@ -6523,7 +7162,7 @@
         "image": "images/products/hybrid/topdeck-storm-luxury/storm-royal-white-oak.webp",
         "alt": "Royal White Oak hybrid flooring swatch",
         "description": "Bright and elegant, Royal White Oak brings timeless charm with its soft, creamy tones. It creates an inviting sense of openness, filling interiors with light and warmth.",
-        "features": ["Waterproof hybrid flooring with built-in acoustic backing.", "Negative Ion surface technology and 5-Star AAAC rating claims from Topdeck.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+        "features": ["Supplier-listed waterproof hybrid flooring with built-in acoustic backing.", "Supplier-listed Negative Ion surface feature and 5-Star AAAC rating claim.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
         "suitableFor": ["Living areas", "Bedrooms", "Kitchens", "Apartments", "Busy family homes"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/storm-royal-white-oak",
@@ -6544,7 +7183,7 @@
         "image": "images/products/hybrid/topdeck-storm-luxury/storm-spotted-gum.webp",
         "alt": "Spotted Gum hybrid flooring swatch",
         "description": "Dynamic and full of character, Spotted Gum showcases rich variation and natural texture. It breathes life into interiors with warmth and bold personality.",
-        "features": ["Waterproof hybrid flooring with built-in acoustic backing.", "Negative Ion surface technology and 5-Star AAAC rating claims from Topdeck.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+        "features": ["Supplier-listed waterproof hybrid flooring with built-in acoustic backing.", "Supplier-listed Negative Ion surface feature and 5-Star AAAC rating claim.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
         "suitableFor": ["Living areas", "Bedrooms", "Kitchens", "Apartments", "Busy family homes"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/storm-spotted-gum",
@@ -6565,7 +7204,7 @@
         "image": "images/products/hybrid/topdeck-storm-luxury/storm-vienna-oak.webp",
         "alt": "Vienna Oak hybrid flooring swatch",
         "description": "Warm and golden, Vienna Oak carries an understated European elegance. Its soft tones feel inviting and graceful, perfect for refined interiors.",
-        "features": ["Waterproof hybrid flooring with built-in acoustic backing.", "Negative Ion surface technology and 5-Star AAAC rating claims from Topdeck.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+        "features": ["Supplier-listed waterproof hybrid flooring with built-in acoustic backing.", "Supplier-listed Negative Ion surface feature and 5-Star AAAC rating claim.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
         "suitableFor": ["Living areas", "Bedrooms", "Kitchens", "Apartments", "Busy family homes"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/storm-vienna-oak",
@@ -6586,7 +7225,7 @@
         "image": "images/products/hybrid/topdeck-storm-luxury/storm-vintage-cambridge-oak.webp",
         "alt": "Vintage Cambridge Oak hybrid flooring swatch",
         "description": "Classic and deep, Vintage Cambridge Oak radiates old-world charm. Its dark, timeworn hues bring richness and character to every corner of the home.",
-        "features": ["Waterproof hybrid flooring with built-in acoustic backing.", "Negative Ion surface technology and 5-Star AAAC rating claims from Topdeck.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+        "features": ["Supplier-listed waterproof hybrid flooring with built-in acoustic backing.", "Supplier-listed Negative Ion surface feature and 5-Star AAAC rating claim.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
         "suitableFor": ["Living areas", "Bedrooms", "Kitchens", "Apartments", "Busy family homes"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/storm-vintage-cambridge-oak",
@@ -6607,7 +7246,7 @@
         "image": "images/products/hybrid/topdeck-storm-luxury/storm-vintage-evian-oak.webp",
         "alt": "Vintage Evian Oak hybrid flooring swatch",
         "description": "Elegant and bold, Vintage Evian Oak offers depth and heritage in every grain. Its dark warmth creates intimacy, sophistication, and enduring style.",
-        "features": ["Waterproof hybrid flooring with built-in acoustic backing.", "Negative Ion surface technology and 5-Star AAAC rating claims from Topdeck.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
+        "features": ["Supplier-listed waterproof hybrid flooring with built-in acoustic backing.", "Supplier-listed Negative Ion surface feature and 5-Star AAAC rating claim.", "Timber-look plank visuals for high-traffic residential spaces.", "Floating-floor 5G click system."],
         "suitableFor": ["Living areas", "Bedrooms", "Kitchens", "Apartments", "Busy family homes"],
         "supplier": "Topdeck Flooring",
         "supplierUrl": "https://topdeckflooring.com.au/products/storm-vintage-evian-oak",
@@ -8649,7 +9288,7 @@
               "rangeContent": {
                       "description": [
                               "Elite 6.0 Hybrid Flooring is an Eco Flooring hybrid range for practical flooring projects that need a clean timber-look finish.",
-                              "The quote flow treats the range as the customer selection and allows colour confirmation later."
+                              "This range is selected at range level, with colour confirmation available later."
                       ],
                       "featuresIntro": "Elite 6.0 range highlights",
                       "features": [
@@ -9169,6 +9808,7 @@
       }
     ],
     engineered: [
+      ...BOTANICA_PRODUCTS,
       {
         id: "eco-swish-oak-natura-ambient-sand",
         category: "engineered",
@@ -12209,6 +12849,21 @@
       }
     });
 
+    Object.keys(grouped).forEach(function (rangeId) {
+      const item = grouped[rangeId];
+      const representative = products.find(function (product) {
+        return product.id === item.representativeProductId && (product.imageUrl || product.image);
+      });
+      const firstWithImage = products.find(function (product) {
+        return product.rangeId === rangeId && (product.imageUrl || product.image);
+      });
+      const thumbnailSource = representative || firstWithImage;
+      if (thumbnailSource) {
+        item.imageUrl = thumbnailSource.imageUrl || thumbnailSource.image || item.imageUrl || "";
+        item.image = thumbnailSource.imageUrl || thumbnailSource.image || item.image || "";
+      }
+    });
+
     return clone(Object.keys(grouped).map(function (rangeId) {
       const item = grouped[rangeId];
       item.colours = Array.from(new Set(item.colours)).filter(Boolean).sort();
@@ -12530,11 +13185,23 @@
   }
 
   function formatProductRate(product) {
-    if (!product || product.isPlaceholderPricing || !(product.pricePerM2 > 0)) {
-      return "Price to be confirmed";
+    return getProductPricingDisplayLabel(product);
+  }
+
+  function getProductPricingDisplayLabel(product) {
+    if (!product) {
+      return "Category estimate available in quote";
     }
 
-    return "$" + product.pricePerM2.toFixed(0) + "/m²";
+    if (product.selectionMode === "range_only" || product.type === "range") {
+      return "Select range to continue quote";
+    }
+
+    if (product.isEstimate || product.isPlaceholderPricing || product.pricingMode === "fallback") {
+      return "Category estimate available in quote";
+    }
+
+    return "Pricing included in structured quote";
   }
 
   function getProductStatusLabel(product) {
@@ -12602,24 +13269,207 @@
 
   const categoryRangeInfoTabs = {};
 
+  const TECHNICAL_FIELD_PRIORITY = [
+    "product type",
+    "type",
+    "thickness / wear layer",
+    "total thickness",
+    "thickness",
+    "wear layer",
+    "board size",
+    "plank size",
+    "dimensions",
+    "core / construction",
+    "construction",
+    "core",
+    "surface / finish",
+    "surface finish",
+    "finish",
+    "installation",
+    "installation method",
+    "locking",
+    "water / acoustic / wear rating",
+    "water resistance",
+    "wear resistance",
+    "acoustic rating",
+    "warranty",
+    "colour range",
+    "carton coverage",
+    "pack size",
+    "pkg contains",
+    "edge / profile",
+    "edging",
+    "profile",
+    "slip / voc",
+    "voc rating",
+    "pack weight",
+    "product code"
+  ];
+
+  function normaliseTechnicalLabel(label) {
+    return String(label || "").trim().toLowerCase();
+  }
+
+  function getTechnicalPriority(item) {
+    const label = normaliseTechnicalLabel(item && item.label);
+    const exactIndex = TECHNICAL_FIELD_PRIORITY.indexOf(label);
+    if (exactIndex >= 0) {
+      return exactIndex;
+    }
+    if (label.indexOf("warranty") >= 0) {
+      return TECHNICAL_FIELD_PRIORITY.indexOf("warranty");
+    }
+    if (label.indexOf("install") >= 0 || label.indexOf("locking") >= 0) {
+      return TECHNICAL_FIELD_PRIORITY.indexOf("installation");
+    }
+    if (label.indexOf("water") >= 0 || label.indexOf("acoustic") >= 0 || label.indexOf("wear") >= 0 || label.indexOf("ac") === 0) {
+      return TECHNICAL_FIELD_PRIORITY.indexOf("water / acoustic / wear rating");
+    }
+    if (label.indexOf("pack weight") >= 0 || label.indexOf("weight") >= 0) {
+      return TECHNICAL_FIELD_PRIORITY.indexOf("pack weight");
+    }
+    return 999;
+  }
+
   function isCustomerVisibleTechnicalRow(item) {
     const label = String(item && item.label ? item.label : "").toLowerCase();
     return label !== "product code" && label.indexOf("supplier") < 0;
   }
 
-  function buildCategoryRangeInfoModalBody(content, activeTab) {
-    if (activeTab === "description") {
-      return (content.description || []).slice(0, 5).map(function (paragraph) {
-        return "<p>" + escapeHtml(paragraph) + "</p>";
+  function sanitiseCustomerProductCopy(value) {
+    return String(value || "")
+      .replace(/\b100% waterproof\b/gi, "supplier-listed waterproof")
+      .replace(/\bDIY-friendly\b/gi, "floating-floor")
+      .replace(/Negative Ion Technology enhances wellbeing/gi, "Supplier-listed Negative Ion surface feature")
+      .replace(/a practical flooring option for everyday interiors/gi, "a practical flooring option for everyday interiors")
+      .replace(/lasting more than 100 years/gi, "valued for long service life when correctly selected, installed and maintained")
+      .replace(/superior to solid oak flooring in both durability and stability/gi, "designed to improve dimensional stability compared with solid timber in many internal conditions")
+      .replace(/up to 40 times tougher than standard finishes/gi, "supplier-listed high-wear surface performance")
+      .replace(/\b100% recyclable\b/gi, "supplier-listed recyclable materials claim")
+      .replace(/guarantee of excellence/gi, "quality control process")
+      .replace(/a calm, refined interior finish/gi, "a calm, refined interior finish");
+  }
+
+  function getCustomerText(value) {
+    return escapeHtml(sanitiseCustomerProductCopy(value));
+  }
+
+  function getFallbackRangeDecisionContent(range) {
+    const category = range && range.category ? range.category : "";
+
+    if (category === "laminate") {
+      return {
+        bestFor: ["Dry internal rooms", "Rental upgrades", "Budget-conscious renovations"],
+        notBestFor: ["Wet areas", "Heavy moisture or uncertain subfloor conditions"],
+        quoteNotes: [
+          "Water-resistant laminate is not the same as a waterproof wet-area system.",
+          "Underlay, expansion gaps and subfloor flatness still need confirmation."
+        ]
+      };
+    }
+
+    if (category === "engineered") {
+      return {
+        bestFor: ["Premium residential interiors", "Natural timber appearance", "Feature living spaces"],
+        notBestFor: ["Wet areas", "Projects where moisture risk is unresolved"],
+        quoteNotes: [
+          "Engineered timber is not a waterproof product.",
+          "Moisture, subfloor preparation and installation method are important.",
+          "Colour, grade, stairs and trims can affect final pricing."
+        ]
+      };
+    }
+
+    return {
+      bestFor: ["Family homes", "Apartments with acoustic review", "Rental upgrades", "Low-maintenance timber-look floors"],
+      notBestFor: ["Wet-area work unless manufacturer and installation requirements support it", "Customers wanting a natural timber surface"],
+      quoteNotes: [
+        "Final wet-area suitability depends on manufacturer requirements and site conditions.",
+        "Apartment jobs may need acoustic or strata confirmation.",
+        "Subfloor flatness and trims still affect final quote."
+      ]
+    };
+  }
+
+  function getRangeContentItems(content, range, key) {
+    if (content && Array.isArray(content[key]) && content[key].length) {
+      return content[key];
+    }
+    const fallback = getFallbackRangeDecisionContent(range);
+    return fallback[key] || [];
+  }
+
+  function buildRangePills(title, items) {
+    if (!items || !items.length) {
+      return "";
+    }
+    return (
+      '<div class="catalogue-range-pill-group">' +
+        '<strong>' + escapeHtml(title) + "</strong>" +
+        '<div class="catalogue-range-pills">' +
+          items.slice(0, 5).map(function (item) {
+            return '<span class="catalogue-range-pill">' + getCustomerText(item) + "</span>";
+          }).join("") +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function buildRangeNotes(title, items) {
+    if (!items || !items.length) {
+      return "";
+    }
+    return (
+      '<div class="catalogue-range-notes">' +
+        '<strong>' + escapeHtml(title) + "</strong>" +
+        '<ul class="catalogue-range-list">' +
+          items.slice(0, 4).map(function (item) {
+            return "<li>" + getCustomerText(item) + "</li>";
+          }).join("") +
+        "</ul>" +
+      "</div>"
+    );
+  }
+
+  function getPrioritisedTechnicalRows(content) {
+    const visible = (content.technical || [])
+      .filter(isCustomerVisibleTechnicalRow)
+      .map(function (item, index) {
+        return Object.assign({ __index: index }, item);
+      })
+      .sort(function (a, b) {
+        const priorityDelta = getTechnicalPriority(a) - getTechnicalPriority(b);
+        return priorityDelta || (a.__index - b.__index);
+      });
+
+    const withoutPackWeight = visible.filter(function (item) {
+      const label = normaliseTechnicalLabel(item.label);
+      return label.indexOf("pack weight") < 0 && label !== "weight";
+    });
+
+    return (withoutPackWeight.length >= 8 ? withoutPackWeight : visible).slice(0, 8);
+  }
+
+  function buildCategoryRangeInfoModalBody(content, activeTab, range) {
+    if (activeTab === "overview") {
+      const description = (content.description || []).slice(0, 2).map(function (paragraph) {
+        return "<p>" + getCustomerText(paragraph) + "</p>";
       }).join("");
+
+      return (
+        description +
+        buildRangePills("Best for", getRangeContentItems(content, range, "bestFor")) +
+        buildRangeNotes("Watch-outs", getRangeContentItems(content, range, "notBestFor")) +
+        buildRangeNotes("Quote notes", getRangeContentItems(content, range, "quoteNotes"))
+      );
     }
 
     if (activeTab === "features") {
       return (
-        (content.featuresIntro ? '<p class="catalogue-range-panel-intro">' + escapeHtml(content.featuresIntro) + "</p>" : "") +
+        (content.featuresIntro ? '<p class="catalogue-range-panel-intro">' + getCustomerText(content.featuresIntro) + "</p>" : "") +
         '<ul class="catalogue-range-list">' +
           (content.features || []).slice(0, 5).map(function (feature) {
-            return "<li>" + escapeHtml(feature) + "</li>";
+            return "<li>" + getCustomerText(feature) + "</li>";
           }).join("") +
         "</ul>"
       );
@@ -12627,8 +13477,8 @@
 
     return (
       '<div class="catalogue-range-specs">' +
-        (content.technical || []).filter(isCustomerVisibleTechnicalRow).slice(0, 12).map(function (item) {
-          return '<div class="catalogue-range-spec"><span>' + escapeHtml(item.label) + "</span><strong>" + escapeHtml(item.value) + "</strong></div>";
+        getPrioritisedTechnicalRows(content).map(function (item) {
+          return '<div class="catalogue-range-spec"><span>' + escapeHtml(item.label) + "</span><strong>" + getCustomerText(item.value) + "</strong></div>";
         }).join("") +
       "</div>"
     );
@@ -12692,18 +13542,18 @@
       return false;
     }
 
-    const activeTab = categoryRangeInfoTabs[range.rangeId] || "description";
+    const activeTab = categoryRangeInfoTabs[range.rangeId] || "overview";
     const modal = ensureCategoryRangeInfoModal();
     modal.dataset.category = range.category || "";
     modal.dataset.rangeId = range.rangeId || "";
     modal.querySelector("[data-category-range-info-title]").textContent = range.rangeLabel || "Product information";
     modal.querySelector("[data-category-range-info-subtitle]").textContent = [range.brand, range.colourCount ? range.colourCount + " colours available" : ""].filter(Boolean).join(" · ");
-    modal.querySelector("[data-category-range-info-tabs]").innerHTML = ["description", "features", "technical"].map(function (key) {
+    modal.querySelector("[data-category-range-info-tabs]").innerHTML = ["overview", "features", "technical"].map(function (key) {
       const isActive = activeTab === key;
       const label = key.charAt(0).toUpperCase() + key.slice(1);
       return '<button class="catalogue-range-modal-tab' + (isActive ? " is-active" : "") + '" type="button" data-category-range-modal-tab="' + key + '" aria-selected="' + (isActive ? "true" : "false") + '">' + label + "</button>";
     }).join("");
-    modal.querySelector("[data-category-range-info-body]").innerHTML = buildCategoryRangeInfoModalBody(content, activeTab);
+    modal.querySelector("[data-category-range-info-body]").innerHTML = buildCategoryRangeInfoModalBody(content, activeTab, range);
     modal.hidden = false;
     document.body.classList.add("catalogue-lightbox-open");
     return true;
@@ -12888,9 +13738,7 @@
       ? range.colourCount + " colour" + (range.colourCount === 1 ? "" : "s") + " in this range"
       : "Colour confirmed after range selection";
     const feature = range.feature || (range.rangeContent && range.rangeContent.summary) || "";
-    const priceLine = range.pricePerM2 > 0
-      ? '<span class="catalogue-card-price">From $' + Number(range.pricePerM2).toFixed(0) + "/m²</span>"
-      : "";
+    const priceLine = '<span class="catalogue-card-price">' + escapeHtml(getProductPricingDisplayLabel(range)) + "</span>";
     const colourPreviewButton = range.colourCount
       ? '<button class="button-quiet" type="button" data-open-category-range-colours="' + escapeHtml(range.rangeId) + '">View colours</button>'
       : "";
@@ -13346,9 +14194,7 @@
       title.textContent = "Selected for quote: " + getProductLabel(storedProduct);
       text.textContent = storedProduct.selectionMode === "range_only"
         ? "Using " + getProductLabel(storedProduct) + ". Colour can be confirmed later."
-        : (storedProduct.pricePerM2 > 0
-          ? getProductLabel(storedProduct) + " · " + formatProductRate(storedProduct)
-          : getProductLabel(storedProduct) + " · Product price needs review before final confirmation.");
+        : getProductLabel(storedProduct) + " · " + getProductPricingDisplayLabel(storedProduct);
       clearButton.textContent = "Use " + categoryMeta.label.toLowerCase() + " estimate instead";
       clearButton.onclick = function () {
         clearSelectedProduct();

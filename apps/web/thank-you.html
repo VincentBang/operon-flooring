@@ -18,6 +18,7 @@
   <meta name="twitter:description" content="Your Operon Flooring quote request has been received. We will review the details and confirm the final quote before work starts.">
   <meta name="twitter:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <link rel="stylesheet" href="seo-pages.css">
+  <script src="siteConfig.js"></script>
   <script src="tracking.js"></script>
   <style>
     .thank-you-layout {
@@ -41,7 +42,7 @@
     }
 
     .segment-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     .next-step-card,
@@ -145,7 +146,7 @@
         <span></span>
       </button>
       <div class="header-actions">
-        <a class="header-phone" href="tel:04XXXXXXXX" data-track-cta="click_call_header">Call 04XX XXX XXX</a>
+        <a class="header-phone" href="contact.html" data-track-cta="header_contact_click">Contact</a>
         <a class="button header-quote-button" href="quote.html">Start quote</a>
       </div>
     </div>
@@ -194,20 +195,24 @@
 
             <div class="section-card" id="leadStageSection" style="text-align: left;">
               <span class="eyebrow">Project timing</span>
-              <h2 style="margin-top: 14px;">When are you planning to proceed?</h2>
-              <p>This helps us match the next step to your timing.</p>
+              <h2 style="margin-top: 14px;">When are you hoping to start?</h2>
+              <p>This helps us match the next step to your timing without pushing you into the wrong path.</p>
               <div class="segment-grid" style="margin-top: 18px;" role="group" aria-label="Project timing">
                 <button class="segment-button" type="button" data-lead-stage="hot">
-                  <strong>Ready soon</strong>
+                  <strong>Ready soon / ASAP</strong>
                   <span>I want to move forward soon and confirm the final scope.</span>
                 </button>
                 <button class="segment-button" type="button" data-lead-stage="warm">
-                  <strong>Comparing</strong>
+                  <strong>Comparing quotes</strong>
                   <span>I am checking products, scope or another quote before deciding.</span>
                 </button>
                 <button class="segment-button" type="button" data-lead-stage="cold">
-                  <strong>Planning</strong>
+                  <strong>Planning later</strong>
                   <span>I am preparing for a future flooring project.</span>
+                </button>
+                <button class="segment-button" type="button" data-lead-stage="unsure">
+                  <strong>Not sure yet</strong>
+                  <span>I still need help with product, area or scope before deciding.</span>
                 </button>
               </div>
               <p class="tiny" id="leadStageStatus" style="margin-top: 14px;">Timing not selected yet.</p>
@@ -367,16 +372,18 @@
       }
 
       function getStageLabel(stage) {
-        if (stage === "hot") return "Ready soon";
-        if (stage === "warm") return "Comparing";
-        if (stage === "cold") return "Planning";
+        if (stage === "hot") return "Ready soon / ASAP";
+        if (stage === "warm") return "Comparing quotes";
+        if (stage === "cold") return "Planning later";
+        if (stage === "unsure") return "Not sure yet";
         return "Not selected";
       }
 
       function getStageFollowup(stage) {
-        if (stage === "hot") return "We will treat this as ready-soon and focus on scope confirmation and next available timing.";
-        if (stage === "warm") return "We will focus follow-up on clarity, product direction, and any items you are comparing.";
-        if (stage === "cold") return "We will keep follow-up lighter and focused on planning support.";
+        if (stage === "hot") return "Next step: confirm site-sensitive scope, photos or floor plan details, then discuss site confirmation if needed.";
+        if (stage === "warm") return "Next step: compare the written scope, review missing inclusions, and prepare questions before accepting.";
+        if (stage === "cold") return "Next step: review product guides, save the estimate path, and come back when timing is clearer.";
+        if (stage === "unsure") return "Next step: review product selection, area measurement or scope help before moving toward confirmation.";
         return "Choose a timing option if you want us to tailor follow-up.";
       }
 
@@ -393,7 +400,7 @@
       }
 
       function saveLeadStage(stage) {
-        if (["hot", "warm", "cold"].indexOf(stage) === -1) {
+        if (["hot", "warm", "cold", "unsure"].indexOf(stage) === -1) {
           return;
         }
 

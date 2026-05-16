@@ -15,7 +15,7 @@
     disposal: "Take-away disposal",
     moisture_protection: "Moisture/subfloor checks",
     trims: "Skirting/scotia/trims",
-    access: "Access/apartment conditions",
+    access: "Site/apartment conditions",
     stairs: "Stairs/stair nosing"
   };
 
@@ -27,7 +27,7 @@
     disposal: "Take-away disposal is not clearly specified.",
     moisture_protection: "Moisture or subfloor checks are not clearly specified.",
     trims: "Skirting, scotia, trims and transitions are not clearly specified.",
-    access: "Access, parking, lift, strata or apartment conditions are not clearly specified.",
+    access: "Site, lift, strata or apartment conditions are not clearly specified.",
     stairs: "Not mentioned. Relevant only if stairs or step areas are part of the project."
   };
 
@@ -40,7 +40,7 @@
     "Are moisture checks or subfloor checks included where needed?",
     "Are skirting, scotia, trims and transitions included or priced separately?",
     "Are stairs, stair nosings or step trims included if the job has stairs?",
-    "Are access, parking, lift, strata or apartment restrictions included in the price?"
+    "Are site, lift, strata or apartment requirements clearly listed?"
   ];
 
   function clean(value) {
@@ -105,6 +105,41 @@
     return value === "included" || value === "excluded";
   }
 
+  function allFieldText(fields, primaryLine) {
+    const values = [];
+    (function collect(value) {
+      if (value === null || typeof value === "undefined") return;
+      if (typeof value === "string" || typeof value === "number") {
+        values.push(String(value));
+        return;
+      }
+      if (Array.isArray(value)) {
+        value.forEach(collect);
+        return;
+      }
+      if (typeof value === "object") {
+        Object.keys(value).forEach(function (key) {
+          collect(value[key]);
+        });
+      }
+    })(fields || {});
+    return clean([
+      values.join(" "),
+      primaryLine && (primaryLine.rawDescription || primaryLine.raw_description || primaryLine.label)
+    ].filter(Boolean).join(" ")).toLowerCase();
+  }
+
+  function hasStairsContext(fields, primaryLine) {
+    const combined = allFieldText(fields, primaryLine);
+    return scopeIsClear(fields, "stairs") || /stairs?|staircase|steps?|nosing/.test(combined);
+  }
+
+  function hasAccessContext(fields, primaryLine) {
+    const combined = allFieldText(fields, primaryLine);
+    return scopeIsClear(fields, "access")
+      || /apartment|unit|strata|body corporate|lift|elevator|parking|loading|access|commercial/.test(combined);
+  }
+
   function hasProductSpecification(fields, primaryLine) {
     return Boolean(
       clean(fields && (fields.productBrand || fields.brand)) ||
@@ -114,22 +149,42 @@
     );
   }
 
-  function getMissingScopeItems(fields, primaryLine) {
+  function getScopeReviewItems(fields, primaryLine) {
     const items = [];
-    if (!hasProductSpecification(fields, primaryLine)) items.push("product_specification");
-    if (!scopeIsClear(fields, "underlay")) items.push("underlay");
-    if (!scopeIsClear(fields, "floorPreparation")) items.push("floor_preparation");
-    if (!scopeIsClear(fields, "removal")) items.push("removal");
-    if (!scopeIsClear(fields, "disposal")) items.push("disposal");
-    if (!scopeIsClear(fields, "moistureProtection")) items.push("moisture_protection");
-    if (!scopeIsClear(fields, "skirting") && !scopeIsClear(fields, "scotia") && !scopeIsClear(fields, "doorTrimming")) items.push("trims");
-    items.push("access");
-    if (!scopeIsClear(fields, "stairs")) items.push("stairs");
-    return items.map(function (key) {
-      return {
+    function push(key, status) {
+      items.push({
         key: key,
         label: SCOPE_LABELS[key],
-        note: SCOPE_NOTES[key]
+        note: SCOPE_NOTES[key],
+        status: status || "missing"
+      });
+    }
+
+    if (!hasProductSpecification(fields, primaryLine)) push("product_specification", "missing");
+    if (!scopeIsClear(fields, "underlay")) push("underlay", "missing");
+    if (!scopeIsClear(fields, "floorPreparation")) push("floor_preparation", "missing");
+    if (!scopeIsClear(fields, "removal")) push("removal", "unclear");
+    if (!scopeIsClear(fields, "disposal")) push("disposal", "unclear");
+    if (!scopeIsClear(fields, "moistureProtection")) push("moisture_protection", "confirm_if_applicable");
+    if (!scopeIsClear(fields, "skirting") && !scopeIsClear(fields, "scotia") && !scopeIsClear(fields, "doorTrimming")) push("trims", "unclear");
+    if (!scopeIsClear(fields, "access")) {
+      push("access", hasAccessContext(fields, primaryLine) ? "missing" : "confirm_if_applicable");
+    }
+    if (!scopeIsClear(fields, "stairs")) {
+      push("stairs", hasStairsContext(fields, primaryLine) ? "missing" : "confirm_if_applicable");
+    }
+    return items;
+  }
+
+  function getMissingScopeItems(fields, primaryLine) {
+    return getScopeReviewItems(fields, primaryLine).filter(function (item) {
+      return item.status === "missing" || item.status === "unclear";
+    }).map(function (item) {
+      return {
+        key: item.key,
+        label: item.label,
+        note: item.note,
+        status: item.status
       };
     });
   }
@@ -212,6 +267,69 @@
     return "Low";
   }
 
+  function getQuestionsToAsk(scopeReviewItems) {
+    const active = (scopeReviewItems || []).filter(function (item) {
+      return item.status === "missing" || item.status === "unclear";
+    }).map(function (item) { return item.key; });
+    const questions = [];
+    function add(key, question) {
+      if (active.indexOf(key) >= 0 && questions.indexOf(question) < 0) {
+        questions.push(question);
+      }
+    }
+
+    add("product_specification", "What exact product brand, range, colour and specification is included?");
+    add("underlay", "Is underlay included, and does it meet any apartment/acoustic requirement?");
+    add("removal", "Is existing floor removal included?");
+    add("disposal", "Is take-away disposal included?");
+    add("floor_preparation", "Is floor preparation or levelling included?");
+    add("moisture_protection", "Are moisture checks or subfloor checks included where needed?");
+    add("trims", "Are skirting, scotia, trims and transitions included or priced separately?");
+    add("stairs", "Are stairs, stair nosings or step trims included for the stair areas?");
+    add("access", "Are site, lift, strata or apartment requirements clearly listed?");
+
+    if (!questions.length) {
+      questions.push("Which items are still subject to site inspection before the final price is confirmed?");
+    }
+    return questions;
+  }
+
+  function getConfidenceDimensions(normalized) {
+    const missingCount = normalized.missingScopeItems.length;
+    const productStatus = normalized.productMatchStatus || "";
+    const siteRiskItems = (normalized.scopeReviewItems || []).filter(function (item) {
+      return (item.key === "access" || item.key === "stairs" || item.key === "moisture_protection")
+        && (item.status === "missing" || item.status === "unclear");
+    });
+
+    const extraction = normalized.extractionConfidence;
+    const scope = missingCount <= 1 ? "High" : missingCount <= 4 ? "Medium" : "Low";
+    const product = productStatus === "likely_product_match"
+      ? "High"
+      : productStatus === "possible_product_match" || normalized.productSpecificationConfirmed
+        ? "Medium"
+        : "Low";
+    const comparison = normalized.comparisonLevel === "Scope-level"
+      ? "High"
+      : normalized.comparisonLevel === "Product-level" || normalized.comparisonLevel === "Category-level only"
+        ? "Medium"
+        : "Low";
+    const site = siteRiskItems.length ? (siteRiskItems.length >= 2 ? "Low" : "Medium") : "High";
+    const order = { Low: 1, Medium: 2, High: 3 };
+    const decision = [extraction, scope, product, comparison, site].sort(function (a, b) {
+      return order[a] - order[b];
+    })[0] || "Low";
+
+    return {
+      extractionConfidence: extraction,
+      scopeConfidence: scope,
+      productMatchConfidence: product,
+      comparisonConfidence: comparison,
+      siteRiskConfidence: site,
+      decisionReadiness: decision
+    };
+  }
+
   function getStatusHeadline(normalized) {
     if (normalized.comparisonLevel === "Category-level only" && normalized.extractionConfidence === "High") {
       return "Readable, but not fully comparable yet";
@@ -262,7 +380,10 @@
     ));
     const balanceDue = number(firstValue(fields.balanceDue, fields.balance_due));
     const productSpecificationConfirmed = hasProductSpecification(fields, primaryLine);
-    const missingScopeItems = getMissingScopeItems(fields, primaryLine);
+    const scopeReviewItems = getScopeReviewItems(fields, primaryLine);
+    const missingScopeItems = scopeReviewItems.filter(function (item) {
+      return item.status === "missing" || item.status === "unclear";
+    });
     const productMatch = getProductMatch(databaseComparison);
     const productMatchState = getProductMatchStatus(productMatch);
     const normalized = {
@@ -286,6 +407,8 @@
       balanceDue: balanceDue,
       productSpecificationConfirmed: productSpecificationConfirmed,
       missingScopeItems: missingScopeItems,
+      scopeReviewItems: scopeReviewItems,
+      confirmIfApplicableItems: scopeReviewItems.filter(function (item) { return item.status === "confirm_if_applicable"; }),
       knownScopeItems: [
         flooringType ? "Product category identified" : "",
         quantityM2 ? "Area identified" : "",
@@ -296,12 +419,13 @@
       productMatchLabel: productMatchState.label,
       productMatchText: productMatchState.customerText,
       productMatch: productMatchState.visibleMatch,
-      questionsToAsk: QUESTIONS.slice(),
+      questionsToAsk: getQuestionsToAsk(scopeReviewItems),
       rawFields: fields
     };
     normalized.extractionConfidence = getExtractionConfidence(normalized);
     normalized.comparisonLevel = getComparisonLevel(normalized);
     normalized.decisionConfidence = getDecisionConfidence(normalized.comparisonLevel, normalized.missingScopeItems);
+    normalized.confidenceDimensions = getConfidenceDimensions(normalized);
     normalized.statusHeadline = getStatusHeadline(normalized);
     normalized.recommendation = normalized.comparisonLevel === "Category-level only"
       ? "Confirm inclusions before comparing on total price alone."

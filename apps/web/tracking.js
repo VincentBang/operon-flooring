@@ -9,6 +9,8 @@
   const recentEventSignatures = {};
   const GA_ALLOWED_PARAM_KEYS = [
     "page",
+    "page_type",
+    "page_slug",
     "step_index",
     "step_name",
     "product_category",
@@ -23,6 +25,10 @@
     "has_quote_review",
     "missing_scope_count",
     "file_uploaded",
+    "cta_location",
+    "cta_intent",
+    "destination",
+    "quote_source",
     "event_context"
   ];
   const CTA_EVENT_ALIASES = {
@@ -196,6 +202,8 @@
     const source = params && typeof params === "object" ? params : {};
     const mapped = {
       page: firstDefined(source.page, window.location.pathname),
+      page_type: firstDefined(source.page_type, source.pageType),
+      page_slug: firstDefined(source.page_slug, source.pageSlug),
       step_index: firstDefined(source.step_index, source.step, source.stepNumber),
       step_name: firstDefined(source.step_name, source.stepName),
       product_category: firstDefined(source.product_category, source.category, source.productCategory, source.type),
@@ -210,6 +218,10 @@
       has_quote_review: firstDefined(source.has_quote_review, source.hasQuoteReview),
       missing_scope_count: firstDefined(source.missing_scope_count, source.missingScopeCount),
       file_uploaded: firstDefined(source.file_uploaded, source.has_uploaded_file, source.hasUploadedFile, source.has_file),
+      cta_location: firstDefined(source.cta_location, source.ctaLocation),
+      cta_intent: firstDefined(source.cta_intent, source.ctaIntent, source.intent),
+      destination: firstDefined(source.destination),
+      quote_source: firstDefined(source.quote_source, source.quoteSource),
       event_context: firstDefined(source.event_context, source.cta, source.label, source.action_id, source.interaction_type, source.review_mode)
     };
     const safe = {};
@@ -665,10 +677,17 @@
       element.dataset.trackingBound = "true";
       element.addEventListener("click", function () {
         const eventName = element.getAttribute("data-track-cta") || "cta_click";
+        const path = window.location.pathname.replace(/^\/+/, "") || "index.html";
         const payload = {
           cta: eventName,
+          page: path,
+          page_slug: path.replace(/\.html$/, ""),
+          page_type: element.getAttribute("data-page-type") || document.body.getAttribute("data-page-type") || "",
+          cta_location: element.getAttribute("data-cta-location") || "",
+          cta_intent: element.getAttribute("data-cta-intent") || element.getAttribute("data-funnel-intent") || "",
           destination: element.getAttribute("href") || "",
-          label: (element.textContent || "").trim()
+          label: (element.textContent || "").trim(),
+          quote_source: element.getAttribute("data-quote-source") || ""
         };
         trackEvent("cta_click", payload);
         if (element.href && element.href.indexOf("tel:") === 0) {

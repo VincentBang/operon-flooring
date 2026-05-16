@@ -18,42 +18,47 @@
     },
     engineered: {
       label: "Engineered Timber",
-      summary: "Engineered timber suits a more finish-led project where the timber look and specification matter more.",
+      summary: "Engineered timber suits a more finish-led project where timber look, colour, installation method, and specification matter more.",
       bestFor: ["premium renovations", "feature living areas", "design-led homes", "direct glue review", "herringbone feature areas"],
-      cautions: ["installation method and pattern need clearer review", "herringbone and chevron usually need more confirmation", "engineered colour should be confirmed in the quote flow"],
-      rangeNotes: ["Swish Oak Natura and Swish Oak Natura Herringbone are current engineered range examples.", "Select the range first, then confirm colour and pattern details through the quote."]
+      cautions: ["installation method and pattern need clearer review", "herringbone and chevron usually need more confirmation", "engineered colour can affect pricing when colours vary within the same range"],
+      rangeNotes: ["Swish Oak Natura and Swish Oak Natura Herringbone are current engineered range examples.", "Select the range first, then confirm colour and pattern details through the quote because engineered colours may carry different product pricing."]
     }
   };
 
   const QUOTE_FLOW_STEPS = [
     {
-      key: "project_basics",
-      label: "Project basics",
-      customerCopy: "Suburb, postcode, property type, and quote mode. Contact details can wait until submit."
+      key: "property",
+      label: "Property",
+      customerCopy: "Start with suburb, postcode, property type, and quote mode. Site address can stay optional until review."
     },
     {
-      key: "flooring_area",
-      label: "Flooring and area",
-      customerCopy: "Choose the flooring direction, range or colour where relevant, then add area by total, rooms, floor plan, or mark it as unknown."
+      key: "flooring",
+      label: "Flooring",
+      customerCopy: "Choose supply and install or installation only, then pick the flooring category and product range where relevant."
     },
     {
-      key: "main_scope",
-      label: "Main scope",
-      customerCopy: "Confirm high-impact items: stairs, existing floor removal, disposal, and floor preparation. Use Not sure where site review is needed."
+      key: "area",
+      label: "Area",
+      customerCopy: "Add one total area, room-by-room measurements, use the floor plan tool, or choose a follow-up path if area is not known."
     },
     {
-      key: "estimate_preview",
-      label: "Estimate preview",
-      customerCopy: "Review the starting estimate. Advanced details such as underlay, trims, moisture, doors, furniture, and notes are optional."
+      key: "stairs",
+      label: "Stairs",
+      customerCopy: "Flag stairs and add stair counts where known. Unclear stair details can stay marked for review."
     },
     {
-      key: "contact_submit",
-      label: "Contact and submit",
-      customerCopy: "Add name and phone, optionally email yourself a copy, then submit for Operon review."
+      key: "extras",
+      label: "Extras",
+      customerCopy: "Confirm removal, disposal, floor preparation, underlay, skirting, scotia, door trimming, furniture, and other scope notes where known."
+    },
+    {
+      key: "summary",
+      label: "Summary",
+      customerCopy: "Review the estimate and missing scope notes, then submit for Operon confirmation."
     }
   ];
 
-  const QUOTE_EXPLANATION = "The online quote is a guided starting estimate, not the final confirmed quote. It now follows five customer-facing steps: project basics, flooring and area, main scope, estimate preview, then contact and submit. Contact details are completed near the end, and an emailed copy is optional.";
+  const QUOTE_EXPLANATION = "The online quote is a guided starting estimate, not the final confirmed quote. It follows six customer-facing steps: Property, Flooring, Area, Stairs, Extras, then Summary. Customers can start with the details they know, use Not sure for uncertain scope, and submit for Operon confirmation.";
   const FACTORS = [
     "flooring category, range, colour, and pattern where relevant",
     "measurement method and area",
@@ -61,7 +66,7 @@
     "existing floor to remove",
     "take-away disposal",
     "subfloor preparation",
-    "underlay or acoustic layer",
+    "underlay option such as Standard silver underlay, Premium acoustic underlay, Acoustic Rubber Underlay 5mm, or Acoustic Rubber Underlay 5mm glued down where relevant",
     "skirting, scotia, transition trims, moisture protection, door trimming, furniture, and notes",
     "final site scope confirmation before booking"
   ];
@@ -85,7 +90,7 @@
     {
       key: "site",
       label: "Site details",
-      customerCopy: "Apartment level, lift, parking, loading, occupied rooms, and strata constraints should be captured early."
+      customerCopy: "Apartment level, lift, parking, loading, occupied rooms, and strata constraints should be captured as site details, not guessed from the headline price."
     },
     {
       key: "prep",
@@ -110,9 +115,9 @@
     apartment_lift_not_confirmed: "apartment lift details are not confirmed",
     stairs_require_manual_review: "stairs require manual review",
     subfloor_review_recommended: "subfloor condition should be reviewed",
-    access_review_recommended: "parking or site details should be reviewed",
+    access_review_recommended: "site details should be reviewed",
     area_capture_needed: "area still needs a rough total, room entry, or floor plan",
-    parking_access_review: "parking or loading details should be noted",
+    parking_access_review: "site details should be noted",
     acoustic_review_recommended: "underlay or acoustic requirements should be checked",
     trims_review_recommended: "trims, scotia, skirting, or transitions should be confirmed",
     moisture_review_recommended: "moisture or concrete-floor conditions should be checked"

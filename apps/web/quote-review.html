@@ -25,6 +25,7 @@
     gtag('js', new Date());
     gtag('config', 'G-T2LEXZJM3Q');
   </script>
+  <script src="siteConfig.js"></script>
   <script src="tracking.js"></script>
   <script src="security-config.js"></script>
   <script src="security.js"></script>
@@ -371,6 +372,26 @@
     }
 
     .section-head p { margin: 0; }
+
+    .trust-card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .trust-card {
+      display: grid;
+      gap: 8px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid rgba(216, 226, 223, 0.9);
+      box-shadow: 0 8px 22px rgba(23, 35, 45, 0.05);
+    }
+
+    .trust-card p {
+      margin: 0;
+    }
 
     .field-grid {
       display: grid;
@@ -1456,7 +1477,8 @@
       .report-card-grid.two-column,
       .summary-chip-grid,
       .price-basis-grid,
-      .confidence-grid {
+      .confidence-grid,
+      .trust-card-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1597,7 +1619,7 @@
         <span></span>
       </button>
       <div class="header-actions">
-        <a class="header-phone" href="tel:04XXXXXXXX">Call 04XX XXX XXX</a>
+        <a class="header-phone" href="contact.html">Contact</a>
         <a class="button header-quote-button" href="quote.html">Start quote</a>
       </div>
     </div>
@@ -1651,6 +1673,34 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="quoteReviewScopeTitle">
+      <div class="review-card">
+        <div class="section-head">
+          <p class="eyebrow">Scope clarity</p>
+          <h2 id="quoteReviewScopeTitle">Clear scope before the job is booked</h2>
+          <p>Operon helps Sydney customers review the details that usually change flooring work before installation is confirmed.</p>
+        </div>
+        <div class="trust-card-grid">
+          <article class="trust-card">
+            <h3>Product and area checked</h3>
+            <p>Flooring type, selected range and measured area are reviewed before final confirmation.</p>
+          </article>
+          <article class="trust-card">
+            <h3>Removal, trims and stairs clarified</h3>
+            <p>Removal, disposal, scotia, skirting, trims and stair details are checked so the scope is easier to compare.</p>
+          </article>
+          <article class="trust-card">
+            <h3>Site conditions reviewed</h3>
+            <p>Apartment requirements, subfloor preparation, moisture-related items and other site details are confirmed where relevant.</p>
+          </article>
+          <article class="trust-card">
+            <h3>Written assumptions</h3>
+            <p>The aim is to make product, scope and site assumptions visible before the job is booked.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -1794,7 +1844,7 @@
                     <label class="check-option"><input type="checkbox" value="trims_transitions"><span><strong>Trims/transitions</strong></span></label>
                     <label class="check-option"><input type="checkbox" value="stairs"><span><strong>Stairs</strong></span></label>
                     <label class="check-option"><input type="checkbox" value="stair_nosing"><span><strong>Stair nosing</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="access_delivery"><span><strong>Site access/apartment/parking notes</strong></span></label>
+                    <label class="check-option"><input type="checkbox" value="access_delivery"><span><strong>Apartment/site detail notes</strong></span></label>
                   </div>
                 </div>
 
@@ -2151,7 +2201,7 @@
       stairs: "stairs",
       stair_nosing: "stair nosing",
       moisture_protection: "moisture or subfloor check",
-      access_delivery: "site access or apartment notes",
+      access_delivery: "apartment or site detail notes",
       exclusions: "exclusions",
       site_inspection_items: "site inspection assumptions",
       payment_terms: "payment terms",
@@ -3157,33 +3207,26 @@
 
     function scoreQuickCompleteness(state) {
       const included = new Set(state.inclusions);
-      const productCategoryKnown = Boolean(state.category && state.category !== "unknown");
-      const productDetailScore = [
-        productCategoryKnown,
-        included.has("product_brand") || included.has("product_range_colour"),
-        included.has("product_thickness_spec")
-      ].filter(Boolean).length;
-      const scopeGroups = [
-        included.has("supply") && included.has("installation"),
-        included.has("underlay") || included.has("acoustic_underlay"),
-        included.has("removal") || included.has("disposal"),
-        included.has("floor_prep") || included.has("moisture_protection") || included.has("skirting") || included.has("scotia") || included.has("trims_transitions") || included.has("stairs") || included.has("stair_nosing") || included.has("access_delivery")
-      ].filter(Boolean).length;
+      const dimensions = [
+        ["Product definition", Boolean((state.category && state.category !== "unknown") || included.has("product_brand") || included.has("product_range_colour") || included.has("product_thickness_spec"))],
+        ["Area basis", Boolean(normaliseNumber(state.area) || normaliseNumber(state.unitRate) || normaliseNumber(state.quoteTotal))],
+        ["Supply included", included.has("supply")],
+        ["Installation included", included.has("installation")],
+        ["Underlay/acoustic", included.has("underlay") || included.has("acoustic_underlay")],
+        ["Removal", included.has("removal")],
+        ["Disposal", included.has("disposal")],
+        ["Floor prep", included.has("floor_prep")],
+        ["Moisture/subfloor", included.has("moisture_protection")],
+        ["Finishing trims", included.has("skirting") || included.has("scotia") || included.has("trims_transitions")],
+        ["Stairs/access", included.has("stairs") || included.has("stair_nosing") || included.has("access_delivery")],
+        ["Commercial terms/exclusions", included.has("exclusions") || included.has("site_inspection_items") || included.has("payment_terms") || included.has("expiry_date")]
+      ].map(function (item) {
+        return { label: item[0], clear: !!item[1] };
+      });
       const score = {
-        price: [
-          normaliseNumber(state.area),
-          normaliseNumber(state.quoteTotal),
-          state.gstStatus,
-          normaliseNumber(state.unitRate)
-        ].filter(Boolean).length,
-        product: productDetailScore,
-        scope: Math.min(3, scopeGroups),
-        commercial: [
-          included.has("exclusions") || included.has("site_inspection_items"),
-          included.has("payment_terms") || included.has("expiry_date")
-        ].filter(Boolean).length
+        dimensions: dimensions,
+        total: dimensions.filter(function (item) { return item.clear; }).length
       };
-      score.total = score.price + score.product + score.scope + score.commercial;
       return score;
     }
 
@@ -3194,7 +3237,7 @@
       if (total <= 6) {
         return { label: "Partly clear, but key scope is missing", tag: "Partly clear", tagClass: "medium" };
       }
-      if (total <= 10) {
+      if (total <= 9) {
         return { label: "Mostly clear, confirm remaining items", tag: "Confirm items", tagClass: "medium" };
       }
       return { label: "Good scope clarity, confirm site conditions", tag: "Good clarity", tagClass: "low" };
@@ -3277,16 +3320,19 @@
       if (!included.has("trims_transitions")) {
         groups[1].items.push("Trims and transitions");
       }
+      const stairsRelevant = included.has("stairs") || included.has("stair_nosing") || notesMention(state, [/stairs?|staircase|steps?|nosing/]);
+      const accessRelevant = included.has("access_delivery") || notesMention(state, [/apartment|unit|strata|body corporate|lift|parking|access|commercial/]);
+
       if (included.has("stairs") && !included.has("stair_nosing")) {
         groups[1].items.push("Stair nosing detail");
-      } else if (!included.has("stairs") && !included.has("stair_nosing")) {
+      } else if (stairsRelevant && !included.has("stairs") && !included.has("stair_nosing")) {
         groups[1].items.push("Stairs and stair nosing if the job has stairs");
       }
       if (!included.has("moisture_protection")) {
         groups[2].items.push("Moisture or subfloor check");
       }
-      if (!included.has("access_delivery")) {
-        groups[2].items.push("Apartment access, lift, parking or delivery notes");
+      if (accessRelevant && !included.has("access_delivery")) {
+        groups[2].items.push("Apartment, lift, strata or delivery notes");
       }
       if (!included.has("exclusions")) {
         groups[2].items.push("Exclusions");
@@ -3388,13 +3434,8 @@
       document.getElementById("quickResultSummary").innerHTML =
         "<div class=\"risk-count\"><span class=\"risk-dot " + escapeHtml(result.level.tagClass) + "\"></span><span>" + escapeHtml(result.summary) + "</span></div>";
       document.getElementById("quickScoreText").textContent = "Scope completeness: " + result.score.total + " / 12";
-      document.getElementById("quickScoreBreakdown").innerHTML = [
-        ["Price basis", result.score.price + " / 4"],
-        ["Product detail", result.score.product + " / 3"],
-        ["Installation scope", result.score.scope + " / 3"],
-        ["Site assumptions", result.score.commercial + " / 2"]
-      ].map(function (item) {
-        return "<div class=\"quick-breakdown-item\"><strong>" + escapeHtml(item[0]) + "</strong><span>" + escapeHtml(item[1]) + "</span></div>";
+      document.getElementById("quickScoreBreakdown").innerHTML = result.score.dimensions.map(function (item) {
+        return "<div class=\"quick-breakdown-item\"><strong>" + escapeHtml(item.label) + "</strong><span>" + (item.clear ? "Clear" : "Unclear") + "</span></div>";
       }).join("");
 
       renderRiskCardList("quickClearList", result.clearItems, "Nothing clear enough yet.", "Enter or tick only items that are visibly written on the existing quote.");
@@ -4014,14 +4055,19 @@
       const missingItems = normalized.missingScopeItems.map(function (item) {
         return item.label;
       }).join(", ");
+      const dimensions = normalized.confidenceDimensions || {};
       return [
         "Operon quote review summary",
         normalized.statusHeadline,
         summaryCopy,
         "Price basis: " + priceBasisState.priceBasis,
         "Extraction confidence: " + priceBasisState.extractionConfidence,
+        "Scope confidence: " + (dimensions.scopeConfidence || "Low"),
+        "Product match confidence: " + (dimensions.productMatchConfidence || "Low"),
+        "Comparison confidence: " + (dimensions.comparisonConfidence || "Low"),
+        "Site risk confidence: " + (dimensions.siteRiskConfidence || "Low"),
+        "Final decision readiness: " + (dimensions.decisionReadiness || normalized.decisionConfidence),
         "Comparison level: " + normalized.comparisonLevel,
-        "Decision confidence: " + normalized.decisionConfidence,
         missingItems ? "Missing or unclear items: " + missingItems : "Missing or unclear items: none flagged in this review.",
         normalized.questionsToAsk.length ? "Questions to confirm:\n" + normalized.questionsToAsk.join("\n") : ""
       ].filter(Boolean).join("\n\n");
@@ -4035,7 +4081,45 @@
     }
 
     function renderScopeGap(item) {
-      return "<li><strong>" + escapeHtml(item.label) + "</strong><span>" + escapeHtml(item.note) + "</span></li>";
+      const status = item.status ? " (" + String(item.status).replace(/_/g, " ") + ")" : "";
+      return "<li><strong>" + escapeHtml(item.label + status) + "</strong><span>" + escapeHtml(item.note) + "</span></li>";
+    }
+
+    function renderConfidenceCard(label, value, copy) {
+      return "<div class=\"confidence-card\"><span>" + escapeHtml(label) + "</span><strong>" + escapeHtml(value || "Low") + "</strong><p>" + escapeHtml(copy) + "</p></div>";
+    }
+
+    function getDocumentConfidenceCards(normalized, priceBasisState) {
+      const dimensions = Object.assign({}, normalized.confidenceDimensions || {}, {
+        extractionConfidence: priceBasisState.extractionConfidence
+      });
+      const order = { Low: 1, Medium: 2, High: 3 };
+      dimensions.decisionReadiness = [
+        dimensions.extractionConfidence,
+        dimensions.scopeConfidence,
+        dimensions.productMatchConfidence,
+        dimensions.comparisonConfidence,
+        dimensions.siteRiskConfidence
+      ].sort(function (a, b) {
+        return (order[a] || 1) - (order[b] || 1);
+      })[0] || "Low";
+      const copy = {
+        extractionConfidence: priceBasisState.copy,
+        scopeConfidence: "Checks whether product, area, inclusions, exclusions and major scope items are written clearly.",
+        productMatchConfidence: "Checks whether the document shows an exact product match or only a broad category/specification.",
+        comparisonConfidence: "Checks whether product, area and scope are strong enough to compare totals.",
+        siteRiskConfidence: "Checks whether access, stairs, moisture, preparation and apartment risks are clear enough.",
+        decisionReadiness: "Uses the weakest important dimension, not an average, so one major gap can hold the decision back."
+      };
+
+      return [
+        renderConfidenceCard("Extraction confidence", dimensions.extractionConfidence, copy.extractionConfidence),
+        renderConfidenceCard("Scope confidence", dimensions.scopeConfidence, copy.scopeConfidence),
+        renderConfidenceCard("Product match confidence", dimensions.productMatchConfidence, copy.productMatchConfidence),
+        renderConfidenceCard("Comparison confidence", dimensions.comparisonConfidence, copy.comparisonConfidence),
+        renderConfidenceCard("Site risk confidence", dimensions.siteRiskConfidence, copy.siteRiskConfidence),
+        renderConfidenceCard("Final decision readiness", dimensions.decisionReadiness, copy.decisionReadiness)
+      ].join("");
     }
 
     function renderDetailedDocumentReport(state, normalized) {
@@ -4120,9 +4204,7 @@
               "<p>" + escapeHtml(normalized.productMatchText) + "</p>" +
             "</div>" +
             "<div class=\"confidence-grid\">" +
-              "<div class=\"confidence-card\"><span>Extraction confidence</span><strong>" + escapeHtml(priceBasisState.extractionConfidence) + "</strong><p>" + escapeHtml(priceBasisState.copy) + "</p></div>" +
-              "<div class=\"confidence-card\"><span>Comparison level</span><strong>" + escapeHtml(normalized.comparisonLevel) + "</strong><p>Exact product and scope are not complete enough for a like-for-like price comparison.</p></div>" +
-              "<div class=\"confidence-card\"><span>Decision confidence</span><strong>" + escapeHtml(normalized.decisionConfidence) + "</strong><p>Use this as a scope review until missing items are confirmed.</p></div>" +
+              getDocumentConfidenceCards(normalized, priceBasisState) +
             "</div>" +
           "</section>" +
 
@@ -4157,7 +4239,7 @@
                 "<li><strong>Trims/skirting/scotia</strong><span>Finishing details affect the final look and can be priced separately.</span></li>" +
                 "<li><strong>Stairs and nosing</strong><span>Step work is priced differently from open floor areas when it applies.</span></li>" +
                 "<li><strong>Product brand/range</strong><span>Category and thickness alone do not confirm like-for-like product quality.</span></li>" +
-                "<li><strong>Site access</strong><span>Parking, lifts, strata rules and occupied homes affect installation planning.</span></li>" +
+                "<li><strong>Site details</strong><span>Lifts, strata rules and occupied-home conditions should be clear before installation.</span></li>" +
               "</ul>" +
             "</details>" +
           "</section>" +

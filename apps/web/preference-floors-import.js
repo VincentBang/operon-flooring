@@ -146,7 +146,7 @@ window.PREFERENCE_FLOORS_IMPORT = {
         "rangeId": "laminate-preference-oakleaf-hd-plus",
         "rangeLabel": "Oakleaf HD PLUS",
         "selectionMode": "range_only",
-        "representativeProductId": "laminate-preference-oakleaf-hd-plus-bellmore-oak",
+        "representativeProductId": "laminate-preference-oakleaf-hd-plus-blackbutt",
         "customerLabel": "Oakleaf HD PLUS",
         "rangeContent": {
           "description": [

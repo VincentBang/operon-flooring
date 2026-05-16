@@ -25,6 +25,7 @@
     gtag('js', new Date());
     gtag('config', 'G-T2LEXZJM3Q');
   </script>
+  <script src="siteConfig.js"></script>
   <script src="tracking.js"></script>
   <script type="application/ld+json">
     {
@@ -519,15 +520,15 @@
         <span></span>
       </button>
       <div class="header-actions">
-        <a class="header-phone" href="tel:04XXXXXXXX" data-track-cta="click_call_header">Call 04XX XXX XXX</a>
+        <a class="header-phone" href="contact.html" data-track-cta="header_contact_click">Contact</a>
         <a class="button header-quote-button" href="quote.html">Start quote</a>
       </div>
     </div>
   </header>
 
   <nav class="mobile-sticky-cta" aria-label="Quick contact actions">
-    <!-- TODO: Replace placeholder phone number when the real Operon Flooring phone number is confirmed. -->
-    <a href="tel:04XXXXXXXX" data-track-cta="click_phone_mobile_sticky">Call</a>
+    <!-- TODO: Add real phone CTA when the confirmed Operon Flooring phone number is available. -->
+    <a href="contact.html" data-track-cta="mobile_contact_click">Contact</a>
     <a class="primary" href="quote.html" data-track-cta="click_start_quote_mobile_sticky">Start quote</a>
     <a href="quote-review.html" data-track-cta="click_mobile_quote_review">Check quote</a>
   </nav>
@@ -561,52 +562,56 @@
       <div>
         <p class="eyebrow">Choose your path</p>
         <h2 id="intentRouterTitle">Start from where you are now.</h2>
-        <p class="lead">Pick the fastest next step for your flooring project.</p>
+        <p class="lead">Choose the path that matches what you already know, then keep product, area and scope assumptions visible.</p>
       </div>
       <div class="intent-paths" aria-label="Flooring quote entry paths">
         <a class="intent-path intent-path--primary" href="quote.html" data-track-cta="path_start_quote_click" data-funnel-intent="quote">
           <span class="intent-number">1</span>
-          <span><strong>Start a flooring quote</strong><span>Add product, area and main scope details so the estimate is based on more than a rough guess.</span></span>
-          <span class="card-link">Start quote -></span>
-        </a>
-        <a class="intent-path" href="products.html" data-track-cta="path_products_click" data-funnel-intent="products">
-          <span class="intent-number">2</span>
-          <span><strong>Compare flooring products</strong><span>Understand hybrid, laminate and engineered timber before choosing a range.</span></span>
-          <span class="card-link">Browse products -></span>
+          <span><strong>I know my area or product</strong><span>Build a structured estimate with product, area and main scope details.</span></span>
+          <span class="card-link">Start flooring quote -></span>
         </a>
         <a class="intent-path" href="quote-review.html" data-track-cta="path_quote_review_click" data-funnel-intent="review">
+          <span class="intent-number">2</span>
+          <span><strong>I already have a written quote</strong><span>Review product, area, inclusions and missing scope before comparing totals.</span></span>
+          <span class="card-link">Check quote -></span>
+        </a>
+        <a class="intent-path" href="products.html" data-track-cta="path_products_click" data-funnel-intent="products">
           <span class="intent-number">3</span>
-          <span><strong>Review an existing quote</strong><span>Check whether a written quote lists product, area, inclusions and missing scope before comparing totals.</span></span>
-          <span class="card-link">Review quote -></span>
+          <span><strong>I am still choosing flooring</strong><span>Compare hybrid, laminate and engineered timber before selecting a range.</span></span>
+          <span class="card-link">Browse products -></span>
+        </a>
+        <a class="intent-path" href="floorplan.html" data-track-cta="path_floorplan_click" data-funnel-intent="floorplan">
+          <span class="intent-number">4</span>
+          <span><strong>I only have a floor plan</strong><span>Trace rooms or send measured area into the quote flow.</span></span>
+          <span class="card-link">Upload floor plan -></span>
         </a>
       </div>
     </section>
 
     <section class="section" aria-labelledby="proofTitle">
       <div class="intro">
-        <p class="eyebrow">Trust and proof</p>
-        <h2 id="proofTitle">Proof before promises</h2>
-        <p>Operon should earn trust with visible project detail, not unsupported claims.</p>
+        <p class="eyebrow">Scope clarity</p>
+        <h2 id="proofTitle">Clear scope before the job is booked</h2>
+        <p>Operon helps Sydney customers review the details that usually change flooring work before installation is confirmed.</p>
       </div>
       <div class="trust-card-grid">
         <article class="trust-card">
-          <h3>Real project photos</h3>
-          <p>Finished-room proof should show the product, room type and installation result once Operon jobs are photographed.</p>
+          <h3>Product and area checked</h3>
+          <p>Flooring type, selected range and measured area are reviewed before final confirmation.</p>
         </article>
         <article class="trust-card">
-          <h3>Trim, stair and transition details</h3>
-          <p>Future proof should show the finishing details that often change scope, including stairs, scotia, trims and doorway transitions.</p>
+          <h3>Removal, trims and stairs clarified</h3>
+          <p>Removal, disposal, scotia, skirting, trims and stair details are checked so the scope is easier to compare.</p>
         </article>
         <article class="trust-card">
-          <h3>Floor preparation checks</h3>
-          <p>Subfloor condition, removal, disposal, levelling and moisture checks should be documented before final installation pricing.</p>
+          <h3>Site conditions reviewed</h3>
+          <p>Apartment requirements, subfloor preparation, moisture-related items and other site details are confirmed where relevant.</p>
         </article>
         <article class="trust-card">
-          <h3>Apartment and acoustic considerations</h3>
-          <p>Apartment access, strata requirements and acoustic underlay details should be reviewed before the final booking.</p>
+          <h3>Written assumptions</h3>
+          <p>The aim is to make product, scope and site assumptions visible before the job is booked.</p>
         </article>
       </div>
-      <p class="proof-note">Project proof will be added as completed Operon jobs are photographed.</p>
     </section>
 
     <section class="section" aria-labelledby="quoteProcessTitle">
@@ -666,7 +671,7 @@
           <div class="quote-check">Floor preparation</div>
           <div class="quote-check">Skirting, scotia and trims</div>
           <div class="quote-check">Furniture handling</div>
-          <div class="quote-check">Apartment access and parking</div>
+          <div class="quote-check">Apartment site details</div>
           <div class="quote-check">Stairs or complex areas</div>
           <div class="quote-check">Subfloor and moisture notes</div>
         </div>
@@ -804,6 +809,20 @@
             </div>
             <a class="card-link" href="products.html" data-track-cta="project_fit_premium_click">Explore premium options -></a>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="scopeCheckTitle">
+      <div class="review-path" aria-labelledby="scopeCheckTitle">
+        <div class="review-path-copy">
+          <p class="eyebrow">Scope check</p>
+          <h2 id="scopeCheckTitle">Need confirmation before deciding?</h2>
+          <p>Some projects should be reviewed before relying on a self-serve estimate, especially stairs, apartments, acoustic requirements, levelling, moisture, engineered timber, large areas or difficult access.</p>
+        </div>
+        <div class="review-path-actions">
+          <a class="button-secondary" href="quote.html?quoteStep=5&scope_check=1" data-track-cta="site_assessment_requested" data-cta-intent="scope_check">Request a scope check</a>
+          <span class="review-path-note">No automatic booking. The aim is to confirm risk before the final quote.</span>
         </div>
       </div>
     </section>

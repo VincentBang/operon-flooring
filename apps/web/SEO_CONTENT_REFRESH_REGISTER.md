@@ -211,7 +211,7 @@ Premium-local expansion should wait for real proof. Priority candidates are Mosm
 
 #### Apartment flooring cluster plan
 
-Apartment content should be treated as a cluster, not a rushed landing page. Current supporting assets are `parramatta-flooring.html`, `floorplan.html`, `flooring-installation-cost-sydney.html`, `hybrid-flooring-sydney.html`, `engineered-timber-flooring-sydney.html`, and relevant preparation/problem guides. A future apartment guide should cover measurement, lift/access, strata/acoustic considerations, removal, furniture handling, subfloor condition, and product suitability without exposing internal pricing rules.
+Apartment content should be treated as a cluster, not a rushed landing page. Current supporting assets are `parramatta-flooring.html`, `floorplan.html`, `flooring-installation-cost-sydney.html`, `hybrid-flooring-sydney.html`, `engineered-timber-flooring-sydney.html`, and relevant preparation/problem guides. A future apartment guide should cover measurement, lift details, strata/acoustic considerations, removal, furniture handling, subfloor condition, and product suitability without exposing internal pricing rules.
 
 #### Cost and preparation cluster map
 

@@ -1020,6 +1020,37 @@ li,
   line-height: 1.5;
 }
 
+.catalogue-range-pill-group,
+.catalogue-range-notes {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.catalogue-range-pill-group > strong,
+.catalogue-range-notes > strong {
+  color: var(--text);
+  font-size: 0.86rem;
+}
+
+.catalogue-range-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.catalogue-range-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: rgba(17, 24, 32, 0.055);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
 .catalogue-range-specs {
   display: grid;
   gap: 8px;
@@ -1847,6 +1878,14 @@ li,
     border-color: var(--brand);
   }
 
+  body.products-page.has-mobile-sticky-cta {
+    padding-bottom: 0 !important;
+  }
+
+  body.products-page .mobile-sticky-cta {
+    display: none !important;
+  }
+
   .hero {
     padding-top: 28px;
   }
@@ -2125,8 +2164,16 @@ li,
     padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px));
   }
 
+  body.products-page.has-mobile-sticky-cta {
+    padding-bottom: 0 !important;
+  }
+
   .mobile-sticky-cta {
     grid-template-columns: 1fr 1fr;
+  }
+
+  body.products-page .mobile-sticky-cta {
+    display: none !important;
   }
 
   .mobile-sticky-cta a:first-child {

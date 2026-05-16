@@ -18,6 +18,7 @@
   <meta name="twitter:description" content="Compare hybrid, laminate and engineered timber flooring products for Sydney homes, apartments and renovations before starting a structured flooring quote.">
   <meta name="twitter:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <link rel="stylesheet" href="seo-pages.css">
+  <script src="siteConfig.js"></script>
   <script src="tracking.js"></script>
   <script src="pricingSourceConfig.js"></script>
   <script src="pricingSource.js"></script>
@@ -32,7 +33,7 @@
     gtag('config', 'G-T2LEXZJM3Q');
   </script>
 </head>
-<body class="has-mobile-sticky-cta">
+<body class="has-mobile-sticky-cta products-page">
   <header class="site-header">
     <div class="shell nav">
       <a class="brand" href="index.html#top" aria-label="Operon Flooring home">
@@ -52,17 +53,11 @@
         <span></span>
       </button>
       <div class="header-actions">
-        <a class="header-phone" href="tel:04XXXXXXXX" data-track-cta="click_call_header">Call 04XX XXX XXX</a>
-        <a class="button header-quote-button" href="quote.html">Start quote</a>
+        <a class="header-phone" href="contact.html" data-track-cta="header_contact_click">Contact</a>
+        <a class="button header-quote-button" href="quote.html#quoteForm">Start quote</a>
       </div>
     </div>
   </header>
-
-  <nav class="mobile-sticky-cta" aria-label="Quick contact actions">
-    <a href="tel:04XXXXXXXX" data-track-cta="click_call_mobile_sticky">Call</a>
-    <a class="primary" href="quote.html" data-track-cta="click_start_quote_mobile_sticky">Start quote</a>
-    <a href="quote-review.html" data-track-cta="click_quote_validation">Check quote</a>
-  </nav>
 
   <main>
     <section class="hero">
@@ -74,7 +69,7 @@
               <h1>Flooring products for Sydney homes and apartments</h1>
               <p>Compare hybrid, laminate and engineered timber flooring before starting your quote. Product choice affects cost, durability, maintenance, underlay, installation method and final scope.</p>
               <div class="hero-actions" style="margin-top: 24px;">
-                <a class="button" href="quote.html?from=product">Start Quote</a>
+                <a class="button" href="quote.html?from=product#quoteForm">Start quote</a>
                 <a class="button-secondary" href="floorplan.html">Upload Floor Plan</a>
               </div>
               <div class="pill-row" style="margin-top: 24px;">
@@ -90,7 +85,7 @@
                 </div>
               <div class="stat-card">
                 <strong>Sydney quote support</strong>
-                Product, area, removal, stairs, trims and access can all affect the final scope.
+                Product, area, removal, stairs, trims and site details shape the final scope.
               </div>
               <div class="stat-card">
                 <strong>Best use</strong>
@@ -123,16 +118,52 @@
               <h3>Hybrid flooring</h3>
               <p><strong>Best for:</strong> practical family homes, apartments, water-resistant needs and low maintenance.</p>
               <p><strong>Watch-outs:</strong> subfloor and acoustic layer still need review. Product thickness and range can affect the quote.</p>
+              <a class="button-secondary" href="quote.html?from=product&category=hybrid#quoteForm" data-track-cta="products_hybrid_quote_click">Start quote with hybrid</a>
             </article>
             <article class="decision-guide-card">
               <h3>Laminate flooring</h3>
               <p><strong>Best for:</strong> cost-conscious renovations, rental upgrades and dry internal spaces.</p>
               <p><strong>Watch-outs:</strong> not the first choice for wet-prone areas. Product quality and underlay still matter.</p>
+              <a class="button-secondary" href="quote.html?from=product&category=laminate#quoteForm" data-track-cta="products_laminate_quote_click">Start quote with laminate</a>
             </article>
             <article class="decision-guide-card">
               <h3>Engineered timber</h3>
               <p><strong>Best for:</strong> premium timber feel, higher-spec renovations and feature areas.</p>
               <p><strong>Watch-outs:</strong> range, colour and installation method can affect the quote more. Herringbone or feature patterns need review.</p>
+              <a class="button-secondary" href="quote.html?from=product&category=engineered#quoteForm" data-track-cta="products_engineered_quote_click">Start quote with timber</a>
+            </article>
+          </div>
+          <div class="hero-actions" style="margin-top: 24px;">
+            <a class="button" href="quote.html?from=product&product_status=undecided#quoteForm" data-track-cta="products_start_undecided_click">Not sure yet? Start undecided</a>
+            <a class="button-secondary" href="quote-review.html" data-track-cta="products_quote_review_click">Already have a quote? Review it</a>
+            <a class="button-secondary" href="floorplan.html" data-track-cta="products_floorplan_click">Need area? Use floor plan</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <article class="section-card">
+          <span class="eyebrow">Scope clarity</span>
+          <h2 style="margin-top: 18px;">Clear scope before the job is booked</h2>
+          <p>Operon helps Sydney customers review the details that usually change flooring work before installation is confirmed.</p>
+          <div class="trust-card-grid">
+            <article class="trust-card">
+              <h3>Product and area checked</h3>
+              <p>Flooring type, selected range and measured area are reviewed before final confirmation.</p>
+            </article>
+            <article class="trust-card">
+              <h3>Removal, trims and stairs clarified</h3>
+              <p>Removal, disposal, scotia, skirting, trims and stair details are checked so the scope is easier to compare.</p>
+            </article>
+            <article class="trust-card">
+              <h3>Site conditions reviewed</h3>
+              <p>Apartment requirements, subfloor preparation, moisture-related items and other site details are confirmed where relevant.</p>
+            </article>
+            <article class="trust-card">
+              <h3>Written assumptions</h3>
+              <p>The aim is to make product, scope and site assumptions visible before the job is booked.</p>
             </article>
           </div>
         </article>
@@ -173,7 +204,7 @@
             <p id="catalogueSelectionText">Choose a range if you know it, or start with a category if you are still comparing products.</p>
             <p class="catalogue-selection-meta" id="catalogueSelectionMeta">Product direction can be attached to the quote without locking the final colour too early.</p>
             <div class="catalogue-selection-actions">
-              <a class="button" id="catalogueContinueQuote" href="quote.html?from=product">Continue to quote</a>
+              <a class="button" id="catalogueContinueQuote" href="quote.html?from=product#quoteForm">Continue to quote</a>
               <button class="button-secondary" id="catalogueClearSelection" type="button">Clear selection</button>
             </div>
             <div class="catalogue-context-links" id="catalogueContextLinks"></div>
@@ -184,7 +215,7 @@
               <h2 style="margin: 0;">Available flooring products</h2>
               <p id="catalogueResultsSummary">Loading flooring products...</p>
             </div>
-            <a class="button-quiet" id="catalogueSkipToQuote" href="quote.html?from=product">Start quote undecided</a>
+            <a class="button-quiet" id="catalogueSkipToQuote" href="quote.html?from=product#quoteForm">Start quote undecided</a>
           </div>
 
           <div class="catalogue-grid" id="catalogueProductsGrid"></div>
@@ -200,7 +231,7 @@
           <h2 style="margin-top: 18px;">Not sure what to choose yet?</h2>
           <p>If you are still comparing products, start the quote with the closest category or leave the final range undecided. Operon can review product fit alongside area, removal, stairs, trims and site details.</p>
           <div class="hero-actions" style="margin-top: 24px;">
-            <a class="button" id="startQuoteUndecidedButton" href="quote.html">Start quote undecided</a>
+            <a class="button" id="startQuoteUndecidedButton" href="quote.html#quoteForm">Start quote undecided</a>
             <a class="button-secondary" href="blog/index.html">Read comparison guides</a>
           </div>
         </article>
@@ -241,7 +272,7 @@
           <img src="assets/operon-logo-final.png" alt="Operon Flooring logo" width="154" height="49">
         </a>
         <p class="footer-brand-copy">Flooring quotes and installation guidance for Sydney projects.</p>
-        <a class="footer-brand-cta" href="quote.html">Start quote</a>
+        <a class="footer-brand-cta" href="quote.html#quoteForm">Start quote</a>
       </div>
       <div class="footer-col">
         <h4>Products</h4>
@@ -255,7 +286,7 @@
       <div class="footer-col">
         <h4>Quote &amp; Tools</h4>
         <ul>
-          <li><a href="quote.html">Start Quote</a></li>
+          <li><a href="quote.html#quoteForm">Start quote</a></li>
           <li><a href="quote-review.html">Quote Review</a></li>
           <li><a href="floorplan.html">Upload Floor Plan</a></li>
           <li><a href="blog/index.html">Flooring Guides</a></li>
@@ -526,7 +557,7 @@
       }
 
       function getContinueQuoteUrl() {
-        return "quote.html?from=product&category=" + encodeURIComponent(getPreferredQuoteCategory());
+        return "quote.html?from=product&category=" + encodeURIComponent(getPreferredQuoteCategory()) + "#quoteForm";
       }
 
       function syncSelectionStateFromStorage() {
@@ -781,9 +812,7 @@
         const actionLabel = usesRangeSelection ? "Select this range" : "Select this floor";
         const rangeProducts = product.type === "range" ? PRODUCT_LIBRARY.getProductsByRangeId(product.rangeId) : [];
         const hasRangeColourPreview = product.type === "range" && rangeProducts.length > 0;
-        const priceLine = product.pricePerM2 > 0
-          ? '<span class="catalogue-card-price">' + escapeHtml(PRODUCT_LIBRARY.formatProductRate(product)) + "</span>"
-          : "";
+        const priceLine = '<span class="catalogue-card-price">' + escapeHtml(getProductPricingDisplayLabel(product)) + "</span>";
         const colourDrawerButton = hasRangeColourPreview
           ? '<button class="button-quiet catalogue-colour-toggle" type="button" data-open-range-colours-preview="' + escapeHtml(product.rangeId) + '" aria-label="View ' + escapeHtml(String(rangeProducts.length)) + ' colours in ' + escapeHtml(product.rangeLabel || product.range || "this range") + '">View ' + rangeProducts.length + " colours</button>"
           : "";
@@ -909,7 +938,7 @@
           track("product_continue_to_quote", buildSelectionTrackingPayload(product || rangeRecord, settings.source, {
             category: resolvedSelection.category || rangeCategory
           }));
-          window.location.href = "quote.html?from=product&category=" + encodeURIComponent(resolvedSelection.category || rangeCategory);
+          window.location.href = "quote.html?from=product&category=" + encodeURIComponent(resolvedSelection.category || rangeCategory) + "#quoteForm";
         }
       }
 
@@ -1085,19 +1114,187 @@
         trackCatalogueView();
       });
 
-      function buildRangeInfoModalBody(content, activeTab) {
-        if (activeTab === "description") {
-          return (content.description || []).slice(0, 3).map(function (paragraph) {
-            return "<p>" + escapeHtml(paragraph) + "</p>";
+      function getProductPricingDisplayLabel(product) {
+        if (!product) {
+          return "Category estimate available in quote";
+        }
+
+        if (product.selectionMode === "range_only" || product.type === "range") {
+          return "Select range to continue quote";
+        }
+
+        if (product.isEstimate || product.isPlaceholderPricing || product.pricingMode === "fallback") {
+          return "Category estimate available in quote";
+        }
+
+        return "Pricing included in structured quote";
+      }
+
+      const technicalFieldPriority = [
+        "product type",
+        "type",
+        "thickness / wear layer",
+        "total thickness",
+        "thickness",
+        "wear layer",
+        "board size",
+        "plank size",
+        "dimensions",
+        "core / construction",
+        "construction",
+        "core",
+        "surface / finish",
+        "surface finish",
+        "finish",
+        "installation",
+        "installation method",
+        "locking",
+        "water / acoustic / wear rating",
+        "water resistance",
+        "wear resistance",
+        "acoustic rating",
+        "warranty",
+        "colour range",
+        "carton coverage",
+        "pack size",
+        "pkg contains",
+        "edge / profile",
+        "edging",
+        "profile",
+        "slip / voc",
+        "voc rating",
+        "pack weight",
+        "product code"
+      ];
+
+      function normaliseTechnicalLabel(label) {
+        return String(label || "").trim().toLowerCase();
+      }
+
+      function getTechnicalPriority(item) {
+        const label = normaliseTechnicalLabel(item && item.label);
+        const exactIndex = technicalFieldPriority.indexOf(label);
+        if (exactIndex >= 0) {
+          return exactIndex;
+        }
+        if (label.indexOf("warranty") >= 0) return technicalFieldPriority.indexOf("warranty");
+        if (label.indexOf("install") >= 0 || label.indexOf("locking") >= 0) return technicalFieldPriority.indexOf("installation");
+        if (label.indexOf("water") >= 0 || label.indexOf("acoustic") >= 0 || label.indexOf("wear") >= 0 || label.indexOf("ac") === 0) return technicalFieldPriority.indexOf("water / acoustic / wear rating");
+        if (label.indexOf("pack weight") >= 0 || label.indexOf("weight") >= 0) return technicalFieldPriority.indexOf("pack weight");
+        return 999;
+      }
+
+      function sanitiseCustomerProductCopy(value) {
+        return String(value || "")
+          .replace(/\b100% waterproof\b/gi, "supplier-listed waterproof")
+          .replace(/\bDIY-friendly\b/gi, "floating-floor")
+          .replace(/Negative Ion Technology enhances wellbeing/gi, "Supplier-listed Negative Ion surface feature")
+          .replace(/well-being in one seamless solution/gi, "a practical flooring option for everyday interiors")
+          .replace(/lasting more than 100 years/gi, "valued for long service life when correctly selected, installed and maintained")
+          .replace(/superior to solid oak flooring in both durability and stability/gi, "designed to improve dimensional stability compared with solid timber in many internal conditions")
+          .replace(/up to 40 times tougher than standard finishes/gi, "supplier-listed high-wear surface performance")
+          .replace(/\b100% recyclable\b/gi, "supplier-listed recyclable materials claim")
+          .replace(/guarantee of excellence/gi, "quality control process")
+          .replace(/timeless sophistication in every step/gi, "a calm, refined interior finish");
+      }
+
+      function getCustomerText(value) {
+        return escapeHtml(sanitiseCustomerProductCopy(value));
+      }
+
+      function getFallbackRangeDecisionContent(range) {
+        const category = range && range.category ? range.category : "";
+        if (category === "laminate") {
+          return {
+            bestFor: ["Dry internal rooms", "Rental upgrades", "Budget-conscious renovations"],
+            notBestFor: ["Wet areas", "Heavy moisture or uncertain subfloor conditions"],
+            quoteNotes: ["Water-resistant laminate is not the same as a waterproof wet-area system.", "Underlay, expansion gaps and subfloor flatness still need confirmation."]
+          };
+        }
+
+        if (category === "engineered") {
+          return {
+            bestFor: ["Premium residential interiors", "Natural timber appearance", "Feature living spaces"],
+            notBestFor: ["Wet areas", "Projects where moisture risk is unresolved"],
+            quoteNotes: ["Engineered timber is not a waterproof product.", "Moisture, subfloor preparation and installation method are important.", "Colour, grade, stairs and trims can affect final pricing."]
+          };
+        }
+
+        return {
+          bestFor: ["Family homes", "Apartments with acoustic review", "Rental upgrades", "Low-maintenance timber-look floors"],
+          notBestFor: ["Wet-area work unless manufacturer and installation requirements support it", "Customers wanting a natural timber surface"],
+          quoteNotes: ["Final wet-area suitability depends on manufacturer requirements and site conditions.", "Apartment jobs may need acoustic or strata confirmation.", "Subfloor flatness and trims still affect final quote."]
+        };
+      }
+
+      function getRangeContentItems(content, range, key) {
+        if (content && Array.isArray(content[key]) && content[key].length) {
+          return content[key];
+        }
+        const fallback = getFallbackRangeDecisionContent(range);
+        return fallback[key] || [];
+      }
+
+      function buildRangePills(title, items) {
+        if (!items || !items.length) return "";
+        return '<div class="catalogue-range-pill-group"><strong>' + escapeHtml(title) + '</strong><div class="catalogue-range-pills">' +
+          items.slice(0, 5).map(function (item) {
+            return '<span class="catalogue-range-pill">' + getCustomerText(item) + '</span>';
+          }).join("") +
+        '</div></div>';
+      }
+
+      function buildRangeNotes(title, items) {
+        if (!items || !items.length) return "";
+        return '<div class="catalogue-range-notes"><strong>' + escapeHtml(title) + '</strong><ul class="catalogue-range-list">' +
+          items.slice(0, 4).map(function (item) {
+            return '<li>' + getCustomerText(item) + '</li>';
+          }).join("") +
+        '</ul></div>';
+      }
+
+      function isCustomerVisibleTechnicalRow(item) {
+        const label = normaliseTechnicalLabel(item && item.label);
+        return label !== "product code" && label.indexOf("supplier") < 0;
+      }
+
+      function getPrioritisedTechnicalRows(content) {
+        const visible = (content.technical || [])
+          .filter(isCustomerVisibleTechnicalRow)
+          .map(function (item, index) {
+            return Object.assign({ __index: index }, item);
+          })
+          .sort(function (a, b) {
+            const priorityDelta = getTechnicalPriority(a) - getTechnicalPriority(b);
+            return priorityDelta || (a.__index - b.__index);
+          });
+        const withoutPackWeight = visible.filter(function (item) {
+          const label = normaliseTechnicalLabel(item.label);
+          return label.indexOf("pack weight") < 0 && label !== "weight";
+        });
+        return (withoutPackWeight.length >= 8 ? withoutPackWeight : visible).slice(0, 8);
+      }
+
+      function buildRangeInfoModalBody(content, activeTab, rangeItem) {
+        if (activeTab === "overview") {
+          const description = (content.description || []).slice(0, 2).map(function (paragraph) {
+            return "<p>" + getCustomerText(paragraph) + "</p>";
           }).join("");
+
+          return (
+            description +
+            buildRangePills("Best for", getRangeContentItems(content, rangeItem, "bestFor")) +
+            buildRangeNotes("Watch-outs", getRangeContentItems(content, rangeItem, "notBestFor")) +
+            buildRangeNotes("Quote notes", getRangeContentItems(content, rangeItem, "quoteNotes"))
+          );
         }
 
         if (activeTab === "features") {
           return (
-            (content.featuresIntro ? '<p class="catalogue-range-panel-intro">' + escapeHtml(content.featuresIntro) + "</p>" : "") +
+            (content.featuresIntro ? '<p class="catalogue-range-panel-intro">' + getCustomerText(content.featuresIntro) + "</p>" : "") +
             '<ul class="catalogue-range-list">' +
               (content.features || []).slice(0, 5).map(function (feature) {
-                return "<li>" + escapeHtml(feature) + "</li>";
+                return "<li>" + getCustomerText(feature) + "</li>";
               }).join("") +
             "</ul>"
           );
@@ -1105,10 +1302,8 @@
 
         return (
           '<div class="catalogue-range-specs">' +
-            (content.technical || []).filter(function (item) {
-              return item.label !== "Product Code";
-            }).slice(0, 8).map(function (item) {
-              return '<div class="catalogue-range-spec"><span>' + escapeHtml(item.label) + "</span><strong>" + escapeHtml(item.value) + "</strong></div>";
+            getPrioritisedTechnicalRows(content).map(function (item) {
+              return '<div class="catalogue-range-spec"><span>' + escapeHtml(item.label) + "</span><strong>" + getCustomerText(item.value) + "</strong></div>";
             }).join("") +
           "</div>"
         );
@@ -1261,17 +1456,17 @@
         if (!state.rangeInfoTabs) {
           state.rangeInfoTabs = {};
         }
-        const activeTab = state.rangeInfoTabs[rangeItem.rangeId] || "description";
+        const activeTab = state.rangeInfoTabs[rangeItem.rangeId] || "overview";
         const modal = ensureRangeInfoModal();
         modal.dataset.rangeId = rangeItem.rangeId;
         modal.querySelector("[data-range-info-title]").textContent = rangeItem.rangeLabel || rangeItem.range || "Product information";
         modal.querySelector("[data-range-info-subtitle]").textContent = rangeItem.brand + " · " + (rangeItem.colour || (rangeItem.colourCount + " colours available"));
-        modal.querySelector("[data-range-info-tabs]").innerHTML = ["description", "features", "technical"].map(function (key) {
+        modal.querySelector("[data-range-info-tabs]").innerHTML = ["overview", "features", "technical"].map(function (key) {
           const isActive = activeTab === key;
           const label = key.charAt(0).toUpperCase() + key.slice(1);
           return '<button class="catalogue-range-modal-tab' + (isActive ? " is-active" : "") + '" type="button" data-range-modal-tab="' + key + '" aria-selected="' + (isActive ? "true" : "false") + '">' + label + "</button>";
         }).join("");
-        modal.querySelector("[data-range-info-body]").innerHTML = buildRangeInfoModalBody(content, activeTab);
+        modal.querySelector("[data-range-info-body]").innerHTML = buildRangeInfoModalBody(content, activeTab, rangeItem);
         modal.hidden = false;
         document.body.classList.add("catalogue-lightbox-open");
       }

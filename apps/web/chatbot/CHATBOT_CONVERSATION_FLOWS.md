@@ -61,7 +61,7 @@ Do you already have a written quote, or are you preparing to request one?
 Use this when the customer is unsure what to do next, asks broad questions, or mixes product, area, and quote concerns in one message.
 
 Answer:
-The safest next step is to decide what is unclear first. Product choice, area, existing floor, removal, preparation, stairs, trims, and site access all affect whether the scope is ready to quote.
+The safest next step is to decide what is unclear first. Product choice, area, existing floor, removal, preparation, stairs, trims, and site details all help decide whether the scope is ready to quote.
 
 Follow-up:
 Which one is least clear right now: product, area, existing floor, site details, or an existing quote?
@@ -86,17 +86,19 @@ When the chatbot is used on `quote.html`, it may read the active wizard step and
 Allowed examples:
 
 - "You are on Floor area. Complete area first."
-- "You are on Flooring and area. Choose a flooring direction and add area if you know it."
-- "You are on Main scope. Use Not sure for removal, stairs or floor preparation if they still need review."
-- "You are on Estimate preview. Advanced details are optional."
-- "You are on Contact and submit. Add contact details so Operon can follow up."
+- "You are on Property. Suburb, postcode and property type are enough to start."
+- "You are on Flooring. Choose the flooring category and product path."
+- "You are on Area. Enter one total area, add rooms, use a floor plan, or choose a follow-up path."
+- "You are on Stairs. Add stair details if known, or leave uncertain details for review."
+- "You are on Extras. Use Not sure for removal, disposal, floor preparation, underlay, skirting/scotia, door trimming, or furniture if they still need review."
+- "You are on Summary. Check review notes before submitting."
 
 Rules:
 
 - read only
 - one action at a time
-- express path helps customers start faster
-- advanced scope can still be added if known
+- six-step quote path keeps the customer moving without hiding important scope
+- extras can still be added if known
 - uncertain items are reviewed before final pricing
 - no auto-fill
 - no auto-navigation

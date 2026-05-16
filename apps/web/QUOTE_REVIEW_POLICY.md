@@ -789,7 +789,7 @@ Use when:
 
 5. OPERON_SITE_CONFIRMATION_REQUIRED
 Use when:
-- access, subfloor, stairs, removal, apartment, or other site risks materially affect price
+- site, subfloor, stairs, removal, apartment, or other scope risks materially change what needs review
 
 Also preserve customer-facing review statuses where useful:
 

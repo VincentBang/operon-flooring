@@ -96,6 +96,25 @@ assert.ok(missingScope.includes("stairs"));
   assert.ok(normalizedReport.summary.includes("$48.00/m² ex GST"));
   assert.ok(normalizedReport.missingScopeItems.some((item) => item.key === "underlay"));
   assert.ok(normalizedReport.missingScopeItems.some((item) => item.key === "floor_preparation"));
+  assert.ok(!normalizedReport.missingScopeItems.some((item) => item.key === "stairs"), "standard house-style quote should not treat stairs as a major missing item without stair context");
+  assert.ok(normalizedReport.confirmIfApplicableItems.some((item) => item.key === "stairs"));
+  assert.strictEqual(normalizedReport.confidenceDimensions.extractionConfidence, "High");
+
+  const apartmentReport = quoteReviewReport.normalizeQuoteReview({
+    extractedQuoteFields: Object.assign({}, fields, {
+      jobAddress: "Unit 12, 8 Example Street, Parramatta"
+    }),
+    databaseComparison: comparison
+  });
+  assert.ok(apartmentReport.missingScopeItems.some((item) => item.key === "access"), "apartment context should make access a material scope gap");
+
+  const stairReport = quoteReviewReport.normalizeQuoteReview({
+    extractedQuoteFields: Object.assign({}, fields, {
+      lineItems: [{ rawDescription: "Supply and install hybrid flooring including stairs", quantity: 73, unitPriceExGst: 48, lineTotalExGst: 3504 }]
+    }),
+    databaseComparison: comparison
+  });
+  assert.ok(stairReport.missingScopeItems.some((item) => item.key === "stairs"), "stair context should make stair detail a material scope gap");
   console.log("quoteReviewParser.test.js passed");
 })().catch((error) => {
   console.error(error);

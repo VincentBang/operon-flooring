@@ -84,7 +84,7 @@
       "mainEntity": [
         {"@type":"Question","name":"Do I need exact measurements to start?","acceptedAnswer":{"@type":"Answer","text":"No. Start with the best area you know now. Final measurements can be checked before the quote is confirmed."}},
         {"@type":"Question","name":"Can I upload a floor plan instead of measuring manually?","acceptedAnswer":{"@type":"Answer","text":"Yes. Use the floor plan tool to trace rooms, confirm area, and send that measured total into the quote."}},
-        {"@type":"Question","name":"Is the online quote the final price?","acceptedAnswer":{"@type":"Answer","text":"No. The online result is an estimate. Final pricing is confirmed after measurements, access, and any extra scope are checked."}},
+        {"@type":"Question","name":"Is the online quote the final price?","acceptedAnswer":{"@type":"Answer","text":"No. The online result is an estimate. Final pricing is confirmed after measurements, site details and any extra scope are checked."}},
         {"@type":"Question","name":"Can I choose supply and install or installation only?","acceptedAnswer":{"@type":"Answer","text":"Yes. The quote wizard supports both supply and install, and installation-only projects."}},
         {"@type":"Question","name":"Am I committed when I send the quote?","acceptedAnswer":{"@type":"Answer","text":"No. Sending the estimate does not lock you in. It gives us the project details so we can review and confirm the next step with you."}}
       ]
@@ -2963,7 +2963,7 @@
           <div class="trust-grid" style="margin-top: 18px;">
             <div><strong>Product and area checked</strong><span>Flooring type, selected range and measured area are reviewed before final confirmation.</span></div>
             <div><strong>Removal, trims and stairs clarified</strong><span>Removal, disposal, scotia, skirting, trims and stair details are checked so the scope is easier to compare.</span></div>
-            <div><strong>Site conditions reviewed</strong><span>Access, parking, apartment requirements, subfloor preparation and moisture-related items are confirmed where relevant.</span></div>
+            <div><strong>Site conditions reviewed</strong><span>Apartment requirements, subfloor preparation, moisture-related items and other site details are confirmed where relevant.</span></div>
             <div><strong>Written assumptions</strong><span>The aim is to make product, scope and site assumptions visible before the job is booked.</span></div>
           </div>
         </article>
@@ -3870,7 +3870,7 @@
           <details class="faq-toggle">
             <summary>Is the online quote the final price?</summary>
             <div class="faq-toggle-body">
-              <p>No. The online result is an estimate. Final pricing is confirmed after measurements, access, and any extra scope are checked.</p>
+              <p>No. The online result is an estimate. Final pricing is confirmed after measurements, site details and any extra scope are checked.</p>
             </div>
           </details>
           <details class="faq-toggle">
@@ -7115,7 +7115,7 @@
         factors.push("Subfloor condition or preparation");
       }
       if (input.parkingAccess === "difficult" || input.hasLift === "no" || input.stairs === "yes" || input.stairs === "not_sure" || input.stairsCount > 0) {
-        factors.push("Access, lifts, stairs or parking");
+        factors.push("Stairs and site details");
       }
       if (input.existingFloorToRemove === "unsure" || (isRemovalSelected(input.existingFloorToRemove) && (!input.removalDisposal || input.removalDisposal === "not_sure"))) {
         factors.push("Removal and disposal details");

@@ -30,7 +30,7 @@ Use when the customer selected `Ready soon`, has a clear area, and submitted eno
 ```text
 Hi [Name], this is [Team Member] from Operon Flooring.
 
-Thanks for sending through the flooring estimate. I have reviewed the main details: the flooring type, area, access, and any removal or finishing items.
+Thanks for sending through the flooring estimate. I have reviewed the main details: the flooring type, area, site details, and any removal or finishing items.
 
 Before we confirm the final quote, I just want to check a couple of scope points so there are no surprises later.
 
@@ -94,7 +94,7 @@ Which option suits you better?
 ### SMS 1: Immediate Scope Review
 
 ```text
-Hi [Name], we received your Operon Flooring estimate. I am reviewing the product, area, access and scope details now. If anything needs confirmation, I will let you know before final pricing.
+Hi [Name], we received your Operon Flooring estimate. I am reviewing the product, area, site details and scope now. If anything needs confirmation, I will let you know before final pricing.
 ```
 
 ### SMS 2: Ask For Missing Detail
@@ -296,7 +296,7 @@ Next step: use quote review to check what is included.
 ```text
 The online estimate is not the final quote.
 
-Key point: final pricing is confirmed after product, area, access and site scope are reviewed.
+Key point: final pricing is confirmed after product, area and site scope are reviewed.
 
 Next step: confirm unclear details or request a site assessment.
 ```
@@ -348,7 +348,7 @@ If you send the details through, we can help identify what is included and what 
 ```text
 The estimate is a starting point, not the final locked quote.
 
-Final pricing is confirmed once the product, area, access and site scope are clear. That protects you from a number changing after work has started.
+Final pricing is confirmed once the product, area and site scope are clear. That protects you from a number changing after work has started.
 
 The next step is to confirm the unclear scope items or arrange a site assessment.
 ```

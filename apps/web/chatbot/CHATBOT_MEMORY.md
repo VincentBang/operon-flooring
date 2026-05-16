@@ -45,15 +45,15 @@ Important pages:
 
 ## Quote Flow
 
-The current quote journey has a customer-facing express presentation over the preserved full-scope data model:
+The current quote journey has a customer-facing six-step wizard over the preserved full-scope data model:
 
 ```text
-project basics -> flooring and area -> main scope -> estimate preview -> contact and submit
+Property -> Flooring -> Area -> Stairs -> Extras -> Summary
 ```
 
 The chatbot should help customers understand this flow, but the quote page owns the actual quote process.
 
-Contact details are now in the final customer-facing step: suburb/postcode can start the quote, while name and phone or email are required before final submission. Advanced scope is still available inside estimate preview, but uncertain items can be marked `Not sure` and reviewed before final pricing.
+Suburb and postcode are enough to start. Site address can stay optional until review. Contact details are handled near submission, and uncertain scope items can be marked `Not sure` for review before final pricing.
 
 ## Product Logic
 
@@ -62,7 +62,7 @@ Product guidance should stay category-level unless future integration explicitly
 Current product behaviour:
 
 - hybrid and laminate are range-based paths
-- engineered timber can require range -> colour selection
+- engineered timber can require range -> colour selection, and engineered colour can affect pricing when colours vary within the same range
 - unsure users can use a recommended practical option
 - selected products are handled by the product system, not the chatbot
 - final product details can be confirmed during review
@@ -79,6 +79,7 @@ Important concepts:
 - labour uses real area
 - wastage is handled by `quoteCalculator.js`
 - floorplan measurement returns real area only
+- current underlay options are Standard silver underlay, Premium acoustic underlay, Acoustic Rubber Underlay 5mm, and Acoustic Rubber Underlay 5mm glued down where relevant
 - final quote is confirmed after product, measurements, site details, and scope are reviewed
 
 The chatbot must never calculate a final price or expose internal pricing logic.

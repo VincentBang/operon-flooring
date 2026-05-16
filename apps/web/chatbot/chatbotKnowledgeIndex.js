@@ -19,7 +19,7 @@
     engineered: {
       key: "product_engineered",
       label: "Engineered timber",
-      summary: "Engineered timber suits finish-led projects where timber look, colour, range, and installation method matter. Select the range first; engineered colour is confirmed in the quote flow.",
+      summary: "Engineered timber suits finish-led projects where timber look, colour, range, and installation method matter. Select the range first; engineered colour is confirmed in the quote flow because pricing can vary by colour within some ranges.",
       suitability: "Good for premium renovations, herringbone projects, and feature areas that need clearer review before final confirmation.",
       route: { label: "Browse engineered", href: "engineered-timber-flooring-sydney.html" },
       terms: ["engineered", "timber", "herringbone", "heringbone", "chevron", "premium finish", "swish oak", "natura"]
@@ -46,7 +46,7 @@
     swishOakNatura: {
       key: "range_swish_oak_natura",
       label: "Swish Oak Natura",
-      summary: "Swish Oak Natura is an engineered timber range with colour previews on the product page. The customer selects the range first and confirms the exact colour during the quote flow.",
+      summary: "Swish Oak Natura is an engineered timber range with colour previews on the product page. The customer selects the range first and confirms the exact colour during the quote flow because engineered colour can affect pricing.",
       suitability: "Good for premium engineered timber projects where timber character, colour, and installation method need clear confirmation.",
       route: { label: "Browse engineered", href: "products.html" },
       terms: ["swish oak natura", "ambient sand", "belfort oak", "french natural", "french carbon", "engineered range"]
@@ -64,10 +64,10 @@
   const QUOTE_FLOW = {
     key: "quote_flow",
     label: "Quote flow",
-    summary: "The quote path is a five-step express flow: project basics, flooring and area, main scope, estimate preview, then contact and submit. The online result is a starting estimate, not the final confirmed quote.",
-    steps: ["project basics", "flooring and area", "main scope", "estimate preview", "contact and submit"],
+    summary: "The quote path is a six-step wizard: Property, Flooring, Area, Stairs, Extras, then Summary. The online result is a starting estimate, not the final confirmed quote.",
+    steps: ["property", "flooring", "area", "stairs", "extras", "summary"],
     route: { label: "Start quote", href: "quote.html" },
-    terms: ["quote flow", "how quote works", "quote process", "project basics", "flooring and area", "main scope", "estimate preview", "contact and submit", "advanced details", "not sure", "estimate", "submit", "email copy", "email me a copy", "quote submitted"]
+    terms: ["quote flow", "how quote works", "quote process", "property", "area", "stairs", "extras", "summary", "not sure", "estimate", "submit", "email copy", "email me a copy", "quote submitted"]
   };
 
   const QUOTE_SCOPE = {
@@ -95,9 +95,9 @@
     underlay: {
       key: "scope_underlay_acoustic",
       label: "Underlay and acoustic layer",
-      summary: "Underlay or acoustic layer should be confirmed when the building, product, or strata requirements depend on it. It is a scope item, not something to assume from the total price.",
+      summary: "Underlay or acoustic layer should be confirmed when the building, product, or strata requirements depend on it. Current options include Standard silver underlay, Premium acoustic underlay, Acoustic Rubber Underlay 5mm, and Acoustic Rubber Underlay 5mm glued down where relevant.",
       route: { label: "Review quote scope", href: "quote-review.html" },
-      terms: ["underlay", "acoustic", "sound rating", "strata acoustic", "soundproof", "noise", "apartment acoustic"]
+      terms: ["underlay", "acoustic", "sound rating", "strata acoustic", "soundproof", "noise", "apartment acoustic", "standard silver underlay", "premium acoustic underlay", "rubber underlay", "acoustic rubber underlay"]
     },
     floorPrep: {
       key: "scope_floor_preparation",
