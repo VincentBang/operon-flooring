@@ -32,11 +32,13 @@
   from = "/index.html"
   to = "/"
   status = 301
+  force = true
 
 [[redirects]]
   from = "/blog/index.html"
   to = "/blog/"
   status = 301
+  force = true
 
 [[redirects]]
   from = "/index2.html"
