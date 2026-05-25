@@ -3,10 +3,10 @@
     hybrid: {
       key: "product_hybrid",
       label: "Hybrid flooring",
-      summary: "Hybrid is a practical starting point for busy homes, apartments, kitchens, pets, and everyday water resistance. Browse by range first, then confirm the final colour during the quote if needed.",
-      suitability: "Good when durability, easy maintenance, and a simple quote path matter. Current hybrid ranges include 7.0mm, 8.0mm, and 9.0mm options.",
+      summary: "Hybrid is a practical starting point for busy homes, apartments, kitchens, pets, and everyday water resistance. The hybrid page shows a curated range preview; the full catalogue stays on the products page.",
+      suitability: "Good when durability, easy maintenance, and a simple quote path matter. Final project details are reviewed before booking.",
       route: { label: "Browse hybrid", href: "hybrid-flooring-sydney.html" },
-      terms: ["hybrid", "waterproof", "water resistant", "pets", "busy home", "7mm", "8mm", "9mm", "etf"]
+      terms: ["hybrid", "waterproof", "water resistant", "pets", "busy home", "7mm", "8mm", "9mm", "etf", "hybrid range preview"]
     },
     laminate: {
       key: "product_laminate",
@@ -19,10 +19,10 @@
     engineered: {
       key: "product_engineered",
       label: "Engineered timber",
-      summary: "Engineered timber suits finish-led projects where timber look, colour, range, and installation method matter. Select the range first; engineered colour is confirmed in the quote flow because pricing can vary by colour within some ranges.",
+      summary: "Engineered timber suits finish-led projects where timber look, colour, range, and installation method matter. The engineered page previews selected premium directions before the customer starts a quote.",
       suitability: "Good for premium renovations, herringbone projects, and feature areas that need clearer review before final confirmation.",
       route: { label: "Browse engineered", href: "engineered-timber-flooring-sydney.html" },
-      terms: ["engineered", "timber", "herringbone", "heringbone", "chevron", "premium finish", "swish oak", "natura"]
+      terms: ["engineered", "timber", "herringbone", "heringbone", "chevron", "premium finish", "swish oak", "natura", "engineered range preview"]
     }
   };
 
@@ -35,6 +35,30 @@
       route: { label: "Browse hybrid ranges", href: "products.html" },
       terms: ["etf hybrid", "etf 7", "etf 8", "etf 9", "hybrid 7.0", "hybrid 8.0", "hybrid 9.0"]
     },
+    hybridGrande: {
+      key: "range_hybrid_grande",
+      label: "Grande 9.0 Hybrid Flooring",
+      summary: "Grande 9.0 is one of the curated hybrid preview ranges for family living spaces and low-maintenance renovations.",
+      suitability: "Good when the customer wants a thicker hybrid shortlist before starting the quote.",
+      route: { label: "Preview hybrid ranges", href: "hybrid-flooring-sydney.html" },
+      terms: ["grande hybrid", "grande 9", "grande 9.0", "eco grande", "bella hybrid"]
+    },
+    hybridLumiere: {
+      key: "range_hybrid_lumiere",
+      label: "Lumiere Ultra HD Hybrid Plank",
+      summary: "Lumiere Ultra HD is a curated hybrid preview range for a more refined timber-look hybrid direction.",
+      suitability: "Good for customers comparing a premium timber-look hybrid before using the quote.",
+      route: { label: "Preview hybrid ranges", href: "hybrid-flooring-sydney.html" },
+      terms: ["lumiere", "lumiere ultra", "lumiere ultra hd", "bellevue avenue"]
+    },
+    hybridStorm: {
+      key: "range_hybrid_storm",
+      label: "Storm Luxury Hybrid Plank",
+      summary: "Storm Luxury Hybrid Plank is a curated hybrid preview range for durable everyday rooms with a cleaner timber-look finish.",
+      suitability: "Good for busy homes where the customer wants a strong hybrid shortlist.",
+      route: { label: "Preview hybrid ranges", href: "hybrid-flooring-sydney.html" },
+      terms: ["storm hybrid", "storm luxury", "storm luxury hybrid", "royal white oak"]
+    },
     laminateWaterResistant: {
       key: "range_laminate_water_resistant",
       label: "12mm water-resistant laminate",
@@ -43,13 +67,77 @@
       route: { label: "Browse laminate", href: "products.html" },
       terms: ["12mm water resistant", "ac4 laminate", "water resistant ac4", "laminate range"]
     },
+    laminateSwishAqua: {
+      key: "range_laminate_swish_aqua",
+      label: "Swish Laminate Aqua",
+      summary: "Swish Laminate Aqua is a curated laminate preview range for practical dry-area renovations where water-resistant laminate is preferred.",
+      suitability: "Good for bedrooms and living areas that need a neat laminate shortlist.",
+      route: { label: "Preview laminate ranges", href: "laminate-flooring-sydney.html" },
+      terms: ["swish laminate aqua", "laminate aqua", "blackbutt aqua"]
+    },
+    laminateSwish: {
+      key: "range_laminate_swish",
+      label: "Swish Laminate",
+      summary: "Swish Laminate is a curated laminate preview range for straightforward dry internal spaces.",
+      suitability: "Good for rentals, bedrooms, and practical everyday upgrades.",
+      route: { label: "Preview laminate ranges", href: "laminate-flooring-sydney.html" },
+      terms: ["swish laminate", "oak step", "spotted gum laminate", "practical laminate"]
+    },
+    laminateVilleroyHeritage: {
+      key: "range_laminate_villeroy_heritage",
+      label: "Villeroy & Boch Heritage Laminate",
+      summary: "Villeroy & Boch Heritage Laminate is a curated laminate preview range for a more classic timber-look direction.",
+      suitability: "Good for customers who want laminate with a more refined heritage look.",
+      route: { label: "Preview laminate ranges", href: "laminate-flooring-sydney.html" },
+      terms: ["villeroy heritage", "villeroy boch heritage", "heritage laminate", "travertin oak"]
+    },
+    laminateVilleroyContemporary: {
+      key: "range_laminate_villeroy_contemporary",
+      label: "Villeroy & Boch Contemporary Laminate",
+      summary: "Villeroy & Boch Contemporary Laminate is a curated laminate preview range for a cleaner modern timber-look finish.",
+      suitability: "Good for customers comparing a contemporary laminate shortlist.",
+      route: { label: "Preview laminate ranges", href: "laminate-flooring-sydney.html" },
+      terms: ["villeroy contemporary", "villeroy boch contemporary", "contemporary laminate", "current oak"]
+    },
+    engineeredWideboard: {
+      key: "range_engineered_wideboard",
+      label: "Swish Oak Wideboard",
+      summary: "Swish Oak Wideboard is a curated engineered timber preview range for wider-board premium timber projects.",
+      suitability: "Good for feature living spaces and higher-end renovations where board width matters.",
+      route: { label: "Preview engineered ranges", href: "engineered-timber-flooring-sydney.html" },
+      terms: ["swish oak wideboard", "wideboard engineered", "wide board engineered", "urban antique oak"]
+    },
+    engineeredContemporary: {
+      key: "range_engineered_contemporary",
+      label: "Swish Oak Contemporary",
+      summary: "Swish Oak Contemporary is a curated engineered timber preview range for a clean modern timber finish.",
+      suitability: "Good for premium homes where the customer wants a refined engineered timber shortlist.",
+      route: { label: "Preview engineered ranges", href: "engineered-timber-flooring-sydney.html" },
+      terms: ["swish oak contemporary", "contemporary engineered", "elegant natural oak"]
+    },
     swishOakNatura: {
       key: "range_swish_oak_natura",
-      label: "Swish Oak Natura",
-      summary: "Swish Oak Natura is an engineered timber range with colour previews on the product page. The customer selects the range first and confirms the exact colour during the quote flow because engineered colour can affect pricing.",
-      suitability: "Good for premium engineered timber projects where timber character, colour, and installation method need clear confirmation.",
-      route: { label: "Browse engineered", href: "products.html" },
-      terms: ["swish oak natura", "ambient sand", "belfort oak", "french natural", "french carbon", "engineered range"]
+      label: "Swish Oak Natura Handcrafted",
+      summary: "Swish Oak Natura Handcrafted is a curated engineered timber preview range with a more textured timber character.",
+      suitability: "Good for premium engineered timber projects where timber character and finish quality matter.",
+      route: { label: "Preview engineered ranges", href: "engineered-timber-flooring-sydney.html" },
+      terms: ["swish oak natura", "swish oak natura handcrafted", "natura handcrafted", "natural canvas", "ambient sand", "belfort oak", "french natural", "french carbon", "engineered range"]
+    },
+    engineeredCastelNuovo: {
+      key: "range_engineered_castel_nuovo",
+      label: "Castel Nuovo Herringbone",
+      summary: "Castel Nuovo Herringbone is a curated engineered timber preview range for a premium patterned floor.",
+      suitability: "Good for feature spaces where the customer wants herringbone visual impact.",
+      route: { label: "Preview engineered ranges", href: "engineered-timber-flooring-sydney.html" },
+      terms: ["castel nuovo", "castel nuovo herringbone", "panania oak herringbone", "herringbone preview"]
+    },
+    engineeredCavalloBianco: {
+      key: "range_engineered_cavallo_bianco",
+      label: "Cavallo Bianco Chevron",
+      summary: "Cavallo Bianco Chevron is a curated engineered timber preview range for a clean chevron pattern.",
+      suitability: "Good for design-led projects where pattern detail is part of the finish.",
+      route: { label: "Preview engineered ranges", href: "engineered-timber-flooring-sydney.html" },
+      terms: ["cavallo bianco", "cavallo bianco chevron", "chevron engineered", "amaretti oak"]
     },
     swishOakHerringbone: {
       key: "range_swish_oak_herringbone",
@@ -109,9 +197,23 @@
     trims: {
       key: "scope_trims_finishing",
       label: "Trims, scotia and skirting",
-      summary: "Finishing should say whether trims, scotia, skirting, transition strips, door trims, or stair nosing are included. If it is not written, it should be confirmed before comparing quotes.",
+      summary: "Finishing should say whether trims, scotia, skirting, transition strips, door trimming, or stair nosing are included. If the customer is not sure, treat it as needs confirmation rather than a confirmed no.",
       route: { label: "Review quote scope", href: "quote-review.html" },
-      terms: ["trim", "trims", "scotia", "skirting", "transition", "door trim", "door trimming", "stair nosing", "nosing", "edge trim"]
+      terms: ["trim", "trims", "scotia", "skirting", "transition", "door trim", "door trimming", "door trimming not sure", "stair nosing", "nosing", "edge trim"]
+    },
+    furniture: {
+      key: "scope_furniture_moving",
+      label: "Furniture moving",
+      summary: "Furniture moving should be written as included, not included, or needs confirmation. If the customer is not sure, it should stay as a review item rather than silently becoming excluded.",
+      route: { label: "Start quote", href: "quote.html" },
+      terms: ["furniture", "furniture moving", "move furniture", "furnished rooms", "furniture not sure", "furniture unsure"]
+    },
+    uncertainExtras: {
+      key: "scope_uncertain_extras",
+      label: "Uncertain extras",
+      summary: "Not sure answers for removal, disposal, preparation, underlay, skirting or scotia, door trimming, furniture, stairs, or site details should be treated as needs confirmation before final confirmation.",
+      route: { label: "Start quote", href: "quote.html" },
+      terms: ["not sure", "unsure extras", "needs confirmation", "review note", "review notes", "why not included", "selected not sure"]
     },
     stairs: {
       key: "scope_stairs",
@@ -154,7 +256,7 @@
     installGuide: {
       key: "service_install_guide",
       label: "Installation guide",
-      summary: "Installation guidance should focus on area, product direction, removal, floor preparation, trims, and review scope.",
+      summary: "Installation guidance should focus on area, flooring choice, main inclusions, finishing details, and final scope review.",
       route: { label: "Read install guide", href: "flooring-installation-cost-sydney.html" },
       terms: ["installation guide", "installation", "flooring installation", "install flooring"]
     },
@@ -179,41 +281,41 @@
       key: "suburb_parramatta",
       label: "Parramatta",
       summary: "Parramatta projects often need clear parking, building type, and product selection details.",
-      route: { label: "Parramatta flooring", href: "parramatta-flooring.html" },
+      route: { label: "Parramatta flooring", href: "flooring-parramatta.html" },
       terms: ["parramatta"]
     },
     auburn: {
       key: "suburb_auburn",
       label: "Auburn",
       summary: "Auburn jobs can involve apartments, older units, parking, and practical product choice.",
-      route: { label: "Auburn flooring", href: "auburn-flooring.html" },
+      route: { label: "Auburn flooring", href: "flooring-auburn.html" },
       terms: ["auburn"]
     },
     liverpool: {
       key: "suburb_liverpool",
       label: "Liverpool",
-      summary: "Liverpool projects may need staged planning, parking, and a clear product direction.",
-      route: { label: "Liverpool flooring", href: "liverpool-flooring.html" },
+      summary: "Liverpool projects may need staged planning, clear product choice, and final project detail review.",
+      route: { label: "Liverpool flooring", href: "flooring-liverpool.html" },
       terms: ["liverpool"]
     },
     blacktown: {
       key: "suburb_blacktown",
       label: "Blacktown",
       summary: "Blacktown projects often include larger family layouts, staged renovation plans, and site checks.",
-      route: { label: "Blacktown flooring", href: "blacktown-flooring.html" },
+      route: { label: "Blacktown flooring", href: "flooring-blacktown.html" },
       terms: ["blacktown"]
     },
     miranda: {
       key: "suburb_miranda",
       label: "Miranda",
       summary: "Miranda projects can include family homes, apartments, moisture awareness, and premium product review.",
-      route: { label: "Miranda flooring", href: "miranda-flooring.html" },
+      route: { label: "Miranda flooring", href: "flooring-miranda.html" },
       terms: ["miranda"]
     },
     cabramatta: {
       key: "suburb_cabramatta",
       label: "Cabramatta",
-      summary: "Cabramatta projects should keep product direction, area, and site scope clear before quote confirmation.",
+      summary: "Cabramatta projects should keep flooring choice, area, and main project details clear before quote confirmation.",
       route: { label: "Cabramatta flooring", href: "flooring-cabramatta.html" },
       terms: ["cabramatta"]
     },

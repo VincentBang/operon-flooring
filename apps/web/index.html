@@ -69,11 +69,11 @@
         {
           "@type": "FAQPage",
           "mainEntity": [
-            {"@type":"Question","name":"What changes the final flooring price?","acceptedAnswer":{"@type":"Answer","text":"Product range, measured area, removal, disposal, floor preparation, trims, stairs and moisture requirements can all change the final quote. These items should be visible before the job is booked."}},
-            {"@type":"Question","name":"Why does underlay or acoustic layer matter?","acceptedAnswer":{"@type":"Answer","text":"Underlay and acoustic layers can affect comfort, sound performance, apartment requirements and product suitability. Requirements depend on the flooring product, building type, subfloor and strata rules where applicable."}},
+            {"@type":"Question","name":"What should be clear before you decide?","acceptedAnswer":{"@type":"Answer","text":"The product range, measured area, main inclusions, finishing details and any review items should be clear before the job is booked."}},
+            {"@type":"Question","name":"How is the final scope confirmed?","acceptedAnswer":{"@type":"Answer","text":"Operon reviews the product, area, main inclusions and project notes so the final scope can be confirmed before installation."}},
             {"@type":"Question","name":"When is a floor plan useful?","acceptedAnswer":{"@type":"Answer","text":"A floor plan is useful when room measurements are unclear, the layout is awkward, or you want a faster starting area without measuring each room manually. The tool lets you trace flooring spaces and send the measured area into the quote page."}},
-            {"@type":"Question","name":"What should I check before accepting a flooring quote?","acceptedAnswer":{"@type":"Answer","text":"Check the product range, area basis, removal, disposal, underlay, floor preparation, trims, stairs, property details, warranty and exclusions. If anything is unclear, ask for it in writing."}},
-            {"@type":"Question","name":"Why can two flooring quotes look different?","acceptedAnswer":{"@type":"Answer","text":"Two quotes can look different because one may include more work than the other, even if both are for the same rooms. Product quality, waste allowance, preparation, finishing details and site conditions can all change the total."}}
+            {"@type":"Question","name":"What should I check before accepting a flooring quote?","acceptedAnswer":{"@type":"Answer","text":"Check the product range, area basis, main inclusions, finishing details, warranty and exclusions. If anything is unclear, ask for it in writing."}},
+            {"@type":"Question","name":"Why can two flooring quotes look different?","acceptedAnswer":{"@type":"Answer","text":"Two quotes can describe different levels of product, finish and included work. Compare the written inclusions before deciding."}}
           ]
         }
       ]
@@ -92,7 +92,9 @@
       --accent: #B56E52;
       --shadow: 0 18px 50px rgba(23, 35, 45, 0.08);
       --radius: 28px;
-      --max: 1280px;
+      --max: 1060px;
+      --hero-max: 1120px;
+      --header-max: 1260px;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; max-width: 100%; overflow-x: clip; }
@@ -110,6 +112,10 @@
     .shell {
       width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
+    }
+
+    .site-header .shell {
+      width: min(var(--header-max), calc(100% - 32px));
     }
     .site-header {
       position: sticky;
@@ -179,9 +185,10 @@
     .quiet-link { display: inline-flex; align-items: center; min-height: 48px; padding: 12px 4px; color: var(--muted); font-weight: 800; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
     .quiet-link:hover { color: var(--text); }
     main { overflow: hidden; }
-    .section { max-width: var(--max); margin: 0 auto; padding: 92px 22px; }
+    .section { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; padding: 84px 0; }
+    .section.hero { width: min(var(--hero-max), calc(100% - 32px)); }
     .hero { padding-top: 42px; }
-    .hero-grid { display: grid; grid-template-columns: minmax(0, 640px) minmax(380px, 520px); gap: 40px; align-items: center; justify-content: space-between; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 520px) minmax(360px, 500px); gap: clamp(32px, 4vw, 44px); align-items: center; justify-content: space-between; }
     .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: .14em; font-size: .8rem; font-weight: 800; margin: 0 0 18px; }
     h1, h2, h3 { margin: 0; line-height: 1.04; letter-spacing: -0.045em; }
     h1 { font-size: clamp(2.35rem, 4.55vw, 4.05rem); max-width: 12.2ch; text-wrap: balance; }
@@ -194,7 +201,7 @@
     .hero-visual {
       position: relative;
       width: 100%;
-      min-height: 500px;
+      min-height: 430px;
       max-width: 520px;
       justify-self: end;
       border-radius: 42px;
@@ -202,7 +209,7 @@
       background: var(--surface);
       box-shadow: var(--shadow);
     }
-    .hero-visual img { width: 100%; height: 100%; min-height: 500px; object-fit: cover; object-position: center 56%; }
+    .hero-visual img { width: 100%; height: 100%; min-height: 430px; object-fit: cover; object-position: center 56%; }
     .trust-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding-top: 24px; }
     .trust-item { padding: 18px 0; border-top: 1px solid var(--line); font-weight: 700; color: var(--text); }
     .trust-item span { display: block; color: var(--muted); font-weight: 500; margin-top: 6px; }
@@ -210,6 +217,25 @@
     .trust-card { background: var(--surface); border: 1px solid rgba(216,226,223,.82); border-radius: var(--radius); padding: 24px; box-shadow: 0 6px 20px rgba(17,24,32,.05); }
     .trust-card p { color: var(--muted); margin-bottom: 0; }
     .proof-note { margin-top: 18px; color: var(--muted); font-weight: 650; }
+    .project-proof { display: grid; gap: 22px; padding: clamp(22px, 4vw, 38px); border: 1px solid rgba(216,226,223,.9); border-radius: 36px; background: linear-gradient(135deg, #F8FAF8 0%, #FFFFFF 56%, #F3F7F6 100%); box-shadow: 0 14px 36px rgba(23, 35, 45, .06); }
+    .project-proof-head { display: grid; grid-template-columns: minmax(0, .66fr) minmax(260px, .34fr); gap: 24px; align-items: end; }
+    .project-proof-head .intro { margin: 0; }
+    .project-proof-chips { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+    .project-proof-chips span { padding: 9px 12px; border: 1px solid rgba(216,226,223,.9); border-radius: 999px; background: rgba(255,255,255,.78); color: var(--text); font-size: .84rem; font-weight: 750; }
+    .project-gallery { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .project-gallery-side { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .project-card { position: relative; min-height: 220px; margin: 0; overflow: hidden; border: 1px solid rgba(216,226,223,.88); border-radius: 26px; background: #fff; box-shadow: 0 8px 22px rgba(23,35,45,.055); }
+    .project-card-feature { min-height: 400px; }
+    .project-card img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .project-card-caption { position: absolute; left: 14px; right: 14px; bottom: 14px; padding: 12px 14px; border: 1px solid rgba(255,255,255,.68); border-radius: 18px; background: rgba(255,255,255,.9); box-shadow: 0 8px 22px rgba(17,24,32,.08); backdrop-filter: blur(14px); }
+    .project-card-caption strong { display: block; color: var(--text); font-size: .98rem; line-height: 1.25; }
+    .project-card-caption span { display: block; margin-top: 3px; color: var(--muted); font-size: .86rem; line-height: 1.35; }
+    .project-proof-note { max-width: 70ch; margin: 0; color: var(--muted); font-size: .95rem; }
+    .project-proof-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding-top: 8px; border-top: 1px solid rgba(216,226,223,.86); }
+    .project-proof-actions h3 { margin: 0 0 4px; }
+    .project-proof-actions p { margin: 0; color: var(--muted); line-height: 1.55; }
+    .project-proof-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+    .section[aria-labelledby="proofTitle"] { width: min(1060px, calc(100% - 32px)); }
     .intent-router {
       display: grid;
       grid-template-columns: minmax(240px, .72fr) minmax(0, 1.28fr);
@@ -269,6 +295,7 @@
       margin-bottom: 24px;
     }
     .process-step p { color: var(--muted); margin-bottom: 0; }
+    .clarity-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .section-action { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
     .section-action span { color: var(--muted); font-size: .95rem; }
     .quote-checks {
@@ -413,15 +440,18 @@
     .seo-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 34px; align-items: start; }
     .seo-link-groups { display: grid; gap: 24px; margin-top: 28px; }
     .seo-link-group h3 { margin-bottom: 12px; font-size: 1.02rem; letter-spacing: -0.02em; }
+    .seo-link-group-secondary { margin: 0; }
+    .seo-link-group-secondary summary { color: var(--text); font-size: 1.02rem; }
+    .seo-link-group-secondary .link-list { margin-top: 14px; }
     .link-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 0; }
     .link-list a { padding: 10px 14px; border: 1px solid var(--line); border-radius: 999px; background: white; color: var(--muted); font-weight: 700; }
     details { background: var(--surface); border: 1px solid rgba(216,226,223,.82); border-radius: 20px; padding: 20px 22px; margin-bottom: 12px; }
     summary { cursor: pointer; font-weight: 800; }
-    .final-cta { text-align: center; padding-bottom: 120px; }
+    .final-cta { width: min(900px, calc(100% - 32px)); text-align: center; padding-bottom: 120px; }
     .final-cta p { margin: 20px auto 30px; max-width: 640px; color: var(--muted); font-size: 1.1rem; }
     .container { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
     .site-footer { background: var(--primary); color: #fff; padding: 64px 0 20px; }
-    .site-footer.footer-contained { width: min(1360px, calc(100% - 80px)); margin: 64px auto 80px; border-radius: 30px; overflow: hidden; box-shadow: 0 18px 48px rgba(23, 49, 58, 0.16); }
+    .site-footer.footer-contained { width: min(1240px, calc(100% - 80px)); margin: 64px auto 80px; border-radius: 30px; overflow: hidden; box-shadow: 0 18px 48px rgba(23, 49, 58, 0.16); }
     .footer-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) repeat(4, minmax(0, .9fr)); gap: 28px 36px; align-items: start; }
     .footer-brand-block { display: grid; gap: 16px; max-width: 300px; }
     .footer-logo { display: inline-flex; align-items: center; justify-content: center; width: 188px; min-height: 58px; padding: 14px 16px; border-radius: 18px; background: rgba(255,255,255,.96); box-shadow: inset 0 0 0 1px rgba(17,24,32,.06); }
@@ -462,24 +492,42 @@
       .mobile-sticky-cta a { min-height: 48px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; padding: 10px 12px; font-weight: 800; background: var(--soft); color: var(--text); border: 1px solid var(--line); }
       .mobile-sticky-cta a.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
       #operon-chatbot-root { bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important; }
-      .hero-grid, .quality, .floorplan-cta, .seo-grid, .review-path, .intent-router { grid-template-columns: 1fr; }
+      .hero-grid, .quality, .floorplan-cta, .seo-grid, .review-path, .intent-router, .project-proof-head, .project-gallery { grid-template-columns: 1fr; }
       .hero-visual, .hero-visual img { min-height: 320px; }
       .hero-visual { max-width: none; justify-self: stretch; }
       .trust-strip, .trust-card-grid, .cards, .process-grid { grid-template-columns: 1fr; }
       .quote-check-grid { grid-template-columns: 1fr; }
       .project-fit-grid { grid-template-columns: 1fr; }
       .quality-list { grid-template-columns: 1fr; }
-      .section { padding: 56px 18px; }
+      .section { width: min(var(--max), calc(100% - 36px)); padding: 56px 0; }
+      .section.hero, .section[aria-labelledby="proofTitle"], .final-cta { width: min(100% - 36px, var(--hero-max)); }
       .hero { padding-top: 28px; }
       h1 { font-size: clamp(2.3rem, 9.2vw, 3.45rem); max-width: 11ch; }
       .lead { font-size: 1rem; max-width: 28rem; }
       .hero-actions { margin-top: 22px; }
       .hero-actions .button { width: 100%; }
       .hero-actions .quiet-link { justify-content: center; width: 100%; }
+      .hero-grid { gap: 22px; }
+      .hero-visual, .hero-visual img { min-height: 240px; border-radius: 24px; }
+      .trust-strip { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 16px; }
+      .trust-item { flex: 1 1 calc(50% - 8px); padding: 10px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.76); font-size: .82rem; text-align: center; }
+      .trust-item span { display: none; }
+      .intent-router { gap: 18px; border: 0; padding-top: 28px; }
+      .intent-paths { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .intent-path, .intent-path--primary { display: grid; grid-template-columns: 1fr; gap: 8px; padding: 14px; border: 1px solid var(--line); border-radius: 18px; margin: 0; background: rgba(255,255,255,.84); box-shadow: none; }
+      .intent-number { width: 30px; height: 30px; font-size: .82rem; }
+      .intent-path strong { font-size: .98rem; }
+      .intent-path span span { font-size: .86rem; line-height: 1.35; }
       .section-action .button, .section-action .button-secondary { width: 100%; }
-      .intent-path { grid-template-columns: auto 1fr; align-items: start; }
-      .intent-path .card-link { grid-column: 2; white-space: normal; }
+      .intent-path { align-items: start; }
+      .intent-path .card-link { grid-column: auto; white-space: normal; margin-top: 4px; }
       .trust-line { margin-top: 14px; font-size: .9rem; }
+      .project-proof { border-radius: 30px; padding: 24px; gap: 22px; }
+      .project-proof-head, .project-gallery { grid-template-columns: 1fr; }
+      .project-proof-chips { justify-content: flex-start; }
+      .project-card-feature { min-height: 400px; }
+      .project-gallery-side { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .project-gallery-side .project-card { min-height: 240px; }
       .site-footer.footer-contained { width: calc(100% - 24px); margin: 44px auto 24px; border-radius: 22px; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
       .footer-brand-block { grid-column: 1 / -1; max-width: 420px; }
@@ -493,6 +541,28 @@
       .mobile-sticky-cta { grid-template-columns: 1fr 1fr; }
       .mobile-sticky-cta a:first-child { display: none; }
       #operon-chatbot-root { bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important; }
+      .section { width: min(var(--max), calc(100% - 32px)); padding: 38px 0; }
+      .section.hero, .section[aria-labelledby="proofTitle"], .final-cta { width: min(100% - 32px, var(--hero-max)); }
+      .hero { padding-top: 18px; }
+      h1 { font-size: clamp(2.1rem, 10vw, 2.75rem); max-width: 11.5ch; }
+      .lead { margin-top: 12px; line-height: 1.45; }
+      .trust-card-grid, .process-grid, .quote-check-grid, .review-checklist, .project-fit-grid { gap: 10px; }
+      .quote-checks, .quality, .floorplan-cta, .project-fit, .review-path { border-radius: 24px; padding: 22px 18px; box-shadow: none; }
+      .trust-card, .process-step, .card, .review-check, .project-fit-card { border-radius: 18px; padding: 16px; min-height: 0; box-shadow: none; }
+      .project-fit-card::before { display: none; }
+      .quote-check { min-height: 46px; padding: 12px 14px; border-radius: 14px; font-size: .92rem; }
+      .project-proof { border-radius: 24px; padding: 18px; gap: 18px; box-shadow: none; }
+      .project-proof-chips { gap: 6px; }
+      .project-proof-chips span { padding: 8px 10px; font-size: .78rem; }
+      .project-gallery-side { grid-template-columns: 1fr; gap: 12px; }
+      .project-card, .project-card-feature, .project-gallery-side .project-card { min-height: 0; border-radius: 18px; box-shadow: none; }
+      .project-card img { height: 240px; }
+      .project-card-caption { position: static; border: 0; border-radius: 0; background: #fff; box-shadow: none; backdrop-filter: none; }
+      .project-proof-actions, .project-proof-buttons { display: grid; grid-template-columns: 1fr; }
+      .project-proof-buttons .button, .project-proof-buttons .button-secondary { width: 100%; }
+      .seo-grid .intro p { font-size: .96rem; }
+      details { padding: 14px 16px; border-radius: 16px; }
+      .final-cta { padding-bottom: 88px; }
       .site-footer { padding: 52px 0 18px; }
       .footer-grid { grid-template-columns: 1fr; }
       .footer-brand-block { max-width: none; }
@@ -503,16 +573,16 @@
 <body class="has-mobile-sticky-cta">
   <header class="site-header">
     <div class="shell nav">
-      <a class="brand" href="/#top" aria-label="Operon Flooring home">
+      <a class="brand" href="index.html#top" aria-label="Operon Flooring home">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Operon Flooring</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="/#top">Home</a>
+        <a href="index.html#top">Home</a>
         <a href="quote.html">Quote</a>
         <a href="products.html">Flooring Products</a>
         <a href="floorplan.html">Floor Plan</a>
-        <a href="/blog/">Guides</a>
+        <a href="blog/">Guides</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
         <span></span>
@@ -538,13 +608,13 @@
       <div class="hero-grid">
         <div>
           <p class="eyebrow">Sydney flooring quotes</p>
-          <h1>Get a clearer flooring quote before you book an installer</h1>
-          <p class="lead">Operon Flooring helps Sydney homeowners, renovators and apartment owners quote and install hybrid, laminate and engineered timber flooring with clearer scope before work begins.</p>
+          <h1>Get a clear flooring quote in minutes</h1>
+          <p class="lead">Premium Sydney flooring quotes for hybrid, laminate and engineered timber. Start with the details you know now.</p>
           <div class="hero-actions">
-            <a class="button" href="quote.html" data-track-cta="hero_start_quote_click">Start flooring quote</a>
-            <a class="quiet-link" href="quote-review.html" data-track-cta="hero_quote_review_click">Already have a written quote? Check it here.</a>
+            <a class="button" href="quote.html" data-track-cta="hero_start_quote_click">Start quote</a>
+            <a class="quiet-link" href="quote-review.html" data-track-cta="hero_quote_review_click">Check existing quote</a>
           </div>
-          <p class="trust-line">Online estimate first. Product range, measured area, removal, underlay, trims and access checked before booking.</p>
+          <p class="trust-line">Starting estimate first. Product, area and final scope are reviewed before booking.</p>
         </div>
         <div class="hero-visual" aria-label="Modern engineered timber flooring visual">
           <img src="images/home/modern-engineered-timber-flooring-sydney.avif" alt="Modern engineered timber flooring in a Sydney home" loading="eager" width="568" height="378">
@@ -553,7 +623,7 @@
       <div class="trust-strip" aria-label="Service highlights">
         <div class="trust-item">Hybrid, laminate and engineered timber<span>Choose the product path that fits the job</span></div>
         <div class="trust-item">Floor plan upload available<span>Trace rooms instead of measuring every wall</span></div>
-        <div class="trust-item">Stairs, trims and removal checked<span>Capture items that change flooring work</span></div>
+        <div class="trust-item">Stairs, trims and removal checked<span>Capture the main inclusions before review</span></div>
         <div class="trust-item">Sydney service area<span>Support for homes, units and renovations</span></div>
       </div>
     </section>
@@ -562,129 +632,132 @@
       <div>
         <p class="eyebrow">Choose your path</p>
         <h2 id="intentRouterTitle">Start from where you are now.</h2>
-        <p class="lead">Choose the path that matches what you already know, then keep product, area and scope assumptions visible.</p>
+        <p class="lead">Quote, check a written quote, browse products or use a floor plan.</p>
       </div>
       <div class="intent-paths" aria-label="Flooring quote entry paths">
         <a class="intent-path intent-path--primary" href="quote.html" data-track-cta="path_start_quote_click" data-funnel-intent="quote">
           <span class="intent-number">1</span>
-          <span><strong>I know my area or product</strong><span>Build a structured estimate with product, area and main scope details.</span></span>
-          <span class="card-link">Start flooring quote -></span>
+          <span><strong>Start a quote</strong><span>Add product, area and key scope.</span></span>
+          <span class="card-link">Start -></span>
         </a>
         <a class="intent-path" href="quote-review.html" data-track-cta="path_quote_review_click" data-funnel-intent="review">
           <span class="intent-number">2</span>
-          <span><strong>I already have a written quote</strong><span>Review product, area, inclusions and missing scope before comparing totals.</span></span>
+          <span><strong>Check existing quote</strong><span>Review inclusions before deciding.</span></span>
           <span class="card-link">Check quote -></span>
         </a>
         <a class="intent-path" href="products.html" data-track-cta="path_products_click" data-funnel-intent="products">
           <span class="intent-number">3</span>
-          <span><strong>I am still choosing flooring</strong><span>Compare hybrid, laminate and engineered timber before selecting a range.</span></span>
+          <span><strong>Browse flooring</strong><span>Compare hybrid, laminate and timber.</span></span>
           <span class="card-link">Browse products -></span>
         </a>
         <a class="intent-path" href="floorplan.html" data-track-cta="path_floorplan_click" data-funnel-intent="floorplan">
           <span class="intent-number">4</span>
-          <span><strong>I only have a floor plan</strong><span>Trace rooms or send measured area into the quote flow.</span></span>
+          <span><strong>Use a floor plan</strong><span>Trace rooms and send area to quote.</span></span>
           <span class="card-link">Upload floor plan -></span>
         </a>
       </div>
     </section>
 
     <section class="section" aria-labelledby="proofTitle">
-      <div class="intro">
-        <p class="eyebrow">Scope clarity</p>
-        <h2 id="proofTitle">Clear scope before the job is booked</h2>
-        <p>Operon helps Sydney customers review the details that usually change flooring work before installation is confirmed.</p>
-      </div>
-      <div class="trust-card-grid">
-        <article class="trust-card">
-          <h3>Product and area checked</h3>
-          <p>Flooring type, selected range and measured area are reviewed before final confirmation.</p>
-        </article>
-        <article class="trust-card">
-          <h3>Removal, trims and stairs clarified</h3>
-          <p>Removal, disposal, scotia, skirting, trims and stair details are checked so the scope is easier to compare.</p>
-        </article>
-        <article class="trust-card">
-          <h3>Site conditions reviewed</h3>
-          <p>Apartment requirements, subfloor preparation, moisture-related items and other site details are confirmed where relevant.</p>
-        </article>
-        <article class="trust-card">
-          <h3>Written assumptions</h3>
-          <p>The aim is to make product, scope and site assumptions visible before the job is booked.</p>
-        </article>
+      <div class="project-proof">
+        <div class="project-proof-head">
+          <div class="intro">
+            <p class="eyebrow">Recent project proof</p>
+            <h2 id="proofTitle">Recent Sydney flooring projects</h2>
+            <p>Finished flooring work across Sydney homes, with the preparation, product choice and stair details handled before the job is booked.</p>
+          </div>
+          <div class="project-proof-chips" aria-label="Project types shown">
+            <span>Engineered timber</span>
+            <span>Herringbone</span>
+            <span>Stairs</span>
+            <span>Spotted gum</span>
+            <span>Hybrid flooring</span>
+            <span>Subfloor levelling</span>
+            <span>Sydney projects</span>
+          </div>
+        </div>
+        <div class="project-gallery" aria-label="Recent Sydney flooring project photos">
+          <figure class="project-card project-card-feature">
+            <img src="images/projects/engineered-herringbone-timber-stair-sydney/finished-engineered-herringbone-timber-flooring-sydney-kitchen-living.jpg" alt="Finished engineered herringbone timber flooring in a Sydney kitchen and living area" loading="lazy" width="1118" height="944">
+            <figcaption class="project-card-caption">
+              <strong>Engineered herringbone timber</strong>
+              <span>A refined timber finish that lifts the main living space.</span>
+            </figcaption>
+          </figure>
+          <div class="project-gallery-side">
+            <figure class="project-card">
+              <img src="images/projects/hybrid-floor-levelling-case-study/hybrid-flooring-after-levelling-open-plan-sydney.jpg" alt="Finished hybrid flooring after preparation in a Sydney open plan living area" loading="lazy" width="1500" height="1125">
+              <figcaption class="project-card-caption">
+                <strong>Finished hybrid flooring</strong>
+                <span>Clean timber-look finish after preparation and installation.</span>
+              </figcaption>
+            </figure>
+            <figure class="project-card">
+              <img src="images/projects/engineered-herringbone-timber-stair-sydney/finished-engineered-timber-stair-sydney.jpg" alt="Finished engineered timber stair installation in Sydney" loading="lazy" width="1500" height="1125">
+              <figcaption class="project-card-caption">
+                <strong>Finished timber stair</strong>
+                <span>Stair detail matched to the timber finish.</span>
+              </figcaption>
+            </figure>
+            <figure class="project-card">
+              <img src="images/projects/engineered-spotted-gum-rounded-stair-sydney/finished-spotted-gum-rounded-stair-step-sydney.jpg" alt="Finished spotted gum rounded stair step detail in Sydney" loading="lazy" width="1500" height="1125">
+              <figcaption class="project-card-caption">
+                <strong>Spotted gum rounded step</strong>
+                <span>A softer feature step with matched timber grain.</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+        <p class="project-proof-note">Behind these finished results, preparation items like floor levelling, removal and stair detailing are reviewed before booking. <a href="recent-flooring-projects.html">View more project photos</a>.</p>
+        <div class="project-proof-actions">
+          <div>
+            <h3>Want a quote for a similar project?</h3>
+            <p>Start with the product, area and details you know now. We’ll help confirm the remaining scope before booking.</p>
+          </div>
+          <div class="project-proof-buttons">
+            <a class="button" href="quote.html" data-track-cta="project_proof_start_quote_click">Start flooring quote</a>
+            <a class="button-secondary" href="quote-review.html" data-track-cta="project_proof_quote_review_click">Check existing quote</a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="quoteProcessTitle">
+    <section class="section" aria-labelledby="quoteClarityTitle">
       <div class="intro">
-        <p class="eyebrow">After you submit</p>
-        <h2 id="quoteProcessTitle">What happens after your flooring quote request?</h2>
-        <p>Start with what you know. Product, area and site details can be checked before the job is booked.</p>
+        <p class="eyebrow">Quote clarity</p>
+        <h2 id="quoteClarityTitle">How Operon keeps your quote clear</h2>
+        <p>Start with the details you know now. Operon keeps the quote focused on product, area and the main inclusions before anything is booked.</p>
       </div>
-      <div class="process-grid">
+      <div class="process-grid clarity-grid">
         <article class="process-step">
           <span class="process-number">1</span>
-          <h3>Submit the quote details you know</h3>
-          <p>Choose a flooring type, enter area and add obvious items like removal, stairs or trims.</p>
+          <h3>Product and area</h3>
+          <p>Choose a flooring type and add the area you know, or use the floor plan tool if measuring is easier that way.</p>
         </article>
         <article class="process-step">
           <span class="process-number">2</span>
-          <h3>Operon reviews product, area and scope</h3>
-          <p>The request is checked against the product range, measured area and included work.</p>
+          <h3>Main inclusions</h3>
+          <p>Include the obvious work such as removal, trims, stairs or furniture notes so the estimate reflects the project more clearly.</p>
         </article>
         <article class="process-step">
           <span class="process-number">3</span>
-          <h3>Site details are confirmed where required</h3>
-          <p>Subfloor preparation, moisture, apartment access and acoustic underlay are reviewed where relevant.</p>
-        </article>
-        <article class="process-step">
-          <span class="process-number">4</span>
-          <h3>Final quote and installation path are agreed</h3>
-          <p>Installation method, finishing items and any site assumptions are agreed before work starts.</p>
+          <h3>Final scope review</h3>
+          <p>Final project details are reviewed before booking, so the written scope is clear before installation is confirmed.</p>
         </article>
       </div>
       <div class="faq" aria-label="Quote process details">
         <details>
-          <summary>What changes the final flooring price?</summary>
-          <p>Product range, measured area, removal, disposal, subfloor preparation, trims, stairs and moisture conditions can all change the final quote.</p>
+          <summary>What should be clear before you decide?</summary>
+          <p>Product choice, measured area, main inclusions, finish details and exclusions should be clear before you accept a flooring quote.</p>
         </details>
         <details>
           <summary>Why can two flooring quotes look different?</summary>
-          <p>One quote may include supply, installation, disposal and finishing details, while another may only show a headline total. Check the written inclusions before comparing totals.</p>
+          <p>Two quotes can describe different levels of product, finish and included work. Compare the written inclusions before deciding.</p>
         </details>
       </div>
       <div class="section-action">
         <a class="button" href="quote.html" data-track-cta="click_quote_process_start">Start flooring quote</a>
-        <span>Start now, then confirm removal, subfloor, access and finishing details before booking.</span>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="quoteChecksTitle">
-      <div class="quote-checks">
-        <p class="eyebrow">What your quote checks</p>
-        <h2 id="quoteChecksTitle">What we check before final pricing.</h2>
-        <p class="lead">The estimate asks for the items that usually change flooring work.</p>
-        <div class="quote-check-grid" aria-label="Quote scope checks">
-          <div class="quote-check">Flooring type</div>
-          <div class="quote-check">Measured area</div>
-          <div class="quote-check">Product range</div>
-          <div class="quote-check">Removal and disposal</div>
-          <div class="quote-check">Floor preparation</div>
-          <div class="quote-check">Skirting, scotia and trims</div>
-          <div class="quote-check">Furniture handling</div>
-          <div class="quote-check">Apartment site details</div>
-          <div class="quote-check">Stairs or complex areas</div>
-          <div class="quote-check">Subfloor and moisture notes</div>
-        </div>
-        <div class="faq" aria-label="Quote scope explanations">
-        <details>
-          <summary>What should I check before accepting a flooring quote?</summary>
-          <p>Check the product range, area basis, removal, disposal, underlay, floor preparation, trims, stairs, warranty and exclusions. If those items are not written clearly, ask for confirmation before accepting.</p>
-        </details>
-        <details>
-          <summary>Why does underlay or acoustic layer matter?</summary>
-          <p>Underlay and acoustic layers affect comfort, sound performance and product suitability. In apartments and strata projects, check this early because the requirement can change the product and installation setup.</p>
-        </details>
-        </div>
+        <span>Start now, then final scope can be reviewed before booking.</span>
       </div>
     </section>
 
@@ -692,30 +765,30 @@
       <div class="review-path" aria-labelledby="reviewQuoteTitle">
         <div class="review-path-copy">
           <p class="eyebrow">Quote validation</p>
-          <h2 id="reviewQuoteTitle">Not sure if your flooring quote is fair?</h2>
-          <p>Upload or enter a written quote to check product, area, inclusions and common missing items before you decide.</p>
+          <h2 id="reviewQuoteTitle">Want to check a written quote before deciding?</h2>
+          <p>Upload or enter a written quote to review product, area, inclusions and questions to ask before you decide.</p>
           <div class="review-checklist" aria-label="Quote review checklist">
             <div class="review-check">
-              <strong>Check missing scope</strong>
-              <span>Removal, disposal, prep, trims and stairs.</span>
+              <strong>Review inclusions</strong>
+              <span>Check what is written into the quote.</span>
             </div>
             <div class="review-check">
-              <strong>Compare inclusions</strong>
-              <span>Supply, installation, underlay and finishing details.</span>
+              <strong>Compare product details</strong>
+              <span>Confirm range, finish and installation wording.</span>
             </div>
             <div class="review-check">
-              <strong>Understand cost risks</strong>
-              <span>Subfloor, moisture and apartment access items.</span>
+              <strong>Clarify open questions</strong>
+              <span>Spot items worth asking about before booking.</span>
             </div>
             <div class="review-check">
-              <strong>Avoid false cheapness</strong>
-              <span>A low total can describe a smaller job.</span>
+              <strong>Decide with confidence</strong>
+              <span>Use the written scope to compare clearly.</span>
             </div>
           </div>
         </div>
         <div class="review-path-actions">
           <a class="button-secondary" href="quote-review.html" data-track-cta="quote_validation_section">Review my quote</a>
-          <span class="review-path-note">Scope check first, price comparison second.</span>
+          <span class="review-path-note">A quiet second path if you already have a written quote.</span>
         </div>
       </div>
     </section>
@@ -737,9 +810,9 @@
         </article>
         <article class="card">
           <div>
-            <img src="https://images.pexels.com/photos/4263067/pexels-photo-4263067.jpeg?cs=srgb&dl=pexels-kelly-4263067.jpg&fm=jpg" alt="Installer working carefully on a laminate flooring installation" loading="lazy" width="500" height="300">
+            <img src="images/home/modern-timber-flooring-living-room.jpg" alt="Timber-look flooring in a modern Sydney living room" loading="lazy" decoding="async" width="500" height="300">
             <h3>Laminate Flooring</h3>
-            <p>A cost-conscious option for dry areas, rental upgrades and straightforward renovation work.</p>
+            <p>A practical option for dry areas, rental upgrades and straightforward renovation work.</p>
           </div>
           <a class="card-link" href="laminate-flooring-sydney.html">View laminate flooring →</a>
         </article>
@@ -778,13 +851,13 @@
         <div class="intro">
           <p class="eyebrow">Project fit</p>
           <h2 id="projectFitTitle">Choose flooring around the job, not just the colour.</h2>
-          <p>Product choice depends on the property, use case, access, maintenance needs and installation scope.</p>
+          <p>Product choice depends on the property, use case, finish expectations, maintenance needs and installation scope.</p>
         </div>
         <div class="project-fit-grid" aria-label="Flooring project fit options">
           <article class="project-fit-card">
             <div>
               <h3>Apartment flooring</h3>
-              <p>For strata, access, acoustic underlay and practical product selection.</p>
+              <p>For strata-friendly product selection and practical apartment finishes.</p>
             </div>
             <a class="card-link" href="quote.html" data-track-cta="project_fit_apartment_click">Start apartment quote -></a>
           </article>
@@ -798,7 +871,7 @@
           <article class="project-fit-card">
             <div>
               <h3>Investment property flooring</h3>
-              <p>For durable, practical upgrades where speed, cost control and maintenance matter.</p>
+              <p>For durable, practical upgrades where scheduling, value and maintenance matter.</p>
             </div>
             <a class="card-link" href="quote.html" data-track-cta="project_fit_investment_click">Start investment quote -></a>
           </article>
@@ -813,48 +886,54 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="scopeCheckTitle">
-      <div class="review-path" aria-labelledby="scopeCheckTitle">
-        <div class="review-path-copy">
-          <p class="eyebrow">Scope check</p>
-          <h2 id="scopeCheckTitle">Need confirmation before deciding?</h2>
-          <p>Some projects should be reviewed before relying on a self-serve estimate, especially stairs, apartments, acoustic requirements, levelling, moisture, engineered timber, large areas or difficult access.</p>
-        </div>
-        <div class="review-path-actions">
-          <a class="button-secondary" href="quote.html?quoteStep=5&scope_check=1" data-track-cta="site_assessment_requested" data-cta-intent="scope_check">Request a scope check</a>
-          <span class="review-path-note">No automatic booking. The aim is to confirm risk before the final quote.</span>
-        </div>
-      </div>
-    </section>
-
     <section class="section" aria-labelledby="seoTitle">
       <div class="seo-grid">
         <div>
           <p class="eyebrow">Sydney flooring quote support</p>
-          <h2 id="seoTitle">Flooring quote support across Sydney</h2>
-          <p class="lead">Operon helps Sydney customers price flooring work with product, area, removal, stairs, trims, access and subfloor details in view.</p>
+          <h2 id="seoTitle">Premium flooring quote support across Sydney</h2>
+          <p class="lead">Operon helps Sydney customers choose a product path, prepare a clear scope and move toward installation with more confidence.</p>
           <div class="seo-link-groups" aria-label="Internal links">
             <div class="seo-link-group">
-              <h3>Product quote paths</h3>
+              <h3>Product paths</h3>
               <div class="link-list">
                 <a href="hybrid-flooring-sydney.html">Hybrid Flooring Sydney</a>
                 <a href="laminate-flooring-sydney.html">Laminate Flooring Sydney</a>
                 <a href="engineered-timber-flooring-sydney.html">Engineered Timber Flooring Sydney</a>
+                <a href="products.html">Flooring Products</a>
               </div>
             </div>
             <div class="seo-link-group">
-              <h3>Quote and tools</h3>
+              <h3>Quote tools</h3>
               <div class="link-list">
                 <a href="quote.html">Start Quote</a>
+                <a href="flooring-quote-sydney.html">Flooring Quote Sydney</a>
                 <a href="quote-review.html">Quote Review</a>
                 <a href="floorplan.html">Floor Plan Tool</a>
-                <a href="products.html">Flooring Products</a>
-                <a href="flooring-installation-cost-sydney.html">Installation cost guide</a>
-                <a href="/blog/">Flooring guides</a>
+                <a href="recent-flooring-projects.html">Recent Projects</a>
+                <a href="blog/">Flooring guides</a>
               </div>
             </div>
             <div class="seo-link-group">
-              <h3>Sydney locations</h3>
+              <h3>Premium Sydney areas</h3>
+              <div class="link-list">
+                <a href="flooring-mosman.html">Mosman</a>
+                <a href="flooring-double-bay.html">Double Bay</a>
+                <a href="flooring-vaucluse.html">Vaucluse</a>
+                <a href="flooring-bellevue-hill.html">Bellevue Hill</a>
+                <a href="flooring-woollahra.html">Woollahra</a>
+                <a href="flooring-rose-bay.html">Rose Bay</a>
+                <a href="flooring-neutral-bay.html">Neutral Bay</a>
+                <a href="flooring-manly.html">Manly</a>
+                <a href="flooring-wahroonga.html">Wahroonga</a>
+                <a href="flooring-pymble.html">Pymble</a>
+                <a href="flooring-killara.html">Killara</a>
+                <a href="flooring-balmain.html">Balmain</a>
+                <a href="flooring-drummoyne.html">Drummoyne</a>
+                <a href="flooring-coogee.html">Coogee</a>
+              </div>
+            </div>
+            <details class="seo-link-group seo-link-group-secondary">
+              <summary>More Sydney locations</summary>
               <div class="link-list">
                 <a href="flooring-edmondson-park.html">Edmondson Park</a>
                 <a href="flooring-liverpool.html">Liverpool</a>
@@ -877,17 +956,17 @@
                 <a href="flooring-miranda.html">Miranda</a>
                 <a href="flooring-randwick.html">Randwick</a>
               </div>
-            </div>
+            </details>
           </div>
         </div>
         <div class="faq">
           <details open>
-            <summary>What changes the final flooring price?</summary>
-            <p>Product range, measured area, removal, disposal, floor preparation, trims, stairs and moisture requirements can all change the final quote. These items should be visible before the job is booked.</p>
+            <summary>What should be clear before you decide?</summary>
+            <p>The product range, measured area, main inclusions, finish details and exclusions should be clear before you accept a flooring quote.</p>
           </details>
           <details>
-            <summary>Why does underlay or acoustic layer matter?</summary>
-            <p>Underlay and acoustic layers can affect comfort, sound performance, apartment requirements and product suitability. Requirements depend on the flooring product, building type, subfloor and strata rules where applicable.</p>
+            <summary>How is the final scope confirmed?</summary>
+            <p>Operon reviews the product, area, main inclusions and project notes so the final scope can be confirmed before installation.</p>
           </details>
           <details>
             <summary>When is a floor plan useful?</summary>
@@ -895,11 +974,11 @@
           </details>
           <details>
             <summary>What should I check before accepting a flooring quote?</summary>
-            <p>Check the product range, area basis, removal, disposal, underlay, floor preparation, trims, stairs, property details, warranty and exclusions. If anything is unclear, ask for it in writing.</p>
+            <p>Check the product range, area basis, main inclusions, finishing details, warranty and exclusions. If anything is unclear, ask for it in writing.</p>
           </details>
           <details>
             <summary>Why can two flooring quotes look different?</summary>
-            <p>Two quotes can look different because one may include more work than the other, even if both are for the same rooms. Product quality, waste allowance, preparation, finishing details and site conditions can all change the total.</p>
+            <p>Two quotes can describe different levels of product, finish and included work. Compare the written inclusions before deciding.</p>
           </details>
         </div>
       </div>
@@ -908,14 +987,14 @@
     <section class="section final-cta" aria-labelledby="finalTitle">
       <p class="eyebrow">Ready when you are</p>
       <h2 id="finalTitle">Ready to get your flooring quote?</h2>
-      <p>Start with the product, area and site details you know now. The remaining details can be checked before booking.</p>
+      <p>Start with the product, area and project details you know now. The remaining details can be checked before booking.</p>
       <a class="button" href="quote.html" data-track-cta="final_quote_cta_click">Start flooring quote</a>
     </section>
   </main>
   <footer class="site-footer footer-contained">
     <div class="container footer-grid">
       <div class="footer-col footer-brand-block">
-        <a class="footer-logo" href="/" aria-label="Operon Flooring home">
+        <a class="footer-logo" href="index.html" aria-label="Operon Flooring home">
           <img src="assets/operon-logo-final.png" alt="Operon Flooring logo" width="154" height="49">
         </a>
         <p class="footer-brand-copy">Flooring quotes and installation guidance for Sydney projects.</p>
@@ -936,7 +1015,7 @@
           <li><a href="quote.html">Start Quote</a></li>
           <li><a href="quote-review.html">Quote Review</a></li>
           <li><a href="floorplan.html">Upload Floor Plan</a></li>
-          <li><a href="/blog/">Flooring Guides</a></li>
+          <li><a href="blog/">Flooring Guides</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -955,6 +1034,7 @@
       <div class="footer-col">
         <h4>Company</h4>
         <ul>
+          <li><a href="recent-flooring-projects.html">Recent Projects</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="privacy-policy.html">Privacy Policy</a></li>
           <li><a href="terms.html">Terms</a></li>

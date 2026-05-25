@@ -12572,6 +12572,27 @@
       .replace(/'/g, "&#39;");
   }
 
+  function resolveAssetUrl(value) {
+    const url = String(value || "").trim();
+    if (!url || /^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i.test(url) || url.charAt(0) === "/") {
+      return url;
+    }
+
+    const scripts = document && document.getElementsByTagName ? Array.from(document.getElementsByTagName("script")) : [];
+    const productsScript = scripts.reverse().find(function (script) {
+      return /(?:^|\/)products\.js(?:[?#].*)?$/i.test(script.getAttribute("src") || "");
+    });
+    const baseUrl = productsScript && productsScript.src
+      ? productsScript.src
+      : (window.location && window.location.href ? window.location.href : "");
+
+    try {
+      return new URL(url, baseUrl).href;
+    } catch (error) {
+      return url;
+    }
+  }
+
   function slugify(value) {
     return String(value || "")
       .trim()
@@ -13218,12 +13239,13 @@
 
   function buildProductImageMarkup(product) {
     const imageUrl = product.imageUrl || product.image || "";
+    const resolvedImageUrl = resolveAssetUrl(imageUrl);
     const altText = product.alt || (getProductLabel(product) + " colour sample");
 
     if (imageUrl) {
       return (
         '<button class="catalogue-image-frame" type="button" data-open-product-image="' + product.id + '" aria-label="Open larger image for ' + altText + '">' +
-          '<img class="catalogue-image" src="' + imageUrl + '" alt="' + altText + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">' +
+          '<img class="catalogue-image" src="' + escapeHtml(resolvedImageUrl) + '" alt="' + escapeHtml(altText) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">' +
           '<div class="catalogue-swatch-fallback" aria-hidden="true">' +
             '<div class="catalogue-swatch" style="background:' + product.swatch + ';"></div>' +
             '<span>' + product.colour + "</span>" +
@@ -13576,7 +13598,7 @@
       rangeProducts.map(function (colourProduct) {
         const altText = colourProduct.alt || (getProductLabel(colourProduct) + " colour sample");
         const imageMarkup = colourProduct.image
-          ? '<img src="' + escapeHtml(colourProduct.image) + '" alt="' + escapeHtml(altText) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">'
+          ? '<img src="' + escapeHtml(resolveAssetUrl(colourProduct.image)) + '" alt="' + escapeHtml(altText) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">'
           : "";
         return (
           '<button class="catalogue-colour-option catalogue-colour-option-preview" type="button" data-open-category-range-colour-lightbox="' + escapeHtml(colourProduct.id) + '">' +
@@ -13697,7 +13719,9 @@
 
   function buildRangeImageMarkup(range) {
     const representativeId = range.representativeProductId || "";
-    const imageUrl = range.imageUrl || range.image || "";
+    const representative = getRepresentativeProductByRangeId(range.rangeId);
+    const imageUrl = range.imageUrl || range.image || (representative ? (representative.imageUrl || representative.image || "") : "");
+    const resolvedImageUrl = resolveAssetUrl(imageUrl);
     const label = range.rangeLabel || "Flooring range";
     const hasRangeInfo = !!range.rangeContent;
     const imageActionAttrs = hasRangeInfo
@@ -13710,7 +13734,7 @@
     if (imageUrl) {
       return (
         '<button class="catalogue-image-frame' + (hasRangeInfo ? " has-range-info" : "") + '"' + imageActionAttrs + ">" +
-          '<img class="catalogue-image" src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(label) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">' +
+          '<img class="catalogue-image" src="' + escapeHtml(resolvedImageUrl) + '" alt="' + escapeHtml(label) + '" loading="lazy" onerror="this.hidden=true; this.parentNode.classList.add(\'is-fallback\');">' +
           (hasRangeInfo ? '<span class="catalogue-range-info-hint">Range details</span>' : "") +
           '<div class="catalogue-swatch-fallback" aria-hidden="true">' +
             '<span>' + escapeHtml(fallbackText) + "</span>" +
@@ -14013,9 +14037,10 @@
 
     thumbnails.hidden = false;
     thumbnails.innerHTML = galleryImages.map(function (imageUrl, index) {
+      const resolvedImageUrl = resolveAssetUrl(imageUrl);
       return (
         '<button class="catalogue-lightbox-thumb' + (index === (modal.__galleryIndex || 0) ? " is-active" : "") + '" type="button" data-lightbox-image-index="' + index + '" aria-label="View ' + product.colour + " image " + (index + 1) + '">' +
-          '<img src="' + imageUrl + '" alt="' + (product.alt || (getProductLabel(product) + " colour sample")) + " image " + (index + 1) + '" loading="lazy" onerror="this.parentNode.hidden=true;">' +
+          '<img src="' + escapeHtml(resolvedImageUrl) + '" alt="' + escapeHtml((product.alt || (getProductLabel(product) + " colour sample")) + " image " + (index + 1)) + '" loading="lazy" onerror="this.parentNode.hidden=true;">' +
         "</button>"
       );
     }).join("");
@@ -14041,7 +14066,7 @@
     image.alt = product.alt || (getProductLabel(product) + " colour sample");
 
     if (galleryImages[index]) {
-      image.src = galleryImages[index];
+      image.src = resolveAssetUrl(galleryImages[index]);
       image.onload = function () {
         fallback.hidden = true;
         image.hidden = false;

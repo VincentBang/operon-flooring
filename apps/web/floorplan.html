@@ -71,7 +71,7 @@
           "name": "Does this calculate the final quote?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. It sends measured area into the quote. Product choice, removal, stairs, trims, underlay, preparation and site details are reviewed separately."
+            "text": "No. It sends measured area into the quote. Product choice, main inclusions and final project details are reviewed separately."
           }
         },
         {
@@ -109,7 +109,9 @@
       --radius-xl: 26px;
       --radius-lg: 18px;
       --radius-md: 14px;
-      --max-width: 1280px;
+      --max-width: 1080px;
+      --hero-width: 1080px;
+      --header-width: 1240px;
       --font-sans: "Inter", "Segoe UI", BlinkMacSystemFont, -apple-system, sans-serif;
     }
 
@@ -159,6 +161,10 @@
     .container {
       width: min(var(--max-width), calc(100% - 32px));
       margin: 0 auto;
+    }
+
+    .site-header .shell {
+      width: min(var(--header-width), calc(100% - 32px));
     }
 
     .site-header {
@@ -315,6 +321,10 @@
 
     .hero {
       padding: 56px 0 30px;
+    }
+
+    .hero > .shell {
+      width: min(var(--hero-width), calc(100% - 32px));
     }
 
     main > .section:nth-of-type(even) {
@@ -1342,7 +1352,7 @@
     }
 
     body.floorplan-workspace-active {
-      --max-width: 1360px;
+      --max-width: 1080px;
       background:
         radial-gradient(circle at 8% 0%, rgba(181, 110, 82, 0.07), transparent 30%),
         linear-gradient(180deg, #ffffff 0%, #f9fbfa 100%);
@@ -1740,12 +1750,41 @@
     }
 
     @media (max-width: 640px) {
+      main {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #floorplanHero {
+        order: 1;
+      }
+
+      #measurementTool {
+        order: 2;
+      }
+
+      #floorplanEntrySection {
+        order: 3;
+      }
+
+      #floorplanGuideSection {
+        order: 4;
+      }
+
+      #floorplanTrustSection {
+        order: 5;
+      }
+
+      #floorplanFaq {
+        order: 6;
+      }
+
       .shell {
         width: min(var(--max-width), calc(100% - 20px));
       }
 
       .hero {
-        padding: 56px 0 24px;
+        padding: 18px 0 10px;
       }
 
       .hero-card,
@@ -1761,7 +1800,44 @@
       }
 
       h1 {
-        font-size: 2.25rem;
+        font-size: clamp(2rem, 10vw, 2.55rem);
+      }
+
+      .hero-mini-panel {
+        display: none;
+      }
+
+      .hero-actions {
+        margin-top: 16px !important;
+      }
+
+      .hero-copy-block p {
+        line-height: 1.45;
+      }
+
+      #floorplanEntrySection {
+        padding-top: 0 !important;
+      }
+
+      #floorplanEntrySection .section-card,
+      #floorplanGuideSection .section-card,
+      #floorplanTrustSection .section-card {
+        box-shadow: none;
+      }
+
+      #floorplanGuideSection .step-grid,
+      #floorplanTrustSection .trust-card-grid {
+        display: none;
+      }
+
+      #floorplanGuideSection .section-card,
+      #floorplanTrustSection .section-card {
+        padding: 16px;
+      }
+
+      #floorplanGuideSection h2,
+      #floorplanTrustSection h2 {
+        font-size: 1.35rem;
       }
 
       canvas {
@@ -1929,16 +2005,16 @@
 <body id="top">
   <header class="site-header">
     <div class="shell nav">
-      <a class="brand" href="/#top" aria-label="Operon Flooring home">
+      <a class="brand" href="index.html#top" aria-label="Operon Flooring home">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Operon Flooring</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="/#top">Home</a>
+        <a href="index.html#top">Home</a>
         <a data-quote-return-link href="quote.html">Quote</a>
         <a href="products.html">Flooring Products</a>
         <a href="floorplan.html">Floor Plan</a>
-        <a href="/blog/">Guides</a>
+        <a href="blog/">Guides</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
         <span></span>
@@ -1960,12 +2036,12 @@
           <div class="hero-content-row">
             <div class="hero-copy-block">
               <h1>Measure your flooring area from a floor plan.</h1>
-              <p>Upload a floor plan and use it to create a starting area for your quote. Final measurements and site details can still be checked before booking.</p>
+              <p>Upload a floor plan, trace the rooms and send a starting area into your quote.</p>
               <div class="hero-actions" style="margin-top: 24px;">
                 <a class="button" href="#measurementTool">Start measuring</a>
                 <a class="button-secondary" data-quote-return-link href="quote.html?quoteStep=3&areaMethod=floorplan_review">Ask for plan review</a>
               </div>
-              <p class="helper" style="margin-top: 14px;">Measured starting area only. Final area and site scope may still be confirmed before installation.</p>
+              <p class="helper" style="margin-top: 14px;">Starting area only. Product and final scope are confirmed before booking.</p>
             </div>
 
             <aside class="hero-mini-panel" aria-label="Measurement summary">
@@ -2027,7 +2103,7 @@
             </div>
             <div class="step-card">
               <strong>4. Use area in quote</strong>
-              <span>Send real measured area only. Product and site scope are still confirmed separately.</span>
+              <span>Send measured area into the quote. Product and final scope are confirmed separately.</span>
             </div>
           </div>
         </article>
@@ -2039,7 +2115,7 @@
         <article class="section-card">
           <span class="eyebrow">Scope clarity</span>
           <h2 style="margin-top: 18px;">Clear scope before the job is booked</h2>
-          <p>Floor plan area is only one part of a flooring quote. Product, removal, disposal, trims, stairs and site conditions still need to be visible before final confirmation.</p>
+          <p>Floor plan area is one part of a flooring quote. Product, removal, disposal, trims and stairs are reviewed before final confirmation.</p>
           <div class="trust-card-grid" style="margin-top: 22px;">
             <article class="trust-card">
               <h3>Area checked</h3>
@@ -2051,7 +2127,7 @@
             </article>
             <article class="trust-card">
               <h3>Site scope still reviewed</h3>
-              <p>Removal, floor preparation, stairs, access and trims are confirmed separately.</p>
+              <p>Removal, floor preparation, stairs and trims are confirmed separately.</p>
             </article>
             <article class="trust-card">
               <h3>Quote handoff ready</h3>
@@ -2287,7 +2363,7 @@
 
           <div class="summary-box">
             <strong>Ready to continue your quote?</strong>
-            <p class="helper" style="margin: 10px 0 0;">Send the selected floor area back to the quote form, then confirm product and site scope before submitting.</p>
+            <p class="helper" style="margin: 10px 0 0;">Send the selected floor area back to the quote form, then confirm product and final scope before submitting.</p>
             <div class="summary-actions" style="margin-top: 16px;">
               <button class="button" id="useAreaInQuoteButton" type="button">Use selected measured area in quote</button>
               <button class="button-danger" id="clearRoomsButton" type="button">Clear rooms</button>
@@ -2305,7 +2381,7 @@
           <div class="rooms-table">
             <details class="summary-box">
               <summary><strong>Is this the final flooring measurement?</strong></summary>
-              <p class="helper" style="margin: 10px 0 0;">No. It gives a measured starting area from your floor plan. Final site details can still be confirmed before installation.</p>
+              <p class="helper" style="margin: 10px 0 0;">No. It gives a measured starting area from your floor plan. Final details can still be confirmed before installation.</p>
             </details>
             <details class="summary-box">
               <summary><strong>What kind of floor plan works best?</strong></summary>
@@ -2313,7 +2389,7 @@
             </details>
             <details class="summary-box">
               <summary><strong>Does this calculate the final quote?</strong></summary>
-              <p class="helper" style="margin: 10px 0 0;">No. It sends measured area into the quote. Product choice, removal, stairs, trims, underlay, preparation and site details are reviewed separately.</p>
+              <p class="helper" style="margin: 10px 0 0;">No. It sends measured area into the quote. Product choice, main inclusions and final project details are reviewed separately.</p>
             </details>
             <details class="summary-box">
               <summary><strong>Should I include every room?</strong></summary>
@@ -2329,7 +2405,7 @@
   <footer class="site-footer footer-contained">
     <div class="container footer-grid">
       <div class="footer-col footer-brand-block">
-        <a class="footer-logo" href="/" aria-label="Operon Flooring home">
+        <a class="footer-logo" href="index.html" aria-label="Operon Flooring home">
           <img src="assets/operon-logo-final.png" alt="Operon Flooring logo" width="154" height="49">
         </a>
         <p class="footer-brand-copy">Flooring quotes and installation guidance for Sydney projects.</p>
@@ -2350,7 +2426,7 @@
           <li><a href="quote.html">Start Quote</a></li>
           <li><a href="quote-review.html">Quote Review</a></li>
           <li><a href="floorplan.html">Upload Floor Plan</a></li>
-          <li><a href="/blog/">Flooring Guides</a></li>
+          <li><a href="blog/">Flooring Guides</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -2369,6 +2445,7 @@
       <div class="footer-col">
         <h4>Company</h4>
         <ul>
+          <li><a href="recent-flooring-projects.html">Recent Projects</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="privacy-policy.html">Privacy Policy</a></li>
           <li><a href="terms.html">Terms</a></li>

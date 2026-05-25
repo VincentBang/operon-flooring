@@ -3,6 +3,66 @@
 const { jsonResponse, calculatePrivateQuote } = require("./_supabasePricing");
 const Security = require("./_security");
 
+const PRIVATE_QUOTE_RESPONSE_BLOCKLIST = new Set([
+  "labourSubtotalBeforeMultipliers",
+  "labourSubtotalAfterMultipliers",
+  "accessFactor",
+  "smallJobFactor",
+  "zoneMultiplier",
+  "locationSurchargePercent",
+  "minimumJobFee",
+  "roundingAdjustment",
+  "minimumChargeApplied",
+  "travelFeeTotal",
+  "locationTotal",
+  "installationTotal",
+  "installationAdjustedTotal",
+  "pricingSourceProductId",
+  "pricingSourceProductLabel",
+  "stairWidthTier",
+  "stairWidthTierLabel",
+  "stairWidthAssumed",
+  "stairGuideWidthMm",
+  "stairRangeId"
+]);
+
+function sanitizeLineItem(line) {
+  const source = line && typeof line === "object" ? line : {};
+  return {
+    label: source.label || "",
+    qty: source.qty || "",
+    quantity: source.quantity || source.qty || "",
+    note: source.note || "",
+    amount: Number(source.amount || source.total || 0),
+    total: Number(source.amount || source.total || 0)
+  };
+}
+
+function sanitizePrivateQuoteResponse(result) {
+  const source = result && typeof result === "object" ? result : {};
+  const safe = {};
+
+  Object.keys(source).forEach(function (key) {
+    if (PRIVATE_QUOTE_RESPONSE_BLOCKLIST.has(key)) {
+      return;
+    }
+    safe[key] = source[key];
+  });
+
+  safe.quoteLines = Array.isArray(source.quoteLines)
+    ? source.quoteLines.map(sanitizeLineItem)
+    : [];
+  safe.quoteTotal = Number(source.totalIncGst || 0);
+  safe.lineItems = safe.quoteLines;
+  safe.estimateStatus = source.pricePending ? "pending" : "ready";
+  safe.confidence = source.quoteConfidence || source.confidenceLevel || "";
+  safe.customerNotes = Array.isArray(source.warnings) ? source.warnings : [];
+  safe.includedScope = safe.quoteLines.map(function (line) { return line.label; }).filter(Boolean);
+  safe.itemsToConfirm = Array.isArray(source.warnings) ? source.warnings : [];
+
+  return safe;
+}
+
 exports.handler = async function (event) {
   if (event.httpMethod === "OPTIONS") {
     return Security.optionsResponse(event, {
@@ -39,7 +99,7 @@ exports.handler = async function (event) {
     return jsonResponse(200, {
       ok: true,
       source: "supabase_private_pricing",
-      quote: result
+      quote: sanitizePrivateQuoteResponse(result)
     });
   } catch (error) {
     return jsonResponse(500, {

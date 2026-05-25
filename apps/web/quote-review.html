@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flooring Quote Review Sydney | Check Scope Before Comparing Prices</title>
-  <meta name="description" content="Upload a flooring quote or use a quick completeness check to see whether product, area, underlay, removal, preparation, trims and site details are clear before comparing prices.">
+  <title>Flooring Quote Review Sydney | Check Inclusions Before Deciding</title>
+  <meta name="description" content="Upload a flooring quote or use a quick completeness check to see whether product, area, main inclusions and open questions are clear before deciding.">
   <link rel="canonical" href="https://operonflooring.com.au/quote-review.html">
   <link rel="icon" href="assets/Operon favicon.png" type="image/png">
   <meta name="robots" content="index,follow">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Flooring Quote Review Sydney | Check Scope Before Comparing Prices">
-  <meta property="og:description" content="Upload a flooring quote or use a quick completeness check before comparing flooring prices.">
+  <meta property="og:title" content="Flooring Quote Review Sydney | Check Inclusions Before Deciding">
+  <meta property="og:description" content="Upload a flooring quote or use a quick completeness check before deciding.">
   <meta property="og:url" content="https://operonflooring.com.au/quote-review.html">
   <meta property="og:site_name" content="Operon Flooring">
   <meta property="og:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Flooring Quote Review Sydney | Check Scope Before Comparing Prices">
-  <meta name="twitter:description" content="Upload a flooring quote or use a quick completeness check before comparing flooring prices.">
+  <meta name="twitter:title" content="Flooring Quote Review Sydney | Check Inclusions Before Deciding">
+  <meta name="twitter:description" content="Upload a flooring quote or use a quick completeness check before deciding.">
   <meta name="twitter:image" content="https://operonflooring.com.au/assets/operon-social-preview.png">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2LEXZJM3Q"></script>
   <script>
@@ -40,23 +40,23 @@
         "name": "What does a complete flooring quote include?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "A complete flooring quote should clearly list the product range, installation method, area basis, removal, disposal, floor preparation, trims or scotia, stairs and any items still subject to site confirmation. The goal is not just to see a total, but to understand exactly what work is included before you compare prices."
+          "text": "A complete flooring quote should clearly list the product range, installation method, area basis, main inclusions, finishing details and any items still subject to final project confirmation. The goal is to understand what work is included before you decide."
         }
       },
       {
         "@type": "Question",
-        "name": "Why can flooring quotes change?",
+        "name": "Why can flooring quotes look different?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Flooring quotes usually change when important details are not fully confirmed at the start, such as product selection, subfloor condition, moisture protection, trims, stairs or preparation. Most quote differences come from missing or unclear scope, not just from the headline rate."
+          "text": "Flooring quotes can look different when the product, area basis, main inclusions or finishing details are written differently. Compare what is included before comparing totals."
         }
       },
       {
         "@type": "Question",
-        "name": "Should I accept a flooring quote without checking scope?",
+        "name": "Should I accept a flooring quote without checking inclusions?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "It is better to confirm the product, installation method, preparation, finishing items and site details first. A total only becomes meaningful when the included work, excluded work and items still needing site confirmation are clearly written."
+          "text": "It is better to confirm the product, installation method, main inclusions, finishing items and final project details first. A total is easier to compare when the included work and open items are clearly written."
         }
       },
       {
@@ -88,7 +88,9 @@
       --check-line: rgba(181, 110, 82, 0.18);
       --shadow: 0 12px 30px rgba(23, 35, 45, 0.06);
       --radius: 20px;
-      --max: 1280px;
+      --max: 1040px;
+      --hero-max: 1080px;
+      --header-max: 1240px;
     }
 
     * { box-sizing: border-box; }
@@ -112,6 +114,10 @@
     .shell {
       width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
+    }
+
+    .site-header .shell {
+      width: min(var(--header-max), calc(100% - 32px));
     }
 
     .site-header {
@@ -204,11 +210,16 @@
       padding: 48px 22px;
     }
 
+    .section.hero {
+      max-width: var(--hero-max);
+    }
+
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.88fr);
-      gap: 22px;
+      grid-template-columns: minmax(0, 520px) minmax(320px, 480px);
+      gap: clamp(24px, 4vw, 40px);
       align-items: center;
+      justify-content: space-between;
     }
 
     .eyebrow {
@@ -1519,6 +1530,40 @@
         font-size: clamp(2rem, 10vw, 2.7rem);
       }
 
+      .hero {
+        gap: 16px;
+      }
+
+      .hero-panel {
+        display: none;
+      }
+
+      .hero .lead {
+        margin-top: 10px;
+        line-height: 1.45;
+      }
+
+      .mode-grid {
+        gap: 10px;
+      }
+
+      .mode-card {
+        min-height: 0;
+      }
+
+      .mode-card .mode-points {
+        display: none;
+      }
+
+      .review-card .section-head p {
+        font-size: .94rem;
+        line-height: 1.45;
+      }
+
+      #reviewOutputPanel {
+        margin-top: 14px;
+      }
+
       .hero-panel-header .eyebrow,
       .hero-note,
       .field-help,
@@ -1602,16 +1647,16 @@
 <body>
   <header class="site-header">
     <div class="shell nav">
-      <a class="brand" href="/#top" aria-label="Operon Flooring home">
+      <a class="brand" href="index.html#top" aria-label="Operon Flooring home">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Operon Flooring</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="/#top">Home</a>
+        <a href="index.html#top">Home</a>
         <a href="quote.html">Quote</a>
         <a href="products.html">Flooring Products</a>
         <a href="floorplan.html">Floor Plan</a>
-        <a href="/blog/">Guides</a>
+        <a href="blog/">Guides</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
         <span></span>
@@ -1631,12 +1676,12 @@
         <div>
           <p class="eyebrow">Quote review</p>
           <h1>Review a flooring quote</h1>
-          <p class="lead">Check whether the quote is complete enough to compare before you accept the price.</p>
+          <p class="lead">Upload a written quote or run a quick completeness check before you decide.</p>
           <div class="hero-actions">
-            <a class="button" href="#reviewForm" id="quoteReviewStartLink">Start quote review</a>
-            <a class="button-secondary quote-review-to-quote" href="quote.html?source=quote_review">Get structured Operon estimate</a>
+            <a class="button" href="#reviewForm" id="quoteReviewStartLink">Start review</a>
+            <a class="button-secondary quote-review-to-quote" href="quote.html?source=quote_review">Start quote</a>
           </div>
-          <p class="hero-note">Upload the written quote for the strongest review. If you do not have the file ready, use the quick completeness check to see what may be missing.</p>
+          <p class="hero-note">Upload gives the strongest review. Quick check is for when the file is not ready.</p>
         </div>
         <div class="hero-panel">
           <div class="hero-panel-header">
@@ -1719,24 +1764,22 @@
               <input type="radio" name="reviewMode" value="detailed" checked>
               <span class="mode-subtitle">Strongest review</span>
               <strong>Upload written quote</strong>
-              <span>Upload the written quote so Operon can extract the price basis, product line, area, GST and missing scope items.</span>
+                <span>Best for a written PDF, image or screenshot.</span>
               <ul class="mode-points">
-                <li>Reads written quote details</li>
-                <li>Checks visible inclusions</li>
+                <li>Reads visible quote details</li>
                 <li>Flags unclear scope</li>
-                <li>Stronger comparison guidance</li>
               </ul>
               <span class="mode-cta">Upload quote</span>
             </label>
             <label class="mode-card">
               <input type="radio" name="reviewMode" value="quick">
               <span class="mode-subtitle">Quick check</span>
-              <strong>No-file quote completeness check</strong>
-              <span>No file available? Tick what your quote clearly lists and get a high-level scope completeness check.</span>
+              <strong>Quick completeness check</strong>
+              <span>No file? Tick what the quote clearly lists.</span>
               <ul class="mode-points">
                 <li>No upload required</li>
-                <li>Checks if the quote is complete enough to compare</li>
-                <li>Creates questions to ask before accepting</li>
+                <li>Checks completeness</li>
+                <li>Creates questions to ask</li>
               </ul>
               <span class="mode-cta">Run quick check</span>
             </label>
@@ -1844,7 +1887,7 @@
                     <label class="check-option"><input type="checkbox" value="trims_transitions"><span><strong>Trims/transitions</strong></span></label>
                     <label class="check-option"><input type="checkbox" value="stairs"><span><strong>Stairs</strong></span></label>
                     <label class="check-option"><input type="checkbox" value="stair_nosing"><span><strong>Stair nosing</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="access_delivery"><span><strong>Apartment/site detail notes</strong></span></label>
+                    <label class="check-option"><input type="checkbox" value="access_delivery"><span><strong>Building/detail notes</strong></span></label>
                   </div>
                 </div>
 
@@ -2048,7 +2091,7 @@
                   <h3>Why quotes can differ</h3>
                   <span class="risk-tag low">Common changes</span>
                   <div id="lowRiskList">
-                    <div class="risk-card"><strong>Common change items will appear here.</strong><span>These are common scope variables, not confirmed charges.</span></div>
+                    <div class="risk-card"><strong>Review items will appear here.</strong><span>These are common items to confirm in writing, not confirmed charges.</span></div>
                   </div>
                 </div>
               </div>
@@ -2083,7 +2126,7 @@
       <div class="section-head">
         <p class="eyebrow">Scope checklist</p>
         <h2 id="completeQuoteTitle">What a complete flooring quote should show</h2>
-        <p>A useful written quote should make the price basis clear before you compare totals. Look for product detail, measured area, GST status, underlay, removal, disposal, preparation, trims, stairs, exclusions and any items still subject to site confirmation.</p>
+        <p>A useful written quote should make the product, area basis and main inclusions clear before you compare totals. Look for product detail, measured area, GST status, underlay, removal, finishing details, stairs, exclusions and any items still subject to final confirmation.</p>
       </div>
     </section>
 
@@ -2095,15 +2138,15 @@
       <div class="faq-grid">
         <details open>
           <summary>What does a complete flooring quote include?</summary>
-          <p>A complete flooring quote should clearly list the product range, installation method, area basis, removal, disposal, floor preparation, trims or scotia, stairs and any items still subject to site confirmation. The goal is not just to see a total, but to understand exactly what work is included before you compare prices.</p>
+          <p>A complete flooring quote should clearly list the product range, installation method, area basis, main inclusions, finishing details and any items still subject to final project confirmation. The goal is to understand what work is included before you decide.</p>
         </details>
         <details>
-          <summary>Why can flooring quotes change?</summary>
-          <p>Flooring quotes usually change when important details are not fully confirmed at the start, such as product selection, subfloor condition, moisture protection, trims, stairs or preparation. Most quote differences come from missing or unclear scope, not just from the headline rate.</p>
+          <summary>Why can flooring quotes look different?</summary>
+          <p>Flooring quotes can look different when the product, area basis, main inclusions or finishing details are written differently. Compare what is included before comparing totals.</p>
         </details>
         <details>
-          <summary>Should I accept a flooring quote without checking scope?</summary>
-          <p>It is better to confirm the product, installation method, preparation, finishing items and site details first. A total only becomes meaningful when the included work, excluded work and items still needing site confirmation are clearly written.</p>
+          <summary>Should I accept a flooring quote without checking inclusions?</summary>
+          <p>It is better to confirm the product, installation method, main inclusions, finishing items and final project details first. A total is easier to compare when the included work and open items are clearly written.</p>
         </details>
         <details>
           <summary>Should removal and disposal be listed separately?</summary>
@@ -2111,7 +2154,7 @@
         </details>
         <details>
           <summary>Can this review turn into an Operon estimate?</summary>
-          <p>Yes. If the review identifies the flooring type, area and enough scope detail, you can use it as a starting point for a structured Operon estimate. If product range, preparation, site details or finishing items are unclear, the safer next step is to confirm those items before comparing totals.</p>
+          <p>Yes. If the review identifies the flooring type, area and enough scope detail, you can use it as a starting point for a structured Operon estimate. If product range, preparation, finishing items or final project details are unclear, the safer next step is to confirm those items before comparing totals.</p>
         </details>
       </div>
     </section>
@@ -2119,7 +2162,7 @@
   <footer class="site-footer footer-contained">
     <div class="container footer-grid">
       <div class="footer-col footer-brand-block">
-        <a class="footer-logo" href="/" aria-label="Operon Flooring home">
+        <a class="footer-logo" href="index.html" aria-label="Operon Flooring home">
           <img src="assets/operon-logo-final.png" alt="Operon Flooring logo" width="154" height="49">
         </a>
         <p class="footer-brand-copy">Flooring quotes and installation guidance for Sydney projects.</p>
@@ -2140,7 +2183,7 @@
           <li><a href="quote.html">Start Quote</a></li>
           <li><a href="quote-review.html">Quote Review</a></li>
           <li><a href="floorplan.html">Upload Floor Plan</a></li>
-          <li><a href="/blog/">Flooring Guides</a></li>
+          <li><a href="blog/">Flooring Guides</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -2159,6 +2202,7 @@
       <div class="footer-col">
         <h4>Company</h4>
         <ul>
+          <li><a href="recent-flooring-projects.html">Recent Projects</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="privacy-policy.html">Privacy Policy</a></li>
           <li><a href="terms.html">Terms</a></li>
@@ -2175,6 +2219,7 @@
     const QUOTE_REVIEW_LATEST_KEY = "operon_quote_review_latest_v1";
     const QUOTE_REVIEW_INTELLIGENCE_KEY = "operon_quote_review_intelligence_v1";
     const QUOTE_REVIEW_HANDOFF_KEY = "operon_quote_review_handoff_v1";
+    const QUOTE_REVIEW_STORAGE_TTL_MS = 30 * 24 * 60 * 60 * 1000;
     const CATEGORY_LABELS = {
       hybrid: "Hybrid flooring",
       laminate: "Laminate flooring",
@@ -2182,6 +2227,34 @@
       timber: "Timber flooring",
       unknown: "Flooring type still to be confirmed"
     };
+
+    function withStorageExpiry(payload) {
+      const now = Date.now();
+      return {
+        savedAt: new Date(now).toISOString(),
+        expiresAt: new Date(now + QUOTE_REVIEW_STORAGE_TTL_MS).toISOString(),
+        payload: payload
+      };
+    }
+
+    function unwrapStoredPayload(record, key) {
+      if (!record || typeof record !== "object") {
+        return null;
+      }
+      if (!record.payload) {
+        return record;
+      }
+      const expiresAt = Date.parse(record.expiresAt || "");
+      if (Number.isFinite(expiresAt) && expiresAt <= Date.now()) {
+        try {
+          localStorage.removeItem(key);
+        } catch (error) {
+          // Ignore storage cleanup failures.
+        }
+        return null;
+      }
+      return record.payload;
+    }
 
     const SCOPE_ITEM_LABELS = {
       product_brand: "product brand",
@@ -2201,7 +2274,7 @@
       stairs: "stairs",
       stair_nosing: "stair nosing",
       moisture_protection: "moisture or subfloor check",
-      access_delivery: "apartment or site detail notes",
+      access_delivery: "building/detail notes",
       exclusions: "exclusions",
       site_inspection_items: "site inspection assumptions",
       payment_terms: "payment terms",
@@ -2659,7 +2732,7 @@
 
     function saveReviewState() {
       try {
-        localStorage.setItem(QUOTE_REVIEW_STORAGE_KEY, JSON.stringify(getReviewState()));
+        localStorage.setItem(QUOTE_REVIEW_STORAGE_KEY, JSON.stringify(withStorageExpiry(getReviewState())));
       } catch (error) {
         // Ignore local storage failures in privacy mode.
       }
@@ -2667,7 +2740,7 @@
 
     function loadReviewState() {
       try {
-        const saved = JSON.parse(localStorage.getItem(QUOTE_REVIEW_STORAGE_KEY) || "null");
+        const saved = unwrapStoredPayload(JSON.parse(localStorage.getItem(QUOTE_REVIEW_STORAGE_KEY) || "null"), QUOTE_REVIEW_STORAGE_KEY);
         if (!saved) {
           return;
         }
@@ -3003,7 +3076,7 @@
       if (category === "engineered") {
         return {
           title: "Engineered timber review",
-          consequence: "Engineered timber pricing depends heavily on installation method, subfloor preparation, moisture checks and finishing details."
+          consequence: "Engineered timber should be reviewed with installation method, preparation notes and finishing details."
         };
       }
       if (category === "unknown") {
@@ -3218,7 +3291,7 @@
         ["Floor prep", included.has("floor_prep")],
         ["Moisture/subfloor", included.has("moisture_protection")],
         ["Finishing trims", included.has("skirting") || included.has("scotia") || included.has("trims_transitions")],
-        ["Stairs/access", included.has("stairs") || included.has("stair_nosing") || included.has("access_delivery")],
+        ["Stairs/building notes", included.has("stairs") || included.has("stair_nosing") || included.has("access_delivery")],
         ["Commercial terms/exclusions", included.has("exclusions") || included.has("site_inspection_items") || included.has("payment_terms") || included.has("expiry_date")]
       ].map(function (item) {
         return { label: item[0], clear: !!item[1] };
@@ -3240,7 +3313,7 @@
       if (total <= 9) {
         return { label: "Mostly clear, confirm remaining items", tag: "Confirm items", tagClass: "medium" };
       }
-      return { label: "Good scope clarity, confirm site conditions", tag: "Good clarity", tagClass: "low" };
+      return { label: "Good scope clarity, confirm final details", tag: "Good clarity", tagClass: "low" };
     }
 
     function getQuickClearItems(state) {
@@ -3332,13 +3405,13 @@
         groups[2].items.push("Moisture or subfloor check");
       }
       if (accessRelevant && !included.has("access_delivery")) {
-        groups[2].items.push("Apartment, lift, strata or delivery notes");
+        groups[2].items.push("Building requirements or final site notes");
       }
       if (!included.has("exclusions")) {
         groups[2].items.push("Exclusions");
       }
       if (!included.has("site_inspection_items")) {
-        groups[2].items.push("Items subject to site inspection");
+        groups[2].items.push("Items to confirm before booking");
       }
       if (!included.has("payment_terms")) {
         groups[2].items.push("Deposit or payment terms");
@@ -3370,12 +3443,12 @@
       addQuestion(/preparation|levelling/.test(missingText), "Is floor preparation or levelling included?");
       addQuestion(/skirting|scotia|trims|transitions/.test(missingText), "Are skirting, scotia, trims and transitions included or priced separately?");
       addQuestion(/stair/.test(missingText), "Are stairs or stair nosings included if the job has stairs?");
-      addQuestion(/access|lift|parking|apartment/.test(missingText), "Are access, lift, parking or strata conditions included in the quote?");
-      addQuestion(/exclusions|site inspection/.test(missingText), "What items are excluded or subject to site inspection?");
+      addQuestion(/building requirements|final site notes|access|lift|parking|apartment/.test(missingText), "Are building requirements and final project details clear before booking?");
+      addQuestion(/exclusions|site inspection/.test(missingText), "What items are excluded or subject to final confirmation?");
       addQuestion(/payment|expiry/.test(missingText), "What are the payment terms and quote expiry date?");
 
       if (!questions.length) {
-        questions.push("Can you confirm which items are still subject to site inspection before the final quote is locked in?");
+        questions.push("Can you confirm which items still need review before booking?");
       }
       return questions.slice(0, 8);
     }
@@ -3443,12 +3516,12 @@
       const missingRows = result.missingGroups.map(function (group) {
         return [group.title, group.items.join(", ")];
       });
-      renderRiskCardList("quickMissingList", missingRows, "No major missing group flagged.", "Still confirm site conditions before accepting.");
+      renderRiskCardList("quickMissingList", missingRows, "No major missing group flagged.", "Still confirm final details before accepting.");
 
       const questionRows = result.questions.map(function (question) {
         return [question, "Ask for this in writing before comparing or accepting the quote."];
       });
-      renderRiskCardList("quickQuestionsList", questionRows, "No extra questions yet.", "The quote appears clear on the items entered, but site conditions should still be confirmed.");
+      renderRiskCardList("quickQuestionsList", questionRows, "No extra questions yet.", "The quote appears clear on the items entered, but final details should still be confirmed.");
     }
 
     function getExtractedScope(state) {
@@ -3560,9 +3633,9 @@
         moisture_protection: "Is moisture testing or moisture protection included where needed?",
         moistureProtection: "Is moisture testing or moisture protection included where needed?",
         warranty: "What product and installation warranty applies?",
-        exclusions: "What exclusions could increase the final price?"
+        exclusions: "What exclusions or open items should be confirmed before booking?"
       };
-      return questions[key] || "Can you confirm whether this item is included, excluded or subject to site confirmation?";
+      return questions[key] || "Can you confirm whether this item is included, excluded or still open for review?";
     }
 
     function pushUniqueQuestion(questions, question) {
@@ -3581,11 +3654,11 @@
       });
 
       if (!questions.length && state.mode === "quick") {
-        pushUniqueQuestion(questions, "Can you confirm which items are still subject to site inspection before the final quote is locked in?");
+        pushUniqueQuestion(questions, "Can you confirm which items still need review before booking?");
       }
       if (state.extractedQuoteFields) {
         pushUniqueQuestion(questions, "What warranty applies?");
-        pushUniqueQuestion(questions, "What exclusions could increase the final price?");
+        pushUniqueQuestion(questions, "What exclusions or open items should be confirmed before booking?");
       }
 
       return questions.slice(0, 8);
@@ -3638,7 +3711,7 @@
       if (hasDocumentReview) {
         return "The written quote looks clear enough for a practical comparison. Final price still depends on site details being reviewed before installation.";
       }
-      return "The visible scope looks reasonably clear, but site details can still change after review. For a more precise review, upload your quote.";
+      return "The visible scope looks reasonably clear. For a more precise review, upload your quote.";
     }
 
     function buildAdvisorSummary(state, risks, strengths, clarity, clarityScore) {
@@ -3654,7 +3727,7 @@
         clarification_notes: risks.low,
         strengths: strengths,
         questions_to_ask: buildQuestionsToAsk(state),
-        professional_insight: "Most quote differences come from what is excluded, not just the headline total. Hidden site conditions cannot be fully confirmed online, but the written quote should clearly state what is included, excluded, and subject to site confirmation.",
+        professional_insight: "Most quote differences come from what is excluded, not just the headline total. The written quote should clearly state what is included, excluded, and subject to final confirmation.",
         decision_guidance: getDecisionGuidanceText(state, risks),
         price_reframing: "Total price is only meaningful when scope is complete."
       };
@@ -3851,7 +3924,7 @@
         tagClass: "low",
         counts: [
           { level: "low", text: "Main comparison items are visible in this review." },
-          { level: "medium", text: confidenceLevel + ". Hidden site conditions can still change after review." }
+          { level: "medium", text: confidenceLevel + ". Final project details should still be confirmed." }
         ]
       };
     }
@@ -4108,7 +4181,7 @@
         scopeConfidence: "Checks whether product, area, inclusions, exclusions and major scope items are written clearly.",
         productMatchConfidence: "Checks whether the document shows an exact product match or only a broad category/specification.",
         comparisonConfidence: "Checks whether product, area and scope are strong enough to compare totals.",
-        siteRiskConfidence: "Checks whether access, stairs, moisture, preparation and apartment risks are clear enough.",
+        siteRiskConfidence: "Checks whether stairs, moisture, preparation and apartment requirements are clear enough.",
         decisionReadiness: "Uses the weakest important dimension, not an average, so one major gap can hold the decision back."
       };
 
@@ -4239,7 +4312,7 @@
                 "<li><strong>Trims/skirting/scotia</strong><span>Finishing details affect the final look and can be priced separately.</span></li>" +
                 "<li><strong>Stairs and nosing</strong><span>Step work is priced differently from open floor areas when it applies.</span></li>" +
                 "<li><strong>Product brand/range</strong><span>Category and thickness alone do not confirm like-for-like product quality.</span></li>" +
-                "<li><strong>Site details</strong><span>Lifts, strata rules and occupied-home conditions should be clear before installation.</span></li>" +
+                "<li><strong>Final project details</strong><span>Building requirements and occupied-home conditions should be clear before installation.</span></li>" +
               "</ul>" +
             "</details>" +
           "</section>" +
@@ -4255,13 +4328,12 @@
             "<div class=\"document-report-head\">" +
               "<p class=\"eyebrow\">Next step</p>" +
               "<h3>Get a structured Operon comparison quote</h3>" +
-              "<p>Use the extracted area and scope gaps as context, then build a structured Operon quote before any site confirmation is requested.</p>" +
+              "<p>Use the extracted area and open items as context, then build a structured Operon comparison quote.</p>" +
             "</div>" +
             "<div class=\"cta-actions\" style=\"justify-content: flex-start; margin-top: 16px;\">" +
-              "<a class=\"button-secondary quote-review-to-quote\" href=\"quote.html?source=quote_review\">Get an Operon comparison quote</a>" +
-              "<a class=\"button-secondary quote-review-to-quote\" href=\"quote.html?source=quote_review&next=site_confirmation\">Request site confirmation</a>" +
-              "<button class=\"button-secondary\" type=\"button\" id=\"copyDocumentSummaryButton\">Copy report summary</button>" +
+              "<a class=\"button quote-review-to-quote\" href=\"quote.html?source=quote_review\">Get an Operon comparison quote</a>" +
               "<a class=\"button-secondary\" href=\"mailto:quotes@operonflooring.com.au?subject=Flooring quote review\">Email Operon about this review</a>" +
+              "<button class=\"button-secondary\" type=\"button\" id=\"copyDocumentSummaryButton\">Copy report</button>" +
               "<button class=\"button-secondary\" type=\"button\" id=\"uploadAnotherQuoteButton\">Upload another quote</button>" +
             "</div>" +
             "<p class=\"copy-status\" id=\"copyDocumentSummaryStatus\" aria-live=\"polite\"></p>" +
@@ -4321,10 +4393,10 @@
       documentReport.querySelectorAll(".quote-review-to-quote").forEach(function (button) {
         button.addEventListener("click", function () {
           try {
-            const saved = JSON.parse(localStorage.getItem(QUOTE_REVIEW_LATEST_KEY) || "{}");
+            const saved = unwrapStoredPayload(JSON.parse(localStorage.getItem(QUOTE_REVIEW_LATEST_KEY) || "{}"), QUOTE_REVIEW_LATEST_KEY) || {};
             saved.next_step_taken = button.getAttribute("href") || "quote.html?source=quote_review";
             saved.converted_to_quote = true;
-            localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(saved));
+            localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(withStorageExpiry(saved)));
             if (saveQuoteReviewHandoff(saved)) {
               trackQuoteReviewEvent("quote_review_handoff_attached", {
                 review_mode: saved.review_mode || "",
@@ -4335,6 +4407,14 @@
             // Navigation must not depend on local storage.
           }
           trackQuoteReviewEvent("quote_review_to_quote_clicked", {
+            comparison_level: normalized.comparisonLevel,
+            decision_confidence: normalized.decisionConfidence,
+            extraction_confidence: priceBasisState.extractionConfidence,
+            missing_scope_count: normalized.missingScopeItems.length,
+            has_uploaded_file: true,
+            generated_report: true
+          });
+          trackQuoteReviewEvent("quote_review_to_quote", {
             comparison_level: normalized.comparisonLevel,
             decision_confidence: normalized.decisionConfidence,
             extraction_confidence: priceBasisState.extractionConfidence,
@@ -4441,14 +4521,14 @@
       if (!handoff) {
         return null;
       }
-      localStorage.setItem(QUOTE_REVIEW_HANDOFF_KEY, JSON.stringify(handoff));
+      localStorage.setItem(QUOTE_REVIEW_HANDOFF_KEY, JSON.stringify(withStorageExpiry(handoff)));
       return handoff;
     }
 
     function saveQuoteIntelligencePayload(payload) {
       try {
-        localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(payload));
-        localStorage.setItem(QUOTE_REVIEW_INTELLIGENCE_KEY, JSON.stringify(payload));
+        localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(withStorageExpiry(payload)));
+        localStorage.setItem(QUOTE_REVIEW_INTELLIGENCE_KEY, JSON.stringify(withStorageExpiry(payload)));
         if (hasPayloadInput(payload)) {
           trackQuoteReviewEvent("quote_review_payload_saved", {
             review_mode: payload.review_mode,
@@ -4491,7 +4571,7 @@
 
         if (result && result.review_id) {
           payload.review_id = result.review_id;
-          localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(payload));
+          localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(withStorageExpiry(payload)));
         }
         if (result && result.ok === false) {
           trackQuoteReviewEvent("quote_review_payload_save_error", {});
@@ -4689,6 +4769,15 @@
             generated_report: true
           });
           trackQuoteReviewEvent("quote_review_to_quote_clicked", {
+            review_mode: payload.review_mode,
+            comparison_level: payload.normalized_document_review ? payload.normalized_document_review.comparisonLevel : "",
+            decision_confidence: payload.normalized_document_review ? payload.normalized_document_review.decisionConfidence : payload.confidence_level,
+            extraction_confidence: payload.normalized_document_review ? payload.normalized_document_review.extractionConfidence : payload.confidence_level,
+            missing_scope_count: payload.missing_items ? payload.missing_items.length : 0,
+            has_uploaded_file: Boolean(payload.uploaded_quote_reference),
+            generated_report: true
+          });
+          trackQuoteReviewEvent("quote_review_to_quote", {
             review_mode: payload.review_mode,
             comparison_level: payload.normalized_document_review ? payload.normalized_document_review.comparisonLevel : "",
             decision_confidence: payload.normalized_document_review ? payload.normalized_document_review.decisionConfidence : payload.confidence_level,

@@ -30,15 +30,12 @@ function sanitiseProducts(productsByCategory) {
         thickness: product.thickness || "",
         productType: product.productType || "",
         pricePerM2: Number(product.pricePerM2 || 0),
-        installRate: product.installRate,
         imageUrl: product.imageUrl || product.image || "",
         image: product.image || product.imageUrl || "",
         alt: product.alt || "",
         description: product.description || "",
         features: Array.isArray(product.features) ? product.features : [],
         suitableFor: Array.isArray(product.suitableFor) ? product.suitableFor : [],
-        supplier: product.supplier || "",
-        supplierUrl: product.supplierUrl || "",
         active: product.active !== false
       };
     });

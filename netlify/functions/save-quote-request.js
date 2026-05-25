@@ -1351,15 +1351,16 @@ async function sendQuoteEmails(emailTo, payload, quoteId, quoteReference) {
 }
 
 async function safelySendQuoteEmails(emailTo, payload, quoteId, quoteReference) {
+  const config = getEmailConfig();
   const result = {
-    attempted: !!emailTo,
+    attempted: !!(emailTo || config.internalEmail),
     customerEmailSent: false,
     internalNotificationSent: false,
     customerEmailError: "",
     internalNotificationError: ""
   };
 
-  if (!emailTo) {
+  if (!result.attempted) {
     return result;
   }
 
@@ -1440,7 +1441,7 @@ exports.handler = async function (event) {
 
   const quoteId = String(body.quoteId || payload.id || "").trim() || createQuoteUuid();
   const status = mode === "email_quote" ? "emailed" : mode === "submit_quote" ? "submitted" : "draft_saved";
-  const shouldSendCustomerCopy = mode === "submit_quote" && body.sendCustomerCopy === true && !!emailTo;
+  const submitCustomerCopyEmail = mode === "submit_quote" && body.sendCustomerCopy === true ? emailTo : "";
 
   try {
     const row = getQuoteRow(quoteId, payload, status);
@@ -1470,8 +1471,8 @@ exports.handler = async function (event) {
       const immediateFollowupEmailResult = mode === "submit_quote"
         ? await safelySendImmediateFollowupEmailsForQuote(quoteId)
         : { ok: true, attempted: false, sent: 0, failed: 0 };
-      const emailResult = shouldSendCustomerCopy
-        ? await safelySendQuoteEmails(emailTo, payload, quoteId, quoteReference)
+      const emailResult = mode === "submit_quote"
+        ? await safelySendQuoteEmails(submitCustomerCopyEmail, payload, quoteId, quoteReference)
         : {
             attempted: false,
             customerEmailSent: false,

@@ -29,7 +29,15 @@
     "cta_intent",
     "destination",
     "quote_source",
-    "event_context"
+    "event_context",
+    "quote_id",
+    "estimated_value",
+    "price_pending",
+    "email_source",
+    "has_customer_email",
+    "customer_email_sent",
+    "internal_notification_sent",
+    "email_attempted"
   ];
   const CTA_EVENT_ALIASES = {
     click_hero_start_quote: "hero_start_quote_click",
@@ -46,19 +54,16 @@
     quote_review_mode_select: "quote_review_mode_selected",
     quote_review_complete: "quote_review_generated",
     quote_review_document_review_generate: "quote_review_generated",
+    quote_review_to_quote: "quote_review_to_quote_clicked",
+    quote_result_view: "quote_result_viewed",
     quote_email_send_attempt: "quote_email_copy_requested",
+    quote_email_send_success: "quote_email_copy_sent",
+    quote_email_send_failed: "quote_email_copy_failed",
+    floorplan_upload_start: "floorplan_upload_started",
+    floorplan_to_quote: "floorplan_area_sent_to_quote",
     product_selected: "quote_product_selected",
     product_select: "quote_product_selected"
   };
-
-  // Optimisation signals:
-  // Step 1 drop-off -> form too long
-  // Step 2 drop-off -> confusing property inputs
-  // Step 3 drop-off -> product unclear
-  // Step 4 drop-off -> measurement confusing
-  // Step 5 drop-off -> stairs uncertainty
-  // Step 6 drop-off -> too many extras
-  // Step 7 drop-off -> price shock or summary hesitation
 
   function safeParse(value, fallback) {
     try {
@@ -96,7 +101,7 @@
 
   function readTrackingState() {
     const parsed = safeParse(localStorage.getItem(TRACKING_KEY), null);
-    return Object.assign({
+    const state = Object.assign({
       quoteStarts: 0,
       quoteSubmissions: 0,
       floorplanOpens: 0,
@@ -110,6 +115,15 @@
       abandonmentByStep: {},
       events: []
     }, parsed || {});
+    state.events = Array.isArray(state.events)
+      ? state.events.slice(-100).map(function (event) {
+        const safeEvent = Object.assign({}, event || {});
+        safeEvent.metadata = sanitizeAnalyticsParams(safeEvent.metadata || {});
+        safeEvent.quote_id = cleanAnalyticsValue(safeEvent.quote_id) || null;
+        return safeEvent;
+      })
+      : [];
+    return state;
   }
 
   function writeTrackingState(state) {
@@ -118,7 +132,7 @@
 
   function readFunnelState() {
     const parsed = safeParse(localStorage.getItem(FUNNEL_KEY), null);
-    return Object.assign({
+    const state = Object.assign({
       session_id: "",
       landing_page: window.location.pathname,
       traffic_source: getTrafficSource(),
@@ -130,9 +144,10 @@
       current_step_name: "",
       quote_id: null,
       estimated_quote_value: 0,
-      abandoned_at_step: 0,
-      raw_payload: {}
+      abandoned_at_step: 0
     }, parsed || {});
+    delete state.raw_payload;
+    return state;
   }
 
   function writeFunnelState(state) {
@@ -222,7 +237,15 @@
       cta_intent: firstDefined(source.cta_intent, source.ctaIntent, source.intent),
       destination: firstDefined(source.destination),
       quote_source: firstDefined(source.quote_source, source.quoteSource),
-      event_context: firstDefined(source.event_context, source.cta, source.label, source.action_id, source.interaction_type, source.review_mode)
+      event_context: firstDefined(source.event_context, source.cta, source.label, source.action_id, source.interaction_type, source.review_mode),
+      quote_id: firstDefined(source.quote_id, source.quoteId),
+      estimated_value: firstDefined(source.estimated_value, source.estimatedTotal, source.estimated_total, source.total_estimate),
+      price_pending: firstDefined(source.price_pending, source.pricePending),
+      email_source: firstDefined(source.email_source, source.emailSource),
+      has_customer_email: firstDefined(source.has_customer_email, source.hasCustomerEmail),
+      customer_email_sent: firstDefined(source.customer_email_sent, source.customerEmailSent),
+      internal_notification_sent: firstDefined(source.internal_notification_sent, source.internalNotificationSent),
+      email_attempted: firstDefined(source.email_attempted, source.emailAttempted)
     };
     const safe = {};
     GA_ALLOWED_PARAM_KEYS.forEach(function (key) {
@@ -245,9 +268,6 @@
       }
     } catch (error) {
       // GA4 is optional and should never block UX.
-    }
-    if (window.console && window.location.search.indexOf("debug_tracking=1") >= 0) {
-      console.log("[Operon tracking]", eventName, safeParams);
     }
   };
 
@@ -326,15 +346,15 @@
 
   function trackEvent(eventName, metadata) {
     const sessionId = getOrCreateSessionId();
-    const details = metadata || {};
-    const normalisedStep = Number(details.step) || Number(details.stepNumber) || null;
-    const normalisedStepName = details.step_name || details.stepName || null;
+    const details = sanitizeAnalyticsParams(metadata || {});
+    const normalisedStep = Number(details.step_index) || null;
+    const normalisedStepName = details.step_name || null;
     const trackingState = readTrackingState();
     const event = {
       id: createUuid(),
       created_at: new Date().toISOString(),
       session_id: sessionId,
-      quote_id: details.quoteId || null,
+      quote_id: details.quoteId || details.quote_id || null,
       event_name: eventName,
       step_number: normalisedStep,
       step_name: normalisedStepName,
@@ -615,6 +635,10 @@
   }
 
   function trackFloorplanUploaded(fileName) {
+    trackEvent("floorplan_upload_start", {
+      has_floorplan: true,
+      file_uploaded: !!fileName
+    });
     trackEvent("floorplan_uploaded", {
       file_name: fileName || ""
     });
@@ -652,6 +676,10 @@
     trackingState.floorplanAreaUses += 1;
     writeTrackingState(trackingState);
     trackEvent("floorplan_area_used", payload);
+    trackEvent("floorplan_to_quote", {
+      has_floorplan: true,
+      area: payload.area
+    });
     trackEvent("floorplan_area_sent_to_quote", {
       has_floorplan: true
     });

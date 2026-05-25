@@ -1,5 +1,6 @@
 (function () {
-  const DEFAULT_SCRIPT_PATH = "chatbot/";
+  const FALLBACK_SCRIPT_PATH = "chatbot/";
+  const DEFAULT_SCRIPT_PATH = getCurrentScriptPath();
   const MODULE_FILES = [
     "../security-config.js",
     "../security.js",
@@ -101,6 +102,16 @@
     return PAGE_PRESETS[pageKey] || PAGE_PRESETS.default;
   }
 
+  function getCurrentScriptPath() {
+    const script = document.currentScript;
+    const source = script && script.getAttribute ? script.getAttribute("src") : "";
+    if (!source) {
+      return FALLBACK_SCRIPT_PATH;
+    }
+
+    return source.replace(/[^/]*$/, "");
+  }
+
   function getConfig(overrides) {
     const globalConfig = window.OperonChatbotBootstrapConfig || {};
     const requestedPageKey = (overrides && overrides.pageKey) || globalConfig.pageKey || getPageKey();
@@ -121,7 +132,7 @@
 
   function ensureTrailingSlash(value) {
     if (!value) {
-      return DEFAULT_SCRIPT_PATH;
+      return FALLBACK_SCRIPT_PATH;
     }
 
     return /\/$/.test(value) ? value : value + "/";

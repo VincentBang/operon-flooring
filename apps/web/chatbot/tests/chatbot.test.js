@@ -268,7 +268,7 @@ test("controlled knowledge index routes site content without prices", function (
   [
     {
       prompt: "Tell me about Parramatta flooring",
-      route: "parramatta-flooring.html",
+      route: "flooring-parramatta.html",
       expected: /Parramatta/i
     },
     {
@@ -285,6 +285,21 @@ test("controlled knowledge index routes site content without prices", function (
       prompt: "What page helps with hybrid flooring?",
       route: "hybrid-flooring-sydney.html",
       expected: /Hybrid flooring/i
+    },
+    {
+      prompt: "Can I preview Lumiere Ultra HD hybrid?",
+      route: "hybrid-flooring-sydney.html",
+      expected: /Lumiere Ultra HD|hybrid preview/i
+    },
+    {
+      prompt: "Show me Villeroy Boch Heritage laminate",
+      route: "laminate-flooring-sydney.html",
+      expected: /Villeroy|Heritage|laminate preview/i
+    },
+    {
+      prompt: "Tell me about Cavallo Bianco Chevron",
+      route: "engineered-timber-flooring-sydney.html",
+      expected: /Cavallo Bianco|Chevron|engineered/i
     },
     {
       prompt: "Tell me about Swish Oak Natura Herringbone",
@@ -305,6 +320,11 @@ test("controlled knowledge index routes site content without prices", function (
       prompt: "Are trims and skirting included?",
       route: "quote-review.html",
       expected: /Trims|scotia|skirting|Finishing/i
+    },
+    {
+      prompt: "I selected not sure for door trimming and furniture, why are they not in review notes?",
+      route: "quote.html",
+      expected: /Not sure|needs confirmation|door trimming|furniture/i
     },
     {
       prompt: "What warranty and exclusions should I check?",

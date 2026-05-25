@@ -349,7 +349,7 @@
         idleSuggestionShown = true;
         pushGuided(
           siteState.isNearCompletion ? "The quote is nearly ready for review." : "A clear next step is available.",
-          "Keep the decision focused on product direction, area, and site scope.",
+          "Keep the decision focused on flooring choice, area, and main project details.",
           getStateAwareNextStep(siteState),
           prompts.actions.nextSteps
         );
@@ -365,7 +365,7 @@
         setRoute("Start quote", "quote.html?from=chatbot");
         pushTrigger(
           triggerId,
-          "Choose a flooring direction with more confidence.",
+          "Need help choosing where to start?",
           "One clear category is enough to begin the quote path.",
           "Start with a guided recommendation.",
           prompts.actions.productGuide
@@ -1404,7 +1404,7 @@
         setRoute("Start quote", "quote.html");
         pushGuided(
           "Operon focuses on clear scope and professional installation.",
-          "The aim is a clear estimate, suitable product direction, and final confirmation before work starts.",
+          "The aim is a clear estimate, suitable flooring choice, and final confirmation before work starts.",
           "Start with products or quote scope.",
           prompts.actions.welcome
         );
@@ -1488,7 +1488,7 @@
         }
         pushGuided(
           policyDecision.notice,
-          "Use this assistant for product direction, quote scope, and the next useful step.",
+          "Use this assistant for flooring choice, quote scope, and the next useful step.",
           "Start the quote or review scope.",
           prompts.actions.quoteHelp
         );

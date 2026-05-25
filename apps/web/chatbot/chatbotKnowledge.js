@@ -6,22 +6,22 @@
       label: "Hybrid",
       summary: "Hybrid is the practical default when water resistance, easy maintenance, and busy-home durability matter.",
       bestFor: ["apartments", "family homes", "pets", "kitchens", "general renovations"],
-      cautions: ["still needs subfloor and site details checked", "final colour and site scope are confirmed through the quote path"],
-      rangeNotes: ["ETF hybrid is organised by 7.0mm, 8.0mm, and 9.0mm ranges.", "Colour previews are for browsing; the quote can start from the selected range."]
+      cautions: ["final project details are reviewed before booking", "the chatbot should not claim a final product has been selected"],
+      rangeNotes: ["The hybrid category page shows a curated preview of ETF 7.0mm, ETF 8.0mm, Grande 9.0, Lumiere Ultra HD, and Storm Luxury Hybrid Plank.", "Use products.html when the customer asks to browse the full catalogue."]
     },
     laminate: {
       label: "Laminate",
       summary: "Laminate is a straightforward starting point for dry areas and simpler floating-floor projects.",
       bestFor: ["budget-conscious projects", "bedrooms", "dry living spaces", "quick decisions"],
-      cautions: ["not the first choice where water exposure is a priority", "subfloor and removal still matter"],
-      rangeNotes: ["12mm water-resistant AC4 laminate can be previewed by colour before starting the quote.", "Use laminate when the project is dry-area and straightforward."]
+      cautions: ["best suited to dry internal areas", "final project details are reviewed before booking"],
+      rangeNotes: ["The laminate category page shows a curated preview of 12mm water-resistant laminate, Swish Laminate Aqua, Swish Laminate, and Villeroy & Boch Heritage and Contemporary options.", "Use products.html when the customer asks to browse all products."]
     },
     engineered: {
       label: "Engineered Timber",
       summary: "Engineered timber suits a more finish-led project where timber look, colour, installation method, and specification matter more.",
       bestFor: ["premium renovations", "feature living areas", "design-led homes", "direct glue review", "herringbone feature areas"],
-      cautions: ["installation method and pattern need clearer review", "herringbone and chevron usually need more confirmation", "engineered colour can affect pricing when colours vary within the same range"],
-      rangeNotes: ["Swish Oak Natura and Swish Oak Natura Herringbone are current engineered range examples.", "Select the range first, then confirm colour and pattern details through the quote because engineered colours may carry different product pricing."]
+      cautions: ["installation method and pattern need clearer review", "herringbone and chevron should be confirmed before booking", "the chatbot should not finalise colour selection"],
+      rangeNotes: ["The engineered timber category page shows a curated preview of Swish Oak Wideboard, Swish Oak Contemporary, Swish Oak Natura Handcrafted, Castel Nuovo Herringbone, and Cavallo Bianco Chevron.", "Use products.html when the customer asks for the full catalogue or colour browsing."]
     }
   };
 
@@ -62,13 +62,8 @@
   const FACTORS = [
     "flooring category, range, colour, and pattern where relevant",
     "measurement method and area",
-    "stairs",
-    "existing floor to remove",
-    "take-away disposal",
-    "subfloor preparation",
-    "underlay option such as Standard silver underlay, Premium acoustic underlay, Acoustic Rubber Underlay 5mm, or Acoustic Rubber Underlay 5mm glued down where relevant",
-    "skirting, scotia, transition trims, moisture protection, door trimming, furniture, and notes",
-    "final site scope confirmation before booking"
+    "main inclusions such as removal, disposal, underlay, finishing, stairs, and furniture where relevant",
+    "final project details reviewed before booking"
   ];
 
   const SCOPE_CHECKS = [

@@ -6,6 +6,7 @@ const path = require("path");
 const vm = require("vm");
 
 const WEB_DIR = path.resolve(__dirname, "..");
+const FRONTEND_PRICING_DIR = path.resolve(__dirname, "..", "..", "..", "internal-tools", "frontend-pricing");
 
 function loadCalculator() {
   const context = {
@@ -24,21 +25,21 @@ function loadCalculator() {
   context.window = context;
 
   [
-    "pricingSource.js",
-    "products.js",
-    "installRates.js",
-    "underlay.js",
-    "skirtingScotia.js",
-    "removalRates.js",
-    "locationZones.js",
-    "pricingRules.js",
-    "stairRates.js",
-    "quoteCalculator.js"
+    path.join(WEB_DIR, "pricingSource.js"),
+    path.join(WEB_DIR, "products.js"),
+    path.join(FRONTEND_PRICING_DIR, "installRates.js"),
+    path.join(WEB_DIR, "underlay.js"),
+    path.join(WEB_DIR, "skirtingScotia.js"),
+    path.join(FRONTEND_PRICING_DIR, "removalRates.js"),
+    path.join(FRONTEND_PRICING_DIR, "locationZones.js"),
+    path.join(FRONTEND_PRICING_DIR, "pricingRules.js"),
+    path.join(FRONTEND_PRICING_DIR, "stairRates.js"),
+    path.join(FRONTEND_PRICING_DIR, "quoteCalculator.js")
   ].forEach(function (file) {
     vm.runInNewContext(
-      fs.readFileSync(path.join(WEB_DIR, file), "utf8"),
+      fs.readFileSync(file, "utf8"),
       context,
-      { filename: file }
+      { filename: path.basename(file) }
     );
   });
 

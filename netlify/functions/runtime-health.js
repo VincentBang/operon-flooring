@@ -21,20 +21,13 @@ function getEnvStatus() {
   const quoteSaveReady = !!(supabaseUrl && supabaseServiceRoleKey);
   const emailReady = !!(resendApiKey && fromEmail && internalEmail);
 
-  return {
-    quoteSaveReady: quoteSaveReady,
-    privatePricingReady: quoteSaveReady,
-    emailReady: emailReady,
-    missing: {
-      supabase: quoteSaveReady ? [] : ["SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"],
-      email: emailReady ? [] : ["RESEND_API_KEY", "OPERON_FROM_EMAIL", "OPERON_INTERNAL_EMAIL"]
-    }
-  };
+  return quoteSaveReady && emailReady;
 }
 
 exports.handler = async function () {
+  const available = getEnvStatus();
   return jsonResponse(200, {
-    ok: true,
-    runtime: getEnvStatus()
+    ok: available,
+    status: available ? "available" : "unavailable"
   });
 };

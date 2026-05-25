@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operon Dashboard</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="assets/Operon favicon.png" type="image/png">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+    :root { --bg:#f8f9fb; --surface:rgba(255,255,255,.94); --text:#111; --muted:#555; --brand:#1e3a8a; --shadow:0 18px 50px rgba(15,23,42,.08); --radius:24px; --max:1280px; }
+    * { box-sizing:border-box; } body { margin:0; font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--text); background:var(--bg); } a { color:inherit; text-decoration:none; }
+    .shell { width:min(var(--max), calc(100% - 32px)); margin:0 auto; }
+    .site-header { position:sticky; top:0; z-index:10; background:rgba(248,250,252,.84); backdrop-filter:blur(18px); border-bottom:1px solid rgba(16,24,40,.06); }
+    .nav { min-height:74px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .brand { display:inline-flex; align-items:center; width:clamp(232px, 22vw, 340px); min-height:52px; background:left center / auto 100% no-repeat url("assets/operon-logo-final.png"); color:transparent; font-size:0; letter-spacing:0; text-transform:none; line-height:0; overflow:hidden; white-space:nowrap; gap:0; flex:none; }
+    .brand-mark { display:none; }
+    .nav-links { display:flex; align-items:center; gap:22px; color:var(--muted); font-size:.95rem; }
+    .button,.button-secondary { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 22px; border-radius:10px; border:0; cursor:pointer; }
+    .button { background:var(--brand); color:#fff; box-shadow:0 12px 30px rgba(30,58,138,.16); }
+    .button-secondary { background:#fff; color:var(--text); border:1px solid rgba(17,17,17,.1); }
+    .hero,.section { padding:0 0 56px; }
+    .hero { padding-top:64px; text-align:center; }
+    .hero h1 { margin:0 0 14px; font-size:clamp(2.25rem,5vw,2.625rem); }
+    .hero p,.muted { color:var(--muted); line-height:1.6; }
+    .warning { margin-top:16px; padding:14px 16px; border-radius:12px; background:rgba(181,71,8,.1); color:#b54708; text-align:left; }
+    .section-head { margin-bottom:18px; }
+    .grid,.metrics-grid,.task-columns,.small-grid { display:grid; gap:20px; }
+    .metrics-grid { grid-template-columns:repeat(4, minmax(0,1fr)); }
+    .grid { grid-template-columns:repeat(2, minmax(0,1fr)); }
+    .task-columns { grid-template-columns:repeat(3, minmax(0,1fr)); }
+    .card,.task-box { background:var(--surface); border:1px solid rgba(17,17,17,.06); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; }
+    h2,h3 { margin:0 0 14px; line-height:1.1; } h2 { font-size:1.75rem; } h3 { font-size:1.05rem; }
+    .metric-value { font-size:2rem; font-weight:700; color:var(--brand); margin-bottom:6px; }
+    .list { margin:0; padding-left:18px; display:grid; gap:8px; color:var(--muted); }
+    .small-grid { gap:14px; grid-template-columns:repeat(2, minmax(0,1fr)); margin-top:16px; }
+    .admin-row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:12px; }
+    .admin-row input,.admin-row select { min-height:46px; padding:10px 12px; border-radius:10px; border:1px solid rgba(17,17,17,.1); background:#fff; flex:1 1 220px; }
+    .admin-table { width:100%; border-collapse:collapse; margin-top:14px; font-size:.9rem; }
+    .admin-table th,.admin-table td { padding:10px 8px; border-bottom:1px solid rgba(17,17,17,.08); text-align:left; vertical-align:top; }
+    .admin-table th { color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.04em; }
+    .admin-table td:last-child { text-align:right; }
+    .mini-button { min-height:34px; padding:8px 10px; border-radius:8px; border:1px solid rgba(17,17,17,.12); background:#fff; cursor:pointer; font-weight:700; }
+    .mini-button.danger { color:#b42318; border-color:rgba(180,35,24,.18); background:rgba(180,35,24,.06); }
+    .lead-toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:16px 0; }
+    .lead-toolbar select { min-height:42px; padding:9px 12px; border-radius:10px; border:1px solid rgba(17,17,17,.1); background:#fff; }
+    .priority-badge,.status-badge,.risk-pill { display:inline-flex; align-items:center; min-height:28px; padding:5px 9px; border-radius:999px; font-weight:800; font-size:.78rem; white-space:nowrap; }
+    .priority-badge { background:#eef4ff; color:#1e3a8a; }
+    .priority-badge[data-priority="A"] { background:#e8f7ef; color:#047857; }
+    .priority-badge[data-priority="C"] { background:#f4f4f5; color:#52525b; }
+    .priority-badge[data-priority="D"] { background:#fff1f2; color:#be123c; }
+    .status-badge { background:#f8fafc; color:#334155; border:1px solid rgba(15,23,42,.08); }
+    .risk-list { display:flex; flex-wrap:wrap; gap:6px; }
+    .risk-pill { background:#fff7ed; color:#c2410c; font-weight:700; }
+    .template-box { white-space:pre-wrap; color:var(--muted); line-height:1.6; }
+    @media (max-width: 980px) { .metrics-grid,.grid,.task-columns,.small-grid { grid-template-columns:1fr; } }
+    @media (max-width: 820px) { .nav-links { display:none; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell nav">
+      <a class="brand" href="index.html#top"><span class="brand-mark" aria-hidden="true"></span>Operon Flooring</a>
+      <nav class="nav-links">
+        <a href="index.html#top">Home</a>
+        <a href="quote.html">Quote</a>
+        <a href="floorplan.html">Floorplan</a>
+        <a href="admin-revenue.html">Revenue</a>
+      </nav>
+      <a class="button" href="quote.html">Open quote</a>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="shell">
+        <h1>Operon operating dashboard</h1>
+        <p>Track SEO, funnel conversion, revenue, task priority and content pipeline from one clean decision view.</p>
+        <div class="warning" id="setupWarning">Using localStorage and manual inputs until Supabase analytics and external ranking feeds are connected.</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell section-head"><h2>SEO Overview</h2></div>
+      <div class="shell metrics-grid">
+        <article class="card"><div class="metric-value" id="pagesCreatedValue">0</div><div class="muted">Pages created</div></article>
+        <article class="card"><div class="metric-value" id="keywordsTargetedValue">0</div><div class="muted">Keywords targeted</div></article>
+        <article class="card"><div class="metric-value" id="rankSnapshotValue">0</div><div class="muted">Ranking snapshots</div></article>
+        <article class="card"><div class="metric-value" id="backlinksValue">0</div><div class="muted">Backlinks live</div></article>
+      </div>
+      <div class="shell small-grid">
+        <article class="card"><div class="metric-value" id="pendingBacklinksValue">0</div><div class="muted">Backlinks pending</div></article>
+        <article class="card"><div class="metric-value" id="internalLinksValue">13</div><div class="muted">Tracked homepage internal links</div></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell section-head"><h2>Conversion Funnel</h2></div>
+      <div class="shell metrics-grid">
+        <article class="card"><div class="metric-value" id="quoteStartsValue">0</div><div class="muted">Quote starts</div></article>
+        <article class="card"><div class="metric-value" id="quoteSubmissionsValue">0</div><div class="muted">Quote submissions</div></article>
+        <article class="card"><div class="metric-value" id="abandonmentValue">0</div><div class="muted">Abandonments</div></article>
+        <article class="card"><div class="metric-value" id="conversionRateValue">0%</div><div class="muted">Submission rate</div></article>
+      </div>
+      <div class="shell small-grid">
+        <article class="card"><h3>Step completion</h3><ul class="list" id="stepCompletionList"></ul></article>
+        <article class="card"><h3>Abandonment by step</h3><ul class="list" id="abandonmentList"></ul></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell section-head">
+        <h2>Lead Qualification Control</h2>
+        <p class="muted">Triage quote requests into remote estimate, missing information, site confirmation, founder review, or low-priority handling. This panel does not send messages or book visits automatically.</p>
+      </div>
+      <div class="shell metrics-grid">
+        <article class="card"><div class="metric-value" id="leadPriorityAValue">0</div><div class="muted">A site confirmation priority</div></article>
+        <article class="card"><div class="metric-value" id="leadPriorityBValue">0</div><div class="muted">B missing info / remote review</div></article>
+        <article class="card"><div class="metric-value" id="leadPriorityCValue">0</div><div class="muted">C low priority</div></article>
+        <article class="card"><div class="metric-value" id="leadPriorityDValue">0</div><div class="muted">D founder review</div></article>
+      </div>
+      <div class="shell grid" style="margin-top:20px;">
+        <article class="card" style="overflow:auto;">
+          <h3>Qualified lead queue</h3>
+          <div class="lead-toolbar">
+            <input id="leadAdminToken" type="password" placeholder="Admin token" aria-label="Lead admin token">
+            <button class="button-secondary" id="leadLoadButton" type="button">Load shared leads</button>
+            <select id="leadPriorityFilter" aria-label="Lead priority filter">
+              <option value="all">All priorities</option>
+              <option value="A">Priority A</option>
+              <option value="B">Priority B</option>
+              <option value="C">Priority C</option>
+              <option value="D">Priority D</option>
+            </select>
+            <select id="leadStatusFilter" aria-label="Lead status filter">
+              <option value="all">All statuses</option>
+              <option>New</option>
+              <option>Needs missing info</option>
+              <option>Remote estimate sent</option>
+              <option>Site confirmation eligible</option>
+              <option>Site confirmation booked</option>
+              <option>Manual review required</option>
+              <option>Quoted</option>
+              <option>Won</option>
+              <option>Lost</option>
+              <option>Low priority</option>
+            </select>
+          </div>
+          <p class="muted" id="leadAdminStatus">Showing local qualified leads until shared leads are loaded.</p>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Risk flags</th>
+                <th>Next action</th>
+                <th>Contact</th>
+                <th>Summary</th>
+                <th>Files</th>
+                <th>Update</th>
+              </tr>
+            </thead>
+            <tbody id="leadQualificationRows">
+              <tr><td colspan="8">No qualified leads saved on this device yet.</td></tr>
+            </tbody>
+          </table>
+        </article>
+        <article class="card">
+          <h3>Follow-up templates</h3>
+          <p class="muted">Templates are draft copy only. Use them for manual follow-up after checking the lead.</p>
+          <select id="leadTemplateSelect" style="width:100%; min-height:46px; padding:10px 12px; border-radius:10px; border:1px solid rgba(17,17,17,.1); background:#fff;"></select>
+          <div class="template-box" id="leadTemplatePreview" style="margin-top:16px;"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell section-head"><h2>Follow-up Queue</h2></div>
+      <div class="shell grid">
+        <article class="card">
+          <h3>Queue controls</h3>
+          <p class="muted">Safe mode only. These records prepare follow-up tasks; they do not send SMS or email.</p>
+          <div class="admin-row">
+            <input id="followupAdminToken" type="password" placeholder="Admin token">
+            <select id="followupStatusFilter">
+              <option value="queued">Queued</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="sent">Sent</option>
+              <option value="failed">Failed</option>
+              <option value="all">All</option>
+            </select>
+            <button class="button-secondary" id="followupLoadButton" type="button">Load queue</button>
+          </div>
+          <p class="muted" id="followupAdminStatus">Enter the admin token to view queued follow-ups.</p>
+        </article>
+        <article class="card">
+          <h3>Pause controls</h3>
+          <p class="muted">Pause cancels queued follow-ups for that quote and marks the quote as paused. Resume clears the pause flag only.</p>
+          <ul class="list" id="followupActionList"></ul>
+        </article>
+      </div>
+      <div class="shell">
+        <article class="card" style="margin-top:20px; overflow:auto;">
+          <h3>Recent follow-up tasks</h3>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>When</th>
+                <th>Customer</th>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Control</th>
+              </tr>
+            </thead>
+            <tbody id="followupQueueRows">
+              <tr><td colspan="5">No follow-ups loaded yet.</td></tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell section-head"><h2>Revenue</h2></div>
+      <div class="shell metrics-grid">
+        <article class="card"><div class="metric-value" id="leadCountValue">0</div><div class="muted">Leads</div></article>
+        <article class="card"><div class="metric-value" id="wonJobsValue">0</div><div class="muted">Won jobs</div></article>
+        <article class="card"><div class="metric-value" id="revenueValue">$0</div><div class="muted">Final revenue</div></article>
+        <article class="card"><div class="metric-value" id="profitValue">$0</div><div class="muted">Gross profit</div></article>
+      </div>
+      <div class="shell small-grid">
+        <article class="card"><h3>Average margin</h3><div class="metric-value" id="marginValue">0%</div><div class="muted">Average margin across won and completed jobs.</div></article>
+        <article class="card"><h3>Last tracked quote</h3><div class="metric-value" id="lastQuoteValue">$0</div><div class="muted" id="lastQuoteType">No tracked quote yet.</div></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell section-head"><h2>Agent Tasks</h2></div>
+      <div class="shell metrics-grid" style="margin-bottom:20px;">
+        <article class="card"><div class="metric-value" id="queueTotalValue">0</div><div class="muted">Backlog tasks</div></article>
+        <article class="card"><div class="metric-value" id="queueDoneValue">0</div><div class="muted">Completed</div></article>
+        <article class="card"><div class="metric-value" id="queuePendingValue">0</div><div class="muted">Pending</div></article>
+        <article class="card"><div class="metric-value" id="queueCompletionValue">0%</div><div class="muted">Completion rate</div></article>
+      </div>
+      <div class="shell small-grid" style="margin-bottom:20px;">
+        <article class="card"><h3>Backlog status rollup</h3><ul class="list" id="queueStatusList"></ul></article>
+        <article class="card"><h3>Completed by category</h3><ul class="list" id="queueCompletedCategoryList"></ul></article>
+      </div>
+      <div class="shell task-columns">
+        <article class="task-box"><h3>Top tasks</h3><ul class="list" id="taskList"></ul></article>
+        <article class="task-box"><h3>Status</h3><ul class="list" id="taskStatusList"></ul></article>
+        <article class="task-box"><h3>Next action</h3><ul class="list" id="nextActionList"></ul></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell section-head"><h2>Blog Pipeline</h2></div>
+      <div class="shell metrics-grid">
+        <article class="card"><div class="metric-value" id="blogIdeasValue">0</div><div class="muted">Ideas in pipeline</div></article>
+        <article class="card"><div class="metric-value" id="blogDraftsValue">0</div><div class="muted">Drafts</div></article>
+        <article class="card"><div class="metric-value" id="blogPublishedValue">0</div><div class="muted">Published</div></article>
+        <article class="card"><div class="metric-value" id="blogKeywordCountValue">0</div><div class="muted">Blog keywords tracked</div></article>
+      </div>
+      <div class="shell grid" style="margin-top:20px;">
+        <article class="card"><ul class="list" id="blogList"></ul></article>
+        <article class="card"><ul class="list" id="blogActionList"></ul></article>
+      </div>
+    </section>
+  </main>
+  <script>
+    const OPERON_SUPABASE_PROJECT_REF = "pwohrvtwuctmxwwirrim";
+    window.OPERON_SUPABASE_CONFIG = {
+      url: "https://" + OPERON_SUPABASE_PROJECT_REF + ".supabase.co",
+      anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3b2hydnR3dWN0bXh3d2lycmltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MzI4MTYsImV4cCI6MjA5MDIwODgxNn0.TmR2wHo5vnf9fkyWtEYTU4txeanwlMlgesdC3CFU6Hc"
+    };
+  </script>
+  <script src="tracking.js"></script>
+  <script src="leadQualification.js"></script>
+  <script src="agent-task-engine.js"></script>
+  <script>
+    function fmt(n){return new Intl.NumberFormat("en-AU",{style:"currency",currency:"AUD",maximumFractionDigits:0}).format(Number(n)||0);}
+    function pct(n){return ((Number(n)||0)*100).toFixed(1)+"%";}
+    function sum(values){return values.reduce((total, value) => total + (Number(value) || 0), 0);}
+    function readJsonKey(key){try{return JSON.parse(localStorage.getItem(key)||"[]");}catch(e){return [];}}
+    function escapeHtml(value) {
+      return String(value == null ? "" : value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+    function renderList(id, items, fallback){document.getElementById(id).innerHTML = items.length ? items.map(item => "<li>"+escapeHtml(item)+"</li>").join("") : "<li>"+escapeHtml(fallback)+"</li>";}
+    const QUALIFIED_LEADS_KEY = "operon_qualified_leads_v1";
+    const LEAD_ADMIN_TOKEN_KEY = "operon_lead_admin_token";
+    let sharedLeadRows = [];
+    function readQualifiedLeads(){return readJsonKey(QUALIFIED_LEADS_KEY);}
+    function writeQualifiedLeads(records){localStorage.setItem(QUALIFIED_LEADS_KEY, JSON.stringify(records));}
+    function getLeadAdminToken(){return sessionStorage.getItem(LEAD_ADMIN_TOKEN_KEY) || getFollowupToken() || "";}
+    function setLeadAdminStatus(message){
+      const status = document.getElementById("leadAdminStatus");
+      if (status) status.textContent = message;
+    }
+    function mapSupabaseLead(row){
+      const qualification = row.lead_qualification && typeof row.lead_qualification === "object" && row.lead_qualification.status
+        ? row.lead_qualification
+        : {
+            status: row.lead_status || "New",
+            priority: row.lead_priority || "B",
+            qualificationFields: row.lead_qualification_fields || {},
+            riskFlags: Array.isArray(row.lead_risk_flags) ? row.lead_risk_flags : [],
+            missingFields: Array.isArray(row.lead_missing_fields) ? row.lead_missing_fields : [],
+            nextAction: row.lead_next_action || "",
+            followUpTemplateKey: row.lead_followup_template_key || ""
+          };
+      return {
+        id: row.id,
+        quoteId: row.id,
+        createdAt: row.created_at,
+        updatedAt: row.updated_at,
+        name: row.customer_name || "",
+        phone: row.phone || "",
+        email: row.email || "",
+        suburb: row.suburb || "",
+        postcode: row.postcode || "",
+        quoteMode: row.quote_mode || "",
+        category: row.product_category || "",
+        selectedProduct: row.product_name || "",
+        realArea: row.real_area || 0,
+        quoteTotal: row.total_inc_gst || 0,
+        quoteConfidence: row.confidence_level || "",
+        reviewRequired: row.review_required || row.manual_review_required || false,
+        floorplanSource: row.floorplan_attached ? "supabase" : "",
+        quoteReview: row.quote_review_attached ? { attached: true } : {},
+        qualification: qualification,
+        operonLeadStatus: row.lead_status || qualification.status,
+        operonLeadPriority: row.lead_priority || qualification.priority,
+        operonNextAction: row.lead_next_action || qualification.nextAction,
+        sharedSource: "supabase"
+      };
+    }
+    function getLeadRows(){
+      const qualifier = window.OperonLeadQualification;
+      const sourceRows = sharedLeadRows.length ? sharedLeadRows.map(mapSupabaseLead) : readQualifiedLeads();
+      return sourceRows
+        .map(function (lead) {
+          return qualifier && typeof qualifier.buildDashboardLead === "function"
+            ? qualifier.buildDashboardLead(lead)
+            : null;
+        })
+        .filter(Boolean)
+        .sort(function (a, b) {
+          const priorityOrder = { A: 0, D: 1, B: 2, C: 3 };
+          return (priorityOrder[a.priority] || 9) - (priorityOrder[b.priority] || 9)
+            || String(b.createdAt || "").localeCompare(String(a.createdAt || ""));
+        });
+    }
+    function getFilteredLeadRows(){
+      const priorityFilter = document.getElementById("leadPriorityFilter");
+      const statusFilter = document.getElementById("leadStatusFilter");
+      const priority = priorityFilter ? priorityFilter.value : "all";
+      const status = statusFilter ? statusFilter.value : "all";
+      return getLeadRows().filter(function (lead) {
+        return (priority === "all" || lead.priority === priority)
+          && (status === "all" || lead.status === status);
+      });
+    }
+    function renderLeadMetrics(rows){
+      const counts = rows.reduce(function (memo, lead) {
+        memo[lead.priority] = (memo[lead.priority] || 0) + 1;
+        return memo;
+      }, {});
+      document.getElementById("leadPriorityAValue").textContent = String(counts.A || 0);
+      document.getElementById("leadPriorityBValue").textContent = String(counts.B || 0);
+      document.getElementById("leadPriorityCValue").textContent = String(counts.C || 0);
+      document.getElementById("leadPriorityDValue").textContent = String(counts.D || 0);
+    }
+    function renderLeadQualificationRows(){
+      const rows = document.getElementById("leadQualificationRows");
+      if (!rows) return;
+      const allRows = getLeadRows();
+      renderLeadMetrics(allRows);
+      const filtered = getFilteredLeadRows();
+      if (!filtered.length) {
+        rows.innerHTML = '<tr><td colspan="8">No qualified leads match this filter.</td></tr>';
+        return;
+      }
+      rows.innerHTML = filtered.map(function (lead) {
+        const contact = [
+          lead.contact.name,
+          lead.contact.phone,
+          lead.contact.email
+        ].filter(Boolean).map(escapeHtml).join("<br>") || "No contact";
+        const riskFlags = lead.riskFlags.length
+          ? '<div class="risk-list">' + lead.riskFlags.map(function (flag) { return '<span class="risk-pill">' + escapeHtml(flag) + '</span>'; }).join("") + '</div>'
+          : '<span class="muted">None</span>';
+        const files = [
+          lead.floorplanAttached ? "Floorplan: yes" : "Floorplan: no",
+          lead.quoteReviewAttached ? "Quote review: yes" : "Quote review: no"
+        ].join("<br>");
+        return '<tr>'
+          + '<td><span class="priority-badge" data-priority="' + escapeHtml(lead.priority) + '">' + escapeHtml(lead.priority) + '</span></td>'
+          + '<td><span class="status-badge">' + escapeHtml(lead.status) + '</span></td>'
+          + '<td>' + riskFlags + '</td>'
+          + '<td>' + escapeHtml(lead.nextAction) + '</td>'
+          + '<td>' + contact + '</td>'
+          + '<td>' + escapeHtml(lead.quoteSummary) + '</td>'
+          + '<td>' + files + '</td>'
+          + '<td><select data-lead-status="' + escapeHtml(lead.id) + '" aria-label="Update lead status">'
+          + getLeadStatusOptions(lead.status)
+          + '</select></td>'
+          + '</tr>';
+      }).join("");
+    }
+    function getLeadStatusOptions(currentStatus){
+      const statuses = window.OperonLeadQualification
+        ? Object.values(window.OperonLeadQualification.STATUSES)
+        : ["New", "Needs missing info", "Remote estimate sent", "Site confirmation eligible", "Site confirmation booked", "Manual review required", "Quoted", "Won", "Lost", "Low priority"];
+      return statuses.map(function (status) {
+        return '<option' + (status === currentStatus ? ' selected' : '') + '>' + escapeHtml(status) + '</option>';
+      }).join("");
+    }
+    function getPriorityForStatus(status, currentPriority){
+      if (status === "Site confirmation eligible" || status === "Site confirmation booked") return "A";
+      if (status === "Manual review required") return "D";
+      if (status === "Low priority" || status === "Lost") return "C";
+      return currentPriority || "B";
+    }
+    function getNextActionForStatus(status, currentAction){
+      if (!window.OperonLeadQualification) return currentAction || "";
+      const actions = window.OperonLeadQualification.NEXT_ACTIONS;
+      if (status === "Site confirmation booked" || status === "Site confirmation eligible") return actions.BOOK_SITE_CONFIRMATION;
+      if (status === "Needs missing info") return actions.REQUEST_MISSING_INFO;
+      if (status === "Manual review required") return actions.FOUNDER_REVIEW;
+      if (status === "Low priority") return actions.MARK_LOW_PRIORITY;
+      if (status === "Remote estimate sent" || status === "Quoted") return actions.SEND_ESTIMATE_EXPLANATION;
+      return currentAction || actions.CALL_CUSTOMER;
+    }
+    function trackLeadStatusChange(status){
+      if (typeof window.operonTrack !== "function") return;
+      if (status === "Site confirmation booked") {
+        window.operonTrack("site_confirmation_booked", { source: "dashboard", event_context: "manual_status_update" });
+      } else if (status === "Needs missing info") {
+        window.operonTrack("missing_info_requested", { source: "dashboard", event_context: "manual_status_update" });
+      } else if (status === "Low priority") {
+        window.operonTrack("lead_marked_low_priority", { source: "dashboard", event_context: "manual_status_update" });
+      }
+    }
+    async function callLeadAdmin(method, payload){
+      const token = getLeadAdminToken();
+      const priorityFilter = document.getElementById("leadPriorityFilter");
+      const statusFilter = document.getElementById("leadStatusFilter");
+      const url = method === "GET"
+        ? "/.netlify/functions/lead-admin?priority=" + encodeURIComponent(priorityFilter ? priorityFilter.value : "all") + "&status=" + encodeURIComponent(statusFilter ? statusFilter.value : "all") + "&limit=80"
+        : "/.netlify/functions/lead-admin";
+      const response = await fetch(url, {
+        method: method,
+        headers: Object.assign({
+          "x-operon-admin-token": token
+        }, payload ? { "Content-Type": "application/json" } : {}),
+        body: payload ? JSON.stringify(payload) : undefined
+      });
+      const result = await response.json().catch(function () { return null; });
+      if (!response.ok || !result || !result.ok) {
+        throw new Error(result && result.error ? result.error : "Lead admin request failed.");
+      }
+      return result;
+    }
+    async function loadSharedLeads(){
+      const tokenInput = document.getElementById("leadAdminToken");
+      if (tokenInput && tokenInput.value.trim()) {
+        sessionStorage.setItem(LEAD_ADMIN_TOKEN_KEY, tokenInput.value.trim());
+      }
+      if (!getLeadAdminToken()) {
+        setLeadAdminStatus("Enter the admin token to load shared leads.");
+        return;
+      }
+      setLeadAdminStatus("Loading shared leads...");
+      try {
+        const result = await callLeadAdmin("GET");
+        sharedLeadRows = result.leads || [];
+        renderLeadQualificationRows();
+        setLeadAdminStatus("Loaded " + sharedLeadRows.length + " shared lead(s).");
+      } catch (error) {
+        setLeadAdminStatus(error.message || "Could not load shared leads.");
+      }
+    }
+    async function updateSharedLeadStatus(leadId, status){
+      const row = sharedLeadRows.find(function (lead) { return String(lead.id) === String(leadId); });
+      if (!row) return false;
+      setLeadAdminStatus("Updating shared lead...");
+      const result = await callLeadAdmin("POST", {
+        action: "update_lead",
+        quote_request_id: leadId,
+        lead_status: status,
+        lead_priority: row.lead_priority || "B",
+        lead_next_action: row.lead_next_action || ""
+      });
+      const updated = result.lead || null;
+      if (updated) {
+        sharedLeadRows = sharedLeadRows.map(function (lead) {
+          return String(lead.id) === String(leadId) ? Object.assign({}, lead, updated) : lead;
+        });
+      }
+      setLeadAdminStatus("Shared lead updated.");
+      return true;
+    }
+    async function updateLeadStatus(leadId, status){
+      if (sharedLeadRows.some(function (lead) { return String(lead.id) === String(leadId); })) {
+        try {
+          await updateSharedLeadStatus(leadId, status);
+          trackLeadStatusChange(status);
+          renderLeadQualificationRows();
+        } catch (error) {
+          setLeadAdminStatus(error.message || "Shared lead update failed.");
+        }
+        return;
+      }
+      const records = readQualifiedLeads();
+      const index = records.findIndex(function (lead) {
+        return String(lead.id || lead.quoteId || lead.createdAt) === String(leadId);
+      });
+      if (index === -1) return;
+      records[index].operonLeadStatus = status;
+      records[index].leadStatus = status;
+      records[index].operonLeadPriority = getPriorityForStatus(status, records[index].operonLeadPriority || records[index].leadPriority);
+      records[index].operonNextAction = getNextActionForStatus(status, records[index].operonNextAction || records[index].nextAction);
+      records[index].updatedAt = new Date().toISOString();
+      writeQualifiedLeads(records);
+      trackLeadStatusChange(status);
+      renderLeadQualificationRows();
+    }
+    function renderLeadTemplates(){
+      const select = document.getElementById("leadTemplateSelect");
+      const preview = document.getElementById("leadTemplatePreview");
+      if (!select || !preview || !window.OperonLeadQualification) return;
+      const templates = window.OperonLeadQualification.FOLLOW_UP_TEMPLATES;
+      select.innerHTML = Object.keys(templates).map(function (key) {
+        return '<option value="' + escapeHtml(key) + '">' + escapeHtml(templates[key].title) + '</option>';
+      }).join("");
+      function renderSelectedTemplate(){
+        const template = templates[select.value] || templates[Object.keys(templates)[0]];
+        preview.innerHTML = '<strong>' + escapeHtml(template.subject) + '</strong>\n\n' + escapeHtml(template.body);
+      }
+      select.addEventListener("change", renderSelectedTemplate);
+      renderSelectedTemplate();
+    }
+    function initialiseLeadQualificationPanel(){
+      const rows = document.getElementById("leadQualificationRows");
+      const priorityFilter = document.getElementById("leadPriorityFilter");
+      const statusFilter = document.getElementById("leadStatusFilter");
+      const tokenInput = document.getElementById("leadAdminToken");
+      const loadButton = document.getElementById("leadLoadButton");
+      if (tokenInput) tokenInput.value = getLeadAdminToken();
+      if (loadButton) loadButton.addEventListener("click", loadSharedLeads);
+      if (priorityFilter) priorityFilter.addEventListener("change", renderLeadQualificationRows);
+      if (statusFilter) statusFilter.addEventListener("change", renderLeadQualificationRows);
+      if (rows) {
+        rows.addEventListener("change", async function (event) {
+          const select = event.target.closest("[data-lead-status]");
+          if (!select) return;
+          await updateLeadStatus(select.getAttribute("data-lead-status"), select.value);
+        });
+      }
+      renderLeadTemplates();
+      renderLeadQualificationRows();
+    }
+    function countBy(items, key) {
+      return items.reduce((counts, item) => {
+        const value = item && item[key] ? item[key] : "unknown";
+        counts[value] = (counts[value] || 0) + 1;
+        return counts;
+      }, {});
+    }
+    function rollupList(counts) {
+      return Object.entries(counts)
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+        .map(entry => entry[0] + ": " + entry[1]);
+    }
+    function getFollowupToken() {
+      return sessionStorage.getItem("operon_followup_admin_token") || "";
+    }
+    function setFollowupStatus(message) {
+      const status = document.getElementById("followupAdminStatus");
+      if (status) status.textContent = message;
+    }
+    function formatDateTime(value) {
+      if (!value) return "Not scheduled";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return String(value);
+      return date.toLocaleString("en-AU", { dateStyle: "medium", timeStyle: "short" });
+    }
+    async function callFollowupAdmin(method, payload) {
+      const token = getFollowupToken();
+      const statusFilter = document.getElementById("followupStatusFilter");
+      const url = method === "GET"
+        ? "/.netlify/functions/followup-admin?status=" + encodeURIComponent(statusFilter ? statusFilter.value : "queued") + "&limit=25"
+        : "/.netlify/functions/followup-admin";
+      const response = await fetch(url, {
+        method: method,
+        headers: Object.assign({
+          "x-operon-admin-token": token
+        }, payload ? { "Content-Type": "application/json" } : {}),
+        body: payload ? JSON.stringify(payload) : undefined
+      });
+      const result = await response.json().catch(() => null);
+      if (!response.ok || !result || !result.ok) {
+        throw new Error(result && result.error ? result.error : "Follow-up admin request failed.");
+      }
+      return result;
+    }
+    function renderFollowupRows(messages) {
+      const rows = document.getElementById("followupQueueRows");
+      if (!rows) return;
+      if (!messages || !messages.length) {
+        rows.innerHTML = '<tr><td colspan="5">No follow-ups found for this filter.</td></tr>';
+        return;
+      }
+      rows.innerHTML = messages.map(message => {
+        const quote = message.quote || {};
+        const payload = message.payload || {};
+        const customer = quote.customer_name || payload.to_email || payload.to_phone || "Unknown customer";
+        const product = quote.product_name ? " · " + quote.product_name : "";
+        const task = (message.channel || "") + " · " + (message.template_key || "");
+        const quoteId = message.quote_request_id || "";
+        return '<tr>'
+          + '<td>' + escapeHtml(formatDateTime(message.scheduled_for)) + '</td>'
+          + '<td><strong>' + escapeHtml(customer) + '</strong><br><span class="muted">' + escapeHtml((quote.suburb || "") + product) + '</span></td>'
+          + '<td>' + escapeHtml(task) + '</td>'
+          + '<td>' + escapeHtml(message.status || "") + '</td>'
+          + '<td>'
+          + (message.status === "queued" ? '<button class="mini-button danger" data-followup-cancel="' + escapeHtml(message.id) + '">Cancel</button> ' : '')
+          + (quoteId ? '<button class="mini-button" data-followup-pause="' + escapeHtml(quoteId) + '">Pause quote</button>' : '')
+          + '</td>'
+          + '</tr>';
+      }).join("");
+    }
+    async function loadFollowupQueue() {
+      const tokenInput = document.getElementById("followupAdminToken");
+      if (tokenInput && tokenInput.value.trim()) {
+        sessionStorage.setItem("operon_followup_admin_token", tokenInput.value.trim());
+      }
+      if (!getFollowupToken()) {
+        setFollowupStatus("Enter the admin token first.");
+        return;
+      }
+      setFollowupStatus("Loading follow-up queue...");
+      try {
+        const result = await callFollowupAdmin("GET");
+        renderFollowupRows(result.messages || []);
+        setFollowupStatus("Loaded " + ((result.messages || []).length) + " follow-up task(s).");
+        renderList("followupActionList", [
+          "Queued tasks are safe drafts only.",
+          "Pause cancels queued tasks for that quote.",
+          "Resume can be done by clearing the quote pause flag from the admin endpoint."
+        ], "No follow-up controls loaded.");
+      } catch (error) {
+        setFollowupStatus(error.message || "Could not load follow-up queue.");
+      }
+    }
+    async function handleFollowupTableClick(event) {
+      const cancelButton = event.target.closest("[data-followup-cancel]");
+      const pauseButton = event.target.closest("[data-followup-pause]");
+      if (!cancelButton && !pauseButton) return;
+      try {
+        if (cancelButton) {
+          setFollowupStatus("Cancelling queued follow-up...");
+          await callFollowupAdmin("POST", {
+            action: "cancel_message",
+            message_id: cancelButton.getAttribute("data-followup-cancel")
+          });
+        }
+        if (pauseButton) {
+          setFollowupStatus("Pausing quote follow-ups...");
+          await callFollowupAdmin("POST", {
+            action: "pause_quote",
+            quote_request_id: pauseButton.getAttribute("data-followup-pause")
+          });
+        }
+        await loadFollowupQueue();
+      } catch (error) {
+        setFollowupStatus(error.message || "Follow-up control failed.");
+      }
+    }
+    function initialiseFollowupAdmin() {
+      const tokenInput = document.getElementById("followupAdminToken");
+      const loadButton = document.getElementById("followupLoadButton");
+      const rows = document.getElementById("followupQueueRows");
+      if (tokenInput) tokenInput.value = getFollowupToken();
+      if (loadButton) loadButton.addEventListener("click", loadFollowupQueue);
+      if (rows) rows.addEventListener("click", handleFollowupTableClick);
+      renderList("followupActionList", [
+        "Add OPERON_ADMIN_TOKEN in Netlify before using this panel.",
+        "Follow-ups stay queued until sending is separately enabled."
+      ], "Follow-up queue not configured.");
+    }
+    async function initialiseDashboard(){
+      const tracking = window.OperonTracking ? window.OperonTracking.getState() : null;
+      const funnel = window.OperonTracking ? window.OperonTracking.getFunnelState() : null;
+      const revenue = readJsonKey("operon_revenue_records_v1");
+      const rankSnapshots = readJsonKey("operon_rank_snapshots_v1");
+      const backlinks = readJsonKey("operon_backlink_targets_v1");
+      const metricsResponse = await fetch("data/metrics.json").catch(() => null);
+      const metrics = metricsResponse ? await metricsResponse.json() : { pages_created: [], keywords_targeted: [] };
+      const blogResponse = await fetch("blog-keywords.json").catch(() => null);
+      const blogIdeas = blogResponse ? await blogResponse.json() : [];
+      const queueResponse = await fetch("task_queue.json").catch(() => null);
+      const queuePayload = queueResponse ? await queueResponse.json().catch(() => []) : [];
+      const queueTasks = Array.isArray(queuePayload) ? queuePayload : (queuePayload.tasks || []);
+      const tasks = window.OperonTaskEngine ? window.OperonTaskEngine.generateNextTasks({ totalQuotes: tracking ? tracking.quoteSubmissions : 0 }) : [];
+
+      document.getElementById("pagesCreatedValue").textContent = String((metrics.pages_created || []).length);
+      document.getElementById("keywordsTargetedValue").textContent = String((metrics.keywords_targeted || []).length);
+      document.getElementById("rankSnapshotValue").textContent = String(rankSnapshots.length);
+      document.getElementById("backlinksValue").textContent = String(backlinks.filter(item => item.status === "live").length);
+      document.getElementById("pendingBacklinksValue").textContent = String(backlinks.filter(item => item.status !== "live" && item.status !== "rejected").length);
+
+      const starts = tracking ? tracking.quoteStarts : 0;
+      const submissions = tracking ? tracking.quoteSubmissions : 0;
+      const abandonment = tracking ? Object.values(tracking.abandonmentByStep || {}).reduce((s,v)=>s+v,0) : 0;
+      document.getElementById("quoteStartsValue").textContent = String(starts);
+      document.getElementById("quoteSubmissionsValue").textContent = String(submissions);
+      document.getElementById("abandonmentValue").textContent = String(abandonment);
+      document.getElementById("conversionRateValue").textContent = starts ? pct(submissions / starts) : "0%";
+      renderList("stepCompletionList", Object.entries((tracking && tracking.stepCompletedCounts) || {}).map(entry => "Step " + entry[0] + ": " + entry[1] + " completions"), "No step completion data yet.");
+      renderList("abandonmentList", Object.entries((tracking && tracking.abandonmentByStep) || {}).map(entry => "Step " + entry[0] + ": " + entry[1] + " abandons"), "No abandonment data yet.");
+
+      const won = revenue.filter(item => item.status === "won" || item.status === "completed");
+      const totalRevenue = sum(won.map(item => item.final_quote_value));
+      const totalProfit = sum(won.map(item => (Number(item.final_quote_value)||0)-(Number(item.material_cost)||0)-(Number(item.labour_cost)||0)-(Number(item.subcontractor_cost)||0)-(Number(item.other_cost)||0)));
+      const avgMargin = won.length ? won.reduce((acc, item) => {
+        const finalValue = Number(item.final_quote_value) || 0;
+        const margin = finalValue > 0 ? ((finalValue - (Number(item.material_cost)||0) - (Number(item.labour_cost)||0) - (Number(item.subcontractor_cost)||0) - (Number(item.other_cost)||0)) / finalValue) : 0;
+        return acc + margin;
+      }, 0) / won.length : 0;
+      document.getElementById("leadCountValue").textContent = String(revenue.length);
+      document.getElementById("wonJobsValue").textContent = String(won.length);
+      document.getElementById("revenueValue").textContent = fmt(totalRevenue);
+      document.getElementById("profitValue").textContent = fmt(totalProfit);
+      document.getElementById("marginValue").textContent = pct(avgMargin);
+      document.getElementById("lastQuoteValue").textContent = fmt(tracking ? tracking.lastQuoteValue : 0);
+      document.getElementById("lastQuoteType").textContent = funnel && funnel.quote_id ? "Last quote id: " + funnel.quote_id : (tracking && tracking.lastQuoteType ? "Last quote type: " + tracking.lastQuoteType : "No tracked quote yet.");
+
+      const queueDone = queueTasks.filter(task => task.status === "done").length;
+      const queuePending = queueTasks.filter(task => task.status !== "done").length;
+      const completedByCategory = countBy(queueTasks.filter(task => task.status === "done"), "category");
+      document.getElementById("queueTotalValue").textContent = String(queueTasks.length);
+      document.getElementById("queueDoneValue").textContent = String(queueDone);
+      document.getElementById("queuePendingValue").textContent = String(queuePending);
+      document.getElementById("queueCompletionValue").textContent = queueTasks.length ? pct(queueDone / queueTasks.length) : "0%";
+      renderList("queueStatusList", rollupList(countBy(queueTasks, "status")), "No queue status loaded.");
+      renderList("queueCompletedCategoryList", rollupList(completedByCategory), "No completed tasks yet.");
+      renderList("taskList", tasks.map(task => task.title + " · score " + task.priority_score), "No tasks generated yet.");
+      renderList("taskStatusList", tasks.map(task => task.category + " · " + task.assigned_agent + " · " + task.status), "No task status yet.");
+      renderList("nextActionList", tasks.slice(0, 3).map(task => task.expected_impact), "No next actions yet.");
+
+      document.getElementById("blogIdeasValue").textContent = String(blogIdeas.length);
+      document.getElementById("blogDraftsValue").textContent = "0";
+      document.getElementById("blogPublishedValue").textContent = String((metrics.pages_created || []).filter(page => String(page).indexOf("/blog/") === 0).length);
+      document.getElementById("blogKeywordCountValue").textContent = String(blogIdeas.length);
+      renderList("blogList", blogIdeas.slice(0, 8).map(item => item.title + " · " + item.keyword), "No blog ideas loaded yet.");
+      renderList("blogActionList", [
+        "Write the flooring installation cost money page next.",
+        "Link each blog to a product page and the quote page.",
+        "Only publish content that sounds local and trade-informed."
+      ], "No blog actions yet.");
+    }
+    initialiseFollowupAdmin();
+    initialiseLeadQualificationPanel();
+    initialiseDashboard();
+  </script>
+</body>
+</html>

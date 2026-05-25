@@ -22,3 +22,6 @@ ios/
 # Local Xcode user data
 xcuserdata/
 *.xcuserstate
+
+# Local Netlify folder
+.netlify
