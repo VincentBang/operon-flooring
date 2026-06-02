@@ -7,6 +7,7 @@ const DEFAULT_ALLOWED_ORIGINS = [
   "https://www.operonflooring.com.au"
 ];
 const LOCAL_ORIGIN_PATTERN = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/i;
+const NETLIFY_PREVIEW_ORIGIN_PATTERN = /^https:\/\/[a-z0-9-]+--operonflooring\.netlify\.app$/i;
 const buckets = new Map();
 
 function getAllowedOrigins() {
@@ -25,6 +26,7 @@ function getOrigin(event) {
 function isAllowedOrigin(origin) {
   if (!origin) return false;
   if (LOCAL_ORIGIN_PATTERN.test(origin)) return true;
+  if (NETLIFY_PREVIEW_ORIGIN_PATTERN.test(origin)) return true;
   return getAllowedOrigins().indexOf(origin) >= 0;
 }
 

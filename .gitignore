@@ -5,15 +5,24 @@
 node_modules/
 dist/
 build/
+apps/web-tsx/.next/
+apps/web-tsx/out/
 .tools/
 .pycache/
 __pycache__/
 *.log
 .netlify-state/
 
+# Local rollback backups are intentionally outside deployed app folders.
+backups/
+
 # Local Supabase audit exports can contain customer data.
 apps/web/supabase-audit-exports/**/*.json
 apps/web/supabase-audit-exports/**/*.error.txt
+internal-audits/
+
+# Local QA screenshots are not deployable source.
+internal-qa/screenshots/
 
 # Keep the website repo focused on the Netlify/Supabase app.
 flooring_app/

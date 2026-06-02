@@ -6,7 +6,7 @@
     "dev:netlify": "netlify dev",
     "check:public-leaks": "node scripts/check-public-leaks.js",
     "test:calculate-quote": "node scripts/test-calculate-quote-fixtures.js",
-    "test:floorplan": "node apps/web/tests/floorplanMeasurement.test.js"
+    "test:floorplan": "node internal-qa/tests/web/floorplanMeasurement.test.js"
   },
   "devDependencies": {
     "netlify-cli": "^26.0.0"

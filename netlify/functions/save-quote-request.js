@@ -5,7 +5,7 @@ const path = require("path");
 const { PDFDocument, StandardFonts, rgb } = require("pdf-lib");
 const { getSupabaseTables } = require("./_supabaseTables");
 const Security = require("./_security");
-const LeadQualification = require("../../apps/web/leadQualification.js");
+const LeadQualification = require("../../internal-docs/lead-scoring/leadQualification.js");
 
 function jsonResponse(event, statusCode, payload) {
   return Security.jsonResponse(event, statusCode, payload, {

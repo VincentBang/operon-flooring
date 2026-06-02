@@ -9,8 +9,20 @@ const publicRoot = path.join(repoRoot, "apps", "web");
 const blockedFilePatterns = [
   /\.env(?:\.local)?$/i,
   /\.md$/i,
+  /\.map$/i,
+  /\.sql$/i,
+  /(^|\/)supabase-audit-exports(\/|$)/i,
+  /(^|\/)tests(\/|$)/i,
+  /(^|\/)qa-screenshots(\/|$)/i,
+  /(^|\/)[^/]*audit[^/]*(\/|$)/i,
+  /(^|\/)customers\.json$/i,
+  /(^|\/)quotes\.json$/i,
+  /(^|\/)quotes_public_view\.json$/i,
+  /(^|\/)task_queue\.json$/i,
+  /(^|\/)agent-task-engine\.js$/i,
   /(^|\/)admin[^/]*\.html$/i,
-  /(^|\/)dashboard\.html$/i
+  /(^|\/)dashboard\.html$/i,
+  /(^|\/)preview\.html$/i
 ];
 
 const blockedContentPatterns = [

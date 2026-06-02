@@ -1,0 +1,30 @@
+export const routes = {
+  home: "/",
+  quote: "/quote.html",
+  products: "/products.html",
+  quoteReview: "/quote-review.html",
+  floorplan: "/floorplan.html",
+  recentProjects: "/recent-flooring-projects.html",
+  contact: "/contact.html",
+  contactThankYou: "/contact-thank-you.html",
+  hybrid: "/hybrid-flooring-sydney.html",
+  laminate: "/laminate-flooring-sydney.html",
+  engineered: "/engineered-timber-flooring-sydney.html",
+  flooringQuoteSydney: "/flooring-quote-sydney.html",
+  edmondsonPark: "/flooring-edmondson-park.html",
+  liverpool: "/flooring-liverpool.html",
+  leppington: "/flooring-leppington.html",
+  camden: "/flooring-camden.html",
+  campbelltown: "/flooring-campbelltown.html",
+  parramatta: "/flooring-parramatta.html",
+  bankstown: "/flooring-bankstown.html",
+  bellevueHill: "/flooring-bellevue-hill.html",
+  manly: "/flooring-manly.html",
+  balmain: "/flooring-balmain.html",
+  drummoyne: "/flooring-drummoyne.html",
+  easternSuburbs: "/flooring-eastern-suburbs.html",
+  auburn: "/flooring-auburn.html",
+  blog: "/blog/"
+} as const;
+
+export type PublicRouteKey = keyof typeof routes;

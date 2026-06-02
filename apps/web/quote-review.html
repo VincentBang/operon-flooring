@@ -33,6 +33,26 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://operonflooring.com.au/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Quote review",
+        "item": "https://operonflooring.com.au/quote-review.html"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
       {
@@ -203,6 +223,24 @@
     }
 
     .button-secondary:hover { border-color: rgba(181, 110, 82, 0.42); }
+
+    .button-utility {
+      min-height: 40px;
+      padding: 9px 12px;
+      border-radius: 12px;
+      background: transparent;
+      box-shadow: none;
+      color: var(--text);
+      border-color: rgba(216, 226, 223, 0.9);
+      font-size: .92rem;
+    }
+
+    .text-utility-link {
+      color: var(--primary);
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
 
     .section {
       max-width: var(--max);
@@ -913,6 +951,11 @@
       opacity: .84;
     }
 
+    .document-report-section.dark .button-utility {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.36);
+    }
+
     .document-report-head {
       display: grid;
       gap: 10px;
@@ -1000,6 +1043,35 @@
       border: 1px solid rgba(216, 226, 223, 0.9);
       border-radius: 14px;
       background: #fff;
+    }
+
+    .business-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .business-detail-item {
+      padding: 12px;
+      border: 1px solid rgba(216, 226, 223, 0.9);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .business-detail-item strong,
+    .business-detail-item span {
+      display: block;
+    }
+
+    .business-detail-item strong {
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .business-detail-item span {
+      color: var(--muted);
+      font-size: .9rem;
     }
 
     .confidence-card span {
@@ -1487,6 +1559,7 @@
       .quick-breakdown-grid,
       .report-card-grid.two-column,
       .summary-chip-grid,
+      .business-detail-grid,
       .price-basis-grid,
       .confidence-grid,
       .trust-card-grid {
@@ -1647,12 +1720,12 @@
 <body>
   <header class="site-header">
     <div class="shell nav">
-      <a class="brand" href="index.html#top" aria-label="Operon Flooring home">
+      <a class="brand" href="/#top" aria-label="Operon Flooring home">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Operon Flooring</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="index.html#top">Home</a>
+        <a href="/#top">Home</a>
         <a href="quote.html">Quote</a>
         <a href="products.html">Flooring Products</a>
         <a href="floorplan.html">Floor Plan</a>
@@ -1825,11 +1898,6 @@
                   </select>
                 </div>
                 <div class="field">
-                  <label for="reviewUnitRate">Unit rate per m² if shown</label>
-                  <input id="reviewUnitRate" name="reviewUnitRate" type="number" min="0" step="0.01" placeholder="Optional">
-                  <p class="field-help">Used to understand the quote. Leave blank if not shown.</p>
-                </div>
-                <div class="field">
                   <label for="reviewProvider">Quote provider name (optional)</label>
                   <input id="reviewProvider" name="reviewProvider" type="text" autocomplete="organization" placeholder="Company name on the quote">
                 </div>
@@ -1857,57 +1925,74 @@
             </div>
 
             <div class="input-section">
-              <details class="quick-check-details">
-                <summary>What is written on the quote?</summary>
-                <p>Leave unclear items unticked. Unticked means unknown, not excluded.</p>
-                <div class="inclusion-sections" id="inclusionGrid">
-                <div>
-                  <div class="check-heading">Product detail shown?</div>
-                  <div class="check-grid">
-                    <label class="check-option"><input type="checkbox" value="product_brand"><span><strong>Product brand shown</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="product_range_colour"><span><strong>Range or colour shown</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="product_thickness_spec"><span><strong>Thickness/specification shown</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="warranty_details"><span><strong>Warranty/product details shown</strong></span></label>
+              <h3>What is written on the quote?</h3>
+              <p>Leave unclear items unticked. Unticked means unknown, not excluded.</p>
+              <div class="inclusion-sections" id="inclusionGrid">
+                <details class="quick-check-details" open>
+                  <summary>Product</summary>
+                  <div class="inclusion-sections">
+                    <div class="check-grid">
+                      <label class="check-option"><input type="checkbox" value="product_brand"><span><strong>Product brand shown</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="product_range_colour"><span><strong>Range or colour shown</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="product_thickness_spec"><span><strong>Thickness/specification shown</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="warranty_details"><span><strong>Warranty/product details shown</strong></span></label>
+                    </div>
                   </div>
-                </div>
+                </details>
 
-                <div>
-                  <div class="check-heading">Work included?</div>
-                  <div class="check-grid">
-                    <label class="check-option"><input type="checkbox" value="supply"><span><strong>Flooring supply</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="installation"><span><strong>Installation</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="underlay"><span><strong>Underlay</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="acoustic_underlay"><span><strong>Acoustic underlay</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="removal"><span><strong>Existing floor removal</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="disposal"><span><strong>Take-away disposal</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="floor_prep"><span><strong>Floor preparation or levelling</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="moisture_protection"><span><strong>Moisture/subfloor check</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="skirting"><span><strong>Skirting</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="scotia"><span><strong>Scotia</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="trims_transitions"><span><strong>Trims/transitions</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="stairs"><span><strong>Stairs</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="stair_nosing"><span><strong>Stair nosing</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="access_delivery"><span><strong>Building/detail notes</strong></span></label>
+                <details class="quick-check-details" open>
+                  <summary>Work included</summary>
+                  <div class="inclusion-sections">
+                    <div class="check-grid">
+                      <label class="check-option"><input type="checkbox" value="supply"><span><strong>Flooring supply</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="installation"><span><strong>Installation</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="underlay"><span><strong>Underlay</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="acoustic_underlay"><span><strong>Acoustic underlay</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="removal"><span><strong>Existing floor removal</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="disposal"><span><strong>Take-away disposal</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="floor_prep"><span><strong>Floor preparation or levelling</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="moisture_protection"><span><strong>Moisture/subfloor check</strong></span></label>
+                    </div>
                   </div>
-                </div>
+                </details>
 
-                <div>
-                  <div class="check-heading">Exclusions and assumptions</div>
-                  <div class="check-grid">
-                    <label class="check-option"><input type="checkbox" value="exclusions"><span><strong>Exclusions clearly listed</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="site_inspection_items"><span><strong>Site-inspection items clearly listed</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="payment_terms"><span><strong>Deposit/payment terms listed</strong></span></label>
-                    <label class="check-option"><input type="checkbox" value="expiry_date"><span><strong>Quote expiry date listed</strong></span></label>
+                <details class="quick-check-details">
+                  <summary>Finish details</summary>
+                  <div class="inclusion-sections">
+                    <div class="check-grid">
+                      <label class="check-option"><input type="checkbox" value="skirting"><span><strong>Skirting</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="scotia"><span><strong>Scotia</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="trims_transitions"><span><strong>Trims/transitions</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="stairs"><span><strong>Stairs</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="stair_nosing"><span><strong>Stair nosing</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="access_delivery"><span><strong>Building/detail notes</strong></span></label>
+                    </div>
                   </div>
-                </div>
+                </details>
+
+                <details class="quick-check-details">
+                  <summary>Terms</summary>
+                  <div class="inclusion-sections">
+                    <div class="check-grid">
+                      <label class="check-option"><input type="checkbox" value="exclusions"><span><strong>Exclusions clearly listed</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="site_inspection_items"><span><strong>Site-inspection items clearly listed</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="payment_terms"><span><strong>Deposit/payment terms listed</strong></span></label>
+                      <label class="check-option"><input type="checkbox" value="expiry_date"><span><strong>Quote expiry date listed</strong></span></label>
+                    </div>
+                  </div>
+                </details>
               </div>
-              </details>
             </div>
 
             <div class="input-section">
               <details class="optional-quote-details">
                 <summary>Optional quote wording and notes</summary>
                 <div class="field-grid">
+                <div class="field">
+                  <label for="reviewUnitRate">Unit rate shown on their quote, if any</label>
+                  <input id="reviewUnitRate" name="reviewUnitRate" type="number" min="0" step="0.01" placeholder="Optional">
+                  <p class="field-help">Only useful when the included scope is clear.</p>
+                </div>
                 <div class="field full-span">
                   <label for="reviewQuoteWording">Paste quote wording (optional)</label>
                   <textarea id="reviewQuoteWording" name="reviewQuoteWording" placeholder="Paste the line items or description from the quote if you do not want to upload a file."></textarea>
@@ -1928,7 +2013,11 @@
             <input id="reviewQuoteFile" name="reviewQuoteFile" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp">
             <p class="field-help" id="uploadedQuoteReference">No quote file selected.</p>
             <p class="field-help" id="quoteOcrStatus" hidden>Quote file not checked yet.</p>
-            <p class="field-help">Uploaded quotes are used to extract flooring scope and pricing details for review. Files are processed securely and may be stored temporarily to support the review. Structured quote details may be retained to improve Operon’s quoting system. See our <a href="privacy-policy.html">privacy policy</a>.</p>
+            <p class="field-help">PDF, JPG, PNG or WEBP · Max 6MB · Used for quote review</p>
+            <details class="privacy-note-details">
+              <summary>How uploaded quotes are used</summary>
+              <p class="field-help">Uploaded quotes are used to extract flooring scope and pricing details for review. Files are processed securely and may be stored temporarily to support the review. Structured quote details may be retained to improve Operon’s quoting system. See our <a href="privacy-policy.html">privacy policy</a>.</p>
+            </details>
           </div>
         </div>
 
@@ -1942,10 +2031,10 @@
           <div class="summary-block" id="reviewReportContent">
             <div class="summary-block" id="quickCompletenessReport" hidden>
               <div class="clarity-panel" aria-live="polite">
-                <p class="eyebrow" style="margin: 0;">Executive result</p>
+                <p class="eyebrow" style="margin: 0;">Quote readiness</p>
                 <div class="clarity-level">
                   <strong id="quickResultStatus">Add quote details to begin</strong>
-                  <span class="risk-tag medium" id="quickResultTag">Completeness result</span>
+                  <span class="risk-tag medium" id="quickResultTag">Readiness result</span>
                 </div>
                 <div class="risk-counts" id="quickResultSummary">
                   <div class="risk-count"><span class="risk-dot low"></span><span>Select what is clearly shown on the quote to generate a no-file completeness check.</span></div>
@@ -1954,9 +2043,34 @@
 
               <div class="summary-box">
                 <div class="risk-group">
-                  <h3>Scope completeness score</h3>
+                  <h3>Review confidence</h3>
                   <span class="risk-tag medium" id="quickScoreText">0 / 12</span>
+                  <div id="quickConfidenceCard">
+                    <div class="risk-card compact"><strong>Review confidence</strong><span>Low</span></div>
+                  </div>
                   <div class="quick-breakdown-grid" id="quickScoreBreakdown"></div>
+                </div>
+              </div>
+
+              <div class="summary-box questions">
+                <div class="risk-group">
+                  <h3>Top 3 items to confirm</h3>
+                  <div id="quickTopItemsList">
+                    <div class="risk-card"><strong>Priority confirms will appear here.</strong><span>The highest-priority missing items are shown before the full list.</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="summary-box questions">
+                <div class="risk-group">
+                  <h3>Questions to ask</h3>
+                  <div id="quickQuestionsList">
+                    <div class="risk-card"><strong>Questions will appear here.</strong><span>Based on missing or unclear items only.</span></div>
+                  </div>
+                  <div class="copy-actions">
+                    <button class="button-secondary" type="button" id="copyQuickQuestionsButton">Copy questions</button>
+                    <span class="field-help" id="copyQuickQuestionsStatus" aria-live="polite"></span>
+                  </div>
                 </div>
               </div>
 
@@ -1980,15 +2094,12 @@
                 </div>
               </div>
 
-              <div class="summary-box questions">
+              <div class="summary-box">
                 <div class="risk-group">
-                  <h3>Questions to ask before accepting</h3>
-                  <div id="quickQuestionsList">
-                    <div class="risk-card"><strong>Questions will appear here.</strong><span>Based on missing or unclear items only.</span></div>
-                  </div>
-                  <div class="copy-actions">
-                    <button class="button-secondary" type="button" id="copyQuickQuestionsButton">Copy questions</button>
-                    <span class="field-help" id="copyQuickQuestionsStatus" aria-live="polite"></span>
+                  <h3>Review limits</h3>
+                  <div class="risk-card">
+                    <strong>Completeness check only.</strong>
+                    <span>This review checks whether the written quote is clear enough to compare. It cannot confirm hidden subfloor condition, moisture, levelling or site-specific work without inspection.</span>
                   </div>
                 </div>
               </div>
@@ -2007,101 +2118,33 @@
                 <h3>Next step</h3>
                 <p>For stronger feedback, upload the written quote. If you want an Operon estimate, continue into the structured quote path with the details you have.</p>
                 <div class="cta-actions" style="justify-content: flex-start;">
-                  <button class="button-secondary" type="button" id="quickUploadQuoteButton">Upload written quote for stronger review</button>
-                  <a class="button-secondary quote-review-to-quote" href="quote.html?source=quote_review">Start structured quote</a>
-                  <a class="button-secondary" href="contact.html">Contact Operon</a>
+                  <a class="button quote-review-to-quote" href="quote.html?source=quote_review">Get an Operon comparison quote</a>
+                  <button class="button-secondary" type="button" id="sendQuickReviewEmailButton">Send this review to my email</button>
+                  <span id="quickProductsCtaSlot"></span>
+                  <button class="button-secondary button-utility" type="button" id="quickUploadQuoteButton">Upload another quote</button>
+                </div>
+                <div class="field-grid" id="quickReviewEmailPanel" hidden>
+                  <div class="field full-span">
+                    <label for="quickReviewEmailAddress">Email this review</label>
+                    <input id="quickReviewEmailAddress" type="email" autocomplete="email" placeholder="name@example.com">
+                    <div class="copy-actions">
+                      <button class="button-secondary" type="button" id="confirmQuickReviewEmailButton">Send review to my email</button>
+                      <span class="field-help" id="quickReviewEmailStatus" aria-live="polite"></span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
             <div class="summary-block" id="documentReviewReport" hidden>
               <div class="clarity-panel" aria-live="polite">
-                <p class="eyebrow" style="margin: 0;">Executive summary</p>
+                <p class="eyebrow" style="margin: 0;">Quote readiness</p>
                 <div class="clarity-level">
                   <strong id="clarityLevel">Upload a written quote to begin</strong>
-                  <span class="risk-tag medium" id="clarityTag">Document review</span>
+                  <span class="risk-tag medium" id="clarityTag">Readiness result</span>
                 </div>
                 <div class="risk-counts" id="clarityCounts">
                   <div class="risk-count"><span class="risk-dot low"></span><span>Upload the written quote to generate the document-based review.</span></div>
-                </div>
-              </div>
-
-              <div class="summary-box">
-                <div class="risk-group">
-                  <h3>Scope read</h3>
-                  <span class="risk-tag high">Completeness result</span>
-                  <div id="highRiskList">
-                    <div class="risk-card"><strong>Observations will appear here.</strong><span>The review uses the uploaded quote, visible inclusions and common installation patterns.</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="summary-box" id="extractedQuoteFieldsBox" hidden>
-                <div class="risk-group">
-                  <h3>Extracted from uploaded quote</h3>
-                  <span class="risk-tag medium" id="extractedQuoteFieldsTag">Document fields</span>
-                  <div id="extractedQuoteFieldsList">
-                    <div class="risk-card"><strong>No extracted fields yet.</strong><span>Upload a quote and generate the document-based review.</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="summary-box" id="riskDimensionsBox" hidden>
-                <div class="risk-group">
-                  <h3>Risk dimensions</h3>
-                  <span class="risk-tag medium">Decision confidence</span>
-                  <div id="riskDimensionsList">
-                    <div class="risk-card"><strong>Risk dimensions will appear here.</strong><span>Upload a quote and generate the document-based review.</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="summary-box" id="databaseComparisonBox" hidden>
-                <div class="risk-group">
-                  <h3>Comparison guide</h3>
-                  <span class="risk-tag medium" id="databaseComparisonTag">Comparison guide</span>
-                  <div id="databaseComparisonList">
-                    <div class="risk-card"><strong>No comparison guide yet.</strong><span>Upload a quote and generate the document-based review.</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="summary-box">
-                <div class="risk-group">
-                  <h3>Missing or unclear items</h3>
-                  <span class="risk-tag medium">Scope gaps</span>
-                  <div id="mediumRiskList">
-                    <div class="risk-card"><strong>Unknown items will appear here.</strong><span>Unticked items are treated as unknown until the written quote is reviewed.</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="summary-box questions">
-                <div class="risk-group">
-                  <h3>Questions to confirm before accepting</h3>
-                  <span class="risk-tag medium">Before accepting</span>
-                  <div id="questionsToAskList">
-                    <div class="risk-card"><strong>Questions will appear here.</strong><span>Based on missing or unclear scope items.</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="summary-box">
-                <div class="risk-group">
-                  <h3>Why quotes can differ</h3>
-                  <span class="risk-tag low">Common changes</span>
-                  <div id="lowRiskList">
-                    <div class="risk-card"><strong>Review items will appear here.</strong><span>These are common items to confirm in writing, not confirmed charges.</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="summary-box guidance">
-                <h3>Next step</h3>
-                <p id="decisionGuidance">Upload the written quote for the strongest review.</p>
-                <div class="cta-actions" style="justify-content: flex-start;">
-                  <a class="button-secondary quote-review-to-quote" href="quote.html?source=quote_review">Get an Operon comparison quote</a>
-                  <a class="button-secondary" href="products.html">Browse products</a>
                 </div>
               </div>
             </div>
@@ -2117,7 +2160,7 @@
         </div>
         <div class="cta-actions">
           <a class="button quote-review-to-quote" href="quote.html?source=quote_review" id="reviewEstimateCta">Get an Operon comparison quote</a>
-          <a class="button-secondary" href="products.html">Browse flooring products</a>
+          <span class="field-help">Need product ideas? <a class="text-utility-link" href="products.html">Browse flooring products</a></span>
         </div>
       </div>
     </section>
@@ -2283,6 +2326,7 @@
 
     let quickScopeCheckState = null;
     let documentReviewState = null;
+    let quoteReviewEmailRequested = false;
 
     const SCORE_ITEMS = [
       { key: "product_specified", weight: 12 },
@@ -2730,9 +2774,52 @@
       return result;
     }
 
+    function getBrowserSafeReviewState(state) {
+      const input = state && typeof state === "object" ? state : {};
+      return {
+        mode: input.mode || "",
+        category: input.category || "",
+        area: input.area || "",
+        quoteTotal: input.quoteTotal || "",
+        gstStatus: input.gstStatus || "",
+        unitRate: input.unitRate || "",
+        quoteProviderName: input.quoteProviderName || "",
+        suburb: input.suburb || "",
+        postcode: input.postcode || "",
+        hasUploadedQuoteFile: Boolean(input.hasUploadedQuoteFile),
+        ocrStatus: input.ocrStatus || "",
+        ocrConfidence: input.ocrConfidence || "",
+        ocrEngine: input.ocrEngine || "",
+        extractedQuoteFields: getSafeExtractedQuoteFields(input.extractedQuoteFields),
+        inclusions: Array.isArray(input.inclusions) ? input.inclusions.slice() : [],
+        savedAt: input.savedAt || new Date().toISOString()
+      };
+    }
+
+    function getSafeExtractedQuoteFields(fields) {
+      if (!fields || typeof fields !== "object") {
+        return null;
+      }
+      const lineItem = getPrimaryExtractedLineItem(fields) || {};
+      return {
+        documentType: getFieldValue(fields, "documentType", "document_type") || "",
+        supplierName: getFieldValue(fields, "supplierName", "supplier_name") || "",
+        invoiceOrQuoteNumber: getFieldValue(fields, "invoiceOrQuoteNumber", "invoice_or_quote_number") || fields.quoteNumber || "",
+        issueDate: getFieldValue(fields, "issueDate", "issue_date") || fields.quoteDate || "",
+        dueDate: getFieldValue(fields, "dueDate", "due_date") || "",
+        productScopeLine: lineItem.rawDescription || lineItem.raw_description || lineItem.label || fields.productScopeLine || "",
+        flooringType: fields.flooringType || "",
+        quotedAreaM2: fields.quotedAreaM2 || fields.areaM2 || fields.area_m2 || lineItem.quantity || null,
+        quoteTotalExGst: fields.quoteTotalExGst || fields.subtotalExGst || fields.subtotal_ex_gst || lineItem.lineTotalExGst || lineItem.line_total_ex_gst || null,
+        gstAmount: fields.gstAmount || fields.gstTotal || fields.gst_total || lineItem.gst || null,
+        quoteTotalIncGst: fields.quoteTotalIncGst || fields.totalIncGst || fields.total_inc_gst || lineItem.lineTotalIncGst || lineItem.line_total_inc_gst || null,
+        scope: fields.scope || null
+      };
+    }
+
     function saveReviewState() {
       try {
-        localStorage.setItem(QUOTE_REVIEW_STORAGE_KEY, JSON.stringify(withStorageExpiry(getReviewState())));
+        localStorage.setItem(QUOTE_REVIEW_STORAGE_KEY, JSON.stringify(withStorageExpiry(getBrowserSafeReviewState(getReviewState()))));
       } catch (error) {
         // Ignore local storage failures in privacy mode.
       }
@@ -2773,30 +2860,10 @@
         if (saved.postcode) {
           document.getElementById("reviewPostcode").value = saved.postcode;
         }
-        if (saved.customerName) {
-          document.getElementById("reviewCustomerName").value = saved.customerName;
-        }
-        if (saved.phone) {
-          document.getElementById("reviewPhone").value = saved.phone;
-        }
-        if (saved.email) {
-          document.getElementById("reviewEmail").value = saved.email;
-        }
-        if (saved.quoteWording) {
-          document.getElementById("reviewQuoteWording").value = saved.quoteWording;
-        }
-        if (saved.notes) {
-          document.getElementById("reviewNotes").value = saved.notes;
-        }
         if (Array.isArray(saved.inclusions)) {
           document.querySelectorAll("#inclusionGrid input").forEach(function (input) {
             input.checked = saved.inclusions.indexOf(input.value) >= 0;
           });
-        }
-        if (saved.uploadedQuoteReference) {
-          const quoteFile = document.getElementById("reviewQuoteFile");
-          quoteFile.dataset.savedReference = "";
-          document.getElementById("uploadedQuoteReference").textContent = "Upload the quote again to continue detailed review.";
         }
       } catch (error) {
         // Ignore malformed saved state.
@@ -3304,16 +3371,99 @@
     }
 
     function getQuickCompletenessLevel(total) {
-      if (total <= 3) {
-        return { label: "Not ready to compare", tag: "Not ready", tagClass: "high" };
+      if (total <= 5) {
+        return {
+          key: "not_ready_to_compare",
+          label: "Not ready to compare",
+          tag: "Not ready to compare",
+          tagClass: "high",
+          scoreLabel: "Not ready to compare"
+        };
       }
-      if (total <= 6) {
-        return { label: "Partly clear, but key scope is missing", tag: "Partly clear", tagClass: "medium" };
+      if (total <= 8) {
+        return {
+          key: "partly_clear",
+          label: "Partly clear — confirm missing items",
+          tag: "Partly clear",
+          tagClass: "medium",
+          scoreLabel: "Partly clear"
+        };
       }
-      if (total <= 9) {
-        return { label: "Mostly clear, confirm remaining items", tag: "Confirm items", tagClass: "medium" };
+      return {
+        key: "clear_enough_to_compare",
+        label: "Clear enough to compare",
+        tag: "Clear enough",
+        tagClass: "low",
+        scoreLabel: "Clear enough to compare"
+      };
+    }
+
+    function getQuickReportConfidence(state, score) {
+      const hasCategory = Boolean(state.category && state.category !== "unknown");
+      const hasArea = Boolean(normaliseNumber(state.area));
+      const hasTotal = Boolean(normaliseNumber(state.quoteTotal));
+      const hasProduct = hasCategory || state.inclusions.indexOf("product_brand") >= 0 || state.inclusions.indexOf("product_range_colour") >= 0;
+      if (hasCategory && hasArea && hasTotal && state.inclusions.length >= 5) {
+        return "Medium";
       }
-      return { label: "Good scope clarity, confirm final details", tag: "Good clarity", tagClass: "low" };
+      if (hasProduct || hasArea || hasTotal || score.total >= 3) {
+        return "Low";
+      }
+      return "Low";
+    }
+
+    function getQuickTopItemsToConfirm(state, missingGroups) {
+      const items = [];
+      function push(key, label, note) {
+        if (items.some(function (item) { return item.key === key; })) {
+          return;
+        }
+        items.push({
+          key: key,
+          label: label,
+          note: note
+        });
+      }
+
+      const missingText = missingGroups.map(function (group) {
+        return group.items.join(" ").toLowerCase();
+      }).join(" ");
+
+      if (/brand|range|colour|thickness|specification/.test(missingText)) {
+        push("product_specification", "Product brand, range, colour and thickness", "The written quote should identify the exact product before you compare totals.");
+      }
+      if (!normaliseNumber(state.area)) {
+        push("area_basis", "Area basis", "The measured area is not clearly shown in the review inputs.");
+      }
+      if (state.inclusions.indexOf("installation") < 0) {
+        push("installation_scope", "Installation scope", "The quote should clearly state whether installation labour is included.");
+      }
+      if (/removal/.test(missingText)) {
+        push("removal", "Existing floor removal", "Removal should be shown clearly, not assumed.");
+      }
+      if (/disposal/.test(missingText)) {
+        push("disposal", "Take-away disposal", "Disposal is often separate from removal and should be confirmed.");
+      }
+      if (/underlay|acoustic/.test(missingText)) {
+        push("underlay", "Underlay or acoustic layer", "Underlay requirements should be clear where they apply.");
+      }
+      if (/stair/.test(missingText)) {
+        push("stairs", "Stairs or stair nosing", "Step work should be shown separately if the job has stairs.");
+      }
+      if (/preparation|levelling/.test(missingText)) {
+        push("floor_preparation", "Floor preparation or levelling", "Preparation allowances should be written clearly before comparing price.");
+      }
+      if (/skirting|scotia|trims|transitions/.test(missingText)) {
+        push("trims", "Trims, skirting or scotia", "Finishing items should be clear before you compare totals.");
+      }
+      if (state.gstStatus === "unknown" || !state.gstStatus) {
+        push("gst_status", "GST status", "The quote total should say whether GST is included.");
+      }
+      if (/building requirements|site notes|access|lift|parking|apartment/.test(missingText)) {
+        push("access", "Site, lift or apartment conditions", "Building and access conditions should be clear before booking.");
+      }
+
+      return items.slice(0, 3);
     }
 
     function getQuickClearItems(state) {
@@ -3459,16 +3609,22 @@
       const clearItems = getQuickClearItems(state);
       const missingGroups = getQuickMissingGroups(state);
       const hasInput = hasQuickCompletenessInput(state);
+      const reportConfidence = getQuickReportConfidence(state, score);
+      const topItemsToConfirm = getQuickTopItemsToConfirm(state, missingGroups);
       const summary = hasInput
-        ? (score.total <= 6
+        ? (level.key === "not_ready_to_compare"
           ? "Your quote has some visible detail, but important scope items are still unclear. Do not compare this on total price only until product, underlay, removal, preparation and finishing details are confirmed."
-          : "Your quote has a useful starting point for comparison, but the remaining unclear items should still be confirmed in writing before accepting.")
+          : level.key === "partly_clear"
+            ? "Your quote has a useful starting point, but the missing items still need to be confirmed in writing before you compare totals."
+            : "Your quote looks clear enough for an initial comparison, but final project details should still be confirmed before accepting.")
         : "Add the visible quote details and tick only what is clearly written to generate a quick completeness result.";
       return {
         score: score,
         level: level,
         clearItems: clearItems,
         missingGroups: missingGroups,
+        topItemsToConfirm: topItemsToConfirm,
+        reportConfidence: reportConfidence,
         questions: buildQuickQuestions(state, missingGroups),
         summary: summary,
         hasInput: hasInput
@@ -3506,10 +3662,20 @@
       tag.className = "risk-tag " + result.level.tagClass;
       document.getElementById("quickResultSummary").innerHTML =
         "<div class=\"risk-count\"><span class=\"risk-dot " + escapeHtml(result.level.tagClass) + "\"></span><span>" + escapeHtml(result.summary) + "</span></div>";
-      document.getElementById("quickScoreText").textContent = "Scope completeness: " + result.score.total + " / 12";
+      document.getElementById("quickScoreText").textContent = result.level.scoreLabel + " · " + result.score.total + " / 12";
+      document.getElementById("quickConfidenceCard").innerHTML =
+        "<div class=\"report-card-grid two-column\">" +
+          "<div class=\"risk-card compact\"><strong>Review confidence</strong><span>" + escapeHtml(result.reportConfidence) + "</span></div>" +
+          "<div class=\"risk-card compact\"><strong>Document quality</strong><span>No uploaded document</span></div>" +
+        "</div>";
       document.getElementById("quickScoreBreakdown").innerHTML = result.score.dimensions.map(function (item) {
         return "<div class=\"quick-breakdown-item\"><strong>" + escapeHtml(item.label) + "</strong><span>" + (item.clear ? "Clear" : "Unclear") + "</span></div>";
       }).join("");
+
+      const topItemRows = result.topItemsToConfirm.map(function (item) {
+        return [item.label, item.note];
+      });
+      renderRiskCardList("quickTopItemsList", topItemRows, "Top priority confirms will appear here.", "The most important unknown items are shown first.");
 
       renderRiskCardList("quickClearList", result.clearItems, "Nothing clear enough yet.", "Enter or tick only items that are visibly written on the existing quote.");
 
@@ -3522,6 +3688,11 @@
         return [question, "Ask for this in writing before comparing or accepting the quote."];
       });
       renderRiskCardList("quickQuestionsList", questionRows, "No extra questions yet.", "The quote appears clear on the items entered, but final details should still be confirmed.");
+
+      const productsCtaSlot = document.getElementById("quickProductsCtaSlot");
+      if (productsCtaSlot) {
+        productsCtaSlot.innerHTML = buildProductsCta(null, state);
+      }
     }
 
     function getExtractedScope(state) {
@@ -3733,9 +3904,37 @@
       };
     }
 
+    function applyLeadPriorityFields(payload) {
+      if (!payload || typeof payload !== "object") {
+        return payload;
+      }
+      const reasons = [];
+      const uploadedQuote = Boolean(payload.uploaded_quote_reference);
+      const clickedComparisonQuote = Boolean(payload.clicked_comparison_quote);
+      const emailReviewRequested = Boolean(payload.email_review_requested || quoteReviewEmailRequested);
+      const hasQuoteBasis = Boolean(payload.area_m2 || payload.quote_total || payload.quote_unit_rate_m2);
+      const hasPriorityItems = Array.isArray(payload.top_items_to_confirm) && payload.top_items_to_confirm.length > 0;
+
+      if (clickedComparisonQuote) reasons.push("comparison quote requested");
+      if (uploadedQuote) reasons.push("written quote uploaded");
+      if (emailReviewRequested) reasons.push("email review requested");
+      if (hasQuoteBasis) reasons.push("quote basis supplied");
+      if (hasPriorityItems) reasons.push("scope items to confirm");
+
+      payload.uploaded_quote = uploadedQuote;
+      payload.clicked_comparison_quote = clickedComparisonQuote;
+      payload.email_review_requested = emailReviewRequested;
+      payload.lead_priority = clickedComparisonQuote || (uploadedQuote && hasQuoteBasis && hasPriorityItems)
+        ? "hot"
+        : (uploadedQuote || emailReviewRequested || hasQuoteBasis ? "warm" : "low");
+      payload.lead_priority_reasons = reasons;
+      return payload;
+    }
+
     function buildQuoteIntelligencePayload(state, risks, strengths, clarity) {
       const clarityScore = calculateClarityScore(state);
       const normalizedDocumentReview = getNormalizedDocumentReview(state);
+      const quickResult = state.mode === "quick" ? buildQuickCompletenessResult(state) : null;
       const riskDimensions = state.decisionReport && Array.isArray(state.decisionReport.riskDimensions)
         ? state.decisionReport.riskDimensions
         : [];
@@ -3751,7 +3950,7 @@
         };
       });
 
-      return {
+      const payload = {
         review_mode: state.mode,
         customer_name: state.customerName || "",
         phone: state.phone || "",
@@ -3763,7 +3962,6 @@
         uploaded_quote_url: null,
         uploaded_quote_reference: state.uploadedQuoteReference || "",
         ocr_status: state.ocrStatus || "",
-        ocr_extracted_text: state.ocrExtractedText || "",
         ocr_confidence: state.ocrConfidence ? Number(state.ocrConfidence) : null,
         ocr_engine: state.ocrEngine || "",
         extracted_quote_fields: state.extractedQuoteFields || null,
@@ -3776,7 +3974,6 @@
         quote_gst_status: state.gstStatus || "",
         quote_unit_rate_m2: normalizedDocumentReview ? normalizedDocumentReview.unitPriceExGst : normaliseNumber(state.unitRate),
         quote_provider_name: state.quoteProviderName || "",
-        pasted_quote_wording: state.quoteWording || "",
         included_items: state.inclusions.slice(),
         included_item_labels: state.inclusions.map(function (key) {
           return SCOPE_ITEM_LABELS[key] || key;
@@ -3784,6 +3981,12 @@
         missing_items: normalizedDocumentReview ? normalizedDocumentReview.missingScopeItems.map(function (item) { return item.key; }) : getMissingScopeItems(state),
         unknown_items: normalizedDocumentReview ? normalizedDocumentReview.missingScopeItems.map(function (item) { return item.key; }) : getMissingScopeItems(state),
         normalized_document_review: normalizedDocumentReview,
+        quote_readiness: normalizedDocumentReview ? normalizedDocumentReview.quoteReadiness : (quickResult ? quickResult.level.key : ""),
+        quote_readiness_label: normalizedDocumentReview ? normalizedDocumentReview.statusHeadline : (quickResult ? quickResult.level.label : clarity.level),
+        report_confidence: normalizedDocumentReview ? normalizedDocumentReview.reportConfidence : (quickResult ? quickResult.reportConfidence : normaliseConfidenceLevel(clarity.confidenceLevel)),
+        document_quality: normalizedDocumentReview && normalizedDocumentReview.documentQuality ? normalizedDocumentReview.documentQuality.label : "",
+        business_detail_checks: normalizedDocumentReview ? normalizedDocumentReview.businessDetailChecks || [] : [],
+        top_items_to_confirm: normalizedDocumentReview ? normalizedDocumentReview.topItemsToConfirm : (quickResult ? quickResult.topItemsToConfirm : []),
         risk_items: riskItems,
         risk_dimensions: riskDimensions,
         likely_variation_risks: likelyVariationRisks,
@@ -3797,6 +4000,7 @@
         linked_quote_lead_id: null,
         created_at: state.savedAt
       };
+      return applyLeadPriorityFields(payload);
     }
 
     function getConfidenceLevel(state) {
@@ -3832,7 +4036,7 @@
 
       if (comparisonStatus === "READY_TO_COMPARE") {
         return {
-          level: "Ready to compare",
+          level: "Clear enough to compare",
           riskLevel: "Low risk",
           confidenceLevel: "Extraction confidence: high",
           tag: "Ready",
@@ -3861,7 +4065,7 @@
 
       if (comparisonStatus === "NOT_READY_SCOPE_MISSING") {
         return {
-          level: "Not ready - scope missing",
+          level: "Not ready to compare",
           riskLevel: "Needs confirmation",
           confidenceLevel: confidenceLevel,
           tag: "Scope missing",
@@ -3904,7 +4108,7 @@
 
       if (riskCount > 0) {
         return {
-          level: "Partly clear, confirm missing items",
+          level: "Partly clear — confirm missing items",
           riskLevel: "Check items",
           confidenceLevel: confidenceLevel,
           tag: "Confirm items",
@@ -4135,6 +4339,7 @@
         summaryCopy,
         "Price basis: " + priceBasisState.priceBasis,
         "Extraction confidence: " + priceBasisState.extractionConfidence,
+        "Document quality: " + (normalized.documentQuality ? normalized.documentQuality.label : "Not assessed"),
         "Scope confidence: " + (dimensions.scopeConfidence || "Low"),
         "Product match confidence: " + (dimensions.productMatchConfidence || "Low"),
         "Comparison confidence: " + (dimensions.comparisonConfidence || "Low"),
@@ -4160,6 +4365,39 @@
 
     function renderConfidenceCard(label, value, copy) {
       return "<div class=\"confidence-card\"><span>" + escapeHtml(label) + "</span><strong>" + escapeHtml(value || "Low") + "</strong><p>" + escapeHtml(copy) + "</p></div>";
+    }
+
+    function renderBusinessDetailChecks(checks) {
+      const items = Array.isArray(checks) ? checks : [];
+      if (!items.length) {
+        return "";
+      }
+      return "<div class=\"business-detail-grid\">" + items.map(function (item) {
+        return "<div class=\"business-detail-item\"><strong>" + escapeHtml(item.label) + "</strong><span>" + escapeHtml(item.shown ? item.value : "Not clearly shown") + "</span></div>";
+      }).join("") + "</div>";
+    }
+
+    function productNeedsGuidance(normalized, state) {
+      if (normalized) {
+        return normalized.flooringType === "unknown" ||
+          !normalized.productSpecificationConfirmed ||
+          normalized.productMatchStatus === "not_confirmed" ||
+          normalized.productMatchStatus === "category_only";
+      }
+      const inputState = state || {};
+      const inclusions = Array.isArray(inputState.inclusions) ? inputState.inclusions : [];
+      return !inputState.category ||
+        inputState.category === "unknown" ||
+        inclusions.indexOf("product_brand") < 0 ||
+        inclusions.indexOf("product_range_colour") < 0 ||
+        inclusions.indexOf("product_thickness_spec") < 0;
+    }
+
+    function buildProductsCta(normalized, state) {
+      if (!productNeedsGuidance(normalized, state)) {
+        return "";
+      }
+      return "<a class=\"button-secondary\" href=\"products.html\">Browse products</a>";
     }
 
     function getDocumentConfidenceCards(normalized, priceBasisState) {
@@ -4195,6 +4433,177 @@
       ].join("");
     }
 
+    function getReadinessLabel(key) {
+      const labels = {
+        not_ready_to_compare: "Not ready to compare",
+        partly_clear: "Partly clear — confirm missing items",
+        clear_enough_to_compare: "Clear enough to compare"
+      };
+      return labels[key] || "Not ready to compare";
+    }
+
+    function getDocumentReportConfidence(normalized, priceBasisState) {
+      if (
+        normalized.rawFields &&
+        priceBasisState.extractionConfidence === "High" &&
+        normalized.quantityM2 &&
+        normalized.totalIncGst &&
+        normalized.flooringType !== "unknown" &&
+        normalized.knownScopeItems.length >= 3
+      ) {
+        return "High";
+      }
+      if (
+        normalized.rawFields &&
+        (priceBasisState.extractionConfidence === "Medium" || normalized.quantityM2 || normalized.totalIncGst || normalized.flooringType !== "unknown")
+      ) {
+        return "Medium";
+      }
+      return "Low";
+    }
+
+    function getDocumentExtractedRows(normalized, productLine) {
+      return [
+        { label: "Document type", value: normalized.documentType },
+        { label: "Business shown on document", value: normalized.businessShownOnDocument },
+        { label: "Product / scope line", value: productLine },
+        { label: "Flooring type", value: normalized.flooringTypeLabel },
+        { label: "Area", value: formatDocumentArea(normalized.quantityM2) },
+        { label: "Unit rate ex GST", value: normalized.unitPriceExGst ? formatDocumentMoney(normalized.unitPriceExGst) + "/m²" : "" },
+        { label: "Unit rate inc GST", value: normalized.unitPriceIncGst ? formatDocumentMoney(normalized.unitPriceIncGst) + "/m²" : "" },
+        { label: "Subtotal ex GST", value: formatDocumentMoney(normalized.subtotalExGst) },
+        { label: "GST", value: formatDocumentMoney(normalized.gstAmount) },
+        { label: "Total inc GST", value: formatDocumentMoney(normalized.totalIncGst) }
+      ].filter(function (row) {
+        return row.value;
+      });
+    }
+
+    function getDocumentTopItems(normalized) {
+      return Array.isArray(normalized.topItemsToConfirm) ? normalized.topItemsToConfirm.slice(0, 3) : [];
+    }
+
+    function renderDocumentTopItems(items) {
+      if (!items.length) {
+        return "<div class=\"risk-card\"><strong>No priority items flagged.</strong><span>The uploaded quote looks reasonably clear on the main comparison items.</span></div>";
+      }
+      return items.map(function (item) {
+        return "<div class=\"risk-card\"><strong>" + escapeHtml(item.label) + "</strong><span>" + escapeHtml(item.note) + "</span></div>";
+      }).join("");
+    }
+
+    function getDocumentClearRows(normalized, productLine) {
+      const rows = [];
+      if (normalized.businessShownOnDocument) {
+        rows.push(["Business shown on document", normalized.businessShownOnDocument]);
+      }
+      if (productLine) {
+        rows.push(["Product / scope line", productLine]);
+      }
+      if (normalized.flooringType && normalized.flooringType !== "unknown") {
+        rows.push(["Flooring type", normalized.flooringTypeLabel]);
+      }
+      if (normalized.quantityM2) {
+        rows.push(["Area basis", formatDocumentArea(normalized.quantityM2)]);
+      }
+      if (normalized.totalIncGst) {
+        rows.push(["Total shown", formatDocumentMoney(normalized.totalIncGst) + " inc GST"]);
+      }
+      (normalized.knownScopeItems || []).forEach(function (item) {
+        if (!rows.some(function (row) { return row[1] === item; })) {
+          rows.push(["Scope shown", item]);
+        }
+      });
+      return rows.slice(0, 8);
+    }
+
+    function renderDocumentClearRows(rows) {
+      if (!rows.length) {
+        return "<div class=\"risk-card\"><strong>Limited clear detail.</strong><span>The uploaded quote needs more visible product, area, price or scope information.</span></div>";
+      }
+      return rows.map(function (row) {
+        return "<div class=\"risk-card\"><strong>" + escapeHtml(row[0]) + "</strong><span>" + escapeHtml(row[1]) + "</span></div>";
+      }).join("");
+    }
+
+    function buildReviewEmailPayload(payload) {
+      const normalized = payload && payload.normalized_document_review ? payload.normalized_document_review : null;
+      const extractedRows = normalized
+        ? getDocumentExtractedRows(normalized, normalized.productScopeLine || normalized.flooringTypeLabel)
+        : [];
+      return {
+        quoteReadiness: payload.quote_readiness || "",
+        quoteReadinessLabel: payload.quote_readiness_label || getReadinessLabel(payload.quote_readiness),
+        reportConfidence: payload.report_confidence || "",
+        documentQuality: normalized && normalized.documentQuality ? normalized.documentQuality.label : (payload.document_quality || ""),
+        topItemsToConfirm: Array.isArray(payload.top_items_to_confirm) ? payload.top_items_to_confirm.slice(0, 3) : [],
+        questionsToAsk: Array.isArray(payload.questions_to_ask) ? payload.questions_to_ask.slice(0, 8) : [],
+        extractedRows: extractedRows,
+        summary: normalized ? normalized.summary : (payload.advisor_summary && payload.advisor_summary.decision_guidance) || ""
+      };
+    }
+
+    async function sendReviewEmail(payload, emailTo, statusElement, analyticsSource) {
+      if (statusElement) {
+        statusElement.textContent = "Sending review...";
+      }
+      trackQuoteReviewEvent("quote_review_email_send_attempt", {
+        review_mode: payload.review_mode,
+        quote_readiness: payload.quote_readiness,
+        report_confidence: payload.report_confidence,
+        has_uploaded_file: Boolean(payload.uploaded_quote_reference),
+        generated_report: true
+      });
+      try {
+        const response = await fetch("/.netlify/functions/send-quote-review-email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            emailTo: emailTo,
+            review: buildReviewEmailPayload(payload),
+            turnstileToken: await getSecurityChallengeToken("quote_review_email")
+          })
+        });
+        const result = await response.json().catch(function () {
+          return {};
+        });
+        if (!response.ok || !result || !result.ok) {
+          throw new Error(result && result.error ? result.error : "Quote review email unavailable.");
+        }
+        if (statusElement) {
+          statusElement.textContent = "Review sent to your email.";
+        }
+        quoteReviewEmailRequested = true;
+        payload.email_review_requested = true;
+        applyLeadPriorityFields(payload);
+        saveQuoteIntelligencePayload(payload);
+        trackQuoteReviewEvent("quote_review_email_send_success", {
+          review_mode: payload.review_mode,
+          quote_readiness: payload.quote_readiness,
+          report_confidence: payload.report_confidence,
+          has_uploaded_file: Boolean(payload.uploaded_quote_reference),
+          generated_report: true,
+          source: analyticsSource
+        });
+        return true;
+      } catch (error) {
+        if (statusElement) {
+          statusElement.textContent = "Review email could not be sent right now.";
+        }
+        trackQuoteReviewEvent("quote_review_email_send_failed", {
+          review_mode: payload.review_mode,
+          quote_readiness: payload.quote_readiness,
+          report_confidence: payload.report_confidence,
+          has_uploaded_file: Boolean(payload.uploaded_quote_reference),
+          generated_report: true,
+          source: analyticsSource
+        });
+        return false;
+      }
+    }
+
     function renderDetailedDocumentReport(state, normalized) {
       const quickReport = document.getElementById("quickCompletenessReport");
       const documentReport = document.getElementById("documentReviewReport");
@@ -4216,22 +4625,17 @@
       ].filter(Boolean).join(" ");
       const priceBasisState = getDocumentPriceBasisState(normalized);
       normalized.extractionConfidence = priceBasisState.extractionConfidence;
+      normalized.reportConfidence = getDocumentReportConfidence(normalized, priceBasisState);
       const summaryCopy = getDocumentSummaryCopy(normalized, priceBasisState);
       const reportSummaryText = buildDocumentReportSummaryText(normalized, priceBasisState, summaryCopy);
-      const priceBasisRows = [
-        ["Document type", normalized.documentType],
-        ["Business shown on document", normalized.businessShownOnDocument],
-        ["Product / scope line", productLine],
-        ["Flooring type", normalized.flooringTypeLabel],
-        ["Area", formatDocumentArea(normalized.quantityM2)],
-        ["Unit rate ex GST", normalized.unitPriceExGst ? formatDocumentMoney(normalized.unitPriceExGst) + "/m²" : ""],
-        ["Unit rate inc GST", normalized.unitPriceIncGst ? formatDocumentMoney(normalized.unitPriceIncGst) + "/m²" : ""],
-        ["Subtotal ex GST", formatDocumentMoney(normalized.subtotalExGst)],
-        ["GST", formatDocumentMoney(normalized.gstAmount)],
-        ["Total inc GST", formatDocumentMoney(normalized.totalIncGst)]
-      ].map(function (row) {
-        return renderPriceBasisRow(row[0], row[1]);
+      const priceBasisRows = getDocumentExtractedRows(normalized, productLine).map(function (row) {
+        return renderPriceBasisRow(row.label, row.value);
       }).join("");
+      const topItems = getDocumentTopItems(normalized);
+      const documentQuality = normalized.documentQuality || { label: "Weak", summary: "The uploaded document has limited readable detail." };
+      const businessDetails = renderBusinessDetailChecks(normalized.businessDetailChecks);
+      const clearRows = getDocumentClearRows(normalized, productLine);
+      const productsCta = buildProductsCta(normalized, state);
 
       const questionsText = normalized.questionsToAsk.join("\n");
       const rawRows = [
@@ -4252,42 +4656,44 @@
           "<section class=\"document-report-section soft\">" +
             "<div class=\"document-report-head\">" +
               "<p class=\"eyebrow\">Document quote review</p>" +
-              "<h3>" + escapeHtml(normalized.statusHeadline) + "</h3>" +
+              "<h3>" + escapeHtml(getReadinessLabel(normalized.quoteReadiness)) + "</h3>" +
               "<p>" + escapeHtml(summaryCopy) + "</p>" +
             "</div>" +
             "<div class=\"summary-chip-grid\">" +
-              "<div class=\"summary-chip\"><span>Price basis</span><strong>" + escapeHtml(priceBasisState.priceBasis) + "</strong></div>" +
-              "<div class=\"summary-chip\"><span>Scope completeness</span><strong>" + (normalized.missingScopeItems.length ? "Incomplete" : "Mostly clear") + "</strong></div>" +
+              "<div class=\"summary-chip\"><span>Quote readiness</span><strong>" + escapeHtml(getReadinessLabel(normalized.quoteReadiness)) + "</strong></div>" +
+              "<div class=\"summary-chip\"><span>Review confidence</span><strong>" + escapeHtml(normalized.reportConfidence) + "</strong></div>" +
+              "<div class=\"summary-chip\"><span>Document quality</span><strong>" + escapeHtml(documentQuality.label) + "</strong></div>" +
+            "</div>" +
+            "<details style=\"margin-top:16px;\">" +
+              "<summary>Review limits</summary>" +
+              "<p>This review checks whether the written quote is clear enough to compare. It cannot confirm hidden subfloor condition, moisture, levelling or site-specific work without inspection.</p>" +
+            "</details>" +
+          "</section>" +
+
+          "<section class=\"document-report-section\">" +
+            "<div class=\"document-report-head\">" +
+              "<p class=\"eyebrow\">Confidence</p>" +
+              "<h3>Review confidence and document quality</h3>" +
+              "<p>" + escapeHtml(documentQuality.summary) + "</p>" +
+            "</div>" +
+            "<div class=\"summary-chip-grid\">" +
+              "<div class=\"summary-chip\"><span>Review confidence</span><strong>" + escapeHtml(normalized.reportConfidence) + "</strong></div>" +
+              "<div class=\"summary-chip\"><span>Document quality</span><strong>" + escapeHtml(documentQuality.label) + "</strong></div>" +
               "<div class=\"summary-chip\"><span>Comparison level</span><strong>" + escapeHtml(normalized.comparisonLevel) + "</strong></div>" +
             "</div>" +
+            "<div class=\"document-report-head\" style=\"margin-top:18px;\">" +
+              "<p class=\"eyebrow\">Business details</p>" +
+            "</div>" +
+            businessDetails +
           "</section>" +
 
           "<section class=\"document-report-section\">" +
             "<div class=\"document-report-head\">" +
-              "<p class=\"eyebrow\">Extracted price basis</p>" +
-              "<h3>What the uploaded quote shows</h3>" +
+              "<p class=\"eyebrow\">Priority confirms</p>" +
+              "<h3>Top 3 items to confirm</h3>" +
+              "<p>These are the main gaps to resolve before you compare totals or accept the quote.</p>" +
             "</div>" +
-            "<div class=\"price-basis-grid\">" + priceBasisRows + "</div>" +
-          "</section>" +
-
-          "<section class=\"document-report-section\">" +
-            "<div class=\"document-report-head\">" +
-              "<p class=\"eyebrow\">Comparison confidence</p>" +
-              "<h3>Scope first, price second</h3>" +
-              "<p>" + escapeHtml(normalized.productMatchText) + "</p>" +
-            "</div>" +
-            "<div class=\"confidence-grid\">" +
-              getDocumentConfidenceCards(normalized, priceBasisState) +
-            "</div>" +
-          "</section>" +
-
-          "<section class=\"document-report-section\">" +
-            "<div class=\"document-report-head\">" +
-              "<p class=\"eyebrow\">Scope gaps</p>" +
-              "<h3>Missing or unclear items</h3>" +
-              "<p>" + normalized.missingScopeItems.length + " item" + (normalized.missingScopeItems.length === 1 ? "" : "s") + " should be confirmed before accepting or comparing total price.</p>" +
-            "</div>" +
-            "<ul class=\"scope-gap-list\">" + normalized.missingScopeItems.map(renderScopeGap).join("") + "</ul>" +
+            "<div class=\"report-card-grid\">" + renderDocumentTopItems(topItems) + "</div>" +
           "</section>" +
 
           "<section class=\"document-report-section questions\">" +
@@ -4300,6 +4706,40 @@
             }).join("") + "</ol>" +
             "<button class=\"button-secondary\" type=\"button\" id=\"copyDocumentQuestionsButton\" data-questions=\"" + escapeHtml(questionsText) + "\">Copy questions</button>" +
             "<p class=\"copy-status\" id=\"copyDocumentQuestionsStatus\" aria-live=\"polite\"></p>" +
+          "</section>" +
+
+          "<section class=\"document-report-section\">" +
+            "<div class=\"document-report-head\">" +
+              "<p class=\"eyebrow\">What looks clear</p>" +
+              "<h3>Clear written details</h3>" +
+            "</div>" +
+            "<div class=\"report-card-grid two-column\">" + renderDocumentClearRows(clearRows) + "</div>" +
+          "</section>" +
+
+          "<section class=\"document-report-section\">" +
+            "<details>" +
+              "<summary>Extracted quote details</summary>" +
+              "<p>Unit rate is only useful when the included scope is clear.</p>" +
+              "<div class=\"price-basis-grid\">" + priceBasisRows + "</div>" +
+            "</details>" +
+          "</section>" +
+
+          "<section class=\"document-report-section\">" +
+            "<details>" +
+              "<summary>Full missing or unclear list</summary>" +
+              "<p>" + normalized.missingScopeItems.length + " item" + (normalized.missingScopeItems.length === 1 ? "" : "s") + " should be confirmed before accepting or comparing total price.</p>" +
+              "<ul class=\"scope-gap-list\">" + normalized.missingScopeItems.map(renderScopeGap).join("") + "</ul>" +
+            "</details>" +
+          "</section>" +
+
+          "<section class=\"document-report-section\">" +
+            "<details>" +
+              "<summary>Secondary analysis</summary>" +
+              "<div class=\"confidence-grid\">" +
+                getDocumentConfidenceCards(normalized, priceBasisState) +
+              "</div>" +
+              "<p style=\"margin-top:16px;\">" + escapeHtml(normalized.productMatchText) + "</p>" +
+            "</details>" +
           "</section>" +
 
           "<section class=\"document-report-section\">" +
@@ -4332,9 +4772,22 @@
             "</div>" +
             "<div class=\"cta-actions\" style=\"justify-content: flex-start; margin-top: 16px;\">" +
               "<a class=\"button quote-review-to-quote\" href=\"quote.html?source=quote_review\">Get an Operon comparison quote</a>" +
-              "<a class=\"button-secondary\" href=\"mailto:quotes@operonflooring.com.au?subject=Flooring quote review\">Email Operon about this review</a>" +
-              "<button class=\"button-secondary\" type=\"button\" id=\"copyDocumentSummaryButton\">Copy report</button>" +
-              "<button class=\"button-secondary\" type=\"button\" id=\"uploadAnotherQuoteButton\">Upload another quote</button>" +
+              "<button class=\"button-secondary\" type=\"button\" id=\"sendDocumentReviewEmailButton\">Send this review to my email</button>" +
+              productsCta +
+              "<button class=\"button-secondary button-utility\" type=\"button\" id=\"uploadAnotherQuoteButton\">Upload another quote</button>" +
+            "</div>" +
+            "<div class=\"field-grid" + (state.email ? "" : "") + "\" id=\"documentReviewEmailPanel\" hidden>" +
+              "<div class=\"field full-span\">" +
+                "<label for=\"documentReviewEmailAddress\">Email this review</label>" +
+                "<input id=\"documentReviewEmailAddress\" type=\"email\" autocomplete=\"email\" placeholder=\"name@example.com\" value=\"" + escapeHtml(state.email || "") + "\">" +
+                "<div class=\"copy-actions\">" +
+                  "<button class=\"button-secondary\" type=\"button\" id=\"confirmDocumentReviewEmailButton\">Send review to my email</button>" +
+                  "<span class=\"field-help\" id=\"documentReviewEmailStatus\" aria-live=\"polite\"></span>" +
+                "</div>" +
+              "</div>" +
+            "</div>" +
+            "<div class=\"copy-actions\" style=\"margin-top: 14px;\">" +
+              "<button class=\"button-secondary button-utility\" type=\"button\" id=\"copyDocumentSummaryButton\">Copy report</button>" +
             "</div>" +
             "<p class=\"copy-status\" id=\"copyDocumentSummaryStatus\" aria-live=\"polite\"></p>" +
           "</section>" +
@@ -4390,16 +4843,54 @@
         });
       }
 
+      const sendEmailButton = document.getElementById("sendDocumentReviewEmailButton");
+      if (sendEmailButton) {
+        sendEmailButton.addEventListener("click", function () {
+          const panel = document.getElementById("documentReviewEmailPanel");
+          const input = document.getElementById("documentReviewEmailAddress");
+          if (panel) {
+            panel.hidden = false;
+          }
+          if (input) {
+            input.focus();
+          }
+        });
+      }
+
+      const confirmEmailButton = document.getElementById("confirmDocumentReviewEmailButton");
+      if (confirmEmailButton) {
+        confirmEmailButton.addEventListener("click", async function () {
+          const input = document.getElementById("documentReviewEmailAddress");
+          const status = document.getElementById("documentReviewEmailStatus");
+          const emailValue = input ? input.value.trim() : "";
+          if (!/.+@.+\..+/.test(emailValue)) {
+            if (status) status.textContent = "Enter a valid email address.";
+            return;
+          }
+          const payload = buildQuoteIntelligencePayload(state, buildRiskGroups(state), buildStrengths(state), getClaritySummary(state, buildRiskGroups(state)));
+          payload.normalized_document_review = normalized;
+          payload.quote_readiness = normalized.quoteReadiness;
+          payload.quote_readiness_label = getReadinessLabel(normalized.quoteReadiness);
+          payload.report_confidence = normalized.reportConfidence;
+          payload.top_items_to_confirm = topItems;
+          payload.questions_to_ask = normalized.questionsToAsk;
+          await sendReviewEmail(payload, emailValue, status, "document_review");
+        });
+      }
+
       documentReport.querySelectorAll(".quote-review-to-quote").forEach(function (button) {
         button.addEventListener("click", function () {
           try {
             const saved = unwrapStoredPayload(JSON.parse(localStorage.getItem(QUOTE_REVIEW_LATEST_KEY) || "{}"), QUOTE_REVIEW_LATEST_KEY) || {};
-            saved.next_step_taken = button.getAttribute("href") || "quote.html?source=quote_review";
-            saved.converted_to_quote = true;
-            localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(withStorageExpiry(saved)));
-            if (saveQuoteReviewHandoff(saved)) {
+            const safeSaved = buildBrowserSafeQuoteReviewPayload(saved);
+            safeSaved.next_step_taken = button.getAttribute("href") || "quote.html?source=quote_review";
+            safeSaved.converted_to_quote = true;
+            safeSaved.clicked_comparison_quote = true;
+            applyLeadPriorityFields(safeSaved);
+            localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(withStorageExpiry(safeSaved)));
+            if (saveQuoteReviewHandoff(safeSaved)) {
               trackQuoteReviewEvent("quote_review_handoff_attached", {
-                review_mode: saved.review_mode || "",
+                review_mode: safeSaved.review_mode || "",
                 source: "quote_review"
               });
             }
@@ -4414,16 +4905,89 @@
             has_uploaded_file: true,
             generated_report: true
           });
-          trackQuoteReviewEvent("quote_review_to_quote", {
-            comparison_level: normalized.comparisonLevel,
-            decision_confidence: normalized.decisionConfidence,
-            extraction_confidence: priceBasisState.extractionConfidence,
-            missing_scope_count: normalized.missingScopeItems.length,
-            has_uploaded_file: true,
-            generated_report: true
-          });
         });
       });
+    }
+
+    function renderDocumentFallbackReport(state) {
+      const quickReport = document.getElementById("quickCompletenessReport");
+      const documentReport = document.getElementById("documentReviewReport");
+      const layout = document.querySelector(".review-layout");
+      if (quickReport) {
+        quickReport.hidden = true;
+      }
+      if (!documentReport) {
+        return;
+      }
+      documentReport.hidden = false;
+      if (layout) {
+        layout.classList.add("has-result", "report-ready");
+      }
+
+      const fallbackMessage = state.hasUploadedQuoteFile
+        ? "Your quote file was received, but automatic reading failed. You can run a quick check, contact Operon, or try another file."
+        : "Upload the written quote for the strongest review, or use the quick completeness check if the file is not ready.";
+
+      documentReport.innerHTML =
+        "<div class=\"document-report\">" +
+          "<section class=\"document-report-section soft\">" +
+            "<div class=\"document-report-head\">" +
+              "<p class=\"eyebrow\">Document quote review</p>" +
+              "<h3>Not ready to compare</h3>" +
+              "<p>" + escapeHtml(fallbackMessage) + "</p>" +
+            "</div>" +
+            "<div class=\"summary-chip-grid\">" +
+              "<div class=\"summary-chip\"><span>Quote readiness</span><strong>Not ready to compare</strong></div>" +
+              "<div class=\"summary-chip\"><span>Review confidence</span><strong>Low</strong></div>" +
+              "<div class=\"summary-chip\"><span>Document quality</span><strong>Weak</strong></div>" +
+            "</div>" +
+          "</section>" +
+          "<section class=\"document-report-section\">" +
+            "<div class=\"document-report-head\">" +
+              "<p class=\"eyebrow\">Top 3 items to confirm</p>" +
+              "<h3>What to do next</h3>" +
+            "</div>" +
+            "<div class=\"report-card-grid\">" +
+              "<div class=\"risk-card\"><strong>Readable product details</strong><span>The written quote needs a clearer product line, range or scope description.</span></div>" +
+              "<div class=\"risk-card\"><strong>Area and total basis</strong><span>The review needs visible area and price details to compare properly.</span></div>" +
+              "<div class=\"risk-card\"><strong>Use another path if needed</strong><span>You can run the quick check or ask Operon to review the uploaded quote with you.</span></div>" +
+            "</div>" +
+          "</section>" +
+          "<section class=\"document-report-section questions\">" +
+            "<div class=\"document-report-head\">" +
+              "<p class=\"eyebrow\">Next action</p>" +
+              "<h3>Continue with a stronger source</h3>" +
+            "</div>" +
+            "<div class=\"cta-actions\" style=\"justify-content: flex-start; margin-top: 16px;\">" +
+              "<button class=\"button-secondary\" type=\"button\" id=\"fallbackQuickCheckButton\">Run quick check</button>" +
+              "<a class=\"button-secondary\" href=\"contact.html\">Contact Operon</a>" +
+              "<button class=\"button-secondary\" type=\"button\" id=\"fallbackUploadAnotherButton\">Try another file</button>" +
+            "</div>" +
+          "</section>" +
+        "</div>";
+
+      const quickButton = document.getElementById("fallbackQuickCheckButton");
+      if (quickButton) {
+        quickButton.addEventListener("click", function () {
+          const quickMode = document.querySelector('input[name="reviewMode"][value="quick"]');
+          if (quickMode) {
+            quickMode.checked = true;
+          }
+          renderReview();
+        });
+      }
+
+      const uploadAnother = document.getElementById("fallbackUploadAnotherButton");
+      if (uploadAnother) {
+        uploadAnother.addEventListener("click", function () {
+          const quoteFile = document.getElementById("reviewQuoteFile");
+          if (quoteFile) {
+            resetUploadedQuoteState(quoteFile, true);
+            renderReview();
+            quoteFile.click();
+          }
+        });
+      }
     }
 
     function sanitizeQuoteReviewAnalytics(metadata) {
@@ -4440,6 +5004,12 @@
       }
       if (input.extraction_confidence || input.confidence_level) {
         safe.extraction_confidence = String(input.extraction_confidence || input.confidence_level);
+      }
+      if (input.quote_readiness) {
+        safe.quote_readiness = String(input.quote_readiness);
+      }
+      if (input.report_confidence) {
+        safe.report_confidence = String(input.report_confidence);
       }
       if (typeof input.missing_scope_count !== "undefined") {
         const count = Number(input.missing_scope_count);
@@ -4471,13 +5041,30 @@
       }
     }
 
+    function trackQuoteReviewReportViewed(payload, state) {
+      if (!payload) {
+        return;
+      }
+      const normalized = payload.normalized_document_review || null;
+      trackQuoteReviewEvent("quote_review_report_viewed", {
+        review_mode: payload.review_mode || (state && state.mode) || "",
+        comparison_level: normalized ? normalized.comparisonLevel : "",
+        decision_confidence: normalized ? normalized.decisionConfidence : payload.confidence_level,
+        extraction_confidence: normalized ? normalized.extractionConfidence : payload.confidence_level,
+        quote_readiness: payload.quote_readiness || "",
+        report_confidence: payload.report_confidence || "",
+        missing_scope_count: payload.missing_items ? payload.missing_items.length : 0,
+        has_uploaded_file: Boolean(payload.uploaded_quote_reference),
+        generated_report: true
+      });
+    }
+
     function hasPayloadInput(payload) {
       return Boolean(
         payload.flooring_type ||
         payload.area_m2 ||
         payload.quote_total ||
         payload.quote_unit_rate_m2 ||
-        payload.pasted_quote_wording ||
         payload.quote_provider_name ||
         payload.uploaded_quote_reference ||
         payload.included_items.length ||
@@ -4506,14 +5093,108 @@
         hasReviewContext: true,
         reviewId: payload.review_id || "",
         reviewMode: payload.review_mode || "",
+        quoteReadiness: payload.quote_readiness || "",
+        reportConfidence: payload.report_confidence || "",
+        documentQuality: payload.document_quality || (normalized && normalized.documentQuality ? normalized.documentQuality.label : ""),
         extractedFlooringType: normalized ? normalized.flooringType : (payload.flooring_type || ""),
         extractedAreaM2: normalized ? normalized.quantityM2 : (payload.area_m2 || null),
         businessShownOnDocument: normalized ? normalized.businessShownOnDocument : (payload.quote_provider_name || ""),
         missingScopeItems: missingScopeItems,
         comparisonLevel: normalized ? normalized.comparisonLevel : (payload.risk_level || ""),
         questionsToAsk: questionsToAsk,
+        topItemsToConfirm: Array.isArray(payload.top_items_to_confirm) ? payload.top_items_to_confirm.slice(0, 3) : [],
+        extractedQuoteFields: normalized ? {
+          documentType: normalized.documentType,
+          productScopeLine: normalized.productScopeLine,
+          quantityM2: normalized.quantityM2,
+          totalIncGst: normalized.totalIncGst,
+          gstAmount: normalized.gstAmount
+        } : null,
+        uploadedQuoteReference: payload.uploaded_quote_reference || "",
+        quoteTotal: payload.quote_total || null,
+        quoteGstStatus: payload.quote_gst_status || "",
+        missingItemCount: Array.isArray(payload.missing_items) ? payload.missing_items.length : missingScopeItems.length,
+        leadPriority: payload.lead_priority || "low",
+        leadPriorityReasons: Array.isArray(payload.lead_priority_reasons) ? payload.lead_priority_reasons.slice(0, 6) : [],
+        uploadedQuote: Boolean(payload.uploaded_quote),
+        clickedComparisonQuote: Boolean(payload.clicked_comparison_quote),
+        emailReviewRequested: Boolean(payload.email_review_requested),
         createdAt: payload.created_at || new Date().toISOString()
       };
+    }
+
+    function buildBrowserSafeQuoteReviewPayload(payload) {
+      if (!payload || typeof payload !== "object") {
+        return payload;
+      }
+      const normalized = payload.normalized_document_review || null;
+      const safeNormalized = normalized ? {
+        documentType: normalized.documentType || "",
+        businessShownOnDocument: normalized.businessShownOnDocument || "",
+        invoiceOrQuoteNumber: normalized.invoiceOrQuoteNumber || "",
+        issueDate: normalized.issueDate || "",
+        dueDate: normalized.dueDate || "",
+        productScopeLine: normalized.productScopeLine || "",
+        flooringType: normalized.flooringType || "",
+        flooringTypeLabel: normalized.flooringTypeLabel || "",
+        thicknessMm: normalized.thicknessMm || null,
+        quantityM2: normalized.quantityM2 || null,
+        unitPriceExGst: normalized.unitPriceExGst || null,
+        unitPriceIncGst: normalized.unitPriceIncGst || null,
+        subtotalExGst: normalized.subtotalExGst || null,
+        gstAmount: normalized.gstAmount || null,
+        totalIncGst: normalized.totalIncGst || null,
+        productSpecificationConfirmed: Boolean(normalized.productSpecificationConfirmed),
+        missingScopeItems: Array.isArray(normalized.missingScopeItems) ? normalized.missingScopeItems.slice(0, 12) : [],
+        knownScopeItems: Array.isArray(normalized.knownScopeItems) ? normalized.knownScopeItems.slice(0, 8) : [],
+        questionsToAsk: Array.isArray(normalized.questionsToAsk) ? normalized.questionsToAsk.slice(0, 8) : [],
+        quoteReadiness: normalized.quoteReadiness || "",
+        reportConfidence: normalized.reportConfidence || "",
+        documentQuality: normalized.documentQuality || null,
+        businessDetailChecks: Array.isArray(normalized.businessDetailChecks) ? normalized.businessDetailChecks.slice(0, 6) : [],
+        comparisonLevel: normalized.comparisonLevel || "",
+        decisionConfidence: normalized.decisionConfidence || "",
+        topItemsToConfirm: Array.isArray(normalized.topItemsToConfirm) ? normalized.topItemsToConfirm.slice(0, 3) : [],
+        statusHeadline: normalized.statusHeadline || "",
+        summary: normalized.summary || ""
+      } : null;
+
+      return applyLeadPriorityFields({
+        review_id: payload.review_id || "",
+        review_mode: payload.review_mode || "",
+        suburb: payload.suburb || "",
+        postcode: payload.postcode || "",
+        flooring_type: payload.flooring_type || "",
+        area_m2: payload.area_m2 || null,
+        uploaded_quote_reference: payload.uploaded_quote_reference || "",
+        ocr_status: payload.ocr_status || "",
+        ocr_confidence: payload.ocr_confidence || null,
+        ocr_engine: payload.ocr_engine || "",
+        extracted_quote_fields: getSafeExtractedQuoteFields(payload.extracted_quote_fields),
+        quote_total: payload.quote_total || null,
+        quote_gst_status: payload.quote_gst_status || "",
+        quote_unit_rate_m2: payload.quote_unit_rate_m2 || null,
+        quote_provider_name: payload.quote_provider_name || "",
+        included_items: Array.isArray(payload.included_items) ? payload.included_items.slice(0, 24) : [],
+        included_item_labels: Array.isArray(payload.included_item_labels) ? payload.included_item_labels.slice(0, 24) : [],
+        missing_items: Array.isArray(payload.missing_items) ? payload.missing_items.slice(0, 12) : [],
+        unknown_items: Array.isArray(payload.unknown_items) ? payload.unknown_items.slice(0, 12) : [],
+        normalized_document_review: safeNormalized,
+        quote_readiness: payload.quote_readiness || "",
+        quote_readiness_label: payload.quote_readiness_label || "",
+        report_confidence: payload.report_confidence || "",
+        document_quality: payload.document_quality || "",
+        business_detail_checks: Array.isArray(payload.business_detail_checks) ? payload.business_detail_checks.slice(0, 6) : [],
+        top_items_to_confirm: Array.isArray(payload.top_items_to_confirm) ? payload.top_items_to_confirm.slice(0, 3) : [],
+        advisor_summary: payload.advisor_summary || null,
+        recommended_next_step: payload.recommended_next_step || "quote.html",
+        next_step_taken: payload.next_step_taken || "",
+        converted_to_quote: Boolean(payload.converted_to_quote),
+        linked_quote_lead_id: payload.linked_quote_lead_id || null,
+        clicked_comparison_quote: Boolean(payload.clicked_comparison_quote),
+        email_review_requested: Boolean(payload.email_review_requested),
+        created_at: payload.created_at || new Date().toISOString()
+      });
     }
 
     function saveQuoteReviewHandoff(payload) {
@@ -4527,8 +5208,9 @@
 
     function saveQuoteIntelligencePayload(payload) {
       try {
-        localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(withStorageExpiry(payload)));
-        localStorage.setItem(QUOTE_REVIEW_INTELLIGENCE_KEY, JSON.stringify(withStorageExpiry(payload)));
+        const safePayload = buildBrowserSafeQuoteReviewPayload(payload);
+        localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(withStorageExpiry(safePayload)));
+        localStorage.setItem(QUOTE_REVIEW_INTELLIGENCE_KEY, JSON.stringify(withStorageExpiry(safePayload)));
         if (hasPayloadInput(payload)) {
           trackQuoteReviewEvent("quote_review_payload_saved", {
             review_mode: payload.review_mode,
@@ -4571,7 +5253,7 @@
 
         if (result && result.review_id) {
           payload.review_id = result.review_id;
-          localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(withStorageExpiry(payload)));
+          localStorage.setItem(QUOTE_REVIEW_LATEST_KEY, JSON.stringify(withStorageExpiry(buildBrowserSafeQuoteReviewPayload(payload))));
         }
         if (result && result.ok === false) {
           trackQuoteReviewEvent("quote_review_payload_save_error", {});
@@ -4614,6 +5296,7 @@
         }
         saveReviewState();
         saveQuoteIntelligencePayload(payload);
+        trackQuoteReviewReportViewed(payload, state);
         return payload;
       }
 
@@ -4632,50 +5315,10 @@
           normalized: normalizedDocumentReview
         };
         quickScopeCheckState = null;
+        trackQuoteReviewReportViewed(payload, state);
         return payload;
       }
-      const keyObservations = buildKeyObservations(state, risks, strengths);
-      const unknownConfirmations = buildUnknownConfirmations(state);
-      const decisionVariationRisks = state.decisionReport && Array.isArray(state.decisionReport.likelyVariationRisks)
-        ? state.decisionReport.likelyVariationRisks.map(function (item) {
-          return {
-            title: item.label,
-            consequence: "Why this matters: " + item.whyThisMatters
-          };
-        })
-        : [];
-      const typicalChanges = decisionVariationRisks.length ? decisionVariationRisks : buildTypicalChanges(state, risks);
-
-      const quickReport = document.getElementById("quickCompletenessReport");
-      const documentReport = document.getElementById("documentReviewReport");
-      if (quickReport) {
-        quickReport.hidden = true;
-      }
-      if (documentReport) {
-        documentReport.hidden = false;
-      }
-      if (layout) {
-        layout.classList.add("has-result");
-      }
-
-      renderClarity(clarity);
-      renderRiskList("highRiskList", keyObservations, {
-        title: "Initial review waiting for input.",
-        body: "Add visible quote details to generate observations."
-      });
-      renderRiskList("mediumRiskList", unknownConfirmations, {
-        title: "No unknown item flagged yet.",
-        body: "Unticked items remain unknown until the quote document confirms them."
-      });
-      renderRiskList("lowRiskList", typicalChanges, {
-        title: "Common change items will appear here.",
-        body: "These are typical flooring quote variables, not confirmed charges."
-      });
-      renderQuestionsToAsk(buildQuestionsToAsk(state));
-      renderDecisionGuidance(state, risks);
-      renderExtractedQuoteFields(state.extractedQuoteFields);
-      renderRiskDimensions(state.decisionReport);
-      renderDatabaseComparison(state.databaseComparison, state.operonComparison, state.decisionReport);
+      renderDocumentFallbackReport(state);
 
       saveReviewState();
       saveQuoteIntelligencePayload(payload);
@@ -4684,6 +5327,7 @@
         payload: payload
       };
       quickScopeCheckState = null;
+      trackQuoteReviewReportViewed(payload, state);
       return payload;
     }
 
@@ -4733,6 +5377,9 @@
             trackQuoteReviewEvent("quote_review_mode_select", {
               review_mode: element.value
             });
+            trackQuoteReviewEvent("quote_review_mode_selected", {
+              review_mode: element.value
+            });
           }
           renderReview();
         });
@@ -4758,6 +5405,8 @@
           }
           payload.next_step_taken = "quote.html";
           payload.converted_to_quote = true;
+          payload.clicked_comparison_quote = true;
+          applyLeadPriorityFields(payload);
           saveQuoteIntelligencePayload(payload);
           trackQuoteReviewEvent("quote_review_complete", {
             review_mode: payload.review_mode,
@@ -4769,15 +5418,6 @@
             generated_report: true
           });
           trackQuoteReviewEvent("quote_review_to_quote_clicked", {
-            review_mode: payload.review_mode,
-            comparison_level: payload.normalized_document_review ? payload.normalized_document_review.comparisonLevel : "",
-            decision_confidence: payload.normalized_document_review ? payload.normalized_document_review.decisionConfidence : payload.confidence_level,
-            extraction_confidence: payload.normalized_document_review ? payload.normalized_document_review.extractionConfidence : payload.confidence_level,
-            missing_scope_count: payload.missing_items ? payload.missing_items.length : 0,
-            has_uploaded_file: Boolean(payload.uploaded_quote_reference),
-            generated_report: true
-          });
-          trackQuoteReviewEvent("quote_review_to_quote", {
             review_mode: payload.review_mode,
             comparison_level: payload.normalized_document_review ? payload.normalized_document_review.comparisonLevel : "",
             decision_confidence: payload.normalized_document_review ? payload.normalized_document_review.decisionConfidence : payload.confidence_level,
@@ -4837,6 +5477,44 @@
         });
       }
 
+      const sendQuickReviewEmailButton = document.getElementById("sendQuickReviewEmailButton");
+      if (sendQuickReviewEmailButton) {
+        sendQuickReviewEmailButton.addEventListener("click", function () {
+          const panel = document.getElementById("quickReviewEmailPanel");
+          const input = document.getElementById("quickReviewEmailAddress");
+          if (panel) {
+            panel.hidden = false;
+          }
+          if (input) {
+            if (!input.value && document.getElementById("reviewEmail")) {
+              input.value = document.getElementById("reviewEmail").value.trim();
+            }
+            input.focus();
+          }
+        });
+      }
+
+      const confirmQuickReviewEmailButton = document.getElementById("confirmQuickReviewEmailButton");
+      if (confirmQuickReviewEmailButton) {
+        confirmQuickReviewEmailButton.addEventListener("click", async function () {
+          const input = document.getElementById("quickReviewEmailAddress");
+          const status = document.getElementById("quickReviewEmailStatus");
+          const state = getReviewState();
+          const risks = buildRiskGroups(state);
+          const strengths = buildStrengths(state);
+          const clarity = getClaritySummary(state, risks);
+          const payload = buildQuoteIntelligencePayload(state, risks, strengths, clarity);
+          const emailValue = input ? input.value.trim() : "";
+          if (!/.+@.+\..+/.test(emailValue)) {
+            if (status) {
+              status.textContent = "Enter a valid email address.";
+            }
+            return;
+          }
+          await sendReviewEmail(payload, emailValue, status, "quick_review");
+        });
+      }
+
       const detailedUploadCta = document.getElementById("detailedReviewUploadCta");
       if (detailedUploadCta) {
         detailedUploadCta.addEventListener("click", async function () {
@@ -4872,13 +5550,30 @@
                   extraction_confidence: quoteFile.dataset.ocrConfidence ? "Medium" : "Low",
                   has_uploaded_file: true
                 });
+                trackQuoteReviewEvent("quote_review_upload_success", {
+                  review_mode: "detailed",
+                  extraction_confidence: quoteFile.dataset.ocrConfidence ? "Medium" : "Low",
+                  has_uploaded_file: true
+                });
               } else if (quoteFile.dataset.ocrStatus === "engine_not_configured") {
-                setQuoteOcrStatus("Document review is not configured yet.", true);
+                setQuoteOcrStatus("Your quote file was received, but automatic reading failed. You can run a quick check or contact Operon with the uploaded quote.", true);
+                trackQuoteReviewEvent("quote_review_upload_failed", {
+                  review_mode: "detailed",
+                  has_uploaded_file: true
+                });
               } else {
-                setQuoteOcrStatus(ocrResult.ocr && ocrResult.ocr.notes ? ocrResult.ocr.notes : "Could not extract readable quote detail yet.", true);
+                setQuoteOcrStatus("Your quote file was received, but automatic reading failed. You can run a quick check or contact Operon with the uploaded quote.", true);
+                trackQuoteReviewEvent("quote_review_upload_failed", {
+                  review_mode: "detailed",
+                  has_uploaded_file: true
+                });
               }
             } catch (error) {
-              setQuoteOcrStatus(error && error.message ? error.message : "Could not send the file for review.", true);
+              setQuoteOcrStatus("Your quote file was received, but automatic reading failed. You can run a quick check or contact Operon with the uploaded quote.", true);
+              trackQuoteReviewEvent("quote_review_upload_failed", {
+                review_mode: "detailed",
+                has_uploaded_file: Boolean(file)
+              });
             } finally {
               detailedUploadCta.disabled = false;
             }

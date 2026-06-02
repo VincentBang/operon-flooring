@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://operonflooring.com.au/sitemap.xml

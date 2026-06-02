@@ -77,7 +77,7 @@
       "mainEntity": [
         {"@type":"Question","name":"Do I need exact measurements to start?","acceptedAnswer":{"@type":"Answer","text":"No. Start with the best area you know now. Final measurements can be checked before the quote is confirmed."}},
         {"@type":"Question","name":"Can I upload a floor plan instead of measuring manually?","acceptedAnswer":{"@type":"Answer","text":"Yes. Use the floor plan tool to trace rooms, confirm area, and send that measured total into the quote."}},
-        {"@type":"Question","name":"Is the online quote the final price?","acceptedAnswer":{"@type":"Answer","text":"No. The online result is an estimate. Final pricing is confirmed after measurements, site details and any extra scope are checked."}},
+        {"@type":"Question","name":"Is the online quote the final price?","acceptedAnswer":{"@type":"Answer","text":"No. The online result is a starting estimate. Final scope is reviewed before booking."}},
         {"@type":"Question","name":"Can I choose supply and install or installation only?","acceptedAnswer":{"@type":"Answer","text":"Yes. The quote wizard supports both supply and install, and installation-only projects."}},
         {"@type":"Question","name":"Am I committed when I send the quote?","acceptedAnswer":{"@type":"Answer","text":"No. Sending the estimate does not lock you in. It gives us the project details so we can review and confirm the next step with you."}}
       ]
@@ -685,7 +685,7 @@
     }
 
     .trust-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px 20px;
       align-items: start;
     }
@@ -3017,12 +3017,11 @@
         <article class="section-card">
           <p class="eyebrow">Scope clarity</p>
           <h2 id="quoteScopeClarityTitle" style="margin-top: 12px;">Clear scope before the job is booked</h2>
-          <p class="hero-sub" style="margin-top: 10px;">Operon helps Sydney customers review the details that usually change flooring work before installation is confirmed.</p>
+          <p class="hero-sub" style="margin-top: 10px;">Operon helps Sydney customers start with product, area and main inclusions, then review the final scope before booking.</p>
           <div class="trust-grid" style="margin-top: 18px;">
-            <div><strong>Product and area checked</strong><span>Flooring type, selected range and measured area are reviewed before final confirmation.</span></div>
-            <div><strong>Removal, trims and stairs clarified</strong><span>Removal, disposal, scotia, skirting, trims and stair details are checked so the scope is easier to compare.</span></div>
-            <div><strong>Site conditions reviewed</strong><span>Apartment requirements, subfloor preparation, moisture-related items and other site details are confirmed where relevant.</span></div>
-            <div><strong>Written assumptions</strong><span>The aim is to make product, scope and site assumptions visible before the job is booked.</span></div>
+            <div><strong>Product and area</strong><span>Choose the flooring direction and provide an area, room list or floor plan path.</span></div>
+            <div><strong>Main inclusions</strong><span>Confirm the big scope items first, including removal, disposal, finishing and stairs.</span></div>
+            <div><strong>Final scope review</strong><span>Operon reviews the remaining details before the job is booked.</span></div>
           </div>
         </article>
       </div>
@@ -3145,8 +3144,8 @@
               </div>
             </div>
             <details class="mobile-optional-group">
-              <summary>Optional property details</summary>
-              <p class="helper">Suburb and postcode are enough to start. Add address, level or building notes if useful.</p>
+              <summary>Optional site details</summary>
+              <p class="helper">Suburb and postcode are enough to start. Add these details now only if they are useful.</p>
               <div class="form-grid">
               <div class="field" id="propertyLevelField">
                 <label for="level">Level</label>
@@ -3168,12 +3167,12 @@
                 </select>
               </div>
               <div class="field">
-                <label for="parkingAccess">Parking or loading note</label>
+                <label for="parkingAccess">Arrival or building note</label>
                 <select id="parkingAccess" name="parkingAccess">
-                  <option value="">Select parking or loading note</option>
+                  <option value="">Select optional note</option>
                   <option value="easy">Easy parking / driveway</option>
                   <option value="limited">Limited street parking</option>
-                  <option value="difficult">Apartment / building details</option>
+                  <option value="difficult">Building coordination needed</option>
                   <option value="unsure">Unsure</option>
                 </select>
               </div>
@@ -3534,7 +3533,7 @@
 
               <div class="decision-tier">
                 <div class="decision-tier-head">
-                  <strong>Main scope</strong>
+                  <strong>Main inclusions</strong>
                 </div>
 
                 <div class="decision-card">
@@ -3559,26 +3558,59 @@
                           <option value="other">Other / manual</option>
                         </select>
                       </div>
-                      <div class="field">
-                        <label for="removalDisposal">Does your project include disposal?</label>
-                        <select id="removalDisposal" name="removalDisposal">
-                          <option value="yes">Yes</option>
-                          <option value="no">No</option>
-                          <option value="not_sure">Not sure</option>
-                        </select>
-                      </div>
                     </div>
                   </div>
                   <div class="decision-status" id="removalDecisionStatus"></div>
                 </div>
 
-              </div>
-
-              <div class="decision-tier">
-                <div class="decision-tier-head">
-                  <strong>Finishes</strong>
+                <div class="decision-card">
+                  <strong>Does your project include disposal?</strong>
+                  <div class="decision-options" id="removalDisposalButtons">
+                    <button class="decision-option" type="button" data-extra-field="removalDisposal" data-extra-choice="no">No</button>
+                    <button class="decision-option" type="button" data-extra-field="removalDisposal" data-extra-choice="yes">Yes</button>
+                    <button class="decision-option" type="button" data-extra-field="removalDisposal" data-extra-choice="not_sure">Not sure</button>
+                  </div>
+                  <input id="removalDisposal" name="removalDisposal" type="hidden" value="">
+                  <div class="decision-status" id="removalDisposalStatus"></div>
                 </div>
 
+                <div class="decision-card">
+                  <strong>Does your project include skirting or scotia?</strong>
+                  <div class="decision-options" id="finishDecisionButtons">
+                    <button class="decision-option" type="button" data-extra-field="finishDecision" data-extra-choice="no">No</button>
+                    <button class="decision-option" type="button" data-extra-field="finishDecision" data-extra-choice="yes">Yes</button>
+                    <button class="decision-option" type="button" data-extra-field="finishDecision" data-extra-choice="not_sure">Not sure</button>
+                  </div>
+                  <input id="finishDecision" name="finishDecision" type="hidden" value="">
+                  <div class="decision-detail" id="finishDetail" hidden>
+                    <div class="grid-2">
+                      <div class="field">
+                        <label for="skirtingType">Skirting</label>
+                        <select id="skirtingType" name="skirtingType">
+                          <option value="no">No</option>
+                          <option value="supply_install">Supply &amp; install skirting</option>
+                          <option value="remove_refit">Remove / refit existing skirting</option>
+                          <option value="manual">Manual / review required</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label for="scotiaType">Scotia</label>
+                        <select id="scotiaType" name="scotiaType">
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="decision-status" id="finishDecisionStatus"></div>
+                </div>
+
+              </div>
+
+              <details class="mobile-optional-group quote-advanced-scope">
+                <summary>Advanced optional details</summary>
+                <p class="helper">Leave these for review if you are unsure.</p>
+                <div class="decision-tier">
                 <div class="decision-card">
                   <strong>Does your project include underlay?</strong>
                   <div class="decision-options" id="underlayDecisionButtons">
@@ -3598,42 +3630,6 @@
                   <div class="decision-status" id="underlayDecisionStatus"></div>
                 </div>
 
-                <div class="decision-card">
-                  <strong>Does your project include skirting or scotia?</strong>
-                  <div class="decision-options" id="finishDecisionButtons">
-                    <button class="decision-option" type="button" data-extra-field="finishDecision" data-extra-choice="no">No</button>
-                    <button class="decision-option" type="button" data-extra-field="finishDecision" data-extra-choice="yes">Yes</button>
-                    <button class="decision-option" type="button" data-extra-field="finishDecision" data-extra-choice="not_sure">Not sure</button>
-                  </div>
-                  <input id="finishDecision" name="finishDecision" type="hidden" value="">
-                  <div class="decision-detail" id="finishDetail" hidden>
-                    <div class="grid-2">
-                      <div class="field">
-                        <label for="skirtingType">Skirting</label>
-                        <select id="skirtingType" name="skirtingType">
-                          <option value="no">No</option>
-                          <option value="supply_install">Supply &amp; install skirting</option>
-                          <option value="remove_refit">Remove / refit existing skirting</option>
-                          <option value="manual">Manual / site inspection required</option>
-                        </select>
-                      </div>
-                      <div class="field">
-                        <label for="scotiaType">Scotia</label>
-                        <select id="scotiaType" name="scotiaType">
-                          <option value="no">No</option>
-                          <option value="yes">Yes</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="decision-status" id="finishDecisionStatus"></div>
-                </div>
-              </div>
-
-              <details class="mobile-optional-group quote-advanced-scope">
-                <summary>Advanced optional details</summary>
-                <p class="helper">Leave these for review if you are unsure.</p>
-                <div class="decision-tier">
                   <div class="decision-card">
                     <strong>Does your project include floor preparation?</strong>
                     <div class="decision-options" id="floorPrepDecisionButtons">
@@ -3808,7 +3804,7 @@
               <div class="summary-row" id="summaryChargeableAreaRow"><span id="summaryChargeableAreaLabel">Estimated area</span><strong id="summaryChargeableArea">Add area</strong></div>
             </div>
             <span id="summaryConfidence" hidden>Not ready</span>
-            <span id="summaryConfidenceText" hidden>Confidence improves as area, product and site details become clearer.</span>
+            <span id="summaryConfidenceText" hidden>Confidence improves as area, product and main scope become clearer.</span>
           </div>
 
           <div class="summary-box estimate-note-card" id="summaryPendingEstimateCard" hidden>
@@ -3826,7 +3822,7 @@
 
           <div id="quoteLines" hidden></div>
           <ul id="summaryFinalPriceFactorsList" hidden></ul>
-          <div id="manualReviewNotice" hidden>Product and site details are confirmed before booking.</div>
+          <div id="manualReviewNotice" hidden>Product and final scope are reviewed before booking.</div>
 
           <div class="summary-box" id="warningsCard" hidden>
             <h3>Review notes</h3>
@@ -3930,7 +3926,7 @@
           <details class="faq-toggle">
             <summary>Is the online quote the final price?</summary>
             <div class="faq-toggle-body">
-              <p>No. The online result is an estimate. Final pricing is confirmed after measurements, site details and any extra scope are checked.</p>
+              <p>No. The online result is a starting estimate. Final scope is reviewed before booking.</p>
             </div>
           </details>
           <details class="faq-toggle">
@@ -4204,8 +4200,15 @@
       pricingOptimizationCache: {},
       backendQuoteRuntimeAvailable: true,
       backendQuoteFallbackLogged: false,
+      backendQuoteCacheSignature: "",
+      backendQuoteCacheResult: null,
+      backendQuoteInFlightSignature: "",
+      backendQuoteInFlightPromise: null,
       lastShadowQuoteComparisonSignature: "",
       lastPropertyType: "",
+      lastRemovalType: "",
+      lastFloorPrepType: "",
+      lastPatternType: "",
       lastEstimateStateSignature: "",
       quoteRuntimeHealth: {
         checked: false,
@@ -4532,7 +4535,7 @@
 
       const confirmationItems = getScopeConfirmationItems(getFormInput());
       const highRiskConfirmationItems = confirmationItems.filter(function (item) {
-        return /stairs|removal|disposal|floor preparation|subfloor|underlay|parking|access|lift/i.test(item);
+        return /stairs|removal|disposal|floor preparation|subfloor|underlay|building/i.test(item);
       });
 
       if (highRiskConfirmationItems.length || confirmationItems.length >= 3) {
@@ -4650,14 +4653,11 @@
       if (!source.furnitureDecision || source.furnitureDecision === "not_sure") {
         add("furniture moving");
       }
-      if (!source.parkingAccess || source.parkingAccess === "unsure" || source.parkingAccess === "difficult") {
+      if (source.parkingAccess === "unsure" || source.parkingAccess === "difficult") {
         add("building details");
       }
-      if ((source.propertyType === "unit_apartment" || source.propertyType === "commercial_other") && (!source.level || source.level === "other_unsure")) {
-        add("property level or building details");
-      }
-      if (source.level === "level_2_plus" && !source.hasLift) {
-        add("building lift details");
+      if (source.hasLift === "no") {
+        add("building coordination details");
       }
 
       return items;
@@ -4668,12 +4668,12 @@
         return "High estimate confidence. Product, area and main scope details are clear enough for a strong starting estimate. Final project details are still reviewed before booking.";
       }
       if (confidence === "Medium") {
-        return "Medium estimate confidence. The estimate is useful for planning, but some scope or site details should be confirmed before relying on the final price.";
+        return "Medium estimate confidence. The estimate is useful for planning, with final scope reviewed before booking.";
       }
       if (confidence === "Estimate pending" || confidence === "Not ready") {
         return "Estimate pending. Add flooring type and area before we calculate a useful estimate.";
       }
-      return "Low estimate confidence. This is not reliable enough for price comparison yet. Confirm the missing product, area or site details first.";
+      return "Low estimate confidence. Add the missing product, area or main scope details before comparing estimates.";
     }
 
     function getQuoteTypeLabel(quoteMode) {
@@ -4683,7 +4683,10 @@
       if (quoteMode === "supply_only") {
         return "Supply only";
       }
-      return "Supply and install";
+      if (quoteMode === "supply_install") {
+        return "Supply and install";
+      }
+      return "Not selected yet";
     }
 
     function setTextIfPresent(id, text) {
@@ -5041,6 +5044,10 @@
       return !!floorType && floorType !== "none";
     }
 
+    function isSpecificRemovalFloorType(value) {
+      return ["carpet", "floating", "glue_down", "tile", "vinyl", "other"].indexOf(normaliseRemovalFloorType(value)) >= 0;
+    }
+
     function getDefaultUnderlayIdForCategory(category) {
       if (!window.OperonUnderlay || typeof window.OperonUnderlay.list !== "function") {
         return "";
@@ -5288,7 +5295,7 @@
       setExtraDecision("removalDecision", "no");
       setInputValue("removalType", "none");
       setInputValue("existingFloorType", "none");
-      setInputValue("removalDisposal", "");
+      setInputValue("removalDisposal", "no");
 
       setExtraDecision("floorPrepDecision", "no");
       setInputValue("floorPrepType", "none");
@@ -5391,6 +5398,7 @@
     function renderExtrasStep() {
       enforceUnderlayRequirement();
       setActiveCards("[data-extra-field='removalDecision']", getInputValue("removalDecision"), "data-extra-choice");
+      setActiveCards("[data-extra-field='removalDisposal']", getInputValue("removalDisposal"), "data-extra-choice");
       setActiveCards("[data-extra-field='floorPrepDecision']", getInputValue("floorPrepDecision"), "data-extra-choice");
       setActiveCards("[data-extra-field='underlayDecision']", getInputValue("underlayDecision"), "data-extra-choice");
       setActiveCards("[data-extra-field='finishDecision']", getInputValue("finishDecision"), "data-extra-choice");
@@ -5416,6 +5424,13 @@
         removalStatus.textContent = getInputValue("removalDecision") === "yes"
           ? "Included in estimate."
           : (getInputValue("removalDecision") === "not_sure" ? "Needs confirmation." : (getInputValue("removalDecision") === "no" ? "Not included." : ""));
+      }
+
+      const disposalStatus = document.getElementById("removalDisposalStatus");
+      if (disposalStatus) {
+        disposalStatus.textContent = getInputValue("removalDisposal") === "yes"
+          ? "Included if removal is included."
+          : (getInputValue("removalDisposal") === "not_sure" ? "Needs confirmation if removal is included." : (getInputValue("removalDisposal") === "no" ? "Not included." : ""));
       }
 
       const floorPrepStatus = document.getElementById("floorPrepDecisionStatus");
@@ -5524,6 +5539,12 @@
       if (!removalDecision && !getInputValue("removalType") && !legacyExistingFloorType) {
         removalType = "";
       }
+      if (isSpecificRemovalFloorType(removalType)) {
+        state.lastRemovalType = removalType;
+      }
+      if (["basic", "levelling", "heavy", "manual"].indexOf(getInputValue("floorPrepType")) >= 0) {
+        state.lastFloorPrepType = getInputValue("floorPrepType");
+      }
       if (getInputValue("removalType") !== removalType) {
         setInputValue("removalType", removalType);
       }
@@ -5555,13 +5576,19 @@
       if (removalDecision === "no") {
         removalType = "none";
         setInputValue("removalType", "none");
-        setInputValue("removalDisposal", "");
+        setInputValue("removalDisposal", "no");
       } else if (removalDecision === "not_sure") {
         removalType = "unsure";
         setInputValue("removalType", "unsure");
-        setInputValue("removalDisposal", "");
-      } else if (removalDecision === "yes" && !getInputValue("removalDisposal")) {
         setInputValue("removalDisposal", "not_sure");
+      } else if (removalDecision === "yes") {
+        if (!isSpecificRemovalFloorType(removalType)) {
+          removalType = isSpecificRemovalFloorType(state.lastRemovalType) ? state.lastRemovalType : "carpet";
+          setInputValue("removalType", removalType);
+        }
+        if (!getInputValue("removalDisposal")) {
+          setInputValue("removalDisposal", "not_sure");
+        }
       }
       setInputValue("existingFloorType", removalType);
 
@@ -5573,6 +5600,8 @@
         setInputValue("floorPrepType", "unsure");
         setInputValue("subfloorCondition", "not_sure");
         setInputValue("moistureBarrier", "not_sure");
+      } else if (floorPrepDecision === "yes" && ["basic", "levelling", "heavy", "manual"].indexOf(getInputValue("floorPrepType")) < 0) {
+        setInputValue("floorPrepType", state.lastFloorPrepType || "basic");
       }
 
       if (underlayDecision === "yes") {
@@ -5655,13 +5684,15 @@
       const quoteMode = getInputValue("quoteMode") || "supply_install";
       const isInstallOnly = quoteMode === "install_only";
       const lockPatternToRange = shouldLockPatternTypeToSelectedRange();
-      const autoPatternType = (lockPatternToRange || (!isInstallOnly && selectedCategory === "engineered"))
+      const autoPatternType = lockPatternToRange
         ? getAutoPatternTypeForSelectedRange()
         : "";
       if (autoPatternType && getInputValue("patternType") !== autoPatternType) {
         setInputValue("patternType", autoPatternType);
       }
       const currentPatternType = getInputValue("patternType") || "standard";
+      const previousPatternType = state.lastPatternType || currentPatternType;
+      const patternChanged = previousPatternType !== currentPatternType;
       const isEngineered = selectedCategory === "engineered";
       const installMethodFieldVisible = isEngineered;
       const patternFieldVisible = isEngineered;
@@ -5721,11 +5752,12 @@
         setInputValue("installMethod", "direct_glue");
         installationPathHelper.textContent = "Feature pattern installation selected.";
       } else {
-        if (!getInputValue("installMethod")) {
+        if (!getInputValue("installMethod") || (patternChanged && isStraightPlankPatternType(currentPatternType) && !isStraightPlankPatternType(previousPatternType))) {
           setInputValue("installMethod", "floating");
         }
         installationPathHelper.textContent = "Choose floating or glued-down installation.";
       }
+      state.lastPatternType = currentPatternType;
 
       setConditionalFieldVisibility("installMethodField", installMethodFieldVisible);
       setConditionalFieldVisibility("patternTypeField", patternFieldVisible);
@@ -6521,12 +6553,6 @@
         if (!getInputValue("propertyType")) {
           return { valid: false, message: "Please choose the property type." };
         }
-        if (!document.getElementById("propertyLevelField").hidden && !getInputValue("level")) {
-          return { valid: false, message: "Please choose the property level." };
-        }
-        if (!document.getElementById("hasLiftField").hidden && !getInputValue("hasLift")) {
-          return { valid: false, message: "Please choose the building lift option." };
-        }
         return { valid: true, message: "" };
       }
 
@@ -6628,8 +6654,11 @@
         underlayId: getInputValue("underlayId"),
         skirtingOption: input.skirtingType,
         scotiaOption: input.scotiaType,
+        removal: input.removalDecision,
         removalOption: input.existingFloorToRemove,
+        disposal: input.removalDisposal,
         removalDisposal: input.removalDisposal,
+        floorPrep: input.floorPrepDecision,
         suburb: getInputValue("suburb").trim(),
         postcode: getInputValue("postcode").trim(),
         propertyType: input.propertyType,
@@ -6775,7 +6804,7 @@
 
     function canUseBackendQuoteRuntime() {
       return state.backendQuoteRuntimeAvailable
-        && typeof window.fetch === "function"
+        && (typeof window.fetch === "function" || typeof window.XMLHttpRequest === "function")
         && window.location.protocol !== "file:";
     }
 
@@ -6890,24 +6919,94 @@
       };
     }
 
-    async function fetchBackendQuote(input) {
-      const response = await window.fetch(CALCULATE_QUOTE_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(buildQuoteCalculationInput(input))
-      });
-
-      const payload = await response.json().catch(function () {
-        return null;
-      });
-
-      if (!response.ok || !payload || payload.ok !== true) {
-        throw new Error(payload && payload.error ? payload.error : "Quote calculation runtime unavailable.");
+    function postJson(endpoint, body) {
+      const serializedBody = JSON.stringify(body);
+      if (typeof window.fetch === "function") {
+        return window.fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: serializedBody
+        }).then(function (response) {
+          return response.json().catch(function () {
+            return null;
+          }).then(function (payload) {
+            return {
+              ok: response.ok,
+              status: response.status,
+              payload: payload
+            };
+          });
+        });
       }
 
-      return adaptBackendQuoteResult(payload, input);
+      return new Promise(function (resolve, reject) {
+        if (typeof window.XMLHttpRequest !== "function") {
+          reject(new Error("Quote calculation runtime unavailable."));
+          return;
+        }
+
+        const request = new XMLHttpRequest();
+        request.open("POST", endpoint, true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.onload = function () {
+          let payload = null;
+          try {
+            payload = JSON.parse(request.responseText || "null");
+          } catch (error) {
+            payload = null;
+          }
+          resolve({
+            ok: request.status >= 200 && request.status < 300,
+            status: request.status,
+            payload: payload
+          });
+        };
+        request.onerror = function () {
+          reject(new Error("Quote calculation runtime unavailable."));
+        };
+        request.send(serializedBody);
+      });
+    }
+
+    function getBackendQuoteRequestSignature(requestBody) {
+      try {
+        return JSON.stringify(requestBody || {});
+      } catch (error) {
+        return "";
+      }
+    }
+
+    async function fetchBackendQuote(input) {
+      const requestBody = buildQuoteCalculationInput(input);
+      const signature = getBackendQuoteRequestSignature(requestBody);
+      if (signature && signature === state.backendQuoteCacheSignature && state.backendQuoteCacheResult) {
+        return state.backendQuoteCacheResult;
+      }
+      if (signature && signature === state.backendQuoteInFlightSignature && state.backendQuoteInFlightPromise) {
+        return state.backendQuoteInFlightPromise;
+      }
+
+      const requestPromise = postJson(CALCULATE_QUOTE_ENDPOINT, requestBody).then(function (response) {
+        const payload = response.payload;
+        if (!response.ok || !payload || payload.ok !== true) {
+          throw new Error(payload && payload.error ? payload.error : "Quote calculation runtime unavailable.");
+        }
+        const adapted = adaptBackendQuoteResult(payload, input);
+        state.backendQuoteCacheSignature = signature;
+        state.backendQuoteCacheResult = adapted;
+        return adapted;
+      }).finally(function () {
+        if (state.backendQuoteInFlightSignature === signature) {
+          state.backendQuoteInFlightSignature = "";
+          state.backendQuoteInFlightPromise = null;
+        }
+      });
+
+      state.backendQuoteInFlightSignature = signature;
+      state.backendQuoteInFlightPromise = requestPromise;
+      return requestPromise;
     }
 
     function canRunShadowQuoteComparison() {
@@ -7296,8 +7395,10 @@
         notes.push("Based on selected product pricing. Final project details are confirmed before booking.");
       } else if (pricingMode === "fallback") {
         notes.push("Product selected. Product price needs review before final confirmation.");
+      } else if (getResolvedQuoteSelection().rangeId) {
+        notes.push("Based on the selected " + categoryLabel + " range. Final product and colour are reviewed before booking.");
       } else {
-        notes.push("Standard " + categoryLabel + " estimate based on entry-level " + categoryLabel + " product pricing.");
+        notes.push("Starting " + categoryLabel + " estimate based on a practical product range.");
       }
 
       if (measurement.measurementStatus === "unknown" || measurement.method !== "floorplan_upload") {
@@ -7428,7 +7529,7 @@
         factors.push("Subfloor condition or preparation");
       }
       if (input.parkingAccess === "difficult" || input.hasLift === "no" || input.stairs === "yes" || input.stairs === "not_sure" || input.stairsCount > 0) {
-        factors.push("Stairs and site details");
+        factors.push("Stairs or building details");
       }
       if (input.existingFloorToRemove === "unsure" || (isRemovalSelected(input.existingFloorToRemove) && (!input.removalDisposal || input.removalDisposal === "not_sure"))) {
         factors.push("Removal and disposal details");
@@ -7536,7 +7637,11 @@
         return "Needs confirmation: " + item + ".";
       });
       const summaryHeadline = document.getElementById("summaryHeadline");
-      const estimateReady = measurement.measurementStatus !== "unknown" && result.measurementStatus !== "unknown" && result.realArea > 0 && !!selection.category;
+      const estimateReady = measurement.measurementStatus !== "unknown"
+        && result.measurementStatus !== "unknown"
+        && result.realArea > 0
+        && !!selection.category
+        && Number(result.totalIncGst || 0) > 0;
       const pendingMeasurement = !estimateReady;
       const confidenceState = getEstimateConfidenceState(measurement, result, input);
       const confidence = confidenceState.label;
@@ -7548,7 +7653,7 @@
 
       if (pendingMeasurement) {
         summaryHeadline.textContent = "Your flooring estimate";
-        document.getElementById("summaryTotal").textContent = "Estimate pending";
+        document.getElementById("summaryTotal").textContent = "Add flooring type and area to see your starting estimate.";
         document.getElementById("summaryPricingRangeNote").hidden = true;
         document.getElementById("summaryPricingRangeNote").textContent = "";
         document.getElementById("summaryTotalSecondary").textContent = "Pending";
@@ -7563,7 +7668,7 @@
         document.getElementById("summaryChargeableAreaLabel").textContent = "Next step status";
         document.getElementById("summaryChargeableArea").textContent = "Pending";
         document.getElementById("summaryChargeableAreaRow").hidden = false;
-        document.getElementById("summaryCaption").textContent = "Add flooring type and area to calculate";
+        document.getElementById("summaryCaption").textContent = "Estimate pending";
         document.getElementById("summaryScope").textContent = getQuoteTypeLabel(result.quoteMode);
         document.getElementById("summaryMeasurement").textContent = "Measurement pending";
         document.getElementById("summaryConfidence").textContent = confidence;
@@ -7583,14 +7688,15 @@
         document.getElementById("chargeableAreaMetricCard").hidden = false;
 
         document.getElementById("manualReviewNotice").textContent = confidenceState.message || buildEstimateNote(result, measurement);
-        renderEstimateBreakdown(result);
-        renderSummaryPricedList(result);
+        document.getElementById("quoteLines").innerHTML = "";
+        document.getElementById("summaryIncludedScopeList").innerHTML = "";
         renderSummaryChecklist("summaryFinalPriceFactorsList", buildFinalPriceFactors(result, measurement, input));
         document.getElementById("summaryNextStepText").textContent = measurement.nextStepRequired
           ? "Submit the quote request and we will follow up on the selected measurement path before confirming pricing."
           : "Choose the next measurement step, then submit the quote request when it looks right.";
         if (pendingEstimateCard) {
           pendingEstimateCard.hidden = false;
+          pendingEstimateCard.textContent = "Add flooring type and area to see your starting estimate.";
         }
         if (estimateDetailsBox) {
           estimateDetailsBox.hidden = true;
@@ -7647,7 +7753,7 @@
         ? "Based on selected product pricing"
         : (result.pricingMode === "fallback"
           ? "Product price needs review"
-          : "Category-level product estimate");
+          : (selection.rangeId ? "Based on selected range" : "Category-level product estimate"));
       document.getElementById("summaryNextStep").textContent = summaryIssues.length
         ? "Check the quote details first"
         : (confirmationItems.length
@@ -7787,6 +7893,16 @@
       setInputValue("stairs", "");
       setInputValue("stairsRequiresReview", "yes");
       setInputValue("removalDecision", "");
+      setInputValue("removalType", "");
+      setInputValue("existingFloorType", "");
+      setInputValue("removalDisposal", "");
+      state.lastRemovalType = "";
+      state.lastFloorPrepType = "";
+      state.lastPatternType = "";
+      state.backendQuoteCacheSignature = "";
+      state.backendQuoteCacheResult = null;
+      state.backendQuoteInFlightSignature = "";
+      state.backendQuoteInFlightPromise = null;
       setInputValue("floorPrepDecision", "");
       setInputValue("underlayDecision", "");
       setInputValue("finishDecision", "");

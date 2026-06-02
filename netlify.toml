@@ -1,10 +1,17 @@
 [build]
-  publish = "apps/web"
+  command = "npm --prefix apps/web-tsx ci && npm --prefix apps/web-tsx run build"
+  publish = "apps/web-tsx/out"
 
 [build.environment]
   # These values are public operational config, not secrets. Keep real secrets
   # such as SUPABASE_SERVICE_ROLE_KEY and RESEND_API_KEY protected by Netlify scan.
   SECRETS_SCAN_OMIT_KEYS = "DRY_RUN_FOLLOWUP_STATUS,OPERON_FROM_EMAIL,OPERON_FROM_NAME,OPERON_REPLY_TO,OPERON_INTERNAL_EMAIL"
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.html]
+  pretty_urls = false
 
 [functions]
   included_files = [
@@ -48,10 +55,511 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+
+[[redirects]]
+  from = "/blog.html"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/supabase-audit-exports/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/apps/web/supabase-audit-exports/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/tests/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/qa-screenshots/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/task_queue.json"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/agent-task-engine.js"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# Explicit extensionless redirects for generated .html pages.
+[[redirects]]
+  from = "/apartment-flooring-sydney"
+  to = "/apartment-flooring-sydney.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact-thank-you"
+  to = "/contact-thank-you.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/engineered-timber-flooring-sydney"
+  to = "/engineered-timber-flooring-sydney.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/floor-care-maintenance"
+  to = "/floor-care-maintenance.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-auburn"
+  to = "/flooring-auburn.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-balmain"
+  to = "/flooring-balmain.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-bankstown"
+  to = "/flooring-bankstown.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-baulkham-hills"
+  to = "/flooring-baulkham-hills.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-bellevue-hill"
+  to = "/flooring-bellevue-hill.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-blacktown"
+  to = "/flooring-blacktown.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-burwood"
+  to = "/flooring-burwood.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-cabramatta"
+  to = "/flooring-cabramatta.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-camden"
+  to = "/flooring-camden.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-campbelltown"
+  to = "/flooring-campbelltown.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-castle-hill"
+  to = "/flooring-castle-hill.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-coogee"
+  to = "/flooring-coogee.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-double-bay"
+  to = "/flooring-double-bay.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-drummoyne"
+  to = "/flooring-drummoyne.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-eastern-suburbs"
+  to = "/flooring-eastern-suburbs.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-edmondson-park"
+  to = "/flooring-edmondson-park.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-epping"
+  to = "/flooring-epping.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-fairfield"
+  to = "/flooring-fairfield.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-installation-cost-sydney"
+  to = "/flooring-installation-cost-sydney.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-killara"
+  to = "/flooring-killara.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-leppington"
+  to = "/flooring-leppington.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-liverpool"
+  to = "/flooring-liverpool.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-manly"
+  to = "/flooring-manly.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-marrickville"
+  to = "/flooring-marrickville.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-miranda"
+  to = "/flooring-miranda.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-mosman"
+  to = "/flooring-mosman.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-neutral-bay"
+  to = "/flooring-neutral-bay.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-parramatta"
+  to = "/flooring-parramatta.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-pymble"
+  to = "/flooring-pymble.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-quote-sydney"
+  to = "/flooring-quote-sydney.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-randwick"
+  to = "/flooring-randwick.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-rose-bay"
+  to = "/flooring-rose-bay.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-ryde"
+  to = "/flooring-ryde.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-strathfield"
+  to = "/flooring-strathfield.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-vaucluse"
+  to = "/flooring-vaucluse.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-wahroonga"
+  to = "/flooring-wahroonga.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-woollahra"
+  to = "/flooring-woollahra.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/floorplan"
+  to = "/floorplan.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hybrid-flooring-sydney"
+  to = "/hybrid-flooring-sydney.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/laminate-flooring-sydney"
+  to = "/laminate-flooring-sydney.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/privacy-policy"
+  to = "/privacy-policy.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/products"
+  to = "/products.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quote-review"
+  to = "/quote-review.html"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/quote"
   to = "/quote.html"
   status = 301
+  force = true
+
+[[redirects]]
+  from = "/recent-flooring-projects"
+  to = "/recent-flooring-projects.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/terms"
+  to = "/terms.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/thank-you"
+  to = "/thank-you.html"
+  status = 301
+  force = true
+
+# Explicit extensionless redirects for generated blog guide pages.
+[[redirects]]
+  from = "/blog/apartment-flooring-acoustic-underlay"
+  to = "/blog/apartment-flooring-acoustic-underlay.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/best-flooring-for-pets-sydney"
+  to = "/blog/best-flooring-for-pets-sydney.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/do-you-need-floor-preparation"
+  to = "/blog/do-you-need-floor-preparation.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/engineered-timber-floor-maintenance"
+  to = "/blog/engineered-timber-floor-maintenance.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/engineered-timber-vs-laminate"
+  to = "/blog/engineered-timber-vs-laminate.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/engineered-timber-water-damage"
+  to = "/blog/engineered-timber-water-damage.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/floor-preparation-costs"
+  to = "/blog/floor-preparation-costs.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/floor-repair-or-replace"
+  to = "/blog/floor-repair-or-replace.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/flooring-cost-sydney"
+  to = "/blog/flooring-cost-sydney.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/flooring-gaps-and-expansion"
+  to = "/blog/flooring-gaps-and-expansion.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/flooring-installation-cost-breakdown"
+  to = "/blog/flooring-installation-cost-breakdown.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/flooring-maintenance-checklist"
+  to = "/blog/flooring-maintenance-checklist.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/flooring-stairs-and-stair-nosing"
+  to = "/blog/flooring-stairs-and-stair-nosing.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/hidden-flooring-costs"
+  to = "/blog/hidden-flooring-costs.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/how-to-clean-hybrid-flooring"
+  to = "/blog/how-to-clean-hybrid-flooring.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/how-to-clean-laminate-flooring"
+  to = "/blog/how-to-clean-laminate-flooring.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/how-to-measure-floor-area"
+  to = "/blog/how-to-measure-floor-area.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/hybrid-flooring-problems"
+  to = "/blog/hybrid-flooring-problems.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/laminate-floor-water-damage"
+  to = "/blog/laminate-floor-water-damage.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/laminate-vs-hybrid-maintenance"
+  to = "/blog/laminate-vs-hybrid-maintenance.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/laminate-vs-hybrid"
+  to = "/blog/laminate-vs-hybrid.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/scotia-vs-skirting"
+  to = "/blog/scotia-vs-skirting.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/why-flooring-quotes-vary"
+  to = "/blog/why-flooring-quotes-vary.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/why-is-my-floor-lifting"
+  to = "/blog/why-is-my-floor-lifting.html"
+  status = 301
+  force = true
+
+
+
+
+
 
 [[redirects]]
   from = "/index.html"
@@ -80,11 +588,6 @@
 [[redirects]]
   from = "/index2.html"
   to = "/"
-  status = 301
-
-[[redirects]]
-  from = "/floorplan"
-  to = "/floorplan.html"
   status = 301
 
 [[redirects]]

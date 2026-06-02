@@ -1,9 +1,22 @@
 "use strict";
 
 const crypto = require("crypto");
-const sharp = require("sharp");
 const Security = require("./_security");
 const { loadPricingLibrary } = require("./_supabasePricing");
+
+let sharpModule;
+function getSharp() {
+  if (typeof sharpModule !== "undefined") {
+    return sharpModule;
+  }
+  try {
+    const optionalRequire = eval("require");
+    sharpModule = optionalRequire("sharp");
+  } catch (error) {
+    sharpModule = null;
+  }
+  return sharpModule;
+}
 
 const MAX_FILE_BYTES = 6 * 1024 * 1024;
 const MAX_EXTRACTED_TEXT_CHARS = 18000;
@@ -104,6 +117,14 @@ function isImageMimeType(mimeType) {
 
 async function prepareImageForOcr(buffer, mimeType) {
   if (!isImageMimeType(mimeType)) {
+    return {
+      buffer: buffer,
+      mimeType: mimeType
+    };
+  }
+
+  const sharp = getSharp();
+  if (!sharp) {
     return {
       buffer: buffer,
       mimeType: mimeType
