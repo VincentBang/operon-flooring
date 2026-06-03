@@ -15,7 +15,7 @@
 
 [functions]
   included_files = [
-    "apps/web/assets/operon-logo-final.png",
+    "apps/web/assets/operon-flooring-sydney-logo.png",
     "apps/web/assets/operon-logo-wordmark.png",
     "apps/web/assets/Operon Flooring brand logo final.png"
   ]

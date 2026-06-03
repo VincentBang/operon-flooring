@@ -49,7 +49,7 @@ export function Footer() {
       <div className="site-footer-inner">
         <section className="footer-brand" aria-label="Operon contact details">
           <a className="footer-logo" href="/" aria-label="Operon Flooring home">
-            <img src="/assets/operon-logo-final.png" alt="Operon Flooring logo" width="154" height="49" />
+            <img src="/assets/operon-flooring-sydney-logo.png" alt="Operon Flooring Sydney logo" width="154" height="49" />
           </a>
           <p>Flooring quotes and installation guidance for Sydney projects.</p>
           <a className="footer-brand-cta" href={routes.quote}>Start quote</a>

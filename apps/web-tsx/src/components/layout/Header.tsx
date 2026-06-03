@@ -12,7 +12,7 @@ export function Header() {
   return (
     <header className="site-header" aria-label="Primary navigation">
       <a className="site-logo" href="/" aria-label="Operon Flooring home">
-        <img src="/assets/operon-logo-final.png" alt="Operon Flooring" width="184" height="58" />
+        <img src="/assets/operon-flooring-sydney-logo.png" alt="Operon Flooring Sydney logo" width="184" height="58" />
       </a>
       <nav className="site-nav">
         {navItems.map((item) => (
