@@ -376,6 +376,18 @@
       return ["recommend", "choose_range"].indexOf(mode) >= 0 ? mode : "recommend";
     }
 
+    function normaliseProductChoiceForProgress() {
+      if (getProductChoiceMode() !== "choose_range") {
+        return;
+      }
+
+      if (getInputValue("selectedRangeId")) {
+        return;
+      }
+
+      setProductChoiceMode("recommend", { track: false });
+    }
+
     function getRangeRecordById(category, rangeId) {
       if (!PRODUCT_SELECTION || !rangeId) {
         return null;
@@ -902,6 +914,10 @@
     }
 
     async function goToNextQuoteStep() {
+      if (currentQuoteStep === 1) {
+        normaliseProductChoiceForProgress();
+      }
+
       const validation = validateCurrentQuoteStep();
       if (!validation.valid) {
         showWizardValidationMessage(validation.message);
@@ -925,22 +941,33 @@
         );
       }
 
-      if (currentQuoteStep === 4) {
+      const isMovingToSummaryStep = currentQuoteStep === 4;
+
+      if (isMovingToSummaryStep) {
         clearQuoteSubmitMessage();
+        showQuoteStep(currentQuoteStep + 1, { scrollMode: "top" });
+        const summaryPricingPromise = refreshQuoteEstimate({ render: true, track: true });
         if (!shouldUseLocalReviewOnlyMode()) {
-          try {
-            const payload = await buildQuotePayload();
+          Promise.resolve(summaryPricingPromise).then(async function (pricing) {
+            const payload = await buildQuotePayload({ pricing: pricing });
             if (state.quoteRuntimeHealth.checked && !state.quoteRuntimeHealth.quoteSaveReady) {
-              showQuoteSubmitMessage("review_ready", "Estimate ready to review.");
+              if (currentQuoteStep === 5) {
+                showQuoteSubmitMessage("review_ready", "Estimate ready to review.");
+              }
             } else {
               await saveQuoteDraftToNetlify(payload);
-              showQuoteSubmitMessage("review_ready", "Estimate saved. Review it here, then send when you are ready.");
+              if (currentQuoteStep === 5) {
+                showQuoteSubmitMessage("review_ready", "Estimate saved. Review it here, then send when you are ready.");
+              }
             }
-          } catch (error) {
+          }).catch(function () {
             console.error("Quote draft save check failed.");
-            showQuoteSubmitMessage("review_ready", "Estimate ready. You can still review and send the quote.");
-          }
+            if (currentQuoteStep === 5) {
+              showQuoteSubmitMessage("review_ready", "Estimate ready. You can still review and send the quote.");
+            }
+          });
         }
+        return;
       }
 
       showQuoteStep(currentQuoteStep + 1, { scrollMode: "top" });
@@ -2472,7 +2499,7 @@
       if (emailValue && !/.+@.+\..+/.test(emailValue)) errors.push("Email format looks invalid.");
       if (settings.requireDeliveryEmail && !emailValue) errors.push("Please enter an email address to receive a copy of the estimate.");
       if (!getInputValue("siteAddress").trim() && !(getInputValue("suburb").trim() && getInputValue("postcode").trim())) {
-        errors.push("Please enter the site address, or provide suburb and postcode.");
+        errors.push("Please enter suburb and postcode, or add the site address under Optional site details.");
       }
       if (!getInputValue("postcode").trim()) errors.push("Postcode is required.");
 
@@ -2532,10 +2559,18 @@
 
       if (currentQuoteStep === 0) {
         const hasSiteAddress = !!getInputValue("siteAddress").trim();
-        const hasSuburbPostcode = !!getInputValue("suburb").trim() && !!getInputValue("postcode").trim();
+        const hasSuburb = !!getInputValue("suburb").trim();
+        const hasPostcode = !!getInputValue("postcode").trim();
+        const hasSuburbPostcode = hasSuburb && hasPostcode;
 
         if (!hasSiteAddress && !hasSuburbPostcode) {
-          return { valid: false, message: "Please enter the site address, or provide suburb and postcode." };
+          if (hasSuburb && !hasPostcode) {
+            return { valid: false, message: "Please enter the postcode for this suburb. The postcode field is editable." };
+          }
+          if (!hasSuburb && hasPostcode) {
+            return { valid: false, message: "Please enter the suburb for this postcode." };
+          }
+          return { valid: false, message: "Please enter suburb and postcode, or add the site address under Optional site details." };
         }
         if (!getInputValue("propertyType")) {
           return { valid: false, message: "Please choose the property type." };
@@ -2978,7 +3013,9 @@
       const requestPromise = postJson(CALCULATE_QUOTE_ENDPOINT, requestBody).then(function (response) {
         const payload = response.payload;
         if (!response.ok || !payload || payload.ok !== true) {
-          throw new Error(payload && payload.error ? payload.error : "Quote calculation runtime unavailable.");
+          const error = new Error(payload && payload.error ? payload.error : "Quote calculation runtime unavailable.");
+          error.status = response.status;
+          throw error;
         }
         const adapted = adaptBackendQuoteResult(payload, input);
         state.backendQuoteCacheSignature = signature;
@@ -3186,6 +3223,14 @@
         }
         return pendingResult;
       }
+      if (!measurement.realArea) {
+        const pendingResult = buildPendingMeasurementQuote(input);
+        state.currentQuoteResult = pendingResult;
+        if (config.render !== false) {
+          renderQuoteSummary(pendingResult);
+        }
+        return pendingResult;
+      }
       if (canUseBackendQuoteRuntime()) {
         try {
           const backendResult = await applyPricingOptimizationLayer(await fetchBackendQuote(input), input);
@@ -3205,7 +3250,10 @@
           if (requestToken !== state.quoteRefreshToken) {
             return state.currentQuoteResult || (canUseLocalQuoteCalculatorFallback() ? calculateQuote(input) : buildBackendUnavailableQuote(input));
           }
-          state.backendQuoteRuntimeAvailable = false;
+          const isTransientBackendError = error && (error.status === 429 || error.status >= 500);
+          if (!isTransientBackendError) {
+            state.backendQuoteRuntimeAvailable = false;
+          }
           if (canUseLocalQuoteCalculatorFallback()) {
             if (!state.backendQuoteFallbackLogged && window.console && typeof window.console.warn === "function") {
               state.backendQuoteFallbackLogged = true;
@@ -4252,10 +4300,11 @@
       });
     }
 
-    async function buildQuotePayload() {
+    async function buildQuotePayload(options) {
+      const settings = options || {};
       const input = getFormInput();
       const measurement = getMeasurementState();
-      const pricing = await refreshQuoteEstimate({
+      const pricing = settings.pricing || await refreshQuoteEstimate({
         input: input,
         render: false,
         track: false
@@ -4859,16 +4908,16 @@
       return {
         id: payload.uploaded_file_id || null,
         quote_id: quoteId,
-        file_name: safeDisplayName,
-        file_path: payload.file_path,
+        file_name: payload.safe_filename || safeDisplayName,
         file_type: payload.file_type,
         file_size_bytes: payload.file_size_bytes,
-        storage_bucket: payload.storage_bucket,
         source: source || "quote.html",
+        status: payload.status || "uploaded",
+        metadata_saved: Boolean(payload.metadata_saved),
         raw_payload: {
-          path: payload.file_path,
           type: payload.file_type,
-          size: payload.file_size_bytes
+          size: payload.file_size_bytes,
+          status: payload.status || "uploaded"
         }
       };
     }
@@ -5210,6 +5259,13 @@
 
       quoteForm.addEventListener("change", function (event) {
         clearWizardValidationMessage();
+        if (currentQuoteStep === 5 && event.target && event.target.matches("#fullName, #phone, #quoteDeliveryEmail, #emailQuoteCopy, #customerNotes")) {
+          updateConditionalQuoteFields();
+          refreshQuoteEstimate({ render: true, track: true });
+          saveDraft();
+          updateQuoteCtaSystem();
+          return;
+        }
         renderAll();
         updateQuoteCtaSystem();
       });

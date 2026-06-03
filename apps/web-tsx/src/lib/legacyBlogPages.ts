@@ -39,7 +39,7 @@ export const legacyBlogPages = {
             "name": "Operon Flooring",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
             }
           },
           "mainEntityOfPage": "https://operonflooring.com.au/blog/apartment-flooring-acoustic-underlay.html"
@@ -127,7 +127,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -199,7 +199,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -271,7 +271,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -343,7 +343,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -415,7 +415,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -486,7 +486,7 @@ export const legacyBlogPages = {
             "name": "Operon Flooring",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
             }
           },
           "mainEntityOfPage": "https://operonflooring.com.au/blog/floor-preparation-costs.html"
@@ -574,7 +574,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -646,7 +646,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -726,7 +726,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -798,7 +798,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -870,7 +870,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -941,7 +941,7 @@ export const legacyBlogPages = {
             "name": "Operon Flooring",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
             }
           },
           "mainEntityOfPage": "https://operonflooring.com.au/blog/flooring-stairs-and-stair-nosing.html"
@@ -1028,7 +1028,7 @@ export const legacyBlogPages = {
             "name": "Operon Flooring",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
             }
           },
           "mainEntityOfPage": "https://operonflooring.com.au/blog/hidden-flooring-costs.html"
@@ -1116,7 +1116,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -1188,7 +1188,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -1260,7 +1260,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -1332,7 +1332,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -1403,7 +1403,7 @@ export const legacyBlogPages = {
             "name": "Operon Flooring",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
             }
           },
           "mainEntityOfPage": "https://operonflooring.com.au/blog/"
@@ -1499,7 +1499,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -1571,7 +1571,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -1643,7 +1643,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },
@@ -1714,7 +1714,7 @@ export const legacyBlogPages = {
             "name": "Operon Flooring",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
             }
           },
           "mainEntityOfPage": "https://operonflooring.com.au/blog/scotia-vs-skirting.html"
@@ -1801,7 +1801,7 @@ export const legacyBlogPages = {
             "name": "Operon Flooring",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+              "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
             }
           },
           "mainEntityOfPage": "https://operonflooring.com.au/blog/why-flooring-quotes-vary.html"
@@ -1889,7 +1889,7 @@ export const legacyBlogPages = {
           "name": "Operon Flooring",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-logo.png"
+            "url": "https://operonflooring.com.au/assets/operon-flooring-sydney-brand-logo.png"
           }
         }
       },

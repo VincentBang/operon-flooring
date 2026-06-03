@@ -223,6 +223,51 @@ function normaliseOcrResult(parsed, engine) {
   };
 }
 
+function buildBrowserSafeOcrResult(ocrResult) {
+  return {
+    status: ocrResult && ocrResult.status || "no_text_found",
+    confidence: Number.isFinite(Number(ocrResult && ocrResult.confidence)) ? Number(ocrResult.confidence) : 0,
+    notes: cleanText(ocrResult && ocrResult.notes, 500),
+    engine: cleanText(ocrResult && ocrResult.engine, 80)
+  };
+}
+
+function stripRawQuoteTextFields(value) {
+  if (Array.isArray(value)) {
+    return value.map(stripRawQuoteTextFields);
+  }
+  if (!value || typeof value !== "object") {
+    return value;
+  }
+
+  const blockedKeys = {
+    extractedText: true,
+    extracted_text: true,
+    rawText: true,
+    raw_text: true,
+    rawOcrText: true,
+    raw_ocr_text: true,
+    rawEvidence: true,
+    raw_evidence: true,
+    sourceText: true,
+    source_text: true
+  };
+
+  return Object.keys(value).reduce(function (safe, key) {
+    if (blockedKeys[key]) {
+      return safe;
+    }
+    if (key === "rawDescription" || key === "raw_description") {
+      if (!safe.label) {
+        safe.label = cleanText(value[key], 220);
+      }
+      return safe;
+    }
+    safe[key] = stripRawQuoteTextFields(value[key]);
+    return safe;
+  }, {});
+}
+
 function emptyQuoteFields(status, notes) {
   return {
     status: status || "not_started",
@@ -1675,21 +1720,19 @@ exports.handler = async function (event) {
           "operon_comparison_mapping",
           "decision_report"
         ],
-        pricingLogic: "existing_operon_pricing_only",
         scopeFirst: true
       },
       file: {
-        name: fileName,
         mimeType: mimeType,
         sizeBytes: buffer.length,
-        reference: contentHash.slice(0, 12) + "-" + fileName
+        reference: contentHash.slice(0, 12)
       },
-      ocr: ocrResult,
-      extractedFields: extractedFields,
-      scopeClassification: scopeClassification,
-      databaseComparison: databaseComparison,
-      operonComparison: operonComparison,
-      decisionReport: decisionReport,
+      ocr: buildBrowserSafeOcrResult(ocrResult),
+      extractedFields: stripRawQuoteTextFields(extractedFields),
+      scopeClassification: stripRawQuoteTextFields(scopeClassification),
+      databaseComparison: stripRawQuoteTextFields(databaseComparison),
+      operonComparison: stripRawQuoteTextFields(operonComparison),
+      decisionReport: stripRawQuoteTextFields(decisionReport),
       nextStep: databaseComparison.status === "compared"
         ? "report_ui"
         : "ocr_review"

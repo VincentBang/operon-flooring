@@ -905,7 +905,7 @@ function buildMissingScopeText(payload) {
 
 function getLogoPath() {
   const logoFiles = [
-    "operon-flooring-sydney-logo.png",
+    "operon-flooring-sydney-brand-logo.png",
     "operon-logo-wordmark.png",
     "Operon Flooring brand logo final.png"
   ];

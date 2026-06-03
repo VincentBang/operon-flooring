@@ -397,9 +397,18 @@ function assertCustomerSafeResponse(payload) {
     "installationAdjustedTotal",
     "pricingSourceProductId",
     "pricingSourceProductLabel",
+    "costPrice",
+    "grossMargin",
     "installRate",
+    "labourRate",
+    "markup",
+    "pricePerM2",
+    "pricingRules",
+    "removalRate",
+    "supplierCost",
     "supplierUrl",
     "supplier",
+    "unitRate",
     "margin"
   ];
   const text = JSON.stringify(payload);

@@ -252,19 +252,14 @@ exports.handler = async function (event) {
       metadata = null;
     }
 
-    const signedUrl = body.createSignedUrl === true
-      ? await createSignedUrl(config.bucket, storagePath, Math.min(900, Math.max(60, Number(body.expiresIn || 600) || 600)))
-      : "";
-
     return jsonResponse(event, 200, {
       ok: true,
-      storage_bucket: config.bucket,
-      file_path: storagePath,
+      status: "uploaded",
+      safe_filename: originalName,
       file_type: mimeType,
       file_size_bytes: buffer.length,
       metadata_saved: Boolean(metadata),
-      uploaded_file_id: metadata && metadata.id || null,
-      signed_url: signedUrl || undefined
+      uploaded_file_id: metadata && metadata.id || null
     });
   } catch (error) {
     return jsonResponse(event, 500, {

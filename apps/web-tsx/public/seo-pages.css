@@ -220,18 +220,18 @@ textarea {
 
 .nav {
   min-height: 74px;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 18px;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  width: clamp(232px, 22vw, 340px);
-  min-height: 52px;
-  background: left center / auto 100% no-repeat url("assets/operon-flooring-sydney-logo.png");
+  width: clamp(232px, 22vw, 300px);
+  min-height: 63px;
+  background: left center / 100% auto no-repeat url("assets/operon-flooring-sydney-brand-logo.png");
   color: transparent;
   font-size: 0;
   letter-spacing: 0;
@@ -250,7 +250,8 @@ textarea {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 22px;
+  justify-content: center;
+  gap: clamp(14px, 1.6vw, 22px);
   color: var(--muted);
   font-size: 0.95rem;
   font-weight: 600;
@@ -285,6 +286,7 @@ textarea {
 .header-actions {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
 }
 
@@ -1943,8 +1945,8 @@ li,
   }
 
   .brand {
-    width: clamp(220px, 42vw, 320px);
-    min-height: 44px;
+    width: clamp(188px, 62vw, 250px);
+    min-height: 51px;
   }
 
   .nav-toggle {
@@ -2339,8 +2341,8 @@ li,
   }
 
   .brand {
-    width: clamp(188px, 60vw, 260px);
-    min-height: 38px;
+    width: clamp(188px, 62vw, 250px);
+    min-height: 40px;
   }
 
   body.has-mobile-sticky-cta {
