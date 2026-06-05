@@ -198,7 +198,7 @@ exports.handler = async function (event) {
   try {
     const message = buildReviewEmail(body);
     await sendResendEmail(message);
-    return jsonResponse(event, 200, { ok: true, emailTo: emailTo });
+    return jsonResponse(event, 200, { ok: true });
   } catch (error) {
     return jsonResponse(event, 500, {
       ok: false,

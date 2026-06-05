@@ -1,5 +1,8 @@
 "use strict";
 
+const Security = require("./_security");
+const LeadWriter = require("./shared/leadWriter");
+
 function getEmailConfig() {
   const fromEmail = process.env.OPERON_FROM_EMAIL
     || process.env.OPERON_QUOTE_FROM_EMAIL
@@ -87,6 +90,53 @@ async function sendResendEmail(message) {
   }
 
   return response.json();
+}
+
+async function safelyRecordContactLead(data) {
+  try {
+    const leadResult = await LeadWriter.createOrUpdateLead({
+      primarySource: "contact",
+      sourceDetail: "contact_form",
+      customer: {
+        name: data.name,
+        email: data.email,
+        phone: data.phone
+      },
+      project: {
+        suburb: data.suburb
+      },
+      statuses: {
+        status: "New",
+        priority: "normal",
+        contactStatus: "internal_notification_sent"
+      },
+      nextAction: "Review contact enquiry",
+      metadata: {
+        topic: data.topic || "",
+        timing: data.timing || "",
+        message_length: String(data.message || "").length,
+        source_page: "contact.html"
+      }
+    });
+
+    if (leadResult && leadResult.leadId) {
+      await LeadWriter.recordLeadEvent({
+        leadId: leadResult.leadId,
+        eventType: "contact_submitted",
+        source: "contact-enquiry",
+        metadata: {
+          source_page: "contact.html",
+          topic: data.topic || "",
+          timing: data.timing || "",
+          message_length: String(data.message || "").length
+        }
+      });
+    }
+  } catch (error) {
+    console.warn("Non-blocking lead write failed for contact enquiry", {
+      reason: Security.safeLogReason(error)
+    });
+  }
 }
 
 exports.handler = async function (event) {
@@ -179,8 +229,19 @@ exports.handler = async function (event) {
       html: html,
       text: text
     });
+    await safelyRecordContactLead({
+      name: name,
+      email: email,
+      phone: phone,
+      suburb: suburb,
+      topic: topic,
+      timing: timing,
+      message: message
+    });
   } catch (error) {
-    console.error("Contact enquiry failed:", error && error.message ? error.message : error);
+    console.error("Contact enquiry failed", {
+      reason: Security.safeLogReason(error)
+    });
     return {
       statusCode: 502,
       headers: { "Content-Type": "text/plain; charset=utf-8" },

@@ -3,6 +3,7 @@
 const crypto = require("crypto");
 const { getSupabaseTables } = require("./_supabaseTables");
 const Security = require("./_security");
+const LeadWriter = require("./shared/leadWriter");
 
 const MAX_FILE_BYTES = 6 * 1024 * 1024;
 const DEFAULT_BUCKET = "quote-files";
@@ -105,7 +106,7 @@ function encodeStoragePath(path) {
 }
 
 function isUuid(value) {
-  return typeof value === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{12}$/i.test(value);
+  return typeof value === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 }
 
 async function supabaseFetch(path, options) {
@@ -166,6 +167,74 @@ async function insertMetadata(row) {
   });
 }
 
+async function getQuoteLeadId(quoteId) {
+  if (!isUuid(quoteId)) return "";
+  const rows = await supabaseFetch(
+    "/rest/v1/" + getSupabaseTables().quoteRequests
+      + "?id=eq." + encodeURIComponent(quoteId)
+      + "&select=lead_id",
+    { method: "GET" }
+  );
+  const row = Array.isArray(rows) && rows[0] ? rows[0] : null;
+  return row && row.lead_id ? row.lead_id : "";
+}
+
+async function insertLeadFile(row) {
+  return supabaseFetch("/rest/v1/operon_lead_files", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Prefer: "return=minimal"
+    },
+    body: JSON.stringify(row)
+  });
+}
+
+async function safelyLinkUploadToLead(options) {
+  try {
+    const leadId = await getQuoteLeadId(options.quoteId);
+    if (!leadId || !options.uploadedFileId) {
+      return;
+    }
+
+    await LeadWriter.linkLeadToSource({
+      leadId: leadId,
+      table: getSupabaseTables().uploadedFiles,
+      sourceId: options.uploadedFileId
+    });
+    await insertLeadFile({
+      lead_id: leadId,
+      uploaded_file_id: options.uploadedFileId,
+      file_role: options.source === "floorplan" ? "floorplan_upload" : options.source === "quote_review" ? "quote_review_upload" : "quote_attachment",
+      safe_filename: options.safeFilename,
+      file_type: options.fileType,
+      file_size_bytes: options.fileSizeBytes,
+      storage_status: "stored_private",
+      metadata: {
+        source: options.source || "quote"
+      }
+    });
+    await LeadWriter.recordLeadEvent({
+      leadId: leadId,
+      eventType: "file_uploaded",
+      source: "upload-customer-file",
+      sourceTable: getSupabaseTables().uploadedFiles,
+      sourceId: options.uploadedFileId,
+      metadata: {
+        source: options.source || "quote",
+        safe_filename: options.safeFilename,
+        file_type: options.fileType,
+        file_size_bytes: options.fileSizeBytes
+      }
+    });
+  } catch (error) {
+    console.warn("Non-blocking lead file link failed", {
+      uploadedFileId: options && options.uploadedFileId || "",
+      reason: Security.safeLogReason(error)
+    });
+  }
+}
+
 exports.handler = async function (event) {
   if (event.httpMethod === "OPTIONS") {
     return Security.optionsResponse(event, {
@@ -190,8 +259,14 @@ exports.handler = async function (event) {
     return Security.rateLimitResponse(event, rateLimit);
   }
 
+  let body;
   try {
-    const body = JSON.parse(event.body || "{}");
+    body = JSON.parse(event.body || "{}");
+  } catch (error) {
+    return jsonResponse(event, 400, { ok: false, error: "Invalid JSON payload." });
+  }
+
+  try {
     const turnstile = await Security.verifyTurnstile(event, body.turnstileToken || body.turnstile_token || "");
     if (!turnstile.ok) {
       return Security.botChallengeResponse(event, turnstile);
@@ -252,6 +327,15 @@ exports.handler = async function (event) {
       metadata = null;
     }
 
+    await safelyLinkUploadToLead({
+      quoteId: quoteId,
+      uploadedFileId: metadata && metadata.id || null,
+      safeFilename: originalName,
+      fileType: mimeType,
+      fileSizeBytes: buffer.length,
+      source: source
+    });
+
     return jsonResponse(event, 200, {
       ok: true,
       status: "uploaded",
@@ -262,9 +346,12 @@ exports.handler = async function (event) {
       uploaded_file_id: metadata && metadata.id || null
     });
   } catch (error) {
+    console.warn("File upload failed", {
+      reason: Security.safeLogReason(error)
+    });
     return jsonResponse(event, 500, {
       ok: false,
-      error: error && error.message ? error.message : "File upload failed."
+      error: Security.safePublicError("File upload failed. Please try again or contact Operon.")
     });
   }
 };

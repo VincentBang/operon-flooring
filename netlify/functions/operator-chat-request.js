@@ -1,6 +1,7 @@
 "use strict";
 
 const Security = require("./_security");
+const LeadWriter = require("./shared/leadWriter");
 
 function jsonResponse(event, statusCode, payload) {
   return Security.jsonResponse(event, statusCode, payload, {
@@ -152,6 +153,64 @@ async function sendResendEmail(message) {
   return response.json();
 }
 
+function getStructuredOutputKeys(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return [];
+  }
+  return Object.keys(value).slice(0, 20);
+}
+
+async function safelyRecordOperatorLead(payload, requestId, customerEmailSent) {
+  try {
+    const customer = payload.customer || {};
+    const transcript = Array.isArray(payload.transcript) ? payload.transcript : [];
+    const structuredOutput = payload.structuredOutput && typeof payload.structuredOutput === "object"
+      ? payload.structuredOutput
+      : {};
+    const leadResult = await LeadWriter.createOrUpdateLead({
+      primarySource: "chatbot",
+      sourceDetail: "operator_request",
+      customer: {
+        name: customer.name,
+        email: customer.email,
+        phone: customer.phone
+      },
+      statuses: {
+        status: "New",
+        priority: "normal",
+        contactStatus: customerEmailSent ? "customer_and_internal_email_sent" : "internal_notification_sent"
+      },
+      nextAction: "Review operator request",
+      metadata: {
+        request_id: requestId,
+        page_url: toText(payload.pageUrl, 1000),
+        message_length: String(payload.message || "").length,
+        transcript_message_count: transcript.length,
+        structured_output_keys: getStructuredOutputKeys(structuredOutput)
+      }
+    });
+
+    if (leadResult && leadResult.leadId) {
+      await LeadWriter.recordLeadEvent({
+        leadId: leadResult.leadId,
+        eventType: "operator_request_submitted",
+        source: "operator-chat-request",
+        metadata: {
+          request_id: requestId,
+          page_url: toText(payload.pageUrl, 1000),
+          customer_email_sent: Boolean(customerEmailSent),
+          transcript_message_count: transcript.length
+        }
+      });
+    }
+  } catch (error) {
+    console.warn("Non-blocking lead write failed for operator request", {
+      requestId: requestId || "",
+      reason: Security.safeLogReason(error)
+    });
+  }
+}
+
 exports.handler = async function (event) {
   if (event.httpMethod === "OPTIONS") {
     return Security.optionsResponse(event, {
@@ -239,6 +298,8 @@ exports.handler = async function (event) {
       customerEmailSent = true;
     }
 
+    await safelyRecordOperatorLead(payload, requestId, customerEmailSent);
+
     return jsonResponse(event, 200, {
       ok: true,
       requestId: requestId,
@@ -246,9 +307,12 @@ exports.handler = async function (event) {
       customerEmailSent: customerEmailSent
     });
   } catch (error) {
+    console.warn("Operator request failed", {
+      reason: Security.safeLogReason(error)
+    });
     return jsonResponse(event, 500, {
       ok: false,
-      error: error && error.message ? error.message : "Operator request failed."
+      error: Security.safePublicError("Operator request failed. Please try again or contact Operon.")
     });
   }
 };

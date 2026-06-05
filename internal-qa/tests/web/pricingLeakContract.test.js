@@ -252,7 +252,10 @@ function testUploadMetadataPrivacyContract() {
     "payload.storage_bucket",
     "payload.signed_url",
     "storage_bucket:",
-    "file_path:"
+    "file_path:",
+    "storageBucket",
+    "filePath",
+    "signedUrl"
   ].forEach(function (field) {
     assert.strictEqual(
       quoteRuntime.indexOf(field),

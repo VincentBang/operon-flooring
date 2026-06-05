@@ -2,6 +2,7 @@
 
 const { getSupabaseTables } = require("./_supabaseTables");
 const Security = require("./_security");
+const LeadWriter = require("./shared/leadWriter");
 
 function jsonResponse(event, statusCode, payload) {
   return Security.jsonResponse(event, statusCode, payload, {
@@ -184,6 +185,78 @@ async function insertQuoteReview(row) {
   return Array.isArray(rows) && rows[0] ? rows[0] : null;
 }
 
+function getReviewLeadPriority(row) {
+  if (row.risk_level === "high") return "high";
+  if (Number(row.quote_total || 0) >= 12000) return "high";
+  if (row.confidence_level === "low") return "high";
+  return "normal";
+}
+
+async function safelyRecordQuoteReviewLead(row, inserted) {
+  try {
+    const reviewId = inserted && inserted.id;
+    const mode = row.review_mode === "detailed" ? "uploaded_quote_review" : "quick_check";
+    const leadResult = await LeadWriter.createOrUpdateLead({
+      primarySource: "quote_review",
+      sourceDetail: mode,
+      sourceTable: getSupabaseTables().quoteReviews,
+      sourceId: reviewId,
+      customer: {
+        name: row.customer_name,
+        email: row.email,
+        phone: row.phone
+      },
+      project: {
+        suburb: row.suburb,
+        postcode: row.postcode,
+        productCategory: row.flooring_type,
+        areaM2: row.area_m2
+      },
+      quote: {
+        totalIncGst: row.quote_total,
+        confidenceLevel: row.confidence_level,
+        missingInfoFlags: row.missing_items,
+        riskFlags: row.risk_items
+      },
+      statuses: {
+        status: "Needs review",
+        priority: getReviewLeadPriority(row),
+        quoteReviewStatus: "saved"
+      },
+      nextAction: "Review quote comparison and offer Operon comparison quote",
+      metadata: {
+        review_mode: row.review_mode,
+        risk_level: row.risk_level,
+        confidence_level: row.confidence_level,
+        missing_item_count: Array.isArray(row.missing_items) ? row.missing_items.length : 0,
+        risk_item_count: Array.isArray(row.risk_items) ? row.risk_items.length : 0,
+        converted_to_quote: Boolean(row.converted_to_quote)
+      }
+    });
+
+    if (leadResult && leadResult.leadId) {
+      await LeadWriter.recordLeadEvent({
+        leadId: leadResult.leadId,
+        eventType: "quote_review_saved",
+        source: "save-quote-review",
+        sourceTable: getSupabaseTables().quoteReviews,
+        sourceId: reviewId,
+        metadata: {
+          review_mode: row.review_mode,
+          source_detail: mode,
+          risk_level: row.risk_level,
+          confidence_level: row.confidence_level
+        }
+      });
+    }
+  } catch (error) {
+    console.warn("Non-blocking lead write failed for quote review", {
+      reviewId: inserted && inserted.id || "",
+      reason: Security.safeLogReason(error)
+    });
+  }
+}
+
 exports.handler = async function (event) {
   if (event.httpMethod === "OPTIONS") {
     return Security.optionsResponse(event, {
@@ -217,12 +290,15 @@ exports.handler = async function (event) {
     const payload = body.quoteReviewPayload || body;
     const row = buildQuoteReviewRow(payload);
     const inserted = await insertQuoteReview(row);
+    await safelyRecordQuoteReviewLead(row, inserted);
     return jsonResponse(event, 200, {
       ok: true,
       review_id: inserted && inserted.id || null
     });
   } catch (error) {
-    console.warn("Quote review save unavailable", error && error.message ? error.message : error);
+    console.warn("Quote review save unavailable", {
+      reason: Security.safeLogReason(error)
+    });
     return jsonResponse(event, 200, {
       ok: false,
       warning: "Quote review was kept locally. Server save is unavailable.",

@@ -1653,7 +1653,13 @@ exports.handler = async function (event) {
       return Security.rateLimitResponse(event, rateLimit);
     }
 
-    const body = JSON.parse(event.body || "{}");
+    let body;
+    try {
+      body = JSON.parse(event.body || "{}");
+    } catch (error) {
+      return jsonResponse(event, 400, { ok: false, error: "Invalid JSON payload." });
+    }
+
     const turnstile = await Security.verifyTurnstile(event, body.turnstileToken || body.turnstile_token || "");
     if (!turnstile.ok) {
       return Security.botChallengeResponse(event, turnstile);
@@ -1738,9 +1744,12 @@ exports.handler = async function (event) {
         : "ocr_review"
     });
   } catch (error) {
+    console.warn("Quote file handoff failed", {
+      reason: Security.safeLogReason(error)
+    });
     return jsonResponse(event, 500, {
       ok: false,
-      error: error && error.message ? error.message : "Quote file handoff failed."
+      error: Security.safePublicError("Quote file handoff failed. Please try again or use the quick check.")
     });
   }
 };

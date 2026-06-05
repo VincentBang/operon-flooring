@@ -246,7 +246,13 @@ exports.handler = async function (event) {
     });
     if (largeBodyResponse) return largeBodyResponse;
 
-    const body = JSON.parse(event.body || "{}");
+    let body;
+    try {
+      body = JSON.parse(event.body || "{}");
+    } catch (error) {
+      return jsonResponse(event, 400, { ok: false, error: "Invalid JSON payload." });
+    }
+
     const action = String(body.action || "").trim();
     const quoteRequestId = String(body.quote_request_id || body.quoteRequestId || "").trim();
     const messageId = String(body.message_id || body.messageId || "").trim();
@@ -270,9 +276,12 @@ exports.handler = async function (event) {
 
     return jsonResponse(event, 400, { ok: false, error: "Unknown follow-up admin action." });
   } catch (error) {
+    console.warn("Follow-up admin request failed", {
+      reason: Security.safeLogReason(error)
+    });
     return jsonResponse(event, 500, {
       ok: false,
-      error: error && error.message ? error.message : "Follow-up admin request failed."
+      error: Security.safePublicError("Follow-up admin request failed.")
     });
   }
 };

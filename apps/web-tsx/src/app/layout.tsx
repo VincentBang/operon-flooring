@@ -8,6 +8,16 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/operon-flooring-favicon.png", type: "image/png", sizes: "512x512" }
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }
+    ],
+    shortcut: ["/favicon.ico"]
   }
 };
 

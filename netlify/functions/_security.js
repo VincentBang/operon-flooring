@@ -241,6 +241,22 @@ function rejectLargeBody(event, maxBytes, options) {
   }, options);
 }
 
+function safePublicError(fallback) {
+  return String(fallback || "Something went wrong. Please try again.");
+}
+
+function safeLogReason(error, maxLength) {
+  const limit = Math.max(40, Number(maxLength) || 220);
+  const message = error && error.message
+    ? error.message
+    : (typeof error === "string" ? error : "unknown");
+  return String(message || "unknown")
+    .replace(/(service[_-]?role|api[_-]?key|secret|token|password|authorization|bearer)\s*[:=]\s*[^,\s)]+/gi, "$1=[redacted]")
+    .replace(/\b(sk|re)_[A-Za-z0-9_-]{12,}\b/g, "[redacted-key]")
+    .replace(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g, "[redacted-email]")
+    .slice(0, limit);
+}
+
 module.exports = {
   botChallengeResponse: botChallengeResponse,
   checkRateLimit: checkRateLimit,
@@ -252,6 +268,8 @@ module.exports = {
   optionsResponse: optionsResponse,
   rateLimitResponse: rateLimitResponse,
   rejectLargeBody: rejectLargeBody,
+  safeLogReason: safeLogReason,
+  safePublicError: safePublicError,
   turnstileConfigured: turnstileConfigured,
   verifyTurnstile: verifyTurnstile
 };

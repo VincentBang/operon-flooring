@@ -11,35 +11,6 @@
       maximumFractionDigits: 0
     });
 
-    const OPERON_SUPABASE_PROJECT_REF = "pwohrvtwuctmxwwirrim";
-    const OPERON_SUPABASE_CONFIG = {
-      url: "https://" + OPERON_SUPABASE_PROJECT_REF + ".supabase.co",
-      anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3b2hydnR3dWN0bXh3d2lycmltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MzI4MTYsImV4cCI6MjA5MDIwODgxNn0.TmR2wHo5vnf9fkyWtEYTU4txeanwlMlgesdC3CFU6Hc",
-      quoteFilesBucket: "quote-files"
-    };
-    window.OPERON_SUPABASE_CONFIG = OPERON_SUPABASE_CONFIG;
-
-    function isSupabasePlaceholder(value) {
-      return !value || /YOUR_SUPABASE/i.test(String(value));
-    }
-
-    const operonSupabase = (function () {
-      if (!window.supabase || typeof window.supabase.createClient !== "function") {
-        console.warn("Optional upload runtime is unavailable.");
-        return null;
-      }
-
-      if (isSupabasePlaceholder(OPERON_SUPABASE_CONFIG.url) || isSupabasePlaceholder(OPERON_SUPABASE_CONFIG.anonKey)) {
-        console.warn("Optional upload runtime is unavailable.");
-        return null;
-      }
-
-      return window.supabase.createClient(
-        OPERON_SUPABASE_CONFIG.url,
-        OPERON_SUPABASE_CONFIG.anonKey
-      );
-    }());
-
     const quoteForm = document.getElementById("quoteForm");
     const quoteLayout = document.getElementById("quoteLayout");
     const quoteSummaryCard = document.getElementById("quoteSummaryCard");
@@ -226,14 +197,6 @@
     const CUSTOMER_DRAFT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
     function createId() {
       return Math.random().toString(36).slice(2, 9);
-    }
-
-    function createQuoteUuid() {
-      if (window.crypto && typeof window.crypto.randomUUID === "function") {
-        return window.crypto.randomUUID();
-      }
-
-      return "quote-" + Date.now() + "-" + Math.random().toString(36).slice(2, 10);
     }
 
     function withStorageExpiry(payload, ttlMs) {
@@ -4734,113 +4697,6 @@
       state.lastSavedDraftSignature = signature;
       saveDraft();
       return result;
-    }
-
-    async function saveQuoteRequest(payload) {
-      if (!operonSupabase) {
-        throw new Error("Supabase is not configured.");
-      }
-
-      const quoteId = createQuoteUuid();
-      const row = {
-        id: quoteId,
-        customer_name: payload.customer.name,
-        phone: payload.customer.phone,
-        email: payload.customer.email,
-        site_address: payload.customer.siteAddress,
-        suburb: payload.customer.suburb,
-        postcode: payload.customer.postcode,
-        property_type: payload.property.type,
-        property_level: payload.property.level,
-        has_lift: payload.property.hasLift,
-        parking_access: payload.property.parking,
-        quote_mode: payload.job.quoteMode,
-        product_category: payload.job.productCategory,
-        product_name: payload.job.productName,
-        flooring_pattern: payload.job.flooringPattern,
-        measurement_method: payload.measurement.method,
-        real_area: payload.measurement.realArea,
-        chargeable_area: payload.measurement.chargeableArea,
-        room_count: payload.measurement.roomCount || 0,
-        subtotal_ex_gst: payload.pricing.subtotalExGst,
-        gst: payload.pricing.gst,
-        total_inc_gst: payload.pricing.totalIncGst,
-        manual_review_required: payload.manualReviewRequired,
-        status: "new",
-        source_page: payload.sourcePage,
-        raw_payload: payload
-      };
-
-      const result = await operonSupabase
-        .from("quote_requests")
-        .insert(row);
-
-      if (result.error) {
-        console.error("Failed to save quote request.");
-        throw createSubmitStageError("quote_request", result.error);
-      }
-
-      return { id: quoteId };
-    }
-
-    async function saveQuoteRooms(quoteId, rooms) {
-      if (!operonSupabase || !rooms || !rooms.length) {
-        return [];
-      }
-
-      const rows = rooms.map(function (room) {
-        return {
-          quote_id: quoteId,
-          room_name: room.roomName || room.name || "Room",
-          length_m: room.lengthM || room.length || null,
-          width_m: room.widthM || room.width || null,
-          area_m2: room.areaM2 || room.area || null,
-          included: room.included !== false,
-          source: room.source || "index_room_by_room",
-          raw_payload: room
-        };
-      });
-
-      const result = await operonSupabase
-        .from("quote_rooms")
-        .insert(rows);
-
-      if (result.error) {
-        console.error("Failed to save quote rooms.");
-        throw createSubmitStageError("quote_rooms", result.error);
-      }
-
-      return [];
-    }
-
-    async function saveQuoteItems(quoteId, items) {
-      if (!operonSupabase || !items || !items.length) {
-        return [];
-      }
-
-      const rows = items.map(function (item) {
-        return {
-          quote_id: quoteId,
-          item_type: item.type || item.itemType || "item",
-          label: item.label || item.name || "Quote item",
-          quantity: item.quantity || null,
-          unit: item.unit || null,
-          unit_basis: item.unitBasis || null,
-          amount_ex_gst: item.amountExGst || item.amount || null,
-          raw_payload: item.rawPayload || item
-        };
-      });
-
-      const result = await operonSupabase
-        .from("quote_items")
-        .insert(rows);
-
-      if (result.error) {
-        console.error("Failed to save quote items.");
-        throw createSubmitStageError("quote_items", result.error);
-      }
-
-      return [];
     }
 
     async function uploadQuoteFile(quoteId, file, source) {

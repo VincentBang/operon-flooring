@@ -5,7 +5,11 @@ const path = require("path");
 const { PDFDocument, StandardFonts, rgb } = require("pdf-lib");
 const { getSupabaseTables } = require("./_supabaseTables");
 const Security = require("./_security");
+const LeadWriter = require("./shared/leadWriter");
 const LeadQualification = require("../../internal-docs/lead-scoring/leadQualification.js");
+
+const PUBLIC_CUSTOMER_EMAIL_ERROR = "Customer quote email could not be sent automatically.";
+const PUBLIC_INTERNAL_EMAIL_ERROR = "Internal notification could not be sent automatically.";
 
 function jsonResponse(event, statusCode, payload) {
   return Security.jsonResponse(event, statusCode, payload, {
@@ -354,6 +358,167 @@ function getQuoteRow(quoteId, payload, status) {
   }, leadQualificationColumns);
 }
 
+function mapLeadPriority(value) {
+  const priority = String(value || "").trim().toLowerCase();
+  if (priority === "urgent") return "urgent";
+  if (priority === "a" || priority === "high" || priority === "hot") return "high";
+  if (priority === "c" || priority === "low" || priority === "cold") return "low";
+  return "normal";
+}
+
+function getLeadSourceDetail(payload, mode) {
+  const source = String(payload.source || payload.sourcePage || payload.source_page || "").toLowerCase();
+  const measurement = payload.measurement || {};
+  const job = payload.job || {};
+
+  if (hasMeaningfulObject(payload.quoteReview || payload.quote_review)) {
+    return "quote_review_handoff";
+  }
+  if (
+    measurement.floorplanSource
+    || measurement.floorplan_source
+    || measurement.floorplanAreaFound
+    || measurement.floorplan_area_found
+    || measurement.floorplanMeasurementMode
+    || measurement.floorplan_measurement_mode
+    || source.indexOf("floorplan") >= 0
+  ) {
+    return "floorplan_handoff";
+  }
+  if (
+    hasMeaningfulObject(payload.productSelection || payload.product_selection || payload.selectedProduct || payload.selected_product)
+    || job.productId
+    || job.product_id
+    || source.indexOf("product") >= 0
+  ) {
+    return "product_handoff";
+  }
+  if (mode === "email_quote") {
+    return "email_quote";
+  }
+  return mode === "submit_quote" ? "direct_quote_submit" : "direct_quote_draft";
+}
+
+function getLeadStatus(row, mode, emailResult) {
+  if (mode === "submit_quote" && emailResult && emailResult.customerEmailSent) {
+    return "Quote sent";
+  }
+  if (
+    row.manual_review_required
+    || row.review_required
+    || String(row.lead_status || "").toLowerCase().indexOf("review") >= 0
+  ) {
+    return "Needs review";
+  }
+  return "New";
+}
+
+function getLeadNextAction(row, mode) {
+  if (row.lead_next_action) return row.lead_next_action;
+  if (row.next_action) return row.next_action;
+  if (row.manual_review_required || row.review_required) return "Review quote request";
+  if (mode === "submit_quote") return "Confirm flooring quote and follow up";
+  if (mode === "email_quote") return "Follow up after emailed quote";
+  return "Review saved quote draft";
+}
+
+function getLeadContactStatus(emailResult) {
+  if (emailResult && emailResult.customerEmailSent && emailResult.internalNotificationSent) {
+    return "customer_and_internal_email_sent";
+  }
+  if (emailResult && emailResult.customerEmailSent) return "customer_email_sent";
+  if (emailResult && emailResult.internalNotificationSent) return "internal_notification_sent";
+  return "none";
+}
+
+function getLeadFollowUpStatus(followupResult, immediateFollowupEmailResult) {
+  if (immediateFollowupEmailResult && immediateFollowupEmailResult.sent > 0) return "sent";
+  if (followupResult && followupResult.queued > 0) return "queued";
+  if (followupResult && followupResult.skipped) return "skipped";
+  return "none";
+}
+
+function buildQuoteLeadInput(options) {
+  const payload = options.payload || {};
+  const row = options.row || {};
+  const quoteReference = options.quoteReference || "";
+  const mode = options.mode || "draft";
+  const emailResult = options.emailResult || {};
+  const followupResult = options.followupResult || {};
+  const immediateFollowupEmailResult = options.immediateFollowupEmailResult || {};
+  const tables = getSupabaseTables();
+
+  return {
+    primarySource: "quote",
+    sourceDetail: getLeadSourceDetail(payload, mode),
+    sourceTable: tables.quoteRequests,
+    sourceId: options.quoteId,
+    customer: {
+      name: row.customer_name,
+      email: row.email,
+      phone: row.phone
+    },
+    project: {
+      suburb: row.suburb,
+      postcode: row.postcode,
+      productCategory: row.product_category,
+      productName: row.product_name,
+      areaM2: row.real_area,
+      estimatedOrderAreaM2: row.chargeable_area
+    },
+    quote: {
+      totalIncGst: row.total_inc_gst,
+      confidenceScore: row.close_score,
+      confidenceLevel: row.confidence_level || row.close_band,
+      missingInfoFlags: row.lead_missing_fields,
+      riskFlags: row.lead_risk_flags
+    },
+    statuses: {
+      status: getLeadStatus(row, mode, emailResult),
+      priority: mapLeadPriority(row.lead_priority || row.lead_stage || row.close_band),
+      quoteReviewStatus: row.quote_review_attached ? "attached" : "none",
+      floorplanStatus: row.floorplan_attached ? "attached" : "none",
+      contactStatus: getLeadContactStatus(emailResult),
+      followUpStatus: getLeadFollowUpStatus(followupResult, immediateFollowupEmailResult)
+    },
+    nextAction: getLeadNextAction(row, mode),
+    metadata: {
+      quote_reference: quoteReference,
+      mode: mode
+    }
+  };
+}
+
+async function safelyRecordQuoteLead(options) {
+  try {
+    const leadResult = await LeadWriter.createOrUpdateLead(buildQuoteLeadInput(options));
+    if (leadResult && leadResult.leadId) {
+      await LeadWriter.recordLeadEvent({
+        leadId: leadResult.leadId,
+        eventType: options.mode === "submit_quote" ? "quote_submitted" : options.mode === "email_quote" ? "quote_emailed" : "quote_draft_saved",
+        source: "save-quote-request",
+        sourceTable: getSupabaseTables().quoteRequests,
+        sourceId: options.quoteId,
+        metadata: {
+          quote_reference: options.quoteReference,
+          mode: options.mode,
+          source_detail: getLeadSourceDetail(options.payload || {}, options.mode),
+          customer_email_sent: Boolean(options.emailResult && options.emailResult.customerEmailSent),
+          internal_notification_sent: Boolean(options.emailResult && options.emailResult.internalNotificationSent),
+          followup_queued: Number(options.followupResult && options.followupResult.queued || 0)
+        }
+      });
+    }
+    return { ok: true, leadId: leadResult && leadResult.leadId || null };
+  } catch (error) {
+    console.warn("Non-blocking lead write failed for quote request", {
+      quoteId: options && options.quoteId || "",
+      reason: Security.safeLogReason(error)
+    });
+    return { ok: false };
+  }
+}
+
 function getRoomRows(quoteId, rooms) {
   return (Array.isArray(rooms) ? rooms : []).map(function (room) {
     return {
@@ -597,7 +762,9 @@ async function safelyQueueFollowupsForQuote(quoteId, quoteRow) {
     const result = await queueFollowupsForQuote(quoteId, quoteRow);
     return Object.assign({ ok: true }, result);
   } catch (error) {
-    console.error("Follow-up queue creation failed", error);
+    console.error("Follow-up queue creation failed", {
+      reason: Security.safeLogReason(error)
+    });
     return {
       ok: false,
       queued: 0,
@@ -713,7 +880,9 @@ async function safelySendImmediateFollowupEmailsForQuote(quoteId) {
   try {
     return Object.assign({ ok: true }, await sendImmediateFollowupEmailsForQuote(quoteId));
   } catch (error) {
-    console.error("Immediate follow-up email processing failed", error);
+    console.error("Immediate follow-up email processing failed", {
+      reason: Security.safeLogReason(error)
+    });
     return {
       ok: false,
       attempted: false,
@@ -1338,8 +1507,10 @@ async function sendQuoteEmails(emailTo, payload, quoteId, quoteReference) {
       });
       result.internalNotificationSent = true;
     } catch (error) {
-      result.internalNotificationError = error && error.message ? error.message : "Internal notification failed.";
-      console.error("Internal quote notification failed", error);
+      result.internalNotificationError = Security.safePublicError(PUBLIC_INTERNAL_EMAIL_ERROR);
+      console.error("Internal quote notification failed", {
+        reason: Security.safeLogReason(error)
+      });
     }
   }
 
@@ -1368,8 +1539,10 @@ async function safelySendQuoteEmails(emailTo, payload, quoteId, quoteReference) 
     const emailResult = await sendQuoteEmails(emailTo, payload, quoteId, quoteReference);
     return Object.assign(result, emailResult);
   } catch (error) {
-    result.customerEmailError = error && error.message ? error.message : "Customer quote email failed.";
-    console.error("Customer quote email failed", error);
+    result.customerEmailError = Security.safePublicError(PUBLIC_CUSTOMER_EMAIL_ERROR);
+    console.error("Customer quote email failed", {
+      reason: Security.safeLogReason(error)
+    });
     return result;
   }
 }
@@ -1481,6 +1654,17 @@ exports.handler = async function (event) {
             internalNotificationError: ""
           };
 
+      await safelyRecordQuoteLead({
+        quoteId: quoteId,
+        quoteReference: quoteReference,
+        payload: payload,
+        row: Object.assign({}, row, savedQuoteRow),
+        mode: mode,
+        emailResult: emailResult,
+        followupResult: followupResult,
+        immediateFollowupEmailResult: immediateFollowupEmailResult
+      });
+
       return jsonResponse(event, 200, {
         ok: true,
         mode: mode,
@@ -1504,6 +1688,17 @@ exports.handler = async function (event) {
       const emailResult = await sendQuoteEmails(emailTo, payload, quoteId, quoteReference);
       const followupResult = await safelyQueueFollowupsForQuote(quoteId, row);
       const immediateFollowupEmailResult = await safelySendImmediateFollowupEmailsForQuote(quoteId);
+      await safelyRecordQuoteLead({
+        quoteId: quoteId,
+        quoteReference: quoteReference,
+        payload: payload,
+        row: Object.assign({}, row, updatedQuoteRow),
+        mode: mode,
+        emailResult: emailResult,
+        followupResult: followupResult,
+        immediateFollowupEmailResult: immediateFollowupEmailResult
+      });
+
       return jsonResponse(event, 200, {
         ok: true,
         mode: mode,
@@ -1516,9 +1711,12 @@ exports.handler = async function (event) {
       });
     }
   } catch (error) {
+    console.warn("Quote save failed", {
+      reason: Security.safeLogReason(error)
+    });
     return jsonResponse(event, 500, {
       ok: false,
-      error: error && error.message ? error.message : "Quote save failed."
+      error: Security.safePublicError("Quote save failed. Please try again or contact Operon.")
     });
   }
 };

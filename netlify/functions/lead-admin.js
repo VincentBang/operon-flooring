@@ -240,7 +240,13 @@ exports.handler = async function (event) {
     });
     if (largeBodyResponse) return largeBodyResponse;
 
-    const body = JSON.parse(event.body || "{}");
+    let body;
+    try {
+      body = JSON.parse(event.body || "{}");
+    } catch (error) {
+      return jsonResponse(event, 400, { ok: false, error: "Invalid JSON payload." });
+    }
+
     const action = String(body.action || "update_lead").trim();
     if (action !== "update_lead") {
       return jsonResponse(event, 400, { ok: false, error: "Unknown lead admin action." });
@@ -248,9 +254,12 @@ exports.handler = async function (event) {
 
     return jsonResponse(event, 200, Object.assign({ ok: true }, await updateLead(body)));
   } catch (error) {
+    console.warn("Lead admin request failed", {
+      reason: Security.safeLogReason(error)
+    });
     return jsonResponse(event, 500, {
       ok: false,
-      error: error && error.message ? error.message : "Lead admin request failed."
+      error: Security.safePublicError("Lead admin request failed.")
     });
   }
 };

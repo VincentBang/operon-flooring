@@ -301,59 +301,10 @@
     return sessionId;
   }
 
-  function getSupabaseConfig() {
-    const config = window.OPERON_SUPABASE_CONFIG;
-    if (!config || !config.url || !config.anonKey || /YOUR_SUPABASE/i.test(config.url) || /YOUR_SUPABASE/i.test(config.anonKey)) {
-      return null;
-    }
-    return config;
-  }
-
-  function getSupabaseTableName(tableName) {
-    const config = getSupabaseConfig();
-    const tables = config && config.tables || {};
-    return tables[tableName] || tableName;
-  }
-
-  async function sendToSupabase(tableName, payload, options) {
-    const config = getSupabaseConfig();
-    if (!config) {
-      return false;
-    }
-
-    const settings = Object.assign({ upsert: false, onConflict: "" }, options || {});
-    const headers = {
-      "Content-Type": "application/json",
-      apikey: config.anonKey,
-      Authorization: "Bearer " + config.anonKey,
-      Prefer: settings.upsert ? "resolution=merge-duplicates" : "return=minimal"
-    };
-
-    const url = new URL(config.url.replace(/\/$/, "") + "/rest/v1/" + getSupabaseTableName(tableName));
-    if (settings.upsert && settings.onConflict) {
-      url.searchParams.set("on_conflict", settings.onConflict);
-    }
-
-    try {
-      const response = await fetch(url.toString(), {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(payload)
-      });
-      return response.ok;
-    } catch (error) {
-      return false;
-    }
-  }
-
   function updateFunnelState(patch) {
     const state = readFunnelState();
     Object.assign(state, patch || {});
     writeFunnelState(state);
-    void sendToSupabase("quote_funnel_sessions", state, {
-      upsert: true,
-      onConflict: "session_id"
-    });
     return state;
   }
 
@@ -397,7 +348,6 @@
 
     appendEvent(trackingState, event);
     writeTrackingState(trackingState);
-    void sendToSupabase("quote_events", event);
     if (eventName === "cta_click") {
       const aliasEvent = Object.assign({}, event, {
         id: createUuid(),
@@ -405,7 +355,6 @@
       });
       appendEvent(trackingState, aliasEvent);
       writeTrackingState(trackingState);
-      void sendToSupabase("quote_events", aliasEvent);
     }
     return { trackingState: trackingState, event: event };
   }

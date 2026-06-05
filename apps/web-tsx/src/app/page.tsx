@@ -113,8 +113,8 @@ const productCards = [
   },
   {
     href: `${routes.quote}?from=home&category=laminate`,
-    image: "/images/products/laminate/eco-villeroy-boch-heritage/travertin-oak.webp",
-    alt: "Laminate flooring range preview in a pale oak tone",
+    image: "/images/products/laminate/topdeck-prime-luxury/luxury-natural-oak-gallery-2.webp",
+    alt: "Laminate flooring natural oak range preview",
     title: "Laminate flooring",
     text: "A timber-look option for dry internal spaces where budget and durability matter."
   },
@@ -292,7 +292,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section" aria-labelledby="servicesTitle">
+      <section className="section home-product-paths" aria-labelledby="servicesTitle">
         <div className="home-section-head">
           <p className="eyebrow">Product paths</p>
           <h2 id="servicesTitle">Browse products after you know the quote path.</h2>
