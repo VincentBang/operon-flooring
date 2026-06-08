@@ -4,6 +4,8 @@ Date: 2026-06-04
 
 Purpose: define the status-pipeline implementation guardrails before building admin status controls.
 
+Local status: first protected status-pipeline slice implemented.
+
 ## Scope
 
 Build internal-only status changes for leads:
@@ -55,6 +57,41 @@ Success:
 ```json
 { "ok": true }
 ```
+
+Implemented local function:
+
+- `netlify/functions/lead-status-admin.js`
+
+Implemented local UI:
+
+- Status update form inside `apps/web-tsx/src/app/admin/AdminLeadDetail.tsx`
+
+Implemented local tests:
+
+- `internal-qa/tests/web/leadStatusAdminContract.test.js`
+- `internal-qa/tests/web/adminLeadDetailClientContract.test.js`
+
+Current behavior:
+
+- Status changes require admin token auth.
+- Writes use service-role credentials server-side only.
+- Valid statuses match the current `operon_leads.status` database constraint:
+  - New
+  - Needs review
+  - Waiting customer
+  - Quote sent
+  - Site measure booked
+  - Won
+  - Lost
+  - Archived
+- Status changes update `operon_leads.status`, `updated_at`, and `last_activity_at`.
+- Status changes insert `operon_lead_status_history`.
+- Status changes insert `operon_lead_events` with `event_type = lead_status_changed`.
+- Terminal statuses `Won`, `Lost`, and `Archived` require browser confirmation.
+- Responses return only safe status state.
+- No public quote/pricing/product/floorplan/quote-review/chatbot logic is changed.
+
+Preview/live verification still required before operator use.
 
 ## UI Requirements
 

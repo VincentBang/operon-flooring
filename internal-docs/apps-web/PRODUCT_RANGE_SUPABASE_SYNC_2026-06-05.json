@@ -1,0 +1,355 @@
+{
+  "generatedAt": "2026-06-05T13:29:48.932Z",
+  "source": "apps/web-tsx/public/products.js",
+  "totalRanges": 49,
+  "categories": {
+    "hybrid": 19,
+    "laminate": 16,
+    "engineered": 14
+  },
+  "ranges": [
+    {
+      "id": "hybrid-etf-7mm",
+      "category": "hybrid",
+      "brand": "ETF Hybrid 7.0mm",
+      "rangeName": "ETF 7.0mm Waterproof Hybrid Flooring",
+      "colourCount": 15
+    },
+    {
+      "id": "hybrid-aquabase",
+      "category": "hybrid",
+      "brand": "Aquabase",
+      "rangeName": "Aquabase",
+      "colourCount": 8
+    },
+    {
+      "id": "hybrid-topdeck-artisan-tile",
+      "category": "hybrid",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Artisan Hybrid Tile",
+      "colourCount": 12
+    },
+    {
+      "id": "hybrid-topdeck-avala",
+      "category": "hybrid",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Avala Hybrid Planks",
+      "colourCount": 10
+    },
+    {
+      "id": "hybrid-topdeck-belle-vie",
+      "category": "hybrid",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Belle Vie Herringbone",
+      "colourCount": 12
+    },
+    {
+      "id": "hybrid-eco-elite-6mm",
+      "category": "hybrid",
+      "brand": "Ornato Hybrid",
+      "rangeName": "Elite 6.0 Hybrid Flooring",
+      "colourCount": 12
+    },
+    {
+      "id": "hybrid-etf-8mm",
+      "category": "hybrid",
+      "brand": "ETF Hybrid 8.0mm",
+      "rangeName": "ETF 8.0mm Waterproof Hybrid Flooring",
+      "colourCount": 12
+    },
+    {
+      "id": "hybrid-etf-9mm",
+      "category": "hybrid",
+      "brand": "ETF Hybrid 9.0mm",
+      "rangeName": "ETF 9.0mm Waterproof Hybrid Flooring",
+      "colourCount": 14
+    },
+    {
+      "id": "hybrid-eco-grande-7-5mm",
+      "category": "hybrid",
+      "brand": "Ornato Hybrid",
+      "rangeName": "Grande 7.5 Hybrid Flooring",
+      "colourCount": 6
+    },
+    {
+      "id": "hybrid-eco-grande-9mm",
+      "category": "hybrid",
+      "brand": "Eco Flooring",
+      "rangeName": "Grande 9.0 Hybrid Flooring",
+      "colourCount": 10
+    },
+    {
+      "id": "hybrid-eco-herringbone-7mm",
+      "category": "hybrid",
+      "brand": "Ornato Hybrid",
+      "rangeName": "Herringbone 7.0 Hybrid Flooring",
+      "colourCount": 6
+    },
+    {
+      "id": "hybrid-topdeck-lumiere-ultra-hd",
+      "category": "hybrid",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Lumiere Ultra HD Hybrid Plank",
+      "colourCount": 12
+    },
+    {
+      "id": "hybrid-luxury-7mm",
+      "category": "hybrid",
+      "brand": "Luxury Hybrid",
+      "rangeName": "Luxury Hybrid 7mm",
+      "colourCount": 6
+    },
+    {
+      "id": "hybrid-luxury-8mm",
+      "category": "hybrid",
+      "brand": "Luxury Hybrid",
+      "rangeName": "Luxury Hybrid 8mm",
+      "colourCount": 12
+    },
+    {
+      "id": "hybrid-luxury-9mm",
+      "category": "hybrid",
+      "brand": "Luxury Hybrid",
+      "rangeName": "Luxury Hybrid 9mm",
+      "colourCount": 8
+    },
+    {
+      "id": "hybrid-luxury-plus-10mm",
+      "category": "hybrid",
+      "brand": "Luxury Hybrid PLUS",
+      "rangeName": "Luxury Hybrid PLUS 10mm",
+      "colourCount": 12
+    },
+    {
+      "id": "hybrid-topdeck-storm-luxury",
+      "category": "hybrid",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Storm Luxury Hybrid Plank",
+      "colourCount": 12
+    },
+    {
+      "id": "hybrid-eco-urban-6-5mm",
+      "category": "hybrid",
+      "brand": "Ornato Hybrid",
+      "rangeName": "Urban 6.5 Hybrid Flooring",
+      "colourCount": 12
+    },
+    {
+      "id": "hybrid-eco-xxl-8mm",
+      "category": "hybrid",
+      "brand": "Ornato Hybrid",
+      "rangeName": "XXL 8.0 Hybrid Flooring",
+      "colourCount": 12
+    },
+    {
+      "id": "laminate-12mm-24hr-water-resistant",
+      "category": "laminate",
+      "brand": "ETF Laminate 1.2m",
+      "rangeName": "ETF 12mm 24hrs Water Resistant Laminate",
+      "colourCount": 15
+    },
+    {
+      "id": "laminate-aqua-wood-plus-12mm",
+      "category": "laminate",
+      "brand": "Aqua Wood Plus",
+      "rangeName": "Aqua Wood Plus 12mm",
+      "colourCount": 24
+    },
+    {
+      "id": "laminate-oak-step",
+      "category": "laminate",
+      "brand": "Oak Step",
+      "rangeName": "Oak Step",
+      "colourCount": 10
+    },
+    {
+      "id": "laminate-oak-step-plus",
+      "category": "laminate",
+      "brand": "Oak Step PLUS",
+      "rangeName": "Oak Step PLUS",
+      "colourCount": 10
+    },
+    {
+      "id": "laminate-topdeck-pantora-amor",
+      "category": "laminate",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Pantora Amor Collection",
+      "colourCount": 12
+    },
+    {
+      "id": "laminate-topdeck-pantora-lifestyle",
+      "category": "laminate",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Pantora Lifestyle Collection",
+      "colourCount": 10
+    },
+    {
+      "id": "laminate-topdeck-prime-contemporary-plus",
+      "category": "laminate",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Prime Contemporary Plus Edition",
+      "colourCount": 11
+    },
+    {
+      "id": "laminate-topdeck-prime-deluxe",
+      "category": "laminate",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Prime Deluxe Edition",
+      "colourCount": 8
+    },
+    {
+      "id": "laminate-topdeck-prime-legend",
+      "category": "laminate",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Prime Legend Collection",
+      "colourCount": 10
+    },
+    {
+      "id": "laminate-topdeck-prime-luxury",
+      "category": "laminate",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Prime Luxury Edition",
+      "colourCount": 10
+    },
+    {
+      "id": "laminate-eco-swish-laminate",
+      "category": "laminate",
+      "brand": "Swish Laminate",
+      "rangeName": "Swish Laminate",
+      "colourCount": 12
+    },
+    {
+      "id": "laminate-eco-swish-laminate-aqua",
+      "category": "laminate",
+      "brand": "Swish Laminate",
+      "rangeName": "Swish Laminate Aqua",
+      "colourCount": 16
+    },
+    {
+      "id": "laminate-eco-villeroy-boch-contemporary",
+      "category": "laminate",
+      "brand": "Villeroy & Boch",
+      "rangeName": "Villeroy & Boch Contemporary Laminate",
+      "colourCount": 4
+    },
+    {
+      "id": "laminate-eco-villeroy-boch-cosmopolitan",
+      "category": "laminate",
+      "brand": "Villeroy & Boch",
+      "rangeName": "Villeroy & Boch Cosmopolitan Laminate",
+      "colourCount": 5
+    },
+    {
+      "id": "laminate-eco-villeroy-boch-country",
+      "category": "laminate",
+      "brand": "Villeroy & Boch",
+      "rangeName": "Villeroy & Boch Country Laminate",
+      "colourCount": 3
+    },
+    {
+      "id": "laminate-eco-villeroy-boch-heritage",
+      "category": "laminate",
+      "brand": "Villeroy & Boch",
+      "rangeName": "Villeroy & Boch Heritage Laminate",
+      "colourCount": 3
+    },
+    {
+      "id": "engineered-swish-oak-natura",
+      "category": "engineered",
+      "brand": "Eco Flooring",
+      "rangeName": "Swish Oak Natura",
+      "colourCount": 16
+    },
+    {
+      "id": "engineered-botanica",
+      "category": "engineered",
+      "brand": "Botanica",
+      "rangeName": "Botanica",
+      "colourCount": 8
+    },
+    {
+      "id": "engineered-topdeck-castel-nuovo-herringbone",
+      "category": "engineered",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Castel Nuovo Herringbone",
+      "colourCount": 12
+    },
+    {
+      "id": "engineered-topdeck-cavallo-bianco-chevron",
+      "category": "engineered",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Cavallo Bianco Chevron",
+      "colourCount": 12
+    },
+    {
+      "id": "engineered-topdeck-lavanda-oak",
+      "category": "engineered",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Lavanda Oak",
+      "colourCount": 12
+    },
+    {
+      "id": "engineered-topdeck-project-oak",
+      "category": "engineered",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Project Oak",
+      "colourCount": 12
+    },
+    {
+      "id": "engineered-eco-swish-oak-contemporary",
+      "category": "engineered",
+      "brand": "Swish Oak",
+      "rangeName": "Swish Oak Contemporary",
+      "colourCount": 6
+    },
+    {
+      "id": "engineered-eco-swish-oak-natura-handcrafted",
+      "category": "engineered",
+      "brand": "Swish Oak",
+      "rangeName": "Swish Oak Natura Handcrafted",
+      "colourCount": 3
+    },
+    {
+      "id": "engineered-swish-oak-natura-herringbone",
+      "category": "engineered",
+      "brand": "Eco Flooring",
+      "rangeName": "Swish Oak Natura Herringbone",
+      "colourCount": 6
+    },
+    {
+      "id": "engineered-eco-swish-oak-wideboard",
+      "category": "engineered",
+      "brand": "Swish Oak",
+      "rangeName": "Swish Oak Wideboard",
+      "colourCount": 8
+    },
+    {
+      "id": "engineered-topdeck-wooden-land-australian-136mm",
+      "category": "engineered",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Wooden-Land Australian Species 136mm",
+      "colourCount": 7
+    },
+    {
+      "id": "engineered-topdeck-wooden-land-australian-190mm",
+      "category": "engineered",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Wooden-Land Australian Species 190mm",
+      "colourCount": 6
+    },
+    {
+      "id": "engineered-topdeck-wooden-land-foreign-species",
+      "category": "engineered",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Wooden-Land Foreign Species",
+      "colourCount": 2
+    },
+    {
+      "id": "engineered-topdeck-wooden-land-herringbone",
+      "category": "engineered",
+      "brand": "Topdeck Flooring",
+      "rangeName": "Wooden-Land Herringbone",
+      "colourCount": 2
+    }
+  ]
+}

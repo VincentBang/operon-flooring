@@ -24,6 +24,18 @@ export const routes = {
   drummoyne: "/flooring-drummoyne.html",
   easternSuburbs: "/flooring-eastern-suburbs.html",
   auburn: "/flooring-auburn.html",
+  killara: "/flooring-killara.html",
+  pymble: "/flooring-pymble.html",
+  neutralBay: "/flooring-neutral-bay.html",
+  mosman: "/flooring-mosman.html",
+  marrickville: "/flooring-marrickville.html",
+  coogee: "/flooring-coogee.html",
+  randwick: "/flooring-randwick.html",
+  chatswood: "/flooring-chatswood.html",
+  northSydney: "/flooring-north-sydney.html",
+  newtown: "/flooring-newtown.html",
+  surryHills: "/flooring-surry-hills.html",
+  bondi: "/flooring-bondi.html",
   blog: "/blog/"
 } as const;
 

@@ -2,7 +2,7 @@
 
 const LEGACY_TABLES = {
   pricingCategories: "pricing_categories",
-  pricingProducts: "pricing_products",
+  productRanges: "product_ranges",
   pricingInstallRates: "pricing_install_rates",
   pricingUnderlayOptions: "pricing_underlay_options",
   pricingTrimOptions: "pricing_trim_options",

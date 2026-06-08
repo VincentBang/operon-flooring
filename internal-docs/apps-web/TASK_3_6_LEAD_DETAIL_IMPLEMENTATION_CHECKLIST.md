@@ -4,6 +4,8 @@ Date: 2026-06-04
 
 Do not start until Task 3.4 admin auth shell and Task 3.5 lead list are approved.
 
+Local status: first protected lead-detail slice implemented behind the admin lead list.
+
 ## Objective
 
 Show one protected internal lead detail view with quote, contact, quote-review, upload, notes, status, and event timeline context.
@@ -41,7 +43,7 @@ Supporting:
 
 Use:
 
-- `admin-lead-detail`
+- `lead-dashboard?action=detail&lead_id=<uuid>`
 
 Response must match:
 
@@ -72,6 +74,34 @@ Response must match:
 - File section hides bucket/path.
 - Event metadata is redacted.
 - Public conversion tests still pass.
+
+## Local Implementation
+
+Implemented local files:
+
+- `apps/web-tsx/src/app/admin/AdminLeadDetail.tsx`
+- `internal-qa/tests/web/adminLeadDetailClientContract.test.js`
+
+Current behavior:
+
+- Detail panel appears only after a lead is selected from the authenticated lead list.
+- Reads use `/.netlify/functions/lead-dashboard?action=detail&lead_id=<uuid>`.
+- Reads are protected with `Authorization: Bearer <token>`.
+- Customer, project, quote, status, next action, file metadata, notes and event timeline sections render from the safe dashboard response.
+- File section displays safe filename/type/size/status only.
+- No direct Supabase browser reads.
+- No raw OCR text.
+- No raw uploaded quote text.
+- No storage bucket/path.
+- No signed URL.
+- No private pricing/rate fields.
+
+Remaining for later slices:
+
+- Status update controls.
+- Note creation.
+- Follow-up scheduling.
+- Protected file reveal/download design if ever approved.
 
 ## Stop Conditions
 

@@ -4,6 +4,8 @@ Date: 2026-06-04
 
 Purpose: define the Stage 3 security gate before any internal dashboard production release.
 
+Local status: local source/output/security contract audit completed for the first admin MVP slices.
+
 ## Admin Surface
 
 - `/admin` protected.
@@ -62,3 +64,55 @@ Block:
 ## Release Decision
 
 Stage 3 admin production release is blocked until all checks above pass in preview.
+
+## Local Audit Result
+
+Date: 2026-06-06
+
+Local slices audited:
+
+- Admin auth status function.
+- Admin auth shell.
+- Lead list.
+- Lead detail.
+- Status pipeline.
+- Manual follow-up queue.
+- Quote-review queue.
+- Floorplan queue.
+- Aggregate reporting summary.
+
+Local checks passed:
+
+- `npm run build` in `apps/web-tsx`.
+- `npm run test:local-gates`.
+- `git diff --check`.
+- Admin source scan for forbidden client APIs and private fields.
+- Generated `out/admin.html` and `out/admin.txt` scan for private table names and private fields.
+- Admin response safety contracts.
+- Public function response safety contracts.
+- Admin function runtime safety contracts.
+- Admin discoverability guardrail contracts.
+
+Confirmed local behavior:
+
+- `/admin.html` has `noindex,nofollow`.
+- `/admin.html` is not included in `sitemap.xml`.
+- Unauthenticated generated HTML renders no lead/customer/upload/quote/OCR records.
+- Admin client components do not use `localStorage`, `sessionStorage`, direct Supabase clients, or service-role credentials.
+- Admin Functions require admin token auth.
+- Admin Function responses use `Cache-Control: no-store`.
+- Lead list/detail/reporting reads go through protected Netlify Functions.
+- Status/follow-up writes go through protected Netlify Functions.
+- No admin UI displays storage bucket/path, signed URLs, raw OCR text, raw uploaded quote text, internal rates, supplier costs, margins, or private pricing tables.
+- Follow-up queue remains manual/dry-run only and does not send email or SMS.
+
+Known local caveats:
+
+- `/admin` route behavior remains governed by the existing static export and route-surface decision document. No production Netlify redirect/config change was made.
+- Preview verification has not been run in this slice.
+- Supabase RLS/storage/GraphQL live verification was not rerun in this slice.
+- Real admin token and real lead data were not exercised locally.
+
+Release decision:
+
+- Stage 3 admin production release remains blocked until a controlled preview verifies admin auth, list/detail reads, status writes, follow-up writes, public conversion paths, RLS/storage probes, and function logs.

@@ -4,6 +4,8 @@ Date: 2026-06-04
 
 Purpose: define the internal floorplan review queue before implementation.
 
+Local status: first read-only floorplan queue slice implemented.
+
 ## Scope
 
 Show leads where floorplan/upload data exists and may need manual review.
@@ -66,3 +68,25 @@ Show leads where floorplan/upload data exists and may need manual review.
 - File response includes safe metadata only.
 - Floorplan public tool still works.
 - Quote handoff remains intact.
+
+## Local Implementation
+
+Implemented local UI:
+
+- `apps/web-tsx/src/app/admin/AdminReviewQueues.tsx`
+
+Implemented local test:
+
+- `internal-qa/tests/web/adminReviewQueuesClientContract.test.js`
+
+Current behavior:
+
+- Queue appears only after admin token verification.
+- Reads use `/.netlify/functions/lead-dashboard?action=list&source=floorplan&limit=25`.
+- Shows customer name, suburb, source detail, product category, floorplan status, confidence, missing count, risk count and next action.
+- Read-only in this slice.
+- Follow-up and status actions are handled through the lead detail/status/follow-up controls.
+- No raw file URLs.
+- No storage bucket/path.
+- No direct browser Supabase storage reads.
+- No pricing or quote calculation changes.

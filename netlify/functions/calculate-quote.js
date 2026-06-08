@@ -266,7 +266,7 @@ function buildSafeResponse(result, input) {
     itemsToConfirm: itemsToConfirm,
     warnings: itemsToConfirm,
     manualReviewRequired: estimateStatus !== "ready",
-    pricePending: estimateStatus === "pending",
+    pricePending: !!(result && result.pricePending) || estimateStatus === "pending",
     pricingMode: result && result.pricingMode || "category",
     measurementSource: result && result.measurementSource || input.measurementSource || "Manual total",
     disclaimer: "Estimate only. Final scope is reviewed before a fixed installation price is confirmed."

@@ -4,6 +4,8 @@ Date: 2026-06-04
 
 Goal: build a dry-run/manual follow-up queue only. Do not auto-send until separately approved.
 
+Local status: first protected dry-run/manual follow-up queue slice implemented.
+
 ## MVP View
 
 Show:
@@ -60,3 +62,42 @@ Show:
 ## Stop Condition
 
 If a requested action sends communication automatically, stop and ask for approval.
+
+## Local Implementation
+
+Implemented local function:
+
+- `netlify/functions/lead-followup-admin.js`
+
+Implemented local UI:
+
+- `apps/web-tsx/src/app/admin/AdminFollowUpQueue.tsx`
+
+Implemented local tests:
+
+- `internal-qa/tests/web/leadFollowupAdminContract.test.js`
+- `internal-qa/tests/web/adminFollowUpQueueClientContract.test.js`
+
+Current behavior:
+
+- Queue appears only after admin token verification.
+- Reads open manual follow-ups through `/.netlify/functions/lead-followup-admin?status=open&limit=50`.
+- Actions are protected by admin token auth.
+- Supported actions:
+  - Mark done
+  - Snooze two days
+  - Cancel
+- Actions update `operon_follow_ups`.
+- Actions insert `operon_lead_events`.
+- No email is sent.
+- No SMS is sent.
+- No bulk outreach exists.
+- No direct browser Supabase reads or writes.
+- No private pricing fields, raw OCR text, storage paths, or signed URLs are rendered.
+
+Remaining later:
+
+- Add note from follow-up action.
+- Manual follow-up filter views.
+- Operator assignment workflow.
+- Due-only view refinement.

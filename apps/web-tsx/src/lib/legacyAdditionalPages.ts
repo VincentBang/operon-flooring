@@ -400,8 +400,8 @@ export const legacyAdditionalPages = {
   "flooring-eastern-suburbs": {
     "slug": "flooring-eastern-suburbs",
     "source": "apps/web/flooring-eastern-suburbs.html",
-    "title": "Flooring Installation Eastern Suburbs Sydney | Quote Guide | Operon Flooring",
-    "description": "Get a flooring quote for Sydney Eastern Suburbs projects. Estimate laminate, hybrid and engineered timber flooring with Operon Flooring.",
+    "title": "Flooring Eastern Suburbs Sydney | Quote & Product Guide",
+    "description": "Plan an Eastern Suburbs flooring quote with product, area, apartment access, acoustic underlay, removal, preparation, trims and floor plan details clear.",
     "canonicalPath": "/flooring-eastern-suburbs.html",
     "robots": "index,follow",
     "image": "/assets/operon-social-preview.png",

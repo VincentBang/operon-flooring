@@ -120,24 +120,24 @@ async function loadPricingLibrary() {
   const tables = getSupabaseTables();
   const [
     categories,
-    products,
     installRates,
     underlayOptions,
     trimOptions,
     removalRates,
     locationZones,
     pricingRulesRows,
-    stairRates
+    stairRates,
+    productRanges
   ] = await Promise.all([
     fetchTable(tables.pricingCategories, { select: "*", active: "eq.true", order: "id.asc" }),
-    fetchTable(tables.pricingProducts, { select: "*", active: "eq.true", order: "sort_order.asc" }),
     fetchTable(tables.pricingInstallRates, { select: "*", active: "eq.true", order: "id.asc" }),
     fetchTable(tables.pricingUnderlayOptions, { select: "*", active: "eq.true", order: "id.asc" }),
     fetchTable(tables.pricingTrimOptions, { select: "*", active: "eq.true", order: "id.asc" }),
     fetchTable(tables.pricingRemovalRates, { select: "*", active: "eq.true", order: "id.asc" }),
     fetchTable(tables.pricingLocationZones, { select: "*", active: "eq.true", order: "id.asc" }),
     fetchTable(tables.pricingRules, { select: "*", order: "rule_key.asc" }),
-    fetchOptionalTable(tables.pricingStairRates, { select: "*", active: "eq.true", order: "range_id.asc,stair_type.asc" })
+    fetchOptionalTable(tables.pricingStairRates, { select: "*", active: "eq.true", order: "range_id.asc,stair_type.asc" }),
+    fetchOptionalTable(tables.productRanges, { select: "*", active: "eq.true", order: "sort_order.asc" })
   ]);
 
   const categoryMap = categories.reduce(function (accumulator, category) {
@@ -151,30 +151,41 @@ async function loadPricingLibrary() {
     return accumulator;
   }, {});
 
-  const productList = products.map(function (product) {
+  const rangeList = productRanges.map(function (range) {
     return {
-      id: product.id,
-      category: product.category_id,
-      rangeId: product.range_id || "",
-      brand: product.brand,
-      range: product.range_name,
-      colour: product.colour,
-      tone: product.tone || "",
-      swatch: product.swatch || "",
-      thickness: product.thickness || "",
-      productType: product.product_type || "",
-      pricePerM2: parseNumber(product.price_per_m2),
-      installRate: product.install_rate_override === null ? null : parseNumber(product.install_rate_override),
-      imageUrl: product.image_url || "",
-      image: product.image_url || "",
-      alt: product.alt_text || "",
-      description: product.description || "",
-      features: normaliseList(product.features),
-      suitableFor: normaliseList(product.suitable_for),
-      supplier: product.supplier || "",
-      supplierUrl: product.supplier_url || "",
-      active: product.active !== false
+      id: range.id || range.range_id || "",
+      category: range.category_id || range.category || "",
+      brand: range.brand || "",
+      range: range.range_name || range.range_label || "",
+      colour: range.colour_count > 1 ? range.colour_count + " colours available" : "Selected range",
+      colourCount: parseNumber(range.colour_count),
+      tone: "",
+      swatch: "",
+      thickness: "",
+      productType: "Range",
+      pricePerM2: parseNumber(range.price_per_m2),
+      installRate: range.install_rate_override === null ? null : parseNumber(range.install_rate_override),
+      pricingStatus: range.pricing_status || "",
+      imageUrl: "",
+      image: "",
+      alt: "",
+      description: "",
+      features: [],
+      suitableFor: [],
+      supplier: "",
+      supplierUrl: "",
+      active: range.active !== false,
+      isRangeEstimate: true,
+      rangeId: range.id || range.range_id || "",
+      rangePricingId: range.id || range.range_id || "",
+      rangePricingLabel: range.range_name || range.range_label || ""
     };
+  }).filter(function (range) {
+    return range.id;
+  });
+
+  const productList = rangeList.map(function (range) {
+    return clone(range);
   });
 
   const productsByCategory = productList.reduce(function (accumulator, product) {
@@ -182,6 +193,11 @@ async function loadPricingLibrary() {
       accumulator[product.category] = [];
     }
     accumulator[product.category].push(product);
+    return accumulator;
+  }, {});
+
+  const rangeMap = rangeList.reduce(function (accumulator, range) {
+    accumulator[range.id] = range;
     return accumulator;
   }, {});
 
@@ -200,6 +216,8 @@ async function loadPricingLibrary() {
     categoryMap: categoryMap,
     productList: productList,
     productsByCategory: productsByCategory,
+    rangeList: rangeList,
+    rangeMap: rangeMap,
     installRates: installRates,
     underlayOptions: underlayOptions,
     trimOptions: trimOptions,
@@ -255,6 +273,55 @@ function getProductById(library, productId) {
   return clone(library.productList.find(function (product) {
     return product.id === productId;
   }) || null);
+}
+
+function getRangePricingById(library, rangeId) {
+  const id = String(rangeId || "").trim();
+  if (!id || !library.rangeMap) {
+    return null;
+  }
+  return clone(library.rangeMap[id] || null);
+}
+
+function hasPositiveRangePrice(rangePricing) {
+  return !!(rangePricing && parseNumber(rangePricing.pricePerM2) > 0);
+}
+
+function applyRangePricing(product, rangePricing) {
+  if (!product || !hasPositiveRangePrice(rangePricing)) {
+    return product;
+  }
+  const result = clone(product);
+  result.pricePerM2 = parseNumber(rangePricing.pricePerM2);
+  if (parseNumber(rangePricing.installRate) > 0) {
+    result.installRate = parseNumber(rangePricing.installRate);
+  }
+  result.rangePricingId = rangePricing.id;
+  result.rangePricingLabel = rangePricing.range || "";
+  result.rangePricingMode = "range";
+  return result;
+}
+
+function getRangeEstimateProduct(library, category, rangeId) {
+  const rangePricing = getRangePricingById(library, rangeId);
+  if (!rangePricing) {
+    return null;
+  }
+  return {
+    id: rangePricing.id,
+    category: rangePricing.category || category || "hybrid",
+    brand: rangePricing.brand || "Operon Range",
+    range: rangePricing.range || "Selected range",
+    colour: rangePricing.colourCount > 1 ? rangePricing.colourCount + " colours available" : "Selected range",
+    pricePerM2: parseNumber(rangePricing.pricePerM2),
+    installRate: parseNumber(rangePricing.installRate) > 0 ? parseNumber(rangePricing.installRate) : null,
+    isEstimate: false,
+    isRangeEstimate: true,
+    rangeId: rangePricing.id,
+    rangePricingId: rangePricing.id,
+    rangePricingLabel: rangePricing.range || "",
+    rangePricingMode: hasPositiveRangePrice(rangePricing) ? "range" : "pending"
+  };
 }
 
 function getEntryLevelProduct(library, category) {
@@ -735,6 +802,13 @@ function getSupplyLineContent(result) {
     };
   }
 
+  if (result.pricingMode === "range") {
+    return {
+      label: result.productLabel + " supply",
+      note: "Based on selected range pricing."
+    };
+  }
+
   if (result.pricingMode === "category") {
     return {
       label: "Standard " + categoryLabel + " supply",
@@ -831,7 +905,12 @@ async function calculatePrivateQuote(input) {
 
   const quoteMode = input.jobType || input.quoteMode || "supply_install";
   const requestedProduct = input.productId ? getProductById(library, input.productId) : null;
-  const product = requestedProduct || getEstimateProduct(library, input.category || "hybrid");
+  const requestedRangeId = input.selectedRangeId || input.rangeId || (requestedProduct && requestedProduct.rangeId) || "";
+  const requestedRangePricing = getRangePricingById(library, requestedRangeId);
+  const rangeEstimateProduct = requestedProduct ? null : getRangeEstimateProduct(library, input.category || "hybrid", requestedRangeId);
+  const product = requestedProduct
+    ? applyRangePricing(requestedProduct, requestedRangePricing)
+    : (rangeEstimateProduct || getEstimateProduct(library, input.category || "hybrid"));
   const categoryEstimate = getEstimateProduct(library, product.category);
   const isEngineered = product.category === "engineered";
   const requestedPattern = input.pattern || "standard";
@@ -860,16 +939,21 @@ async function calculatePrivateQuote(input) {
   const smallJobFactor = measurement.realArea > 0 && measurement.realArea < parseNumber(rules.smallJobThresholdM2)
     ? parseNumber(rules.smallJobFactor)
     : 1;
+  const hasRangePrice = hasPositiveRangePrice(requestedRangePricing);
   const productPricePending = quoteMode === "supply_install" && !product.isEstimate && !(parseNumber(product.pricePerM2) > 0);
   const categoryEstimateMode = categoryEstimate && categoryEstimate.pricingMode === "category" ? "category" : "fallback";
   const pricingMode = quoteMode !== "supply_install"
     ? "category"
-    : (productPricePending
-      ? "fallback"
+    : (hasRangePrice
+      ? "range"
+      : productPricePending
+      ? "pending"
       : (!product.isEstimate && parseNumber(product.pricePerM2) > 0
         ? "product"
         : categoryEstimateMode));
-  const materialRate = parseNumber(product.pricePerM2) > 0 ? parseNumber(product.pricePerM2) : parseNumber(categoryEstimate.pricePerM2);
+  const materialRate = parseNumber(product.pricePerM2) > 0
+    ? parseNumber(product.pricePerM2)
+    : (productPricePending ? 0 : parseNumber(categoryEstimate.pricePerM2));
   const installRateConfig = getInstallRateConfig(library, {
     category: product.category,
     pattern: resolvedPattern,
@@ -1020,10 +1104,14 @@ async function calculatePrivateQuote(input) {
     pricingMode: pricingMode,
     pricingSourceProductId: pricingMode === "product"
       ? product.id
-      : ((categoryEstimate && categoryEstimate.baselineProductId) || ""),
+      : (pricingMode === "range"
+        ? (product.rangePricingId || requestedRangeId || "")
+        : ((categoryEstimate && categoryEstimate.baselineProductId) || "")),
     pricingSourceProductLabel: pricingMode === "product"
       ? getProductLabel(product)
-      : ((categoryEstimate && categoryEstimate.baselineProductLabel) || ""),
+      : (pricingMode === "range"
+        ? (product.rangePricingLabel || product.range || getProductLabel(product))
+        : ((categoryEstimate && categoryEstimate.baselineProductLabel) || "")),
     measurementSource: measurement.sourceLabel,
     disclaimer: "Estimate only — final quote confirmed after review and site check."
   };

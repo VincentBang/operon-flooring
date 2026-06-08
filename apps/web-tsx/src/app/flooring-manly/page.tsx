@@ -1,18 +1,10 @@
 import type { Metadata } from "next";
-import { LegacySeoPageView } from "@/components/seo/LegacySeoPageView";
-import { createPageMetadata } from "@/lib/metadata";
-import { legacyAdditionalPages } from "@/lib/legacyAdditionalPages";
+import { getLocalSuburbMetadata, LocalSuburbPageView } from "@/lib/localSuburbPages";
 
-const page = legacyAdditionalPages["flooring-manly"];
+const slug = "flooring-manly";
 
-export const metadata: Metadata = createPageMetadata({
-  title: page.title,
-  description: page.description,
-  path: page.canonicalPath,
-  image: page.image,
-  robots: page.robots
-});
+export const metadata: Metadata = getLocalSuburbMetadata(slug);
 
 export default function Page() {
-  return <LegacySeoPageView page={page} />;
+  return <LocalSuburbPageView slug={slug} />;
 }

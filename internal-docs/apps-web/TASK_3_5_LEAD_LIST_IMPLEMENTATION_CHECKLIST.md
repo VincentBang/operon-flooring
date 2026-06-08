@@ -4,6 +4,8 @@ Date: 2026-06-04
 
 Do not start until Task 3.4 admin auth shell is approved and built.
 
+Local status: first protected lead-list slice implemented behind admin token verification.
+
 ## Objective
 
 Show a protected internal list of leads with enough context to decide the next action.
@@ -28,7 +30,7 @@ Show a protected internal list of leads with enough context to decide the next a
 
 Use:
 
-- `admin-leads-list`
+- `lead-dashboard?action=list`
 
 Query:
 
@@ -68,6 +70,32 @@ Response:
 - Pagination parameters are bounded.
 - Filters map to safe query parameters.
 - Public local gates pass.
+
+## Local Implementation
+
+Implemented local files:
+
+- `apps/web-tsx/src/app/admin/AdminLeadList.tsx`
+- `internal-qa/tests/web/adminLeadListClientContract.test.js`
+
+Current behavior:
+
+- Lead list renders only after `admin-session-status` verifies the token.
+- Admin token remains in React memory and is not stored in browser storage.
+- Reads use `/.netlify/functions/lead-dashboard?action=list&limit=50`.
+- Reads are protected with `Authorization: Bearer <token>`.
+- The UI renders source, customer name, suburb, product category, estimate, status and next action only.
+- No direct Supabase browser reads.
+- No lead detail, notes, files, raw OCR text, storage paths, or private pricing fields.
+- Empty, loading, auth-error and refresh states are present.
+
+Remaining for later slices:
+
+- Filters.
+- Pagination.
+- Lead detail.
+- Status update actions.
+- Notes and follow-up controls.
 
 ## Stop Conditions
 

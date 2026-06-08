@@ -65,10 +65,51 @@ Tests:
 
 1. Add locked `/admin` route. Status: local scaffold complete.
 2. Add tests proving locked state/noindex. Status: local scaffold contract complete.
-3. Add auth status Function returning unauthenticated by default. Status: not started.
+3. Add auth status Function returning safe locked/unlocked state. Status: local `admin-session-status` implemented.
 4. Run local gates after each slice.
 
 Do not add real lead data reads in the first slice.
+
+## Local Auth Status Function
+
+Implemented local files:
+
+- `netlify/functions/shared/adminAuth.js`
+- `netlify/functions/admin-session-status.js`
+- `internal-qa/tests/web/adminSessionStatusContract.test.js`
+
+Current behavior:
+
+- Validates either `Authorization: Bearer <token>` or `x-operon-admin-token`.
+- Uses `OPERON_ADMIN_TOKEN` or `OPERON_LEAD_ADMIN_TOKEN` server-side only.
+- Returns `503` if admin access is not configured.
+- Returns `401` when no token is supplied.
+- Returns `403` when the token is invalid.
+- Returns only `{ ok, authenticated, role, access }` when valid.
+- Uses `Cache-Control: no-store`.
+- Does not read Supabase.
+- Does not render or return lead, upload, OCR, quote, contact, pricing, or customer data.
+
+The `/admin.html` page is still intentionally static and locked. It is not connected to this Function yet.
+
+## Local Shell Auth UI
+
+Implemented local file:
+
+- `apps/web-tsx/src/app/admin/AdminAuthShell.tsx`
+- `internal-qa/tests/web/adminAuthShellClientContract.test.js`
+
+Current behavior:
+
+- The `/admin.html` page can check `admin-session-status`.
+- The admin token is held in React state only.
+- The token is not written to `localStorage` or `sessionStorage`.
+- The token is cleared after a successful check.
+- The shell shows only disabled future modules.
+- The shell does not call `lead-dashboard`, `lead-admin`, Supabase, or any lead table.
+- The shell renders no customer, quote, upload, OCR, contact, pricing, or lead records.
+
+This completes the local auth-shell slice, but not the lead list, lead detail, or status pipeline.
 
 Before any preview/deploy that includes the scaffold:
 

@@ -125,6 +125,128 @@ Current behavior:
 
 This is not a completed admin auth implementation. It is only a safe placeholder for the future Stage 3 admin surface.
 
+## Local Admin Auth Status Function
+
+The first admin-auth Function slice has been added locally:
+
+- `netlify/functions/shared/adminAuth.js`
+- `netlify/functions/admin-session-status.js`
+- `internal-qa/tests/web/adminSessionStatusContract.test.js`
+
+Purpose:
+
+- Provide a safe admin session probe for later UI work.
+- Keep the admin token server-side.
+- Return only authentication state, never lead data.
+- Avoid Supabase reads until the admin UI and read path are explicitly approved.
+
+Current local behavior:
+
+- Missing configured admin token returns `503`.
+- Missing request token returns `401`.
+- Invalid request token returns `403`.
+- Valid request token returns `{ ok: true, authenticated: true, role: "admin", access: "admin_shell" }`.
+- Responses use `Cache-Control: no-store`.
+
+The `/admin.html` shell remains locked and makes no Function calls.
+
+Local auth-shell UI has also been added:
+
+- `apps/web-tsx/src/app/admin/AdminAuthShell.tsx`
+- `internal-qa/tests/web/adminAuthShellClientContract.test.js`
+
+The shell now checks `/.netlify/functions/admin-session-status`, but still renders no lead/customer data and does not call `lead-dashboard`.
+
+## Local Lead List Slice
+
+The first protected lead-list UI slice has been added locally:
+
+- `apps/web-tsx/src/app/admin/AdminLeadList.tsx`
+- `internal-qa/tests/web/adminLeadListClientContract.test.js`
+
+Current behavior:
+
+- Lead list appears only after a successful admin token check.
+- It reads through `/.netlify/functions/lead-dashboard?action=list&limit=50`.
+- It does not use direct browser Supabase reads.
+- It renders only safe list columns from the unified `operon_leads` parent model.
+- It does not render lead detail, file paths, storage buckets, raw OCR text, private pricing, notes, or follow-up controls yet.
+
+## Local Lead Detail Slice
+
+The first protected lead-detail UI slice has been added locally:
+
+- `apps/web-tsx/src/app/admin/AdminLeadDetail.tsx`
+- `internal-qa/tests/web/adminLeadDetailClientContract.test.js`
+
+Current behavior:
+
+- Detail appears only after selecting a row from the authenticated lead list.
+- It reads through `/.netlify/functions/lead-dashboard?action=detail&lead_id=<uuid>`.
+- It renders customer, project, quote, missing/risk flags, linked statuses, safe file metadata, notes and event timeline.
+- It does not render storage bucket/path, signed URLs, raw OCR text, raw uploaded quote text, private pricing, or internal rates.
+- Status update controls, note creation, and follow-up scheduling are not connected yet.
+
+## Local Status Pipeline Slice
+
+The first protected lead status pipeline slice has been added locally:
+
+- `netlify/functions/lead-status-admin.js`
+- `internal-qa/tests/web/leadStatusAdminContract.test.js`
+- Status update form in `apps/web-tsx/src/app/admin/AdminLeadDetail.tsx`
+
+Current behavior:
+
+- Status changes require admin token auth.
+- Valid statuses match the existing `operon_leads.status` check constraint.
+- The server updates `operon_leads.status`, `updated_at`, and `last_activity_at`.
+- The server inserts `operon_lead_status_history`.
+- The server inserts `operon_lead_events` with `event_type = lead_status_changed`.
+- Terminal statuses require browser confirmation.
+- No customer-facing public flow or pricing logic is changed.
+
+Preview/live verification is still required before real operator use.
+
+## Local Follow-Up Queue Slice
+
+The first protected dry-run/manual follow-up queue slice has been added locally:
+
+- `netlify/functions/lead-followup-admin.js`
+- `apps/web-tsx/src/app/admin/AdminFollowUpQueue.tsx`
+- `internal-qa/tests/web/leadFollowupAdminContract.test.js`
+- `internal-qa/tests/web/adminFollowUpQueueClientContract.test.js`
+
+Current behavior:
+
+- Queue appears only after admin token verification.
+- It lists open follow-ups from `operon_follow_ups` with safe linked lead summaries.
+- It supports manual mark done, snooze two days, and cancel actions.
+- It inserts admin events for follow-up actions.
+- It does not send email or SMS.
+- It does not perform bulk outreach or contractor dispatch.
+- It does not expose private pricing, storage paths, signed URLs, or raw OCR/upload text.
+
+Preview/live verification is still required before real operator use.
+
+## Local Review Queues And Reporting Slice
+
+The first read-only queue/reporting slice has been added locally:
+
+- `apps/web-tsx/src/app/admin/AdminReviewQueues.tsx`
+- `apps/web-tsx/src/app/admin/AdminReportingSummary.tsx`
+- `internal-qa/tests/web/adminReviewQueuesClientContract.test.js`
+
+Current behavior:
+
+- Quote-review queue reads `lead-dashboard?action=list&source=quote_review&limit=25`.
+- Floorplan queue reads `lead-dashboard?action=list&source=floorplan&limit=25`.
+- Reporting summary reads `lead-dashboard?action=summary`.
+- All panels appear only after admin token verification.
+- Panels are read-only and aggregate/safe-list oriented.
+- No raw OCR text, storage paths, signed URLs, private pricing, margins, supplier costs, or internal rates are rendered.
+
+Preview/live verification is still required before real operator use.
+
 Before any deploy or preview that includes this shell, verify:
 
 1. `/admin.html` remains locked and `noindex,nofollow`.

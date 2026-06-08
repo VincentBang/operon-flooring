@@ -2,9 +2,25 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Layout } from "@/components/layout/Layout";
 import { createPageMetadata } from "@/lib/metadata";
+import { projectCaseStudies } from "@/lib/projectProofCaseStudies";
 import { routes } from "@/lib/routes";
 
 const heroImage = "/images/projects/engineered-herringbone-timber-stair-sydney/finished-engineered-herringbone-timber-flooring-sydney-kitchen-living.jpg";
+
+const projectFaqs = [
+  {
+    question: "Can project photos help me compare flooring quotes?",
+    answer: "Yes. Project photos help clarify finish expectations, but the written quote still needs product, area, preparation, stairs, trims and exclusions clearly listed."
+  },
+  {
+    question: "Can I ask for a quote based on a similar project?",
+    answer: "Yes. Start a quote with the product direction, approximate area and any similar project style. Final product and scope details are reviewed before booking."
+  },
+  {
+    question: "Do these projects show final site conditions?",
+    answer: "They show finished project proof and selected preparation details. Every new project still needs its own product, area and site conditions reviewed."
+  }
+];
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -37,6 +53,14 @@ const jsonLd = {
         { "@type": "ImageObject", contentUrl: "https://operonflooring.com.au/images/projects/engineered-chevron-flooring-sydney/finished-engineered-chevron-flooring-sunlit-room-sydney.jpg", caption: "Finished engineered chevron flooring in a sunlit Sydney room" },
         { "@type": "ImageObject", contentUrl: "https://operonflooring.com.au/images/projects/hybrid-floor-levelling-case-study/hybrid-flooring-after-levelling-open-plan-sydney.jpg", caption: "Hybrid flooring installed after floor levelling in a Sydney open plan living area" }
       ]
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: projectFaqs.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer }
+      }))
     }
   ]
 };
@@ -105,12 +129,25 @@ function ProjectCard({ project }: ProjectCardProps) {
   );
 }
 
+function CaseStudyCard({ project }: { project: (typeof projectCaseStudies)[number] }) {
+  return (
+    <figure className="project-card-photo project-case-link">
+      <img src={project.primaryImage.src} alt={project.primaryImage.alt} loading="lazy" width={project.primaryImage.width} height={project.primaryImage.height} />
+      <span className="project-case-caption">
+        <strong>{project.shortTitle}</strong>
+        <span>{project.flooringType} · {project.suburb}</span>
+        <span className="project-card-chips">{project.tags.slice(0, 3).map((chip) => <span key={chip}>{chip}</span>)}</span>
+      </span>
+    </figure>
+  );
+}
+
 export const metadata: Metadata = createPageMetadata({
-  title: "Recent Sydney Flooring Projects | Operon Flooring",
-  description: "View recent Operon Flooring project photos across engineered timber, herringbone, chevron, hybrid flooring, stair details and subfloor preparation in Sydney.",
+  title: "Recent Sydney Flooring Projects | Timber, Hybrid & Stairs",
+  description: "View Sydney flooring project proof across engineered timber, herringbone, chevron, hybrid flooring, stair details and preparation work before quoting.",
   path: routes.recentProjects,
   image: heroImage,
-  openGraphDescription: "Finished flooring project photos across engineered timber, herringbone, chevron, hybrid flooring, stair details and subfloor preparation."
+  openGraphDescription: "Finished Sydney flooring project photos across engineered timber, hybrid flooring, stairs and preparation work."
 });
 
 export default function RecentFlooringProjectsPage() {
@@ -122,7 +159,7 @@ export default function RecentFlooringProjectsPage() {
           <article className="hero-card">
             <span className="eyebrow">Project Proof</span>
             <h1>Recent Sydney flooring projects</h1>
-            <p>Finished flooring projects across Sydney homes, from engineered timber patterns and stair details to hybrid flooring and preparation work behind the finish.</p>
+            <p>Finished Sydney flooring projects showing engineered timber patterns, stair details, hybrid flooring and the preparation work behind a cleaner finished quote scope.</p>
             <div className="project-chip-row" aria-label="Project categories">
               {["Engineered timber", "Herringbone", "Chevron", "Hybrid flooring", "Stairs", "Subfloor levelling"].map((chip) => <span key={chip}>{chip}</span>)}
             </div>
@@ -141,6 +178,22 @@ export default function RecentFlooringProjectsPage() {
         <div className="project-page-shell">
           <div className="project-section-head"><div><span className="eyebrow">What these projects show</span><h2 id="projectProofPointsTitle">Finish quality, not just product choice</h2></div><p>These examples show the visible result and the practical details that make a floor feel considered once it is installed.</p></div>
           <div className="project-proof-points" aria-label="Project proof highlights">{proofPoints.map(([title, copy]) => <article className="project-proof-point" key={title}><strong>{title}</strong><span>{copy}</span></article>)}</div>
+          <div className="project-mid-cta"><div><h2>Use project proof before comparing quotes</h2><p>Photos help clarify finish expectations, but the written quote still needs product, area, preparation, stairs and trims clearly listed.</p></div><div className="project-cta-actions"><a className="button button-secondary" href={routes.products} data-track-cta="projects_products_click">Browse product ranges</a><a className="button button-secondary" href={routes.floorplan} data-track-cta="projects_floorplan_click">Measure from floor plan</a></div></div>
+        </div>
+      </section>
+
+      <section className="section project-section">
+        <div className="project-page-shell">
+          <div className="project-section-head">
+            <div>
+              <span className="eyebrow">Case studies</span>
+              <h2>Real project proof with quote lessons</h2>
+            </div>
+            <p>Each case study uses only available project photos and recorded details. Where suburb, range or property type is not confirmed, the page says so.</p>
+          </div>
+          <div className="project-grid">
+            {projectCaseStudies.map((project) => <CaseStudyCard project={project} key={project.slug} />)}
+          </div>
         </div>
       </section>
 
@@ -149,6 +202,23 @@ export default function RecentFlooringProjectsPage() {
       <section className="section project-section"><div className="project-page-shell"><div className="project-section-head"><div><span className="eyebrow">Feature Details</span><h2>Chevron, spotted gum and direct-stick work</h2></div><p>Selected details that show pattern alignment, stair transitions and timber character up close.</p></div><div className="project-grid">{featureProjects.map((project) => <ProjectCard key={project.title} project={project} />)}</div></div></section>
 
       <section className="section project-section"><div className="project-page-shell"><div className="project-section-head"><div><span className="eyebrow">Behind The Finish</span><h2>Preparation before finished flooring</h2></div><p>Levelling and preparation photos are kept here as supporting evidence: they show the work behind the finished result without dominating the homepage.</p></div><div className="project-grid">{preparationProjects.map((project) => <ProjectCard key={project.title} project={project} />)}</div></div></section>
+
+      <section className="section project-section">
+        <div className="project-page-shell">
+          <article className="section-card">
+            <span className="eyebrow">Project quote questions</span>
+            <h2>Use project proof to ask better quote questions</h2>
+            <div className="grid-3">
+              {projectFaqs.map((item) => (
+                <article className="faq-card" key={item.question}>
+                  <h3>{item.question}</h3>
+                  <p>{item.answer}</p>
+                </article>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
 
       <section className="section"><div className="project-page-shell project-cta-card"><div><h2>Want a quote for a similar project?</h2><p>Start with what you know now. Product, area and final scope can be reviewed before booking.</p></div><div className="project-cta-actions"><a className="button button-primary" href={routes.quote} data-track-cta="projects_bottom_quote_click">Start flooring quote</a><a className="button button-secondary" href={routes.quoteReview} data-track-cta="projects_bottom_review_click">Check existing quote</a></div></div></section>
     </Layout>

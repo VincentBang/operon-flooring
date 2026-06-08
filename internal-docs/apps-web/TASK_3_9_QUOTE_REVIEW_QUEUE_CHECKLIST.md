@@ -4,6 +4,8 @@ Date: 2026-06-04
 
 Purpose: define the internal quote-review queue before implementation.
 
+Local status: first read-only quote-review queue slice implemented.
+
 ## Scope
 
 Show internal quote-review leads where a customer used:
@@ -73,3 +75,25 @@ Show internal quote-review leads where a customer used:
 - Unauthenticated access blocked.
 - Response blocks raw OCR, storage paths, and pricing internals.
 - Quote-review public page still works.
+
+## Local Implementation
+
+Implemented local UI:
+
+- `apps/web-tsx/src/app/admin/AdminReviewQueues.tsx`
+
+Implemented local test:
+
+- `internal-qa/tests/web/adminReviewQueuesClientContract.test.js`
+
+Current behavior:
+
+- Queue appears only after admin token verification.
+- Reads use `/.netlify/functions/lead-dashboard?action=list&source=quote_review&limit=25`.
+- Shows customer name, suburb, source detail, product category, quote-review status, confidence, missing count, risk count and next action.
+- Read-only in this slice.
+- Follow-up and status actions are handled through the lead detail/status/follow-up controls.
+- No raw OCR text.
+- No storage bucket/path.
+- No signed URLs.
+- No private pricing fields.

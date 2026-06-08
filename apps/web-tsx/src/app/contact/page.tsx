@@ -60,8 +60,8 @@ const contactJsonLd = {
 };
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Contact Operon Flooring | Sydney Flooring Quotes",
-  description: "Contact Operon Flooring for Sydney flooring quotes, quote review, floor plan upload support, product guidance and installation scope confirmation.",
+  title: "Contact Operon Flooring | Sydney Quote Help",
+  description: "Contact Operon Flooring for Sydney flooring quote help, quote review, floor plan support, product guidance and installation scope questions.",
   path: routes.contact,
   image: "/assets/operon-social-preview.png"
 });
@@ -83,7 +83,7 @@ export default function ContactPage() {
               <div className="hero-copy">
                 <span className="eyebrow">Contact Operon Flooring</span>
                 <h1>Contact Operon Flooring</h1>
-                <p>Need a flooring quote, quote review or help choosing a product? Send your details and Operon will review the best next step.</p>
+                <p>Need a flooring quote, quote review, floor plan help or product guidance? Send your details and Operon will review the best next step.</p>
                 <div className="hero-actions">
                   <a className="button button-primary" href={routes.quote}>Start flooring quote</a>
                   <a className="button button-secondary" href={routes.quoteReview}>Check an existing quote</a>

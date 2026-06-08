@@ -6,22 +6,22 @@ import { absoluteUrl, siteConfig } from "@/lib/site";
 import { routes } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "Instant Flooring Quote Sydney | Operon Flooring",
-  description: "Start a Sydney flooring quote for hybrid, laminate or engineered timber. Add product, area, removal, trims, stairs and site details before review.",
+  title: "Flooring Quote Sydney | Online Estimate & Scope Review",
+  description: "Start a Sydney flooring quote for hybrid, laminate or engineered timber. Add product, area, quote review notes and floor plan details before final scope review.",
   robots: "index,follow",
   alternates: {
     canonical: `${siteConfig.origin}/`
   },
   openGraph: {
-    title: "Instant Flooring Quote Sydney | Operon Flooring",
-    description: "Start a Sydney flooring quote for hybrid, laminate or engineered timber. Add product, area, removal, trims, stairs and site details before review.",
+    title: "Flooring Quote Sydney | Online Estimate & Scope Review",
+    description: "Start a Sydney flooring quote for hybrid, laminate or engineered timber. Add product, area, quote review notes and floor plan details before final scope review.",
     url: `${siteConfig.origin}/`,
     images: [absoluteUrl("/assets/operon-social-preview.png")]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Instant Flooring Quote Sydney | Operon Flooring",
-    description: "Start a Sydney flooring quote for hybrid, laminate or engineered timber. Add product, area, removal, trims, stairs and site details before review.",
+    title: "Flooring Quote Sydney | Online Estimate & Scope Review",
+    description: "Start a Sydney flooring quote for hybrid, laminate or engineered timber. Add product, area, quote review notes and floor plan details before final scope review.",
     images: [absoluteUrl("/assets/operon-social-preview.png")]
   }
 };
@@ -135,6 +135,7 @@ const projectFitCards = [
 ];
 
 const seoLinks = [
+  ["Flooring Quote Sydney", routes.flooringQuoteSydney],
   ["Hybrid Flooring Sydney", routes.hybrid],
   ["Laminate Flooring Sydney", routes.laminate],
   ["Engineered Timber Flooring Sydney", routes.engineered],
@@ -143,6 +144,7 @@ const seoLinks = [
   ["Check Existing Quote", routes.quoteReview],
   ["Floor Plan Tool", routes.floorplan],
   ["Recent Projects", routes.recentProjects],
+  ["Contact Operon Flooring", routes.contact],
   ["Flooring Bankstown", routes.bankstown],
   ["Flooring Bellevue Hill", routes.bellevueHill],
   ["Flooring Manly", routes.manly],
@@ -170,7 +172,7 @@ export default function HomePage() {
           <div>
             <p className="eyebrow">Sydney flooring quotes</p>
             <h1>Get a clear flooring quote in minutes</h1>
-            <p className="home-lead">Premium Sydney flooring quotes for hybrid, laminate and engineered timber. Start with the details you know now.</p>
+            <p className="home-lead">Premium Sydney flooring quote support for hybrid, laminate and engineered timber. Start with product, area and scope details so the written quote is easier to review before booking.</p>
             <div className="home-actions">
               <a className="button button-primary" data-track-cta="hero_start_quote_click" href={routes.quote}>Start quote</a>
               <a className="home-quiet-link" data-track-cta="hero_quote_review_click" href={routes.quoteReview}>Check existing quote</a>
@@ -192,7 +194,7 @@ export default function HomePage() {
         <div className="home-section-head">
           <p className="eyebrow">Choose your path</p>
           <h2 id="intentRouterTitle">Start from where you are now.</h2>
-          <p>Quote, check a written quote, browse products or use a floor plan.</p>
+          <p>Start a quote, check a written quote, browse product ranges or use a floor plan to create a clearer area estimate.</p>
         </div>
         <div className="home-intent-paths" aria-label="Flooring quote entry paths">
           {intentPaths.map((path) => (
@@ -278,7 +280,7 @@ export default function HomePage() {
         <div className="home-review-copy">
           <p className="eyebrow">Quote validation</p>
           <h2 id="reviewQuoteTitle">Want to check a written quote before deciding?</h2>
-          <p>Upload or enter a written quote to review product, area, inclusions and questions to ask before you decide.</p>
+          <p>Upload or enter a written quote to review product, area, inclusions, missing items and questions to ask before you decide.</p>
           <div className="home-review-checklist" aria-label="Quote review checklist">
             <div><strong>Product</strong><span>Check what is written into the quote.</span></div>
             <div><strong>Area</strong><span>Compare measured area and quote basis.</span></div>
@@ -296,7 +298,7 @@ export default function HomePage() {
         <div className="home-section-head">
           <p className="eyebrow">Product paths</p>
           <h2 id="servicesTitle">Browse products after you know the quote path.</h2>
-          <p>Choose a broad flooring direction, then start the quote with that category already in mind.</p>
+          <p>Compare hybrid, laminate and engineered timber directions, then start the quote with the category or range already attached.</p>
         </div>
         <div className="home-product-grid">
           {productCards.map((product) => (
@@ -316,7 +318,7 @@ export default function HomePage() {
         <div>
           <p className="eyebrow">Floor plan area</p>
           <h2 id="floorplanTitle">Have a floor plan?</h2>
-          <p>Upload a floor plan, trace rooms and send the measured area into your quote.</p>
+          <p>Upload a floor plan, trace rooms receiving flooring and send the measured area into your quote without retyping it.</p>
         </div>
         <a className="button button-primary" data-track-cta="floorplan_cta_click" href={routes.floorplan}>Use floor plan tool</a>
       </section>
@@ -341,7 +343,7 @@ export default function HomePage() {
         <div>
           <p className="eyebrow">Sydney flooring quote support</p>
           <h2 id="seoTitle">Premium flooring quote support across Sydney</h2>
-          <p>Operon helps Sydney customers choose a product path, prepare a clear scope and move toward installation with more confidence.</p>
+          <p>Operon helps Sydney customers choose a product path, check written quote scope, prepare measured area and move toward installation with more confidence.</p>
         </div>
         <div className="home-seo-grid" aria-label="Useful flooring pages">
           {seoLinks.map(([label, href]) => (
@@ -382,7 +384,7 @@ export default function HomePage() {
             "@type": "LocalBusiness",
             name: siteConfig.name,
             email: siteConfig.email,
-            telephone: siteConfig.phone,
+            ...(siteConfig.phone.includes("X") ? {} : { telephone: siteConfig.phone }),
             image: absoluteUrl("/assets/operon-social-preview.png"),
             areaServed: { "@type": "City", name: "Sydney" },
             url: siteConfig.origin,

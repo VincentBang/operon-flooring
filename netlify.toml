@@ -196,6 +196,12 @@
   force = true
 
 [[redirects]]
+  from = "/flooring-chatswood"
+  to = "/flooring-chatswood.html"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/flooring-coogee"
   to = "/flooring-coogee.html"
   status = 301
@@ -286,8 +292,20 @@
   force = true
 
 [[redirects]]
+  from = "/flooring-newtown"
+  to = "/flooring-newtown.html"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/flooring-neutral-bay"
   to = "/flooring-neutral-bay.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-north-sydney"
+  to = "/flooring-north-sydney.html"
   status = 301
   force = true
 
@@ -330,6 +348,18 @@
 [[redirects]]
   from = "/flooring-strathfield"
   to = "/flooring-strathfield.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-surry-hills"
+  to = "/flooring-surry-hills.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/flooring-bondi"
+  to = "/flooring-bondi.html"
   status = 301
   force = true
 

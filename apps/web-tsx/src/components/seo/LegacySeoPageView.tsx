@@ -1,9 +1,11 @@
+import type { ReactNode } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import type { LegacySeoPage } from "@/lib/legacySeoPages";
 
 type LegacySeoPageViewProps = {
   page: LegacySeoPage;
+  children?: ReactNode;
 };
 
 function normalizeLegacyLinks(html: string) {
@@ -14,11 +16,12 @@ function normalizeLegacyLinks(html: string) {
     .replace(/href=(["'])\/?blog\.html\1/g, 'href=$1/blog/$1');
 }
 
-export function LegacySeoPageView({ page }: LegacySeoPageViewProps) {
+export function LegacySeoPageView({ page, children }: LegacySeoPageViewProps) {
   return (
     <Layout>
       {page.jsonLd ? <JsonLd data={page.jsonLd} /> : null}
       <div className="legacy-seo-content" dangerouslySetInnerHTML={{ __html: normalizeLegacyLinks(page.html) }} />
+      {children}
     </Layout>
   );
 }

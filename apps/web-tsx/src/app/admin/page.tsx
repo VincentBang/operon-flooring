@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Layout } from "@/components/layout/Layout";
 import { createPageMetadata } from "@/lib/metadata";
+import { AdminAuthShell } from "./AdminAuthShell";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Operon OS Admin | Operon Flooring",
@@ -23,6 +24,7 @@ export default function AdminShellPage() {
             <p className="hero-trust">
               No lead data is rendered here. Public quote, product, floorplan and quote-review flows are unchanged.
             </p>
+            <AdminAuthShell />
             <div className="hero-actions">
               <a className="button button-secondary" href="/">Return to website</a>
             </div>

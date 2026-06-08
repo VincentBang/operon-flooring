@@ -42,26 +42,24 @@ const fixtureTables = {
       active: true
     }
   ],
-  pricing_products: [
+  product_ranges: [
     {
-      id: "hybrid-fixture-oak",
+      id: "hybrid-fixture-range",
       category_id: "hybrid",
-      range_id: "hybrid-fixture-range",
       brand: "Fixture",
       range_name: "Fixture Hybrid Oak",
-      colour: "Natural Oak",
+      colour_count: 3,
       price_per_m2: 50,
       install_rate_override: null,
       active: true,
       sort_order: 1
     },
     {
-      id: "laminate-fixture-oak",
+      id: "laminate-fixture-range",
       category_id: "laminate",
-      range_id: "laminate-fixture-range",
       brand: "Fixture",
       range_name: "Fixture Laminate Oak",
-      colour: "Warm Oak",
+      colour_count: 2,
       price_per_m2: 40,
       install_rate_override: null,
       active: true,
@@ -180,14 +178,14 @@ function installFetchMock() {
 }
 
 function loadFrontendCalculatorFixture() {
-  const products = fixtureTables.pricing_products.map(function (product) {
+  const products = fixtureTables.product_ranges.map(function (product) {
     return {
       id: product.id,
       category: product.category_id,
-      rangeId: product.range_id || "",
+      rangeId: product.id || "",
       brand: product.brand,
       range: product.range_name,
-      colour: product.colour,
+      colour: product.colour_count > 1 ? product.colour_count + " colours available" : "Selected range",
       pricePerM2: Number(product.price_per_m2 || 0),
       installRate: product.install_rate_override === null ? null : Number(product.install_rate_override || 0),
       active: product.active !== false
@@ -459,7 +457,7 @@ async function testSupplyInstallFixture() {
   const result = await callCalculateQuote({
     quoteType: "supply_install",
     category: "hybrid",
-    selectedProductId: "hybrid-fixture-oak",
+    selectedRangeId: "hybrid-fixture-range",
     area: 50,
     suburb: "Parramatta",
     postcode: "2150",
@@ -510,7 +508,7 @@ async function testUnknownAreaFixture() {
   const result = await callCalculateQuote({
     quoteType: "supply_install",
     category: "laminate",
-    selectedProductId: "laminate-fixture-oak",
+    selectedRangeId: "laminate-fixture-range",
     postcode: "2150",
     propertyType: "house"
   });
@@ -528,7 +526,7 @@ async function testShadowComparisonFixtures() {
   await assertShadowComparisonFixture("hybrid supply install with underlay", calculator, {
     quoteType: "supply_install",
     category: "hybrid",
-    selectedProductId: "hybrid-fixture-oak",
+    selectedRangeId: "hybrid-fixture-range",
     area: 50,
     suburb: "Parramatta",
     postcode: "2150",
@@ -547,7 +545,7 @@ async function testShadowComparisonFixtures() {
   await assertShadowComparisonFixture("laminate supply install with removal", calculator, {
     quoteType: "supply_install",
     category: "laminate",
-    selectedProductId: "laminate-fixture-oak",
+    selectedRangeId: "laminate-fixture-range",
     area: 35,
     postcode: "2150",
     propertyType: "house",

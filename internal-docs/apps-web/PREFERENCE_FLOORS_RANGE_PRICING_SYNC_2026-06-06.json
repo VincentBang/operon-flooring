@@ -1,0 +1,174 @@
+{
+  "generatedAt": "2026-06-05T19:54:35.466Z",
+  "source": "apps/web-tsx/public/preference-floors-import.js",
+  "totalRanges": 18,
+  "categories": {
+    "engineered": 8,
+    "hybrid": 5,
+    "laminate": 5
+  },
+  "ranges": [
+    {
+      "id": "engineered-preference-de-marque-oak",
+      "category_id": "engineered",
+      "brand": "De Marque Oak",
+      "range_name": "De Marque Oak",
+      "colour_count": 35,
+      "active": true,
+      "sort_order": 1010
+    },
+    {
+      "id": "engineered-preference-elk-falls-hickory",
+      "category_id": "engineered",
+      "brand": "Elk Falls Hickory",
+      "range_name": "Elk Falls Hickory",
+      "colour_count": 12,
+      "active": true,
+      "sort_order": 1011
+    },
+    {
+      "id": "engineered-preference-fiddleback-australian-hardwood",
+      "category_id": "engineered",
+      "brand": "Fiddleback Australian Hardwood",
+      "range_name": "Fiddleback Australian Hardwood",
+      "colour_count": 6,
+      "active": true,
+      "sort_order": 1012
+    },
+    {
+      "id": "engineered-preference-hardwood-collection",
+      "category_id": "engineered",
+      "brand": "Hardwood Collection",
+      "range_name": "Hardwood Collection",
+      "colour_count": 12,
+      "active": true,
+      "sort_order": 1013
+    },
+    {
+      "id": "engineered-preference-prestige-oak",
+      "category_id": "engineered",
+      "brand": "Prestige Oak",
+      "range_name": "Prestige Oak",
+      "colour_count": 55,
+      "active": true,
+      "sort_order": 1014
+    },
+    {
+      "id": "engineered-preference-pronto-engineered-oak-flooring",
+      "category_id": "engineered",
+      "brand": "Pronto Engineered Oak Flooring",
+      "range_name": "Pronto Engineered Oak Flooring",
+      "colour_count": 17,
+      "active": true,
+      "sort_order": 1015
+    },
+    {
+      "id": "engineered-preference-select-australian-timber",
+      "category_id": "engineered",
+      "brand": "Select Australian Timber",
+      "range_name": "Select Australian Timber",
+      "colour_count": 2,
+      "active": true,
+      "sort_order": 1016
+    },
+    {
+      "id": "engineered-preference-village-oak",
+      "category_id": "engineered",
+      "brand": "Village Oak",
+      "range_name": "Village Oak",
+      "colour_count": 22,
+      "active": true,
+      "sort_order": 1017
+    },
+    {
+      "id": "hybrid-preference-aspire-rcb",
+      "category_id": "hybrid",
+      "brand": "Aspire RCB",
+      "range_name": "Aspire RCB",
+      "colour_count": 14,
+      "active": true,
+      "sort_order": 1005
+    },
+    {
+      "id": "hybrid-preference-easi-plank-spc",
+      "category_id": "hybrid",
+      "brand": "Easi-Plank SPC",
+      "range_name": "Easi-Plank SPC",
+      "colour_count": 30,
+      "active": true,
+      "sort_order": 1006
+    },
+    {
+      "id": "hybrid-preference-hydroplank-wpc",
+      "category_id": "hybrid",
+      "brand": "Hydroplank WPC",
+      "range_name": "Hydroplank WPC",
+      "colour_count": 12,
+      "active": true,
+      "sort_order": 1007
+    },
+    {
+      "id": "hybrid-preference-iconic-wpc",
+      "category_id": "hybrid",
+      "brand": "Iconic WPC",
+      "range_name": "Iconic WPC",
+      "colour_count": 14,
+      "active": true,
+      "sort_order": 1008
+    },
+    {
+      "id": "hybrid-preference-lifestyle-collection-epc",
+      "category_id": "hybrid",
+      "brand": "Lifestyle Collection EPC",
+      "range_name": "Lifestyle Collection EPC",
+      "colour_count": 9,
+      "active": true,
+      "sort_order": 1009
+    },
+    {
+      "id": "laminate-preference-aquastop-kronoswiss",
+      "category_id": "laminate",
+      "brand": "Aquastop - Kronoswiss",
+      "range_name": "Aquastop - Kronoswiss",
+      "colour_count": 20,
+      "active": true,
+      "sort_order": 1001
+    },
+    {
+      "id": "laminate-preference-aspect",
+      "category_id": "laminate",
+      "brand": "Aspect",
+      "range_name": "Aspect",
+      "colour_count": 14,
+      "active": true,
+      "sort_order": 1000
+    },
+    {
+      "id": "laminate-preference-oakleaf-hd-plus",
+      "category_id": "laminate",
+      "brand": "Oakleaf HD PLUS",
+      "range_name": "Oakleaf HD PLUS",
+      "colour_count": 12,
+      "active": true,
+      "sort_order": 1002
+    },
+    {
+      "id": "laminate-preference-oakleaf-laminate",
+      "category_id": "laminate",
+      "brand": "Oakleaf Laminate",
+      "range_name": "Oakleaf Laminate",
+      "colour_count": 14,
+      "active": true,
+      "sort_order": 1003
+    },
+    {
+      "id": "laminate-preference-preference-classic-laminate",
+      "category_id": "laminate",
+      "brand": "Preference Classic Laminate",
+      "range_name": "Preference Classic Laminate",
+      "colour_count": 9,
+      "active": true,
+      "sort_order": 1004
+    }
+  ]
+}
