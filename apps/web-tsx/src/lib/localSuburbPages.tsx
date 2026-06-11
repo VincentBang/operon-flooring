@@ -365,9 +365,9 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     eyebrow: "Liverpool flooring quotes",
     title: "Timber Flooring Liverpool | Hybrid, Laminate & Quote Help",
     description:
-      "Start a Liverpool timber flooring quote for hybrid, laminate or engineered timber with area, apartment access, removal, stairs and finishing details clear.",
+      "Start a Liverpool timber flooring quote for hybrid, laminate or engineered timber with area, apartment access, removal, stairs, trims and quote-review details clear.",
     hero:
-      "Liverpool timber flooring projects can range from apartment updates near the centre to townhouses and family homes across the south-west. A stronger quote separates product selection from site scope, so hybrid flooring, laminate flooring or engineered timber can be reviewed alongside area, removal, stairs, trims and access instead of being hidden behind one total.",
+      "Liverpool timber flooring projects can range from apartment updates near the centre to townhouses and family homes across the south-west. A stronger flooring Liverpool quote separates product selection from site scope, so hybrid flooring, laminate flooring or engineered timber can be reviewed alongside area, removal, stairs, trims and access instead of being hidden behind one total.",
     localAngle:
       "In Liverpool, the quote should account for access and property type early. Apartments can need lift or strata notes, while townhouses and homes often need stair, trim, removal and staged-work details before the estimate is useful.",
     propertyContext: [
@@ -404,7 +404,9 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     quoteConsiderations: [
       {
         title: "Access and building notes",
-        copy: "For apartments, quote notes should cover lift booking, parking, loading and any building requirements."
+        copy: "For apartments, quote notes should cover lift booking, parking, loading and any building requirements.",
+        href: "/blog/apartment-flooring-acoustic-underlay.html",
+        track: "liverpool_apartment_guide_click"
       },
       {
         title: "Stairs and split levels",
@@ -412,11 +414,15 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
       },
       {
         title: "Removal and disposal",
-        copy: "Existing carpet, laminate, vinyl, timber or tile should be identified before the quote is compared."
+        copy: "Existing carpet, laminate, vinyl, timber or tile should be identified before the quote is compared.",
+        href: "/blog/common-flooring-quote-exclusions.html",
+        track: "liverpool_exclusions_click"
       },
       {
         title: "Measured area",
-        copy: "Floor plans or room-by-room measurements help avoid comparing a quote with unclear area assumptions."
+        copy: "Floor plans or room-by-room measurements help avoid comparing a quote with unclear area assumptions.",
+        href: routes.floorplan,
+        track: "liverpool_floorplan_click"
       }
     ],
     projectProof:
@@ -446,6 +452,11 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
         question: "Can I compare an existing Liverpool flooring quote?",
         answer:
           "Yes. The quote review tool checks whether the written scope is complete enough before you compare the total."
+      },
+      {
+        question: "What should I check for timber flooring Liverpool quotes?",
+        answer:
+          "Check product category or range, measured area, apartment access, stairs, trims, removal, disposal and any floor preparation assumptions before comparing totals."
       }
     ]
   },
@@ -458,7 +469,7 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     description:
       "Compare or start a Parramatta flooring quote for hybrid, laminate or engineered timber with area, apartment access, acoustic underlay, removal and finishing details clear.",
     hero:
-      "Parramatta flooring decisions often involve apartments, investor properties and busy renovation timelines. A useful quote should show whether the project is leaning toward hybrid flooring, laminate flooring or engineered timber, then connect that product choice to measured area, access, acoustic underlay, removal and finishing details before totals are compared.",
+      "Parramatta flooring decisions often involve apartments, investor properties and busy renovation timelines. A useful flooring Parramatta quote should show whether the project is leaning toward hybrid flooring, laminate flooring or engineered timber, then connect that product choice to measured area, access, acoustic underlay, removal and finishing details before totals are compared.",
     localAngle:
       "For Parramatta, quote clarity is especially important where apartments or investor properties need fast decisions. The best starting point is a written scope that separates product, area, access, underlay, removal and finishing details.",
     propertyContext: [
@@ -495,7 +506,9 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     quoteConsiderations: [
       {
         title: "Acoustic underlay",
-        copy: "Apartment projects should not assume underlay suitability; the quote should identify what is included."
+        copy: "Apartment projects should not assume underlay suitability; the quote should identify what is included.",
+        href: "/blog/apartment-flooring-acoustic-underlay.html",
+        track: "parramatta_acoustic_guide_click"
       },
       {
         title: "Lift and parking access",
@@ -503,11 +516,15 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
       },
       {
         title: "Area basis",
-        copy: "Room measurements or a floor plan help separate true area from rough assumptions."
+        copy: "Room measurements or a floor plan help separate true area from rough assumptions.",
+        href: routes.floorplan,
+        track: "parramatta_floorplan_click"
       },
       {
         title: "Removal and site preparation",
-        copy: "Existing flooring, adhesive, uneven surfaces and disposal should be confirmed before comparing totals."
+        copy: "Existing flooring, adhesive, uneven surfaces and disposal should be confirmed before comparing totals.",
+        href: "/blog/why-flooring-quotes-vary.html",
+        track: "parramatta_quotes_vary_click"
       }
     ],
     projectProof:
@@ -537,6 +554,11 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
         question: "Can Operon check a quote from another contractor?",
         answer:
           "Yes. The quote review focuses on what is clear, missing or still subject to confirmation."
+      },
+      {
+        question: "What product types should I compare for flooring Parramatta projects?",
+        answer:
+          "Hybrid, laminate and engineered timber can all suit different Parramatta homes or apartments. Compare the product fit together with acoustic needs, access, area, removal and written inclusions."
       }
     ]
   },
@@ -638,11 +660,11 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     eyebrow: "Edmondson Park flooring quotes",
     title: "Timber Flooring Edmondson Park | Hybrid, Laminate & Quote Help",
     description:
-      "Plan an Edmondson Park timber flooring quote for hybrid, laminate or engineered timber with area, stairs, trims, removal and floorplan details clear.",
+      "Plan an Edmondson Park timber flooring quote for hybrid, laminate or engineered timber with area, stairs, trims, removal, floorplan and quote-review details clear.",
     hero:
-      "Edmondson Park timber flooring projects often involve newer homes, open-plan living areas, upstairs bedrooms and growing families who need a practical, easy-to-maintain finish. A useful flooring quote should capture whether you are leaning toward hybrid flooring, laminate flooring or engineered timber, then connect that choice to measured area, stairs, trims, removal and any floorplan details before final confirmation.",
+      "Edmondson Park timber flooring projects often involve newer homes, open-plan living areas, upstairs bedrooms and growing families who need a practical, easy-to-maintain finish. A useful flooring quote should capture whether you are leaning toward hybrid flooring, laminate flooring or engineered timber, then connect that choice to measured area, stairs, trims, removal, floorplan details and any quote-review flags before final confirmation.",
     localAngle:
-      "For Edmondson Park, the quote should reflect newer-home layouts: larger living areas, bedrooms, stairs, skirting or scotia choices and floorplan-based measurement where plans are available. This is especially useful for timber-look flooring because two quotes can sound similar while allowing for different upstairs areas, stair finishes or trim assumptions.",
+      "For Edmondson Park, the quote should reflect newer-home layouts: larger living areas, bedrooms, stairs, skirting or scotia choices and floorplan-based measurement where plans are available. This is especially useful for timber flooring Edmondson Park searches, because two timber-look quotes can sound similar while allowing for different upstairs areas, stair finishes, product categories or trim assumptions.",
     propertyContext: [
       {
         title: "Newer family homes",
@@ -661,7 +683,7 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
       {
         ...sharedProductSuggestions.hybrid,
         bestFor: "open-plan family areas, kids, pets and practical everyday use where a timber-look floor is preferred.",
-        quoteNote: "Confirm skirting or scotia, stair details, underlay and room area before final scope."
+        quoteNote: "Confirm skirting or scotia, stair details, underlay, removal and room area before final scope."
       },
       {
         ...sharedProductSuggestions.laminate,
@@ -677,7 +699,9 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     quoteConsiderations: [
       {
         title: "Large connected areas",
-        copy: "Open-plan layouts should use measured area or a floor plan so the estimate is not based on rough assumptions."
+        copy: "Open-plan layouts should use measured area or a floor plan so the timber flooring estimate is not based on rough assumptions.",
+        href: routes.floorplan,
+        track: "edmondson_floorplan_scope_click"
       },
       {
         title: "Stairs and upper levels",
@@ -685,11 +709,15 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
       },
       {
         title: "Trims, scotia and skirting",
-        copy: "Finishing details can change the look and scope, so they should be clear before booking."
+        copy: "Finishing details can change the look and scope, so they should be clear before booking.",
+        href: "/blog/scotia-vs-skirting.html",
+        track: "edmondson_scotia_guide_click"
       },
       {
         title: "Removal or replacement work",
-        copy: "If replacing builder carpet or existing floating floors, removal and disposal should be listed."
+        copy: "If replacing builder carpet or existing floating floors, removal and disposal should be listed.",
+        href: "/blog/common-flooring-quote-exclusions.html",
+        track: "edmondson_exclusions_click"
       }
     ],
     projectProof:
@@ -724,6 +752,11 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
         question: "What should I check in a timber flooring quote for Edmondson Park?",
         answer:
           "Check whether the quote names the product category or range, measured area, upstairs rooms, stairs, trims, removal, disposal and any floor preparation assumptions."
+      },
+      {
+        question: "Can I compare hybrid, laminate and engineered timber for Edmondson Park?",
+        answer:
+          "Yes. Start with the product category that suits the rooms, then compare the written scope for area, stairs, trims, removal, disposal and any floor preparation notes."
       }
     ]
   },
@@ -736,7 +769,7 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     description:
       "Plan a Leppington timber flooring quote for newer homes, open-plan areas, stairs, trims, removal and floorplan measurement with hybrid, laminate or engineered timber options.",
     hero:
-      "Leppington timber flooring projects often involve newer homes, open-plan family areas and practical low-maintenance choices. A useful quote should capture whether hybrid, laminate or engineered timber is the right direction, plus measured area, stairs, trims, removal and finishing details before final confirmation.",
+      "Leppington timber flooring projects often involve newer homes, open-plan family areas and practical low-maintenance choices. A useful timber flooring Leppington quote should capture whether hybrid, laminate or engineered timber is the right direction, plus measured area, stairs, trims, removal and finishing details before final confirmation.",
     localAngle:
       "For Leppington, the biggest quote risk is assuming a simple square-metre total covers the whole job. Newer layouts can include large connected living areas, stairs, skirting or scotia choices, and room-by-room measurement that should be clear before comparing totals.",
     propertyContext: [
@@ -773,7 +806,9 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     quoteConsiderations: [
       {
         title: "Large connected areas",
-        copy: "Use measured rooms or a floor plan so open-plan spaces are not estimated too roughly."
+        copy: "Use measured rooms or a floor plan so open-plan spaces are not estimated too roughly.",
+        href: routes.floorplan,
+        track: "leppington_floorplan_click"
       },
       {
         title: "Stairs and upper levels",
@@ -781,11 +816,15 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
       },
       {
         title: "Skirting or scotia",
-        copy: "Finishing choices affect both look and scope, so they should be written clearly."
+        copy: "Finishing choices affect both look and scope, so they should be written clearly.",
+        href: "/blog/scotia-vs-skirting.html",
+        track: "leppington_scotia_guide_click"
       },
       {
         title: "Replacement work",
-        copy: "If builder carpet or older floating floors are being removed, removal and disposal should be listed."
+        copy: "If builder carpet or older floating floors are being removed, removal and disposal should be listed.",
+        href: "/blog/common-flooring-quote-exclusions.html",
+        track: "leppington_exclusions_click"
       }
     ],
     projectProof:
@@ -815,6 +854,11 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
         question: "Can Operon check another Leppington flooring quote?",
         answer:
           "Yes. Quote review checks whether product, area, stairs, trims, removal and exclusions are clear enough to compare."
+      },
+      {
+        question: "What should timber flooring Leppington quotes include?",
+        answer:
+          "They should show product category or range, measured area, open-plan rooms, stairs, trims, removal, disposal and any floor preparation assumptions clearly enough to compare."
       }
     ]
   },

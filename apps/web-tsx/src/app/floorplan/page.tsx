@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { HomeChatbot } from "@/components/HomeChatbot";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { createPageMetadata } from "@/lib/metadata";
 import { routes } from "@/lib/routes";
@@ -79,6 +80,7 @@ export default function FloorplanPage() {
       <style dangerouslySetInnerHTML={{ __html: floorplanStyle }} />
       <div dangerouslySetInnerHTML={{ __html: floorplanBodyHtml }} />
       <FloorplanRuntime />
+      <HomeChatbot pageKey="floorplan" />
     </>
   );
 }

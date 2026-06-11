@@ -467,6 +467,40 @@ a {
   font-size: 0.98rem;
 }
 
+.admin-filter-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--operon-line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.admin-filter-field {
+  display: grid;
+  gap: 6px;
+}
+
+.admin-filter-field span {
+  color: var(--operon-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.admin-filter-field select {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--operon-line);
+  border-radius: 8px;
+  background: #f4f7f6;
+  color: var(--operon-ink);
+  padding: 9px 11px;
+  font: inherit;
+}
+
 .admin-empty-state,
 .admin-lead-table-wrap {
   border: 1px solid var(--operon-line);
@@ -660,10 +694,15 @@ a {
 }
 
 .admin-followup-meta,
-.admin-followup-actions {
+.admin-followup-actions,
+.admin-followup-toolbar {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.admin-followup-toolbar {
+  justify-content: flex-end;
 }
 
 .admin-followup-meta span {
@@ -682,6 +721,15 @@ a {
   color: var(--operon-ink);
   font: inherit;
   font-weight: 800;
+}
+
+.admin-followup-suggestion {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 12px 14px;
+  border-left: 4px solid var(--operon-gold);
+  background: #f7f3eb;
 }
 
 .admin-review-queues,
@@ -1787,6 +1835,7 @@ a {
 
   .admin-lead-detail-head,
   .admin-detail-grid,
+  .admin-filter-row,
   .admin-review-queue-grid,
   .admin-report-grid,
   .admin-report-metrics {

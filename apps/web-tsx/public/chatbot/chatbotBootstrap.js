@@ -20,49 +20,73 @@
       pageKey: "index",
       title: "Operon Assistant",
       subtitle: "Flooring and quote help",
-      welcomeText: "Get clear guidance on flooring type, quote scope, and the details worth preparing before review.",
+      welcomeText: "Are you trying to start a quote, choose a flooring product, check an existing quote, or measure from a floor plan?",
       initialRouteLabel: "Start quote",
-      initialRouteHref: "quote.html"
+      initialRouteHref: "/quote.html"
     },
     products: {
       pageKey: "products",
       title: "Product Guide",
       subtitle: "Choose with confidence",
-      welcomeText: "Compare laminate, hybrid, and engineered timber with clear guidance on the next suitable step.",
+      welcomeText: "Are you trying to start a quote, choose a flooring product, check an existing quote, or measure from a floor plan?",
       initialRouteLabel: "Browse products",
-      initialRouteHref: "products.html"
+      initialRouteHref: "/products.html"
     },
     quote: {
       pageKey: "quote",
       title: "Quote Helper",
       subtitle: "Check details",
-      welcomeText: "Review the estimate scope, identify missing details, and keep uncertain items clear before submission.",
+      welcomeText: "Are you trying to start a quote, choose a flooring product, check an existing quote, or measure from a floor plan?",
       initialRouteLabel: "Continue quote",
-      initialRouteHref: "quote.html"
+      initialRouteHref: "/quote.html"
     },
     "quote-review": {
       pageKey: "quote-review",
       title: "Quote Review Helper",
       subtitle: "Check inclusions",
-      welcomeText: "Check product, area, inclusions, missing scope items, and the questions worth clarifying.",
+      welcomeText: "Are you trying to start a quote, choose a flooring product, check an existing quote, or measure from a floor plan?",
       initialRouteLabel: "Get structured estimate",
-      initialRouteHref: "quote.html?source=quote_review"
+      initialRouteHref: "/quote.html?source=quote_review"
+    },
+    floorplan: {
+      pageKey: "floorplan",
+      title: "Floor Plan Helper",
+      subtitle: "Measure and route",
+      welcomeText: "Are you trying to start a quote, choose a flooring product, check an existing quote, or measure from a floor plan?",
+      initialRouteLabel: "Measure floor plan",
+      initialRouteHref: "/floorplan.html"
+    },
+    contact: {
+      pageKey: "contact",
+      title: "Operon Assistant",
+      subtitle: "Contact and quote help",
+      welcomeText: "Are you trying to start a quote, choose a flooring product, check an existing quote, or measure from a floor plan?",
+      initialRouteLabel: "Contact Operon",
+      initialRouteHref: "/contact.html"
+    },
+    blog: {
+      pageKey: "blog",
+      title: "Guide Helper",
+      subtitle: "Find the right next step",
+      welcomeText: "Are you trying to start a quote, choose a flooring product, check an existing quote, or measure from a floor plan?",
+      initialRouteLabel: "Start quote",
+      initialRouteHref: "/quote.html"
     },
     "thank-you": {
       pageKey: "thank-you",
       title: "Next Step Helper",
       subtitle: "After-submit support",
-      welcomeText: "Thanks - we've received your estimate. If you want, we can confirm a few details now.",
+      welcomeText: "Are you trying to start a quote, choose a flooring product, check an existing quote, or measure from a floor plan?",
       initialRouteLabel: "Confirm details",
-      initialRouteHref: "thank-you.html#leadStageSection"
+      initialRouteHref: "/thank-you.html#leadStageSection"
     },
     default: {
       pageKey: "default",
       title: "Operon Assistant",
       subtitle: "Product and quote guidance",
-      welcomeText: "Get clear guidance on flooring type, quote scope, and the details worth preparing before review.",
+      welcomeText: "Are you trying to start a quote, choose a flooring product, check an existing quote, or measure from a floor plan?",
       initialRouteLabel: "Start quote",
-      initialRouteHref: "quote.html"
+      initialRouteHref: "/quote.html"
     }
   };
 
@@ -90,6 +114,15 @@
     }
     if (fileName === "quote-review.html") {
       return "quote-review";
+    }
+    if (fileName === "floorplan.html") {
+      return "floorplan";
+    }
+    if (fileName === "contact.html") {
+      return "contact";
+    }
+    if (pathname === "/blog/" || pathname.indexOf("/blog/") === 0) {
+      return "blog";
     }
     if (fileName === "thank-you.html") {
       return "thank-you";

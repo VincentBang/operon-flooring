@@ -27,33 +27,38 @@
 
   const QUOTE_FLOW_STEPS = [
     {
-      key: "project_basics",
-      label: "Project basics",
-      customerCopy: "Start with suburb, postcode, property type, and quote mode. Full contact details stay for submit."
+      key: "property",
+      label: "Property",
+      customerCopy: "Start with suburb, postcode, property type, and quote mode."
     },
     {
-      key: "flooring_area",
-      label: "Flooring and area",
-      customerCopy: "Choose the flooring category, product direction, installation pattern/method where relevant, and the easiest area path."
+      key: "flooring_product",
+      label: "Flooring/product",
+      customerCopy: "Choose the flooring category, product direction, and installation pattern or method where relevant."
     },
     {
-      key: "main_scope",
-      label: "Main scope",
-      customerCopy: "Confirm the high-impact scope items such as removal, stairs, apartment access, and floor preparation. Not sure stays as a review item."
+      key: "area",
+      label: "Area",
+      customerCopy: "Add the clearest area you have, use room-by-room entry, or use a floor plan path."
     },
     {
-      key: "estimate_preview",
-      label: "Estimate preview",
-      customerCopy: "Review estimate readiness, confidence, included basics, and needs-confirmation items. Advanced details stay optional."
+      key: "stairs",
+      label: "Stairs",
+      customerCopy: "Flag stairs and access details early so they stay visible for review."
     },
     {
-      key: "contact_submit",
-      label: "Contact and submit",
-      customerCopy: "Add contact details and notes when the customer is ready to send the quote request for Operon review."
+      key: "extras",
+      label: "Extras",
+      customerCopy: "Review removal, disposal, underlay, preparation, finishing, door trimming and furniture where relevant."
+    },
+    {
+      key: "summary_review",
+      label: "Summary/review",
+      customerCopy: "Review estimate readiness, needs-confirmation items and contact details before submitting for Operon review."
     }
   ];
 
-  const QUOTE_EXPLANATION = "The online quote is a guided starting estimate, not the final confirmed quote. It follows five customer-facing steps: Project basics, Flooring and area, Main scope, Estimate preview, then Contact and submit. Customers can start with the details they know, use Not sure for uncertain scope, and submit for Operon confirmation.";
+  const QUOTE_EXPLANATION = "The online quote is a guided starting estimate, not the final confirmed quote. It follows six customer-facing steps: Property, Flooring/product, Area, Stairs, Extras, then Summary/review. Customers can start with the details they know, use Not sure for uncertain scope, and submit for Operon confirmation.";
   const FACTORS = [
     "flooring category, range, colour, and pattern where relevant",
     "measurement method and area",

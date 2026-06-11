@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { HomeChatbot } from "@/components/HomeChatbot";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Layout } from "@/components/layout/Layout";
 import { createPageMetadata } from "@/lib/metadata";
@@ -211,6 +212,7 @@ export default function ContactPage() {
       <section className="section"><div className="shell grid-3"><article className="faq-card"><h3>Should I contact Operon or start the quote first?</h3><p>If you know the area or have a floor plan, starting the quote is usually faster. If you have a general question or an existing quote to discuss, the contact form is suitable.</p></article><article className="faq-card"><h3>Can I send an existing flooring quote?</h3><p>Yes. You can use the quote review page or contact Operon with the details. The focus is scope clarity, not cheapest-price comparison.</p></article><article className="faq-card"><h3>Is the online estimate final?</h3><p>No. The online estimate is a starting point based on product, area and the details provided. Final scope is reviewed before work is booked.</p></article></div></section>
 
       <section className="section"><div className="shell"><article className="section-card text-center"><span className="eyebrow">Ready To Move</span><h2>Ready to price your flooring project?</h2><p>Start estimate or send an enquiry.</p><div className="hero-actions"><a className="button button-primary" href={routes.quote}>Start flooring quote</a><a className="button button-secondary" href="mailto:quotes@operonflooring.com.au">Email Operon Flooring</a></div></article></div></section>
+      <HomeChatbot pageKey="contact" />
     </Layout>
   );
 }

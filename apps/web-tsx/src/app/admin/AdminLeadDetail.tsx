@@ -117,6 +117,18 @@ function humanize(value?: string) {
   return String(value || "not recorded").replace(/[_-]/g, " ");
 }
 
+function formatEventMetadata(metadata?: Record<string, unknown>) {
+  if (!metadata || typeof metadata !== "object") return "";
+  const parts = [
+    metadata.intent ? `Intent: ${humanize(String(metadata.intent))}` : "",
+    metadata.handoff_path ? `Handoff: ${String(metadata.handoff_path)}` : "",
+    metadata.next_action ? `Next: ${String(metadata.next_action)}` : "",
+    metadata.device_type ? `Device: ${humanize(String(metadata.device_type))}` : "",
+    metadata.source_page ? `Source page: ${String(metadata.source_page)}` : ""
+  ].filter(Boolean);
+  return parts.slice(0, 5).join(" · ");
+}
+
 function formatFileSize(value?: number) {
   const bytes = Number(value || 0);
   if (!Number.isFinite(bytes) || bytes <= 0) return "Size not recorded";
@@ -359,6 +371,7 @@ export function AdminLeadDetail({
                   <li key={event.id}>
                     <strong>{humanize(event.event_type)} · {formatDate(event.created_at)}</strong>
                     <span>{humanize(event.source)} · {event.customer_safe === false ? "internal event" : "customer-safe event"}</span>
+                    {formatEventMetadata(event.metadata) ? <span>{formatEventMetadata(event.metadata)}</span> : null}
                   </li>
                 ))}
               </ol>

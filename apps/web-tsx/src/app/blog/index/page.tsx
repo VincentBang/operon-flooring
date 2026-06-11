@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { HomeChatbot } from "@/components/HomeChatbot";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Layout } from "@/components/layout/Layout";
 import { createPageMetadata } from "@/lib/metadata";
@@ -118,6 +119,7 @@ export default function BlogIndexPage() {
           </article>
         </div>
       </section>
+      <HomeChatbot pageKey="blog" />
     </Layout>
   );
 }

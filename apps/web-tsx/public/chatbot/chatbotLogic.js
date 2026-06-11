@@ -53,7 +53,7 @@
       pageKey: "default",
       welcomeText: "",
       initialRouteLabel: "Start quote",
-      initialRouteHref: "quote.html",
+      initialRouteHref: "/quote.html",
       enableIdleSuggestions: false
     }, options || {});
 
@@ -73,7 +73,17 @@
       draft: mapper.createDraft(),
       routeSuggestion: {
         label: settings.initialRouteLabel,
-        href: settings.initialRouteHref
+        href: normaliseRouteHref(settings.initialRouteHref)
+      },
+      prequalification: {
+        active: false,
+        stepIndex: 0,
+        answers: {}
+      },
+      quoteReviewGuide: {
+        active: false,
+        stepIndex: 0,
+        answers: {}
       },
       triggerNudge: null,
       recommendationSignal: "",
@@ -109,6 +119,8 @@
         localStorageDraft: mapper.toLocalStorageDraft(structured),
         handoffReadiness: mapper.toHandoffReadiness(structured),
         routeSuggestion: clone(state.routeSuggestion),
+        prequalification: clone(state.prequalification),
+        quoteReviewGuide: clone(state.quoteReviewGuide),
         operatorHandoff: state.operatorHandoff ? clone(state.operatorHandoff) : null,
         triggerNudge: state.triggerNudge ? clone(state.triggerNudge) : null
       });
@@ -135,6 +147,609 @@
       }
 
       return text.slice(0, firstQuestionIndex + 1);
+    }
+
+    function normaliseRouteHref(href) {
+      const value = compact(href, "/quote.html");
+      if (/^(https?:|mailto:|tel:|#)/i.test(value)) {
+        return value;
+      }
+      if (value.charAt(0) === "/") {
+        return value;
+      }
+      return "/" + value;
+    }
+
+    const PREQUAL_STEPS = [
+      {
+        key: "suburb",
+        question: "What suburb is the job in?",
+        actions: "prequalSuburb",
+        text: true
+      },
+      {
+        key: "property_type",
+        question: "Is it a house, townhouse, apartment/unit, or commercial space?",
+        actions: "prequalProperty"
+      },
+      {
+        key: "product_category",
+        question: "What flooring type are you considering?",
+        actions: "prequalFlooring",
+        text: true
+      },
+      {
+        key: "area_status",
+        question: "Do you know the approximate area?",
+        actions: "prequalArea",
+        text: true
+      },
+      {
+        key: "stairs_status",
+        question: "Are there stairs?",
+        actions: "prequalYesNo"
+      },
+      {
+        key: "removal_status",
+        question: "Is there old flooring to remove?",
+        actions: "prequalYesNo"
+      },
+      {
+        key: "documents_status",
+        question: "Do you have a floor plan or written quote?",
+        actions: "prequalFiles"
+      }
+    ];
+
+    const QUOTE_REVIEW_CHECKLIST_STEPS = [
+      { key: "product_shown", question: "Does the quote show the product brand, range or colour?" },
+      { key: "area_shown", question: "Does it show the flooring area or measured square metres?" },
+      { key: "installation_included", question: "Does it clearly say installation is included?" },
+      { key: "removal_disposal_included", question: "Does it mention old flooring removal or disposal?" },
+      { key: "trims_stairs_listed", question: "Are trims, skirting, scotia or stairs listed if relevant?" },
+      { key: "exclusions_listed", question: "Are exclusions or variation conditions listed?" }
+    ];
+
+    function getPrequalActions(step) {
+      if (!step || !prompts.actions) {
+        return [];
+      }
+      return prompts.actions[step.actions] || prompts.actions.nextSteps || [];
+    }
+
+    function getCurrentPrequalStep() {
+      return PREQUAL_STEPS[state.prequalification.stepIndex] || null;
+    }
+
+    function startPrequalification() {
+      state.stage = "quote_prequalification";
+      state.prequalification = {
+        active: true,
+        stepIndex: 0,
+        answers: {}
+      };
+      setIntent("start_quote", {
+        readiness: "unsure",
+        reason: "chatbot quote prequalification"
+      });
+      setRoute("Start quote", "/quote.html?source=chatbot#quoteForm");
+      const firstStep = getCurrentPrequalStep();
+      pushGuided(
+        "I can collect a few basics before the quote form.",
+        "You can answer, say Not sure, or skip any question.",
+        firstStep ? firstStep.question : "Start the quote.",
+        getPrequalActions(firstStep)
+      );
+    }
+
+    function normalisePrequalValue(stepKey, rawValue) {
+      const value = compact(rawValue).toLowerCase();
+      if (!value || value === "skip" || value === "prequal_skip") {
+        return "skipped";
+      }
+      if (includesAny(value, ["not sure", "unsure", "unknown", "prequal_not_sure"])) {
+        return "not_sure";
+      }
+      if (stepKey === "property_type") {
+        if (includesAny(value, ["house", "family_home", "prequal_property_house"])) return "house";
+        if (includesAny(value, ["townhouse", "town house", "prequal_property_townhouse"])) return "townhouse";
+        if (includesAny(value, ["apartment", "unit", "strata", "prequal_property_apartment"])) return "apartment";
+        if (includesAny(value, ["commercial", "shop", "office", "prequal_property_commercial"])) return "commercial";
+        return "not_sure";
+      }
+      if (stepKey === "product_category") {
+        if (includesAny(value, ["hybrid", "prequal_flooring_hybrid"])) return "hybrid";
+        if (includesAny(value, ["laminate", "prequal_flooring_laminate"])) return "laminate";
+        if (includesAny(value, ["engineered", "timber", "prequal_flooring_engineered"])) return "engineered_timber";
+        return "not_sure";
+      }
+      if (stepKey === "area_status") {
+        const numberMatch = value.match(/\d+(\.\d+)?/);
+        if (numberMatch) {
+          return "known:" + numberMatch[0];
+        }
+        if (value === "yes" || value === "prequal_area_known" || includesAny(value, ["rough", "approx", "known"])) {
+          return "known";
+        }
+        return "not_sure";
+      }
+      if (stepKey === "stairs_status" || stepKey === "removal_status") {
+        if (value === "yes" || value === "prequal_yes" || includesAny(value, ["there are", "some", "stairs", "remove", "carpet", "tile", "old floor"])) return "yes";
+        if (value === "no" || value === "prequal_no" || includesAny(value, ["none", "no stairs", "no removal", "nothing"])) return "no";
+        return "not_sure";
+      }
+      if (stepKey === "documents_status") {
+        const hasFloorplan = includesAny(value, ["floor plan", "floorplan", "plan", "prequal_file_floorplan", "prequal_file_both"]);
+        const hasQuote = includesAny(value, ["written quote", "existing quote", "quote", "prequal_file_quote", "prequal_file_both"]);
+        if (hasFloorplan && hasQuote) return "both";
+        if (hasFloorplan) return "floorplan";
+        if (hasQuote) return "quote";
+        if (value === "no" || value === "prequal_file_neither" || includesAny(value, ["neither", "none"])) return "none";
+        return "not_sure";
+      }
+      return compact(rawValue).slice(0, 80) || "skipped";
+    }
+
+    function getDisplayPrequalValue(stepKey, value) {
+      if (!value || value === "skipped") return "Skipped";
+      if (value === "not_sure") return "Not sure";
+      if (value.indexOf("known:") === 0) return value.replace("known:", "") + " m2";
+      const labels = {
+        house: "House",
+        townhouse: "Townhouse",
+        unit_apartment: "Apartment/unit",
+        commercial_other: "Commercial space",
+        hybrid: "Hybrid",
+        laminate: "Laminate",
+        engineered: "Engineered timber",
+        known: "Area known",
+        yes: "Yes",
+        no: "No",
+        both: "Floor plan and written quote",
+        floorplan: "Floor plan",
+        quote: "Written quote",
+        none: "No",
+        apartment: "Apartment/unit",
+        commercial: "Commercial space",
+        engineered_timber: "Engineered timber",
+        unknown: "Unknown",
+        has_floorplan: "Has floor plan",
+        no_floorplan: "No floor plan",
+        has_quote: "Has written quote",
+        no_quote: "No written quote",
+        go_to_quote: "Go to quote",
+        go_to_products: "Go to products",
+        go_to_quote_review: "Go to quote review",
+        go_to_floorplan: "Go to floor plan",
+        request_contact: "Request contact",
+        continue_chat: "Continue chat"
+      };
+      return labels[value] || value;
+    }
+
+    function toQuoteCategory(value) {
+      if (value === "engineered_timber") return "engineered";
+      return ["hybrid", "laminate", "engineered"].indexOf(value) >= 0 ? value : "";
+    }
+
+    function toContractPropertyType(value) {
+      if (value === "unit_apartment") return "apartment";
+      if (value === "commercial_other") return "commercial";
+      if (["house", "townhouse", "apartment", "commercial", "not_sure"].indexOf(value) >= 0) return value;
+      return "not_sure";
+    }
+
+    function toContractProductCategory(value) {
+      if (value === "engineered") return "engineered_timber";
+      if (["hybrid", "laminate", "engineered_timber", "not_sure"].indexOf(value) >= 0) return value;
+      return "not_sure";
+    }
+
+    function toYesNoNotSure(value) {
+      return value === "yes" || value === "no" ? value : "not_sure";
+    }
+
+    function getAreaStatus(value, documentsStatus) {
+      if (value === "known" || (value && value.indexOf("known:") === 0)) {
+        return "known";
+      }
+      if (documentsStatus === "floorplan" || documentsStatus === "both") {
+        return "has_floorplan";
+      }
+      if (value === "unknown") {
+        return "unknown";
+      }
+      return "not_sure";
+    }
+
+    function getApproxArea(value) {
+      if (!value || value.indexOf("known:") !== 0) {
+        return undefined;
+      }
+      const area = Number(value.replace("known:", ""));
+      return Number.isFinite(area) && area > 0 ? area : undefined;
+    }
+
+    function getFloorplanStatus(documentsStatus) {
+      if (documentsStatus === "floorplan" || documentsStatus === "both") return "has_floorplan";
+      if (documentsStatus === "none") return "no_floorplan";
+      return "not_sure";
+    }
+
+    function getExistingQuoteStatus(documentsStatus) {
+      if (documentsStatus === "quote" || documentsStatus === "both") return "has_quote";
+      if (documentsStatus === "none") return "no_quote";
+      return "not_sure";
+    }
+
+    function buildQualificationMissingInfo(summary) {
+      const missing = [];
+      if (!summary.suburb) missing.push("suburb");
+      if (!summary.property_type || summary.property_type === "not_sure") missing.push("property_type");
+      if (!summary.product_category || summary.product_category === "not_sure") missing.push("product_category");
+      if (summary.area_status !== "known" && summary.area_status !== "has_floorplan") missing.push("area");
+      if (summary.stairs_status === "not_sure") missing.push("stairs");
+      if (summary.removal_status === "not_sure") missing.push("removal");
+      if (summary.floorplan_status === "not_sure") missing.push("floorplan_status");
+      if (summary.existing_quote_status === "not_sure") missing.push("existing_quote_status");
+      return missing;
+    }
+
+    function getQualificationConfidence(summary) {
+      const hasSuburb = !!summary.suburb;
+      const hasProduct = summary.product_category && summary.product_category !== "not_sure";
+      const hasArea = summary.area_status === "known" || summary.area_status === "has_floorplan";
+      if (hasSuburb && hasProduct && hasArea) return "high";
+      if (hasProduct || hasArea || hasSuburb) return "medium";
+      return "low";
+    }
+
+    function getSourcePage() {
+      if (settings.pageKey && settings.pageKey !== "default") {
+        return settings.pageKey;
+      }
+      try {
+        return window.location ? window.location.pathname : "";
+      } catch (error) {
+        return "";
+      }
+    }
+
+    function getSourceUrl() {
+      try {
+        return window.location ? String(window.location.href || "") : "";
+      } catch (error) {
+        return "";
+      }
+    }
+
+    function applyPrequalToDraft(answers) {
+      const next = {
+        intent: "start_quote",
+        readiness: "review",
+        reason: "chatbot quote prequalification"
+      };
+      const quoteCategory = toQuoteCategory(answers.product_category);
+      if (quoteCategory) {
+        next.category = quoteCategory;
+        next.recommended_category = quoteCategory;
+        next.selection_mode = "recommend";
+      }
+      const propertyMap = {
+        house: "house",
+        townhouse: "townhouse",
+        apartment: "unit_apartment",
+        commercial: "commercial_other"
+      };
+      if (answers.property_type && propertyMap[answers.property_type]) {
+        next.property_type = propertyMap[answers.property_type];
+        if (answers.property_type === "apartment") {
+          next.access = "apartment";
+        }
+      }
+      if (answers.area_status && answers.area_status.indexOf("known:") === 0) {
+        const area = Number(answers.area_status.replace("known:", ""));
+        if (Number.isFinite(area) && area > 0) {
+          next.area = area;
+          next.area_m2 = area;
+          next.measurement_method = "manual_total";
+        }
+      } else if (answers.area_status === "known") {
+        next.measurement_method = "manual_total";
+      }
+      if (answers.stairs_status === "yes") next.stairs = 1;
+      if (answers.stairs_status === "no") next.stairs = 0;
+      if (answers.removal_status === "yes") {
+        next.existing_floor = "other";
+        next.removal_disposal = "unsure";
+      }
+      if (answers.removal_status === "no") {
+        next.existing_floor = "none";
+        next.removal_disposal = "no";
+      }
+      const flags = [];
+      if (answers.area_status === "not_sure" || answers.area_status === "skipped") flags.push("area_to_confirm");
+      if (answers.stairs_status === "yes" || answers.stairs_status === "not_sure") flags.push("stairs_to_review");
+      if (answers.removal_status === "yes" || answers.removal_status === "not_sure") flags.push("removal_to_review");
+      if (answers.documents_status === "floorplan" || answers.documents_status === "both") flags.push("floorplan_available");
+      if (answers.documents_status === "quote" || answers.documents_status === "both") flags.push("written_quote_available");
+      if (flags.length) next.validation_flags = flags;
+      setDraft(next);
+    }
+
+    function getPrequalSummary(answers) {
+      const documentsStatus = answers.documents_status || "not_sure";
+      const areaStatus = getAreaStatus(answers.area_status || "not_sure", documentsStatus);
+      const approxArea = getApproxArea(answers.area_status || "");
+      const summary = {
+        source_page: getSourcePage(),
+        source_url: getSourceUrl(),
+        intent: "start_quote",
+        suburb: answers.suburb && answers.suburb !== "not_sure" && answers.suburb !== "skipped" ? answers.suburb : "",
+        property_type: toContractPropertyType(answers.property_type || "not_sure"),
+        product_category: toContractProductCategory(answers.product_category || "not_sure"),
+        area_status: areaStatus,
+        stairs_status: toYesNoNotSure(answers.stairs_status),
+        removal_status: toYesNoNotSure(answers.removal_status),
+        floorplan_status: getFloorplanStatus(documentsStatus),
+        existing_quote_status: getExistingQuoteStatus(documentsStatus),
+        next_action: "go_to_quote",
+        handoff_url: "",
+        missing_info: [],
+        confidence: "low"
+      };
+      if (typeof approxArea === "number") {
+        summary.approx_area_m2 = approxArea;
+      }
+      summary.missing_info = buildQualificationMissingInfo(summary);
+      summary.confidence = getQualificationConfidence(summary);
+      summary.handoff_url = buildPrequalQuoteUrl(summary);
+      return summary;
+    }
+
+    function buildPrequalQuoteUrl(summary) {
+      const pairs = [
+        ["source", "chatbot"]
+      ];
+      const quoteCategory = toQuoteCategory(summary.product_category);
+      if (quoteCategory) pairs.push(["category", quoteCategory]);
+      return "/quote.html?" + pairs.map(function (pair) {
+        return encodeURIComponent(pair[0]) + "=" + encodeURIComponent(pair[1]);
+      }).join("&") + "#quoteForm";
+    }
+
+    function finishPrequalification() {
+      const answers = state.prequalification.answers || {};
+      const summary = getPrequalSummary(answers);
+      applyPrequalToDraft(answers);
+      state.prequalification = {
+        active: false,
+        stepIndex: PREQUAL_STEPS.length,
+        answers: answers,
+        summary: summary
+      };
+      state.stage = "prequal_complete";
+      setRoute("Start quote", buildPrequalQuoteUrl(summary));
+      pushGuided(
+        "Great - I'll send you to the quote form with the details you know. Anything unsure can be reviewed later.",
+        "Saved details: "
+          + "suburb " + (summary.suburb || "not sure")
+          + ", product " + getDisplayPrequalValue("product_category", summary.product_category)
+          + ", area " + getDisplayPrequalValue("area_status", summary.area_status)
+          + ".",
+        "Open the quote form.",
+        prompts.actions.nextSteps
+      );
+    }
+
+    function answerPrequalification(rawValue) {
+      const step = getCurrentPrequalStep();
+      if (!step) {
+        finishPrequalification();
+        return;
+      }
+      const value = normalisePrequalValue(step.key, rawValue);
+      state.prequalification.answers[step.key] = value;
+      state.prequalification.stepIndex += 1;
+      pushUser(getDisplayPrequalValue(step.key, value));
+      const nextStep = getCurrentPrequalStep();
+      if (!nextStep) {
+        finishPrequalification();
+        return;
+      }
+      pushGuided(
+        "Got it.",
+        "Not sure is okay.",
+        nextStep.question,
+        getPrequalActions(nextStep)
+      );
+    }
+
+    function handlePrequalAction(actionId) {
+      if (!state.prequalification.active) {
+        return false;
+      }
+      const map = {
+        prequal_skip: "skip",
+        prequal_not_sure: "not sure",
+        prequal_property_house: "house",
+        prequal_property_townhouse: "townhouse",
+        prequal_property_apartment: "apartment",
+        prequal_property_commercial: "commercial",
+        prequal_flooring_hybrid: "hybrid",
+        prequal_flooring_laminate: "laminate",
+        prequal_flooring_engineered: "engineered timber",
+        prequal_flooring_unsure: "not sure",
+        prequal_area_known: "yes",
+        prequal_area_unknown: "not sure",
+        prequal_yes: "yes",
+        prequal_no: "no",
+        prequal_file_floorplan: "floor plan",
+        prequal_file_quote: "written quote",
+        prequal_file_both: "floor plan and written quote",
+        prequal_file_neither: "no"
+      };
+      if (!Object.prototype.hasOwnProperty.call(map, actionId)) {
+        return false;
+      }
+      answerPrequalification(map[actionId]);
+      return true;
+    }
+
+    function isPrequalTextExpected() {
+      const step = getCurrentPrequalStep();
+      return Boolean(state.prequalification.active && step && step.text);
+    }
+
+    function getCurrentQuoteReviewChecklistStep() {
+      return QUOTE_REVIEW_CHECKLIST_STEPS[state.quoteReviewGuide.stepIndex] || null;
+    }
+
+    function startQuoteReviewGuide() {
+      state.stage = "quote_review_file_check";
+      state.quoteReviewGuide = {
+        active: true,
+        stepIndex: 0,
+        answers: {}
+      };
+      setIntent("existing_quote_review", {
+        readiness: "review",
+        reason: "quote review guided file check"
+      });
+      setRoute("Review my quote", "/quote-review.html?from=chatbot&mode=upload");
+      pushGuided(
+        "Do you already have a written quote PDF, image or screenshot?",
+        "Please do not paste the quote text here. Uploading it on the review page is safer and gives the strongest review.",
+        "Choose the closest option.",
+        prompts.actions.quoteReviewFileCheck
+      );
+    }
+
+    function startQuoteReviewChecklist() {
+      state.stage = "quote_review_quick_check";
+      state.quoteReviewGuide.active = true;
+      state.quoteReviewGuide.stepIndex = 0;
+      state.quoteReviewGuide.answers = {};
+      setIntent("existing_quote_review", {
+        readiness: "review",
+        reason: "quote review quick completeness checklist",
+        missing_items_to_check: ["product shown", "area shown", "installation included", "removal and disposal", "trims or stairs", "exclusions"]
+      });
+      setRoute("Review my quote", "/quote-review.html?from=chatbot&mode=quick_check#quick-check");
+      const firstStep = getCurrentQuoteReviewChecklistStep();
+      pushGuided(
+        "No problem. We can do a quick completeness check without the file.",
+        "Only answer yes, no, not sure, or skip. Do not paste the quote text here.",
+        firstStep ? firstStep.question : "Open quick check.",
+        prompts.actions.quoteReviewChecklist
+      );
+    }
+
+    function finishQuoteReviewChecklist() {
+      const answers = state.quoteReviewGuide.answers || {};
+      const missing = Object.keys(answers).filter(function (key) {
+        return answers[key] !== "yes";
+      }).map(function (key) {
+        return key.replace(/_/g, " ");
+      });
+      state.quoteReviewGuide = {
+        active: false,
+        stepIndex: QUOTE_REVIEW_CHECKLIST_STEPS.length,
+        answers: answers,
+        summary: {
+          intent: "existing_quote_review",
+          missing_items: missing.slice(0, 8),
+          next_action: "review_my_quote"
+        }
+      };
+      state.stage = "quote_review_quick_check_complete";
+      setIntent("existing_quote_review", {
+        readiness: missing.length ? "review" : "ready",
+        reason: "quote review quick checklist completed",
+        missing_items_to_check: missing
+      });
+      setRoute("Review my quote", "/quote-review.html?from=chatbot&mode=quick_check#quick-check");
+      pushGuided(
+        "That is enough for a quick completeness check.",
+        missing.length
+          ? "Items to check: " + missing.slice(0, 4).join(", ") + "."
+          : "The main quote sections appear to be covered, but upload still gives a stronger review.",
+        "Open quote review to continue.",
+        prompts.actions.quoteReviewNext
+      );
+    }
+
+    function handleQuoteReviewGuideAction(actionId) {
+      if (actionId === "quote_review_file_yes" || actionId === "quote_review_file_screenshot") {
+        const fileType = actionId === "quote_review_file_screenshot" ? "screenshot/image" : "PDF or image";
+        state.quoteReviewGuide = {
+          active: false,
+          stepIndex: 0,
+          answers: { has_file: "yes", file_type: fileType }
+        };
+        pushUser(actionLabel(actionId));
+        setIntent("existing_quote_review", {
+          readiness: "review",
+          reason: "customer has written quote file"
+        });
+        setRoute("Review my quote", "/quote-review.html?from=chatbot&mode=upload");
+        pushGuided(
+          "Upload gives the strongest review because the tool can check visible quote details.",
+          "The chatbot will not read or store the quote file. Upload it on the quote-review page.",
+          "Review my quote.",
+          prompts.actions.quoteReviewNext
+        );
+        state.stage = "quote_review_upload_route";
+        return true;
+      }
+      if (actionId === "quote_review_file_no" || actionId === "quote_review_file_not_sure") {
+        pushUser(actionLabel(actionId));
+        startQuoteReviewChecklist();
+        return true;
+      }
+      if (actionId === "quote_review_route_review") {
+        pushUser(actionLabel(actionId));
+        setRoute("Review my quote", state.routeSuggestion.href || "/quote-review.html?from=chatbot");
+        pushGuided(
+          "Open quote review when you are ready.",
+          "Upload is best if you have a file. Quick check is useful when you do not.",
+          "Review my quote.",
+          prompts.actions.quoteReviewNext
+        );
+        return true;
+      }
+      if (!state.quoteReviewGuide.active) {
+        return false;
+      }
+      const currentStep = getCurrentQuoteReviewChecklistStep();
+      if (!currentStep) {
+        finishQuoteReviewChecklist();
+        return true;
+      }
+      const valueMap = {
+        quote_review_check_yes: "yes",
+        quote_review_check_no: "no",
+        quote_review_check_not_sure: "not_sure",
+        quote_review_check_skip: "skipped"
+      };
+      if (!Object.prototype.hasOwnProperty.call(valueMap, actionId)) {
+        return false;
+      }
+      state.quoteReviewGuide.answers[currentStep.key] = valueMap[actionId];
+      state.quoteReviewGuide.stepIndex += 1;
+      pushUser(actionLabel(actionId));
+      const nextStep = getCurrentQuoteReviewChecklistStep();
+      if (!nextStep) {
+        finishQuoteReviewChecklist();
+        return true;
+      }
+      pushGuided(
+        "Got it.",
+        "Keep it high level. No quote text needed here.",
+        nextStep.question,
+        prompts.actions.quoteReviewChecklist
+      );
+      return true;
     }
 
     function guidedText(answer, insight, nextStep) {
@@ -213,20 +828,21 @@
     }
 
     function setRoute(label, href, focusId) {
-      state.routeSuggestion = { label: label, href: href, focusId: focusId || "" };
+      const safeHref = normaliseRouteHref(href);
+      state.routeSuggestion = { label: label, href: safeHref, focusId: focusId || "" };
       state.draft = mapper.sanitiseDraft(Object.assign({}, state.draft, {
-        next_step: href
+        next_step: safeHref
       }));
     }
 
     function setOperatorHandoff() {
-      const href = "quote.html?from=chatbot&support=operator";
-      setIntent("operator_handoff", {
+      const href = "/contact.html?from=chatbot";
+      setIntent("contact_human", {
         readiness: "review",
         reason: "customer requested human support",
         missing_items_to_check: ["contact details", "project note"]
       });
-      setRoute("Request operator follow-up", href, "fullName");
+      setRoute("Contact Operon", href, "contactName");
       state.operatorHandoff = {
         title: "Need a person?",
         copy: prompts.copy.operatorHandoff || "Send your contact details and project note so Operon can follow up. This is not a live chat.",
@@ -296,9 +912,7 @@
       const answer = focus === "question"
         ? "Ask one direct scope question first."
         : status + ".";
-      const insight = focus === "extracted" && siteState && siteState.reviewExtractedDetails && siteState.reviewExtractedDetails.length
-        ? "Extracted detail: " + getFirstUsefulReviewItem(siteState.reviewExtractedDetails, missing)
-        : "Main scope point: " + missing;
+      const insight = "Main scope point: " + missing;
       const nextStep = focus === "question" ? question : "Confirm that item, or build a structured Operon estimate.";
 
       setIntent("quote_review_result_explanation", {
@@ -306,7 +920,7 @@
         reason: "quote review result guidance",
         missing_items_to_check: siteState && siteState.reviewMissingScope ? siteState.reviewMissingScope.slice(0, 5) : []
       });
-      setRoute("Get structured estimate", siteState && siteState.next ? siteState.next.href : "quote.html?source=quote_review");
+      setRoute("Get structured estimate", siteState && siteState.next ? siteState.next.href : "/quote.html?source=quote_review");
       pushGuided(answer, insight, nextStep, prompts.actions.nextSteps);
       state.stage = "quote_review_result";
     }
@@ -362,7 +976,7 @@
 
       if (triggerId === "homepage_idle" && pageKey === "index") {
         setIntent("product_guidance", { readiness: "browsing", reason: "homepage idle guidance" });
-        setRoute("Start quote", "quote.html?from=chatbot");
+        setRoute("Start quote", "/quote.html?from=chatbot");
         pushTrigger(
           triggerId,
           "Need help choosing where to start?",
@@ -379,7 +993,7 @@
           reason: "product scroll depth",
           category: siteState && siteState.selectedCategory ? siteState.selectedCategory : state.draft.category
         });
-        setRoute("Start quote", "quote.html?from=products");
+        setRoute("Start quote", "/quote.html?from=products");
         pushTrigger(
           triggerId,
           "Narrow the product choice with a few practical checks.",
@@ -396,7 +1010,7 @@
           reason: "homepage review section visible",
           missing_items_to_check: ["removal", "floor preparation", "site details", "finishing"]
         });
-        setRoute("Review your quote", "quote-review.html");
+        setRoute("Review your quote", "/quote-review.html");
         pushTrigger(
           triggerId,
           "Already have a quote? Review the scope before comparing it.",
@@ -413,7 +1027,7 @@
 
       if (triggerId === "near_submit" && pageKey === "quote") {
         setIntent("route_next_step", { readiness: "ready", reason: "near quote submit" });
-        setRoute("Continue quote", "quote.html", siteState && siteState.next ? siteState.next.focusId : "");
+        setRoute("Continue quote", "/quote.html", siteState && siteState.next ? siteState.next.focusId : "");
         pushTrigger(
           triggerId,
           "The quote is almost ready for review.",
@@ -435,7 +1049,7 @@
           reason: "quote review page guidance",
           missing_items_to_check: ["installation method", "disposal", "floor preparation", "skirting", "site details"]
         });
-        setRoute("Get structured estimate", "quote.html?source=quote_review");
+        setRoute("Get structured estimate", "/quote.html?source=quote_review");
         pushTrigger(
           triggerId,
           "Review what is included before moving forward.",
@@ -451,7 +1065,7 @@
           readiness: "ready",
           reason: "post submit engagement"
         });
-        setRoute("Confirm details", "thank-you.html#leadStageSection");
+        setRoute("Confirm details", "/thank-you.html#leadStageSection");
         pushTrigger(
           triggerId,
           "Thanks - we've received your estimate.",
@@ -572,7 +1186,7 @@
 
     function getRouteForScenario(scenarioId) {
       if (!scenarios || !policy || typeof scenarios.getRouteKey !== "function" || typeof policy.normaliseRoute !== "function") {
-        return { label: "Start quote", href: "quote.html" };
+        return { label: "Start quote", href: "/quote.html" };
       }
 
       return policy.normaliseRoute(scenarios.getRouteKey(scenarioId));
@@ -669,11 +1283,9 @@
       if (!siteState || !(siteState.next && siteState.next.href)) {
         setRoute(settings.initialRouteLabel, settings.initialRouteHref);
       }
-      setIntent("route_next_step");
-      pushGuided(
-        settings.welcomeText || "Get clear guidance on flooring type, quote scope, and the details worth preparing before review.",
-        "",
-        "Choose a topic below or type one project detail.",
+      setIntent("general_question");
+      pushAssistant(
+        settings.welcomeText || prompts.copy.welcomeText || "Are you trying to start a quote, choose a flooring product, check an existing quote, or measure from a floor plan?",
         prompts.actions.welcome
       );
       scheduleIdleSuggestion();
@@ -681,11 +1293,11 @@
 
     function explainQuote() {
       state.stage = "quote_help";
-      setIntent("quote_explanation", { readiness: "unsure", reason: "estimate versus final quote" });
-      setRoute("Start quote", "quote.html");
+      setIntent("start_quote", { readiness: "unsure", reason: "estimate versus final quote" });
+      setRoute("Start quote", "/quote.html");
       pushGuided(
         "The quote is a structured estimate before final confirmation.",
-        "Product direction, measured area, removal, and floor preparation shape the scope.",
+        "The estimate depends on product, area, stairs, removal, trims and final site details.",
         "Start the quote or check missing details.",
         prompts.actions.quoteHelp
       );
@@ -693,8 +1305,8 @@
 
     function startProductGuide() {
       state.stage = "product_guide";
-      setIntent("product_guidance", { readiness: "browsing" });
-      setRoute("Browse products", "products.html");
+      setIntent("product_help", { readiness: "browsing" });
+      setRoute("Choose product", "/products.html");
       pushGuided(
         "Choose the flooring path from the project conditions.",
         "Property type and water resistance usually narrow the category first.",
@@ -716,7 +1328,7 @@
     function startDetailCollection() {
       state.stage = "collect_existing_floor";
       setIntent("missing_info_collection");
-      setRoute("Start quote", "quote.html");
+      setRoute("Start quote", "/quote.html");
       pushGuided(
         "Capture only the key scope details.",
         "Existing floor affects removal, disposal, and prep review.",
@@ -762,7 +1374,7 @@
 
       state.stage = "review";
       setIntent("quote_review", { readiness: structured.missing_items.length ? "review" : "ready" });
-      setRoute(structured.missing_items.length ? "Review quote scope" : "Start quote", structured.missing_items.length ? "quote-review.html" : "quote.html");
+      setRoute(structured.missing_items.length ? "Review quote scope" : "Start quote", structured.missing_items.length ? "/quote-review.html" : "/quote.html");
       pushGuided(
         "Scope check complete.",
         validationSummary || missingSummary,
@@ -794,7 +1406,7 @@
       }
 
       setDraft(draftPatch);
-      setRoute("Start quote", "quote.html");
+      setRoute("Start quote", "/quote.html");
       pushUser(actionLabel(actionId));
       pushGuided(
         prompts.categoryGuidance[category].label + " is the strongest starting category.",
@@ -806,13 +1418,20 @@
     }
 
     function applyAction(actionId) {
+      if (handleQuoteReviewGuideAction(actionId)) {
+        return;
+      }
+      if (handlePrequalAction(actionId)) {
+        return;
+      }
       if (handleScenarioAction(actionId)) {
         return;
       }
 
       switch (actionId) {
         case "start_product_guide":
-          pushUser("Help me choose a flooring type");
+          pushUser("Choose product");
+          setIntent("product_help", { readiness: "browsing" });
           startProductGuide();
           return;
         case "explain_quote":
@@ -827,7 +1446,7 @@
           pushUser(actionLabel(actionId));
           setIntent("install_only", { quote_mode: "install_only", readiness: "unsure", reason: "customer already has flooring materials" });
           addNote("Customer already has flooring materials.");
-          setRoute("Start quote", "quote.html");
+          setRoute("Start quote", "/quote.html");
           pushGuided(
             "Installation-only path selected.",
             "The quote should still check prep, removal, trims, and stairs.",
@@ -839,7 +1458,7 @@
         case "set_supply_install":
           pushUser(actionLabel(actionId));
           setIntent("quote_explanation", { quote_mode: "supply_install", readiness: "unsure", included_items: ["supply", "installation"] });
-          setRoute("Start quote", "quote.html");
+          setRoute("Start quote", "/quote.html");
           pushGuided(
             "Supply and install path selected.",
             "Product selection and measured area drive the next decisions.",
@@ -863,7 +1482,7 @@
               reason: "water resistance requested",
               readiness: "unsure"
             });
-            setRoute("Start quote", "quote.html");
+            setRoute("Start quote", "/quote.html");
             pushGuided(
               "Hybrid flooring is usually the safest choice when water resistance matters.",
               "It keeps the starting path practical for apartments, kitchens, and busy homes.",
@@ -882,8 +1501,8 @@
           handleRecommendationContext(actionId);
           return;
         case "browse_products":
-          setIntent("product_guidance", { readiness: "browsing" });
-          setRoute("Browse products", "products.html");
+          setIntent("product_help", { readiness: "browsing" });
+          setRoute("Choose product", "/products.html");
           pushUser(actionLabel(actionId));
           pushGuided(
             "Review products before quoting.",
@@ -895,10 +1514,10 @@
           return;
         case "what_affects_price":
           pushUser("What affects price?");
-          setIntent("quote_explanation", { reason: "cost factors without pricing calculation" });
+          setIntent("price_question", { reason: "safe price factor explanation without pricing calculation" });
           pushGuided(
-            "Pricing depends on scope, not one simple number.",
-            "Area, product range, removal, prep, trims, and stairs are the main checks.",
+            "The estimate depends on product, area, stairs, removal, trims and final site details.",
+            "I cannot give exact pricing or rates here.",
             "Start the quote or check missing details.",
             prompts.actions.quoteHelp
           );
@@ -906,7 +1525,7 @@
         case "route_floorplan":
           pushUser(actionLabel(actionId));
           setIntent("floorplan_help", { measurement_method: "floorplan_upload", reason: "customer has a floor plan" });
-          setRoute("Measure from floor plan", "floorplan.html");
+          setRoute("Measure floor plan", "/floorplan.html");
           pushGuided(
             "Use the floor plan tool when you already have a plan.",
             "For general area uncertainty, the quote can still start with a rough total or room-by-room entry.",
@@ -917,35 +1536,23 @@
           return;
         case "quick_completeness_check":
           pushUser(actionLabel(actionId));
-          setIntent("quick_quote_completeness", {
-            readiness: "review",
-            reason: "no-file quote completeness check",
-            missing_items_to_check: ["product clarity", "area", "inclusions", "exclusions", "site assumptions"]
-          });
-          setRoute("Run quick check", "quote-review.html");
-          pushGuided(
-            prompts.copy.quickCompleteness,
-            "It checks whether the quote is complete enough to compare, based only on what you enter.",
-            "Run the quick check.",
-            prompts.actions.nextSteps
-          );
-          state.stage = "quick_quote_completeness";
+          startQuoteReviewChecklist();
           return;
         case "review_existing_quote":
           pushUser(actionLabel(actionId));
-          setIntent("document_quote_review", {
-            readiness: "review",
-            reason: "document-based quote review",
-            missing_items_to_check: ["product clarity", "installation method", "floor preparation", "disposal", "site details", "trims"]
-          });
-          setRoute("Upload written quote", "quote-review.html");
+          startQuoteReviewGuide();
+          return;
+        case "contact_operon":
+          pushUser(actionLabel(actionId));
+          setIntent("contact_human", { readiness: "review", reason: "customer wants Operon contact" });
+          setRoute("Contact Operon", "/contact.html");
           pushGuided(
-            prompts.copy.documentReview,
-            "It can check visible inclusions and create questions to confirm before accepting.",
-            "Upload written quote.",
+            "Use the contact page for a direct enquiry.",
+            "You can also start a quote if you already know product and area.",
+            "Open the contact page.",
             prompts.actions.nextSteps
           );
-          state.stage = "quote_review";
+          state.stage = "contact";
           return;
         case "request_operator":
           pushUser(actionLabel(actionId));
@@ -967,7 +1574,7 @@
             reason: "post submit timing selected",
             included_items: [actionLabel(actionId)]
           });
-          setRoute("Confirm timing", "thank-you.html#leadStageSection");
+          setRoute("Confirm timing", "/thank-you.html#leadStageSection");
           pushGuided(
             "Good. Add that timing to the request.",
             "It keeps follow-up useful without adding pressure.",
@@ -977,20 +1584,12 @@
           state.stage = "post_submit_followup";
           return;
         case "ready_for_quote":
-          setIntent("route_next_step", { readiness: "ready" });
-          setRoute("Start quote", "quote.html");
           pushUser(actionLabel(actionId));
-          pushGuided(
-            "The project is ready to continue.",
-            getValidationSummary(mapper.toStructuredOutput(state.draft)) || "The quote will collect the required fields.",
-            "Start the quote.",
-            prompts.actions.nextSteps
-          );
-          state.stage = "ready";
+          startPrequalification();
           return;
         case "review_scope":
           setIntent("document_quote_review", { readiness: "review" });
-          setRoute("Upload written quote", "quote-review.html");
+          setRoute("Upload written quote", "/quote-review.html");
           pushUser(actionLabel(actionId));
           pushGuided(
             prompts.copy.documentReview,
@@ -1118,6 +1717,30 @@
         return;
       }
 
+      if (isPrequalTextExpected()) {
+        answerPrequalification(value);
+        return;
+      }
+
+      const rawQuoteLikeText = value.toLowerCase();
+      const looksLikeQuotePaste = includesAny(rawQuoteLikeText, ["total $", "inc gst", "quote total", "removal extra", "area "])
+        && includesAny(rawQuoteLikeText, ["quote", "$", "gst", "m2", "m²"]);
+      if (((value.length > 300 || (value.match(/\n/g) || []).length >= 3) && includesAny(rawQuoteLikeText, ["quote", "$", "supply", "install", "total", "gst", "m2"])) || looksLikeQuotePaste) {
+        setIntent("existing_quote_review", {
+          readiness: "review",
+          reason: "raw quote text rejected in chatbot"
+        });
+        setRoute("Review my quote", "/quote-review.html?from=chatbot&mode=upload");
+        pushGuided(
+          "Please do not paste raw quote text into the chatbot.",
+          "Upload the PDF, image or screenshot on the quote-review page for the safest review.",
+          "Review my quote.",
+          prompts.actions.quoteReviewNext
+        );
+        state.stage = "quote_review_privacy_guard";
+        return;
+      }
+
       pushUser(value);
 
       const lowerValue = value.toLowerCase();
@@ -1164,32 +1787,40 @@
       }
 
       if (includesAny(lowerValue, ["beat price", "price match", "competitor pricing", "competitor quote", "beat a competitor", "beat this quote", "beat my quote", "cheaper than", "quote expensive", "is this quote expensive"])) {
-        setIntent("unsupported", {
-          reason: "competitor pricing comparison requested"
+        setIntent("existing_quote_review", {
+          readiness: "review",
+          reason: "price comparison needs scope review",
+          missing_items_to_check: ["product shown", "area shown", "installation included", "removal and disposal", "exclusions"]
         });
-        setRoute("Upload written quote", "quote-review.html");
+        setRoute("Review my quote", "/quote-review.html?from=chatbot&mode=upload");
         pushGuided(
-          "I cannot judge another quote by price or claim a cheaper outcome.",
-          "Price is easier to compare once both quotes describe the same job.",
-          "Upload the written quote or run the quick completeness check.",
-          prompts.actions.nextSteps
+          "I cannot tell whether a quote is expensive just from the total.",
+          "Quote review checks whether the scope is clear enough to compare: product, area, installation, removal, trims, stairs and exclusions.",
+          "Do you already have a written quote PDF, image or screenshot?",
+          prompts.actions.quoteReviewFileCheck
         );
+        state.stage = "quote_review_file_check";
         return;
       }
 
       if (includesAny(lowerValue, ["do not have the file", "don't have the file", "no file", "quick check", "quick completeness", "only know total", "only says supply and install", "quote only says", "my quote only says"])) {
-        setIntent("quick_quote_completeness", {
+        startQuoteReviewChecklist();
+        return;
+      }
+
+      if (includesAny(lowerValue, ["pdf quote", "quote pdf", "quote screenshot", "screenshot quote", "image of quote", "photo of quote", "have a pdf", "have screenshot"])) {
+        setIntent("existing_quote_review", {
           readiness: "review",
-          reason: "no-file quote completeness check",
-          missing_items_to_check: ["product clarity", "area", "inclusions", "exclusions", "site assumptions"]
+          reason: "customer has written quote file"
         });
-        setRoute("Run quick check", "quote-review.html");
+        setRoute("Review my quote", "/quote-review.html?from=chatbot&mode=upload");
         pushGuided(
-          prompts.copy.quickCompleteness,
-          "It is not a full quote review and does not judge price fairness.",
-          "Run the quick check.",
-          prompts.actions.nextSteps
+          "Upload gives the strongest review because the tool can check visible quote details.",
+          "Please upload the PDF, image or screenshot on the quote-review page. Do not paste the quote text here.",
+          "Review my quote.",
+          prompts.actions.quoteReviewNext
         );
+        state.stage = "quote_review_upload_route";
         return;
       }
 
@@ -1199,7 +1830,7 @@
           reason: "quote review result explanation",
           missing_items_to_check: ["product brand", "range", "colour", "full specification"]
         });
-        setRoute("Upload written quote", "quote-review.html");
+        setRoute("Upload written quote", "/quote-review.html");
         pushGuided(
           "A low product signal should not be treated as a confirmed match.",
           "If the uploaded quote only says something broad like Hybrid 7mm, the safe result is product match not confirmed.",
@@ -1214,7 +1845,7 @@
           readiness: "review",
           reason: "quote review result explanation"
         });
-        setRoute("Upload written quote", "quote-review.html");
+        setRoute("Upload written quote", "/quote-review.html");
         pushGuided(
           "A quote review result starts with quote readiness.",
           "Use Not ready to compare, Partly clear, or Clear enough to compare as the main signal, then check the top 3 items and questions before accepting.",
@@ -1225,18 +1856,7 @@
       }
 
       if (includesAny(lowerValue, ["existing quote", "another quote", "compare quote", "quote review", "review my quote", "check my quote", "uploaded quote", "written quote", "hybrid 7mm quote", "is this quote fair"])) {
-        setIntent("document_quote_review", {
-          readiness: "review",
-          reason: "document-based quote review",
-          missing_items_to_check: ["product clarity", "installation method", "floor preparation", "disposal", "site details", "trims"]
-        });
-        setRoute("Upload written quote", "quote-review.html");
-        pushGuided(
-          prompts.copy.documentReview,
-          "It checks visible details, scope clarity, and comparison readiness without judging cheapest price.",
-          "Upload written quote.",
-          prompts.actions.nextSteps
-        );
+        startQuoteReviewGuide();
         return;
       }
 
@@ -1249,7 +1869,7 @@
           readiness: "browsing",
           reason: "colour preview guidance"
         });
-        setRoute("Browse products", "products.html");
+        setRoute("Browse products", "/products.html");
         pushGuided(
           "Use the product page to preview colours by range.",
           getRangeGuidanceForText(lowerValue) || "Colour previews help browsing. The quote confirms the final product details where needed.",
@@ -1265,7 +1885,7 @@
           reason: "scope clarity and avoiding surprises",
           missing_items_to_check: ["removal", "floor preparation", "disposal", "site details", "trims", "furniture"]
         });
-        setRoute("Start quote", "quote.html");
+        setRoute("Start quote", "/quote.html");
         pushGuided(
           "Hidden costs usually come from unclear scope.",
           "Removal, disposal, floor preparation, trims, furniture, and stairs are the main checks.",
@@ -1281,7 +1901,7 @@
           reason: "removal and disposal clarity",
           missing_items_to_check: ["existing floor to remove", "disposal", "site details"]
         });
-        setRoute("Start quote", "quote.html");
+        setRoute("Start quote", "/quote.html");
         pushGuided(
           "Removal and disposal should be clear before submit.",
           "Choose the existing floor to remove, then confirm whether take-away disposal is included.",
@@ -1300,7 +1920,7 @@
           reason: "tile removal and stairs require quote scope review",
           missing_items_to_check: ["tile removal", "disposal", "stairs", "site details", "trims", "floor preparation"]
         });
-        setRoute("Review quote scope", "quote-review.html");
+        setRoute("Review quote scope", "/quote-review.html");
         pushGuided(
           "Tiles plus stairs need scope review.",
           "Removal, disposal, stairs, and trims should be checked before submission.",
@@ -1320,7 +1940,7 @@
           reason: "apartment without lift requires quote review",
           missing_items_to_check: ["level", "parking", "loading details", "strata rules", "stairs"]
         });
-        setRoute("Review quote scope", "quote-review.html");
+        setRoute("Review quote scope", "/quote-review.html");
         pushGuided(
           "Apartment with no lift needs site review.",
           "Level, loading, parking, and strata rules are reviewed before final confirmation.",
@@ -1338,7 +1958,7 @@
           reason: "uneven floor may need preparation",
           missing_items_to_check: ["floor preparation", "levelling", "subfloor condition"]
         });
-        setRoute("Review quote scope", "quote-review.html");
+        setRoute("Review quote scope", "/quote-review.html");
         pushGuided(
           "Uneven floor should be reviewed.",
           "Prep or levelling may be needed before final quote confirmation.",
@@ -1355,7 +1975,7 @@
           reason: "stairs require quote scope review",
           missing_items_to_check: ["stairs", "site details", "trims"]
         });
-        setRoute("Review quote scope", "quote-review.html");
+        setRoute("Review quote scope", "/quote-review.html");
         pushGuided(
           "Stairs should be flagged early.",
           "They should be clear before the final scope is confirmed.",
@@ -1370,7 +1990,7 @@
           readiness: "unsure",
           reason: "final quote confirmation"
         });
-        setRoute("Start quote", "quote.html");
+        setRoute("Start quote", "/quote.html");
         pushGuided(
           "Yes, final confirmation can adjust the estimate.",
           "That keeps the quote aligned with the actual product, area, and site conditions.",
@@ -1387,7 +2007,7 @@
           reason: "practical starting category for dry straightforward areas",
           readiness: "browsing"
         });
-        setRoute("Browse products", "products.html");
+        setRoute("Browse products", "/products.html");
         pushGuided(
           "Lowest price alone is not a reliable category choice.",
           "Laminate suits simple dry areas; hybrid suits busier or water-risk areas.",
@@ -1401,7 +2021,7 @@
         setIntent("route_next_step", {
           reason: "customer confidence and trust"
         });
-        setRoute("Start quote", "quote.html");
+        setRoute("Start quote", "/quote.html");
         pushGuided(
           "Operon focuses on clear scope and professional installation.",
           "The aim is a clear estimate, suitable flooring choice, and final confirmation before work starts.",
@@ -1416,7 +2036,7 @@
           reason: "hybrid versus laminate suitability",
           readiness: "browsing"
         });
-        setRoute("Browse products", "products.html");
+        setRoute("Browse products", "/products.html");
         pushGuided(
           "Hybrid is usually the stronger practical category.",
           "Laminate is better for simpler dry rooms; hybrid suits water resistance and durability.",
@@ -1442,7 +2062,7 @@
           reason: "premium finish and timber look",
           readiness: "browsing"
         });
-        setRoute("Browse products", "products.html");
+        setRoute("Browse products", "/products.html");
         pushGuided(
           "Engineered timber is the premium finish path.",
           "Range, colour, and install method should be reviewed clearly.",
@@ -1458,7 +2078,7 @@
           measurement_method: hasFloorPlanContext ? "floorplan_upload" : "",
           reason: "area unclear"
         });
-        setRoute(hasFloorPlanContext ? "Measure from floor plan" : "Continue quote", hasFloorPlanContext ? "floorplan.html" : "quote.html");
+        setRoute(hasFloorPlanContext ? "Measure from floor plan" : "Continue quote", hasFloorPlanContext ? "/floorplan.html" : "/quote.html");
         pushGuided(
           "No problem. You can still move forward without the area right now.",
           hasFloorPlanContext
@@ -1474,13 +2094,13 @@
 
       if (policyDecision.notice) {
         if (policyDecision.notice.indexOf("cannot calculate") >= 0) {
-          setIntent("quote_explanation", {
+          setIntent("price_question", {
             reason: "cost question without pricing calculation"
           });
-          setRoute("Start quote", "quote.html");
+          setRoute("Start quote", "/quote.html");
           pushGuided(
-            "It depends on area, product and site conditions.",
-            "I cannot calculate pricing here.",
+            "The estimate depends on product, area, stairs, removal, trims and final site details.",
+            "I cannot give exact pricing or rates here.",
             "Start the quote for a structured estimate.",
             prompts.actions.quoteHelp
           );
@@ -1518,11 +2138,11 @@
       }
 
       if (includesAny(lowerValue, ["i am ready", "i'm ready", "ready for quote", "ready to quote", "start quote", "start the quote"])) {
-        setIntent("route_next_step", {
+        setIntent("start_quote", {
           readiness: "ready",
           reason: "customer ready to continue to quote"
         });
-        setRoute("Start quote", "quote.html");
+        setRoute("Start quote", "/quote.html");
         pushGuided(
           "The project is ready to continue.",
           "The quote page will collect the required details safely.",
@@ -1541,7 +2161,7 @@
 
       if (policyDecision.intent === "install_only" || value.toLowerCase().indexOf("install only") >= 0) {
         setIntent("install_only", { quote_mode: "install_only", reason: "customer already has flooring materials" });
-        setRoute("Start quote", "quote.html");
+        setRoute("Start quote", "/quote.html");
         pushGuided(
           "Installation-only path selected.",
           "The quote still needs area, prep, and extras checked.",
@@ -1553,40 +2173,20 @@
 
       const intent = policyDecision.intent || inferIntent(value);
 
-      if (intent === "product_guidance" || intent === "product") {
+      if (intent === "product_help" || intent === "product_guidance" || intent === "product") {
         startProductGuide();
         return;
       }
-      if (intent === "quote_explanation" || intent === "quote") {
+      if (intent === "start_quote" || intent === "quote_explanation" || intent === "quote") {
         explainQuote();
         return;
       }
-      if (intent === "quick_quote_completeness") {
-        setIntent("quick_quote_completeness", {
-          readiness: "review",
-          reason: "no-file quote completeness check"
-        });
-        setRoute("Run quick check", "quote-review.html");
-        pushGuided(
-          prompts.copy.quickCompleteness,
-          "It shows quote readiness first, based on what you enter, then highlights top items to confirm.",
-          "Run the quick check.",
-          prompts.actions.nextSteps
-        );
+      if (intent === "existing_quote_review" || intent === "quick_quote_completeness") {
+        startQuoteReviewGuide();
         return;
       }
       if (intent === "document_quote_review") {
-        setIntent("document_quote_review", {
-          readiness: "review",
-          reason: "document-based quote review"
-        });
-        setRoute("Upload written quote", "quote-review.html");
-        pushGuided(
-          prompts.copy.documentReview,
-          "This is stronger than a no-file check because it can use visible document details.",
-          "Upload written quote.",
-          prompts.actions.nextSteps
-        );
+        startQuoteReviewGuide();
         return;
       }
       if (intent === "quote_review_result_explanation") {
@@ -1594,7 +2194,7 @@
           readiness: "review",
           reason: "quote review result explanation"
         });
-        setRoute("Upload written quote", "quote-review.html");
+        setRoute("Upload written quote", "/quote-review.html");
         pushGuided(
           "A review result starts with quote readiness.",
           "It should show Not ready to compare, Partly clear, or Clear enough to compare, then list what to confirm before accepting.",
@@ -1608,7 +2208,7 @@
           measurement_method: "floorplan_upload",
           reason: "floor plan measurement support"
         });
-        setRoute("Measure from floor plan", "floorplan.html");
+        setRoute("Measure floor plan", "/floorplan.html");
         pushGuided(
           "Use floor plan measurement when you already have a plan.",
           "If you are only unsure about area, the quote can still start with rough details.",
@@ -1617,12 +2217,23 @@
         );
         return;
       }
-      if (intent === "scope_validation" || intent === "review") {
-        setIntent("scope_validation", {
+      if (intent === "suburb_service") {
+        setIntent("suburb_service", { reason: "service area question" });
+        setRoute("Start quote", "/quote.html");
+        pushGuided(
+          "Operon supports Sydney flooring quote enquiries.",
+          "Add the suburb in the quote so the project can be reviewed properly.",
+          "Start the quote and enter the suburb.",
+          prompts.actions.nextSteps
+        );
+        return;
+      }
+      if (intent === "stairs_removal_scope" || intent === "scope_validation" || intent === "review") {
+        setIntent("stairs_removal_scope", {
           readiness: "review",
           reason: "scope details need review"
         });
-        setRoute("Review quote scope", "quote-review.html");
+        setRoute("Check existing quote", "/quote-review.html");
         pushGuided(
           "Scope review is the right next step.",
           getValidationSummary(mapper.toStructuredOutput(state.draft)) || "Check the common missing items before submitting.",
@@ -1631,7 +2242,7 @@
         );
         return;
       }
-      if (intent === "operator_handoff") {
+      if (intent === "contact_human" || intent === "operator_handoff") {
         setOperatorHandoff();
         pushGuided(
           "I can route you to human follow-up.",
@@ -1652,6 +2263,7 @@
         return;
       }
 
+      setIntent("general_question", { reason: "general flooring question" });
       startDetailCollection();
     }
 
@@ -1671,6 +2283,8 @@
           localStorageDraft: mapper.toLocalStorageDraft(structured),
           handoffReadiness: mapper.toHandoffReadiness(structured),
           routeSuggestion: clone(state.routeSuggestion),
+          prequalification: clone(state.prequalification),
+          quoteReviewGuide: clone(state.quoteReviewGuide),
           operatorHandoff: state.operatorHandoff ? clone(state.operatorHandoff) : null,
           triggerNudge: state.triggerNudge ? clone(state.triggerNudge) : null
         };

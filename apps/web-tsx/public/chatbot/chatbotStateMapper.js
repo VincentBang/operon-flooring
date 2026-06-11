@@ -39,7 +39,7 @@
       quote_mode: "supply_install",
       readiness: "",
       ready_for_quote: false,
-      next_step: "quote.html",
+      next_step: "/quote.html",
       included_items: [],
       missing_items_to_check: [],
       scenario_id: "",
@@ -118,7 +118,15 @@
       "route_next_step",
       "operator_handoff",
       "install_only",
-      "unsupported"
+      "unsupported",
+      "start_quote",
+      "existing_quote_review",
+      "product_help",
+      "price_question",
+      "stairs_removal_scope",
+      "suburb_service",
+      "contact_human",
+      "general_question"
     ];
     return allowed.indexOf(value) >= 0 ? value : "";
   }
@@ -204,8 +212,11 @@
   }
 
   function normaliseNextStep(value) {
-    const allowed = ["quote.html", "products.html", "quote-review.html", "floorplan.html"];
-    return allowed.indexOf(value) >= 0 ? value : "";
+    const text = normaliseText(value, 240);
+    if (/^\/?(quote|products|quote-review|floorplan)\.html(?:[?#].*)?$/.test(text)) {
+      return text.charAt(0) === "/" ? text : "/" + text;
+    }
+    return "";
   }
 
   function normaliseScenarioId(value) {
@@ -404,8 +415,8 @@
     const quoteFieldDraft = toQuoteFieldDraft(draft);
     const requiredMissing = getHandoffMissingFields(draft);
     const reviewFlags = getReviewBlockingFlags(draft.validation_flags);
-    const blockedByIntent = draft.intent === "unsupported" || draft.intent === "product_guidance";
-    const blockedByRoute = draft.next_step === "products.html";
+    const blockedByIntent = draft.intent === "unsupported" || draft.intent === "product_guidance" || draft.intent === "product_help";
+    const blockedByRoute = draft.next_step === "products.html" || draft.next_step === "/products.html";
     let status = "blocked";
     let reason = "";
 

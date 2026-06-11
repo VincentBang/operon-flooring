@@ -10,6 +10,10 @@ declare global {
   }
 }
 
+type HomeChatbotProps = {
+  pageKey?: string;
+};
+
 function loadChatbotBootstrap() {
   return new Promise<void>((resolve, reject) => {
     if (window.OperonChatbotBootstrap) {
@@ -34,16 +38,22 @@ function loadChatbotBootstrap() {
   });
 }
 
-export function HomeChatbot() {
+export function HomeChatbot({ pageKey = "index" }: HomeChatbotProps) {
   useEffect(() => {
     let cancelled = false;
+    let addedStickyOffsetClass = false;
+
+    if (document.querySelector(".mobile-sticky-cta") && !document.body.classList.contains("has-mobile-sticky-cta")) {
+      document.body.classList.add("has-mobile-sticky-cta");
+      addedStickyOffsetClass = true;
+    }
 
     loadChatbotBootstrap()
       .then(() => {
         if (cancelled || !window.OperonChatbotBootstrap?.mount) {
           return;
         }
-        window.OperonChatbotBootstrap.mount({ pageKey: "index", openOnInit: false });
+        window.OperonChatbotBootstrap.mount({ pageKey, openOnInit: false });
       })
       .catch(() => {
         // Chatbot parity should never block the core quote path.
@@ -51,8 +61,11 @@ export function HomeChatbot() {
 
     return () => {
       cancelled = true;
+      if (addedStickyOffsetClass) {
+        document.body.classList.remove("has-mobile-sticky-cta");
+      }
     };
-  }, []);
+  }, [pageKey]);
 
   return null;
 }

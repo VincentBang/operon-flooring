@@ -28,12 +28,66 @@
 
   const ACTIONS = {
     welcome: [
-      { id: "ready_for_quote", label: "Start flooring quote" },
-      { id: "review_existing_quote", label: "Upload written quote" },
-      { id: "quick_completeness_check", label: "Quick completeness check" },
-      { id: "start_product_guide", label: "Choose flooring type" },
-      { id: "route_floorplan", label: "Measure from floor plan" },
-      { id: "request_operator", label: "Request human follow-up" }
+      { id: "ready_for_quote", label: "Start quote" },
+      { id: "review_existing_quote", label: "Check existing quote" },
+      { id: "start_product_guide", label: "Choose product" },
+      { id: "route_floorplan", label: "Use floor plan" },
+      { id: "contact_operon", label: "Contact Operon" }
+    ],
+    prequalSuburb: [
+      { id: "prequal_not_sure", label: "Not sure" },
+      { id: "prequal_skip", label: "Skip" }
+    ],
+    prequalProperty: [
+      { id: "prequal_property_house", label: "House" },
+      { id: "prequal_property_townhouse", label: "Townhouse" },
+      { id: "prequal_property_apartment", label: "Apartment/unit" },
+      { id: "prequal_property_commercial", label: "Commercial space" },
+      { id: "prequal_not_sure", label: "Not sure" },
+      { id: "prequal_skip", label: "Skip" }
+    ],
+    prequalFlooring: [
+      { id: "prequal_flooring_hybrid", label: "Hybrid" },
+      { id: "prequal_flooring_laminate", label: "Laminate" },
+      { id: "prequal_flooring_engineered", label: "Engineered timber" },
+      { id: "prequal_flooring_unsure", label: "Not sure" },
+      { id: "prequal_skip", label: "Skip" }
+    ],
+    prequalArea: [
+      { id: "prequal_area_known", label: "Yes" },
+      { id: "prequal_area_unknown", label: "Not sure" },
+      { id: "prequal_skip", label: "Skip" }
+    ],
+    prequalYesNo: [
+      { id: "prequal_yes", label: "Yes" },
+      { id: "prequal_no", label: "No" },
+      { id: "prequal_not_sure", label: "Not sure" },
+      { id: "prequal_skip", label: "Skip" }
+    ],
+    prequalFiles: [
+      { id: "prequal_file_floorplan", label: "Floor plan" },
+      { id: "prequal_file_quote", label: "Written quote" },
+      { id: "prequal_file_both", label: "Both" },
+      { id: "prequal_file_neither", label: "No" },
+      { id: "prequal_not_sure", label: "Not sure" },
+      { id: "prequal_skip", label: "Skip" }
+    ],
+    quoteReviewFileCheck: [
+      { id: "quote_review_file_yes", label: "Yes" },
+      { id: "quote_review_file_screenshot", label: "Screenshot/image" },
+      { id: "quote_review_file_no", label: "No" },
+      { id: "quote_review_file_not_sure", label: "Not sure" }
+    ],
+    quoteReviewChecklist: [
+      { id: "quote_review_check_yes", label: "Yes" },
+      { id: "quote_review_check_no", label: "No" },
+      { id: "quote_review_check_not_sure", label: "Not sure" },
+      { id: "quote_review_check_skip", label: "Skip" }
+    ],
+    quoteReviewNext: [
+      { id: "quote_review_route_review", label: "Review my quote" },
+      { id: "ready_for_quote", label: "Start Operon comparison quote" },
+      { id: "restart_chatbot", label: "Start over" }
     ],
     productGuide: [
       { id: "context_apartment", label: "Apartment" },
@@ -104,12 +158,12 @@
 
   const COPY = {
     welcomeTitle: "Operon Assistant",
-    welcomeText: "Get clear guidance on flooring type, quote scope, and the details worth preparing before review.",
+    welcomeText: "Are you trying to start a quote, choose a flooring product, check an existing quote, or measure from a floor plan?",
     guidanceOnly: "I can guide product choice and scope, but I will not calculate pricing here.",
     productGuideIntro: "Start with the priority that matters most for this floor.",
     productGuideContext: "Understood. Which setting best describes the project?",
-    quoteExplain: "The quote has five customer-facing steps: Project basics, Flooring and area, Main scope, Estimate preview, and Contact and submit. The online result is a starting estimate before Operon reviews the scope.",
-    priceFactors: "The main scope items are product path, area, stairs, existing floor removal, disposal, floor preparation, underlay, skirting or scotia, moisture protection, door trimming, furniture, and notes. Not sure should be treated as needs review, not as a confirmed no.",
+    quoteExplain: "The quote has six customer-facing steps: Property, Flooring/product, Area, Stairs, Extras, and Summary/review. The online result is a starting estimate before Operon reviews the scope.",
+    priceFactors: "The estimate depends on product, area, stairs, removal, trims and final site details. Not sure is okay and should be treated as needs review.",
     detailIntro: "A few optional details can make the quote scope clearer before review.",
     detailExistingFloor: "What existing floor needs to be removed, if any?",
     detailSubfloor: "How does the subfloor look from what you know so far?",

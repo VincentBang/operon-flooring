@@ -165,9 +165,9 @@
       "  border: 1px solid rgba(17, 24, 32, 0.08);",
       "  background: #ffffff;",
       "  color: var(--operon-chatbot-text);",
-      "  min-height: 32px;",
+      "  min-height: 44px;",
       "  border-radius: 8px;",
-      "  padding: 7px 10px;",
+      "  padding: 9px 12px;",
       "  font-size: 0.78rem;",
       "  font-weight: 650;",
       "  text-align: left;",
@@ -349,7 +349,8 @@
       onTextSubmit: function () {},
       onOperatorSubmit: function () {
         return Promise.reject(new Error("Operator request is unavailable."));
-      }
+      },
+      onRouteClick: function () {}
     }, options || {});
 
     ensureStyles();
@@ -474,7 +475,7 @@
     const route = createElement("div", "operon-chatbot-route");
     const routeCopy = createElement("div", "operon-chatbot-route-copy", "Next");
     const routeLink = createElement("a", "operon-chatbot-route-link", "Start quote");
-    routeLink.href = "quote.html";
+    routeLink.href = "/quote.html";
     routeLink.setAttribute("data-chatbot-route", "true");
     route.appendChild(routeCopy);
     route.appendChild(routeLink);
@@ -517,6 +518,20 @@
         .filter(function (item) {
           return !item.hasAttribute("disabled");
         });
+    }
+
+    function getHandoffEventName(href) {
+      try {
+        const url = new URL(href, window.location.href);
+        if (url.pathname === "/quote.html") return "chatbot_quote_handoff";
+        if (url.pathname === "/quote-review.html") return "chatbot_quote_review_handoff";
+        if (url.pathname === "/products.html") return "chatbot_products_handoff";
+        if (url.pathname === "/floorplan.html") return "chatbot_floorplan_handoff";
+        if (url.pathname === "/contact.html") return "chatbot_contact_handoff";
+      } catch (error) {
+        return "";
+      }
+      return "";
     }
 
     function setOpen(next) {
@@ -774,11 +789,21 @@
 
     routeLink.addEventListener("click", function (event) {
       const focusId = routeLink.getAttribute("data-chatbot-focus-id") || "";
+      settings.onRouteClick({
+        href: routeLink.href,
+        label: routeLink.textContent || ""
+      });
       if (window.OperonTracking && typeof window.OperonTracking.trackEvent === "function") {
         window.OperonTracking.trackEvent("chatbot_route_clicked", {
           source: "chatbot_route",
           event_context: routeLink.textContent || "route"
         });
+        const handoffEvent = getHandoffEventName(routeLink.href);
+        if (handoffEvent) {
+          window.OperonTracking.trackEvent(handoffEvent, {
+            source: "chatbot_route"
+          });
+        }
       }
       const routeUrl = new URL(routeLink.href, window.location.href);
       const currentUrl = new URL(window.location.href);

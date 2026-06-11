@@ -68,7 +68,38 @@ function installFetchMock(calls) {
         next_action: "Call customer",
         assigned_to: "operator",
         created_at: "2026-06-06T00:00:00.000Z",
-        updated_at: "2026-06-06T00:00:00.000Z"
+        updated_at: "2026-06-06T00:00:00.000Z",
+        metadata: {
+          dry_run_only: true,
+          task_type: "quote_intent_follow_up",
+          reason: "High-confidence quote intent from chatbot.",
+          priority: "high",
+          suggested_message: "Review manually."
+        }
+      }]);
+    }
+
+    if (table === "operon_chatbot_qualifications") {
+      return makeResponse([{
+        id: "33333333-3333-4333-8333-333333333333",
+        lead_id: leadId,
+        event_id: "44444444-4444-4444-8444-444444444444",
+        created_at: "2026-06-06T00:00:00.000Z",
+        source_page: "/quote.html",
+        intent: "start_quote",
+        suburb: "Auburn",
+        property_type: "house",
+        product_category: "not_sure",
+        area_status: "unknown",
+        stairs_status: "no",
+        removal_status: "not_sure",
+        floorplan_status: "no",
+        existing_quote_status: "no",
+        urgency: "asap",
+        next_action: "start_quote_form",
+        handoff_url: "/quote.html",
+        missing_info: ["product_category", "area"],
+        confidence: "high"
       }]);
     }
 
@@ -92,6 +123,10 @@ function installFetchMock(calls) {
       return makeResponse("");
     }
 
+    if (table === "operon_follow_ups" && options.method === "POST") {
+      return makeResponse("");
+    }
+
     if (table === "operon_lead_events") {
       return makeResponse("");
     }
@@ -103,8 +138,22 @@ function installFetchMock(calls) {
 (async function main() {
   assert.strictEqual(followupAdmin._test.isUuid(leadId), true);
   assert.strictEqual(followupAdmin._test.isUuid("bad"), false);
-  assert.strictEqual(followupAdmin._test.sanitizeText(" hello\nthere ", 20), "hello there");
-  assert.strictEqual(followupAdmin._test.parseLimit(200), 100);
+    assert.strictEqual(followupAdmin._test.sanitizeText(" hello\nthere ", 20), "hello there");
+    assert.strictEqual(followupAdmin._test.parseLimit(200), 100);
+    const derived = followupAdmin._test.deriveDryRunTask({
+      intent: "start_quote",
+      confidence: "high",
+      product_category: "not_sure",
+      area_status: "unknown",
+      existing_quote_status: "has_quote",
+      floorplan_status: "has_floorplan",
+      urgency: "asap"
+    });
+    assert.strictEqual(derived.priority, "high");
+    assert.strictEqual(derived.task_type, "floorplan_review_follow_up");
+    assert.ok(derived.reason.includes("High-confidence quote intent"));
+    assert.ok(derived.reason.includes("Product category is unknown"));
+    assert.ok(derived.reason.includes("Floor area is unknown"));
 
   await withEnv({
     OPERON_ADMIN_TOKEN: "admin-token",
@@ -123,6 +172,25 @@ function installFetchMock(calls) {
     assert.strictEqual(listPayload.ok, true);
     assert.strictEqual(listPayload.follow_ups.length, 1);
     assert.strictEqual(listPayload.follow_ups[0].lead.customer_name, "Synthetic Customer");
+    assert.strictEqual(listPayload.follow_ups[0].metadata.dry_run_only, true);
+    assert.strictEqual(listPayload.follow_ups[0].metadata.task_type, "quote_intent_follow_up");
+
+    const generated = await followupAdmin.handler(event("POST", "", {
+      action: "generate_dry_run"
+    }, { "x-operon-admin-token": "admin-token" }));
+    assert.strictEqual(generated.statusCode, 200);
+    assert.strictEqual(parse(generated).ok, true);
+    assert.ok(calls.some(function (call) {
+      return call.url.includes("/operon_chatbot_qualifications");
+    }), "chatbot qualification read missing");
+    const generatedInsert = calls.find(function (call) {
+      return call.url.includes("/operon_follow_ups") && call.options.method === "POST" && Array.isArray(JSON.parse(call.options.body || "[]"));
+    });
+    assert.ok(generatedInsert, "dry-run follow-up insert missing");
+    const generatedBody = JSON.parse(generatedInsert.options.body);
+    assert.strictEqual(generatedBody[0].channel, "manual");
+    assert.strictEqual(generatedBody[0].metadata.dry_run_only, true);
+    assert.strictEqual(generatedBody[0].metadata.priority, "high");
 
     const done = await followupAdmin.handler(event("POST", "", {
       action: "mark_done",
@@ -132,6 +200,14 @@ function installFetchMock(calls) {
     assert.strictEqual(done.statusCode, 200);
     assert.strictEqual(parse(done).ok, true);
     assert.ok(calls.some(function (call) { return call.url.includes("/operon_lead_events"); }), "follow-up event insert missing");
+
+    const archived = await followupAdmin.handler(event("POST", "", {
+      action: "archive",
+      follow_up_id: followUpId,
+      lead_id: leadId
+    }, { "x-operon-admin-token": "admin-token" }));
+    assert.strictEqual(archived.statusCode, 200);
+    assert.strictEqual(parse(archived).ok, true);
 
     const serialized = JSON.stringify(listPayload);
     [

@@ -99,12 +99,133 @@ function safeLeadSummary(row) {
   };
 }
 
+function toArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function safeMetadata(row) {
+  const metadata = row && typeof row.metadata === "object" && !Array.isArray(row.metadata)
+    ? row.metadata
+    : {};
+  return {
+    task_type: sanitizeText(metadata.task_type, 80),
+    reason: sanitizeText(metadata.reason, 240),
+    priority: sanitizeText(metadata.priority, 40),
+    suggested_message: sanitizeText(metadata.suggested_message, 420),
+    source: sanitizeText(metadata.source, 80),
+    source_event_id: sanitizeText(metadata.source_event_id, 80),
+    qualification_id: sanitizeText(metadata.qualification_id, 80),
+    dry_run_only: metadata.dry_run_only === true
+  };
+}
+
+function getDueAt(priority) {
+  const date = new Date();
+  if (priority === "high") {
+    date.setHours(date.getHours() + 2);
+    return date.toISOString();
+  }
+  if (priority === "low") {
+    date.setDate(date.getDate() + 3);
+    date.setHours(9, 0, 0, 0);
+    return date.toISOString();
+  }
+  date.setDate(date.getDate() + 1);
+  date.setHours(9, 0, 0, 0);
+  return date.toISOString();
+}
+
+function normalizeSignal(value) {
+  return sanitizeText(value, 80).toLowerCase();
+}
+
+function isUnknown(value) {
+  return ["", "unknown", "not_sure", "not sure", "skipped", "skip", "unsure"].indexOf(normalizeSignal(value)) >= 0;
+}
+
+function isYes(value) {
+  return ["yes", "has_quote", "has quote", "has_floorplan", "has floorplan", "uploaded", "true"].indexOf(normalizeSignal(value)) >= 0;
+}
+
+function deriveDryRunTask(qualification) {
+  const reasons = [];
+  let taskType = "review_chatbot_lead";
+  let priority = "normal";
+  let nextAction = "Review chatbot qualification and check whether the customer completed the handoff.";
+  let suggestedMessage = "Review the chatbot summary, then decide whether a manual follow-up is useful.";
+
+  if (qualification.intent === "contact_human") {
+    taskType = "priority_contact_follow_up";
+    priority = "high";
+    reasons.push("Customer asked to contact Operon.");
+    nextAction = "Review contact request and follow up manually.";
+    suggestedMessage = "Thanks for contacting Operon Flooring. We can help clarify the next step for your flooring project.";
+  }
+
+  if (qualification.intent === "start_quote" && qualification.confidence === "high") {
+    taskType = taskType === "review_chatbot_lead" ? "quote_intent_follow_up" : taskType;
+    reasons.push("High-confidence quote intent from chatbot.");
+    nextAction = "Check quote form completion and follow up if contact details are available.";
+    suggestedMessage = "I noticed you were starting a flooring quote. If you need help with product, area, stairs or removal details, we can review it with you.";
+  }
+
+  if (isUnknown(qualification.product_category)) {
+    taskType = "product_guide_follow_up";
+    reasons.push("Product category is unknown.");
+    nextAction = "Suggest product guide or products page before quote follow-up.";
+    suggestedMessage = "If you are not sure which flooring type suits the project, start with hybrid, laminate and engineered timber options before finalising the quote scope.";
+  }
+
+  if (isUnknown(qualification.area_status)) {
+    taskType = "area_or_floorplan_follow_up";
+    reasons.push("Floor area is unknown.");
+    nextAction = "Ask for approximate area or a floor plan.";
+    suggestedMessage = "If the area is not known yet, a floor plan or rough room measurements can help prepare a clearer flooring estimate.";
+  }
+
+  if (isYes(qualification.existing_quote_status)) {
+    taskType = "quote_review_follow_up";
+    reasons.push("Customer has an existing written quote.");
+    nextAction = "Suggest quote-review before comparing or accepting the quote.";
+    suggestedMessage = "If you already have a written quote, Operon can review what is clear, what is missing and what questions to ask before comparing.";
+  }
+
+  if (isYes(qualification.floorplan_status)) {
+    taskType = "floorplan_review_follow_up";
+    reasons.push("Customer has a floor plan.");
+    nextAction = "Suggest floor plan upload or manual review.";
+    suggestedMessage = "A floor plan can help confirm approximate area and make the quote scope easier to review.";
+  }
+
+  if (qualification.urgency === "asap") {
+    priority = "high";
+    reasons.push("Urgency is ASAP.");
+  }
+  if (qualification.urgency === "just_researching") {
+    priority = priority === "high" ? "high" : "low";
+    reasons.push("Customer is still researching.");
+  }
+
+  if (!reasons.length) {
+    reasons.push("Chatbot qualification created a safe lead event.");
+  }
+
+  return {
+    task_type: taskType,
+    priority: priority,
+    reason: reasons.join(" "),
+    due_at: getDueAt(priority),
+    next_action: nextAction,
+    suggested_message: suggestedMessage
+  };
+}
+
 async function listFollowUps(event) {
   const params = new URLSearchParams(event.rawQuery || "");
   const status = sanitizeText(params.get("status") || "open", 40);
   const limit = parseLimit(params.get("limit"));
   const query = {
-    select: "id,lead_id,due_at,status,channel,next_action,assigned_to,created_at,updated_at",
+    select: "id,lead_id,due_at,status,channel,next_action,assigned_to,created_at,updated_at,metadata",
     order: "due_at.asc.nullslast",
     limit: String(limit)
   };
@@ -135,9 +256,97 @@ async function listFollowUps(event) {
     ok: true,
     follow_ups: (Array.isArray(followUps) ? followUps : []).map(function (item) {
       return Object.assign({}, item, {
+        metadata: safeMetadata(item),
         lead: item.lead_id ? leadsById[item.lead_id] || null : null
       });
     })
+  };
+}
+
+async function generateDryRunFollowUps(event) {
+  const params = new URLSearchParams(event.rawQuery || "");
+  const limit = parseLimit(params.get("limit"));
+  const qualifications = await supabaseRequest("operon_chatbot_qualifications", {
+    query: {
+      select: "id,lead_id,event_id,created_at,source_page,intent,suburb,property_type,product_category,area_status,stairs_status,removal_status,floorplan_status,existing_quote_status,urgency,next_action,handoff_url,missing_info,confidence",
+      order: "created_at.desc",
+      limit: String(limit)
+    }
+  });
+  const rows = Array.isArray(qualifications) ? qualifications : [];
+  const leadIds = Array.from(new Set(rows.map(function (row) { return row.lead_id; }).filter(isUuid)));
+
+  if (!leadIds.length) {
+    return {
+      ok: true,
+      created: 0,
+      skipped: rows.length,
+      reason: "No chatbot qualifications with lead_id were available."
+    };
+  }
+
+  const existingRows = await supabaseRequest("operon_follow_ups", {
+    query: {
+      lead_id: "in." + quoteUuidList(leadIds),
+      select: "id,lead_id,metadata",
+      limit: "500"
+    }
+  });
+  const existingKeys = new Set((Array.isArray(existingRows) ? existingRows : []).map(function (row) {
+    const metadata = row && typeof row.metadata === "object" && !Array.isArray(row.metadata) ? row.metadata : {};
+    return String(metadata.qualification_id || metadata.source_event_id || "");
+  }).filter(Boolean));
+
+  const inserts = [];
+  let skipped = 0;
+  rows.forEach(function (qualification) {
+    if (!isUuid(qualification.lead_id)) {
+      skipped += 1;
+      return;
+    }
+    const key = String(qualification.id || qualification.event_id || "");
+    if (key && existingKeys.has(key)) {
+      skipped += 1;
+      return;
+    }
+    const task = deriveDryRunTask(qualification);
+    inserts.push({
+      lead_id: qualification.lead_id,
+      due_at: task.due_at,
+      status: "open",
+      channel: "manual",
+      next_action: task.next_action,
+      assigned_to: "operator",
+      metadata: {
+        dry_run_only: true,
+        source: "chatbot_qualification",
+        qualification_id: qualification.id,
+        source_event_id: qualification.event_id,
+        task_type: task.task_type,
+        reason: task.reason,
+        priority: task.priority,
+        suggested_message: task.suggested_message,
+        source_page: qualification.source_page,
+        handoff_url: qualification.handoff_url,
+        missing_info: toArray(qualification.missing_info).slice(0, 12)
+      }
+    });
+    if (key) existingKeys.add(key);
+  });
+
+  if (inserts.length) {
+    await supabaseRequest("operon_follow_ups", {
+      method: "POST",
+      headers: { Prefer: "return=minimal" },
+      body: inserts
+    });
+  }
+
+  return {
+    ok: true,
+    created: inserts.length,
+    skipped: skipped,
+    dry_run_only: true
   };
 }
 
@@ -160,7 +369,7 @@ async function updateFollowUp(body) {
   const action = sanitizeText(body.action, 60);
   const followUpId = String(body.follow_up_id || body.followUpId || "").trim();
   const leadId = String(body.lead_id || body.leadId || "").trim();
-  const allowedActions = ["mark_done", "cancel", "snooze", "update_next_action"];
+  const allowedActions = ["mark_done", "cancel", "archive", "snooze", "update_next_action"];
 
   if (allowedActions.indexOf(action) < 0) {
     return { status: 400, payload: { ok: false, error: "Unknown follow-up action." } };
@@ -182,6 +391,10 @@ async function updateFollowUp(body) {
   if (action === "cancel") {
     patch.status = "cancelled";
     eventType = "follow_up_cancelled";
+  }
+  if (action === "archive") {
+    patch.status = "cancelled";
+    eventType = "follow_up_archived";
   }
   if (action === "snooze") {
     const dueAt = new Date(String(body.due_at || body.dueAt || ""));
@@ -253,6 +466,10 @@ exports.handler = async function (event) {
       return jsonResponse(event, 400, { ok: false, error: "Invalid JSON payload." });
     }
 
+    if (sanitizeText(body.action, 60) === "generate_dry_run") {
+      return jsonResponse(event, 200, await generateDryRunFollowUps(event));
+    }
+
     const result = await updateFollowUp(body);
     return jsonResponse(event, result.status, result.payload);
   } catch (error) {
@@ -269,5 +486,6 @@ exports.handler = async function (event) {
 exports._test = {
   isUuid: isUuid,
   sanitizeText: sanitizeText,
-  parseLimit: parseLimit
+  parseLimit: parseLimit,
+  deriveDryRunTask: deriveDryRunTask
 };

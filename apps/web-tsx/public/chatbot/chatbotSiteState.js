@@ -8,11 +8,12 @@
   };
 
   const QUOTE_STEP_META = [
-    { index: 0, title: "Project basics", flow: "project_basics", focusId: "suburb" },
-    { index: 1, title: "Flooring and area", flow: "flooring_area", focusId: "selectedProductCategory" },
-    { index: 2, title: "Main scope", flow: "main_scope", focusId: "removalDecision" },
-    { index: 3, title: "Estimate preview", flow: "estimate_preview", focusId: "summaryHeadline" },
-    { index: 4, title: "Contact and submit", flow: "contact_submit", focusId: "fullName" }
+    { index: 0, title: "Property", flow: "property", focusId: "suburb" },
+    { index: 1, title: "Flooring/product", flow: "flooring_product", focusId: "selectedProductCategory" },
+    { index: 2, title: "Area", flow: "area", focusId: "measurementMethod" },
+    { index: 3, title: "Stairs", flow: "stairs", focusId: "stairs" },
+    { index: 4, title: "Extras", flow: "extras_scope", focusId: "floorPrepDecision" },
+    { index: 5, title: "Summary/review", flow: "summary_review", focusId: "customerNotes" }
   ];
 
   function safeGetStorage(key) {
@@ -198,29 +199,28 @@
       if (!getValueById("propertyType")) missing.push("property type");
       if (!getValueById("quoteMode")) missing.push("quote mode");
     } else if (activeStep === 1) {
-      const method = getValueById("measurementMethod");
       const productChoiceMode = getValueById("productChoiceMode");
       if (!data.selectedCategory) missing.push("flooring category");
       if (data.selectedCategory && productChoiceMode === "choose_range" && !data.selectedRangeId && !data.selectedProductId) missing.push("product range");
+    } else if (activeStep === 2) {
+      const method = getValueById("measurementMethod");
       if (method === "unknown" && !getValueById("unknownMeasurementNextStep")) {
         missing.push("measurement next step");
       } else if (!data.realArea && method !== "unknown") {
         missing.push("area");
       }
-    } else if (activeStep === 2) {
+    } else if (activeStep === 3) {
       const propertyType = getValueById("propertyType");
       const stairs = getValueById("stairs") || getActiveChoiceValue("[data-stairs-choice]", "data-stairs-choice");
       if (propertyType === "unit_apartment" && !getValueById("parkingAccess")) missing.push("access detail");
       if (!getValueById("removalDecision")) missing.push("removal");
-      if (!getValueById("floorPrepDecision")) missing.push("floor preparation");
       if (!stairs) {
         missing.push("stairs");
       } else if (stairs === "not_sure") {
         missing.push("stair detail");
       }
-    } else if (activeStep === 3) {
+    } else if (activeStep === 4) {
       [
-        ["removalDecision", "removal"],
         ["underlayDecision", "underlay"],
         ["finishDecision", "finishing"],
         ["floorPrepDecision", "floor preparation"],
@@ -241,9 +241,7 @@
       if (getValueById("floorPrepDecision") === "yes" && !getValueById("subfloorCondition")) {
         missing.push("subfloor condition");
       }
-    } else if (activeStep === 4) {
-      if (!getValueById("fullName")) missing.push("name");
-      if (!getValueById("phone") && !getValueById("email")) missing.push("phone or email");
+    } else if (activeStep === 5) {
       missing.push("review and submit");
     }
 
@@ -281,7 +279,7 @@
     const missingInputs = getMissingQuoteInputs(activeStep, data);
     const next = {
       label: "Continue quote",
-      href: "quote.html",
+      href: "/quote.html",
       focusId: ""
     };
     let nudge = "Keep going through the quote steps and review the details before submitting.";
@@ -293,21 +291,21 @@
       next.focusId = "suburb";
     } else if (activeStep === 1) {
       nudge = category
-        ? "Flooring direction is selected. Add the clearest area you have, or choose an area follow-up."
-        : "Choose laminate, hybrid, engineered timber, or Not sure, then add area.";
+        ? "Flooring direction is selected. Continue to area when the product path is clear enough."
+        : "Choose laminate, hybrid, engineered timber, or Not sure, then continue.";
       next.focusId = "selectedProductCategory";
-      if (!realArea) {
-        next.focusId = measurementMethod === "floorplan_upload"
-        ? "confirmedFloorplanArea"
-        : (measurementMethod === "unknown" ? "floorplanLookupAddress" : "totalAreaM2");
-      }
     } else if (activeStep === 2) {
+      nudge = realArea
+        ? "Area is started. Continue to stairs and removal."
+        : "Add the clearest area you have, or choose a floor plan path.";
+      next.focusId = realArea ? "removalDecision" : (measurementMethod === "floorplan_upload" ? "confirmedFloorplanArea" : "totalAreaM2");
+    } else if (activeStep === 3) {
       nudge = "Answer removal, stairs and floor preparation. Use Not sure if the site needs review.";
       next.focusId = "stairs";
-    } else if (activeStep === 3) {
-      nudge = "Review the estimate status. Advanced details are optional and stay read-only unless the customer fills them.";
-      next.focusId = "summaryHeadline";
     } else if (activeStep === 4) {
+      nudge = "Extras are optional where unclear. Use Not sure if the site needs review.";
+      next.focusId = "floorPrepDecision";
+    } else if (activeStep === 5) {
       nudge = "Add contact details so Operon can review the project and follow up.";
       next.focusId = "customerNotes";
     }
@@ -326,7 +324,7 @@
       measurementMethod: measurementMethod,
       realArea: realArea,
       missingInputs: missingInputs,
-      isNearCompletion: activeStep === 4,
+      isNearCompletion: activeStep === 5,
       nudge: nudge,
       next: next
     };
@@ -346,8 +344,53 @@
         : "Choose a category and range first, then continue to the quote.",
       next: {
         label: rangeId || productId ? "Continue to quote" : "Browse products",
-        href: rangeId || productId ? "quote.html?from=chatbot" : "products.html",
+        href: rangeId || productId ? "/quote.html?from=chatbot" : "/products.html",
         focusId: rangeId || productId ? "" : "catalogueCategoryCards"
+      }
+    };
+  }
+
+  function getFloorplanPageState() {
+    const selectedArea = toNumber(getTextById("selectedAreaTotal"));
+    const confidenceText = getTextById("measurementConfidenceTag");
+    return {
+      flow: "floorplan_help",
+      userType: selectedArea ? "measuring_user" : "area_uncertain_user",
+      measuredArea: selectedArea,
+      measurementConfidence: confidenceText,
+      nudge: selectedArea
+        ? "A measured area is started. Send it into the quote when the rooms and scale are reviewed."
+        : "Use this page when you have a floor plan and need a safer area starting point before quoting.",
+      next: {
+        label: selectedArea ? "Continue quote with area" : "Measure floor plan",
+        href: selectedArea ? "/quote.html?quoteStep=3&areaMethod=floorplan_review" : "/floorplan.html",
+        focusId: selectedArea ? "" : "floorplanUpload"
+      }
+    };
+  }
+
+  function getContactPageState() {
+    return {
+      flow: "contact_human",
+      userType: "contact_user",
+      nudge: "Use contact for human follow-up. If you already know product and area, the quote form is usually the faster path.",
+      next: {
+        label: "Contact Operon",
+        href: "/contact.html",
+        focusId: "contactName"
+      }
+    };
+  }
+
+  function getBlogPageState() {
+    return {
+      flow: "guide_reader",
+      userType: "research_user",
+      nudge: "Guide readers usually need one of four next steps: start a quote, check an existing quote, browse products, or measure area from a plan.",
+      next: {
+        label: "Start quote",
+        href: "/quote.html",
+        focusId: ""
       }
     };
   }
@@ -360,9 +403,6 @@
     const clarityLevel = getTextById("clarityLevel") || quickStatus || findReadinessLabel(documentReportText);
     const clarityTag = getTextById("clarityTag") || getTextById("quickResultTag") || "Quote readiness";
     const decisionGuidance = getTextById("decisionGuidance") || firstTextByIds(["quickResultSummary"]) || "";
-    const extractedText = isElementVisibleById("extractedQuoteFieldsBox")
-      ? getTextById("extractedQuoteFieldsList")
-      : (documentReportText.indexOf("Extracted price basis") >= 0 ? documentReportText : "");
     const missingText = firstTextByIds(["quickTopItemsList", "quickMissingList", "mediumRiskList"]) || documentReportText;
     const questionsText = firstTextByIds(["quickQuestionsList", "questionsToAskList"]) || documentReportText;
     const resultVisible = Boolean(
@@ -371,7 +411,6 @@
       && !/unknown items will appear|observations will appear/i.test(missingText)
     );
     const missingScope = compactListText(missingText, 5);
-    const extractedDetails = compactListText(extractedText, 5);
     const questions = compactListText(questionsText, 4);
 
     return {
@@ -380,7 +419,6 @@
       reviewResultVisible: resultVisible,
       reviewStatus: clarityLevel,
       reviewConfidenceLabel: clarityTag,
-      reviewExtractedDetails: extractedDetails,
       reviewMissingScope: missingScope,
       reviewQuestions: questions,
       reviewDecisionGuidance: decisionGuidance,
@@ -389,7 +427,7 @@
         : "Use the review page to check scope items like removal, prep, trims, and installation before starting a structured estimate.",
       next: {
         label: "Get structured estimate",
-        href: "quote.html?source=quote_review",
+        href: "/quote.html?source=quote_review",
         focusId: ""
       }
     };
@@ -409,7 +447,7 @@
         : "Start with products if you want to browse, or go straight to the quote if you know the project basics.",
       next: {
         label: category ? "Continue quote" : "Start quote",
-        href: "quote.html?from=chatbot",
+        href: "/quote.html?from=chatbot",
         focusId: ""
       }
     };
@@ -434,12 +472,18 @@
       pageState = getProductsPageState();
     } else if (pageKey === "quote-review") {
       pageState = getReviewPageState();
+    } else if (pageKey === "floorplan") {
+      pageState = getFloorplanPageState();
+    } else if (pageKey === "contact") {
+      pageState = getContactPageState();
+    } else if (pageKey === "blog") {
+      pageState = getBlogPageState();
     } else if (pageKey === "index") {
       pageState = getHomePageState();
     } else {
       pageState = {
         nudge: "I can guide you to products, the quote flow, or quote review.",
-        next: { label: "Start quote", href: "quote.html", focusId: "" }
+        next: { label: "Start quote", href: "/quote.html", focusId: "" }
       };
     }
 

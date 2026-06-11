@@ -151,6 +151,14 @@ function lastAssistantText(snapshot) {
   return assistantMessages[assistantMessages.length - 1].text;
 }
 
+function lastAssistantActions(snapshot) {
+  const assistantMessages = snapshot.transcript.filter(function (message) {
+    return message.role === "assistant";
+  });
+  const last = assistantMessages[assistantMessages.length - 1] || {};
+  return Array.isArray(last.actions) ? last.actions.map(function (action) { return action.label; }) : [];
+}
+
 function runPrompt(prompt) {
   const context = loadCore();
   const logic = createLogic(context);
@@ -219,6 +227,7 @@ function assertResponseGuardrails(snapshot, label, options) {
 
 function assertNoWriteOrIntegrationHooks(source, label) {
   assert.strictEqual(/localStorage\.(setItem|removeItem|clear)/.test(source), false, label + " localStorage write");
+  assert.strictEqual(/sessionStorage\.(setItem|removeItem|clear)/.test(source), false, label + " sessionStorage write");
   assert.strictEqual(/quoteCalculator|calculateQuote|QUOTE_CALCULATOR/.test(source), false, label + " pricing call");
   assert.strictEqual(/setInputValue|querySelector\([^)]*quote|\.submit\(/.test(source), false, label + " form write");
   assert.strictEqual(/selectProduct|setSelectedProduct|clearSelectedProduct/.test(source), false, label + " product override");
@@ -243,7 +252,7 @@ test("price questions are blocked without producing totals", function () {
   logic.applyTextInput("How much will 52m2 cost?");
 
   const text = lastAssistantText(logic.getSnapshot());
-  assert.match(text, /cannot calculate|source of truth/i);
+  assert.match(text, /cannot give exact pricing|cannot calculate/i);
   assert.doesNotMatch(text, /\$\s*\d/);
 });
 
@@ -255,8 +264,8 @@ test("cost questions produce quote explanation schema only", function () {
   logic.applyTextInput("How much does hybrid flooring cost?");
 
   const snapshot = logic.getSnapshot();
-  assert.strictEqual(snapshot.structuredOutput.intent, "quote_explanation");
-  assert.strictEqual(snapshot.structuredOutput.next_step, "quote.html");
+  assert.strictEqual(snapshot.structuredOutput.intent, "price_question");
+  assert.strictEqual(snapshot.structuredOutput.next_step, "/quote.html");
   assert.strictEqual(snapshot.structuredOutput.ready_for_quote, false);
   assert.doesNotMatch(lastAssistantText(snapshot), /\$\s*\d/);
 });
@@ -269,7 +278,7 @@ test("competitor pricing prompts are blocked", function () {
   logic.applyTextInput("Can you beat a competitor quote?");
 
   const text = lastAssistantText(logic.getSnapshot());
-  assert.match(text, /cannot judge another quote by price|both quotes describe the same job/i);
+  assert.match(text, /cannot tell whether a quote is expensive|scope is clear enough|PDF, image or screenshot/i);
   assert.doesNotMatch(text, /Operon will be cheaper|we will beat/i);
 });
 
@@ -277,72 +286,72 @@ test("controlled knowledge index routes site content without prices", function (
   [
     {
       prompt: "Tell me about Parramatta flooring",
-      route: "flooring-parramatta.html",
+      route: "/flooring-parramatta.html",
       expected: /Parramatta/i
     },
     {
       prompt: "Tell me about Randwick flooring for an apartment",
-      route: "flooring-randwick.html",
+      route: "/flooring-randwick.html",
       expected: /Randwick|apartments|units/i
     },
     {
       prompt: "What should I know about floor preparation?",
-      route: "quote-review.html",
+      route: "/quote-review.html",
       expected: /preparation|Uneven/i
     },
     {
       prompt: "Show me floor care maintenance advice",
-      route: "floor-care-maintenance.html",
+      route: "/floor-care-maintenance.html",
       expected: /care|maintenance/i
     },
     {
       prompt: "What page helps with hybrid flooring?",
-      route: "hybrid-flooring-sydney.html",
+      route: "/hybrid-flooring-sydney.html",
       expected: /Hybrid flooring/i
     },
     {
       prompt: "Can I preview Lumiere Ultra HD hybrid?",
-      route: "hybrid-flooring-sydney.html",
+      route: "/hybrid-flooring-sydney.html",
       expected: /Lumiere Ultra HD|hybrid preview/i
     },
     {
       prompt: "Show me Villeroy Boch Heritage laminate",
-      route: "laminate-flooring-sydney.html",
+      route: "/laminate-flooring-sydney.html",
       expected: /Villeroy|Heritage|laminate preview/i
     },
     {
       prompt: "Tell me about Cavallo Bianco Chevron",
-      route: "engineered-timber-flooring-sydney.html",
+      route: "/engineered-timber-flooring-sydney.html",
       expected: /Cavallo Bianco|Chevron|engineered/i
     },
     {
       prompt: "Tell me about Swish Oak Natura Herringbone",
-      route: "products.html",
+      route: "/products.html",
       expected: /Herringbone|pattern/i
     },
     {
       prompt: "Do I need disposal with carpet removal?",
-      route: "quote.html",
+      route: "/quote.html",
       expected: /disposal|take-away|remove/i
     },
     {
       prompt: "Is acoustic underlay included?",
-      route: "quote-review.html",
+      route: "/quote-review.html",
       expected: /Underlay|acoustic|scope/i
     },
     {
       prompt: "Are trims and skirting included?",
-      route: "quote-review.html",
+      route: "/quote-review.html",
       expected: /Trims|scotia|skirting|Finishing/i
     },
     {
       prompt: "I selected not sure for door trimming and furniture, why are they not in review notes?",
-      route: "quote.html",
+      route: "/quote.html",
       expected: /Not sure|needs confirmation|door trimming|furniture/i
     },
     {
       prompt: "What warranty and exclusions should I check?",
-      route: "quote-review.html",
+      route: "/quote-review.html",
       expected: /Warranty|exclusions|variation/i
     }
   ].forEach(function (example) {
@@ -360,25 +369,25 @@ test("scenario QA matrix routes without pricing output", function () {
     {
       prompt: "I want cheapest",
       intent: "product_guidance",
-      route: "products.html",
+      route: "/products.html",
       forbidden: /\$\s*\d|cheaper than|always cheaper/i
     },
     {
       prompt: "I have stairs",
       intent: "scope_validation",
-      route: "quote-review.html",
+      route: "/quote-review.html",
       forbidden: /\$\s*\d/i
     },
     {
       prompt: "I don't know my area",
       intent: "missing_info_collection",
-      route: "quote.html",
+      route: "/quote.html",
       forbidden: /\$\s*\d/i
     },
     {
       prompt: "Can you beat this quote?",
-      intent: "unsupported",
-      route: "quote-review.html",
+      intent: "existing_quote_review",
+      route: "/quote-review.html?from=chatbot&mode=upload",
       forbidden: /\$\s*\d|yes|we can beat/i
     }
   ].forEach(function (scenario) {
@@ -394,64 +403,64 @@ test("quote-review and handoff policy scenarios stay inside approved boundaries"
   [
     {
       prompt: "Is this quote expensive?",
-      intent: "unsupported",
-      route: "quote-review.html",
-      expected: /both quotes describe the same job|written quote|quick completeness/i,
+      intent: "existing_quote_review",
+      route: "/quote-review.html?from=chatbot&mode=upload",
+      expected: /cannot tell whether a quote is expensive|scope is clear enough|PDF, image or screenshot/i,
       forbidden: /\$\s*\d|that quote is expensive|Operon will be cheaper|we will beat/i
     },
     {
       prompt: "I have Hybrid 7mm quote",
-      intent: "document_quote_review",
-      route: "quote-review.html",
-      expected: /Upload the written quote|strongest review/i,
+      intent: "existing_quote_review",
+      route: "/quote-review.html?from=chatbot&mode=upload",
+      expected: /PDF, image or screenshot|do not paste the quote text|strongest review/i,
       forbidden: /Likely product match|final price|\$\s*\d/i
     },
     {
       prompt: "My quote only says supply and install",
-      intent: "quick_quote_completeness",
-      route: "quote-review.html",
-      expected: /quick quote completeness|not a full quote review|Run the quick check/i,
+      intent: "existing_quote_review",
+      route: "/quote-review.html?from=chatbot&mode=quick_check#quick-check",
+      expected: /quick completeness check|Do not paste the quote text|product brand/i,
       forbidden: /Extracted from uploaded quote|Product match|Operon comparable estimate|\$\s*\d/i
     },
     {
       prompt: "I have a floor plan",
       intent: "floorplan_help",
-      route: "floorplan.html",
+      route: "/floorplan.html",
       expected: /floor plan measurement|already have a plan|measurement/i,
       forbidden: /\$\s*\d|calculate|final price/i
     },
     {
       prompt: "I want a human to call me",
-      intent: "operator_handoff",
-      route: "quote.html?from=chatbot&support=operator",
+      intent: "contact_human",
+      route: "/contact.html?from=chatbot",
       expected: /automated|not a live operator|contact details/i,
       forbidden: /live operator is available|online now|quote submitted/i
     },
     {
       prompt: "Can you give final price?",
-      intent: "quote_explanation",
-      route: "quote.html",
-      expected: /cannot calculate pricing|structured estimate/i,
+      intent: "price_question",
+      route: "/quote.html",
+      expected: /cannot give exact pricing|structured estimate/i,
       forbidden: /\$\s*\d|guaranteed quote|final fixed/i
     },
     {
       prompt: "What does this quote review mean?",
       intent: "quote_review_result_explanation",
-      route: "quote-review.html",
+      route: "/quote-review.html",
       expected: /quote readiness|Not ready to compare|Clear enough to compare/i,
       forbidden: /\$\s*\d|cheaper|bad quote|formula/i
     },
     {
       prompt: "It says product match 35%",
       intent: "quote_review_result_explanation",
-      route: "quote-review.html",
+      route: "/quote-review.html",
       expected: /not treated as a confirmed match|product match not confirmed/i,
       forbidden: /Likely product match|match 35%|\$\s*\d/i
     },
     {
       prompt: "I live in an apartment no lift",
       intent: "scope_validation",
-      route: "quote-review.html",
+      route: "/quote-review.html",
       expected: /Apartment with no lift|site review|strata/i,
       forbidden: /\$\s*\d|rate|cheaper/i
     }
@@ -473,72 +482,72 @@ test("knowledge coverage map covers the customer journey", function () {
       area: "product guidance",
       prompt: "Should I choose hybrid or laminate?",
       intent: "product_guidance",
-      route: "products.html"
+      route: "/products.html"
     },
     {
       area: "quote explanation",
       prompt: "How does the quote work?",
-      intent: "quote_explanation",
-      route: "quote.html"
+      intent: "start_quote",
+      route: "/quote.html"
     },
     {
       area: "missing area",
       prompt: "I don't know my area",
       intent: "missing_info_collection",
-      route: "quote.html"
+      route: "/quote.html"
     },
     {
       area: "stairs access furniture",
       prompt: "I have stairs",
       intent: "scope_validation",
-      route: "quote-review.html"
+      route: "/quote-review.html"
     },
     {
       area: "existing flooring removal",
       prompt: "Replacing carpet in bedrooms",
       scenario: "replacing_carpet",
-      route: "quote.html"
+      route: "/quote.html"
     },
     {
       area: "hidden costs",
       prompt: "Are there hidden costs?",
       intent: "scope_validation",
-      route: "quote.html"
+      route: "/quote.html"
     },
     {
       area: "final quote changes",
       prompt: "Can final quote change?",
       intent: "quote_explanation",
-      route: "quote.html"
+      route: "/quote.html"
     },
     {
       area: "cheapest option",
       prompt: "I want cheapest",
       intent: "product_guidance",
-      route: "products.html"
+      route: "/products.html"
     },
     {
       area: "competitor quote",
       prompt: "Can you beat this quote?",
-      intent: "unsupported",
-      route: "quote-review.html"
+      intent: "existing_quote_review",
+      route: "/quote-review.html?from=chatbot&mode=upload"
     },
     {
       area: "trust professionalism",
       prompt: "Can I trust Operon?",
       intent: "route_next_step",
-      route: "quote.html"
+      route: "/quote.html"
     },
     {
       area: "route suggestions",
       prompt: "I am ready",
-      route: "quote.html"
+      route: "/quote.html"
     },
     {
       area: "json schema",
       prompt: "52",
       intent: "missing_info_collection",
-      route: "quote.html",
+      route: "/quote.html",
       areaM2: 52
     }
   ].forEach(function (coverage) {
@@ -558,6 +567,223 @@ test("knowledge coverage map covers the customer journey", function () {
     assert.strictEqual(snapshot.routeSuggestion.href, coverage.route, coverage.area);
     assert.doesNotMatch(assistantText, /\$\s*\d|per\s*m2|per\s*square|discount/i, coverage.area);
   });
+});
+
+test("guided quote prequalification collects safe handoff summary", function () {
+  const context = loadCore();
+  const logic = createLogic(context);
+
+  logic.begin();
+  logic.applyAction("ready_for_quote");
+  logic.applyTextInput("Auburn");
+  logic.applyAction("prequal_property_house");
+  logic.applyAction("prequal_flooring_hybrid");
+  logic.applyTextInput("60 m2");
+  logic.applyAction("prequal_no");
+  logic.applyAction("prequal_yes");
+  logic.applyAction("prequal_file_both");
+
+  const snapshot = logic.getSnapshot();
+  const summary = snapshot.prequalification.summary;
+
+  assert.strictEqual(snapshot.stage, "prequal_complete");
+  assert.strictEqual(summary.suburb, "Auburn");
+  assert.strictEqual(summary.property_type, "house");
+  assert.strictEqual(summary.product_category, "hybrid");
+  assert.strictEqual(summary.area_status, "known");
+  assert.strictEqual(summary.approx_area_m2, 60);
+  assert.strictEqual(summary.stairs_status, "no");
+  assert.strictEqual(summary.removal_status, "yes");
+  assert.strictEqual(summary.existing_quote_status, "has_quote");
+  assert.strictEqual(summary.floorplan_status, "has_floorplan");
+  assert.strictEqual(summary.next_action, "go_to_quote");
+  assert.strictEqual(summary.confidence, "high");
+  assert.strictEqual(Array.isArray(summary.missing_info), true);
+  assert.strictEqual(summary.missing_info.length, 0);
+  assert.match(snapshot.routeSuggestion.href, /^\/quote\.html\?source=chatbot&category=hybrid#quoteForm$/);
+  assert.strictEqual(summary.handoff_url, snapshot.routeSuggestion.href);
+  assert.match(lastAssistantText(snapshot), /Great.+quote form.+Anything unsure/i);
+  assert.doesNotMatch(JSON.stringify(summary), /\$\s*\d|rate|margin|supplier|phone|email|name/i);
+});
+
+test("chatbot lead qualification TypeScript contract is customer safe", function () {
+  const contractPath = path.resolve(__dirname, "..", "..", "..", "apps", "web-tsx", "src", "lib", "chatbotLeadQualification.ts");
+  const contract = fs.readFileSync(contractPath, "utf8");
+
+  [
+    "export type ChatbotLeadQualification",
+    "source_page: string",
+    "source_url: string",
+    "intent: ChatbotLeadIntent",
+    "product_category?: \"hybrid\" | \"laminate\" | \"engineered_timber\" | \"not_sure\"",
+    "area_status: \"known\" | \"unknown\" | \"has_floorplan\" | \"not_sure\"",
+    "approx_area_m2?: number",
+    "floorplan_status: \"has_floorplan\" | \"no_floorplan\" | \"not_sure\"",
+    "existing_quote_status: \"has_quote\" | \"no_quote\" | \"not_sure\"",
+    "missing_info: string[]",
+    "confidence: \"low\" | \"medium\" | \"high\""
+  ].forEach(function (fragment) {
+    assert(contract.indexOf(fragment) >= 0, fragment);
+  });
+
+  assert.doesNotMatch(contract, /price|rate|margin|supplier|ocr|transcript|phone|email|name/i);
+});
+
+test("guided quote prequalification accepts not sure and skip answers", function () {
+  const context = loadCore();
+  const logic = createLogic(context);
+
+  logic.begin();
+  logic.applyAction("ready_for_quote");
+  logic.applyAction("prequal_not_sure");
+  logic.applyAction("prequal_not_sure");
+  logic.applyAction("prequal_flooring_unsure");
+  logic.applyAction("prequal_area_unknown");
+  logic.applyAction("prequal_not_sure");
+  logic.applyAction("prequal_skip");
+  logic.applyAction("prequal_not_sure");
+
+  const snapshot = logic.getSnapshot();
+  const summary = snapshot.prequalification.summary;
+
+  assert.strictEqual(snapshot.stage, "prequal_complete");
+  assert.strictEqual(summary.suburb, "");
+  assert.strictEqual(summary.property_type, "not_sure");
+  assert.strictEqual(summary.product_category, "not_sure");
+  assert.strictEqual(summary.area_status, "not_sure");
+  assert.strictEqual(summary.stairs_status, "not_sure");
+  assert.strictEqual(summary.removal_status, "not_sure");
+  assert.strictEqual(summary.next_action, "go_to_quote");
+  assert.strictEqual(summary.confidence, "low");
+  assert(summary.missing_info.indexOf("product_category") >= 0);
+  assert(summary.missing_info.indexOf("area") >= 0);
+  assert.strictEqual(snapshot.routeSuggestion.href, "/quote.html?source=chatbot#quoteForm");
+  assert.doesNotMatch(lastAssistantText(snapshot), /\$\s*\d|per\s*m2|formula|margin/i);
+});
+
+test("guided quote prequalification flags apartment stairs removal floorplan and quote paths", function () {
+  const context = loadCore();
+  const logic = createLogic(context);
+
+  logic.begin();
+  logic.applyAction("ready_for_quote");
+  logic.applyTextInput("Sydney");
+  logic.applyAction("prequal_property_apartment");
+  logic.applyAction("prequal_flooring_laminate");
+  logic.applyAction("prequal_area_known");
+  logic.applyAction("prequal_yes");
+  logic.applyAction("prequal_yes");
+  logic.applyAction("prequal_file_floorplan");
+
+  const snapshot = logic.getSnapshot();
+  const summary = snapshot.prequalification.summary;
+
+  assert.strictEqual(summary.property_type, "apartment");
+  assert.strictEqual(summary.product_category, "laminate");
+  assert.strictEqual(summary.area_status, "known");
+  assert.strictEqual(summary.stairs_status, "yes");
+  assert.strictEqual(summary.removal_status, "yes");
+  assert.strictEqual(summary.floorplan_status, "has_floorplan");
+  assert.strictEqual(summary.existing_quote_status, "not_sure");
+  assert.strictEqual(summary.confidence, "high");
+  assert.strictEqual(snapshot.routeSuggestion.href, "/quote.html?source=chatbot&category=laminate#quoteForm");
+  assert.doesNotMatch(snapshot.routeSuggestion.href, /propertyType|stairs|removal|floorplan|existingQuote|areaStatus|Sydney/i);
+});
+
+test("quote-review assistant routes PDF and screenshot users to upload review", function () {
+  [
+    { action: "quote_review_file_yes", label: "pdf" },
+    { action: "quote_review_file_screenshot", label: "screenshot" }
+  ].forEach(function (scenario) {
+    const context = loadCore();
+    const logic = createLogic(context);
+
+    logic.begin();
+    logic.applyAction("review_existing_quote");
+    logic.applyAction(scenario.action);
+
+    const snapshot = logic.getSnapshot();
+    const text = lastAssistantText(snapshot);
+
+    assert.strictEqual(snapshot.structuredOutput.intent, "existing_quote_review", scenario.label);
+    assert.strictEqual(snapshot.routeSuggestion.href, "/quote-review.html?from=chatbot&mode=upload", scenario.label);
+    assert.match(text, /Upload gives the strongest review|Review my quote/i, scenario.label);
+    assert.doesNotMatch(text, /raw quote|extracted text|\$\s*\d|per\s*m2|internal rate/i, scenario.label);
+  });
+});
+
+test("quote-review assistant runs safe no-file checklist", function () {
+  const context = loadCore();
+  const logic = createLogic(context);
+
+  logic.begin();
+  logic.applyAction("review_existing_quote");
+  logic.applyAction("quote_review_file_no");
+  logic.applyAction("quote_review_check_yes");
+  logic.applyAction("quote_review_check_no");
+  logic.applyAction("quote_review_check_not_sure");
+  logic.applyAction("quote_review_check_yes");
+  logic.applyAction("quote_review_check_skip");
+  logic.applyAction("quote_review_check_no");
+
+  const snapshot = logic.getSnapshot();
+  const summary = snapshot.quoteReviewGuide.summary;
+
+  assert.strictEqual(snapshot.stage, "quote_review_quick_check_complete");
+  assert.strictEqual(snapshot.structuredOutput.intent, "existing_quote_review");
+  assert.strictEqual(snapshot.routeSuggestion.href, "/quote-review.html?from=chatbot&mode=quick_check#quick-check");
+  assert(summary.missing_items.indexOf("area shown") >= 0);
+  assert(summary.missing_items.indexOf("trims stairs listed") >= 0);
+  assert.match(lastAssistantText(snapshot), /quick completeness check|Items to check|Review my quote/i);
+  assert.doesNotMatch(JSON.stringify(snapshot.quoteReviewGuide), /raw quote|extracted text|\$\s*\d|phone|email|name/i);
+});
+
+test("quote-review assistant offers comparison quote without judging price", function () {
+  const context = loadCore();
+  const logic = createLogic(context);
+
+  logic.begin();
+  logic.applyTextInput("Is this quote expensive?");
+  logic.applyAction("quote_review_file_no");
+  logic.applyAction("quote_review_check_not_sure");
+  logic.applyAction("quote_review_check_not_sure");
+  logic.applyAction("quote_review_check_not_sure");
+  logic.applyAction("quote_review_check_not_sure");
+  logic.applyAction("quote_review_check_not_sure");
+  logic.applyAction("quote_review_check_not_sure");
+
+  let snapshot = logic.getSnapshot();
+  assert(lastAssistantActions(snapshot).indexOf("Review my quote") >= 0);
+  assert(lastAssistantActions(snapshot).indexOf("Start Operon comparison quote") >= 0);
+  assert.doesNotMatch(lastAssistantText(snapshot), /expensive|cheaper|beat/i);
+
+  logic.applyAction("ready_for_quote");
+  snapshot = logic.getSnapshot();
+  assert.strictEqual(snapshot.stage, "quote_prequalification");
+  assert.match(lastAssistantText(snapshot), /What suburb is the job in/i);
+});
+
+test("quote-review assistant rejects raw pasted quote text", function () {
+  const context = loadCore();
+  const logic = createLogic(context);
+  const rawQuote = [
+    "Competitor quote",
+    "Hybrid supply and install",
+    "Area 62m2",
+    "Total $4300 inc GST",
+    "Removal extra"
+  ].join("\\n") + " ".repeat(320);
+
+  logic.begin();
+  logic.applyTextInput(rawQuote);
+
+  const snapshot = logic.getSnapshot();
+  const transcriptText = snapshot.transcript.map(function (message) { return message.text; }).join("\\n");
+
+  assert.strictEqual(snapshot.structuredOutput.intent, "existing_quote_review");
+  assert.strictEqual(snapshot.routeSuggestion.href, "/quote-review.html?from=chatbot&mode=upload");
+  assert.match(lastAssistantText(snapshot), /Please do not paste raw quote text|Review my quote/i);
+  assert.strictEqual(transcriptText.indexOf("Total $4300"), -1);
 });
 
 test("assistant responses follow response guardrails", function () {
@@ -608,7 +834,7 @@ test("edge-case intent set routes messy customer prompts safely", function () {
       label: "tiles and stairs",
       prompt: "I have tiles and stairs",
       intent: "scope_validation",
-      route: "quote-review.html",
+      route: "/quote-review.html",
       assertStructured: function (structured) {
         assert.strictEqual(structured.existing_floor, "tile");
         assert.strictEqual(structured.stairs, 1);
@@ -619,7 +845,7 @@ test("edge-case intent set routes messy customer prompts safely", function () {
       label: "apartment no lift",
       prompt: "I'm in an apartment with no lift",
       intent: "scope_validation",
-      route: "quote-review.html",
+      route: "/quote-review.html",
       assertStructured: function (structured) {
         assert.strictEqual(structured.access, "apartment");
         assert.strictEqual(structured.property_type, "unit_apartment");
@@ -630,7 +856,7 @@ test("edge-case intent set routes messy customer prompts safely", function () {
       label: "own flooring",
       prompt: "I have my own flooring",
       scenario: "install_only",
-      route: "quote.html",
+      route: "/quote.html",
       assertStructured: function (structured, snapshot) {
         assert.strictEqual(structured.quote_mode, "install_only");
         assert.strictEqual(snapshot.quoteFieldDraft.selectedProductCategory, "");
@@ -640,7 +866,7 @@ test("edge-case intent set routes messy customer prompts safely", function () {
       label: "uneven floor",
       prompt: "The floor is uneven",
       intent: "scope_validation",
-      route: "quote-review.html",
+      route: "/quote-review.html",
       assertStructured: function (structured) {
         assert.strictEqual(structured.subfloor_condition, "minor_prep");
         assert.strictEqual(structured.floor_prep_type, "levelling");
@@ -650,7 +876,7 @@ test("edge-case intent set routes messy customer prompts safely", function () {
       label: "only floorplan",
       prompt: "I only have a floorplan",
       intent: "floorplan_help",
-      route: "floorplan.html",
+      route: "/floorplan.html",
       assertStructured: function (structured) {
         assert.strictEqual(structured.measurement_method, "floorplan_upload");
       }
@@ -659,7 +885,7 @@ test("edge-case intent set routes messy customer prompts safely", function () {
       label: "herringbone",
       prompt: "I need herringbone",
       intent: "product_guidance",
-      route: "products.html",
+      route: "/products.html",
       assertStructured: function (structured) {
         assert.strictEqual(structured.category, "engineered");
         assert.strictEqual(structured.recommended_category, "engineered");
@@ -692,8 +918,8 @@ test("uncertain area routes to quote area flow without updating forms", function
   const snapshot = logic.getSnapshot();
   assert.strictEqual(snapshot.structuredOutput.intent, "floorplan_help");
   assert.strictEqual(snapshot.structuredOutput.measurement_method, "floorplan_upload");
-  assert.strictEqual(snapshot.structuredOutput.next_step, "floorplan.html");
-  assert.strictEqual(snapshot.routeSuggestion.href, "floorplan.html");
+  assert.strictEqual(snapshot.structuredOutput.next_step, "/floorplan.html");
+  assert.strictEqual(snapshot.routeSuggestion.href, "/floorplan.html");
 });
 
 test("operator requests show human follow-up without pretending live chat", function () {
@@ -705,10 +931,10 @@ test("operator requests show human follow-up without pretending live chat", func
 
   const snapshot = logic.getSnapshot();
   const text = lastAssistantText(snapshot);
-  assert.strictEqual(snapshot.structuredOutput.intent, "operator_handoff");
+  assert.strictEqual(snapshot.structuredOutput.intent, "contact_human");
   assert(snapshot.operatorHandoff, "operator handoff section missing");
-  assert.strictEqual(snapshot.operatorHandoff.href, "quote.html?from=chatbot&support=operator");
-  assert.strictEqual(snapshot.routeSuggestion.href, "quote.html?from=chatbot&support=operator");
+  assert.strictEqual(snapshot.operatorHandoff.href, "/contact.html?from=chatbot");
+  assert.strictEqual(snapshot.routeSuggestion.href, "/contact.html?from=chatbot");
   assert.match(text, /automated|human follow-up|contact details/i);
   assert.doesNotMatch(text, /online now|live operator is available|connected to an operator/i);
 });
@@ -723,9 +949,9 @@ test("conversion routes stay inside approved guided funnel", function () {
     "I am stuck"
   ].forEach(function (prompt) {
     const snapshot = runPrompt(prompt);
-    assert(["quote.html", "products.html", "quote-review.html", "floorplan.html"].indexOf(snapshot.routeSuggestion.href) >= 0, prompt);
+    assert(/^\/(quote|products|quote-review|floorplan)\.html(?:[?#].*)?$/.test(snapshot.routeSuggestion.href), prompt);
     if (prompt.indexOf("floorplan") < 0) {
-      assert.notStrictEqual(snapshot.routeSuggestion.href, "floorplan.html", prompt);
+      assert.notStrictEqual(snapshot.routeSuggestion.href, "/floorplan.html", prompt);
     }
   });
 });
@@ -741,8 +967,8 @@ test("controller exposes read-only structured outputs", function () {
 
   controller.init();
 
-  assert.strictEqual(controller.getStructuredOutput().intent, "route_next_step");
-  assert.strictEqual(controller.getRouteSuggestion().href, "quote.html");
+  assert.strictEqual(controller.getStructuredOutput().intent, "general_question");
+  assert.strictEqual(controller.getRouteSuggestion().href, "/quote.html");
   assert.strictEqual(typeof controller.getLocalStorageDraft().operon_chatbot_draft, "string");
 
   controller.destroy();
@@ -828,12 +1054,12 @@ test("handoff readiness contract blocks advisory and incomplete drafts", functio
   const productGuidance = mapper.toHandoffReadiness({
     intent: "product_guidance",
     category: "hybrid",
-    next_step: "products.html"
+    next_step: "/products.html"
   });
   const incompleteQuote = mapper.toHandoffReadiness({
     intent: "route_next_step",
     category: "hybrid",
-    next_step: "quote.html"
+    next_step: "/quote.html"
   });
 
   assert.strictEqual(productGuidance.status, "blocked");
@@ -859,14 +1085,14 @@ test("handoff readiness contract requires review for risk flags", function () {
     access: "easy",
     furniture: "none",
     quote_mode: "supply_install",
-    next_step: "quote-review.html",
+    next_step: "/quote-review.html",
     readiness: "review"
   });
 
   assert.strictEqual(review.status, "needs_review");
   assert.strictEqual(review.safe_to_apply, false);
   assert(review.review_flags.indexOf("stairs_require_manual_review") >= 0);
-  assert.strictEqual(review.next_step, "quote-review.html");
+  assert.strictEqual(review.next_step, "/quote-review.html");
 });
 
 test("handoff readiness contract can be ready but still read-only", function () {
@@ -883,7 +1109,7 @@ test("handoff readiness contract can be ready but still read-only", function () 
     access: "easy",
     furniture: "none",
     quote_mode: "supply_install",
-    next_step: "quote.html",
+    next_step: "/quote.html",
     readiness: "ready"
   });
 
@@ -925,8 +1151,92 @@ test("bootstrap page presets resolve without mounting live pages", function () {
   assert.strictEqual(getConfig("/index.html").pageKey, "index");
   assert.strictEqual(getConfig("/products.html").pageKey, "products");
   assert.strictEqual(getConfig("/quote.html").pageKey, "quote");
+  assert.strictEqual(getConfig("/floorplan.html").pageKey, "floorplan");
+  assert.strictEqual(getConfig("/contact.html").pageKey, "contact");
   assert.strictEqual(getConfig("/thank-you.html").pageKey, "thank-you");
-  assert.strictEqual(getConfig("/blog/index.html").pageKey, "default");
+  assert.strictEqual(getConfig("/blog/").pageKey, "blog");
+  assert.strictEqual(getConfig("/blog/how-to-compare-flooring-quotes.html").pageKey, "blog");
+});
+
+test("chatbot route suggestions are root-relative and cannot nest under blog paths", function () {
+  const routePattern = /(?:href|initialRouteHref|next_step):\s*"([^"]+)"|setRoute\([^,\n]+,\s*"([^"]+)"/g;
+  const allowedPrefixes = [
+    "/quote.html",
+    "/products.html",
+    "/quote-review.html",
+    "/floorplan.html",
+    "/contact.html",
+    "/blog/",
+    "/thank-you.html",
+    "/hybrid-flooring-sydney.html",
+    "/laminate-flooring-sydney.html",
+    "/engineered-timber-flooring-sydney.html",
+    "/flooring-",
+    "/floor-care-maintenance.html"
+  ];
+  const combinedSource = CORE_FILES.map(function (fileName) {
+    return fs.readFileSync(path.resolve(CHATBOT_DIR, fileName), "utf8");
+  }).join("\n");
+  const routeValues = [];
+  let match = null;
+
+  while ((match = routePattern.exec(combinedSource))) {
+    const route = match[1] || match[2] || "";
+    if (route && route.indexOf(".html") >= 0 || route === "/blog/") {
+      routeValues.push(route);
+    }
+  }
+
+  assert(routeValues.length > 20, "expected chatbot routes to be inspected");
+  routeValues.forEach(function (route) {
+    assert(route.charAt(0) === "/", "route is not root-relative: " + route);
+    assert(allowedPrefixes.some(function (prefix) { return route.indexOf(prefix) === 0; }), "route is outside approved funnel: " + route);
+    assert.strictEqual(new URL(route, "https://operonflooring.com.au/blog/example.html").pathname.indexOf("/blog/quote.html"), -1, route);
+    assert.strictEqual(new URL(route, "https://operonflooring.com.au/blog/example.html").pathname.indexOf("/blog/products.html"), -1, route);
+    assert.strictEqual(new URL(route, "https://operonflooring.com.au/blog/example.html").pathname.indexOf("/blog/floorplan.html"), -1, route);
+    assert.strictEqual(new URL(route, "https://operonflooring.com.au/blog/example.html").pathname.indexOf("/blog/quote-review.html"), -1, route);
+  });
+});
+
+test("new chatbot page states cover products floorplan contact and blog", function () {
+  [
+    {
+      pageKey: "products",
+      flow: undefined,
+      href: "/products.html",
+      expected: /Choose a category|flooring selection/i
+    },
+    {
+      pageKey: "floorplan",
+      flow: "floorplan_help",
+      href: "/floorplan.html",
+      expected: /floor plan|area/i
+    },
+    {
+      pageKey: "contact",
+      flow: "contact_human",
+      href: "/contact.html",
+      expected: /contact|human/i
+    },
+    {
+      pageKey: "blog",
+      flow: "guide_reader",
+      href: "/quote.html",
+      expected: /Guide readers|quote/i
+    }
+  ].forEach(function (scenario) {
+    const context = loadCore("/" + (scenario.pageKey === "blog" ? "blog/how-to-compare-flooring-quotes.html" : scenario.pageKey + ".html"));
+    const siteState = context.window.OperonChatbotSiteState.getSnapshot({ pageKey: scenario.pageKey });
+
+    assert.strictEqual(siteState.readOnly, true, scenario.pageKey);
+    assert.strictEqual(siteState.canWriteFields, false, scenario.pageKey);
+    assert.strictEqual(siteState.canCalculatePrice, false, scenario.pageKey);
+    if (scenario.flow) {
+      assert.strictEqual(siteState.flow, scenario.flow, scenario.pageKey);
+    }
+    assert.strictEqual(siteState.next.href, scenario.href, scenario.pageKey);
+    assert.match(siteState.nudge, scenario.expected, scenario.pageKey);
+  });
 });
 
 test("selected live pages use passive chatbot bootstrap only", function () {
@@ -944,6 +1254,21 @@ test("selected live pages use passive chatbot bootstrap only", function () {
     assert(html.indexOf('pageKey: "' + page.pageKey + '"') >= 0);
     assert(html.indexOf("openOnInit: false") >= 0);
     assert.strictEqual(html.indexOf("OperonChatbotConfig"), -1);
+  });
+});
+
+test("tsx pages mount chatbot on required route coverage pages", function () {
+  const appDir = path.resolve(__dirname, "..", "..", "..", "apps", "web-tsx", "src");
+  [
+    { file: "app/page.tsx", signal: "<HomeChatbot" },
+    { file: "app/products/page.tsx", signal: '<HomeChatbot pageKey="products"' },
+    { file: "app/floorplan/page.tsx", signal: '<HomeChatbot pageKey="floorplan"' },
+    { file: "app/contact/page.tsx", signal: '<HomeChatbot pageKey="contact"' },
+    { file: "app/blog/index/page.tsx", signal: '<HomeChatbot pageKey="blog"' },
+    { file: "lib/quoteReviewGuides.tsx", signal: '<HomeChatbot pageKey="blog"' }
+  ].forEach(function (page) {
+    const source = fs.readFileSync(path.resolve(appDir, page.file), "utf8");
+    assert(source.indexOf(page.signal) >= 0, page.file);
   });
 });
 
@@ -1028,7 +1353,7 @@ test("chatbot UI uses premium compact visual styling", function () {
     "max-height: min(76vh, 680px)",
     "border-radius: 16px",
     "font-size: 0.86rem",
-    "min-height: 32px",
+    "min-height: 44px",
     "font-weight: 650",
     "border-radius: 10px",
     "max-height: min(60vh, 500px)"
@@ -1084,18 +1409,29 @@ test("quote page site state detects current wizard step and missing fields", fun
 
   setQuotePageFixture(context, 1, {
     measurementMethod: "manual_total",
+    selectedProductCategory: ""
+  });
+
+  const productState = context.window.OperonChatbotSiteState.getSnapshot({ pageKey: "quote" });
+  assert.strictEqual(productState.activeStep, 1);
+  assert.strictEqual(productState.activeStepNumber, 2);
+  assert.strictEqual(productState.stepTitle, "Flooring/product");
+  assert.strictEqual(productState.flow, "flooring_product");
+  assert(productState.missingInputs.indexOf("flooring category") >= 0);
+  assert.strictEqual(productState.next.focusId, "selectedProductCategory");
+
+  setQuotePageFixture(context, 2, {
+    measurementMethod: "manual_total",
     totalAreaM2: ""
   });
 
   const areaState = context.window.OperonChatbotSiteState.getSnapshot({ pageKey: "quote" });
-  assert.strictEqual(areaState.activeStep, 1);
-  assert.strictEqual(areaState.activeStepNumber, 2);
-  assert.strictEqual(areaState.stepTitle, "Flooring and area");
-  assert.strictEqual(areaState.flow, "flooring_area");
+  assert.strictEqual(areaState.stepTitle, "Area");
+  assert.strictEqual(areaState.flow, "area");
   assert(areaState.missingInputs.indexOf("area") >= 0);
   assert.strictEqual(areaState.next.focusId, "totalAreaM2");
 
-  setQuotePageFixture(context, 2, {
+  setQuotePageFixture(context, 3, {
     stairs: "yes",
     stairWidthKnown: "yes",
     stairWidthMm: "",
@@ -1108,16 +1444,16 @@ test("quote page site state detects current wizard step and missing fields", fun
   });
 
   const stairState = context.window.OperonChatbotSiteState.getSnapshot({ pageKey: "quote" });
-  assert.strictEqual(stairState.stepTitle, "Main scope");
-  assert.strictEqual(stairState.flow, "main_scope");
+  assert.strictEqual(stairState.stepTitle, "Stairs");
+  assert.strictEqual(stairState.flow, "stairs");
 
-  setQuotePageFixture(context, 4, {
+  setQuotePageFixture(context, 5, {
     customerNotes: ""
   });
 
   const summaryState = context.window.OperonChatbotSiteState.getSnapshot({ pageKey: "quote" });
-  assert.strictEqual(summaryState.stepTitle, "Contact and submit");
-  assert.strictEqual(summaryState.flow, "contact_submit");
+  assert.strictEqual(summaryState.stepTitle, "Summary/review");
+  assert.strictEqual(summaryState.flow, "summary_review");
   assert.strictEqual(summaryState.isNearCompletion, true);
 });
 
@@ -1133,7 +1469,7 @@ test("quote page stuck recovery uses read-only site state", function () {
 
   const snapshot = logic.getSnapshot();
   assert.strictEqual(snapshot.structuredOutput.intent, "route_next_step");
-  assert.strictEqual(snapshot.routeSuggestion.href, "quote.html");
+  assert.strictEqual(snapshot.routeSuggestion.href, "/quote.html");
   assert.strictEqual(snapshot.siteState.readOnly, true);
   assert.doesNotMatch(lastAssistantText(snapshot), /Key point:|Next step:|source of truth|calculator stays/i);
 });
@@ -1154,9 +1490,9 @@ test("quote page stuck recovery gives step-specific guidance", function () {
 
   const snapshot = logic.getSnapshot();
   const text = lastAssistantText(snapshot);
-  assert.strictEqual(snapshot.siteState.stepTitle, "Flooring and area");
-  assert.strictEqual(snapshot.siteState.next.focusId, "totalAreaM2");
-  assert.match(text, /Flooring and area|area/i);
+  assert.strictEqual(snapshot.siteState.stepTitle, "Flooring/product");
+  assert.strictEqual(snapshot.siteState.next.focusId, "selectedProductCategory");
+  assert.match(text, /Flooring\/product|product|flooring/i);
   assert.doesNotMatch(text, /\$\s*\d|per\s*m2|formula|calculator/i);
 });
 
@@ -1178,6 +1514,7 @@ test("quote review site state detects visible result without pricing control", f
   assert.strictEqual(siteState.flow, "quote_review_result");
   assert.strictEqual(siteState.reviewResultVisible, true);
   assert.strictEqual(siteState.reviewStatus, "Comparable with caution");
+  assert.strictEqual(Object.prototype.hasOwnProperty.call(siteState, "reviewExtractedDetails"), false);
   assert(siteState.reviewMissingScope.join(" ").indexOf("Underlay") >= 0);
   assert(siteState.reviewQuestions.join(" ").indexOf("acoustic underlay") >= 0);
 });
@@ -1205,7 +1542,7 @@ test("quote review result guidance stays scope-first and routes to estimate", fu
   const text = lastAssistantText(snapshot);
   assert.strictEqual(snapshot.siteState.flow, "quote_review_result");
   assert.strictEqual(snapshot.structuredOutput.intent, "quote_review_result_explanation");
-  assert.strictEqual(snapshot.routeSuggestion.href, "quote.html?source=quote_review");
+  assert.strictEqual(snapshot.routeSuggestion.href, "/quote.html?source=quote_review");
   assert.match(text, /scope|Underlay|Confirm/i);
   assert.doesNotMatch(text, /\$\s*\d|cheaper|bad quote|calculator|formula/i);
 });

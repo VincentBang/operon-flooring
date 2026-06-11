@@ -16,11 +16,18 @@ const authSource = fs.readFileSync(authPath, "utf8");
   "/.netlify/functions/lead-followup-admin",
   "Authorization: `Bearer ${adminToken}`",
   "cache: \"no-store\"",
-  "Manual follow-ups",
-  "Dry-run operator queue only. No email or SMS is sent from this view.",
+  "Dry-run follow-ups",
+  "Internal operator queue only. No email or SMS is sent from this view.",
+  "Generate dry-run tasks",
+  "generate_dry_run",
+  "task_type",
+  "reason",
+  "priority",
+  "suggested_message",
+  "Internal suggested message",
   "mark_done",
   "snooze",
-  "cancel",
+  "archive",
   "window.confirm"
 ].forEach(function (term) {
   assert.ok(queueSource.includes(term), "Admin follow-up queue missing `" + term + "`.");

@@ -6,22 +6,22 @@ import { absoluteUrl, siteConfig } from "@/lib/site";
 import { routes } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "Flooring Quote Sydney | Online Estimate & Scope Review",
-  description: "Start a Sydney flooring quote for hybrid, laminate or engineered timber. Add product, area, quote review notes and floor plan details before final scope review.",
+  title: "Operon Flooring Sydney | Quotes, Products & Scope Review",
+  description: "Operon Flooring helps Sydney customers choose hybrid, laminate and engineered timber, review quote scope, measure from floor plans and start clearer flooring enquiries.",
   robots: "index,follow",
   alternates: {
     canonical: `${siteConfig.origin}/`
   },
   openGraph: {
-    title: "Flooring Quote Sydney | Online Estimate & Scope Review",
-    description: "Start a Sydney flooring quote for hybrid, laminate or engineered timber. Add product, area, quote review notes and floor plan details before final scope review.",
+    title: "Operon Flooring Sydney | Quotes, Products & Scope Review",
+    description: "Operon Flooring helps Sydney customers choose hybrid, laminate and engineered timber, review quote scope, measure from floor plans and start clearer flooring enquiries.",
     url: `${siteConfig.origin}/`,
     images: [absoluteUrl("/assets/operon-social-preview.png")]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Flooring Quote Sydney | Online Estimate & Scope Review",
-    description: "Start a Sydney flooring quote for hybrid, laminate or engineered timber. Add product, area, quote review notes and floor plan details before final scope review.",
+    title: "Operon Flooring Sydney | Quotes, Products & Scope Review",
+    description: "Operon Flooring helps Sydney customers choose hybrid, laminate and engineered timber, review quote scope, measure from floor plans and start clearer flooring enquiries.",
     images: [absoluteUrl("/assets/operon-social-preview.png")]
   }
 };
@@ -172,9 +172,9 @@ export default function HomePage() {
           <div>
             <p className="eyebrow">Sydney flooring quotes</p>
             <h1>Get a clear flooring quote in minutes</h1>
-            <p className="home-lead">Premium Sydney flooring quote support for hybrid, laminate and engineered timber. Start with product, area and scope details so the written quote is easier to review before booking.</p>
+            <p className="home-lead">Premium Sydney flooring quote support for hybrid, laminate and engineered timber. Choose the right path first, then start an instant online quote when you are ready.</p>
             <div className="home-actions">
-              <a className="button button-primary" data-track-cta="hero_start_quote_click" href={routes.quote}>Start quote</a>
+              <a className="button button-primary" data-track-cta="hero_start_quote_click" href={routes.quote}>Start instant quote</a>
               <a className="home-quiet-link" data-track-cta="hero_quote_review_click" href={routes.quoteReview}>Check existing quote</a>
             </div>
             <p className="home-trust-line">Starting estimate first. Product, area and final scope are reviewed before booking.</p>
@@ -393,7 +393,7 @@ export default function HomePage() {
           {
             "@context": "https://schema.org",
             "@type": "Service",
-            name: "Instant flooring quote and installation service",
+            name: "Sydney flooring quote and installation service",
             serviceType: "Flooring quote Sydney",
             provider: { "@type": "LocalBusiness", name: siteConfig.name, url: siteConfig.origin },
             areaServed: { "@type": "City", name: "Sydney" },

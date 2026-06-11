@@ -25,7 +25,13 @@ const listSource = fs.readFileSync(listPath, "utf8");
   "Save status",
   "Files",
   "Notes",
-  "Event timeline"
+  "Event timeline",
+  "formatEventMetadata",
+  "Intent:",
+  "Handoff:",
+  "Next:",
+  "Device:",
+  "Source page:"
 ].forEach(function (term) {
   assert.ok(detailSource.includes(term), "Admin lead detail client missing `" + term + "`.");
 });

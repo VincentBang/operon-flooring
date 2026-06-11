@@ -1,5 +1,13 @@
 (function () {
   const INTENTS = {
+    startQuote: "start_quote",
+    existingQuoteReview: "existing_quote_review",
+    productHelp: "product_help",
+    priceQuestion: "price_question",
+    stairsRemovalScope: "stairs_removal_scope",
+    suburbService: "suburb_service",
+    contactHuman: "contact_human",
+    generalQuestion: "general_question",
     productGuidance: "product_guidance",
     quoteExplanation: "quote_explanation",
     quickQuoteCompleteness: "quick_quote_completeness",
@@ -26,11 +34,12 @@
   ];
 
   const ROUTES = {
-    products: { label: "Browse products", href: "products.html" },
-    quote: { label: "Start quote", href: "quote.html" },
-    quoteReview: { label: "Upload written quote", href: "quote-review.html" },
-    quickCheck: { label: "Run quick check", href: "quote-review.html" },
-    floorplan: { label: "Measure from floor plan", href: "floorplan.html" }
+    products: { label: "Choose product", href: "/products.html" },
+    quote: { label: "Start quote", href: "/quote.html" },
+    quoteReview: { label: "Check existing quote", href: "/quote-review.html" },
+    quickCheck: { label: "Check existing quote", href: "/quote-review.html" },
+    floorplan: { label: "Measure floor plan", href: "/floorplan.html" },
+    contact: { label: "Contact Operon", href: "/contact.html" }
   };
 
   const UNSUPPORTED_RESPONSE = "This assistant is limited to product guidance, quote explanation, and scope details. Pricing, totals, competitor comparisons, and final quote decisions stay with the quote process and Operon review.";
@@ -118,43 +127,46 @@
       return INTENTS.unsupported;
     }
     if (includesAny(value, ["operator", "human", "person", "live chat", "online chat", "sales", "consultant", "speak to someone", "talk to someone", "call me"])) {
-      return INTENTS.operatorHandoff;
+      return INTENTS.contactHuman;
     }
     if (includesAny(value, ["beat price", "beat this quote", "beat my quote", "price match", "cheaper than", "expensive"])) {
       return INTENTS.unsupported;
     }
     if (includesAny(value, ["what does this report mean", "what does this review mean", "product match", "match 35", "comparison level", "missing items", "what should i ask", "why caution"])) {
-      return INTENTS.quoteReviewResultExplanation;
+      return INTENTS.existingQuoteReview;
     }
     if (includesAny(value, ["i do not have the file", "don't have the file", "no file", "quick check", "quick completeness", "only know total", "only says supply and install", "quote only says"])) {
-      return INTENTS.quickQuoteCompleteness;
+      return INTENTS.existingQuoteReview;
     }
     if (includesAny(value, ["review my quote", "check my quote", "existing quote", "uploaded quote", "written quote", "is this quote fair", "hybrid 7mm quote", "quote review"])) {
-      return INTENTS.documentQuoteReview;
+      return INTENTS.existingQuoteReview;
     }
     if (includesAny(value, ["floor plan", "floorplan", "measure from plan", "measure with plan"])) {
       return INTENTS.floorplanHelp;
+    }
+    if (includesAny(value, ["suburb", "service area", "do you service", "near me", "sydney", "parramatta", "bankstown", "liverpool", "auburn", "miranda"])) {
+      return INTENTS.suburbService;
     }
     if (includesAny(value, ["install only", "already bought", "already have flooring", "my own flooring"])) {
       return INTENTS.installOnly;
     }
     if (includesAny(value, ["how much", "total", "price", "cost", "$", "rate", "final price", "guaranteed quote"])) {
-      return INTENTS.quoteExplanation;
+      return INTENTS.priceQuestion;
     }
     if (includesAny(value, ["quote", "estimate", "final", "submit", "review"])) {
-      return INTENTS.quoteExplanation;
+      return INTENTS.startQuote;
     }
     if (includesAny(value, ["missing", "scope", "prep", "access", "stairs", "furniture", "removal", "subfloor"])) {
-      return INTENTS.scopeValidation;
+      return INTENTS.stairsRemovalScope;
     }
     if (includesAny(value, ["product", "hybrid", "laminate", "engineered", "timber", "flooring type", "waterproof"])) {
-      return INTENTS.productGuidance;
+      return INTENTS.productHelp;
     }
     if (includesAny(value, ["start", "continue", "browse", "next"])) {
-      return INTENTS.routeNextStep;
+      return INTENTS.generalQuestion;
     }
 
-    return INTENTS.detailCollection;
+    return INTENTS.generalQuestion;
   }
 
   function getPolicyNotice(text) {

@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { AdminChatbotLeads } from "./AdminChatbotLeads";
 import { AdminFollowUpQueue } from "./AdminFollowUpQueue";
 import { AdminLeadList } from "./AdminLeadList";
 import { AdminReportingSummary } from "./AdminReportingSummary";
@@ -129,6 +130,7 @@ export function AdminAuthShell() {
 
       {authenticated && verifiedToken ? (
         <div>
+          <AdminChatbotLeads adminToken={verifiedToken} />
           <AdminLeadList adminToken={verifiedToken} />
           <AdminFollowUpQueue adminToken={verifiedToken} />
           <AdminReviewQueues adminToken={verifiedToken} />

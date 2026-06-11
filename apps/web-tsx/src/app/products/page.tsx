@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { HomeChatbot } from "@/components/HomeChatbot";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Layout } from "@/components/layout/Layout";
 import { createPageMetadata } from "@/lib/metadata";
@@ -158,6 +159,7 @@ export default function ProductsPage() {
       <Script id="products-catalogue-runtime" strategy="afterInteractive">
         {productsRuntimeScript}
       </Script>
+      <HomeChatbot pageKey="products" />
     </Layout>
   );
 }
