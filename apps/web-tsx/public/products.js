@@ -12626,6 +12626,71 @@
     };
   }
 
+  function getPricingRangeId(product, category) {
+    return product.rangeId || product.range_id || product.id || inferRangeId(product, category);
+  }
+
+  function getPricingRangeKeys(product, category) {
+    return [
+      getPricingRangeId(product, category),
+      inferRangeId(product, category),
+      slugify(product.rangeLabel || product.range || ""),
+      slugify(product.brand || "")
+    ].filter(Boolean);
+  }
+
+  function overlayPricingSourceProducts(staticSource, pricingSource) {
+    const categories = ["laminate", "hybrid", "engineered"];
+    const pricingByCategory = {};
+
+    categories.forEach(function (category) {
+      pricingByCategory[category] = {};
+      (pricingSource && pricingSource[category] ? pricingSource[category] : []).forEach(function (pricingProduct) {
+        getPricingRangeKeys(pricingProduct, category).forEach(function (key) {
+          if (!pricingByCategory[category][key]) {
+            pricingByCategory[category][key] = pricingProduct;
+          }
+        });
+      });
+    });
+
+    return categories.reduce(function (accumulator, category) {
+      const matchedPricingRows = [];
+      const staticProducts = staticSource && staticSource[category] ? staticSource[category] : [];
+      const pricingProducts = pricingSource && pricingSource[category] ? pricingSource[category] : [];
+
+      accumulator[category] = staticProducts.map(function (product) {
+        const pricingProduct = getPricingRangeKeys(product, category)
+          .map(function (key) { return pricingByCategory[category][key]; })
+          .find(Boolean);
+
+        if (!pricingProduct) {
+          return product;
+        }
+
+        if (matchedPricingRows.indexOf(pricingProduct) < 0) {
+          matchedPricingRows.push(pricingProduct);
+        }
+
+        return Object.assign({}, product, {
+          pricePerM2: Number(pricingProduct.pricePerM2 || 0),
+          installRate: typeof pricingProduct.installRate === "undefined" ? product.installRate : pricingProduct.installRate,
+          pricingStatus: Number(pricingProduct.pricePerM2 || 0) > 0 ? "confirmed" : (product.pricingStatus || "pending"),
+          catalogueStatus: pricingProduct.active === false ? "inactive" : (product.catalogueStatus || "live"),
+          active: pricingProduct.active === false ? false : product.active
+        });
+      });
+
+      pricingProducts.forEach(function (pricingProduct) {
+        if (matchedPricingRows.indexOf(pricingProduct) < 0) {
+          accumulator[category].push(pricingProduct);
+        }
+      });
+
+      return accumulator;
+    }, {});
+  }
+
   function getRangeConfigEntry(product, category) {
     const config = getMergedRangeConfig()[category || product.category] || {};
     return config[product.brand] || config[product.range] || null;
@@ -12703,7 +12768,7 @@
     if (!source || typeof source !== "object" || Array.isArray(source) || !Object.keys(source).length) {
       return fallbackSource;
     }
-    return mergeProductCollections(source, importedProducts);
+    return overlayPricingSourceProducts(fallbackSource, source);
   }
 
   function normaliseProduct(product, fallbackCategory) {

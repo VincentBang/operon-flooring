@@ -15,7 +15,9 @@ const source = fs.readFileSync(sourcePath, "utf8");
   "cache: \"no-store\"",
   "setToken(\"\")",
   "Lead list",
-  "Not connected yet"
+  "Verify access to load",
+  "Protected lead modules are available for preview verification.",
+  "Protected module"
 ].forEach(function (term) {
   assert.ok(source.includes(term), "Admin auth shell client missing `" + term + "`.");
 });

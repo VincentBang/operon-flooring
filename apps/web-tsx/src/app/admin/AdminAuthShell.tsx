@@ -19,7 +19,7 @@ type SessionResponse = {
 
 function getStatusCopy(status: AuthState, message: string) {
   if (status === "authenticated") {
-    return "Admin shell unlocked. Lead data remains disconnected until the next approved dashboard slice.";
+    return "Admin shell unlocked. Protected lead modules are available for preview verification.";
   }
   if (status === "checking") {
     return "Checking admin access...";
@@ -115,15 +115,15 @@ export function AdminAuthShell() {
         <div className="admin-auth-preview" aria-label="Future dashboard modules">
           <div>
             <strong>Lead list</strong>
-            <span>Verify access first</span>
+            <span>Verify access to load</span>
           </div>
           <div>
             <strong>Lead detail</strong>
-            <span>Not connected yet</span>
+            <span>Protected module</span>
           </div>
           <div>
             <strong>Status pipeline</strong>
-            <span>Not connected yet</span>
+            <span>Protected module</span>
           </div>
         </div>
       ) : null}

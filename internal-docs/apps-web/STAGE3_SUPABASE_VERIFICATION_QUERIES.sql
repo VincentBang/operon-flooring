@@ -13,7 +13,8 @@ where table_schema = 'public'
     'operon_lead_files',
     'operon_follow_ups',
     'operon_floorplan_reviews',
-    'operon_lead_status_history'
+    'operon_lead_status_history',
+    'operon_chatbot_qualifications'
   )
 order by table_name;
 
@@ -42,7 +43,8 @@ where schemaname = 'public'
     'operon_lead_files',
     'operon_follow_ups',
     'operon_floorplan_reviews',
-    'operon_lead_status_history'
+    'operon_lead_status_history',
+    'operon_chatbot_qualifications'
   )
 order by tablename;
 
@@ -60,7 +62,8 @@ where table_schema = 'public'
     'operon_lead_files',
     'operon_follow_ups',
     'operon_floorplan_reviews',
-    'operon_lead_status_history'
+    'operon_lead_status_history',
+    'operon_chatbot_qualifications'
   )
   and grantee in ('anon', 'authenticated')
 order by grantee, table_name, privilege_type;
@@ -77,6 +80,11 @@ select event_type, count(*) as event_count
 from public.operon_lead_events
 group by event_type
 order by event_type;
+
+select intent, confidence, count(*) as qualification_count
+from public.operon_chatbot_qualifications
+group by intent, confidence
+order by intent, confidence;
 
 -- 6. Link coverage counts only.
 select

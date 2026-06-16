@@ -4,7 +4,7 @@ const path = require("path");
 
 const repoRoot = path.resolve(__dirname, "..", "..", "..");
 
-const tables = [
+const baseTables = [
   "operon_leads",
   "operon_lead_events",
   "operon_lead_notes",
@@ -12,6 +12,10 @@ const tables = [
   "operon_follow_ups",
   "operon_floorplan_reviews",
   "operon_lead_status_history"
+];
+
+const chatbotBridgeTables = [
+  "operon_chatbot_qualifications"
 ];
 
 const docs = [
@@ -48,8 +52,20 @@ const checklistDocs = [
 function main() {
   docs.forEach(function (relativePath) {
     const content = fs.readFileSync(path.join(repoRoot, relativePath), "utf8");
-    tables.forEach(function (table) {
+    baseTables.forEach(function (table) {
       assert.ok(content.includes(table), relativePath + " missing Stage 3 table: " + table);
+    });
+  });
+
+  [
+    "internal-docs/apps-web/STAGE3_COMPLETION_GATE_2026-06-13.md",
+    "internal-docs/apps-web/STAGE3_LEAD_OS_IMPLEMENTATION_STATUS.md",
+    "internal-docs/apps-web/STAGE3_SUPABASE_VERIFICATION_QUERIES.sql",
+    "supabase/migrations/20260611_chatbot_qualification_bridge.sql"
+  ].forEach(function (relativePath) {
+    const content = fs.readFileSync(path.join(repoRoot, relativePath), "utf8");
+    chatbotBridgeTables.forEach(function (table) {
+      assert.ok(content.includes(table), relativePath + " missing chatbot bridge table: " + table);
     });
   });
 
@@ -85,9 +101,21 @@ function main() {
     "anon and authenticated have zero table grants",
     "operon_leads: 0 rows",
     "Backfill remains a separate approval step",
-    "Stage 3 Function write integrations are local-only and have not been deployed"
+    "Stage 3 Function write integrations are local-only and have not been deployed",
+    "`operon_chatbot_qualifications` was added to the Stage 3 verification query set"
   ].forEach(function (snippet) {
     assert.ok(verification.includes(snippet), "Supabase verification note missing safeguard/snippet: " + snippet);
+  });
+
+  const verificationSql = fs.readFileSync(
+    path.join(repoRoot, "internal-docs/apps-web/STAGE3_SUPABASE_VERIFICATION_QUERIES.sql"),
+    "utf8"
+  );
+  [
+    "operon_chatbot_qualifications",
+    "select intent, confidence, count(*) as qualification_count"
+  ].forEach(function (snippet) {
+    assert.ok(verificationSql.includes(snippet), "Stage 3 verification SQL missing snippet: " + snippet);
   });
 
   [

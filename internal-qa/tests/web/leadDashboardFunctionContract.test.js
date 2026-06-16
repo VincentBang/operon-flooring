@@ -4,6 +4,7 @@ const path = require("path");
 
 const repoRoot = path.resolve(__dirname, "..", "..", "..");
 const source = fs.readFileSync(path.join(repoRoot, "netlify/functions/lead-dashboard.js"), "utf8");
+const adminAuthSource = fs.readFileSync(path.join(repoRoot, "netlify/functions/shared/adminAuth.js"), "utf8");
 
 function assertIncludes(term) {
   assert.ok(source.includes(term), "lead-dashboard.js missing required term: " + term);
@@ -15,9 +16,9 @@ function assertNotIncludes(term) {
 
 function main() {
   [
-    "requireAdmin(event)",
-    "x-operon-admin-token",
-    "authorization, content-type, x-operon-admin-token",
+    "const AdminAuth = require(\"./shared/adminAuth\")",
+    "AdminAuth.requireAdmin(event)",
+    "AdminAuth.ADMIN_ALLOW_HEADERS",
     "Security.checkDurableRateLimit",
     "Security.safeLogReason(error)",
     "Security.safePublicError(\"Lead dashboard request failed.\")",
@@ -36,10 +37,21 @@ function main() {
   ].forEach(assertIncludes);
 
   [
+    "x-operon-admin-token",
+    "authorization, content-type, x-operon-admin-token",
+    "timingSafeEqual"
+  ].forEach(function (term) {
+    assert.ok(adminAuthSource.includes(term), "shared adminAuth helper missing required term: " + term);
+  });
+
+  [
     "storage_bucket",
     "file_path",
     "signed_url",
     "publicUrl",
+    "raw_transcript",
+    "raw_quote_text",
+    "uploaded_file_text",
     "extracted_text",
     "raw_ocr",
     "supplier_cost",

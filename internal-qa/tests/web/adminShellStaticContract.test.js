@@ -46,6 +46,7 @@ function assertOutputShellSafe() {
   [
     '<meta name="robots" content="noindex,nofollow"/>',
     "Admin access required",
+    "approved admin token is verified",
     "No lead data is rendered here"
   ].forEach(function (term) {
     assert.ok(html.includes(term), "Admin shell output missing `" + term + "`.");
@@ -85,6 +86,8 @@ function assertDeployReviewWarningExists() {
   [
     "Option A: Redirect `/admin` to `/admin.html`",
     "Option B: Block `/admin`",
+    "`next build` reports the app route as `/admin`",
+    "Verify admin data loads only after the approved token succeeds.",
     "`/admin` returns an indexable 200."
   ].forEach(function (term) {
     assert.ok(routeSurfaceDecision.includes(term), "Admin route surface decision missing: " + term);

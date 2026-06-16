@@ -11,6 +11,8 @@ Use this only after human approval to push a dev branch.
 Good fit:
 
 - Stage 3 lead-write verification.
+- Stage 3 protected admin dashboard verification.
+- Chatbot qualification bridge verification.
 - Netlify Function behavior that needs real env vars.
 - Preview-only QA without production deploy.
 
@@ -49,6 +51,8 @@ Before push:
 - Confirm no secrets.
 - Confirm no production config changes unless explicitly approved.
 - Confirm no production deploy or CLI draft deploy has been run for the same local-only verification.
+- Confirm `operon_chatbot_qualifications` is applied in the target Supabase project or the chatbot-qualified lead panel is treated as blocked for that preview.
+- Confirm `/admin` versus `/admin.html` route behavior is approved for the preview.
 
 ## Preview QA
 
@@ -63,6 +67,9 @@ Verify:
 - Quote-review lead creation.
 - Operator lead creation.
 - Upload link-only behavior.
+- Chatbot qualification lead/event creation.
+- Protected admin shell auth.
+- Protected admin list/detail/status/follow-up/review/reporting actions.
 - No public response leaks.
 - Customer-facing Function errors are safe and bounded.
 - Server logs use short reasons rather than raw provider error objects.

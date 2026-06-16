@@ -50,3 +50,7 @@ Advisor notes:
 Next safe step:
 - Deploy or preview the local Function lead-write changes only after explicit approval.
 - Then submit one controlled preview quote/contact/review test and verify operon_leads plus operon_lead_events populate without exposing data to anon/browser clients.
+
+2026-06-13 note:
+- `operon_chatbot_qualifications` was added to the Stage 3 verification query set after the chatbot qualification bridge migration was introduced locally.
+- If that table is missing in the live project, do not enable the chatbot-qualified lead dashboard panel until the additive migration is applied and RLS/grants are rechecked.

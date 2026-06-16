@@ -1,6 +1,7 @@
 "use strict";
 
 const Security = require("./_security");
+const AdminAuth = require("./shared/adminAuth");
 
 const LEAD_COLUMNS = [
   "id",
@@ -83,28 +84,8 @@ const SAFE_EVENT_METADATA_KEYS = [
 function jsonResponse(event, statusCode, payload) {
   return Security.jsonResponse(event, statusCode, payload, {
     methods: "GET, OPTIONS",
-    allowHeaders: "authorization, content-type, x-operon-admin-token"
+    allowHeaders: AdminAuth.ADMIN_ALLOW_HEADERS
   });
-}
-
-function getAdminToken(event) {
-  const headers = event.headers || {};
-  const headerToken = headers["x-operon-admin-token"] || headers["X-Operon-Admin-Token"] || "";
-  const auth = headers.authorization || headers.Authorization || "";
-  if (headerToken) return String(headerToken).trim();
-  if (/^Bearer\s+/i.test(auth)) return String(auth).replace(/^Bearer\s+/i, "").trim();
-  return "";
-}
-
-function requireAdmin(event) {
-  const expectedToken = process.env.OPERON_ADMIN_TOKEN || process.env.OPERON_LEAD_ADMIN_TOKEN || "";
-  if (!expectedToken) {
-    return { ok: false, status: 503, error: "Admin dashboard is not configured." };
-  }
-  if (getAdminToken(event) !== expectedToken) {
-    return { ok: false, status: 401, error: "Admin authentication required." };
-  }
-  return { ok: true };
 }
 
 function getSupabaseConfig() {
@@ -502,7 +483,7 @@ exports.handler = async function (event) {
   if (event.httpMethod === "OPTIONS") {
     return Security.optionsResponse(event, {
       methods: "GET, OPTIONS",
-      allowHeaders: "authorization, content-type, x-operon-admin-token"
+      allowHeaders: AdminAuth.ADMIN_ALLOW_HEADERS
     });
   }
   if (event.httpMethod !== "GET") {
@@ -517,11 +498,11 @@ exports.handler = async function (event) {
   if (!rateLimit.allowed) {
     return Security.rateLimitResponse(event, rateLimit, {
       methods: "GET, OPTIONS",
-      allowHeaders: "authorization, content-type, x-operon-admin-token"
+      allowHeaders: AdminAuth.ADMIN_ALLOW_HEADERS
     });
   }
 
-  const admin = requireAdmin(event);
+  const admin = AdminAuth.requireAdmin(event);
   if (!admin.ok) {
     return jsonResponse(event, admin.status, { ok: false, error: admin.error });
   }

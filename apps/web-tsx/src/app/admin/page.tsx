@@ -19,7 +19,7 @@ export default function AdminShellPage() {
             <span className="eyebrow">Operon OS</span>
             <h1>Admin access required</h1>
             <p>
-              This internal dashboard shell is locked until protected admin authentication is connected.
+              This internal dashboard shell is locked until an approved admin token is verified.
             </p>
             <p className="hero-trust">
               No lead data is rendered here. Public quote, product, floorplan and quote-review flows are unchanged.

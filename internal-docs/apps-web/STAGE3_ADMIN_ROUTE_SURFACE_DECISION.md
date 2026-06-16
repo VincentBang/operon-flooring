@@ -8,10 +8,11 @@ Current local state:
 
 - Static export generates `out/admin.html`.
 - Static export also generates `out/admin.txt`, the Next static/RSC payload for the locked shell.
+- `next build` reports the app route as `/admin`, but the static export file surface remains `admin.html` and `admin.txt`.
 - `/admin.html` is locked and `noindex,nofollow`.
 - `/admin.html` is excluded from sitemap.
 - No explicit `/admin` redirect or block is currently defined in `netlify.toml`.
-- No admin auth or lead data is connected.
+- Admin auth shell and protected modules exist locally, but no preview/production admin release is approved yet.
 
 ## Decision Required Before Deploy
 
@@ -63,6 +64,8 @@ For the first approved preview with the locked shell:
 2. Do not add either change to production config until approved.
 3. Verify `/admin.html` remains locked, noindex, and out of sitemap.
 4. Verify `/admin` behavior with HTTP status and headers in preview.
+5. Verify unauthenticated dashboard functions return 401/403 before any lead data query.
+6. Verify admin data loads only after the approved token succeeds.
 
 ## Stop Conditions
 

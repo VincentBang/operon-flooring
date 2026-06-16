@@ -3,9 +3,13 @@
 Purpose: prevent the internal dashboard from quietly depending on legacy admin endpoints before the unified operon_leads parent model is active.
 
 Current local Function surfaces:
-- lead-admin.js exists, but its list/update flow currently reads and patches the legacy quote request table through getSupabaseTables().quoteRequests.
-- followup-admin.js exists, but it currently reads the existing follow-up message and quote request tables.
-- The TSX /admin shell remains static and locked. It does not fetch lead-admin.js or followup-admin.js.
+- `lead-dashboard.js` is the current protected read API for the Stage 3 dashboard MVP. It reads `operon_leads`, safe lead detail fields, safe event metadata, safe file metadata, reporting summary rows, and chatbot qualification rows.
+- `lead-status-admin.js` is the current protected status-write API for the Stage 3 dashboard MVP.
+- `lead-followup-admin.js` is the current protected manual follow-up queue API for the Stage 3 dashboard MVP.
+- `admin-session-status.js` verifies the temporary admin-token shell.
+- `lead-admin.js` exists as a legacy/local proof endpoint, but its list/update flow reads and patches the legacy quote request table through `getSupabaseTables().quoteRequests`.
+- `followup-admin.js` exists as a legacy/local proof endpoint, but it reads the existing follow-up message and quote request tables.
+- The TSX `/admin.html` shell now renders protected dashboard modules after token verification. It must not fetch `lead-admin.js` or `followup-admin.js` for the Stage 3 MVP.
 
 Approved Stage 3 target:
 - New dashboard read APIs should use operon_leads as the parent record.
@@ -13,9 +17,13 @@ Approved Stage 3 target:
 - Existing quote/contact/review/upload writes should create or link operon_leads through server-side Netlify Functions.
 - Admin browser access must go through protected Functions, never direct Supabase reads.
 
-Gap:
-- lead-admin.js is not yet the final Stage 3 lead-list/detail API.
-- It should not be used as the source of truth for the new dashboard until it is migrated to operon_leads or replaced by a new protected read Function.
+Resolved local gap:
+- `lead-dashboard.js` replaced `lead-admin.js` as the local Stage 3 lead-list/detail/reporting/chatbot read API.
+- The admin shell points to component modules that call `lead-dashboard`, `lead-status-admin`, and `lead-followup-admin` only after token verification.
+
+Remaining live gap:
+- The `operon_chatbot_qualifications` table used by the chatbot lead panel must exist in the target Supabase project before that panel is enabled in live preview/production.
+- `lead-admin.js` and `followup-admin.js` should remain out of the Stage 3 MVP UI unless they are retired or migrated.
 
 Risk if ignored:
 - The dashboard could show only quote request rows and miss contact, quote-review, floorplan, upload, product handoff, and chatbot/operator leads.
@@ -23,8 +31,9 @@ Risk if ignored:
 
 Guardrail:
 - Do not wire the /admin shell to lead-admin.js for the Stage 3 MVP unless the Function is first updated to read operon_leads.
+- Keep `lead-admin.js` and `followup-admin.js` as legacy/proof endpoints only.
 - Do not expose direct browser Supabase reads for dashboard data.
-- Keep /admin noindex,nofollow and static until the protected operon_leads read contract is approved.
+- Keep /admin.html noindex,nofollow and out of sitemap.
 
 Recommended next Function design:
 - lead-admin-read.js or an updated lead-admin.js should support:

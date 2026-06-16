@@ -1,8 +1,11 @@
 "use strict";
 
 const assert = require("assert");
+const fs = require("fs");
+const path = require("path");
 const followupAdmin = require("../../../netlify/functions/lead-followup-admin");
 
+const repoRoot = path.resolve(__dirname, "..", "..", "..");
 const leadId = "11111111-1111-4111-8111-111111111111";
 const followUpId = "22222222-2222-4222-8222-222222222222";
 
@@ -136,6 +139,23 @@ function installFetchMock(calls) {
 }
 
 (async function main() {
+  const functionSource = fs.readFileSync(path.join(repoRoot, "netlify", "functions", "lead-followup-admin.js"), "utf8");
+  [
+    "send-quote-email",
+    "send-email",
+    "send-sms",
+    "resend.emails.send",
+    "twilio",
+    "fetch(\"https://api.resend.com",
+    "fetch('https://api.resend.com"
+  ].forEach(function (forbidden) {
+    assert.strictEqual(
+      functionSource.toLowerCase().includes(forbidden.toLowerCase()),
+      false,
+      "lead-followup-admin must remain dry-run/manual only and must not include `" + forbidden + "`."
+    );
+  });
+
   assert.strictEqual(followupAdmin._test.isUuid(leadId), true);
   assert.strictEqual(followupAdmin._test.isUuid("bad"), false);
     assert.strictEqual(followupAdmin._test.sanitizeText(" hello\nthere ", 20), "hello there");

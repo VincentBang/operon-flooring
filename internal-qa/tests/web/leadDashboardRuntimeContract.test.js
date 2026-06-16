@@ -46,7 +46,7 @@ async function main() {
     assert.strictEqual(response.headers["Cache-Control"], "no-store");
     assert.deepStrictEqual(parseBody(response), {
       ok: false,
-      error: "Admin dashboard is not configured."
+      error: "Admin access is not configured."
     });
   });
 

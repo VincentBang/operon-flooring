@@ -315,3 +315,26 @@ Next approved implementation candidates:
 3. Add dashboard read-function contracts.
 4. Choose and approve the admin auth model.
 5. Connect the locked admin shell to protected admin functions only after lead write paths and auth are verified.
+
+## 2026-06-13 Completion Gate Update
+
+See `internal-docs/apps-web/STAGE3_COMPLETION_GATE_2026-06-13.md` for the current source-of-truth completion gate.
+
+Current status:
+
+- Stage 3 is locally implementation-complete for a protected MVP.
+- Local build, root public leak check, `git diff --check`, Stage 3 contract tests, admin contracts, chatbot lead event contracts and dashboard safety contracts pass.
+- Stage 3 is not live-complete for operator use until preview/live verification passes.
+
+Important blocker:
+
+- The local migration `supabase/migrations/20260611_chatbot_qualification_bridge.sql` defines `operon_chatbot_qualifications`.
+- Latest read-only Supabase status rows showed `operon_chatbot_qualifications` missing live.
+- The admin chatbot-qualified lead panel reads from that table, so apply/verify the additive migration or disable that panel before live admin use.
+
+Do not production deploy Stage 3 until:
+
+- `/admin` versus `/admin.html` route behavior is approved and tested.
+- Admin auth environment is configured and verified without printing secrets.
+- Git-based Netlify preview verifies admin reads/writes and public conversion paths.
+- Public leak/source-map probes pass on the preview.
