@@ -501,6 +501,25 @@ a {
   font: inherit;
 }
 
+.admin-filter-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--operon-line);
+  border-radius: 8px;
+  background: #f4f7f6;
+}
+
+.admin-filter-summary strong {
+  color: var(--operon-ink);
+}
+
+.admin-filter-summary span {
+  color: var(--operon-muted);
+}
+
 .admin-empty-state,
 .admin-lead-table-wrap {
   border: 1px solid var(--operon-line);
@@ -560,6 +579,34 @@ a {
 
 .admin-lead-table td strong {
   color: var(--operon-ink);
+}
+
+.admin-status-badge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 6px;
+  padding: 5px 9px;
+  border: 1px solid var(--operon-line);
+  border-radius: 999px;
+  background: #f4f7f6;
+  color: var(--operon-ink);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+.admin-status-badge-chatbot {
+  border-color: rgba(20, 64, 74, 0.24);
+  background: #eaf4f3;
+  color: #143f4a;
+}
+
+.admin-status-badge-dry-run {
+  border-color: rgba(176, 122, 48, 0.28);
+  background: #fbf1df;
+  color: #7a4b10;
 }
 
 .admin-table-action {

@@ -206,6 +206,12 @@ async function testRuntimeContract() {
     assert.strictEqual(detailBody.events[0].metadata.intent, "start_quote");
     assert.strictEqual(detailBody.events[0].metadata.source_page, "/products.html");
 
+    const wrongDetail = await dashboard.handler(event("GET", "action=chatbot-detail&id=" + mock.ids.qualificationId, {
+      authorization: "Bearer local-admin-token"
+    }));
+    assert.strictEqual(wrongDetail.statusCode, 400);
+    assert.strictEqual(parseBody(wrongDetail).error, "A valid qualification_id is required.");
+
     [
       "raw_transcript",
       "raw_quote_text",
@@ -232,10 +238,15 @@ function testClientContract() {
     "\"use client\"",
     "action: \"chatbot-list\"",
     "action=chatbot-detail",
+    "qualification_id=",
     "Authorization: `Bearer ${adminToken}`",
     "cache: \"no-store\"",
     "Latest chatbot-qualified events",
+    "Chatbot-qualified lead",
+    "Chatbot-qualified",
     "FilterSelect",
+    "Active filters",
+    "activeFilterSummary",
     "intent",
     "confidence",
     "next_action",

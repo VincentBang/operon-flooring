@@ -62,6 +62,10 @@ function taskTitle(item: FollowUpItem) {
   return "Lead follow-up";
 }
 
+function dryRunLabel(item: FollowUpItem) {
+  return item.metadata?.dry_run_only ? "Dry-run only · no email or SMS sent" : "Manual follow-up";
+}
+
 function getSnoozeDate() {
   const date = new Date();
   date.setDate(date.getDate() + 2);
@@ -216,6 +220,9 @@ export function AdminFollowUpQueue({ adminToken }: { adminToken: string }) {
           {items.map((item) => (
             <article className="admin-followup-item" key={item.id}>
               <div>
+                <span className={item.metadata?.dry_run_only ? "admin-status-badge admin-status-badge-dry-run" : "admin-status-badge"}>
+                  {dryRunLabel(item)}
+                </span>
                 <strong>{taskTitle(item)}</strong>
                 <span>{formatDate(item.due_at)} · {humanize(item.channel)} · {humanize(item.metadata?.priority || item.lead?.priority)}</span>
               </div>

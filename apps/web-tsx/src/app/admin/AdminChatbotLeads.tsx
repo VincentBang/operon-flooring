@@ -95,6 +95,13 @@ function displayList(items?: string[]) {
   return safeItems.length ? safeItems.map(humanize).join(", ") : "None recorded";
 }
 
+function activeFilterSummary(filters: Record<string, string>) {
+  const active = Object.entries(filters)
+    .filter(([, value]) => value && value !== "all")
+    .map(([key, value]) => `${humanize(key)}: ${humanize(value)}`);
+  return active.length ? active.join(" · ") : "Showing all chatbot-qualified lead events.";
+}
+
 function formatEventMetadata(metadata?: Record<string, unknown>) {
   if (!metadata || typeof metadata !== "object") return "";
   return [
@@ -197,6 +204,7 @@ function DetailPanel({
           <span className="eyebrow">Chatbot lead detail</span>
           <h2 id="adminChatbotDetailTitle">{humanize(qualification?.intent)}</h2>
           <p>{qualification ? `${formatDate(qualification.created_at)} · ${qualification.source_page || "Source not recorded"}` : "Loading protected chatbot detail."}</p>
+          {qualification ? <span className="admin-status-badge admin-status-badge-chatbot">Chatbot-qualified lead</span> : null}
         </div>
         <button className="button button-secondary" type="button" onClick={onClose}>Close detail</button>
       </div>
@@ -345,6 +353,10 @@ export function AdminChatbotLeads({ adminToken }: { adminToken: string }) {
         <FilterSelect label="Next action" value={filters.next_action} options={FILTERS.next_action} onChange={(value) => setFilter("next_action", value)} />
         <FilterSelect label="Source page" value={filters.source_page} options={FILTERS.source_page} onChange={(value) => setFilter("source_page", value)} />
       </div>
+      <div className="admin-filter-summary" aria-live="polite">
+        <strong>Active filters</strong>
+        <span>{activeFilterSummary(filters)}</span>
+      </div>
 
       {status === "error" ? (
         <div className="admin-auth-status admin-auth-status-denied">
@@ -386,6 +398,7 @@ export function AdminChatbotLeads({ adminToken }: { adminToken: string }) {
                 <tr key={row.id}>
                   <td>{formatDate(row.created_at)}</td>
                   <td>
+                    <span className="admin-status-badge admin-status-badge-chatbot">Chatbot-qualified</span>
                     <strong>{humanize(row.intent)}</strong>
                     <span>{humanize(row.urgency)}</span>
                   </td>
