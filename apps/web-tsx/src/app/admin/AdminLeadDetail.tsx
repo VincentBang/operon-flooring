@@ -91,6 +91,15 @@ const STATUS_OPTIONS = [
 
 const TERMINAL_STATUSES = ["Won", "Lost", "Archived"];
 
+const PIPELINE_STEPS = [
+  "New",
+  "Needs review",
+  "Waiting customer",
+  "Quote sent",
+  "Site measure booked",
+  "Won"
+];
+
 function formatDate(value?: string) {
   if (!value) return "Not recorded";
   const date = new Date(value);
@@ -134,6 +143,62 @@ function formatFileSize(value?: number) {
   if (!Number.isFinite(bytes) || bytes <= 0) return "Size not recorded";
   if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function deriveFollowUpRecommendation(lead?: DetailLead) {
+  if (!lead) return "Review this lead manually.";
+  if (lead.next_action) return lead.next_action;
+  if (lead.statuses?.contact_status && lead.statuses.contact_status !== "none") return "Review contact request and decide the next manual follow-up.";
+  if (lead.statuses?.quote_review_status && lead.statuses.quote_review_status !== "none") return "Review quote-review status and prepare a comparison quote path.";
+  if (lead.statuses?.floorplan_status && lead.statuses.floorplan_status !== "none") return "Check floorplan status and confirm whether area details are enough.";
+  if (lead.quote?.missing_info_flags?.length) return "Ask customer for the missing scope details before progressing.";
+  if (lead.quote?.risk_flags?.length) return "Review risk flags before sending a final quote.";
+  return "Review lead and choose the next manual action.";
+}
+
+function getPipelineTone(step: string, currentStatus?: string) {
+  if (!currentStatus) return "pending";
+  if (currentStatus === step) return "current";
+  if (TERMINAL_STATUSES.includes(currentStatus)) {
+    return currentStatus === "Won" && step !== "Won" ? "complete" : "pending";
+  }
+  const currentIndex = PIPELINE_STEPS.indexOf(currentStatus);
+  const stepIndex = PIPELINE_STEPS.indexOf(step);
+  if (currentIndex > stepIndex) return "complete";
+  return "pending";
+}
+
+function getRelatedRecordSummaries(payload?: DetailResponse | null) {
+  const lead = payload?.lead;
+  const events = payload?.events || [];
+  const files = payload?.files || [];
+  const summaries = [
+    {
+      label: "Quote",
+      value: lead?.quote?.estimate_total_inc_gst ? formatMoney(lead.quote.estimate_total_inc_gst) : "No quote total yet",
+      detail: lead?.quote?.confidence_level ? `${humanize(lead.quote.confidence_level)} confidence` : "Confidence not recorded"
+    },
+    {
+      label: "Quote review",
+      value: humanize(lead?.statuses?.quote_review_status),
+      detail: events.some((event) => event.event_type === "quote_review_completed" || event.source_table === "operon_quote_reviews")
+        ? "Related quote-review event found"
+        : "No quote-review event linked"
+    },
+    {
+      label: "Floorplan",
+      value: humanize(lead?.statuses?.floorplan_status),
+      detail: files.some((file) => file.file_role === "floorplan" || file.file_role === "floorplan_upload")
+        ? "Safe floorplan file metadata linked"
+        : "No floorplan file metadata linked"
+    },
+    {
+      label: "Contact",
+      value: humanize(lead?.statuses?.contact_status),
+      detail: lead?.customer?.email || lead?.customer?.phone ? "Customer contact details available" : "No direct contact details yet"
+    }
+  ];
+  return summaries;
 }
 
 function ListBlock({ title, items }: { title: string; items?: string[] }) {
@@ -280,6 +345,24 @@ export function AdminLeadDetail({
 
       {status === "ready" && lead ? (
         <>
+          <div className="admin-detail-priority-row">
+            <div className="admin-followup-recommendation">
+              <span className="eyebrow">Recommended next manual action</span>
+              <strong>{deriveFollowUpRecommendation(lead)}</strong>
+              <p>Read-only guidance from current lead status, missing info, linked review/floorplan/contact signals and safe event metadata.</p>
+            </div>
+            <div className="admin-status-pipeline" aria-label="Lead status pipeline">
+              <span className="eyebrow">Status pipeline</span>
+              <ol>
+                {PIPELINE_STEPS.map((step) => (
+                  <li className={`admin-status-pipeline-step admin-status-pipeline-step-${getPipelineTone(step, lead.status)}`} key={step}>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+
           <div className="admin-detail-grid">
             <div className="admin-detail-block">
               <strong>Customer</strong>
@@ -332,6 +415,19 @@ export function AdminLeadDetail({
               <span>Floorplan: {humanize(lead.statuses?.floorplan_status)}</span>
               <span>Contact: {humanize(lead.statuses?.contact_status)}</span>
               <span>Follow-up: {humanize(lead.statuses?.follow_up_status)}</span>
+            </div>
+          </div>
+
+          <div className="admin-detail-section">
+            <h3>Related quote/contact/review/floorplan</h3>
+            <div className="admin-related-grid">
+              {getRelatedRecordSummaries(payload).map((item) => (
+                <div className="admin-related-card" key={item.label}>
+                  <strong>{item.label}</strong>
+                  <span>{item.value}</span>
+                  <small>{item.detail}</small>
+                </div>
+              ))}
             </div>
           </div>
 

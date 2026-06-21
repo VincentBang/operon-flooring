@@ -561,6 +561,19 @@ a {
   vertical-align: top;
 }
 
+.admin-lead-table th:last-child,
+.admin-lead-table td:last-child {
+  position: sticky;
+  right: 0;
+  z-index: 1;
+  background: #fff;
+  box-shadow: -10px 0 14px rgba(17, 24, 32, 0.06);
+}
+
+.admin-lead-table th:last-child {
+  z-index: 2;
+}
+
 .admin-lead-table th {
   color: var(--operon-ink);
   font-size: 0.78rem;
@@ -648,6 +661,66 @@ a {
   color: var(--operon-muted);
 }
 
+.admin-detail-priority-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 12px;
+}
+
+.admin-followup-recommendation,
+.admin-status-pipeline {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid rgba(20, 64, 74, 0.16);
+  border-radius: 8px;
+  background: #f4f7f6;
+}
+
+.admin-followup-recommendation strong {
+  color: var(--operon-ink);
+  font-size: 1.05rem;
+}
+
+.admin-followup-recommendation p {
+  margin: 0;
+  color: var(--operon-muted);
+  line-height: 1.5;
+}
+
+.admin-status-pipeline ol {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-status-pipeline-step {
+  min-width: 0;
+  padding: 9px 8px;
+  border: 1px solid var(--operon-line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--operon-muted);
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-align: center;
+}
+
+.admin-status-pipeline-step-current {
+  border-color: rgba(20, 64, 74, 0.36);
+  background: #eaf4f3;
+  color: #143f4a;
+}
+
+.admin-status-pipeline-step-complete {
+  border-color: rgba(176, 122, 48, 0.28);
+  background: #fbf1df;
+  color: #7a4b10;
+}
+
 .admin-detail-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -706,6 +779,32 @@ a {
 .admin-detail-section h3 {
   margin: 0;
   font-size: 1.05rem;
+}
+
+.admin-related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.admin-related-card {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--operon-line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.admin-related-card strong {
+  color: var(--operon-ink);
+}
+
+.admin-related-card span,
+.admin-related-card small {
+  color: var(--operon-muted);
+  line-height: 1.45;
 }
 
 .admin-followup-queue {
@@ -1881,7 +1980,10 @@ a {
   }
 
   .admin-lead-detail-head,
+  .admin-detail-priority-row,
   .admin-detail-grid,
+  .admin-status-pipeline ol,
+  .admin-related-grid,
   .admin-filter-row,
   .admin-review-queue-grid,
   .admin-report-grid,
