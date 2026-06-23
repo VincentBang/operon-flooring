@@ -35,9 +35,12 @@ Excluded:
 - `internal-qa/fixtures/floorplanBenchmarkCorpus.js`
 - `internal-qa/fixtures/floorplanQuickRoomBaselineCandidates.js`
 - `internal-qa/lib/floorplanBenchmarkHarness.js`
+- `internal-qa/lib/floorplanBenchmarkReportComparator.js`
 - `internal-qa/lib/floorplanBenchmarkReportWriter.js`
+- `internal-qa/scripts/compareFloorplanBenchmarkReports.js`
 - `internal-qa/scripts/runFloorplanBenchmark.js`
 - `internal-qa/tests/web/floorplanBenchmarkCorpusContract.test.js`
+- `internal-qa/tests/web/floorplanBenchmarkComparatorContract.test.js`
 - `internal-qa/tests/web/floorplanCandidateAdapterContract.test.js`
 - `internal-qa/tests/web/floorplanQuickRoomBaselineCandidateContract.test.js`
 - `internal-qa/tests/web/floorplanBenchmarkReportWriterContract.test.js`
@@ -127,6 +130,27 @@ internal-qa/reports/floorplan-benchmarks/
 
 That folder is intentionally gitignored. Reports are local evidence artifacts, not production source.
 
+## Local Report Comparison
+
+Future Phase 3 detection experiments should compare their local artifact against the last accepted baseline before any reviewer-facing code is considered:
+
+```bash
+node internal-qa/scripts/compareFloorplanBenchmarkReports.js \
+  --baseline=internal-qa/reports/floorplan-benchmarks/<baseline>.json \
+  --candidate=internal-qa/reports/floorplan-benchmarks/<candidate>.json
+```
+
+The comparator reports:
+
+- corpus failure delta
+- quick-room contract pass delta
+- average candidate area error
+- per-fixture area error deltas
+- regression count
+- whether it is safe to continue the detection spike
+
+A passing comparison does not approve customer-visible detection. It only means a candidate method did not regress against the local benchmark contract.
+
 ## Privacy Rules
 
 Benchmark fixtures must not include:
@@ -159,6 +183,7 @@ node internal-qa/tests/web/floorplanMeasurement.test.js
 node internal-qa/tests/web/floorplanQuickRoom.test.js
 node internal-qa/tests/web/floorplanMeasurementPhase2Contract.test.js
 node internal-qa/tests/web/floorplanBenchmarkCorpusContract.test.js
+node internal-qa/tests/web/floorplanBenchmarkComparatorContract.test.js
 node internal-qa/tests/web/floorplanCandidateAdapterContract.test.js
 node internal-qa/tests/web/floorplanQuickRoomBaselineCandidateContract.test.js
 node internal-qa/tests/web/floorplanBenchmarkReportWriterContract.test.js
