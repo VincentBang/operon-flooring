@@ -30,6 +30,8 @@ const adminQueuesSource = fs.readFileSync(adminQueuesPath, "utf8");
   "No storage location is shown in the browser.",
   "URL.createObjectURL",
   "URL.revokeObjectURL",
+  "reviewer_notes",
+  "Add reviewer_notes per section",
   "Editor JSON is not valid.",
   "server recalculates area",
   "This does not calculate price"

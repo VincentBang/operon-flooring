@@ -85,6 +85,7 @@ function safePointsForEditor(version?: VersionRow) {
     selection_state: section.selection_state || "include",
     confidence: section.confidence_level || "medium",
     area_m2: section.area_m2 || 0,
+    reviewer_notes: section.reviewer_notes || "",
     points: section.geometry_json?.points || []
   }));
 }
@@ -351,7 +352,7 @@ export function FloorplanMeasurementsConsole() {
                 </div>
                 <div className="admin-detail-section">
                   <h3>Reviewer draft editor</h3>
-                  <p>Edit safe section geometry JSON only. The server recalculates area before saving.</p>
+                  <p>Edit safe section geometry JSON only. The server recalculates area before saving. Add reviewer_notes per section when a correction needs context.</p>
                   <textarea className="internal-floorplan-editor" value={editorJson} onChange={(event) => setEditorJson(event.target.value)} spellCheck={false} />
                   <div className="admin-followup-actions">
                     <button className="admin-table-action" type="button" onClick={saveDraft}>Save review draft</button>
