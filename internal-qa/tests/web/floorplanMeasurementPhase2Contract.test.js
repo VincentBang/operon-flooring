@@ -85,6 +85,11 @@ async function withMockedFetch(handler) {
   assert.equal(result.sections[0].area_m2, 25, "Section area should be calculated server-side.");
 })();
 
+(function testUuidValidationAcceptsStandardUuidShape() {
+  assert.equal(Geometry.isUuid("11111111-1111-4111-8111-111111111111"), true, "Standard UUIDs should pass validation.");
+  assert.equal(Geometry.isUuid("11111111-1111-4111-111111111111"), false, "Malformed UUIDs should fail validation.");
+})();
+
 (function testGeometryRejectsSensitiveFields() {
   assert.throws(function () {
     Geometry.validateMeasurementPayload(validPayload({ supplier_cost: 12 }));
