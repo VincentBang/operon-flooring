@@ -501,6 +501,36 @@ a {
   font: inherit;
 }
 
+.admin-filter-field input,
+.internal-floorplan-editor {
+  width: 100%;
+  border: 1px solid var(--operon-line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--operon-ink);
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.internal-floorplan-console {
+  max-width: none;
+}
+
+.internal-floorplan-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.internal-floorplan-editor {
+  min-height: 260px;
+  resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
 .admin-filter-summary {
   display: flex;
   flex-wrap: wrap;
@@ -1982,6 +2012,7 @@ a {
   .admin-lead-detail-head,
   .admin-detail-priority-row,
   .admin-detail-grid,
+  .internal-floorplan-grid,
   .admin-status-pipeline ol,
   .admin-related-grid,
   .admin-filter-row,

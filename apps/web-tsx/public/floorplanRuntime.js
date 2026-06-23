@@ -123,7 +123,7 @@ const FLOORPLAN_AREA_KEY = "operon-floorplan-area";
       };
     }
 
-    function saveQuoteHandoff(realArea, rooms, source) {
+    function saveQuoteHandoff(realArea, rooms, source, persistence) {
       const measurementMode = source === "suggest_all_mode"
         ? "suggest_all"
         : source === "quick_room_mode"
@@ -135,6 +135,9 @@ const FLOORPLAN_AREA_KEY = "operon-floorplan-area";
         measurementSource: "floorplan",
         measurementMode: measurementMode,
         source: source || "trace_room_mode",
+        measurementSessionId: persistence && persistence.measurement_session_id || "",
+        customerVersionId: persistence && persistence.customer_version_id || "",
+        floorplanReviewStatus: persistence && persistence.status || "local_only",
         savedAt: new Date().toISOString()
       };
 
@@ -143,6 +146,84 @@ const FLOORPLAN_AREA_KEY = "operon-floorplan-area";
       localStorage.setItem(FLOORPLAN_ROOMS_KEY, JSON.stringify(payload.rooms));
       localStorage.setItem(FLOORPLAN_SOURCE_KEY, payload.source);
       localStorage.removeItem(FLOORPLAN_AREA_KEY);
+      return payload;
+    }
+
+    function getFloorplanPersistenceKey() {
+      try {
+        const existing = sessionStorage.getItem("operon_floorplan_measurement_idempotency_v1");
+        if (existing) {
+          return existing;
+        }
+        const key = "floorplan_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 12);
+        sessionStorage.setItem("operon_floorplan_measurement_idempotency_v1", key);
+        return key;
+      } catch (error) {
+        return "floorplan_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 12);
+      }
+    }
+
+    function normaliseRoomPointsForServer(points) {
+      const width = Math.max(1, canvas.width || DEFAULT_CANVAS_WIDTH);
+      const height = Math.max(1, canvas.height || DEFAULT_CANVAS_HEIGHT);
+      return (Array.isArray(points) ? points : []).map(function (point) {
+        return {
+          x: roundTo(Math.min(Math.max((Number(point.x) || 0) / width, 0), 1), 6),
+          y: roundTo(Math.min(Math.max((Number(point.y) || 0) / height, 0), 1), 6)
+        };
+      });
+    }
+
+    function buildMeasurementSessionPayload(totalArea, persistenceSource) {
+      const confidence = getMeasurementConfidence();
+      const hasQuickRoom = state.rooms.some(function (room) {
+        return room.source === "quick_room";
+      });
+      return {
+        idempotency_key: getFloorplanPersistenceKey(),
+        source: "floorplan_tool",
+        measurement_mode: hasQuickRoom ? "quick_room" : "manual_trace",
+        page_key: "floorplan",
+        page_width: canvas.width || DEFAULT_CANVAS_WIDTH,
+        page_height: canvas.height || DEFAULT_CANVAS_HEIGHT,
+        pixels_per_metre: state.pixelsPerMetre || 0,
+        client_selected_area_m2: totalArea,
+        confidence_level: String(confidence.level || "unknown").toLowerCase(),
+        user_agent_family: /Mobile|Android|iPhone/i.test(navigator.userAgent || "") ? "mobile" : "desktop",
+        sections: state.rooms.map(function (room, index) {
+          return {
+            client_section_id: room.id || "room-" + (index + 1),
+            label: room.name || room.label || "Room " + (index + 1),
+            section_type: room.type === "wet" ? "wet_area" : room.type === "outdoor" ? "outdoor" : "room",
+            selection_state: room.includeInQuote ? "include" : "exclude",
+            confidence: room.confidence ? String(room.confidence).toLowerCase() : room.source === "quick_room" ? "medium" : "high",
+            source: room.source || persistenceSource || "manual_trace",
+            origin: room.origin || "",
+            area_m2: roundTo(Number(room.areaM2) || 0, 3),
+            points: normaliseRoomPointsForServer(room.points),
+            coordinate_space: "normalized_page"
+          };
+        })
+      };
+    }
+
+    async function persistMeasurementSession(totalArea, persistenceSource) {
+      if (!window.fetch) {
+        return { ok: false, status: "local_only" };
+      }
+      const response = await fetch("/.netlify/functions/save-floorplan-measurement-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(buildMeasurementSessionPayload(totalArea, persistenceSource))
+      });
+      const payload = await response.json().catch(function () {
+        return null;
+      });
+      if (!response.ok || !payload || !payload.ok) {
+        throw new Error(payload && payload.error || "Floorplan measurement persistence failed.");
+      }
       return payload;
     }
 
@@ -2459,7 +2540,7 @@ const FLOORPLAN_AREA_KEY = "operon-floorplan-area";
       setGlobalStatus("Measured rooms cleared.");
     }
 
-    function saveAreaForQuote() {
+    async function saveAreaForQuote() {
       const totalArea = calculateSelectedTotalArea();
       if (!(totalArea > 0)) {
         setGlobalStatus("Trace and include at least one flooring room before using the area in quote.");
@@ -2483,7 +2564,15 @@ const FLOORPLAN_AREA_KEY = "operon-floorplan-area";
             return;
           }
         }
-        saveQuoteHandoff(totalArea, state.rooms, hasSuggestedAreas ? "suggest_all_mode" : hasQuickRoom ? "quick_room_mode" : "trace_room_mode");
+        const source = hasSuggestedAreas ? "suggest_all_mode" : hasQuickRoom ? "quick_room_mode" : "trace_room_mode";
+        let persistence = { ok: false, status: "local_only" };
+        try {
+          setGlobalStatus("Saving measured area for quote...");
+          persistence = await persistMeasurementSession(totalArea, source);
+        } catch (persistenceError) {
+          setGlobalStatus("Measured area will continue locally. Internal floorplan review save was not available.");
+        }
+        saveQuoteHandoff(totalArea, state.rooms, source, persistence);
       } catch (error) {
         setGlobalStatus("Area could not be saved for quote.");
         return;
@@ -2878,4 +2967,3 @@ const FLOORPLAN_AREA_KEY = "operon-floorplan-area";
     }
 
     initFloorplanTool();
-  

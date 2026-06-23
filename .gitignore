@@ -23,6 +23,7 @@ internal-audits/
 
 # Local QA screenshots are not deployable source.
 internal-qa/screenshots/
+internal-qa/reports/
 
 # Keep the website repo focused on the Netlify/Supabase app.
 flooring_app/
