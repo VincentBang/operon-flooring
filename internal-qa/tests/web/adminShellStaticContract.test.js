@@ -6,6 +6,7 @@ const repoRoot = path.resolve(__dirname, "..", "..", "..");
 const sourcePath = path.join(repoRoot, "apps", "web-tsx", "src", "app", "admin", "page.tsx");
 const changesetReviewPath = path.join(repoRoot, "internal-docs", "apps-web", "LOCAL_CHANGESET_REVIEW_2026-06-04.md");
 const routeSurfaceDecisionPath = path.join(repoRoot, "internal-docs", "apps-web", "STAGE3_ADMIN_ROUTE_SURFACE_DECISION.md");
+const netlifyConfigPath = path.join(repoRoot, "netlify.toml");
 const outRoot = path.join(repoRoot, "apps", "web-tsx", "out");
 const adminOutput = path.join(outRoot, "admin.html");
 const adminPayloadOutput = path.join(outRoot, "admin.txt");
@@ -74,9 +75,11 @@ function assertOutputShellSafe() {
 function assertDeployReviewWarningExists() {
   const review = fs.readFileSync(changesetReviewPath, "utf8");
   const routeSurfaceDecision = fs.readFileSync(routeSurfaceDecisionPath, "utf8");
+  const netlifyConfig = fs.readFileSync(netlifyConfigPath, "utf8");
   [
     "Before any deploy, verify `/admin.html` is noindex and locked",
-    "Verify `/admin` behavior is either redirected, blocked, or otherwise documented",
+    "Verify `/admin` redirects to `/admin.html`",
+    "Verify `/internal/floorplan-measurements` redirects to `/internal/floorplan-measurements.html`",
     "Keep `/admin.html` out of sitemap",
     "STAGE3_ADMIN_ROUTE_SURFACE_DECISION.md"
   ].forEach(function (term) {
@@ -85,12 +88,24 @@ function assertDeployReviewWarningExists() {
 
   [
     "Option A: Redirect `/admin` to `/admin.html`",
-    "Option B: Block `/admin`",
+    "`netlify.toml` now defines `/admin` -> `/admin.html` as a forced 301 redirect.",
+    "`netlify.toml` also defines `/internal/floorplan-measurements` -> `/internal/floorplan-measurements.html` as a forced 301 redirect.",
     "`next build` reports the app route as `/admin`",
     "Verify admin data loads only after the approved token succeeds.",
     "`/admin` returns an indexable 200."
   ].forEach(function (term) {
     assert.ok(routeSurfaceDecision.includes(term), "Admin route surface decision missing: " + term);
+  });
+
+  [
+    'from = "/admin"',
+    'to = "/admin.html"',
+    'from = "/internal/floorplan-measurements"',
+    'to = "/internal/floorplan-measurements.html"',
+    "status = 301",
+    "force = true"
+  ].forEach(function (term) {
+    assert.ok(netlifyConfig.includes(term), "Netlify config missing protected route redirect term: " + term);
   });
 }
 

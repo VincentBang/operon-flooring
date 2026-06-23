@@ -88,13 +88,12 @@ function main() {
 
   assertIncludesAll(routeSurface, [
     "Static export generates `out/admin.html`.",
-    "No explicit `/admin` redirect or block is currently defined in `netlify.toml`.",
+    "`netlify.toml` now defines `/admin` -> `/admin.html` as a forced 301 redirect.",
+    "`netlify.toml` also defines `/internal/floorplan-measurements` -> `/internal/floorplan-measurements.html` as a forced 301 redirect.",
     "Option A: Redirect `/admin` to `/admin.html`",
-    "Option B: Block `/admin`",
-    "Option C: Keep `/admin` Documented But Unchanged",
     "`/admin` returns an indexable 200.",
     "`/admin.html` appears in sitemap.",
-    "Route behavior requires production Netlify config changes that are not approved."
+    "The extensionless protected routes return indexable 200 surfaces."
   ], "Admin route surface decision");
 
   assertExcludesAll(plan, [

@@ -100,6 +100,12 @@
 
 # Explicit extensionless redirects for generated .html pages.
 [[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/apartment-flooring-sydney"
   to = "/apartment-flooring-sydney.html"
   status = 301
@@ -390,6 +396,12 @@
 [[redirects]]
   from = "/hybrid-flooring-sydney"
   to = "/hybrid-flooring-sydney.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/internal/floorplan-measurements"
+  to = "/internal/floorplan-measurements.html"
   status = 301
   force = true
 

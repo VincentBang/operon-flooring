@@ -2,7 +2,7 @@
 
 Date: 2026-06-04
 
-Purpose: decide how `/admin` and `/admin.html` should behave before any preview or production deploy includes the locked admin shell.
+Purpose: record how `/admin` and `/admin.html` should behave before any preview or production deploy includes the locked admin shell.
 
 Current local state:
 
@@ -11,12 +11,13 @@ Current local state:
 - `next build` reports the app route as `/admin`, but the static export file surface remains `admin.html` and `admin.txt`.
 - `/admin.html` is locked and `noindex,nofollow`.
 - `/admin.html` is excluded from sitemap.
-- No explicit `/admin` redirect or block is currently defined in `netlify.toml`.
+- `netlify.toml` now defines `/admin` -> `/admin.html` as a forced 301 redirect.
+- `netlify.toml` also defines `/internal/floorplan-measurements` -> `/internal/floorplan-measurements.html` as a forced 301 redirect.
 - Admin auth shell and protected modules exist locally, but no preview/production admin release is approved yet.
 
-## Decision Required Before Deploy
+## Local Decision
 
-Choose one:
+The local decision is Option A: redirect extensionless protected routes to their `.html` canonical surfaces.
 
 ### Option A: Redirect `/admin` to `/admin.html`
 
@@ -28,8 +29,11 @@ Use when:
 Requirements:
 
 - `/admin` returns 301 or 302 to `/admin.html`.
+- `/internal/floorplan-measurements` returns 301 or 302 to `/internal/floorplan-measurements.html`.
 - `/admin.html` remains `noindex,nofollow`.
+- `/internal/floorplan-measurements.html` remains `noindex,nofollow`.
 - `/admin.html` remains out of sitemap.
+- `/internal/floorplan-measurements.html` remains out of sitemap.
 - The locked shell renders no lead data.
 
 ### Option B: Block `/admin`
@@ -60,8 +64,8 @@ Requirements:
 
 For the first approved preview with the locked shell:
 
-1. Prefer blocking `/admin` or redirecting it to `/admin.html`.
-2. Do not add either change to production config until approved.
+1. Verify `/admin` redirects to `/admin.html`.
+2. Verify `/internal/floorplan-measurements` redirects to `/internal/floorplan-measurements.html`.
 3. Verify `/admin.html` remains locked, noindex, and out of sitemap.
 4. Verify `/admin` behavior with HTTP status and headers in preview.
 5. Verify unauthenticated dashboard functions return 401/403 before any lead data query.
@@ -76,4 +80,4 @@ Stop before preview or production if:
 - `/admin.html` lacks `noindex,nofollow`.
 - `out/admin.txt` contains lead, quote, upload, customer, storage, OCR, or pricing data.
 - Admin output contains lead, quote, upload, customer, storage, OCR, or pricing data.
-- Route behavior requires production Netlify config changes that are not approved.
+- The extensionless protected routes return indexable 200 surfaces.

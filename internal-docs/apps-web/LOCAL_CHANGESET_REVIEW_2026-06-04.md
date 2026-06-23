@@ -46,7 +46,8 @@ Purpose:
 Preview requirement:
 
 - Before any deploy, verify `/admin.html` is noindex and locked.
-- Verify `/admin` behavior is either redirected, blocked, or otherwise documented so it does not create an indexable duplicate surface.
+- Verify `/admin` redirects to `/admin.html` so it does not create an indexable duplicate surface.
+- Verify `/internal/floorplan-measurements` redirects to `/internal/floorplan-measurements.html`.
 - Keep `/admin.html` out of sitemap.
 
 ## Test/Guardrail Changes
@@ -100,7 +101,7 @@ Not run in this shell:
 - Stage 3 lead writes need Netlify preview/function verification before production.
 - The locked admin shell needs preview verification for `/admin.html`, `/admin`, noindex, and sitemap exclusion.
 - The admin auth model is still not selected or connected.
-- No explicit `/admin` redirect/block is currently defined in `netlify.toml`; do not change production config until that route decision is approved.
+- Local `netlify.toml` now redirects `/admin` to `/admin.html`; do not production deploy until this route decision is preview-verified.
 - Admin route-surface options are documented in `STAGE3_ADMIN_ROUTE_SURFACE_DECISION.md`.
 - Git-based preview remains preferred over repeated CLI draft deploys if the user approves a push.
 
