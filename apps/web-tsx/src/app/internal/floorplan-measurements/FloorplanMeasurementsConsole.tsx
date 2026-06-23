@@ -228,6 +228,29 @@ export function FloorplanMeasurementsConsole() {
     if (response.ok) await loadDetail(detail.session.id);
   }
 
+  async function openPrivateDocument() {
+    const uploadedFileId = detail?.session?.uploaded_file_id;
+    if (!uploadedFileId) {
+      setWorkState("No private floorplan file is linked to this measurement.");
+      return;
+    }
+    setWorkState("Opening private floorplan document...");
+    const response = await fetch(`/.netlify/functions/stream-internal-floorplan-document?uploaded_file_id=${encodeURIComponent(uploadedFileId)}`, {
+      headers: { Authorization: `Bearer ${verifiedToken}` },
+      cache: "no-store"
+    });
+    if (!response.ok) {
+      const payload = await response.json().catch(() => null);
+      setWorkState(payload?.error || "Private floorplan document could not be opened.");
+      return;
+    }
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    window.open(objectUrl, "_blank", "noopener,noreferrer");
+    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
+    setWorkState("Private floorplan document opened in a temporary viewer.");
+  }
+
   useEffect(() => {
     if (verifiedToken) {
       loadSessions();
@@ -307,6 +330,13 @@ export function FloorplanMeasurementsConsole() {
                   <div className="admin-detail-block"><strong>Selected area</strong><span>{formatArea(detail.session.selected_area_m2)}</span></div>
                   <div className="admin-detail-block"><strong>Uploaded file</strong><span>{detail.session.uploaded_file_id ? "Private file linked" : "No private file linked"}</span></div>
                 </div>
+                {detail.session.uploaded_file_id ? (
+                  <div className="admin-detail-section">
+                    <h3>Private plan viewer</h3>
+                    <p>Open the uploaded floorplan through the admin-only stream. No storage location is shown in the browser.</p>
+                    <button className="admin-table-action" type="button" onClick={openPrivateDocument}>Open private floorplan</button>
+                  </div>
+                ) : null}
                 <div className="admin-detail-section">
                   <h3>Versions</h3>
                   <div className="admin-followup-meta">
