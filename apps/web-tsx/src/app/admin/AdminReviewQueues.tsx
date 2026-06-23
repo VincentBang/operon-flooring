@@ -166,6 +166,11 @@ export function AdminReviewQueues({ adminToken }: { adminToken: string }) {
           emptyText="No floorplan leads matched the queue filter."
         />
       </div>
+      <div className="admin-auth-status admin-auth-status-authenticated">
+        <strong>Floorplan measurement console</strong>
+        <span>Open the protected internal console when a lead needs room geometry, reviewer draft, approval or Quote OS area linking.</span>
+        <a className="admin-table-action" href="/internal/floorplan-measurements.html">Open measurement console</a>
+      </div>
     </section>
   );
 }
