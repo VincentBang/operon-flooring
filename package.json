@@ -4,6 +4,8 @@
   "scripts": {
     "dev:static": "cd apps/web && python3 -m http.server 8000",
     "dev:netlify": "netlify dev",
+    "benchmark:floorplan": "node internal-qa/scripts/runFloorplanBenchmark.js",
+    "benchmark:floorplan:write": "node internal-qa/scripts/runFloorplanBenchmark.js --write-artifacts",
     "check:public-leaks": "node scripts/check-public-leaks.js",
     "test:calculate-quote": "node scripts/test-calculate-quote-fixtures.js",
     "test:conversion": "node internal-qa/tests/web/quoteCalculator.validation.js && node internal-qa/tests/web/quoteConfidence.test.js && node internal-qa/tests/web/floorplanMeasurement.test.js && node internal-qa/tests/web/floorplanQuickRoom.test.js && node internal-qa/tests/web/quoteReviewParser.test.js && node internal-qa/tests/chatbot/chatbot.test.js",

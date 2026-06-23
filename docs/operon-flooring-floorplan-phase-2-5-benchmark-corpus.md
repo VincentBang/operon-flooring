@@ -116,6 +116,12 @@ Benchmark reports can be written locally for reviewer comparison and future Phas
 node internal-qa/scripts/runFloorplanBenchmark.js --write-artifacts
 ```
 
+or:
+
+```bash
+npm run benchmark:floorplan:write
+```
+
 Optional naming:
 
 ```bash
@@ -170,10 +176,12 @@ Real uploaded or project plans can only be added later if usage rights and priva
 
 ```bash
 node internal-qa/scripts/runFloorplanBenchmark.js
+npm run benchmark:floorplan
 node internal-qa/tests/web/floorplanBenchmarkCorpusContract.test.js
 node internal-qa/tests/web/floorplanCandidateAdapterContract.test.js
 node internal-qa/tests/web/floorplanQuickRoomBaselineCandidateContract.test.js
 node internal-qa/tests/web/floorplanBenchmarkReportWriterContract.test.js
+node internal-qa/tests/web/floorplanBenchmarkCliContract.test.js
 ```
 
 Recommended floorplan gate after Phase 2.5 changes:
@@ -187,6 +195,7 @@ node internal-qa/tests/web/floorplanBenchmarkComparatorContract.test.js
 node internal-qa/tests/web/floorplanCandidateAdapterContract.test.js
 node internal-qa/tests/web/floorplanQuickRoomBaselineCandidateContract.test.js
 node internal-qa/tests/web/floorplanBenchmarkReportWriterContract.test.js
+node internal-qa/tests/web/floorplanBenchmarkCliContract.test.js
 ```
 
 ## Next Use
