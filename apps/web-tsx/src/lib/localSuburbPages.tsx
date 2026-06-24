@@ -29,6 +29,7 @@ type LocalSuburbPage = {
   suburb: string;
   route: string;
   eyebrow: string;
+  h1?: string;
   title: string;
   description: string;
   hero: string;
@@ -363,9 +364,10 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     suburb: "Liverpool",
     route: routes.liverpool,
     eyebrow: "Liverpool flooring quotes",
-    title: "Timber Flooring Liverpool | Hybrid, Laminate & Quote Help",
+    h1: "Flooring Liverpool - Hybrid, Laminate & Timber Installation",
+    title: "Flooring Liverpool | Hybrid, Laminate & Timber Installation",
     description:
-      "Start a Liverpool timber flooring quote for hybrid, laminate or engineered timber with area, apartment access, removal, stairs, trims and quote-review details clear.",
+      "Plan flooring in Liverpool for hybrid, laminate or engineered timber with area, apartment access, removal, stairs, trims and quote-review details clear.",
     hero:
       "Liverpool timber flooring projects can range from apartment updates near the centre to townhouses and family homes across the south-west. A stronger flooring Liverpool quote separates product selection from site scope, so hybrid flooring, laminate flooring or engineered timber can be reviewed alongside area, removal, stairs, trims and access instead of being hidden behind one total.",
     localAngle:
@@ -457,6 +459,11 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
         question: "What should I check for timber flooring Liverpool quotes?",
         answer:
           "Check product category or range, measured area, apartment access, stairs, trims, removal, disposal and any floor preparation assumptions before comparing totals."
+      },
+      {
+        question: "Can I compare hybrid, laminate and timber flooring in Liverpool?",
+        answer:
+          "Yes. Use the Liverpool page to compare the category fit first, then start the quote with the product direction, area and known scope details."
       }
     ]
   },
@@ -658,7 +665,8 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     suburb: "Edmondson Park",
     route: routes.edmondsonPark,
     eyebrow: "Edmondson Park flooring quotes",
-    title: "Timber Flooring Edmondson Park | Hybrid, Laminate & Quote Help",
+    h1: "Timber Flooring Edmondson Park - Hybrid & Flooring Quote Help",
+    title: "Timber Flooring Edmondson Park | Hybrid & Flooring Quote Help",
     description:
       "Plan an Edmondson Park timber flooring quote for hybrid, laminate or engineered timber with area, stairs, trims, removal, floorplan and quote-review details clear.",
     hero:
@@ -1320,7 +1328,7 @@ export function LocalSuburbPageView({ slug }: { slug: string }) {
               <span>Flooring {page.suburb}</span>
             </nav>
             <span className="eyebrow">{page.eyebrow}</span>
-            <h1>Flooring quote help in {page.suburb}</h1>
+            <h1>{page.h1 || `Flooring quote help in ${page.suburb}`}</h1>
             <p>{page.hero}</p>
             <div className="hero-actions">
               <a className="button button-primary" href={`${routes.quote}?from=suburb&suburb=${encodeURIComponent(page.suburb)}#quoteForm`} data-track-cta="suburb_page_quote_click">
@@ -1349,7 +1357,7 @@ export function LocalSuburbPageView({ slug }: { slug: string }) {
                 <span>Shortlist hybrid, laminate or engineered timber before quoting.</span>
               </a>
               <a className="link-card" href={routes.quote}>
-                <strong>Start a structured quote</strong>
+                <strong>Start an instant flooring quote</strong>
                 <span>Add product, area, stairs, removal and site details in one flow.</span>
               </a>
               <a className="link-card" href={routes.quoteReview}>

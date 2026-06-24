@@ -46,8 +46,8 @@ const rangeCards = [
 ];
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Laminate Flooring Sydney | Ranges, Apartments & Quote Scope",
-  description: "Compare laminate flooring for Sydney dry internal spaces, apartments, rentals and renovations. Start a quote with area, underlay, prep and inclusions reviewed.",
+  title: "Laminate Flooring Sydney | Dry Room Ranges & Quote Guide",
+  description: "Compare laminate flooring in Sydney for dry rooms, apartments and rentals. Review range fit, underlay, moisture limits, prep, trims and quote scope.",
   path: routes.laminate,
   image: "/assets/operon-social-preview.png"
 });
@@ -56,9 +56,24 @@ export default function LaminateFlooringSydneyPage() {
   return (
     <Layout>
       <JsonLd data={jsonLd} />
-      <section className="hero"><div className="shell"><article className="hero-card"><nav className="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Laminate flooring Sydney</span></nav><span className="eyebrow">Laminate flooring</span><h1>Laminate flooring Sydney</h1><p>Laminate flooring can be a strong value path for dry internal spaces, rental upgrades and budget-conscious Sydney renovations when product range, underlay, area and scope are written clearly.</p><div className="hero-actions"><a className="button button-primary" href={`${routes.quote}?from=seo&category=laminate`} data-track-cta="guide_to_quote_click">Start a laminate flooring quote</a><a className="button button-secondary" href={routes.quoteReview}>Check an existing flooring quote</a><a className="button button-secondary" href={routes.floorplan}>Upload a floor plan</a></div></article></div></section>
+      <section className="hero"><div className="shell"><article className="hero-card"><nav className="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Laminate flooring Sydney</span></nav><span className="eyebrow">Laminate flooring</span><h1>Laminate flooring Sydney</h1><p>Laminate flooring is a value-focused timber-look option for dry Sydney rooms, rental upgrades and budget-conscious renovations. The quote still needs to make range, underlay, measured area, moisture expectations, trims and preparation clear.</p><div className="hero-actions"><a className="button button-primary" href={`${routes.quote}?from=seo&category=laminate#quoteForm`} data-track-cta="guide_to_quote_click">Start a laminate flooring quote</a><a className="button button-secondary" href={`${routes.products}?category=laminate`}>Browse laminate products</a><a className="button button-secondary" href={routes.quoteReview}>Check an existing flooring quote</a></div></article></div></section>
 
       <section className="section"><div className="shell"><article className="section-card"><span className="eyebrow">Use cases</span><h2>Laminate flooring for dry internal spaces</h2><p>Laminate is usually considered where a timber-look finish and cost control matter more than wet-area suitability. Product quality, underlay and subfloor preparation still influence the finished result.</p><div className="link-grid"><a className="link-card" href={`${routes.products}?category=laminate`}><strong>Browse laminate products</strong><span>Compare ranges before starting the quote.</span></a><a className="link-card" href="/blog/laminate-vs-hybrid.html"><strong>Hybrid vs laminate</strong><span>Compare product tradeoffs before choosing a quote path.</span></a><a className="link-card" href={routes.recentProjects}><strong>Recent flooring projects</strong><span>Use finished project proof to set expectations before choosing a range.</span></a></div></article></div></section>
+
+      <section className="section">
+        <div className="shell">
+          <article className="section-card">
+            <span className="eyebrow">Best fit</span>
+            <h2>Where laminate flooring works best</h2>
+            <div className="link-grid">
+              <div className="link-card"><strong>Dry bedrooms and studies</strong><span>Laminate can be a clean timber-look choice where moisture exposure is controlled.</span></div>
+              <div className="link-card"><strong>Rental refreshes</strong><span>Useful where presentation, value and straightforward replacement planning matter.</span></div>
+              <div className="link-card"><strong>Budget-conscious renovations</strong><span>Can help keep the project practical when premium timber is not the goal.</span></div>
+              <div className="link-card"><strong>Apartments</strong><span>Needs acoustic, underlay, access and building requirements checked before final confirmation.</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
 
       <section className="section">
         <div className="shell grid-2">
@@ -82,9 +97,10 @@ export default function LaminateFlooringSydneyPage() {
               A laminate quote can look simple but still leave out underlay assumptions, old-floor removal, disposal, scotia, skirting, door trimming or subfloor preparation.
               If you already have a written quote, review it before comparing the total.
             </p>
-            <a className="button button-secondary" href={routes.quoteReview} data-track-cta="laminate_quote_review_click">
-              Review a laminate flooring quote
-            </a>
+            <div className="link-grid">
+              <a className="link-card" href={routes.quoteReview} data-track-cta="laminate_quote_review_click"><strong>Review a laminate flooring quote</strong><span>Check product, area, exclusions and finish details before accepting.</span></a>
+              <a className="link-card" href={routes.flooringQuoteSydney}><strong>Read the flooring quote guide</strong><span>Understand what should be written in a quote.</span></a>
+            </div>
           </article>
         </div>
       </section>

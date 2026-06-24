@@ -6,22 +6,22 @@ import { absoluteUrl, siteConfig } from "@/lib/site";
 import { routes } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: "Operon Flooring Sydney | Quotes, Products & Scope Review",
-  description: "Operon Flooring helps Sydney customers choose hybrid, laminate and engineered timber, review quote scope, measure from floor plans and start clearer flooring enquiries.",
+  title: "Operon Flooring Sydney | Products, Quotes & Scope Review",
+  description: "Operon Flooring helps Sydney customers choose hybrid, laminate and engineered timber, check quote scope, measure from floor plans and prepare clearer projects.",
   robots: "index,follow",
   alternates: {
     canonical: `${siteConfig.origin}/`
   },
   openGraph: {
-    title: "Operon Flooring Sydney | Quotes, Products & Scope Review",
-    description: "Operon Flooring helps Sydney customers choose hybrid, laminate and engineered timber, review quote scope, measure from floor plans and start clearer flooring enquiries.",
+    title: "Operon Flooring Sydney | Products, Quotes & Scope Review",
+    description: "Operon Flooring helps Sydney customers choose hybrid, laminate and engineered timber, check quote scope, measure from floor plans and prepare clearer projects.",
     url: `${siteConfig.origin}/`,
     images: [absoluteUrl("/assets/operon-social-preview.png")]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Operon Flooring Sydney | Quotes, Products & Scope Review",
-    description: "Operon Flooring helps Sydney customers choose hybrid, laminate and engineered timber, review quote scope, measure from floor plans and start clearer flooring enquiries.",
+    title: "Operon Flooring Sydney | Products, Quotes & Scope Review",
+    description: "Operon Flooring helps Sydney customers choose hybrid, laminate and engineered timber, check quote scope, measure from floor plans and prepare clearer projects.",
     images: [absoluteUrl("/assets/operon-social-preview.png")]
   }
 };
@@ -145,6 +145,9 @@ const seoLinks = [
   ["Floor Plan Tool", routes.floorplan],
   ["Recent Projects", routes.recentProjects],
   ["Contact Operon Flooring", routes.contact],
+  ["Flooring Miranda", "/flooring-miranda.html"],
+  ["Flooring Liverpool", routes.liverpool],
+  ["Flooring Edmondson Park", routes.edmondsonPark],
   ["Flooring Bankstown", routes.bankstown],
   ["Flooring Bellevue Hill", routes.bellevueHill],
   ["Flooring Manly", routes.manly],
@@ -171,10 +174,10 @@ export default function HomePage() {
         <div className="home-hero-grid">
           <div>
             <p className="eyebrow">Sydney flooring quotes</p>
-            <h1>Get a clear flooring quote in minutes</h1>
-            <p className="home-lead">Premium Sydney flooring quote support for hybrid, laminate and engineered timber. Choose the right path first, then start an instant online quote when you are ready.</p>
+            <h1>Sydney flooring choices made clearer</h1>
+            <p className="home-lead">Operon Flooring helps you choose hybrid, laminate or engineered timber, check written quote scope, measure from a floor plan and start an instant flooring quote when the project is ready.</p>
             <div className="home-actions">
-              <a className="button button-primary" data-track-cta="hero_start_quote_click" href={routes.quote}>Start instant quote</a>
+              <a className="button button-primary" data-track-cta="hero_start_quote_click" href={routes.quote}>Start an instant flooring quote</a>
               <a className="home-quiet-link" data-track-cta="hero_quote_review_click" href={routes.quoteReview}>Check existing quote</a>
             </div>
             <p className="home-trust-line">Starting estimate first. Product, area and final scope are reviewed before booking.</p>
