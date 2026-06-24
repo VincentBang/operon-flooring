@@ -66,6 +66,28 @@ const productCluster = [
     body: "Compare practical tradeoffs before choosing a product path."
   }
 ];
+const localSearchCluster = [
+  {
+    href: "/flooring-miranda.html",
+    title: "Flooring Miranda",
+    body: "Local guide for Miranda hybrid, laminate and timber flooring quote scope."
+  },
+  {
+    href: "/flooring-liverpool.html",
+    title: "Flooring Liverpool",
+    body: "Liverpool quote guidance for product choice, access, removal, stairs and trims."
+  },
+  {
+    href: "/flooring-edmondson-park.html",
+    title: "Timber flooring Edmondson Park",
+    body: "Edmondson Park timber, hybrid and flooring quote help for scope clarity."
+  },
+  {
+    href: "/flooring-quote-sydney.html",
+    title: "Flooring quote Sydney guide",
+    body: "Use the core Sydney quote guide before comparing written totals."
+  }
+];
 
 export const metadata: Metadata = createPageMetadata({
   title: page.title,
@@ -110,6 +132,25 @@ export default function BlogIndexPage() {
             </p>
             <div className="link-grid" style={{ marginTop: 22 }}>
               {productCluster.map((guide) => (
+                <Link className="link-card" href={guide.href} key={guide.href}>
+                  <strong>{guide.title}</strong>
+                  <span>{guide.body}</span>
+                </Link>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+      <section className="section" aria-label="Sydney flooring quote pages">
+        <div className="shell">
+          <article className="section-card">
+            <span className="eyebrow">Local quote paths</span>
+            <h2 style={{ marginTop: 18 }}>Sydney pages Google is already testing</h2>
+            <p>
+              These local quote pages connect suburb intent back to product choice, quote clarity, floorplan area and quote review.
+            </p>
+            <div className="link-grid" style={{ marginTop: 22 }}>
+              {localSearchCluster.map((guide) => (
                 <Link className="link-card" href={guide.href} key={guide.href}>
                   <strong>{guide.title}</strong>
                   <span>{guide.body}</span>

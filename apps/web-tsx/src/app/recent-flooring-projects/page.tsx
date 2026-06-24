@@ -179,6 +179,20 @@ export default function RecentFlooringProjectsPage() {
           <div className="project-section-head"><div><span className="eyebrow">What these projects show</span><h2 id="projectProofPointsTitle">Finish quality, not just product choice</h2></div><p>These examples show the visible result and the practical details that make a floor feel considered once it is installed.</p></div>
           <div className="project-proof-points" aria-label="Project proof highlights">{proofPoints.map(([title, copy]) => <article className="project-proof-point" key={title}><strong>{title}</strong><span>{copy}</span></article>)}</div>
           <div className="project-mid-cta"><div><h2>Use project proof before comparing quotes</h2><p>Photos help clarify finish expectations, but the written quote still needs product, area, preparation, stairs and trims clearly listed.</p></div><div className="project-cta-actions"><a className="button button-secondary" href={routes.products} data-track-cta="projects_products_click">Browse product ranges</a><a className="button button-secondary" href={routes.floorplan} data-track-cta="projects_floorplan_click">Measure from floor plan</a></div></div>
+          <div className="link-grid" style={{ marginTop: 22 }}>
+            <a className="link-card" href={routes.hybrid}>
+              <strong>Hybrid flooring Sydney</strong>
+              <span>Use the hybrid guide for practical apartments, family homes and rental upgrades.</span>
+            </a>
+            <a className="link-card" href={routes.engineered}>
+              <strong>Engineered timber flooring Sydney</strong>
+              <span>Use the timber guide for premium finishes, stairs and feature patterns.</span>
+            </a>
+            <a className="link-card" href={routes.flooringQuoteSydney}>
+              <strong>Flooring quote Sydney guide</strong>
+              <span>Check the written scope before comparing project-style quotes.</span>
+            </a>
+          </div>
         </div>
       </section>
 
