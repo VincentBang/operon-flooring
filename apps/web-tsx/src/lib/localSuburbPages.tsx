@@ -273,11 +273,12 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     suburb: "Bankstown",
     route: routes.bankstown,
     eyebrow: "Bankstown flooring quotes",
-    title: "Flooring Bankstown | Hybrid, Laminate & Timber Quote Help",
+    h1: "Flooring Bankstown - Hybrid, Laminate & Timber Quote Help",
+    title: "Flooring Bankstown | Hybrid, Laminate & Timber Quotes",
     description:
-      "Plan a Bankstown flooring quote with product, area, removal, stairs, trims and floorplan details clear before comparing hybrid, laminate or engineered timber options.",
+      "Plan flooring in Bankstown with hybrid, laminate or timber quote guidance covering area, removal, disposal, stairs, trims and floor preparation.",
     hero:
-      "Bankstown flooring projects often need practical decisions: family homes, unit refreshes, rental-ready upgrades and replacement jobs where removal and disposal can change the final scope. A useful quote should make the product direction, measured area and main inclusions clear before you compare totals.",
+      "Bankstown flooring projects often need practical decisions: family homes, unit refreshes, rental-ready upgrades and replacement jobs where removal and disposal can change the final scope. A useful flooring Bankstown quote should make the product direction, measured area and main inclusions clear before you compare totals.",
     localAngle:
       "For Bankstown, the first quote risk is usually scope clarity rather than product choice alone. Older floors, mixed property types and rental timelines can make removal, disposal, trims and floor preparation just as important as the flooring category.",
     propertyContext: [
@@ -314,7 +315,9 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     quoteConsiderations: [
       {
         title: "Removal and disposal",
-        copy: "Carpet, floating floors, glue-down timber, vinyl or tile should not be bundled vaguely under installation."
+        copy: "Carpet, floating floors, glue-down timber, vinyl or tile should not be bundled vaguely under installation.",
+        href: "/blog/common-flooring-quote-exclusions.html",
+        track: "bankstown_exclusions_click"
       },
       {
         title: "Apartment access",
@@ -326,7 +329,9 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
       },
       {
         title: "Floor preparation",
-        copy: "Older or uneven floors may need patching, levelling, grinding or moisture checks before final confirmation."
+        copy: "Older or uneven floors may need patching, levelling, grinding or moisture checks before final confirmation.",
+        href: "/flooring-installation-cost-sydney.html",
+        track: "bankstown_installation_cost_click"
       }
     ],
     projectProof:
@@ -472,9 +477,10 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     suburb: "Parramatta",
     route: routes.parramatta,
     eyebrow: "Parramatta flooring quotes",
-    title: "Flooring Parramatta | Hybrid, Laminate & Timber Quote Help",
+    h1: "Flooring Parramatta - Hybrid, Laminate & Apartment Quote Help",
+    title: "Flooring Parramatta | Hybrid, Laminate & Apartment Quotes",
     description:
-      "Compare or start a Parramatta flooring quote for hybrid, laminate or engineered timber with area, apartment access, acoustic underlay, removal and finishing details clear.",
+      "Compare flooring in Parramatta for hybrid, laminate and engineered timber with apartment access, acoustic underlay, area, removal and finishing scope clear.",
     hero:
       "Parramatta flooring decisions often involve apartments, investor properties and busy renovation timelines. A useful flooring Parramatta quote should show whether the project is leaning toward hybrid flooring, laminate flooring or engineered timber, then connect that product choice to measured area, access, acoustic underlay, removal and finishing details before totals are compared.",
     localAngle:
@@ -519,7 +525,9 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
       },
       {
         title: "Lift and parking access",
-        copy: "Access limits can affect timing and should be captured before booking."
+        copy: "Access limits can affect timing and should be captured before booking.",
+        href: "/flooring-installation-cost-sydney.html",
+        track: "parramatta_installation_cost_click"
       },
       {
         title: "Area basis",
@@ -574,11 +582,12 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     suburb: "Auburn",
     route: routes.auburn,
     eyebrow: "Auburn flooring quotes",
-    title: "Flooring Auburn | Quote Help for Hybrid, Laminate & Timber",
+    h1: "Flooring Auburn - Hybrid, Laminate & Timber Quote Help",
+    title: "Flooring Auburn | Hybrid, Laminate & Timber Quote Help",
     description:
-      "Start or review an Auburn flooring quote with product, area, removal, floor preparation, access, trims and finishing details clearer before comparing totals.",
+      "Start or review flooring in Auburn with hybrid, laminate and timber quote guidance for units, rentals, removal, preparation, access and trims.",
     hero:
-      "Auburn flooring projects often combine practical product choices with access, removal and preparation questions. A stronger quote explains the product category, measured area, old floor removal, disposal, trims and final confirmation items before a customer compares the total.",
+      "Auburn flooring projects often combine practical product choices with access, removal and preparation questions. A stronger flooring Auburn quote explains the product category, measured area, old floor removal, disposal, trims and final confirmation items before a customer compares the total.",
     localAngle:
       "For Auburn, the quote should work for mixed property types: units, older homes, rental refreshes and busy family spaces. The product direction matters, but hidden preparation or removal assumptions can matter just as much.",
     propertyContext: [
@@ -615,7 +624,9 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     quoteConsiderations: [
       {
         title: "Old floor removal",
-        copy: "The quote should name the existing floor type where possible, especially tile, vinyl or glue-down timber."
+        copy: "The quote should name the existing floor type where possible, especially tile, vinyl or glue-down timber.",
+        href: "/blog/common-flooring-quote-exclusions.html",
+        track: "auburn_exclusions_click"
       },
       {
         title: "Disposal",
@@ -623,7 +634,9 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
       },
       {
         title: "Preparation after removal",
-        copy: "Uneven areas, adhesive residue or old subfloor issues may need review before final confirmation."
+        copy: "Uneven areas, adhesive residue or old subfloor issues may need review before final confirmation.",
+        href: "/flooring-installation-cost-sydney.html",
+        track: "auburn_installation_cost_click"
       },
       {
         title: "Apartment or unit access",
@@ -773,9 +786,10 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
     suburb: "Leppington",
     route: routes.leppington,
     eyebrow: "Leppington flooring quotes",
-    title: "Timber Flooring Leppington | Hybrid, Laminate & Quote Help",
+    h1: "Timber Flooring Leppington - Hybrid, Laminate & New Home Quote Help",
+    title: "Timber Flooring Leppington | Hybrid, Laminate & Stairs",
     description:
-      "Plan a Leppington timber flooring quote for newer homes, open-plan areas, stairs, trims, removal and floorplan measurement with hybrid, laminate or engineered timber options.",
+      "Plan timber flooring in Leppington for newer homes with hybrid, laminate or engineered timber scope, open-plan areas, stairs, trims and floorplan measurement.",
     hero:
       "Leppington timber flooring projects often involve newer homes, open-plan family areas and practical low-maintenance choices. A useful timber flooring Leppington quote should capture whether hybrid, laminate or engineered timber is the right direction, plus measured area, stairs, trims, removal and finishing details before final confirmation.",
     localAngle:
@@ -820,7 +834,9 @@ export const localSuburbPages: Record<string, LocalSuburbPage> = {
       },
       {
         title: "Stairs and upper levels",
-        copy: "Stair counts, landings and nosing need clearer wording than a general installation line."
+        copy: "Stair counts, landings and nosing need clearer wording than a general installation line.",
+        href: "/blog/flooring-stairs-and-stair-nosing.html",
+        track: "leppington_stairs_guide_click"
       },
       {
         title: "Skirting or scotia",
