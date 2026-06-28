@@ -3,6 +3,7 @@
 
 const corpus = require("../fixtures/floorplanBenchmarkCorpus");
 const Baseline = require("../fixtures/floorplanQuickRoomBaselineCandidates");
+const ManualSeed = require("../fixtures/floorplanManualSeedBaselineCandidates");
 const Harness = require("../lib/floorplanBenchmarkHarness");
 const ReportWriter = require("../lib/floorplanBenchmarkReportWriter");
 
@@ -20,11 +21,19 @@ const quickRoomItems = corpus.filter(function (item) {
 const quickRoomResults = quickRoomItems.map(function (item) {
   return Harness.scoreCandidatePayload(item, Baseline.quickRoomCandidatePayloadForItem(item));
 });
+const manualSeedResults = corpus.map(function (item) {
+  return Harness.scoreCandidatePayload(item, ManualSeed.manualSeedCandidatePayloadForItem(item));
+});
 const fullReport = Object.assign({}, report, {
   quick_room_baseline: {
     item_count: quickRoomResults.length,
     passed_contract_count: quickRoomResults.filter(function (result) { return result.passed_contract; }).length,
     results: quickRoomResults
+  },
+  manual_seed_baseline: {
+    item_count: manualSeedResults.length,
+    passed_contract_count: manualSeedResults.filter(function (result) { return result.passed_contract; }).length,
+    results: manualSeedResults
   }
 });
 const jsonMode = process.argv.includes("--json");
@@ -57,6 +66,7 @@ console.log("Warnings: " + report.warning_count);
 console.log("Average customer trace error: " + (report.average_customer_area_error_percent === null ? "n/a" : report.average_customer_area_error_percent + "%"));
 console.log("Ready for Phase 3 detection spike: " + (report.ready_for_phase3_detection_spike ? "yes" : "no"));
 console.log("Quick-room baseline adapter cases: " + quickRoomResults.length + "/" + quickRoomResults.filter(function (result) { return result.passed_contract; }).length + " contract pass");
+console.log("Manual-seed baseline adapter cases: " + manualSeedResults.length + "/" + manualSeedResults.filter(function (result) { return result.passed_contract; }).length + " contract pass");
 console.log("");
 
 report.results.forEach(function (result) {
@@ -79,6 +89,19 @@ console.log("");
 console.log("Quick-room baseline candidates");
 console.log("------------------------------");
 quickRoomResults.forEach(function (result) {
+  console.log(
+    (result.passed_contract ? "PASS" : "FAIL") + " " + result.id
+    + " candidateMeasured=" + result.candidate_measured_area_m2 + "m2"
+    + " reviewed=" + result.reviewed_area_m2 + "m2"
+    + " selected=" + result.candidate_selected_area_m2 + "m2"
+    + " reviewRequired=" + result.review_required
+  );
+});
+
+console.log("");
+console.log("Manual-seed baseline candidates");
+console.log("-------------------------------");
+manualSeedResults.forEach(function (result) {
   console.log(
     (result.passed_contract ? "PASS" : "FAIL") + " " + result.id
     + " candidateMeasured=" + result.candidate_measured_area_m2 + "m2"

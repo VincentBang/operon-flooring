@@ -34,15 +34,19 @@ Excluded:
 
 - `internal-qa/fixtures/floorplanBenchmarkCorpus.js`
 - `internal-qa/fixtures/floorplanQuickRoomBaselineCandidates.js`
+- `internal-qa/fixtures/floorplanManualSeedBaselineCandidates.js`
 - `internal-qa/lib/floorplanBenchmarkHarness.js`
 - `internal-qa/lib/floorplanBenchmarkReportComparator.js`
 - `internal-qa/lib/floorplanBenchmarkReportWriter.js`
 - `internal-qa/scripts/compareFloorplanBenchmarkReports.js`
+- `internal-qa/scripts/runFloorplanManualSeedExperiment.js`
 - `internal-qa/scripts/runFloorplanBenchmark.js`
 - `internal-qa/tests/web/floorplanBenchmarkCorpusContract.test.js`
 - `internal-qa/tests/web/floorplanBenchmarkComparatorContract.test.js`
 - `internal-qa/tests/web/floorplanCandidateAdapterContract.test.js`
 - `internal-qa/tests/web/floorplanQuickRoomBaselineCandidateContract.test.js`
+- `internal-qa/tests/web/floorplanManualSeedBaselineCandidateContract.test.js`
+- `internal-qa/tests/web/floorplanManualSeedExperimentCliContract.test.js`
 - `internal-qa/tests/web/floorplanBenchmarkReportWriterContract.test.js`
 
 ## Benchmark Coverage
@@ -108,6 +112,52 @@ This provides a stable comparison point for Phase 3 without changing production:
 
 The current baseline fixture is not an accuracy claim. It is a contract that makes future detector experiments comparable and safe.
 
+## Manual-Seed Baseline Fixture
+
+The manual-seed baseline fixture simulates the recommended human-assisted Phase 3 path: an operator supplies a seed point inside each reviewed section and the system proposes a candidate outline.
+
+This fixture is intentionally conservative:
+
+- it uses synthetic reviewed geometry only
+- it records normalized seed points
+- it downshifts all candidate confidence to `low` or `medium`
+- every candidate enters review as `not_sure`
+- selected quote area remains `0`
+- candidates are never final, approved or customer-visible
+
+The manual-seed baseline gives future Phase 3 experiments a second comparison target beside quick-room detection. It does not approve assisted detection for public use.
+
+## Manual-Seed Experiment Runner
+
+The local runner lets a future Phase 3 experiment test operator seed points against the synthetic benchmark corpus:
+
+```bash
+node internal-qa/scripts/runFloorplanManualSeedExperiment.js \
+  --fixture=synthetic-two-room-apartment \
+  --seed=0.2,0.2 \
+  --seed=0.6,0.2 \
+  --json
+```
+
+Optional local artifacts:
+
+```bash
+node internal-qa/scripts/runFloorplanManualSeedExperiment.js \
+  --fixture=synthetic-rectangle-clean \
+  --seed=0.2,0.2 \
+  --write-artifacts
+```
+
+The runner:
+
+- reads synthetic benchmark fixtures only
+- rejects seed points outside reviewed sections
+- writes no Supabase rows
+- reads no real uploads
+- creates no customer handoff
+- keeps selected quote area at `0`
+- reports whether it is safe to continue the local experiment
+
 ## Local Artifact Reports
 
 Benchmark reports can be written locally for reviewer comparison and future Phase 3 experiments:
@@ -150,6 +200,7 @@ The comparator reports:
 
 - corpus failure delta
 - quick-room contract pass delta
+- manual-seed contract output is retained in artifacts for reviewer comparison
 - average candidate area error
 - per-fixture area error deltas
 - regression count
@@ -180,6 +231,8 @@ npm run benchmark:floorplan
 node internal-qa/tests/web/floorplanBenchmarkCorpusContract.test.js
 node internal-qa/tests/web/floorplanCandidateAdapterContract.test.js
 node internal-qa/tests/web/floorplanQuickRoomBaselineCandidateContract.test.js
+node internal-qa/tests/web/floorplanManualSeedBaselineCandidateContract.test.js
+node internal-qa/tests/web/floorplanManualSeedExperimentCliContract.test.js
 node internal-qa/tests/web/floorplanBenchmarkReportWriterContract.test.js
 node internal-qa/tests/web/floorplanBenchmarkCliContract.test.js
 ```
@@ -194,6 +247,8 @@ node internal-qa/tests/web/floorplanBenchmarkCorpusContract.test.js
 node internal-qa/tests/web/floorplanBenchmarkComparatorContract.test.js
 node internal-qa/tests/web/floorplanCandidateAdapterContract.test.js
 node internal-qa/tests/web/floorplanQuickRoomBaselineCandidateContract.test.js
+node internal-qa/tests/web/floorplanManualSeedBaselineCandidateContract.test.js
+node internal-qa/tests/web/floorplanManualSeedExperimentCliContract.test.js
 node internal-qa/tests/web/floorplanBenchmarkReportWriterContract.test.js
 node internal-qa/tests/web/floorplanBenchmarkCliContract.test.js
 ```

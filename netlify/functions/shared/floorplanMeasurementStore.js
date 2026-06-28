@@ -356,31 +356,41 @@ async function approveVersion(sessionId, versionId, actorLabel) {
     throw new Error("Floorplan measurement version not found.");
   }
   const sourceSections = await getSections(versionId);
-  const payload = {
+  const recalculated = Geometry.validateMeasurementPayload({
+    source: "internal_floorplan_review",
     version_source: "reviewer",
     page_width: sourceVersion.page_width,
     page_height: sourceVersion.page_height,
     pixels_per_metre: sourceVersion.pixels_per_metre,
-    selected_area_m2: sourceVersion.selected_area_m2,
-    measured_area_m2: sourceVersion.measured_area_m2,
-    adjusted_area_m2: sourceVersion.adjusted_area_m2,
     confidence_level: sourceVersion.confidence_level,
-    review_required: false,
     sections: sourceSections.map(function (section) {
       return {
         client_section_id: section.client_section_id,
         label: section.label,
         section_type: section.section_type,
         selection_state: section.selection_state,
-        confidence_level: section.confidence_level,
-        geometry_json: section.geometry_json,
-        area_m2: section.area_m2,
+        confidence: section.confidence_level,
+        points: section.geometry_json && section.geometry_json.points,
+        coordinate_space: section.geometry_json && section.geometry_json.coordinate_space || "normalized_page",
         reviewer_notes: section.reviewer_notes,
         metadata: section.metadata || {}
       };
-    }),
+    })
+  });
+  const payload = {
+    version_source: "reviewer",
+    page_width: sourceVersion.page_width,
+    page_height: sourceVersion.page_height,
+    pixels_per_metre: sourceVersion.pixels_per_metre,
+    selected_area_m2: recalculated.selected_area_m2,
+    measured_area_m2: recalculated.measured_area_m2,
+    adjusted_area_m2: recalculated.adjusted_area_m2,
+    confidence_level: recalculated.confidence_level,
+    review_required: false,
+    sections: recalculated.sections,
     metadata: Object.assign({}, sourceVersion.metadata || {}, {
-      approved_from_version_id: versionId
+      approved_from_version_id: versionId,
+      server_recalculated_on_approval: true
     })
   };
   const nextVersion = await getLatestVersionNumber(sessionId) + 1;
@@ -455,10 +465,13 @@ async function getUploadedFile(fileId) {
   const rows = await supabaseRequest(TABLES.uploadedFiles, {
     query: {
       id: "eq." + fileId,
-      select: "id,safe_filename,file_type,file_size_bytes,storage_bucket,file_path"
+      select: "id,file_name,file_type,file_size_bytes,storage_bucket,file_path"
     }
   });
-  return getFirstRow(rows);
+  const row = getFirstRow(rows);
+  return row ? Object.assign({}, row, {
+    safe_filename: row.file_name || "Uploaded floorplan"
+  }) : null;
 }
 
 module.exports = {

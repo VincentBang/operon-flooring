@@ -31,6 +31,7 @@ function assertNoSensitiveText(value, label) {
   assert.equal(result.status, 0, result.stderr || result.stdout);
   assert.ok(result.stdout.includes("\"benchmark_version\": \"floorplan-phase-2.5-v1\""), "CLI JSON should include benchmark version.");
   assert.ok(result.stdout.includes("\"quick_room_baseline\""), "CLI JSON should include quick-room baseline summary.");
+  assert.ok(result.stdout.includes("\"manual_seed_baseline\""), "CLI JSON should include manual-seed baseline summary.");
   assertNoSensitiveText(result.stdout, "CLI stdout");
 
   const files = fs.readdirSync(outputDir).sort();
@@ -46,8 +47,10 @@ function assertNoSensitiveText(value, label) {
   assert.equal(json.artifact_metadata.method, "quick-room-baseline-contract");
   assert.equal(json.failed_count, 0);
   assert.equal(json.quick_room_baseline.passed_contract_count, json.quick_room_baseline.item_count);
+  assert.equal(json.manual_seed_baseline.passed_contract_count, json.manual_seed_baseline.item_count);
   assert.ok(markdown.includes("Local only: yes"));
   assert.ok(markdown.includes("Candidate measurements are not final and are not customer-visible."));
+  assert.ok(markdown.includes("Manual-Seed Baseline Candidates"));
   assertNoSensitiveText(JSON.stringify(json), "JSON artifact");
   assertNoSensitiveText(markdown, "Markdown artifact");
 })();

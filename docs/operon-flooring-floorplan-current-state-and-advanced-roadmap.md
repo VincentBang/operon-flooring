@@ -6,13 +6,25 @@ Scope: Operon Flooring only. This is a documentation audit and roadmap. It does 
 
 ## Verdict
 
-Phase 1 is partially complete and customer-useful, but not yet operationally complete.
+Phase 1 is customer-useful and Phase 2 now has a local internal-review foundation, but the advanced floorplan operating system is not yet production-complete.
 
 The current `/floorplan.html` tool is beyond a proof-only mockup. It gives customers a practical browser-side measurement path: upload a plan, set scale, trace rooms, review selected rooms, and send measured real area into the quote form. It also includes early quick-room detection and confidence labels.
 
-It is not yet a complete Quote OS measurement system because measurements are not persisted as internal review records, there is no measurement version history, no protected reviewer console, no server-side geometry verification, and no operator workflow to approve or correct customer-submitted floorplan measurements.
+It is not yet a complete Quote OS measurement system because the protected reviewer workflow still needs live Supabase verification, admin visual QA and production rollout approval before Operon should rely on reviewed measurements operationally.
 
-Recommended next implementation task: Task 2.1 - Internal Measurement Review Console plus measurement versioning.
+Current local implementation now includes:
+
+- additive Phase 2 measurement tables and RLS verification SQL
+- public-safe measurement session save function
+- admin-only floorplan measurement queue/detail functions
+- admin-only private document streaming
+- reviewer draft creation
+- approval with server-side geometry recalculation
+- explicit approved-measurement quote linkage
+- protected internal console shell
+- lifecycle, schema, RLS and response-safety contracts
+
+Recommended next implementation task: run authenticated local/admin QA for the internal floorplan console against a real or staging Supabase project, then prepare a draft preview only after approval.
 
 ## Evidence Reviewed
 
@@ -312,7 +324,7 @@ Still missing from Phase 1 if the definition includes operational readiness:
 
 ### Phase 2 - Internal Measurement Review Console
 
-Build before advanced detection.
+Status: locally implemented / pending live admin QA and rollout approval.
 
 Goal:
 
@@ -320,6 +332,19 @@ Goal:
 - store each measurement session as private operational data
 - create versioned reviewed measurements
 - send approved area into quote workflow safely
+
+Local implementation files include:
+
+- `supabase/migrations/20260623_floorplan_measurement_phase2.sql`
+- `supabase/migrations/drafts/floorplan_measurement_phase2_rls_verification.sql`
+- `netlify/functions/save-floorplan-measurement-session.js`
+- `netlify/functions/list-internal-floorplan-measurements.js`
+- `netlify/functions/get-internal-floorplan-measurement.js`
+- `netlify/functions/stream-internal-floorplan-document.js`
+- `netlify/functions/save-floorplan-review-draft.js`
+- `netlify/functions/approve-floorplan-measurement.js`
+- `netlify/functions/link-approved-floorplan-measurement.js`
+- `apps/web-tsx/src/app/internal/floorplan-measurements/FloorplanMeasurementsConsole.tsx`
 
 Details are in `docs/operon-flooring-floorplan-phase-2-internal-review-console-plan.md`.
 
@@ -337,16 +362,19 @@ Details are in `docs/operon-flooring-floorplan-phase-3-detection-spike-plan.md`.
 
 ## Recommended Next Implementation Task
 
-Task 2.1 - Internal Measurement Review Console + measurement versioning.
+Task 2.2 - authenticated admin QA and rollout readiness for the internal floorplan review console.
 
 Deliverables should be:
 
-1. Additive schema draft for measurement sessions/pages/sections/versions.
-2. Admin-only read endpoint for floorplan measurement queue.
-3. Admin-only signed plan view endpoint.
-4. Read-only console first.
-5. Version creation second.
-6. Server-side geometry recalculation before approval.
-7. Tests for access denial, safe payloads, and quote handoff compatibility.
+1. Run the Phase 2 RLS verification SQL against the target Supabase project.
+2. Confirm the Phase 2 migration is applied or apply it through the approved migration workflow.
+3. Create or use one safe test floorplan upload.
+4. Save a measurement session.
+5. Open the admin queue/detail.
+6. Stream the private document through the admin-only endpoint.
+7. Save a reviewer draft.
+8. Approve a reviewed version.
+9. Link the approved measurement to a quote context.
+10. Confirm no bucket/path/pricing data appears in browser responses.
 
-Do not start semi-automatic detection until the review console and versioning layer exists.
+Do not start customer-visible semi-automatic detection until the review console and versioning layer have passed live admin QA.

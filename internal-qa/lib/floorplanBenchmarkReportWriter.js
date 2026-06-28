@@ -40,6 +40,7 @@ function formatPercent(value) {
 
 function renderMarkdown(report, metadata) {
   const quickRoom = report.quick_room_baseline || { item_count: 0, passed_contract_count: 0, results: [] };
+  const manualSeed = report.manual_seed_baseline || { item_count: 0, passed_contract_count: 0, results: [] };
   const lines = [];
   lines.push("# Operon Floorplan Benchmark Report");
   lines.push("");
@@ -61,6 +62,8 @@ function renderMarkdown(report, metadata) {
   lines.push("| Ready for Phase 3 detection spike | " + (report.ready_for_phase3_detection_spike ? "yes" : "no") + " |");
   lines.push("| Quick-room baseline cases | " + quickRoom.item_count + " |");
   lines.push("| Quick-room contract pass | " + quickRoom.passed_contract_count + " |");
+  lines.push("| Manual-seed baseline cases | " + manualSeed.item_count + " |");
+  lines.push("| Manual-seed contract pass | " + manualSeed.passed_contract_count + " |");
   lines.push("");
   lines.push("## Reviewed Fixture Results");
   lines.push("");
@@ -81,6 +84,21 @@ function renderMarkdown(report, metadata) {
   lines.push("| Status | Fixture | Candidate measured m2 | Reviewed m2 | Area error | Selected m2 | Review required |");
   lines.push("| --- | --- | ---: | ---: | ---: | ---: | --- |");
   quickRoom.results.forEach(function (result) {
+    lines.push("| " + (result.passed_contract ? "PASS" : "FAIL")
+      + " | `" + result.id + "`"
+      + " | " + result.candidate_measured_area_m2
+      + " | " + result.reviewed_area_m2
+      + " | " + formatPercent(result.area_error_percent)
+      + " | " + result.candidate_selected_area_m2
+      + " | " + (result.review_required ? "yes" : "no")
+      + " |");
+  });
+  lines.push("");
+  lines.push("## Manual-Seed Baseline Candidates");
+  lines.push("");
+  lines.push("| Status | Fixture | Candidate measured m2 | Reviewed m2 | Area error | Selected m2 | Review required |");
+  lines.push("| --- | --- | ---: | ---: | ---: | ---: | --- |");
+  manualSeed.results.forEach(function (result) {
     lines.push("| " + (result.passed_contract ? "PASS" : "FAIL")
       + " | `" + result.id + "`"
       + " | " + result.candidate_measured_area_m2

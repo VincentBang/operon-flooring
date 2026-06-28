@@ -154,6 +154,14 @@ Advantages:
 
 This is the recommended first serious spike path.
 
+Current local QA support:
+
+- `internal-qa/fixtures/floorplanManualSeedBaselineCandidates.js`
+- `internal-qa/tests/web/floorplanManualSeedBaselineCandidateContract.test.js`
+- benchmark artifacts include a `manual_seed_baseline` section
+
+This baseline is not a detector. It is a safe candidate-method contract for the future human-assisted spike: seed-point input, proposed outline, reviewer inspection, and no selected quote area until approval.
+
 ### Method D - External AI / OCR / Vision
 
 Only consider later.
@@ -278,3 +286,29 @@ Run a local-only benchmark using current `floorplanQuickRoom.js` against 10 to 2
 - whether improved classical vision is worth building
 
 Do not deploy this spike to production until the internal review console exists.
+
+## Recommended Next Spike Step
+
+Add a local-only `manual-seed` experiment runner that accepts a benchmark fixture id plus seed points, outputs review-only candidates through the existing adapter, and compares them against the `manual_seed_baseline` artifact.
+
+The runner should:
+
+- never read real uploads by default
+- never write Supabase rows
+- never mark candidates approved
+- never produce customer handoff payloads
+- write local benchmark artifacts only when explicitly requested
+
+Status: implemented locally as `internal-qa/scripts/runFloorplanManualSeedExperiment.js`.
+
+Example:
+
+```bash
+node internal-qa/scripts/runFloorplanManualSeedExperiment.js \
+  --fixture=synthetic-two-room-apartment \
+  --seed=0.2,0.2 \
+  --seed=0.6,0.2 \
+  --json
+```
+
+The next detection step can now focus on producing better candidate polygons from seed points, while this runner enforces the review-only safety contract.

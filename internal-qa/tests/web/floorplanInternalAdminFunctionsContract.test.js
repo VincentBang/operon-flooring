@@ -97,15 +97,30 @@ function responseRowFor(url, options) {
       }];
     }
     if (textUrl.includes("select=version_number")) return [{ version_number: 1 }];
+    if (textUrl.includes(APPROVED_VERSION_ID)) {
+      return [{
+        id: APPROVED_VERSION_ID,
+        measurement_session_id: SESSION_ID,
+        page_width: 100,
+        page_height: 100,
+        pixels_per_metre: 10,
+        selected_area_m2: 25,
+        measured_area_m2: 25,
+        adjusted_area_m2: 25,
+        confidence_level: "high",
+        review_required: false,
+        metadata: {}
+      }];
+    }
     return [{
       id: REVIEW_VERSION_ID,
       measurement_session_id: SESSION_ID,
       page_width: 100,
       page_height: 100,
       pixels_per_metre: 10,
-      selected_area_m2: 25,
-      measured_area_m2: 25,
-      adjusted_area_m2: 25,
+      selected_area_m2: 99,
+      measured_area_m2: 99,
+      adjusted_area_m2: 99,
       confidence_level: "high",
       review_required: true,
       metadata: {}
@@ -151,7 +166,7 @@ function responseRowFor(url, options) {
   if (textUrl.includes("operon_uploaded_files")) {
     return [{
       id: UPLOAD_ID,
-      safe_filename: "floorplan.pdf",
+      file_name: "floorplan.pdf",
       file_type: "application/pdf",
       file_size_bytes: 128,
       storage_bucket: "quote-files",
@@ -242,7 +257,7 @@ async function testApproveSafeResponse() {
     assert.equal(body.ok, true);
     assert.equal(body.status, "approved");
     assert.equal(body.approved_version_id, APPROVED_VERSION_ID);
-    assert.equal(body.approved_area_m2, 25);
+    assert.equal(body.approved_area_m2, 25, "Approval must recalculate area from geometry instead of copying stale stored totals.");
   });
 }
 
