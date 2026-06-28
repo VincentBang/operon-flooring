@@ -108,4 +108,23 @@ function assertNoSensitiveText(value, label) {
   assertNoSensitiveText(markdown, "manual seed markdown artifact");
 })();
 
+(function testManualSeedExperimentWriteArtifactsUsesDefaultOutputDir() {
+  const result = run([
+    "--fixture=synthetic-rectangle-clean",
+    "--seed=0.2,0.2",
+    "--write-artifacts",
+    "--json"
+  ]);
+
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.ok(result.stderr.includes("internal-qa/reports/floorplan-manual-seed-experiments"), "default artifact path should be reported.");
+  assertNoSensitiveText(result.stderr, "default artifact stderr");
+  result.stderr.split(/\r?\n/).forEach(function (line) {
+    const match = line.match(/- (?:JSON|Markdown): (.+)$/);
+    if (match && fs.existsSync(match[1])) {
+      fs.unlinkSync(match[1]);
+    }
+  });
+})();
+
 console.log("floorplanManualSeedExperimentCliContract.test.js passed");

@@ -195,9 +195,8 @@ try {
   const seeds = seedArgs.map(parseSeed);
   const report = makeExperimentReport(item, seeds);
   if (writeArtifacts) {
-    const artifact = writeExperimentArtifacts(report, {
-      outputDir: outputDir || undefined
-    });
+    const artifactOptions = outputDir ? { outputDir: outputDir } : {};
+    const artifact = writeExperimentArtifacts(report, artifactOptions);
     console.error("Wrote manual-seed experiment artifacts:");
     console.error("- JSON: " + artifact.json_path);
     console.error("- Markdown: " + artifact.markdown_path);
