@@ -65,6 +65,8 @@ function makeExperimentReport(item, seeds) {
   const qualitySummary = Object.assign({}, experimentCandidate.quality_summary, {
     baseline_area_error_band: areaErrorBand(baseline.area_error_percent),
     experiment_area_error_band: areaErrorBand(experiment.area_error_percent),
+    baseline_measured_area_error_band: areaErrorBand(baseline.measured_area_error_percent),
+    experiment_measured_area_error_band: areaErrorBand(experiment.measured_area_error_percent),
     area_error_delta_band: areaErrorBand(areaDelta === null ? null : Math.abs(areaDelta))
   });
 
@@ -106,6 +108,7 @@ function renderMarkdown(report) {
     "| Accepted seeds | " + report.candidate_quality_summary.accepted_seed_count + " |",
     "| Rejected seeds | " + report.candidate_quality_summary.rejected_seed_count + " |",
     "| Experiment area error band | " + report.candidate_quality_summary.experiment_area_error_band + " |",
+    "| Experiment measured area error band | " + report.candidate_quality_summary.experiment_measured_area_error_band + " |",
     "| Area delta band | " + report.candidate_quality_summary.area_error_delta_band + " |",
     "",
     "Rejected seed reasons: `" + JSON.stringify(report.candidate_quality_summary.rejected_seed_reasons) + "`",
@@ -130,6 +133,7 @@ function renderMarkdown(report) {
     "| Candidate measured m2 | " + report.baseline.candidate_measured_area_m2 + " | " + report.experiment.candidate_measured_area_m2 + " |",
     "| Reviewed m2 | " + report.baseline.reviewed_area_m2 + " | " + report.experiment.reviewed_area_m2 + " |",
     "| Area error | " + formatPercent(report.baseline.area_error_percent) + " | " + formatPercent(report.experiment.area_error_percent) + " |",
+    "| Measured area error | " + formatPercent(report.baseline.measured_area_error_percent) + " | " + formatPercent(report.experiment.measured_area_error_percent) + " |",
     "| Selected quote area | " + report.baseline.candidate_selected_area_m2 + " | " + report.experiment.candidate_selected_area_m2 + " |",
     "| Review required | " + (report.baseline.review_required ? "yes" : "no") + " | " + (report.experiment.review_required ? "yes" : "no") + " |",
     "| Contract pass | " + (report.baseline.passed_contract ? "yes" : "no") + " | " + (report.experiment.passed_contract ? "yes" : "no") + " |",

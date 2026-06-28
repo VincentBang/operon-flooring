@@ -83,7 +83,14 @@ function sectionForSeed(item, seed) {
   if (!match) {
     throw new Error("Manual seed " + normalized.x + "," + normalized.y + " does not fall inside a reviewed benchmark section.");
   }
+  if (String(match.selection_state || "").toLowerCase() === "exclude") {
+    throw new Error("Manual seed " + normalized.x + "," + normalized.y + " falls inside an excluded reviewed benchmark section.");
+  }
   return match;
+}
+
+function isCandidateEligibleSection(section) {
+  return String(section && section.selection_state || "").toLowerCase() !== "exclude";
 }
 
 function candidateForSection(item, section, seed, index, settings) {
@@ -105,7 +112,8 @@ function manualSeedCandidatePayloadForItem(item, options) {
   const reviewedSections = item && item.reviewed && Array.isArray(item.reviewed.sections)
     ? item.reviewed.sections
     : [];
-  const candidates = reviewedSections.slice(0, settings.maxSections).map(function (section, index) {
+  const candidateSections = reviewedSections.filter(isCandidateEligibleSection).slice(0, settings.maxSections);
+  const candidates = candidateSections.map(function (section, index) {
     return candidateForSection(item, section, seedPointForSection(section), index, settings);
   });
 
@@ -143,6 +151,7 @@ function manualSeedCandidatePayloadForSeeds(item, seeds, options) {
 function reasonForSeedError(error) {
   const message = error && error.message || "";
   if (/does not fall inside/i.test(message)) return "outside_reviewed_section";
+  if (/excluded reviewed benchmark section/i.test(message)) return "excluded_reviewed_section";
   if (/numeric x and y/i.test(message)) return "invalid_coordinates";
   return "unknown_seed_error";
 }
@@ -218,6 +227,7 @@ module.exports = {
     pointInPolygon: pointInPolygon,
     reasonForSeedError: reasonForSeedError,
     seedPointForSection: seedPointForSection,
+    isCandidateEligibleSection: isCandidateEligibleSection,
     sectionForSeed: sectionForSeed,
     shrinkTowardCentroid: shrinkTowardCentroid
   }

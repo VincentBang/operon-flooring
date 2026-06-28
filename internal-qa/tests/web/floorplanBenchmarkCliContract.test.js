@@ -51,6 +51,8 @@ function assertNoSensitiveText(value, label) {
   assert.ok(markdown.includes("Local only: yes"));
   assert.ok(markdown.includes("Candidate measurements are not final and are not customer-visible."));
   assert.ok(markdown.includes("Manual-Seed Baseline Candidates"));
+  assert.ok(markdown.includes("Measured error"));
+  assert.ok(Object.prototype.hasOwnProperty.call(json.manual_seed_baseline.results[0], "measured_area_error_percent"));
   assertNoSensitiveText(JSON.stringify(json), "JSON artifact");
   assertNoSensitiveText(markdown, "Markdown artifact");
 })();

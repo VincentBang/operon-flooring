@@ -93,6 +93,7 @@ quickRoomResults.forEach(function (result) {
     (result.passed_contract ? "PASS" : "FAIL") + " " + result.id
     + " candidateMeasured=" + result.candidate_measured_area_m2 + "m2"
     + " reviewed=" + result.reviewed_area_m2 + "m2"
+    + " measuredError=" + result.measured_area_error_percent + "%"
     + " selected=" + result.candidate_selected_area_m2 + "m2"
     + " reviewRequired=" + result.review_required
   );
@@ -106,6 +107,7 @@ manualSeedResults.forEach(function (result) {
     (result.passed_contract ? "PASS" : "FAIL") + " " + result.id
     + " candidateMeasured=" + result.candidate_measured_area_m2 + "m2"
     + " reviewed=" + result.reviewed_area_m2 + "m2"
+    + " measuredError=" + result.measured_area_error_percent + "%"
     + " selected=" + result.candidate_selected_area_m2 + "m2"
     + " reviewRequired=" + result.review_required
   );

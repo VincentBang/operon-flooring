@@ -139,6 +139,9 @@ function scoreCandidatePayload(item, candidatePayload, options) {
   const areaErrorPercent = reviewed.selected_area_m2 > 0
     ? roundTo(Math.abs(candidate.measured_area_m2 - reviewed.selected_area_m2) / reviewed.selected_area_m2 * 100, 2)
     : null;
+  const measuredAreaErrorPercent = reviewed.measured_area_m2 > 0
+    ? roundTo(Math.abs(candidate.measured_area_m2 - reviewed.measured_area_m2) / reviewed.measured_area_m2 * 100, 2)
+    : null;
   const failures = [];
   if (!candidate.review_required) {
     failures.push("candidate_must_require_review");
@@ -157,7 +160,9 @@ function scoreCandidatePayload(item, candidatePayload, options) {
     candidate_selected_area_m2: candidate.selected_area_m2,
     candidate_section_count: candidate.sections.length,
     area_error_percent: areaErrorPercent,
+    measured_area_error_percent: measuredAreaErrorPercent,
     area_warning: areaErrorPercent !== null && areaErrorPercent > settings.areaWarningThresholdPercent,
+    measured_area_warning: measuredAreaErrorPercent !== null && measuredAreaErrorPercent > settings.areaWarningThresholdPercent,
     review_required: candidate.review_required,
     final: false,
     customer_visible: false,

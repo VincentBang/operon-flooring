@@ -62,7 +62,9 @@ function makeReport() {
   assert.ok(markdown.includes("# Operon Floorplan Benchmark Report"));
   assert.ok(markdown.includes("Quick-Room Baseline Candidates"));
   assert.ok(markdown.includes("Manual-Seed Baseline Candidates"));
+  assert.ok(markdown.includes("Measured error"));
   assert.ok(markdown.includes("Candidate selected area must remain `0` until reviewed."));
+  assert.ok(Object.prototype.hasOwnProperty.call(json.manual_seed_baseline.results[0], "measured_area_error_percent"));
   assert.equal(JSON.stringify(json.results).includes("storage_path"), false);
   assert.equal(JSON.stringify(json.quick_room_baseline.results).includes("storage_path"), false);
   assert.equal(JSON.stringify(json.manual_seed_baseline.results).includes("storage_path"), false);

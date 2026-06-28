@@ -81,14 +81,15 @@ function renderMarkdown(report, metadata) {
   lines.push("");
   lines.push("## Quick-Room Baseline Candidates");
   lines.push("");
-  lines.push("| Status | Fixture | Candidate measured m2 | Reviewed m2 | Area error | Selected m2 | Review required |");
-  lines.push("| --- | --- | ---: | ---: | ---: | ---: | --- |");
+  lines.push("| Status | Fixture | Candidate measured m2 | Reviewed m2 | Area error | Measured error | Selected m2 | Review required |");
+  lines.push("| --- | --- | ---: | ---: | ---: | ---: | ---: | --- |");
   quickRoom.results.forEach(function (result) {
     lines.push("| " + (result.passed_contract ? "PASS" : "FAIL")
       + " | `" + result.id + "`"
       + " | " + result.candidate_measured_area_m2
       + " | " + result.reviewed_area_m2
       + " | " + formatPercent(result.area_error_percent)
+      + " | " + formatPercent(result.measured_area_error_percent)
       + " | " + result.candidate_selected_area_m2
       + " | " + (result.review_required ? "yes" : "no")
       + " |");
@@ -96,14 +97,15 @@ function renderMarkdown(report, metadata) {
   lines.push("");
   lines.push("## Manual-Seed Baseline Candidates");
   lines.push("");
-  lines.push("| Status | Fixture | Candidate measured m2 | Reviewed m2 | Area error | Selected m2 | Review required |");
-  lines.push("| --- | --- | ---: | ---: | ---: | ---: | --- |");
+  lines.push("| Status | Fixture | Candidate measured m2 | Reviewed m2 | Area error | Measured error | Selected m2 | Review required |");
+  lines.push("| --- | --- | ---: | ---: | ---: | ---: | ---: | --- |");
   manualSeed.results.forEach(function (result) {
     lines.push("| " + (result.passed_contract ? "PASS" : "FAIL")
       + " | `" + result.id + "`"
       + " | " + result.candidate_measured_area_m2
       + " | " + result.reviewed_area_m2
       + " | " + formatPercent(result.area_error_percent)
+      + " | " + formatPercent(result.measured_area_error_percent)
       + " | " + result.candidate_selected_area_m2
       + " | " + (result.review_required ? "yes" : "no")
       + " |");

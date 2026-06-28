@@ -12,7 +12,9 @@ const Harness = require("../../lib/floorplanBenchmarkHarness");
     assert.equal(payload.final, false);
     assert.equal(payload.customer_visible, false);
     assert.equal(payload.benchmark_item_id, item.id);
-    assert.equal(payload.candidates.length, item.reviewed.sections.length);
+    assert.equal(payload.candidates.length, item.reviewed.sections.filter(function (section) {
+      return section.selection_state !== "exclude";
+    }).length);
     assert.ok(payload.candidates.every(function (candidate) {
       return candidate.selection_state === "not_sure";
     }), "Manual-seed candidates must enter review as not_sure.");
@@ -32,6 +34,44 @@ const Harness = require("../../lib/floorplanBenchmarkHarness");
   assert.ok(results.every(function (result) {
     return result.candidate_selected_area_m2 === 0;
   }), "Manual-seed candidates must not become selected quote area.");
+})();
+
+(function testManualSeedSkipsExcludedReviewedSections() {
+  const item = corpus.find(function (entry) {
+    return entry.id === "synthetic-wet-area-excluded";
+  });
+  const payload = ManualSeed.manualSeedCandidatePayloadForItem(item);
+  assert.deepEqual(payload.candidates.map(function (candidate) {
+    return candidate.label;
+  }), ["Living candidate", "Bedroom candidate"]);
+  const score = Harness.scoreCandidatePayload(item, payload);
+  assert.equal(score.area_warning, false);
+  assert.equal(score.measured_area_warning, false);
+  assert.ok(score.area_error_percent <= 5, "Excluded wet area should not inflate manual-seed candidate area.");
+  assert.ok(score.measured_area_error_percent <= 5, "Excluded wet area should not inflate measured manual-seed candidate area.");
+})();
+
+(function testManualSeedMeasuredAreaMetricHandlesNotSureSections() {
+  const item = corpus.find(function (entry) {
+    return entry.id === "synthetic-not-sure-balcony";
+  });
+  const score = Harness.scoreCandidatePayload(item, ManualSeed.manualSeedCandidatePayloadForItem(item));
+  assert.equal(score.area_warning, true, "Selected-area comparison should still flag not-sure review area.");
+  assert.equal(score.measured_area_warning, false, "Measured-area comparison should not flag a close not-sure candidate.");
+  assert.ok(score.measured_area_error_percent <= 5);
+})();
+
+(function testManualSeedRejectsSeedsInsideExcludedSections() {
+  const item = corpus.find(function (entry) {
+    return entry.id === "synthetic-wet-area-excluded";
+  });
+  const result = ManualSeed.manualSeedCandidatePayloadForSeedsWithQuality(item, [
+    { x: 0.2, y: 0.2 },
+    { x: 0.2, y: 0.55 }
+  ]);
+  assert.equal(result.quality_summary.accepted_seed_count, 1);
+  assert.equal(result.quality_summary.rejected_seed_count, 1);
+  assert.equal(result.quality_summary.rejected_seed_reasons.excluded_reviewed_section, 1);
 })();
 
 (function testManualSeedRejectsUnsafeCandidateEscalationThroughAdapter() {

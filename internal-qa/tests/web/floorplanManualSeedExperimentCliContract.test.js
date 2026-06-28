@@ -41,7 +41,9 @@ function assertNoSensitiveText(value, label) {
   assert.deepEqual(parsed.candidate_quality_summary.rejected_seed_reasons, {});
   assert.deepEqual(parsed.candidate_quality_summary.candidate_section_labels, ["Living room candidate", "Bedroom candidate"]);
   assert.equal(parsed.candidate_quality_summary.experiment_area_error_band, "low_0_to_5_percent");
+  assert.equal(parsed.candidate_quality_summary.experiment_measured_area_error_band, "low_0_to_5_percent");
   assert.equal(parsed.experiment.candidate_method, "manual_seed_spike");
+  assert.ok(Object.prototype.hasOwnProperty.call(parsed.experiment, "measured_area_error_percent"));
   assert.equal(parsed.experiment.candidate_selected_area_m2, 0);
   assert.equal(parsed.experiment.review_required, true);
   assert.equal(parsed.experiment.final, false);
