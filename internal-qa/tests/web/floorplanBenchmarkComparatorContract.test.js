@@ -21,12 +21,59 @@ function report(id, options) {
         {
           id: "synthetic-rectangle-clean",
           area_error_percent: settings.itemErrors[0],
-          passed_contract: settings.contractPass[0]
+          measured_area_error_percent: settings.itemErrors[0],
+          passed_contract: settings.contractPass[0],
+          review_required: true,
+          candidate_selected_area_m2: 0
         },
         {
           id: "synthetic-long-open-plan",
           area_error_percent: settings.itemErrors[1],
-          passed_contract: settings.contractPass[1]
+          measured_area_error_percent: settings.itemErrors[1],
+          passed_contract: settings.contractPass[1],
+          review_required: true,
+          candidate_selected_area_m2: 0
+        }
+      ]
+    },
+    manual_seed_baseline: {
+      results: [
+        {
+          id: "synthetic-rectangle-clean",
+          area_error_percent: 4,
+          measured_area_error_percent: 4,
+          passed_contract: true,
+          review_required: true,
+          candidate_selected_area_m2: 0
+        },
+        {
+          id: "synthetic-long-open-plan",
+          area_error_percent: 3,
+          measured_area_error_percent: 3,
+          passed_contract: true,
+          review_required: true,
+          candidate_selected_area_m2: 0
+        }
+      ]
+    },
+    classical_contour_spike: {
+      results: [
+        {
+          id: "synthetic-rectangle-clean",
+          area_error_percent: 2,
+          measured_area_error_percent: 2,
+          passed_contract: true,
+          review_required: true,
+          candidate_selected_area_m2: 0
+        },
+        {
+          id: "synthetic-long-open-plan",
+          area_error_percent: 14,
+          measured_area_error_percent: 14,
+          measured_area_warning: true,
+          passed_contract: true,
+          review_required: true,
+          candidate_selected_area_m2: 0
         }
       ]
     }
@@ -53,6 +100,25 @@ function report(id, options) {
   assert.equal(comparison.safe_to_continue_detection_spike, false);
   assert.equal(comparison.regression_count, 2);
   assert.equal(comparison.quick_room_contract_pass_delta, -1);
+})();
+
+(function testMethodRankingChoosesBestSafeMethodPerFixture() {
+  const ranking = Comparator.rankMethodsInReport(report("ranked"));
+  assert.equal(ranking.local_only, true);
+  assert.equal(ranking.customer_visible, false);
+  assert.equal(ranking.safe_to_continue_detection_spike, true);
+  assert.equal(ranking.method_summary.length, 3);
+  assert.equal(ranking.fixture_rankings.length, 2);
+  assert.equal(ranking.fixture_rankings.find(function (fixture) {
+    return fixture.fixture_id === "synthetic-rectangle-clean";
+  }).best_method_key, "classical_contour_spike");
+  assert.equal(ranking.fixture_rankings.find(function (fixture) {
+    return fixture.fixture_id === "synthetic-long-open-plan";
+  }).best_method_key, "manual_seed_baseline");
+  const markdown = Comparator.renderMethodRankingMarkdown(ranking);
+  assert.ok(markdown.includes("# Floorplan Candidate Method Ranking"));
+  assert.ok(markdown.includes("classical contour spike"));
+  assert.ok(markdown.includes("Candidate selected area must remain `0` until reviewed."));
 })();
 
 (function testComparisonRejectsSensitiveReportText() {
