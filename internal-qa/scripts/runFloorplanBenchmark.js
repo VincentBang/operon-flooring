@@ -3,6 +3,7 @@
 
 const corpus = require("../fixtures/floorplanBenchmarkCorpus");
 const Baseline = require("../fixtures/floorplanQuickRoomBaselineCandidates");
+const Classical = require("../fixtures/floorplanClassicalContourCandidates");
 const ManualSeed = require("../fixtures/floorplanManualSeedBaselineCandidates");
 const Harness = require("../lib/floorplanBenchmarkHarness");
 const ReportWriter = require("../lib/floorplanBenchmarkReportWriter");
@@ -24,6 +25,9 @@ const quickRoomResults = quickRoomItems.map(function (item) {
 const manualSeedResults = corpus.map(function (item) {
   return Harness.scoreCandidatePayload(item, ManualSeed.manualSeedCandidatePayloadForItem(item));
 });
+const classicalContourResults = corpus.map(function (item) {
+  return Harness.scoreCandidatePayload(item, Classical.classicalContourCandidatePayloadForItem(item));
+});
 const fullReport = Object.assign({}, report, {
   quick_room_baseline: {
     item_count: quickRoomResults.length,
@@ -34,6 +38,12 @@ const fullReport = Object.assign({}, report, {
     item_count: manualSeedResults.length,
     passed_contract_count: manualSeedResults.filter(function (result) { return result.passed_contract; }).length,
     results: manualSeedResults
+  },
+  classical_contour_spike: {
+    item_count: classicalContourResults.length,
+    passed_contract_count: classicalContourResults.filter(function (result) { return result.passed_contract; }).length,
+    measured_warning_count: classicalContourResults.filter(function (result) { return result.measured_area_warning; }).length,
+    results: classicalContourResults
   }
 });
 const jsonMode = process.argv.includes("--json");
@@ -67,6 +77,7 @@ console.log("Average customer trace error: " + (report.average_customer_area_err
 console.log("Ready for Phase 3 detection spike: " + (report.ready_for_phase3_detection_spike ? "yes" : "no"));
 console.log("Quick-room baseline adapter cases: " + quickRoomResults.length + "/" + quickRoomResults.filter(function (result) { return result.passed_contract; }).length + " contract pass");
 console.log("Manual-seed baseline adapter cases: " + manualSeedResults.length + "/" + manualSeedResults.filter(function (result) { return result.passed_contract; }).length + " contract pass");
+console.log("Classical contour spike adapter cases: " + classicalContourResults.length + "/" + classicalContourResults.filter(function (result) { return result.passed_contract; }).length + " contract pass");
 console.log("");
 
 report.results.forEach(function (result) {
@@ -110,6 +121,22 @@ manualSeedResults.forEach(function (result) {
     + " measuredError=" + result.measured_area_error_percent + "%"
     + " selected=" + result.candidate_selected_area_m2 + "m2"
     + " reviewRequired=" + result.review_required
+  );
+});
+
+console.log("");
+console.log("Classical contour spike candidates");
+console.log("----------------------------------");
+classicalContourResults.forEach(function (result) {
+  const warning = result.measured_area_warning ? " warning=measured-area-drift" : "";
+  console.log(
+    (result.passed_contract ? "PASS" : "FAIL") + " " + result.id
+    + " candidateMeasured=" + result.candidate_measured_area_m2 + "m2"
+    + " reviewed=" + result.reviewed_area_m2 + "m2"
+    + " measuredError=" + result.measured_area_error_percent + "%"
+    + " selected=" + result.candidate_selected_area_m2 + "m2"
+    + " reviewRequired=" + result.review_required
+    + warning
   );
 });
 

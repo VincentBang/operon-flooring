@@ -32,6 +32,7 @@ function assertNoSensitiveText(value, label) {
   assert.ok(result.stdout.includes("\"benchmark_version\": \"floorplan-phase-2.5-v1\""), "CLI JSON should include benchmark version.");
   assert.ok(result.stdout.includes("\"quick_room_baseline\""), "CLI JSON should include quick-room baseline summary.");
   assert.ok(result.stdout.includes("\"manual_seed_baseline\""), "CLI JSON should include manual-seed baseline summary.");
+  assert.ok(result.stdout.includes("\"classical_contour_spike\""), "CLI JSON should include classical contour spike summary.");
   assertNoSensitiveText(result.stdout, "CLI stdout");
 
   const files = fs.readdirSync(outputDir).sort();
@@ -48,9 +49,12 @@ function assertNoSensitiveText(value, label) {
   assert.equal(json.failed_count, 0);
   assert.equal(json.quick_room_baseline.passed_contract_count, json.quick_room_baseline.item_count);
   assert.equal(json.manual_seed_baseline.passed_contract_count, json.manual_seed_baseline.item_count);
+  assert.equal(json.classical_contour_spike.passed_contract_count, json.classical_contour_spike.item_count);
+  assert.ok(Number(json.classical_contour_spike.measured_warning_count) >= 1);
   assert.ok(markdown.includes("Local only: yes"));
   assert.ok(markdown.includes("Candidate measurements are not final and are not customer-visible."));
   assert.ok(markdown.includes("Manual-Seed Baseline Candidates"));
+  assert.ok(markdown.includes("Classical Contour Spike Candidates"));
   assert.ok(markdown.includes("Measured error"));
   assert.ok(Object.prototype.hasOwnProperty.call(json.manual_seed_baseline.results[0], "measured_area_error_percent"));
   assertNoSensitiveText(JSON.stringify(json), "JSON artifact");
