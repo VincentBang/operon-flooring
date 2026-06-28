@@ -42,6 +42,7 @@ function renderMarkdown(report, metadata) {
   const quickRoom = report.quick_room_baseline || { item_count: 0, passed_contract_count: 0, results: [] };
   const manualSeed = report.manual_seed_baseline || { item_count: 0, passed_contract_count: 0, results: [] };
   const classicalContour = report.classical_contour_spike || { item_count: 0, passed_contract_count: 0, measured_warning_count: 0, results: [] };
+  const hybridSelector = report.hybrid_selector_spike || { item_count: 0, passed_contract_count: 0, measured_warning_count: 0, results: [] };
   const lines = [];
   lines.push("# Operon Floorplan Benchmark Report");
   lines.push("");
@@ -68,6 +69,9 @@ function renderMarkdown(report, metadata) {
   lines.push("| Classical contour spike cases | " + classicalContour.item_count + " |");
   lines.push("| Classical contour contract pass | " + classicalContour.passed_contract_count + " |");
   lines.push("| Classical contour measured warnings | " + classicalContour.measured_warning_count + " |");
+  lines.push("| Hybrid selector spike cases | " + hybridSelector.item_count + " |");
+  lines.push("| Hybrid selector contract pass | " + hybridSelector.passed_contract_count + " |");
+  lines.push("| Hybrid selector measured warnings | " + hybridSelector.measured_warning_count + " |");
   lines.push("");
   lines.push("## Reviewed Fixture Results");
   lines.push("");
@@ -120,6 +124,23 @@ function renderMarkdown(report, metadata) {
   lines.push("| Status | Fixture | Candidate measured m2 | Reviewed m2 | Area error | Measured error | Selected m2 | Review required | Warning |");
   lines.push("| --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- |");
   classicalContour.results.forEach(function (result) {
+    lines.push("| " + (result.passed_contract ? "PASS" : "FAIL")
+      + " | `" + result.id + "`"
+      + " | " + result.candidate_measured_area_m2
+      + " | " + result.reviewed_area_m2
+      + " | " + formatPercent(result.area_error_percent)
+      + " | " + formatPercent(result.measured_area_error_percent)
+      + " | " + result.candidate_selected_area_m2
+      + " | " + (result.review_required ? "yes" : "no")
+      + " | " + (result.measured_area_warning ? "measured-area-drift" : "")
+      + " |");
+  });
+  lines.push("");
+  lines.push("## Hybrid Selector Spike Candidates");
+  lines.push("");
+  lines.push("| Status | Fixture | Candidate measured m2 | Reviewed m2 | Area error | Measured error | Selected m2 | Review required | Warning |");
+  lines.push("| --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- |");
+  hybridSelector.results.forEach(function (result) {
     lines.push("| " + (result.passed_contract ? "PASS" : "FAIL")
       + " | `" + result.id + "`"
       + " | " + result.candidate_measured_area_m2

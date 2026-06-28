@@ -47,6 +47,7 @@ function assertNoSensitiveText(value, label) {
   assert.ok(markdown.stdout.includes("quick-room baseline"));
   assert.ok(markdown.stdout.includes("manual-seed baseline"));
   assert.ok(markdown.stdout.includes("classical contour spike"));
+  assert.ok(markdown.stdout.includes("hybrid selector spike"));
   assertNoSensitiveText(markdown.stdout, "ranking markdown");
 
   const json = childProcess.spawnSync(process.execPath, [
@@ -63,6 +64,9 @@ function assertNoSensitiveText(value, label) {
   assert.equal(parsed.customer_visible, false);
   assert.equal(parsed.safe_to_continue_detection_spike, true);
   assert.ok(parsed.method_summary.length >= 3);
+  assert.ok(parsed.method_summary.some(function (method) {
+    return method.method_key === "hybrid_selector_spike";
+  }));
   assert.ok(parsed.fixture_rankings.length >= 10);
   assert.ok(parsed.fixture_rankings.every(function (fixture) {
     return fixture.best_method_key;

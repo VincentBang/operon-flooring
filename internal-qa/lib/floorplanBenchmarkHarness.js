@@ -4,7 +4,7 @@ const Geometry = require("../../netlify/functions/shared/floorplanGeometry");
 
 const SENSITIVE_TEXT_PATTERN = /\b(price|pricing|rate|rates|margin|markup|supplier|cost|secret|token|ocr|transcript|phone|email|address)\b|service[_ -]?role|storage[_ -]?(bucket|path)|file[_ -]?path|signed[_ -]?url|raw[_ -]?text/i;
 const ALLOWED_CONFIDENCE = new Set(["low", "medium", "high"]);
-const ALLOWED_CANDIDATE_METHODS = new Set(["quick_room_baseline", "classical_vision_spike", "manual_seed_spike", "fixture_adapter"]);
+const ALLOWED_CANDIDATE_METHODS = new Set(["quick_room_baseline", "classical_vision_spike", "manual_seed_spike", "hybrid_selector_spike", "fixture_adapter"]);
 
 function roundTo(value, places) {
   const factor = Math.pow(10, places || 2);
