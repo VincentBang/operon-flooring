@@ -25,6 +25,12 @@ function chooseHybridMethodForItem(item) {
     };
   }
   if (hasSectionType(item, ["void"])) {
+    if (title.indexOf("bedroom") >= 0) {
+      return {
+        method_key: "classical_contour_spike",
+        reason: "simple bedroom plans beside a void are better matched by contour boundaries while staying reviewer-only"
+      };
+    }
     return {
       method_key: "quick_room_baseline",
       reason: "void/excluded sections are safer with the existing quick-room boundary baseline"

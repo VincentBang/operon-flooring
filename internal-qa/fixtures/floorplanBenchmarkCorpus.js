@@ -296,6 +296,107 @@ const benchmarkCorpus = [
         ], { confidence: "medium" })
       ]
     }
+  },
+  {
+    id: "synthetic-low-confidence-open-plan",
+    title: "Low-confidence open-plan scan",
+    file_type: "synthetic-json",
+    plan_quality: "low_contrast_scan",
+    scale_availability: "known_wall",
+    expected_confidence: "low",
+    reviewer_notes: "Second low-confidence scan-like fixture for checking fallback behaviour on larger open areas.",
+    expected_reviewed_area_m2: 12.96,
+    expected_section_count: 1,
+    reviewed: {
+      source: "floorplan_benchmark",
+      measurement_mode: "reviewed_trace",
+      confidence_level: "low",
+      page_key: "synthetic-low-confidence-open-plan",
+      ...PAGE,
+      sections: [section("open-plan-scan", "Open plan scan", [
+        { x: 0.12, y: 0.12 },
+        { x: 0.52, y: 0.15 },
+        { x: 0.56, y: 0.44 },
+        { x: 0.16, y: 0.48 }
+      ], { confidence: "low" })]
+    }
+  },
+  {
+    id: "synthetic-mixed-boundary-kitchen",
+    title: "Kitchen threshold marked not sure",
+    file_type: "synthetic-json",
+    plan_quality: "mixed_boundary",
+    scale_availability: "known_wall",
+    expected_confidence: "medium",
+    reviewer_notes: "Additional mixed-boundary case where a threshold area should remain reviewer-led.",
+    expected_reviewed_area_m2: 12,
+    expected_measured_area_m2: 16.4,
+    expected_section_count: 2,
+    reviewed: {
+      source: "floorplan_benchmark",
+      measurement_mode: "reviewed_trace",
+      confidence_level: "medium",
+      page_key: "synthetic-mixed-boundary-kitchen",
+      ...PAGE,
+      sections: [
+        section("living", "Living", [{ x: 0.1, y: 0.1 }, { x: 0.5, y: 0.1 }, { x: 0.5, y: 0.4 }, { x: 0.1, y: 0.4 }], { confidence: "high" }),
+        section("kitchen-threshold", "Kitchen threshold", [{ x: 0.55, y: 0.1 }, { x: 0.75, y: 0.1 }, { x: 0.75, y: 0.32 }, { x: 0.55, y: 0.32 }], { section_type: "kitchen_threshold", selection_state: "not_sure", confidence: "low" })
+      ]
+    }
+  },
+  {
+    id: "synthetic-stair-void-bedroom",
+    title: "Bedroom with stair void excluded",
+    file_type: "synthetic-json",
+    plan_quality: "clean_vector",
+    scale_availability: "known_wall",
+    expected_confidence: "medium",
+    reviewer_notes: "Second void-adjacent fixture to test exclusion handling near simple rooms.",
+    expected_reviewed_area_m2: 19.25,
+    expected_measured_area_m2: 19.25,
+    expected_section_count: 2,
+    reviewed: {
+      source: "floorplan_benchmark",
+      measurement_mode: "reviewed_trace",
+      confidence_level: "medium",
+      page_key: "synthetic-stair-void-bedroom",
+      ...PAGE,
+      sections: [
+        section("bedroom", "Bedroom", [{ x: 0.1, y: 0.1 }, { x: 0.65, y: 0.1 }, { x: 0.65, y: 0.45 }, { x: 0.1, y: 0.45 }], { confidence: "medium" }),
+        section("stair-void", "Stair void", [{ x: 0.7, y: 0.1 }, { x: 0.85, y: 0.1 }, { x: 0.85, y: 0.35 }, { x: 0.7, y: 0.35 }], { section_type: "void", selection_state: "exclude", confidence: "medium" })
+      ]
+    }
+  },
+  {
+    id: "synthetic-multipage-upper-irregular",
+    title: "Multipage PDF upper floor irregular rooms",
+    file_type: "synthetic-pdf-page",
+    page_count: 2,
+    plan_quality: "mixed_boundary",
+    scale_availability: "known_wall",
+    expected_confidence: "medium",
+    reviewer_notes: "Second multipage fixture with irregular geometry and mixed boundary handling.",
+    expected_reviewed_area_m2: 18.48,
+    expected_measured_area_m2: 22.48,
+    expected_section_count: 2,
+    reviewed: {
+      source: "floorplan_benchmark",
+      measurement_mode: "reviewed_trace",
+      confidence_level: "medium",
+      page_key: "synthetic-multipage-upper-irregular",
+      ...PAGE,
+      sections: [
+        section("upper-lounge", "Upper lounge", [
+          { x: 0.12, y: 0.14 },
+          { x: 0.62, y: 0.14 },
+          { x: 0.62, y: 0.38 },
+          { x: 0.48, y: 0.38 },
+          { x: 0.48, y: 0.56 },
+          { x: 0.12, y: 0.56 }
+        ], { confidence: "medium" }),
+        section("landing-threshold", "Landing threshold", [{ x: 0.68, y: 0.14 }, { x: 0.88, y: 0.14 }, { x: 0.88, y: 0.34 }, { x: 0.68, y: 0.34 }], { section_type: "landing_threshold", selection_state: "not_sure", confidence: "low" })
+      ]
+    }
   }
 ];
 

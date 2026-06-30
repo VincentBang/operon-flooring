@@ -38,8 +38,10 @@ const Harness = require("../../lib/floorplanBenchmarkHarness");
   assert.equal(Hybrid.chooseHybridMethodForItem(byId["synthetic-two-room-apartment"]).method_key, "classical_contour_spike");
   assert.equal(Hybrid.chooseHybridMethodForItem(byId["synthetic-l-shaped-living"]).method_key, "manual_seed_baseline");
   assert.equal(Hybrid.chooseHybridMethodForItem(byId["synthetic-low-confidence-scan"]).method_key, "manual_seed_baseline");
+  assert.equal(Hybrid.chooseHybridMethodForItem(byId["synthetic-low-confidence-open-plan"]).method_key, "manual_seed_baseline");
   assert.equal(Hybrid.chooseHybridMethodForItem(byId["synthetic-irregular-hallway"]).method_key, "manual_seed_baseline");
   assert.equal(Hybrid.chooseHybridMethodForItem(byId["synthetic-stairs-void-excluded"]).method_key, "quick_room_baseline");
+  assert.equal(Hybrid.chooseHybridMethodForItem(byId["synthetic-stair-void-bedroom"]).method_key, "classical_contour_spike");
 })();
 
 (function testHybridSelectorKeepsWarningProfileLow() {
