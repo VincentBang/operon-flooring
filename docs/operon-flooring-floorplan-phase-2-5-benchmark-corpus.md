@@ -19,6 +19,8 @@ Included:
 - a reusable local harness for future candidate methods
 - a candidate adapter contract for future Phase 3 detector outputs
 - a quick-room baseline fixture that runs the current detector against synthetic reviewed geometry
+- manual-seed, classical contour and hybrid-selector candidate comparison
+- local decision, calibration, tuning and coverage reports
 
 Excluded:
 
@@ -35,17 +37,34 @@ Excluded:
 - `internal-qa/fixtures/floorplanBenchmarkCorpus.js`
 - `internal-qa/fixtures/floorplanQuickRoomBaselineCandidates.js`
 - `internal-qa/fixtures/floorplanManualSeedBaselineCandidates.js`
+- `internal-qa/fixtures/floorplanClassicalContourCandidates.js`
+- `internal-qa/fixtures/floorplanHybridSelectorCandidates.js`
 - `internal-qa/lib/floorplanBenchmarkHarness.js`
+- `internal-qa/lib/floorplanBenchmarkCoverageReport.js`
 - `internal-qa/lib/floorplanBenchmarkReportComparator.js`
 - `internal-qa/lib/floorplanBenchmarkReportWriter.js`
+- `internal-qa/lib/floorplanHybridSelectorDecisionReport.js`
+- `internal-qa/lib/floorplanHybridSelectorCalibrationReport.js`
+- `internal-qa/lib/floorplanHybridSelectorTuningReport.js`
 - `internal-qa/scripts/compareFloorplanBenchmarkReports.js`
+- `internal-qa/scripts/rankFloorplanBenchmarkMethods.js`
+- `internal-qa/scripts/reportFloorplanBenchmarkCoverage.js`
+- `internal-qa/scripts/reportFloorplanHybridSelectorDecisions.js`
+- `internal-qa/scripts/reportFloorplanHybridSelectorCalibration.js`
+- `internal-qa/scripts/reportFloorplanHybridSelectorTuning.js`
 - `internal-qa/scripts/runFloorplanManualSeedExperiment.js`
 - `internal-qa/scripts/runFloorplanBenchmark.js`
 - `internal-qa/tests/web/floorplanBenchmarkCorpusContract.test.js`
+- `internal-qa/tests/web/floorplanBenchmarkCoverageReportContract.test.js`
 - `internal-qa/tests/web/floorplanBenchmarkComparatorContract.test.js`
 - `internal-qa/tests/web/floorplanCandidateAdapterContract.test.js`
 - `internal-qa/tests/web/floorplanQuickRoomBaselineCandidateContract.test.js`
 - `internal-qa/tests/web/floorplanManualSeedBaselineCandidateContract.test.js`
+- `internal-qa/tests/web/floorplanClassicalContourCandidateContract.test.js`
+- `internal-qa/tests/web/floorplanHybridSelectorCandidateContract.test.js`
+- `internal-qa/tests/web/floorplanHybridSelectorDecisionReportContract.test.js`
+- `internal-qa/tests/web/floorplanHybridSelectorCalibrationReportContract.test.js`
+- `internal-qa/tests/web/floorplanHybridSelectorTuningReportContract.test.js`
 - `internal-qa/tests/web/floorplanManualSeedExperimentCliContract.test.js`
 - `internal-qa/tests/web/floorplanBenchmarkReportWriterContract.test.js`
 
@@ -53,16 +72,23 @@ Excluded:
 
 The first corpus uses synthetic geometry only. This keeps the benchmark safe to commit while still covering the measurement behaviours that matter before assisted detection:
 
-- clean single-room rectangle
-- long open-plan rectangle
-- L-shaped living and hallway area
-- two-room apartment
-- wet area excluded from quote area
-- stair void excluded from quote area
-- outdoor/balcony threshold marked not sure
-- low-confidence scan-like trace
+- clean single-room and long open-plan rectangles
+- L-shaped and irregular room geometry
+- two-room and multi-section layouts
+- wet area, stair void and threshold exclusions
+- not-sure boundary sections
+- low-confidence scan-like traces
+- mixed-boundary plans
 - multipage PDF-style page context
-- irregular hallway with nook
+
+Current committed corpus status:
+
+- 14 synthetic fixtures
+- 23 reviewed sections
+- 9 of 10 coverage targets covered
+- remaining gap: approved real reviewed samples
+
+The synthetic corpus is enough for local detection experiments. It is not enough for real detection training or customer-visible detection.
 
 ## Scoring
 
@@ -185,6 +211,32 @@ internal-qa/reports/floorplan-benchmarks/
 ```
 
 That folder is intentionally gitignored. Reports are local evidence artifacts, not production source.
+
+## Coverage, Decision, Calibration and Tuning Reports
+
+Phase 3 now has four local-only report types for reviewer planning:
+
+```bash
+npm run benchmark:floorplan:coverage
+npm run benchmark:floorplan:hybrid-decisions
+npm run benchmark:floorplan:hybrid-calibration
+npm run benchmark:floorplan:hybrid-tuning
+```
+
+They answer different questions:
+
+- coverage: which fixture categories are covered or missing
+- hybrid decisions: why the selector chose a method for each fixture
+- hybrid calibration: how close the selector is to the best benchmark method
+- hybrid tuning: which selector rules to keep, watch or improve
+
+Latest local benchmark direction:
+
+- coverage is strong enough for local synthetic detection spikes
+- all hybrid-selector candidates remain review-only
+- selected quote area remains `0`
+- the only material corpus gap is approved real reviewed samples
+- real uploaded plans must be added only after privacy and usage approval
 
 ## Local Report Comparison
 

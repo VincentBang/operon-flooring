@@ -312,3 +312,50 @@ node internal-qa/scripts/runFloorplanManualSeedExperiment.js \
 ```
 
 The next detection step can now focus on producing better candidate polygons from seed points, while this runner enforces the review-only safety contract.
+
+## Current Local Phase 3 Progress
+
+Implemented locally:
+
+- quick-room baseline candidate adapter
+- manual-seed baseline candidate adapter
+- classical contour spike candidate adapter
+- hybrid selector spike candidate adapter
+- manual-seed experiment runner
+- timestamped benchmark artifact writer
+- benchmark report comparator
+- candidate method ranking report
+- hybrid selector decision report
+- hybrid selector calibration report
+- hybrid selector tuning report
+- benchmark coverage report
+
+Current synthetic corpus:
+
+- 14 synthetic fixtures
+- 23 reviewed sections
+- clean vector, low-confidence scan, mixed-boundary, multi-section, excluded, not-sure, void/stair-adjacent, multipage and irregular-geometry coverage
+- no real customer documents or customer identifiers
+
+Current local result:
+
+- local benchmark harness passes
+- hybrid selector stays review-only
+- hybrid selector average measured error is inside the current local tolerance
+- candidate selected area remains `0` until internal approval
+- public/customer floorplan behaviour is unchanged
+
+Remaining gate before operational detection work:
+
+- add approved real reviewed samples with privacy-safe labels and no customer identifiers
+- run live/staging admin QA against a safe uploaded file
+- keep candidate output internal until a reviewer approves it
+- do not expose storage paths or document contents in browser responses
+
+## Next Recommended Local Tasks
+
+1. Add an approved-real-sample intake checklist and fixture redaction template.
+2. Add a benchmark fixture manifest contract so synthetic and future real fixtures declare usage/privacy status.
+3. Add a candidate acceptance/rejection taxonomy for reviewer QA.
+4. Add a local operator-time estimate field to benchmark reports.
+5. Only after the above, consider a disabled admin-only candidate generation endpoint.
