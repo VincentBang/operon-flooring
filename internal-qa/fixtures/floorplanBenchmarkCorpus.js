@@ -30,6 +30,13 @@ const PAGE = {
   coordinate_space: "normalized_page"
 };
 
+const SAFE_SYNTHETIC_FIXTURE = {
+  fixture_origin: "synthetic",
+  usage_status: "approved_for_local_qa",
+  privacy_status: "no_customer_data",
+  customer_identifiers_removed: true
+};
+
 const livingRectangle = [
   { x: 0.1, y: 0.1 },
   { x: 0.6, y: 0.1 },
@@ -55,6 +62,7 @@ const lShape = [
 
 const benchmarkCorpus = [
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-rectangle-clean",
     title: "Clean single-room rectangle",
     file_type: "synthetic-json",
@@ -82,6 +90,7 @@ const benchmarkCorpus = [
     }
   },
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-long-open-plan",
     title: "Long open-plan living area",
     file_type: "synthetic-json",
@@ -109,6 +118,7 @@ const benchmarkCorpus = [
     }
   },
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-l-shaped-living",
     title: "L-shaped living and hallway",
     file_type: "synthetic-json",
@@ -136,6 +146,7 @@ const benchmarkCorpus = [
     }
   },
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-two-room-apartment",
     title: "Two-room apartment with separate bedroom",
     file_type: "synthetic-json",
@@ -158,6 +169,7 @@ const benchmarkCorpus = [
     }
   },
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-wet-area-excluded",
     title: "Apartment with wet area excluded",
     file_type: "synthetic-json",
@@ -182,6 +194,7 @@ const benchmarkCorpus = [
     }
   },
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-stairs-void-excluded",
     title: "Townhouse floor with stair void excluded",
     file_type: "synthetic-json",
@@ -205,6 +218,7 @@ const benchmarkCorpus = [
     }
   },
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-not-sure-balcony",
     title: "Balcony threshold marked not sure",
     file_type: "synthetic-json",
@@ -228,6 +242,7 @@ const benchmarkCorpus = [
     }
   },
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-low-confidence-scan",
     title: "Low-confidence scanned plan trace",
     file_type: "synthetic-json",
@@ -247,6 +262,7 @@ const benchmarkCorpus = [
     }
   },
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-multipage-ground",
     title: "Multipage PDF ground floor",
     file_type: "synthetic-pdf-page",
@@ -270,6 +286,7 @@ const benchmarkCorpus = [
     }
   },
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-irregular-hallway",
     title: "Irregular hallway with nook",
     file_type: "synthetic-json",
@@ -298,6 +315,7 @@ const benchmarkCorpus = [
     }
   },
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-low-confidence-open-plan",
     title: "Low-confidence open-plan scan",
     file_type: "synthetic-json",
@@ -322,6 +340,7 @@ const benchmarkCorpus = [
     }
   },
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-mixed-boundary-kitchen",
     title: "Kitchen threshold marked not sure",
     file_type: "synthetic-json",
@@ -345,6 +364,7 @@ const benchmarkCorpus = [
     }
   },
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-stair-void-bedroom",
     title: "Bedroom with stair void excluded",
     file_type: "synthetic-json",
@@ -368,6 +388,7 @@ const benchmarkCorpus = [
     }
   },
   {
+    ...SAFE_SYNTHETIC_FIXTURE,
     id: "synthetic-multipage-upper-irregular",
     title: "Multipage PDF upper floor irregular rooms",
     file_type: "synthetic-pdf-page",
