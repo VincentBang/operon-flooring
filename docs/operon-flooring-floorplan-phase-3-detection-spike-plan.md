@@ -331,6 +331,7 @@ Implemented locally:
 - candidate acceptance/rejection taxonomy
 - operator-time estimate report
 - disabled admin-only candidate endpoint contract
+- review-only candidate draft payload builder
 - benchmark coverage report
 
 Current synthetic corpus:
@@ -372,3 +373,7 @@ The operator-time report compares a manual-trace baseline with review-only candi
 Disabled admin endpoint status: scaffolded locally as `netlify/functions/admin-floorplan-detection-candidates.js`.
 
 The endpoint requires admin authentication, returns disabled/not implemented responses, returns zero candidates, and keeps `review_required: true`. It does not read uploaded files, create candidate versions, or enable customer-facing detection.
+
+Review-only candidate draft payload builder status: implemented locally as `netlify/functions/shared/floorplanCandidateVersionDraft.js`.
+
+The builder converts candidate sections into a system-owned, review-required measurement draft shape. Candidate sections remain `not_sure`, selected quote area remains `0`, and no save occurs unless a later approved admin workflow explicitly calls the existing review-draft storage path.
