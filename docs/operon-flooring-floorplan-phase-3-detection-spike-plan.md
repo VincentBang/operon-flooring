@@ -332,6 +332,7 @@ Implemented locally:
 - operator-time estimate report
 - disabled admin-only candidate endpoint contract
 - review-only candidate draft payload builder
+- geometry-redacted candidate inspection packet
 - benchmark coverage report
 
 Current synthetic corpus:
@@ -377,3 +378,7 @@ The endpoint requires admin authentication, returns disabled/not implemented res
 Review-only candidate draft payload builder status: implemented locally as `netlify/functions/shared/floorplanCandidateVersionDraft.js`.
 
 The builder converts candidate sections into a system-owned, review-required measurement draft shape. Candidate sections remain `not_sure`, selected quote area remains `0`, and no save occurs unless a later approved admin workflow explicitly calls the existing review-draft storage path.
+
+Geometry-redacted inspection packet status: implemented locally as `internal-qa/scripts/reportFloorplanCandidateInspectionPacket.js`.
+
+The packet gives reviewers a summary of fixture, method, candidate count, measured area, taxonomy outcome, and next action without exposing points, raw sections, file references, or storage details.
