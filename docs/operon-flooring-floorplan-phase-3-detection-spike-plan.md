@@ -330,6 +330,7 @@ Implemented locally:
 - hybrid selector tuning report
 - candidate acceptance/rejection taxonomy
 - operator-time estimate report
+- disabled admin-only candidate endpoint contract
 - benchmark coverage report
 
 Current synthetic corpus:
@@ -358,7 +359,7 @@ Remaining gate before operational detection work:
 
 1. Add an approved-real-sample intake checklist and fixture redaction template.
 2. Add a benchmark fixture manifest contract so synthetic and future real fixtures declare usage/privacy status.
-3. Only after the above, consider a disabled admin-only candidate generation endpoint.
+3. Only after the above, consider candidate generation implementation behind the disabled admin endpoint.
 
 Candidate review taxonomy status: implemented locally as `internal-qa/scripts/reportFloorplanCandidateReviewTaxonomy.js`.
 
@@ -367,3 +368,7 @@ The taxonomy classifies candidate output into internal reviewer outcomes such as
 Operator-time estimate status: implemented locally as `internal-qa/scripts/reportFloorplanOperatorTimeEstimates.js`.
 
 The operator-time report compares a manual-trace baseline with review-only candidate handling. It is an internal planning artifact for deciding whether Phase 3 detection saves enough reviewer effort to justify deeper implementation.
+
+Disabled admin endpoint status: scaffolded locally as `netlify/functions/admin-floorplan-detection-candidates.js`.
+
+The endpoint requires admin authentication, returns disabled/not implemented responses, returns zero candidates, and keeps `review_required: true`. It does not read uploaded files, create candidate versions, or enable customer-facing detection.
