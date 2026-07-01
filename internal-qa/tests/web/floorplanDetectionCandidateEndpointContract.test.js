@@ -2,6 +2,8 @@
 
 const assert = require("assert");
 
+const corpus = require("../../fixtures/floorplanBenchmarkCorpus");
+const Hybrid = require("../../fixtures/floorplanHybridSelectorCandidates");
 const endpoint = require("../../../netlify/functions/admin-floorplan-detection-candidates");
 const CandidateRequest = require("../../../netlify/functions/shared/floorplanCandidateRequest");
 
@@ -135,6 +137,42 @@ async function testEnabledPathRejectsUnsafePayloads() {
   });
 }
 
+async function testEnabledDryRunReturnsSafeSummaryOnly() {
+  const item = corpus[0];
+  await withEnv({
+    OPERON_ADMIN_TOKEN: "admin-token",
+    OPERON_FLOORPLAN_CANDIDATES_ENABLED: "true"
+  }, async function () {
+    const response = await endpoint.handler(event("POST", { authorization: "Bearer admin-token" }, {
+      measurement_session_id: SESSION_ID,
+      uploaded_file_id: UPLOAD_ID,
+      candidate_method: "hybrid_selector_spike",
+      plan_quality: item.plan_quality,
+      page_number: 1,
+      dry_run: true,
+      candidate_payload: Hybrid.hybridSelectorCandidatePayloadForItem(item),
+      page_context: {
+        page_width: item.reviewed.page_width,
+        page_height: item.reviewed.page_height,
+        pixels_per_metre: item.reviewed.pixels_per_metre,
+        coordinate_space: item.reviewed.coordinate_space
+      }
+    }));
+    const body = parse(response);
+    assert.equal(response.statusCode, 200);
+    assert.equal(body.ok, true);
+    assert.equal(body.status, "dry_run");
+    assert.equal(body.measurement_session_id, SESSION_ID);
+    assert.ok(body.candidate_count >= 1);
+    assert.equal(body.selected_area_m2, 0);
+    assert.ok(body.measured_area_m2 > 0);
+    assert.equal(body.review_required, true);
+    assert.equal(JSON.stringify(body).includes("sections"), false);
+    assert.equal(JSON.stringify(body).includes("points"), false);
+    assertSafeBody(body);
+  });
+}
+
 function testCandidateRequestNormalizer() {
   const normalized = CandidateRequest.normalizeCandidateRequest({
     measurement_session_id: SESSION_ID,
@@ -180,6 +218,7 @@ Promise.resolve()
   .then(testDisabledByDefault)
   .then(testEnabledStillNotImplemented)
   .then(testEnabledPathRejectsUnsafePayloads)
+  .then(testEnabledDryRunReturnsSafeSummaryOnly)
   .then(testOptionsAndMethods)
   .then(testCandidateRequestNormalizer)
   .then(function () {

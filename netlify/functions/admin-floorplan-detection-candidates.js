@@ -3,6 +3,7 @@
 const Security = require("./_security");
 const AdminAuth = require("./shared/adminAuth");
 const CandidateRequest = require("./shared/floorplanCandidateRequest");
+const CandidateDraft = require("./shared/floorplanCandidateVersionDraft");
 
 function jsonResponse(event, statusCode, payload) {
   return Security.jsonResponse(event, statusCode, payload, {
@@ -47,13 +48,34 @@ exports.handler = async function (event) {
     return jsonResponse(event, 400, { ok: false, error: "Invalid JSON payload." });
   }
 
+  let request;
   try {
-    CandidateRequest.normalizeCandidateRequest(body);
+    request = CandidateRequest.normalizeCandidateRequest(body);
   } catch (error) {
     return jsonResponse(event, 400, {
       ok: false,
       error: error && error.message ? error.message : "Invalid candidate request."
     });
+  }
+
+  if (body.dry_run === true && body.candidate_payload && body.page_context) {
+    try {
+      const draft = CandidateDraft.buildCandidateVersionDraftPayload(body, body.candidate_payload, body.page_context);
+      return jsonResponse(event, 200, {
+        ok: true,
+        status: "dry_run",
+        measurement_session_id: request.measurement_session_id,
+        candidate_count: draft.safe_summary.candidate_count,
+        selected_area_m2: 0,
+        measured_area_m2: draft.safe_summary.measured_area_m2,
+        review_required: true
+      });
+    } catch (error) {
+      return jsonResponse(event, 400, {
+        ok: false,
+        error: error && error.message ? error.message : "Invalid candidate dry run."
+      });
+    }
   }
 
   return jsonResponse(event, 501, {
