@@ -3,6 +3,10 @@
 const assert = require("assert");
 
 const endpoint = require("../../../netlify/functions/admin-floorplan-detection-candidates");
+const CandidateRequest = require("../../../netlify/functions/shared/floorplanCandidateRequest");
+
+const SESSION_ID = "11111111-1111-4111-8111-111111111111";
+const UPLOAD_ID = "22222222-2222-4222-8222-222222222222";
 
 function event(method, headers, body) {
   return {
@@ -93,7 +97,13 @@ async function testEnabledStillNotImplemented() {
     OPERON_ADMIN_TOKEN: "admin-token",
     OPERON_FLOORPLAN_CANDIDATES_ENABLED: "true"
   }, async function () {
-    const response = await endpoint.handler(event("POST", { "x-operon-admin-token": "admin-token" }));
+    const response = await endpoint.handler(event("POST", { "x-operon-admin-token": "admin-token" }, {
+      measurement_session_id: SESSION_ID,
+      uploaded_file_id: UPLOAD_ID,
+      candidate_method: "hybrid_selector_spike",
+      plan_quality: "clean_vector",
+      page_number: 1
+    }));
     const body = parse(response);
     assert.equal(response.statusCode, 501);
     assert.equal(body.ok, false);
@@ -102,6 +112,55 @@ async function testEnabledStillNotImplemented() {
     assert.equal(body.review_required, true);
     assertSafeBody(body);
   });
+}
+
+async function testEnabledPathRejectsUnsafePayloads() {
+  await withEnv({
+    OPERON_ADMIN_TOKEN: "admin-token",
+    OPERON_FLOORPLAN_CANDIDATES_ENABLED: "true"
+  }, async function () {
+    const badMethod = await endpoint.handler(event("POST", { authorization: "Bearer admin-token" }, {
+      measurement_session_id: SESSION_ID,
+      candidate_method: "external_ai"
+    }));
+    assert.equal(badMethod.statusCode, 400);
+    assertSafeBody(parse(badMethod));
+
+    const sensitive = await endpoint.handler(event("POST", { authorization: "Bearer admin-token" }, {
+      measurement_session_id: SESSION_ID,
+      storage_path: "private/value"
+    }));
+    assert.equal(sensitive.statusCode, 400);
+    assertSafeBody(parse(sensitive));
+  });
+}
+
+function testCandidateRequestNormalizer() {
+  const normalized = CandidateRequest.normalizeCandidateRequest({
+    measurement_session_id: SESSION_ID,
+    uploaded_file_id: UPLOAD_ID,
+    candidate_method: "manual_seed_assisted",
+    plan_quality: "mixed_boundary",
+    page_number: 2,
+    max_candidates: 12
+  });
+  assert.equal(normalized.measurement_session_id, SESSION_ID);
+  assert.equal(normalized.uploaded_file_id, UPLOAD_ID);
+  assert.equal(normalized.candidate_method, "manual_seed_assisted");
+  assert.equal(normalized.plan_quality, "mixed_boundary");
+  assert.equal(normalized.page_number, 2);
+  assert.equal(normalized.max_candidates, 12);
+  assert.equal(normalized.review_required, true);
+
+  assert.throws(function () {
+    CandidateRequest.normalizeCandidateRequest({ measurement_session_id: "bad" });
+  }, /valid measurement session/);
+  assert.throws(function () {
+    CandidateRequest.normalizeCandidateRequest({
+      measurement_session_id: SESSION_ID,
+      raw_text: "not allowed"
+    });
+  }, /unsupported sensitive fields/);
 }
 
 async function testOptionsAndMethods() {
@@ -120,7 +179,9 @@ Promise.resolve()
   .then(testAdminRequired)
   .then(testDisabledByDefault)
   .then(testEnabledStillNotImplemented)
+  .then(testEnabledPathRejectsUnsafePayloads)
   .then(testOptionsAndMethods)
+  .then(testCandidateRequestNormalizer)
   .then(function () {
     console.log("floorplanDetectionCandidateEndpointContract.test.js passed");
   })

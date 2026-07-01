@@ -2,6 +2,7 @@
 
 const Security = require("./_security");
 const AdminAuth = require("./shared/adminAuth");
+const CandidateRequest = require("./shared/floorplanCandidateRequest");
 
 function jsonResponse(event, statusCode, payload) {
   return Security.jsonResponse(event, statusCode, payload, {
@@ -36,6 +37,22 @@ exports.handler = async function (event) {
       error: "Floorplan candidate generation is disabled.",
       candidate_count: 0,
       review_required: true
+    });
+  }
+
+  let body;
+  try {
+    body = JSON.parse(event.body || "{}");
+  } catch (error) {
+    return jsonResponse(event, 400, { ok: false, error: "Invalid JSON payload." });
+  }
+
+  try {
+    CandidateRequest.normalizeCandidateRequest(body);
+  } catch (error) {
+    return jsonResponse(event, 400, {
+      ok: false,
+      error: error && error.message ? error.message : "Invalid candidate request."
     });
   }
 
