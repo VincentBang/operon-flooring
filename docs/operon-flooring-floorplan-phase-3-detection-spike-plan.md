@@ -334,6 +334,7 @@ Implemented locally:
 - review-only candidate draft payload builder
 - geometry-redacted candidate inspection packet
 - reviewer readiness gate report
+- real-sample intake gate report
 - benchmark coverage report
 
 Current synthetic corpus:
@@ -387,3 +388,7 @@ The packet gives reviewers a summary of fixture, method, candidate count, measur
 Reviewer readiness gate status: implemented locally as `internal-qa/scripts/reportFloorplanReviewerReadinessGate.js`.
 
 The gate rolls up benchmark coverage, review taxonomy, geometry-redacted inspection packet, and operator-time estimate status. Current reviewer QA can pass on synthetic fixtures, while real detection training and customer-visible detection remain blocked until privacy-safe real reviewed samples are approved.
+
+Real-sample intake gate status: implemented locally as `internal-qa/scripts/reportFloorplanRealSampleIntakeGate.js`.
+
+The intake gate verifies that any future real reviewed sample batch has the required approval metadata and coverage mix before it can close the real-sample benchmark gap. It does not approve training or customer-visible detection.

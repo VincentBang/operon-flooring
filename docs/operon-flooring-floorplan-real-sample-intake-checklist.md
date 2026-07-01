@@ -91,6 +91,7 @@ Before committing real fixtures:
 
 ```bash
 npm run test:floorplan-full
+npm run benchmark:floorplan:real-sample-intake -- --json
 npm run benchmark:floorplan:coverage -- --json
 npm run check:public-leaks
 git diff --check
@@ -99,6 +100,7 @@ git diff --check
 Expected:
 
 - all floorplan tests pass
+- real sample intake gate confirms the approved real-sample batch is ready for benchmark use
 - coverage report shows real reviewed samples present
 - no public leak check failure
 - no customer identifiers in fixture text
