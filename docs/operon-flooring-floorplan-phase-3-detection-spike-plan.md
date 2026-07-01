@@ -333,6 +333,7 @@ Implemented locally:
 - disabled admin-only candidate endpoint contract
 - review-only candidate draft payload builder
 - geometry-redacted candidate inspection packet
+- reviewer readiness gate report
 - benchmark coverage report
 
 Current synthetic corpus:
@@ -382,3 +383,7 @@ The builder converts candidate sections into a system-owned, review-required mea
 Geometry-redacted inspection packet status: implemented locally as `internal-qa/scripts/reportFloorplanCandidateInspectionPacket.js`.
 
 The packet gives reviewers a summary of fixture, method, candidate count, measured area, taxonomy outcome, and next action without exposing points, raw sections, file references, or storage details.
+
+Reviewer readiness gate status: implemented locally as `internal-qa/scripts/reportFloorplanReviewerReadinessGate.js`.
+
+The gate rolls up benchmark coverage, review taxonomy, geometry-redacted inspection packet, and operator-time estimate status. Current reviewer QA can pass on synthetic fixtures, while real detection training and customer-visible detection remain blocked until privacy-safe real reviewed samples are approved.
