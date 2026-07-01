@@ -335,6 +335,7 @@ Implemented locally:
 - geometry-redacted candidate inspection packet
 - reviewer readiness gate report
 - real-sample intake gate report
+- Phase 3 status roll-up report
 - benchmark coverage report
 
 Current synthetic corpus:
@@ -392,3 +393,7 @@ The gate rolls up benchmark coverage, review taxonomy, geometry-redacted inspect
 Real-sample intake gate status: implemented locally as `internal-qa/scripts/reportFloorplanRealSampleIntakeGate.js`.
 
 The intake gate verifies that any future real reviewed sample batch has the required approval metadata and coverage mix before it can close the real-sample benchmark gap. It does not approve training or customer-visible detection.
+
+Phase 3 status roll-up status: implemented locally as `internal-qa/scripts/reportFloorplanPhase3Status.js`.
+
+The status report summarizes which Phase 3 areas are ready, which remain blocked, and the next safe task. It is intended as the first artifact to run before deciding whether to add real reviewed samples, run reviewer QA, or continue synthetic-only experiments.
