@@ -328,6 +328,7 @@ Implemented locally:
 - hybrid selector decision report
 - hybrid selector calibration report
 - hybrid selector tuning report
+- candidate acceptance/rejection taxonomy
 - benchmark coverage report
 
 Current synthetic corpus:
@@ -356,6 +357,9 @@ Remaining gate before operational detection work:
 
 1. Add an approved-real-sample intake checklist and fixture redaction template.
 2. Add a benchmark fixture manifest contract so synthetic and future real fixtures declare usage/privacy status.
-3. Add a candidate acceptance/rejection taxonomy for reviewer QA.
-4. Add a local operator-time estimate field to benchmark reports.
-5. Only after the above, consider a disabled admin-only candidate generation endpoint.
+3. Add a local operator-time estimate field to benchmark reports.
+4. Only after the above, consider a disabled admin-only candidate generation endpoint.
+
+Candidate review taxonomy status: implemented locally as `internal-qa/scripts/reportFloorplanCandidateReviewTaxonomy.js`.
+
+The taxonomy classifies candidate output into internal reviewer outcomes such as accept after review, adjust boundary, split or merge sections, exclude section, manual trace fallback, low-confidence fallback, false positive, missing room, and scale/page issue. Every outcome blocks automated approval and stays customer-invisible.
