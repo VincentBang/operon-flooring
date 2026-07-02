@@ -94,7 +94,7 @@ Before committing real fixtures:
 ```bash
 npm run test:floorplan-full
 npm run benchmark:floorplan:validate-real-sample -- --fixture-file=<path-to-redacted-fixture>
-npm run benchmark:floorplan:real-sample-intake -- --json
+npm run benchmark:floorplan:real-sample-intake -- --fixture-file=<path-to-redacted-fixture> --json
 npm run benchmark:floorplan:coverage -- --json
 npm run check:public-leaks
 git diff --check

@@ -2,6 +2,7 @@
 "use strict";
 
 const Gate = require("../lib/floorplanRealSampleIntakeGateReport");
+const Validator = require("./validateFloorplanRealSampleFixture");
 
 function argValue(prefix, fallback) {
   const match = process.argv.find(function (arg) {
@@ -13,7 +14,20 @@ function argValue(prefix, fallback) {
 const jsonMode = process.argv.includes("--json");
 const writeArtifacts = process.argv.includes("--write-artifacts");
 const outputDir = argValue("--output-dir=", null);
-const report = Gate.buildFloorplanRealSampleIntakeGateReport();
+const fixtureFile = argValue("--fixture-file=", null);
+
+let report;
+if (fixtureFile) {
+  const fixtures = Validator.loadFixture(fixtureFile);
+  const validation = Validator.validateFixtures(fixtures);
+  if (!validation.ok) {
+    process.stderr.write(JSON.stringify(validation, null, 2) + "\n");
+    process.exit(1);
+  }
+  report = Gate.buildFloorplanRealSampleIntakeGateReport(Array.isArray(fixtures) ? fixtures : [fixtures]);
+} else {
+  report = Gate.buildFloorplanRealSampleIntakeGateReport();
+}
 
 if (writeArtifacts) {
   const artifact = Gate.writeFloorplanRealSampleIntakeGateArtifacts(report, {

@@ -29,6 +29,20 @@ function cloneAsApprovedReal(item, suffix, overrides) {
   });
 }
 
+function buildPassingSampleBatch() {
+  const byId = corpus.reduce(function (map, item) {
+    map[item.id] = item;
+    return map;
+  }, {});
+  return [
+    cloneAsApprovedReal(byId["synthetic-low-confidence-scan"], "low-contrast-01", { file_type: "reviewed-image" }),
+    cloneAsApprovedReal(byId["synthetic-not-sure-balcony"], "mixed-boundary-01"),
+    cloneAsApprovedReal(byId["synthetic-stairs-void-excluded"], "void-stairs-01"),
+    cloneAsApprovedReal(byId["synthetic-multipage-ground"], "multipage-01", { file_type: "reviewed-pdf-page", page_count: 2 }),
+    cloneAsApprovedReal(byId["synthetic-l-shaped-living"], "irregular-01")
+  ];
+}
+
 (function testCurrentCorpusKeepsRealSampleGateBlocked() {
   const report = Gate.buildFloorplanRealSampleIntakeGateReport(corpus);
   assert.equal(report.report_type, "floorplan_real_sample_intake_gate");
@@ -44,17 +58,7 @@ function cloneAsApprovedReal(item, suffix, overrides) {
 })();
 
 (function testApprovedRealSampleBatchCanPassBenchmarkBatchGate() {
-  const byId = corpus.reduce(function (map, item) {
-    map[item.id] = item;
-    return map;
-  }, {});
-  const sampleBatch = [
-    cloneAsApprovedReal(byId["synthetic-low-confidence-scan"], "low-contrast-01", { file_type: "reviewed-image" }),
-    cloneAsApprovedReal(byId["synthetic-not-sure-balcony"], "mixed-boundary-01"),
-    cloneAsApprovedReal(byId["synthetic-stairs-void-excluded"], "void-stairs-01"),
-    cloneAsApprovedReal(byId["synthetic-multipage-ground"], "multipage-01", { file_type: "reviewed-pdf-page", page_count: 2 }),
-    cloneAsApprovedReal(byId["synthetic-l-shaped-living"], "irregular-01")
-  ];
+  const sampleBatch = buildPassingSampleBatch();
   const report = Gate.buildFloorplanRealSampleIntakeGateReport(sampleBatch);
   assert.equal(report.real_sample_count, 5);
   assert.equal(report.approved_real_sample_count, 5);
@@ -63,6 +67,26 @@ function cloneAsApprovedReal(item, suffix, overrides) {
   assert.equal(report.ready_for_real_sample_benchmark_batch, true);
   assert.equal(report.ready_to_add_real_samples_to_training, false);
   assertNoSensitiveText(JSON.stringify(report), "approved sample intake report JSON");
+})();
+
+(function testIntakeGateCliCanDryRunProposedFixtureBatch() {
+  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "operon-floorplan-real-sample-fixture-batch-"));
+  const fixturePath = path.join(outputDir, "approved-real-sample-batch.json");
+  fs.writeFileSync(fixturePath, JSON.stringify(buildPassingSampleBatch(), null, 2) + "\n");
+
+  const run = childProcess.spawnSync(process.execPath, [
+    gateScript,
+    "--fixture-file=" + fixturePath,
+    "--json"
+  ], {
+    cwd: repoRoot,
+    encoding: "utf8"
+  });
+
+  assert.equal(run.status, 0, run.stderr || run.stdout);
+  assert.ok(run.stdout.includes("\"ready_for_real_sample_benchmark_batch\": true"));
+  assert.ok(run.stdout.includes("\"ready_to_add_real_samples_to_training\": false"));
+  assertNoSensitiveText(run.stdout, "dry-run fixture batch output");
 })();
 
 (function testIntakeGateMarkdownAndCliAreSafe() {
