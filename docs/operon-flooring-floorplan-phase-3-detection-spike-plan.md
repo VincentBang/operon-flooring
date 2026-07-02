@@ -426,3 +426,13 @@ npm run benchmark:floorplan:phase3-packet -- --output-dir=internal-qa/reports/fl
 Runbook: `docs/operon-flooring-floorplan-phase-3-review-packet-runbook.md`.
 
 This packet does not approve production deployment, customer-visible detection, automatic measurement approval or real-sample benchmark intake. It is a reviewer handoff artifact only.
+
+Real-sample collection plan status: implemented locally as `internal-qa/scripts/reportFloorplanRealSampleCollectionPlan.js`.
+
+Run:
+
+```bash
+npm run benchmark:floorplan:real-sample-collection -- --json
+```
+
+The collection plan lists the approved real reviewed sample slots still needed before the benchmark can close the current real-sample gap. It does not add real samples, write files to the active corpus, approve training or unlock customer-visible detection.

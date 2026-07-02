@@ -38,6 +38,8 @@ function scrubAllowedInstructionText(markdown) {
   assert.ok(markdown.includes("writeFloorplanPhase3ReviewPacket.js"));
   assert.ok(markdown.includes("benchmark:floorplan:phase3-packet"));
   assert.ok(markdown.includes("operon-flooring-floorplan-phase-3-review-packet-runbook.md"));
+  assert.ok(markdown.includes("reportFloorplanRealSampleCollectionPlan.js"));
+  assert.ok(markdown.includes("benchmark:floorplan:real-sample-collection"));
   assert.ok(markdown.includes("does not approve production deployment"));
 })();
 

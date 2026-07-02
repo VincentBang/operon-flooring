@@ -17,6 +17,7 @@ const SENSITIVE_PATTERN = /\b(storage_bucket|storage_path|file_path|signed_url|s
   assert.ok(markdown.includes("privacy_status: \"customer_identifiers_removed\""));
   assert.ok(markdown.includes("customer_identifiers_removed: true"));
   assert.ok(markdown.includes("npm run test:floorplan-full"));
+  assert.ok(markdown.includes("npm run benchmark:floorplan:real-sample-collection -- --json"));
   assert.ok(markdown.includes("npm run benchmark:floorplan:coverage -- --json"));
   assert.ok(markdown.includes("does not approve"));
 })();

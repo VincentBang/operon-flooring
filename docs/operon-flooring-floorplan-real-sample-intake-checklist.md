@@ -87,6 +87,14 @@ The first real-sample batch should include at least:
 
 This closes the current `real_reviewed_samples` coverage gap without requiring a large dataset.
 
+Before selecting samples, run the collection plan:
+
+```bash
+npm run benchmark:floorplan:real-sample-collection -- --json
+```
+
+Use the output to confirm which coverage slots are still missing.
+
 A safe local batch template is available at:
 
 ```text
@@ -101,6 +109,7 @@ Before committing real fixtures:
 
 ```bash
 npm run test:floorplan-full
+npm run benchmark:floorplan:real-sample-collection -- --json
 npm run benchmark:floorplan:validate-real-sample -- --fixture-file=<path-to-redacted-fixture>
 npm run benchmark:floorplan:real-sample-intake -- --fixture-file=<path-to-redacted-fixture> --json
 npm run benchmark:floorplan:coverage -- --json
