@@ -8,6 +8,7 @@ const Bundle = require("../lib/floorplanPhase3ReviewBundleReport");
 const Inspection = require("../lib/floorplanCandidateInspectionPacketReport");
 const NextActions = require("../lib/floorplanPhase3NextActionsReport");
 const RealSample = require("../lib/floorplanRealSampleIntakeGateReport");
+const RealSampleCollection = require("../lib/floorplanRealSampleCollectionPlan");
 const Readiness = require("../lib/floorplanReviewerReadinessGateReport");
 const Status = require("../lib/floorplanPhase3StatusReport");
 const GatePlan = require("./reportFloorplanPhase3LocalGatePlan");
@@ -52,6 +53,24 @@ function writeGatePlan(outputDir) {
   };
 }
 
+function writeRealSampleCollectionPlan(outputDir) {
+  const report = RealSampleCollection.buildFloorplanRealSampleCollectionPlan();
+  const reportDir = path.join(outputDir, "real-sample-collection");
+  fs.mkdirSync(reportDir, { recursive: true });
+  const jsonPath = path.join(reportDir, "real-sample-collection.json");
+  const markdownPath = path.join(reportDir, "real-sample-collection.md");
+  fs.writeFileSync(jsonPath, JSON.stringify(report, null, 2) + "\n");
+  fs.writeFileSync(markdownPath, RealSampleCollection.renderFloorplanRealSampleCollectionPlanMarkdown(report));
+  return {
+    key: "real-sample-collection",
+    report_type: report.report_type,
+    json_path: jsonPath,
+    markdown_path: markdownPath,
+    local_only: report.local_only === true,
+    customer_visible: report.customer_visible === true
+  };
+}
+
 function writePacket(outputDir) {
   fs.mkdirSync(outputDir, { recursive: true });
   const reports = [
@@ -61,6 +80,7 @@ function writePacket(outputDir) {
     writeGatePlan(outputDir),
     writeReport("reviewer-readiness", outputDir, Readiness.buildFloorplanReviewerReadinessGateReport, Readiness.writeFloorplanReviewerReadinessGateArtifacts),
     writeReport("real-sample-intake", outputDir, RealSample.buildFloorplanRealSampleIntakeGateReport, RealSample.writeFloorplanRealSampleIntakeGateArtifacts),
+    writeRealSampleCollectionPlan(outputDir),
     writeReport("inspection-packet", outputDir, Inspection.buildFloorplanCandidateInspectionPacketReport, Inspection.writeFloorplanCandidateInspectionPacketArtifacts)
   ];
   const manifest = {
