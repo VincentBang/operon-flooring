@@ -30,12 +30,15 @@ function assertNoSensitiveText(value, label) {
   assert.equal(packet.packet_type, "floorplan_phase3_review_packet");
   assert.equal(packet.local_only, true);
   assert.equal(packet.customer_visible, false);
-  assert.equal(packet.report_count, 6);
+  assert.equal(packet.report_count, 7);
   assert.ok(packet.reports.every(function (report) {
     return report.local_only === true && report.customer_visible === false;
   }));
   assert.ok(packet.reports.some(function (report) {
     return report.key === "phase3-next-actions";
+  }));
+  assert.ok(packet.reports.some(function (report) {
+    return report.key === "phase3-local-gates";
   }));
   assert.ok(fs.existsSync(packet.manifest_path));
   packet.reports.forEach(function (report) {

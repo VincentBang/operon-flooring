@@ -39,6 +39,7 @@ The command writes:
 - Phase 3 status report
 - Phase 3 review bundle
 - Phase 3 next-actions report
+- Phase 3 local gate plan
 - reviewer readiness gate
 - real-sample intake gate
 - geometry-redacted inspection packet
@@ -50,9 +51,10 @@ Review the packet in this order:
 1. `phase3-next-actions`
 2. `phase3-review-bundle`
 3. `reviewer-readiness`
-4. `real-sample-intake`
-5. `inspection-packet`
-6. `phase3-status`
+4. `phase3-local-gates`
+5. `real-sample-intake`
+6. `inspection-packet`
+7. `phase3-status`
 
 The current expected decision is:
 

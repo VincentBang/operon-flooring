@@ -10,6 +10,7 @@ const NextActions = require("../lib/floorplanPhase3NextActionsReport");
 const RealSample = require("../lib/floorplanRealSampleIntakeGateReport");
 const Readiness = require("../lib/floorplanReviewerReadinessGateReport");
 const Status = require("../lib/floorplanPhase3StatusReport");
+const GatePlan = require("./reportFloorplanPhase3LocalGatePlan");
 
 function argValue(prefix, fallback) {
   const match = process.argv.find(function (arg) {
@@ -33,12 +34,31 @@ function writeReport(key, outputDir, build, write) {
   };
 }
 
+function writeGatePlan(outputDir) {
+  const report = GatePlan.buildReport();
+  const reportDir = path.join(outputDir, "phase3-local-gates");
+  fs.mkdirSync(reportDir, { recursive: true });
+  const jsonPath = path.join(reportDir, "phase3-local-gates.json");
+  const markdownPath = path.join(reportDir, "phase3-local-gates.md");
+  fs.writeFileSync(jsonPath, JSON.stringify(report, null, 2) + "\n");
+  fs.writeFileSync(markdownPath, GatePlan.renderMarkdown(report));
+  return {
+    key: "phase3-local-gates",
+    report_type: report.report_type,
+    json_path: jsonPath,
+    markdown_path: markdownPath,
+    local_only: report.local_only === true,
+    customer_visible: report.customer_visible === true
+  };
+}
+
 function writePacket(outputDir) {
   fs.mkdirSync(outputDir, { recursive: true });
   const reports = [
     writeReport("phase3-status", outputDir, Status.buildFloorplanPhase3StatusReport, Status.writeFloorplanPhase3StatusArtifacts),
     writeReport("phase3-review-bundle", outputDir, Bundle.buildFloorplanPhase3ReviewBundleReport, Bundle.writeFloorplanPhase3ReviewBundleArtifacts),
     writeReport("phase3-next-actions", outputDir, NextActions.buildFloorplanPhase3NextActionsReport, NextActions.writeFloorplanPhase3NextActionsArtifacts),
+    writeGatePlan(outputDir),
     writeReport("reviewer-readiness", outputDir, Readiness.buildFloorplanReviewerReadinessGateReport, Readiness.writeFloorplanReviewerReadinessGateArtifacts),
     writeReport("real-sample-intake", outputDir, RealSample.buildFloorplanRealSampleIntakeGateReport, RealSample.writeFloorplanRealSampleIntakeGateArtifacts),
     writeReport("inspection-packet", outputDir, Inspection.buildFloorplanCandidateInspectionPacketReport, Inspection.writeFloorplanCandidateInspectionPacketArtifacts)
