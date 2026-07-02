@@ -12,6 +12,8 @@ Real samples are not allowed in the committed benchmark corpus until every item 
 
 ## Required Approval Fields
 
+Use `internal-qa/templates/floorplanApprovedRealSampleFixtureTemplate.js` as the starting shape for future reviewed sample fixtures. The template is intentionally outside `internal-qa/fixtures/` so it does not enter the active benchmark corpus.
+
 Each future real fixture must declare:
 
 - `fixture_origin: "approved_real_reviewed_sample"`
