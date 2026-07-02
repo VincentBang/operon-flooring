@@ -4,11 +4,20 @@ const fs = require("fs");
 const path = require("path");
 
 const corpus = require("../fixtures/floorplanBenchmarkCorpus");
+const Harness = require("./floorplanBenchmarkHarness");
 const OperatorTime = require("./floorplanOperatorTimeEstimateReport");
 const Phase3Status = require("./floorplanPhase3StatusReport");
 const RealSampleGate = require("./floorplanRealSampleIntakeGateReport");
 const ReportWriter = require("./floorplanBenchmarkReportWriter");
 const ReviewerGate = require("./floorplanReviewerReadinessGateReport");
+const SeedBox = require("../fixtures/floorplanSeedBoxCandidates");
+
+function roundTo(value, places) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return null;
+  const factor = Math.pow(10, places || 2);
+  return Math.round(number * factor) / factor;
+}
 
 function buildSummaryRows(status, reviewer, realSample, operatorTime) {
   return [
@@ -41,6 +50,7 @@ function buildFloorplanPhase3ReviewBundleReport(items) {
   const reviewer = ReviewerGate.buildFloorplanReviewerReadinessGateReport(source);
   const realSample = RealSampleGate.buildFloorplanRealSampleIntakeGateReport(source);
   const operatorTime = OperatorTime.buildFloorplanOperatorTimeEstimateReport(source);
+  const seedBoxSummary = buildSeedBoxSummary(source);
   const rows = buildSummaryRows(status, reviewer, realSample, operatorTime);
   return {
     report_type: "floorplan_phase3_review_bundle_report",
@@ -53,9 +63,41 @@ function buildFloorplanPhase3ReviewBundleReport(items) {
     ready_for_real_sample_benchmark_batch: status.ready_for_real_sample_benchmark_batch,
     ready_for_customer_visible_detection: false,
     estimated_minutes_saved: operatorTime.total_estimated_minutes_saved,
+    seed_box_spike_summary: seedBoxSummary,
     next_safe_task: status.next_safe_task,
     local_gate_commands: status.local_gate_commands,
     summary_rows: rows
+  };
+}
+
+function average(rows, field) {
+  const values = rows.map(function (row) {
+    return Number(row[field]);
+  }).filter(Number.isFinite);
+  if (!values.length) return null;
+  return roundTo(values.reduce(function (sum, value) {
+    return sum + value;
+  }, 0) / values.length, 2);
+}
+
+function buildSeedBoxSummary(source) {
+  const results = source.map(function (item) {
+    return Harness.scoreCandidatePayload(item, SeedBox.seedBoxCandidatePayloadForItem(item), { areaWarningThresholdPercent: 80 });
+  });
+  const contractPassCount = results.filter(function (result) { return result.passed_contract; }).length;
+  const selectedAreaSafeCount = results.filter(function (result) { return result.candidate_selected_area_m2 === 0; }).length;
+  const averageMeasured = average(results, "measured_area_error_percent");
+  return {
+    method_key: "seed_box_spike",
+    method_label: "Seed-box spike",
+    item_count: results.length,
+    contract_pass_count: contractPassCount,
+    selected_area_safe_count: selectedAreaSafeCount,
+    measured_warning_count: results.filter(function (result) { return result.measured_area_warning; }).length,
+    average_measured_area_error_percent: averageMeasured,
+    recommendation: averageMeasured !== null && averageMeasured <= 8
+      ? "Keep investigating seed-box as a candidate helper."
+      : "Keep seed-box as a contract test only; it is not accurate enough to guide reviewer defaults yet."
   };
 }
 
@@ -92,6 +134,18 @@ function renderFloorplanPhase3ReviewBundleMarkdown(report, metadata) {
   lines.push("| Status | Gate | Evidence |");
   lines.push("| --- | --- | --- |");
   lines.push.apply(lines, renderSummaryRows(report.summary_rows));
+  lines.push("");
+  lines.push("## Seed-Box Spike Summary");
+  lines.push("");
+  lines.push("| Metric | Value |");
+  lines.push("| --- | ---: |");
+  lines.push("| Cases | " + report.seed_box_spike_summary.item_count + " |");
+  lines.push("| Contract pass | " + report.seed_box_spike_summary.contract_pass_count + " |");
+  lines.push("| Selected-area safe | " + report.seed_box_spike_summary.selected_area_safe_count + " |");
+  lines.push("| Measured warnings | " + report.seed_box_spike_summary.measured_warning_count + " |");
+  lines.push("| Avg measured error | " + report.seed_box_spike_summary.average_measured_area_error_percent + "% |");
+  lines.push("");
+  lines.push(report.seed_box_spike_summary.recommendation);
   lines.push("");
   lines.push("## Local Gate Commands");
   lines.push("");
@@ -143,6 +197,7 @@ function writeFloorplanPhase3ReviewBundleArtifacts(report, options) {
 }
 
 module.exports = {
+  buildSeedBoxSummary: buildSeedBoxSummary,
   buildFloorplanPhase3ReviewBundleReport: buildFloorplanPhase3ReviewBundleReport,
   renderFloorplanPhase3ReviewBundleMarkdown: renderFloorplanPhase3ReviewBundleMarkdown,
   writeFloorplanPhase3ReviewBundleArtifacts: writeFloorplanPhase3ReviewBundleArtifacts

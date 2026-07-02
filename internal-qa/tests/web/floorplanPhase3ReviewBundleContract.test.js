@@ -28,6 +28,11 @@ function assertNoSensitiveText(value, label) {
   assert.equal(report.ready_for_customer_visible_detection, false);
   assert.ok(report.candidate_section_count >= corpus.length);
   assert.ok(report.estimated_minutes_saved > 0);
+  assert.equal(report.seed_box_spike_summary.method_key, "seed_box_spike");
+  assert.equal(report.seed_box_spike_summary.contract_pass_count, corpus.length);
+  assert.equal(report.seed_box_spike_summary.selected_area_safe_count, corpus.length);
+  assert.ok(report.seed_box_spike_summary.average_measured_area_error_percent > 8);
+  assert.ok(report.seed_box_spike_summary.recommendation.includes("contract test only"));
   assert.ok(report.summary_rows.some(function (row) {
     return row.key === "real_sample_intake" && row.status === "blocked";
   }));
@@ -45,6 +50,8 @@ function assertNoSensitiveText(value, label) {
   });
   assert.ok(markdown.includes("# Floorplan Phase 3 Review Bundle"));
   assert.ok(markdown.includes("## Readiness Rows"));
+  assert.ok(markdown.includes("## Seed-Box Spike Summary"));
+  assert.ok(markdown.includes("contract test only"));
   assert.ok(markdown.includes("## Local Gate Commands"));
   assert.ok(markdown.includes("does not approve customer-visible detection"));
   assertNoSensitiveText(markdown, "Phase 3 review bundle markdown");
