@@ -338,6 +338,7 @@ Implemented locally:
 - real-sample fixture validator and dry-run intake path
 - Phase 3 status roll-up report
 - Phase 3 review bundle report
+- Phase 3 next-actions report
 - benchmark coverage report
 
 Current synthetic corpus:
@@ -407,3 +408,7 @@ The status report summarizes which Phase 3 areas are ready, which remain blocked
 Phase 3 review bundle status: implemented locally as `internal-qa/scripts/reportFloorplanPhase3ReviewBundle.js`.
 
 The bundle combines reviewer QA readiness, candidate value, real-sample intake blockers, and local gate commands into one internal review artifact. It is the recommended handoff report before adding real reviewed samples or requesting manual reviewer QA.
+
+Phase 3 next-actions report status: implemented locally as `internal-qa/scripts/reportFloorplanPhase3NextActions.js`.
+
+The next-actions report turns the current local gate state into an ordered queue. Current P0 remains collecting and validating the first privacy-safe approved real reviewed sample batch. Customer-visible detection remains blocked.
