@@ -93,6 +93,7 @@ Before committing real fixtures:
 
 ```bash
 npm run test:floorplan-full
+npm run benchmark:floorplan:validate-real-sample -- --fixture-file=<path-to-redacted-fixture>
 npm run benchmark:floorplan:real-sample-intake -- --json
 npm run benchmark:floorplan:coverage -- --json
 npm run check:public-leaks
@@ -102,6 +103,7 @@ git diff --check
 Expected:
 
 - all floorplan tests pass
+- each proposed real-sample fixture passes the local validator before joining the benchmark corpus
 - real sample intake gate confirms the approved real-sample batch is ready for benchmark use
 - coverage report shows real reviewed samples present
 - no public leak check failure
