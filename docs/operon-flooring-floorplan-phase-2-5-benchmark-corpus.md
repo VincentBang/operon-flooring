@@ -153,6 +153,20 @@ This fixture is intentionally conservative:
 
 The manual-seed baseline gives future Phase 3 experiments a second comparison target beside quick-room detection. It does not approve assisted detection for public use.
 
+## Seed-Box Spike Candidate
+
+The seed-box candidate adapter is a local-only Phase 3 experiment that starts from operator seed points and creates bounded rectangular candidate areas around those seeds.
+
+This is intentionally weaker than a true detector, but useful because it tests the seed-to-candidate contract without using reviewed polygons as the candidate outline. It must remain:
+
+- review-required
+- customer-invisible
+- selected quote area `0`
+- benchmark-only
+- blocked from public floorplan behaviour
+
+The seed-box spike is covered by `internal-qa/tests/web/floorplanSeedBoxCandidateContract.test.js`.
+
 ## Manual-Seed Experiment Runner
 
 The local runner lets a future Phase 3 experiment test operator seed points against the synthetic benchmark corpus:
