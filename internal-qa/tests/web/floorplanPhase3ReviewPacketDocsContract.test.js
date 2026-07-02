@@ -6,6 +6,7 @@ const path = require("path");
 
 const repoRoot = path.resolve(__dirname, "../../..");
 const docPath = path.join(repoRoot, "docs", "operon-flooring-floorplan-phase-3-review-packet-runbook.md");
+const phase3PlanPath = path.join(repoRoot, "docs", "operon-flooring-floorplan-phase-3-detection-spike-plan.md");
 const SENSITIVE_PATTERN = /\b(storage_bucket|storage_path|file_path|signed_url|supplier_cost|margin|internal_rate|service_role|raw_ocr|raw_text|phone|email|address)\b/i;
 
 function scrubAllowedInstructionText(markdown) {
@@ -29,6 +30,15 @@ function scrubAllowedInstructionText(markdown) {
   assert.ok(markdown.includes("does not approve"));
   assert.ok(markdown.includes("customer-visible detection remains blocked"));
   assert.ok(markdown.includes("real reviewed sample intake remains blocked"));
+})();
+
+(function testPhase3PlanLinksToReviewPacketRunbook() {
+  assert.ok(fs.existsSync(phase3PlanPath), "Phase 3 plan should exist.");
+  const markdown = fs.readFileSync(phase3PlanPath, "utf8");
+  assert.ok(markdown.includes("writeFloorplanPhase3ReviewPacket.js"));
+  assert.ok(markdown.includes("benchmark:floorplan:phase3-packet"));
+  assert.ok(markdown.includes("operon-flooring-floorplan-phase-3-review-packet-runbook.md"));
+  assert.ok(markdown.includes("does not approve production deployment"));
 })();
 
 (function testReviewPacketRunbookDoesNotContainConcreteSensitiveValues() {

@@ -412,3 +412,17 @@ The bundle combines reviewer QA readiness, candidate value, real-sample intake b
 Phase 3 next-actions report status: implemented locally as `internal-qa/scripts/reportFloorplanPhase3NextActions.js`.
 
 The next-actions report turns the current local gate state into an ordered queue. Current P0 remains collecting and validating the first privacy-safe approved real reviewed sample batch. Customer-visible detection remains blocked.
+
+Phase 3 review packet status: implemented locally as `internal-qa/scripts/writeFloorplanPhase3ReviewPacket.js`.
+
+The packet writer creates one local-only handoff folder containing the Phase 3 status report, review bundle, next-actions report, local gate plan, reviewer readiness gate, real-sample intake gate and geometry-redacted inspection packet.
+
+Run:
+
+```bash
+npm run benchmark:floorplan:phase3-packet -- --output-dir=internal-qa/reports/floorplan-phase3-review-packet
+```
+
+Runbook: `docs/operon-flooring-floorplan-phase-3-review-packet-runbook.md`.
+
+This packet does not approve production deployment, customer-visible detection, automatic measurement approval or real-sample benchmark intake. It is a reviewer handoff artifact only.
