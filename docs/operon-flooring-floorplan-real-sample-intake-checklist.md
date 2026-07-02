@@ -87,6 +87,14 @@ The first real-sample batch should include at least:
 
 This closes the current `real_reviewed_samples` coverage gap without requiring a large dataset.
 
+A safe local batch template is available at:
+
+```text
+internal-qa/templates/floorplanApprovedRealSampleBatchTemplate.js
+```
+
+Copy the shape only. Replace each template item with reviewed, redacted, customer-safe measurement data before running the fixture validator.
+
 ## Acceptance Gate
 
 Before committing real fixtures:
