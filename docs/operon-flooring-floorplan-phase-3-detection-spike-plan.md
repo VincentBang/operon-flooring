@@ -335,6 +335,7 @@ Implemented locally:
 - geometry-redacted candidate inspection packet
 - reviewer readiness gate report
 - real-sample intake gate report
+- real-sample fixture validator and dry-run intake path
 - Phase 3 status roll-up report
 - benchmark coverage report
 
@@ -394,6 +395,10 @@ Real-sample intake gate status: implemented locally as `internal-qa/scripts/repo
 
 The intake gate verifies that any future real reviewed sample batch has the required approval metadata and coverage mix before it can close the real-sample benchmark gap. It does not approve training or customer-visible detection.
 
+Real-sample fixture validator status: implemented locally as `internal-qa/scripts/validateFloorplanRealSampleFixture.js`.
+
+The validator checks proposed redacted fixture files before they enter the benchmark corpus. The intake gate can now dry-run a proposed fixture batch with `--fixture-file`, so reviewer-approved samples can be checked without publishing or committing customer-sensitive source material.
+
 Phase 3 status roll-up status: implemented locally as `internal-qa/scripts/reportFloorplanPhase3Status.js`.
 
-The status report summarizes which Phase 3 areas are ready, which remain blocked, and the next safe task. It is intended as the first artifact to run before deciding whether to add real reviewed samples, run reviewer QA, or continue synthetic-only experiments.
+The status report summarizes which Phase 3 areas are ready, which remain blocked, the real-sample validation commands, and the next safe task. It is intended as the first artifact to run before deciding whether to add real reviewed samples, run reviewer QA, or continue synthetic-only experiments.

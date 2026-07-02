@@ -29,12 +29,21 @@ function assertNoSensitiveText(value, label) {
   assert.equal(report.hybrid_selector_ready, true);
   assert.ok(report.total_candidate_count >= corpus.length);
   assert.ok(report.status_rows.some(function (row) {
+    return row.area === "real_sample_fixture_validation" && row.status === "ready";
+  }));
+  assert.ok(report.status_rows.some(function (row) {
     return row.area === "real_sample_intake" && row.status === "blocked";
   }));
   assert.ok(report.status_rows.some(function (row) {
     return row.area === "customer_visible_detection" && row.status === "blocked";
   }));
   assert.ok(report.next_safe_task.includes("approved real reviewed sample batch"));
+  assert.ok(report.local_gate_commands.some(function (command) {
+    return command.includes("validate-real-sample");
+  }));
+  assert.ok(report.local_gate_commands.some(function (command) {
+    return command.includes("real-sample-intake");
+  }));
   assertNoSensitiveText(JSON.stringify(report), "Phase 3 status report JSON");
 })();
 
@@ -46,6 +55,8 @@ function assertNoSensitiveText(value, label) {
   });
   assert.ok(markdown.includes("# Floorplan Phase 3 Status Report"));
   assert.ok(markdown.includes("## Status Rows"));
+  assert.ok(markdown.includes("## Local Gate Commands"));
+  assert.ok(markdown.includes("benchmark:floorplan:validate-real-sample"));
   assert.ok(markdown.includes("does not approve deployment"));
   assertNoSensitiveText(markdown, "Phase 3 status markdown");
 

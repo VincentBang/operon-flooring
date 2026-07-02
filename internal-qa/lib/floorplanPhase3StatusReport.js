@@ -18,6 +18,11 @@ function buildStatusRows(reviewerGate, realSampleGate, tuning, inspection) {
       detail: "Synthetic reviewer QA gate: " + (reviewerGate.ready_for_reviewer_qa ? "ready" : "blocked") + "."
     },
     {
+      area: "real_sample_fixture_validation",
+      status: "ready",
+      detail: "Local validator is available for redacted approved sample fixtures before corpus inclusion."
+    },
+    {
       area: "real_sample_intake",
       status: realSampleGate.ready_for_real_sample_benchmark_batch ? "ready" : "blocked",
       detail: realSampleGate.coverage_gap_count + " real-sample coverage gaps remain."
@@ -58,6 +63,12 @@ function buildFloorplanPhase3StatusReport(items) {
     ready_for_customer_visible_detection: false,
     total_candidate_count: inspection.total_candidate_count,
     hybrid_selector_ready: tuning.ready_for_next_detection_spike,
+    local_gate_commands: [
+      "npm run benchmark:floorplan:validate-real-sample -- --fixture-file=<redacted-fixture>",
+      "npm run benchmark:floorplan:real-sample-intake -- --fixture-file=<redacted-fixture> --json",
+      "npm run test:floorplan-full",
+      "npm run check:public-leaks"
+    ],
     next_safe_task: realSampleGate.ready_for_real_sample_benchmark_batch
       ? "Run reviewer QA against approved real reviewed samples."
       : "Collect and redact the first approved real reviewed sample batch before real detection work.",
@@ -102,6 +113,12 @@ function renderFloorplanPhase3StatusMarkdown(report, metadata) {
   lines.push("## Next Safe Task");
   lines.push("");
   lines.push(report.next_safe_task);
+  lines.push("");
+  lines.push("## Local Gate Commands");
+  lines.push("");
+  (report.local_gate_commands || []).forEach(function (command) {
+    lines.push("- `" + command + "`");
+  });
   lines.push("");
   lines.push("## Safety Notes");
   lines.push("");
