@@ -43,6 +43,7 @@ The command writes:
 - reviewer readiness gate
 - real-sample intake gate
 - real-sample collection plan
+- real-sample request packet
 - geometry-redacted inspection packet
 
 ## What To Review
@@ -55,8 +56,9 @@ Review the packet in this order:
 4. `phase3-local-gates`
 5. `real-sample-intake`
 6. `real-sample-collection`
-7. `inspection-packet`
-8. `phase3-status`
+7. `real-sample-request`
+8. `inspection-packet`
+9. `phase3-status`
 
 The current expected decision is:
 

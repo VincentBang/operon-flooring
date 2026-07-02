@@ -9,6 +9,7 @@ const Inspection = require("../lib/floorplanCandidateInspectionPacketReport");
 const NextActions = require("../lib/floorplanPhase3NextActionsReport");
 const RealSample = require("../lib/floorplanRealSampleIntakeGateReport");
 const RealSampleCollection = require("../lib/floorplanRealSampleCollectionPlan");
+const RealSampleRequest = require("../lib/floorplanRealSampleRequestPacket");
 const Readiness = require("../lib/floorplanReviewerReadinessGateReport");
 const Status = require("../lib/floorplanPhase3StatusReport");
 const GatePlan = require("./reportFloorplanPhase3LocalGatePlan");
@@ -71,6 +72,24 @@ function writeRealSampleCollectionPlan(outputDir) {
   };
 }
 
+function writeRealSampleRequestPacket(outputDir) {
+  const report = RealSampleRequest.buildFloorplanRealSampleRequestPacket();
+  const reportDir = path.join(outputDir, "real-sample-request");
+  fs.mkdirSync(reportDir, { recursive: true });
+  const jsonPath = path.join(reportDir, "real-sample-request.json");
+  const markdownPath = path.join(reportDir, "real-sample-request.md");
+  fs.writeFileSync(jsonPath, JSON.stringify(report, null, 2) + "\n");
+  fs.writeFileSync(markdownPath, RealSampleRequest.renderFloorplanRealSampleRequestPacketMarkdown(report));
+  return {
+    key: "real-sample-request",
+    report_type: report.packet_type,
+    json_path: jsonPath,
+    markdown_path: markdownPath,
+    local_only: report.local_only === true,
+    customer_visible: report.customer_visible === true
+  };
+}
+
 function writePacket(outputDir) {
   fs.mkdirSync(outputDir, { recursive: true });
   const reports = [
@@ -81,6 +100,7 @@ function writePacket(outputDir) {
     writeReport("reviewer-readiness", outputDir, Readiness.buildFloorplanReviewerReadinessGateReport, Readiness.writeFloorplanReviewerReadinessGateArtifacts),
     writeReport("real-sample-intake", outputDir, RealSample.buildFloorplanRealSampleIntakeGateReport, RealSample.writeFloorplanRealSampleIntakeGateArtifacts),
     writeRealSampleCollectionPlan(outputDir),
+    writeRealSampleRequestPacket(outputDir),
     writeReport("inspection-packet", outputDir, Inspection.buildFloorplanCandidateInspectionPacketReport, Inspection.writeFloorplanCandidateInspectionPacketArtifacts)
   ];
   const manifest = {
