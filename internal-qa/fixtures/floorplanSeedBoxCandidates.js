@@ -109,7 +109,7 @@ function seedBoxCandidatePayloadForSeedsWithQuality(item, seeds, options) {
 
   return {
     payload: {
-      method: "manual_seed_spike",
+      method: "seed_box_spike",
       final: false,
       customer_visible: false,
       benchmark_item_id: item.id,

@@ -9,7 +9,7 @@ const SeedBox = require("../../fixtures/floorplanSeedBoxCandidates");
 (function testSeedBoxProducesReviewOnlyCandidatesForAllFixtures() {
   const results = corpus.map(function (item) {
     const payload = SeedBox.seedBoxCandidatePayloadForItem(item);
-    assert.equal(payload.method, "manual_seed_spike");
+    assert.equal(payload.method, "seed_box_spike");
     assert.equal(payload.selected_method_key, "seed_box_spike");
     assert.equal(payload.final, false);
     assert.equal(payload.customer_visible, false);

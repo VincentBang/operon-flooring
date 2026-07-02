@@ -54,6 +54,7 @@ const METHOD_SECTIONS = [
   { key: "quick_room_baseline", label: "quick-room baseline" },
   { key: "manual_seed_baseline", label: "manual-seed baseline" },
   { key: "classical_contour_spike", label: "classical contour spike" },
+  { key: "seed_box_spike", label: "seed-box spike" },
   { key: "hybrid_selector_spike", label: "hybrid selector spike" }
 ];
 

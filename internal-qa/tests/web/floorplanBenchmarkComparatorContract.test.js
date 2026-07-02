@@ -76,6 +76,27 @@ function report(id, options) {
           candidate_selected_area_m2: 0
         }
       ]
+    },
+    seed_box_spike: {
+      results: [
+        {
+          id: "synthetic-rectangle-clean",
+          area_error_percent: 9,
+          measured_area_error_percent: 9,
+          passed_contract: true,
+          review_required: true,
+          candidate_selected_area_m2: 0
+        },
+        {
+          id: "synthetic-long-open-plan",
+          area_error_percent: 12,
+          measured_area_error_percent: 12,
+          measured_area_warning: true,
+          passed_contract: true,
+          review_required: true,
+          candidate_selected_area_m2: 0
+        }
+      ]
     }
   };
 }
@@ -107,7 +128,7 @@ function report(id, options) {
   assert.equal(ranking.local_only, true);
   assert.equal(ranking.customer_visible, false);
   assert.equal(ranking.safe_to_continue_detection_spike, true);
-  assert.equal(ranking.method_summary.length, 3);
+  assert.equal(ranking.method_summary.length, 4);
   assert.equal(ranking.fixture_rankings.length, 2);
   assert.equal(ranking.fixture_rankings.find(function (fixture) {
     return fixture.fixture_id === "synthetic-rectangle-clean";
@@ -118,6 +139,7 @@ function report(id, options) {
   const markdown = Comparator.renderMethodRankingMarkdown(ranking);
   assert.ok(markdown.includes("# Floorplan Candidate Method Ranking"));
   assert.ok(markdown.includes("classical contour spike"));
+  assert.ok(markdown.includes("seed-box spike"));
   assert.ok(markdown.includes("Candidate selected area must remain `0` until reviewed."));
 })();
 
