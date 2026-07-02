@@ -337,6 +337,7 @@ Implemented locally:
 - real-sample intake gate report
 - real-sample fixture validator and dry-run intake path
 - Phase 3 status roll-up report
+- Phase 3 review bundle report
 - benchmark coverage report
 
 Current synthetic corpus:
@@ -402,3 +403,7 @@ The validator checks proposed redacted fixture files before they enter the bench
 Phase 3 status roll-up status: implemented locally as `internal-qa/scripts/reportFloorplanPhase3Status.js`.
 
 The status report summarizes which Phase 3 areas are ready, which remain blocked, the real-sample validation commands, and the next safe task. It is intended as the first artifact to run before deciding whether to add real reviewed samples, run reviewer QA, or continue synthetic-only experiments.
+
+Phase 3 review bundle status: implemented locally as `internal-qa/scripts/reportFloorplanPhase3ReviewBundle.js`.
+
+The bundle combines reviewer QA readiness, candidate value, real-sample intake blockers, and local gate commands into one internal review artifact. It is the recommended handoff report before adding real reviewed samples or requesting manual reviewer QA.
