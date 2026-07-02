@@ -18,7 +18,8 @@ function methodLabel(methodKey) {
     classical_contour_spike: "Classical contour spike",
     hybrid_selector_spike: "Hybrid selector spike",
     manual_seed_baseline: "Manual-seed baseline",
-    quick_room_baseline: "Quick-room baseline"
+    quick_room_baseline: "Quick-room baseline",
+    seed_box_spike: "Seed-box spike"
   };
   return labels[methodKey] || methodKey;
 }

@@ -8,6 +8,7 @@ const Classical = require("../fixtures/floorplanClassicalContourCandidates");
 const Hybrid = require("../fixtures/floorplanHybridSelectorCandidates");
 const ManualSeed = require("../fixtures/floorplanManualSeedBaselineCandidates");
 const QuickRoom = require("../fixtures/floorplanQuickRoomBaselineCandidates");
+const SeedBox = require("../fixtures/floorplanSeedBoxCandidates");
 const Comparator = require("./floorplanBenchmarkReportComparator");
 const Harness = require("./floorplanBenchmarkHarness");
 const ReportWriter = require("./floorplanBenchmarkReportWriter");
@@ -24,7 +25,8 @@ function methodLabel(methodKey) {
     classical_contour_spike: "Classical contour spike",
     hybrid_selector_spike: "Hybrid selector spike",
     manual_seed_baseline: "Manual-seed baseline",
-    quick_room_baseline: "Quick-room baseline"
+    quick_room_baseline: "Quick-room baseline",
+    seed_box_spike: "Seed-box spike"
   };
   return labels[methodKey] || methodKey;
 }
@@ -43,6 +45,9 @@ function buildCandidateBenchmarkReport(items) {
   });
   const classicalContourResults = source.map(function (item) {
     return Harness.scoreCandidatePayload(item, Classical.classicalContourCandidatePayloadForItem(item));
+  });
+  const seedBoxResults = source.map(function (item) {
+    return Harness.scoreCandidatePayload(item, SeedBox.seedBoxCandidatePayloadForItem(item), { areaWarningThresholdPercent: 80 });
   });
   const hybridSelectorResults = source.map(function (item) {
     return Harness.scoreCandidatePayload(item, Hybrid.hybridSelectorCandidatePayloadForItem(item));
@@ -63,6 +68,12 @@ function buildCandidateBenchmarkReport(items) {
       passed_contract_count: classicalContourResults.filter(function (result) { return result.passed_contract; }).length,
       measured_warning_count: classicalContourResults.filter(function (result) { return result.measured_area_warning; }).length,
       results: classicalContourResults
+    },
+    seed_box_spike: {
+      item_count: seedBoxResults.length,
+      passed_contract_count: seedBoxResults.filter(function (result) { return result.passed_contract; }).length,
+      measured_warning_count: seedBoxResults.filter(function (result) { return result.measured_area_warning; }).length,
+      results: seedBoxResults
     },
     hybrid_selector_spike: {
       item_count: hybridSelectorResults.length,

@@ -41,6 +41,11 @@ function assertNoSensitiveText(value, label) {
   assert.ok(report.calibration_rows.some(function (row) {
     return !row.exact_selector_match && row.within_tolerance;
   }), "Calibration should show conservative near-best choices, not only exact wins.");
+  assert.ok(report.calibration_rows.some(function (row) {
+    return row.ranked_method_order.some(function (entry) {
+      return entry.method_key === "seed_box_spike" && entry.method_label === "Seed-box spike";
+    });
+  }), "Calibration should include seed-box spike in ranked method order.");
   assertNoSensitiveText(JSON.stringify(report), "calibration report JSON");
 })();
 
