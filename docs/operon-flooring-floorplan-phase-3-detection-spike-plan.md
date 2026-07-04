@@ -420,6 +420,7 @@ The packet writer creates one local-only handoff folder containing the Phase 3 s
 Run:
 
 ```bash
+npm run benchmark:floorplan:phase3-handoff -- --packet-dir=internal-qa/reports/floorplan-phase3-review-packet --request-dir=internal-qa/reports/floorplan-real-sample-request
 npm run benchmark:floorplan:phase3-packet -- --output-dir=internal-qa/reports/floorplan-phase3-review-packet
 npm run benchmark:floorplan:phase3-validate-packet -- --packet-dir=internal-qa/reports/floorplan-phase3-review-packet
 ```

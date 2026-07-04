@@ -24,6 +24,14 @@ All candidate output remains review-only until an internal reviewer approves a m
 From the repository root:
 
 ```bash
+npm run benchmark:floorplan:phase3-handoff -- --packet-dir=internal-qa/reports/floorplan-phase3-review-packet --request-dir=internal-qa/reports/floorplan-real-sample-request
+```
+
+This prepares the packet, validates it, and writes the real-sample request artifacts.
+
+If you only need to rebuild the packet:
+
+```bash
 npm run benchmark:floorplan:phase3-packet -- --output-dir=internal-qa/reports/floorplan-phase3-review-packet
 ```
 
