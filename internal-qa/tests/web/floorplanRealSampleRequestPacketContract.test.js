@@ -2,6 +2,8 @@
 
 const assert = require("assert");
 const childProcess = require("child_process");
+const fs = require("fs");
+const os = require("os");
 const path = require("path");
 
 const RequestPacket = require("../../lib/floorplanRealSampleRequestPacket");
@@ -47,6 +49,26 @@ function assertSafe(value, label) {
   assert.equal(parsed.packet_type, "floorplan_real_sample_request_packet");
   assert.equal(parsed.requested_slot_count, 5);
   assertSafe(run.stdout, "request packet CLI JSON");
+})();
+
+(function testRequestPacketCliWritesArtifacts() {
+  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "operon-floorplan-real-sample-request-"));
+  const run = childProcess.spawnSync(process.execPath, [
+    scriptPath,
+    "--json",
+    "--write-artifacts",
+    "--output-dir=" + outputDir
+  ], {
+    cwd: repoRoot,
+    encoding: "utf8"
+  });
+  assert.equal(run.status, 0, run.stderr || run.stdout);
+  const parsed = JSON.parse(run.stdout);
+  assert.ok(parsed.artifacts, "CLI should report written artifacts.");
+  assert.ok(fs.existsSync(parsed.artifacts.json_path), "JSON artifact should exist.");
+  assert.ok(fs.existsSync(parsed.artifacts.markdown_path), "Markdown artifact should exist.");
+  assertSafe(fs.readFileSync(parsed.artifacts.json_path, "utf8"), "request packet JSON artifact");
+  assertSafe(fs.readFileSync(parsed.artifacts.markdown_path, "utf8"), "request packet Markdown artifact");
 })();
 
 console.log("floorplanRealSampleRequestPacketContract.test.js passed");
