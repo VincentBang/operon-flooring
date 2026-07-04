@@ -46,6 +46,12 @@ The command writes:
 - real-sample request packet
 - geometry-redacted inspection packet
 
+Validate the generated packet before sharing it:
+
+```bash
+npm run benchmark:floorplan:phase3-validate-packet -- --packet-dir=internal-qa/reports/floorplan-phase3-review-packet
+```
+
 ## What To Review
 
 Review the packet in this order:
@@ -86,6 +92,7 @@ Run:
 
 ```bash
 node internal-qa/tests/web/floorplanPhase3ReviewPacketContract.test.js
+npm run benchmark:floorplan:phase3-validate-packet -- --packet-dir=internal-qa/reports/floorplan-phase3-review-packet
 npm run test:floorplan-full
 npm run check:public-leaks
 git diff --check
@@ -94,6 +101,7 @@ git diff --check
 Expected:
 
 - packet contract passes
+- generated packet validator passes
 - full floorplan suite passes
 - public leak check passes
 - no whitespace errors

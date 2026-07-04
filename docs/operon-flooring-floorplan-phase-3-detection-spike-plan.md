@@ -421,6 +421,7 @@ Run:
 
 ```bash
 npm run benchmark:floorplan:phase3-packet -- --output-dir=internal-qa/reports/floorplan-phase3-review-packet
+npm run benchmark:floorplan:phase3-validate-packet -- --packet-dir=internal-qa/reports/floorplan-phase3-review-packet
 ```
 
 Runbook: `docs/operon-flooring-floorplan-phase-3-review-packet-runbook.md`.
