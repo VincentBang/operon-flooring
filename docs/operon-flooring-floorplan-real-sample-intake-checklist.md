@@ -95,6 +95,12 @@ npm run benchmark:floorplan:real-sample-collection -- --json
 
 Use the output to confirm which coverage slots are still missing.
 
+If using the worksheet flow, convert the completed worksheet into a fixture batch before validation:
+
+```bash
+npm run benchmark:floorplan:convert-real-sample-worksheet -- --worksheet-file=<completed-worksheet-json> --output-file=<redacted-fixture-batch>
+```
+
 A safe local batch template is available at:
 
 ```text
@@ -110,6 +116,7 @@ Before committing real fixtures:
 ```bash
 npm run test:floorplan-full
 npm run benchmark:floorplan:real-sample-collection -- --json
+npm run benchmark:floorplan:convert-real-sample-worksheet -- --worksheet-file=<completed-worksheet-json> --output-file=<redacted-fixture-batch>
 npm run benchmark:floorplan:validate-real-sample -- --fixture-file=<path-to-redacted-fixture>
 npm run benchmark:floorplan:real-sample-intake -- --fixture-file=<path-to-redacted-fixture> --json
 npm run benchmark:floorplan:coverage -- --json

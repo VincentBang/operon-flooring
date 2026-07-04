@@ -77,6 +77,7 @@ function assertSafe(value, label) {
   const markdown = fs.readFileSync(runbookPath, "utf8");
   assert.ok(markdown.includes("# Operon Flooring Floorplan Real Sample Request Runbook"));
   assert.ok(markdown.includes("benchmark:floorplan:real-sample-request"));
+  assert.ok(markdown.includes("benchmark:floorplan:convert-real-sample-worksheet"));
   assert.ok(markdown.includes("--write-artifacts"));
   assert.ok(markdown.includes("floorplan-real-sample-request-packet.md"));
   assert.ok(markdown.includes("low_contrast_scan"));

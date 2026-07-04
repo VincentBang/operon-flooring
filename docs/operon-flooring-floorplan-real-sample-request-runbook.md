@@ -60,7 +60,13 @@ Before a sample is provided or committed, remove:
 
 ## Validation
 
-When a redacted fixture batch is ready, run:
+If the reviewer completed the worksheet, convert it into a fixture batch first:
+
+```bash
+npm run benchmark:floorplan:convert-real-sample-worksheet -- --worksheet-file=<completed-worksheet-json> --output-file=<redacted-fixture-batch>
+```
+
+Then validate the redacted fixture batch:
 
 ```bash
 npm run benchmark:floorplan:validate-real-sample -- --fixture-file=<redacted-fixture-batch>
