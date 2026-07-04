@@ -116,16 +116,22 @@ function writePacket(outputDir) {
   return Object.assign({ manifest_path: manifestPath }, manifest);
 }
 
-const jsonMode = process.argv.includes("--json");
-const outputDir = path.resolve(process.cwd(), argValue("--output-dir=", path.join("internal-qa", "reports", "floorplan-phase3-review-packet")));
-const packet = writePacket(outputDir);
+if (require.main === module) {
+  const jsonMode = process.argv.includes("--json");
+  const outputDir = path.resolve(process.cwd(), argValue("--output-dir=", path.join("internal-qa", "reports", "floorplan-phase3-review-packet")));
+  const packet = writePacket(outputDir);
 
-if (jsonMode) {
-  process.stdout.write(JSON.stringify(packet, null, 2) + "\n");
-} else {
-  console.log("Wrote floorplan Phase 3 review packet:");
-  console.log("- Manifest: " + packet.manifest_path);
-  packet.reports.forEach(function (report) {
-    console.log("- " + report.key + ": " + report.json_path);
-  });
+  if (jsonMode) {
+    process.stdout.write(JSON.stringify(packet, null, 2) + "\n");
+  } else {
+    console.log("Wrote floorplan Phase 3 review packet:");
+    console.log("- Manifest: " + packet.manifest_path);
+    packet.reports.forEach(function (report) {
+      console.log("- " + report.key + ": " + report.json_path);
+    });
+  }
 }
+
+module.exports = {
+  writePacket: writePacket
+};
