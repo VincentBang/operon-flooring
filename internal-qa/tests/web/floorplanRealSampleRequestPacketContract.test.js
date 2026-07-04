@@ -10,6 +10,7 @@ const RequestPacket = require("../../lib/floorplanRealSampleRequestPacket");
 
 const repoRoot = path.resolve(__dirname, "../../..");
 const scriptPath = path.join(repoRoot, "internal-qa", "scripts", "reportFloorplanRealSampleRequestPacket.js");
+const runbookPath = path.join(repoRoot, "docs", "operon-flooring-floorplan-real-sample-request-runbook.md");
 const SENSITIVE_PATTERN = /\b(storage_bucket|storage_path|file_path|signed_url|supplier_cost|margin|internal_rate|service_role|raw_ocr|raw_text)\b/i;
 
 function assertSafe(value, label) {
@@ -69,6 +70,18 @@ function assertSafe(value, label) {
   assert.ok(fs.existsSync(parsed.artifacts.markdown_path), "Markdown artifact should exist.");
   assertSafe(fs.readFileSync(parsed.artifacts.json_path, "utf8"), "request packet JSON artifact");
   assertSafe(fs.readFileSync(parsed.artifacts.markdown_path, "utf8"), "request packet Markdown artifact");
+})();
+
+(function testRequestPacketRunbookDocumentsArtifactCommand() {
+  assert.ok(fs.existsSync(runbookPath), "Real sample request runbook should exist.");
+  const markdown = fs.readFileSync(runbookPath, "utf8");
+  assert.ok(markdown.includes("# Operon Flooring Floorplan Real Sample Request Runbook"));
+  assert.ok(markdown.includes("benchmark:floorplan:real-sample-request"));
+  assert.ok(markdown.includes("--write-artifacts"));
+  assert.ok(markdown.includes("floorplan-real-sample-request-packet.md"));
+  assert.ok(markdown.includes("low_contrast_scan"));
+  assert.ok(markdown.includes("Do not add samples to the active benchmark corpus until validation and intake both pass."));
+  assertSafe(markdown, "request packet runbook");
 })();
 
 console.log("floorplanRealSampleRequestPacketContract.test.js passed");
