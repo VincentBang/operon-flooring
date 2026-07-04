@@ -81,6 +81,9 @@ function assertSafe(value, label) {
   assert.ok(markdown.includes("floorplan-real-sample-request-packet.md"));
   assert.ok(markdown.includes("low_contrast_scan"));
   assert.ok(markdown.includes("Do not add samples to the active benchmark corpus until validation and intake both pass."));
+  const phase3Plan = fs.readFileSync(path.join(repoRoot, "docs", "operon-flooring-floorplan-phase-3-detection-spike-plan.md"), "utf8");
+  assert.ok(phase3Plan.includes("reportFloorplanRealSampleRequestPacket.js"));
+  assert.ok(phase3Plan.includes("operon-flooring-floorplan-real-sample-request-runbook.md"));
   assertSafe(markdown, "request packet runbook");
 })();
 

@@ -436,3 +436,15 @@ npm run benchmark:floorplan:real-sample-collection -- --json
 ```
 
 The collection plan lists the approved real reviewed sample slots still needed before the benchmark can close the current real-sample gap. It does not add real samples, write files to the active corpus, approve training or unlock customer-visible detection.
+
+Real-sample request packet status: implemented locally as `internal-qa/scripts/reportFloorplanRealSampleRequestPacket.js`.
+
+Run:
+
+```bash
+npm run benchmark:floorplan:real-sample-request -- --write-artifacts --output-dir=internal-qa/reports/floorplan-real-sample-request
+```
+
+Runbook: `docs/operon-flooring-floorplan-real-sample-request-runbook.md`.
+
+The request packet is the safe handoff for asking a reviewer to prepare the missing approved redacted samples. It does not contain real samples and does not approve adding them to the active corpus.

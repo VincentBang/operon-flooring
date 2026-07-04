@@ -101,7 +101,13 @@ Expected:
 
 ## Next Step After A Clean Packet
 
-If the packet is clean, the next local-only task is to collect a small approved real reviewed sample batch using:
+If the packet is clean, first generate the reviewer request handoff:
+
+```bash
+npm run benchmark:floorplan:real-sample-request -- --write-artifacts --output-dir=internal-qa/reports/floorplan-real-sample-request
+```
+
+Then collect a small approved real reviewed sample batch using:
 
 ```bash
 npm run benchmark:floorplan:validate-real-sample -- --fixture-file=<redacted-fixture-batch>
