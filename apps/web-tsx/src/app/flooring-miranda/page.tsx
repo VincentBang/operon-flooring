@@ -71,9 +71,9 @@ const jsonLd = [
 ];
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Flooring Miranda | Hybrid, Laminate & Timber Installation",
+  title: "Flooring Miranda | Hybrid, Laminate & Timber Quote Help",
   description:
-    "Plan flooring in Miranda for hybrid, laminate or timber-look projects with product, area, removal, preparation, stairs, trims, quote review and floorplan details clear.",
+    "Plan a Miranda flooring quote for hybrid, laminate or timber flooring with product, area, removal, preparation, stairs, trims and floorplan details clear.",
   path: pagePath,
   image: "/assets/operon-social-preview.png",
   robots: "index,follow"
@@ -95,9 +95,9 @@ export default function Page() {
               <span>Flooring Miranda</span>
             </nav>
             <span className="eyebrow">Miranda flooring quotes</span>
-            <h1>Flooring Miranda - Hybrid, Laminate & Timber Installation</h1>
+            <h1>Flooring Miranda - Hybrid, Laminate & Timber Quote Help</h1>
             <p>
-              Miranda flooring projects can include family homes, apartments, townhouses and rental updates. Use this page to compare hybrid flooring, laminate flooring and timber-look options, then start a quote with product, area, removal, trims, stairs and access details clear.
+              Miranda flooring projects can include family homes, apartments, townhouses and rental updates. Use this page to compare hybrid flooring, laminate flooring and timber flooring options, then start a quote with product, area, removal, trims, stairs and access details clear.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href={`${routes.quote}?from=seo_miranda#quoteForm`} data-track-cta="miranda_start_quote_click">Start Miranda flooring quote</a>

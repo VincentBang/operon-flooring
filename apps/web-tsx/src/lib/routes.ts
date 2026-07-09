@@ -29,6 +29,7 @@ export const routes = {
   neutralBay: "/flooring-neutral-bay.html",
   mosman: "/flooring-mosman.html",
   marrickville: "/flooring-marrickville.html",
+  miranda: "/flooring-miranda.html",
   coogee: "/flooring-coogee.html",
   randwick: "/flooring-randwick.html",
   chatswood: "/flooring-chatswood.html",

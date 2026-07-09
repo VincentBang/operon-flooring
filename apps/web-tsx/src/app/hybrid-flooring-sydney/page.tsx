@@ -105,9 +105,9 @@ const jsonLd = [
 ];
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Hybrid Flooring Sydney | Ranges, Apartments & Quote Guide",
+  title: "Hybrid Flooring Sydney | Products, Apartments & Quote Guide",
   description:
-    "Compare hybrid flooring in Sydney for homes, apartments and rentals. Review range fit, waterproof claims, underlay, removal, trims and quote scope.",
+    "Compare hybrid flooring in Sydney for homes, apartments and rentals. Review products, waterproof claims, underlay, removal, trims and quote scope.",
   path: pagePath,
   image: "/assets/operon-social-preview.png",
   robots: "index,follow"

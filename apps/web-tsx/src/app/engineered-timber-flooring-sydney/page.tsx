@@ -105,9 +105,9 @@ const jsonLd = [
 ];
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Engineered Timber Flooring Sydney | Premium Quote Guide",
+  title: "Engineered Timber Flooring Sydney | Products & Quote Guide",
   description:
-    "Compare engineered timber flooring in Sydney for premium homes, stairs and feature rooms. Review product range, method, prep, trims and quote scope.",
+    "Compare engineered timber flooring in Sydney for premium homes, stairs and feature rooms. Review products, method, prep, trims and quote scope.",
   path: pagePath,
   image: "/assets/operon-social-preview.png",
   robots: "index,follow"

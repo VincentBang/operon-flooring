@@ -405,6 +405,39 @@ export const productAuthoritySupplements = {
   }
 } as const;
 
+const productGuideAuthorityLinks = [
+  {
+    href: routes.products,
+    title: "Browse the product catalogue",
+    body: "Shortlist hybrid, laminate or engineered timber ranges before estimating."
+  },
+  {
+    href: `${routes.quote}?from=product_guide`,
+    title: "Start quote with product direction",
+    body: "Carry the product category into a structured quote with area and scope details."
+  },
+  {
+    href: routes.quoteReview,
+    title: "Review an existing product quote",
+    body: "Check whether the written quote names the product, range, inclusions and exclusions clearly."
+  },
+  {
+    href: routes.floorplan,
+    title: "Measure rooms from a floor plan",
+    body: "Use floorplan area when the product quote does not show a reliable measurement."
+  },
+  {
+    href: routes.flooringQuoteSydney,
+    title: "Flooring quote Sydney guide",
+    body: "Understand how product choice, area and scope should connect before comparing totals."
+  },
+  {
+    href: "/blog/how-to-compare-flooring-quotes.html",
+    title: "How to compare flooring quotes",
+    body: "Normalise product, area, removal, preparation and finishing scope before deciding."
+  }
+];
+
 export function getProductGuideMetadata(slug: string): Metadata {
   const guide = productSeoGuides[slug];
 
@@ -522,6 +555,27 @@ export function ProductGuidePage({ slug }: { slug: string }) {
                 <Link className="button-secondary" href={routes.recentProjects}>
                   View recent projects
                 </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="shell">
+            <div className="section-card">
+              <span className="eyebrow">Product choice to quote path</span>
+              <h2 style={{ marginTop: 18 }}>Connect the product decision to quote clarity</h2>
+              <p>
+                A product guide is most useful when it leads into the next quote step. Use these links to compare ranges, start an estimate, review a
+                written quote or measure area before the product decision becomes a booking decision.
+              </p>
+              <div className="link-grid" style={{ marginTop: 22 }}>
+                {productGuideAuthorityLinks.map((link) => (
+                  <Link className="link-card" href={link.href} key={link.href}>
+                    <strong>{link.title}</strong>
+                    <span>{link.body}</span>
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

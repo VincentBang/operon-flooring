@@ -46,8 +46,8 @@ const rangeCards = [
 ];
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Laminate Flooring Sydney | Dry Room Ranges & Quote Guide",
-  description: "Compare laminate flooring in Sydney for dry rooms, apartments and rentals. Review range fit, underlay, moisture limits, prep, trims and quote scope.",
+  title: "Laminate Flooring Sydney | Products, Apartments & Quote Guide",
+  description: "Compare laminate flooring in Sydney for dry rooms, apartments and rentals. Review products, underlay, moisture limits, prep, trims and quote scope.",
   path: routes.laminate,
   image: "/assets/operon-social-preview.png"
 });

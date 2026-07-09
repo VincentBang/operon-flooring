@@ -644,6 +644,62 @@ export const quoteReviewGuides: Record<string, QuoteReviewGuide> = {
   }
 };
 
+const quoteReviewAuthorityLinks = [
+  {
+    href: routes.quoteReview,
+    title: "Run the quote review tool",
+    body: "Upload a written quote or use the no-file completeness check before deciding."
+  },
+  {
+    href: `${routes.quote}?from=quote_review_guide`,
+    title: "Start an Operon comparison quote",
+    body: "Turn the clearer scope into a structured flooring estimate."
+  },
+  {
+    href: routes.floorplan,
+    title: "Measure area from a floor plan",
+    body: "Use floorplan area when the quote does not show a reliable measurement."
+  },
+  {
+    href: routes.products,
+    title: "Compare flooring products",
+    body: "Check hybrid, laminate and engineered timber direction before comparing written quotes."
+  },
+  {
+    href: routes.flooringQuoteSydney,
+    title: "Flooring quote Sydney guide",
+    body: "Use the main Sydney quote guide for product, area, inclusions and final scope."
+  },
+  {
+    href: "/flooring-installation-cost-sydney.html",
+    title: "Installation cost scope guide",
+    body: "Understand the customer-safe scope items that can make flooring quotes look different."
+  }
+];
+
+const localQuoteAuthorityLinks = [
+  {
+    href: routes.edmondsonPark,
+    title: "Flooring Edmondson Park",
+    body: "Local quote clarity for timber, hybrid and laminate projects."
+  },
+  {
+    href: routes.miranda,
+    title: "Flooring Miranda",
+    body: "Local product and quote scope guidance for Miranda projects."
+  },
+  {
+    href: routes.liverpool,
+    title: "Flooring Liverpool",
+    body: "Liverpool flooring quote support for product, access, removal and trims."
+  },
+  {
+    href: routes.parramatta,
+    title: "Flooring Parramatta",
+    body: "Parramatta apartment and home flooring quote guidance."
+  }
+];
+
 export function getQuoteReviewGuideMetadata(slug: string): Metadata {
   const guide = quoteReviewGuides[slug];
 
@@ -819,6 +875,43 @@ export function QuoteReviewGuidePage({ slug }: { slug: string }) {
                 <Link className="button-secondary" href={`${routes.quote}?from=guide&guide=${guide.slug}`} data-track-cta="quote_review_cluster_quote_cta">
                   Start an Operon comparison quote
                 </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="shell grid-2">
+            <div className="section-card">
+              <span className="eyebrow">Quote tools</span>
+              <h2 style={{ marginTop: 18 }}>Move from guide reading to a clearer quote path</h2>
+              <p>
+                Use this guide as a decision checkpoint, then move into the tool that matches what you know: written quote review, a new comparison quote,
+                floorplan area support or product selection.
+              </p>
+              <div className="link-grid" style={{ marginTop: 22 }}>
+                {quoteReviewAuthorityLinks.map((link) => (
+                  <Link className="link-card" href={link.href} key={link.href}>
+                    <strong>{link.title}</strong>
+                    <span>{link.body}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div className="section-card">
+              <span className="eyebrow">Local quote examples</span>
+              <h2 style={{ marginTop: 18 }}>Apply the checklist to Sydney suburb pages</h2>
+              <p>
+                Local flooring pages keep suburb intent connected to the same quote checks: product, area, removal, preparation, access, stairs and
+                written exclusions.
+              </p>
+              <div className="link-grid" style={{ marginTop: 22 }}>
+                {localQuoteAuthorityLinks.map((link) => (
+                  <Link className="link-card" href={link.href} key={link.href}>
+                    <strong>{link.title}</strong>
+                    <span>{link.body}</span>
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

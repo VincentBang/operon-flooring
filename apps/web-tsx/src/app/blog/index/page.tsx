@@ -5,6 +5,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { Layout } from "@/components/layout/Layout";
 import { createPageMetadata } from "@/lib/metadata";
 import { legacyBlogPages } from "@/lib/legacyBlogPages";
+import { routes } from "@/lib/routes";
 
 const page = legacyBlogPages.index;
 const quoteReviewCluster = [
@@ -88,6 +89,28 @@ const localSearchCluster = [
     body: "Use the core Sydney quote guide before comparing written totals."
   }
 ];
+const conversionCluster = [
+  {
+    href: routes.quote,
+    title: "Start instant flooring quote",
+    body: "Use product, area, removal, stairs and site notes to create a structured starting estimate."
+  },
+  {
+    href: routes.quoteReview,
+    title: "Check an existing quote",
+    body: "Upload a written quote or run a quick completeness check before comparing totals."
+  },
+  {
+    href: routes.floorplan,
+    title: "Measure from a floor plan",
+    body: "Use a plan to create a clearer area when room measurements are not ready."
+  },
+  {
+    href: routes.products,
+    title: "Browse flooring products",
+    body: "Shortlist hybrid, laminate or engineered timber before starting the quote."
+  }
+];
 
 export const metadata: Metadata = createPageMetadata({
   title: page.title,
@@ -102,6 +125,26 @@ export default function BlogIndexPage() {
     <Layout>
       {page.jsonLd ? <JsonLd data={page.jsonLd} /> : null}
       <div className="legacy-seo-content" dangerouslySetInnerHTML={{ __html: page.html }} />
+      <section className="section" aria-label="Flooring quote starting points">
+        <div className="shell">
+          <article className="section-card">
+            <span className="eyebrow">Start with the right path</span>
+            <h2 style={{ marginTop: 18 }}>Use the guides, then move into the quote flow</h2>
+            <p>
+              The guide hub should help customers choose the next action, not just read more pages. Start a quote when you know the project direction,
+              check an existing quote when you already have written scope, or use a floor plan when area is still uncertain.
+            </p>
+            <div className="link-grid" style={{ marginTop: 22 }}>
+              {conversionCluster.map((guide) => (
+                <Link className="link-card" href={guide.href} key={guide.href}>
+                  <strong>{guide.title}</strong>
+                  <span>{guide.body}</span>
+                </Link>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
       <section className="section" aria-label="Flooring quote review guides">
         <div className="shell">
           <article className="section-card">

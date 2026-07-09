@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegacySeoPageView } from "@/components/seo/LegacySeoPageView";
+import { LocalAuthorityExpansion } from "@/components/seo/LocalAuthorityExpansion";
 import { createPageMetadata } from "@/lib/metadata";
 import { legacySeoPages } from "@/lib/legacySeoPages";
 
@@ -14,5 +15,9 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function Page() {
-  return <LegacySeoPageView page={page} />;
+  return (
+    <LegacySeoPageView page={page}>
+      <LocalAuthorityExpansion slug="flooring-rose-bay" />
+    </LegacySeoPageView>
+  );
 }

@@ -48,13 +48,13 @@ const suburbPages = suburbData.map(([name]) => ({
 const nav = (prefix = "") => `
   <header class="site-header">
     <div class="shell nav">
-      <a class="brand" href="${prefix}index.html#top" aria-label="Operon Flooring home"><span>Operon Flooring</span></a>
+      <a class="brand" href="${prefix || "/"}#top" aria-label="Operon Flooring home"><span>Operon Flooring</span></a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="${prefix}index.html#top">Home</a>
+        <a href="${prefix || "/"}#top">Home</a>
         <a href="${prefix}quote.html">Quote</a>
         <a href="${prefix}products.html">Flooring Products</a>
         <a href="${prefix}floorplan.html">Floor Plan</a>
-        <a href="${prefix}blog/index.html">Guides</a>
+        <a href="${prefix}blog/">Guides</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       <div class="header-actions"><a class="button header-quote-button" href="${prefix}quote.html">Start quote</a></div>
@@ -65,7 +65,7 @@ const footer = (prefix = "") => `
   <footer class="site-footer footer-contained">
     <div class="container footer-grid">
       <div class="footer-col footer-brand-block">
-        <a class="footer-logo" href="${prefix}index.html" aria-label="Operon Flooring home"><img src="${prefix}assets/operon-logo-final.png" alt="Operon Flooring logo" width="154" height="49"></a>
+        <a class="footer-logo" href="${prefix || "/"}" aria-label="Operon Flooring home"><img src="${prefix}assets/operon-logo-final.png" alt="Operon Flooring logo" width="154" height="49"></a>
         <p class="footer-brand-copy">Sydney flooring quotes, quote review and floor plan measurement support.</p>
         <a class="footer-brand-cta" href="${prefix}quote.html">Start quote</a>
       </div>
@@ -447,7 +447,7 @@ for (const [name, angle, intro, near] of suburbData) {
       { title: "Stairs and trims", text: "Stair nosing, scotia, skirting, trims and door adjustments should be listed." },
       { title: "Access and parking", text: "Apartment access, lifts, parking and delivery conditions can affect planning." }
     ]),
-    cardSection("Internal links", "Useful next pages", ["Use these pages to compare products, check written scope or start the quote with better information."], [
+    cardSection("Next flooring resources", "Useful next pages", ["Use these pages to compare products, check written scope or start the quote with better information."], [
       { href: "products.html", title: "Browse flooring products", text: "Choose a category, range or product direction." },
       { href: "hybrid-flooring-sydney.html", title: "Hybrid flooring Sydney", text: "Review hybrid quote considerations." },
       { href: "laminate-flooring-sydney.html", title: "Laminate flooring Sydney", text: "Review laminate quote considerations." },
