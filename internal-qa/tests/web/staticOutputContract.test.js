@@ -4,6 +4,7 @@ const path = require("path");
 
 const repoRoot = path.resolve(__dirname, "..", "..", "..");
 const outRoot = path.join(repoRoot, "apps", "web-tsx", "out");
+const productsPageSource = path.join(repoRoot, "apps", "web-tsx", "src", "app", "products", "page.tsx");
 
 const requiredOutputFiles = [
   "index.html",
@@ -239,6 +240,28 @@ function assertCrawlerVisibleCopyContract() {
   });
 }
 
+function assertProductsPerformanceContract() {
+  const source = fs.readFileSync(productsPageSource, "utf8");
+  assert.ok(
+    /<Script id="products-page-body-class" strategy="beforeInteractive">/.test(source),
+    "Products page body class must be applied before hydration to avoid hero layout shift."
+  );
+  [
+    "/pricingSourceConfig.js",
+    "/pricingSource.js",
+    "/preference-floors-import.js",
+    "/products.js",
+    "/productSelection.js"
+  ].forEach(function (scriptPath) {
+    const pattern = new RegExp('src="' + scriptPath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + '"\\s+strategy="lazyOnload"');
+    assert.ok(pattern.test(source), "Heavy products catalogue script must lazy-load: " + scriptPath);
+  });
+  assert.ok(
+    /<Script id="products-catalogue-runtime" strategy="lazyOnload">/.test(source),
+    "Inline products catalogue runtime must lazy-load."
+  );
+}
+
 function assertLocalAuthorityExpansionContract() {
   localAuthorityExpansionPages.forEach(function (relativePath) {
     const html = fs.readFileSync(path.join(outRoot, relativePath), "utf8");
@@ -312,6 +335,7 @@ function main() {
   assertCanonicalShape();
   assertNoRedirectSourceSignals();
   assertCrawlerVisibleCopyContract();
+  assertProductsPerformanceContract();
   assertLocalAuthorityExpansionContract();
   assertSprintDGuideBridgeContract();
   console.log("staticOutputContract.test.js passed");
