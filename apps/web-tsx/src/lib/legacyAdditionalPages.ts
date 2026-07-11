@@ -248,8 +248,8 @@ export const legacyAdditionalPages = {
   "flooring-balmain": {
     "slug": "flooring-balmain",
     "source": "apps/web/flooring-balmain.html",
-    "title": "Flooring Balmain | Premium Hybrid, Laminate &amp; Timber Quotes",
-    "description": "Premium flooring quotes in Balmain for hybrid, laminate and engineered timber. Review product selection, measured area, finish quality and final scope before booking.",
+    "title": "Flooring Balmain | Terrace & Apartment Quote Guide",
+    "description": "Plan a Balmain flooring quote for terraces, apartments and older homes. Compare hybrid, laminate and engineered timber with access, stairs, trims and scope clear.",
     "canonicalPath": "/flooring-balmain.html",
     "robots": "index,follow",
     "image": "/assets/operon-social-preview.png",
@@ -324,8 +324,8 @@ export const legacyAdditionalPages = {
   "flooring-drummoyne": {
     "slug": "flooring-drummoyne",
     "source": "apps/web/flooring-drummoyne.html",
-    "title": "Flooring Drummoyne | Premium Hybrid, Laminate &amp; Timber Quotes",
-    "description": "Premium flooring quotes in Drummoyne for hybrid, laminate and engineered timber. Review product selection, measured area, finish quality and final scope before booking.",
+    "title": "Flooring Drummoyne | Apartment & Home Quote Guide",
+    "description": "Plan a Drummoyne flooring quote for apartments, townhouses and family homes. Review hybrid, laminate, engineered timber, access, removal and finishing scope.",
     "canonicalPath": "/flooring-drummoyne.html",
     "robots": "index,follow",
     "image": "/assets/operon-social-preview.png",

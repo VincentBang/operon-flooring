@@ -1,87 +1,42 @@
 # Operon Flooring Keyword URL Ownership Map
 
-Status: Sprint 1 implementation map
-Date: 2026-06-24
+Last updated: 2026-07-10
 
-## Purpose
+Purpose: prevent cannibalisation by assigning each keyword cluster to a primary owner URL and defining supporting URLs.
 
-This map defines which existing URL should own each Page-1 SEO target so Operon does not split relevance across the homepage, quote tool and quote guide.
-
-The main correction is:
-
-- `/quote.html` owns instant quote and online estimate intent.
-- `/flooring-quote-sydney.html` owns quote scope, inclusions and comparison education.
-- `/` remains the broad brand and quote-clarity platform page.
-
-## Primary Ownership
-
-| Query cluster | Primary URL | Role | Supporting URLs |
+| Keyword cluster | Primary owner URL | Supporting URLs | Notes |
 | --- | --- | --- | --- |
-| instant flooring quote Sydney | `/quote.html` | Transactional quote tool | `/`, `/flooring-quote-sydney.html`, `/products.html`, `/floorplan.html` |
-| instant floor quote Sydney | `/quote.html` | Transactional quote tool | `/flooring-quote-sydney.html` |
-| flooring quotes online | `/quote.html` | Online estimate entry point | `/`, `/floorplan.html` |
-| floor quote Sydney | `/quote.html` | Estimate/action page | `/flooring-quote-sydney.html` |
-| flooring quote Sydney | `/quote.html` | Primary action page | `/flooring-quote-sydney.html` |
-| what should be included in a flooring quote | `/flooring-quote-sydney.html` | Guide and scope page | `/quote-review.html`, `/quote.html` |
-| compare flooring quotes Sydney | `/flooring-quote-sydney.html` | Guide and comparison support | `/quote-review.html`, `/quote.html` |
-| flooring quote exclusions | `/blog/common-flooring-quote-exclusions.html` | Specific guide | `/flooring-quote-sydney.html`, `/quote-review.html` |
-| why flooring quotes vary | `/blog/why-flooring-quotes-vary.html` | Specific guide | `/flooring-quote-sydney.html` |
+| instant flooring quote Sydney | `/quote.html` | `/`, `/flooring-quote-sydney.html`, `/quote-review.html` | Keep `/quote.html` transactional and direct. |
+| instant floor quote Sydney | `/quote.html` | `/floorplan.html`, `/flooring-quote-sydney.html` | Mention floorplan support without implying final fixed pricing. |
+| floor quote Sydney | `/quote.html` | `/flooring-quote-sydney.html`, `/floorplan.html` | Use customer-safe estimate language. |
+| flooring quotes online | `/quote.html` | `/flooring-quote-sydney.html`, `/quote-review.html` | Avoid splitting this into the homepage title. |
+| online flooring quote | `/quote.html` | `/products.html`, `/floorplan.html` | Product/floorplan pages should feed into quote. |
+| flooring quote Sydney guide | `/flooring-quote-sydney.html` | `/quote.html`, `/quote-review.html`, quote review blog guides | Supporting educational page, not the primary quote tool. |
+| what should be included in a flooring quote | `/flooring-quote-sydney.html` | `/blog/what-should-be-included-in-flooring-quote.html`, `/quote-review.html` | Blog guide can support deeper checklist intent. |
+| flooring quote exclusions | `/flooring-quote-sydney.html` | `/blog/common-flooring-quote-exclusions.html`, `/quote-review.html` | Keep practical examples, no internal rates. |
+| compare flooring quotes | `/quote-review.html` | `/blog/how-to-compare-flooring-quotes.html`, `/blog/flooring-quote-review-sydney.html` | Quote-review product is the conversion page. |
+| flooring quote review Sydney | `/quote-review.html` | `/blog/flooring-quote-review-sydney.html`, `/flooring-quote-sydney.html` | Blog guide supports, quote-review converts. |
+| hybrid flooring Sydney | `/hybrid-flooring-sydney.html` | `/products.html`, `/blog/laminate-vs-hybrid.html`, suburb pages | Category authority page owns the head term. |
+| laminate flooring Sydney | `/laminate-flooring-sydney.html` | `/products.html`, `/blog/laminate-vs-hybrid.html`, suburb pages | Keep dry-room/apartment/rental context clear. |
+| engineered timber flooring Sydney | `/engineered-timber-flooring-sydney.html` | `/products.html`, `/recent-flooring-projects.html`, suburb pages | Keep premium timber scope and installation method context. |
+| flooring Miranda | `/flooring-miranda.html` | `/hybrid-flooring-sydney.html`, `/laminate-flooring-sydney.html`, `/engineered-timber-flooring-sydney.html` | Local cluster page for product sub-intents in Miranda. |
+| laminate flooring Miranda | `/flooring-miranda.html` | `/laminate-flooring-sydney.html`, `/products.html` | Do not create a separate page unless GSC proves enough demand. |
+| hybrid flooring Miranda | `/flooring-miranda.html` | `/hybrid-flooring-sydney.html`, `/products.html` | Keep as local product subsection. |
+| timber flooring Miranda | `/flooring-miranda.html` | `/engineered-timber-flooring-sydney.html` | Clarify engineered timber context. |
+| flooring Liverpool | `/flooring-liverpool.html` | `/flooring-edmondson-park.html`, `/flooring-leppington.html`, product pages | Local page should link to nearby south-west pages. |
+| timber flooring Liverpool | `/flooring-liverpool.html` | `/engineered-timber-flooring-sydney.html` | Keep product language natural. |
+| timber flooring Edmondson Park | `/flooring-edmondson-park.html` | `/flooring-liverpool.html`, `/flooring-leppington.html`, `/engineered-timber-flooring-sydney.html` | Current close-ranking opportunity. |
+| flooring Parramatta | `/flooring-parramatta.html` | `/flooring-auburn.html`, `/flooring-ryde.html`, product pages | Keep local/property access context. |
+| flooring Leppington | `/flooring-leppington.html` | `/flooring-edmondson-park.html`, `/flooring-camden.html`, product pages | South-west growth-area local intent. |
+| flooring Bankstown | `/flooring-bankstown.html` | `/flooring-auburn.html`, `/flooring-liverpool.html`, product pages | Keep as local quote page. |
+| flooring Auburn | `/flooring-auburn.html` | `/flooring-bankstown.html`, `/flooring-parramatta.html`, product pages | `/auburn-flooring.html` stays a redirect source only. |
+| flooring installation cost Sydney | `/flooring-installation-cost-sydney.html` | `/flooring-quote-sydney.html`, `/quote.html`, `/quote-review.html` | Discuss scope drivers without publishing rates. |
+| apartment flooring Sydney | `/apartment-flooring-sydney.html` | `/floorplan.html`, product pages, acoustic underlay guides | Needs depth before more apartment-specific pages. |
 
-## Local Ownership
+## Ownership Rules
 
-| Query cluster | Primary URL | Role | Supporting URLs |
-| --- | --- | --- | --- |
-| flooring Miranda | `/flooring-miranda.html` | Local service page | `/quote.html`, `/products.html`, `/quote-review.html`, `/floorplan.html` |
-| laminate flooring Miranda | `/flooring-miranda.html` | Local product/service page | `/laminate-flooring-sydney.html`, `/products.html` |
-| hybrid flooring Miranda | `/flooring-miranda.html` | Local product/service page | `/hybrid-flooring-sydney.html`, `/products.html` |
-| timber flooring Miranda | `/flooring-miranda.html` | Local product/service page | `/engineered-timber-flooring-sydney.html` |
-| flooring Liverpool | `/flooring-liverpool.html` | Local service page | `/quote.html`, `/products.html`, `/quote-review.html`, `/floorplan.html` |
-| timber flooring Liverpool | `/flooring-liverpool.html` | Local timber/product page | `/engineered-timber-flooring-sydney.html` |
-| timber flooring Edmondson Park | `/flooring-edmondson-park.html` | Protected local asset | `/quote.html`, `/products.html`, `/floorplan.html` |
-
-## Homepage Boundaries
-
-The homepage should not be the main target for "instant flooring quote Sydney". It should support the broader brand proposition:
-
-- flooring choices
-- quote clarity
-- product exploration
-- floor plan support
-- quote review
-- Sydney service coverage
-
-Recommended homepage anchors may mention "instant flooring quote" naturally, but the homepage should link users to `/quote.html` instead of competing with it.
-
-## Quote Tool Boundaries
-
-`/quote.html` should be the strongest URL for:
-
-- instant flooring quote Sydney
-- online flooring estimate
-- floor quote Sydney
-- flooring quotes online
-
-It should not become a long guide page. The page should keep action-first intent and use FAQs only to remove objections.
-
-## Quote Guide Boundaries
-
-`/flooring-quote-sydney.html` should support, not compete with, `/quote.html`.
-
-It should target:
-
-- quote inclusions
-- scope clarity
-- comparison questions
-- why quotes vary
-- exclusions
-
-It should link prominently to `/quote.html` using action anchors such as "Start an instant flooring quote".
-
-## Redirect and Sitemap Rules
-
-- Keep `/quote` as a redirect source only, not an indexable page.
-- Keep `/blog.html` returning 404.
-- Keep `/index.html` and `/blog/index.html` out of the sitemap.
-- Keep sitemap entries canonical and `.html` shaped where already approved.
-- Do not add held-back expansion URLs to the sitemap until content quality and visual QA pass.
-
+- One primary owner per keyword cluster.
+- Supporting pages should use natural internal anchors and avoid duplicating title/H1 intent.
+- Do not create product-suburb pages until GSC proves demand and the page can be genuinely useful.
+- Do not create colour/range pages unless there is enough public product detail and no private pricing language.
+- If GSC shows the wrong URL ranking, fix internal anchors and page intent before creating a new URL.

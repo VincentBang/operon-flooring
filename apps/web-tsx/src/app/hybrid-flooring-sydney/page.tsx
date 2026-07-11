@@ -136,6 +136,7 @@ export default function HybridFlooringSydneyPage() {
             <div className="hero-actions">
               <a className="button button-primary" href={`${routes.quote}?from=category&category=hybrid#quoteForm`} data-track-cta="hybrid_category_quote_click">Start quote with hybrid</a>
               <a className="button button-secondary" href={`${routes.products}?category=hybrid`} data-track-cta="hybrid_category_products_click">Browse hybrid products</a>
+              <a className="button button-secondary" href={routes.roomVisualiser} data-track-cta="hybrid_category_visualiser_click">Preview hybrid look</a>
               <a className="button button-secondary" href={routes.quoteReview} data-track-cta="hybrid_category_review_click">Review a hybrid quote</a>
             </div>
           </article>
@@ -211,6 +212,7 @@ export default function HybridFlooringSydneyPage() {
             <div className="link-grid">
               <a className="link-card" href="/blog/apartment-flooring-acoustic-underlay.html"><strong>Apartment acoustic underlay</strong><span>Check acoustic and strata issues before booking.</span></a>
               <a className="link-card" href="/blog/laminate-vs-hybrid.html"><strong>Hybrid vs laminate</strong><span>Compare the common timber-look options.</span></a>
+              <a className="link-card" href={routes.roomVisualiser}><strong>Hybrid flooring visualiser</strong><span>Preview a hybrid timber-look direction before quoting.</span></a>
             </div>
           </article>
         </div>

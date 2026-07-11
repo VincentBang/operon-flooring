@@ -14,6 +14,7 @@ const footerGroups = [
     title: "Actions",
     links: [
       { href: routes.quote, label: "Start Quote" },
+      { href: routes.roomVisualiser, label: "Room Visualiser" },
       { href: routes.floorplan, label: "Upload Floor Plan" },
       { href: routes.quoteReview, label: "Quote Review" },
       { href: routes.blog, label: "Flooring Guides" }
@@ -49,7 +50,7 @@ export function Footer() {
       <div className="container site-footer-inner footer-grid">
         <section className="footer-col footer-brand footer-brand-block" aria-label="Operon contact details">
           <a className="footer-logo" href="/" aria-label="Operon Flooring home">
-            <img src="/assets/operon-flooring-sydney-brand-logo.png" alt="Operon Flooring Sydney logo" width="154" height="33" />
+            <img src="/assets/operon-flooring-sydney-brand-logo.webp" alt="Operon Flooring Sydney logo" width="154" height="33" />
           </a>
           <p className="footer-brand-copy">Flooring quotes and installation guidance for Sydney projects.</p>
           <a className="footer-brand-cta" href={routes.quote}>Start quote</a>

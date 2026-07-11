@@ -5,6 +5,7 @@ const navItems = [
   { href: routes.home, label: "Home" },
   { href: routes.quote, label: "Quote" },
   { href: routes.products, label: "Flooring Products" },
+  { href: routes.roomVisualiser, label: "Visualiser" },
   { href: routes.floorplan, label: "Floor Plan" },
   { href: routes.blog, label: "Guides" }
 ];
@@ -15,7 +16,7 @@ export function Header() {
       <header className="site-header" aria-label="Primary navigation">
         <div className="shell nav">
           <a className="brand site-logo" href="/" aria-label="Operon Flooring home">
-            <img src="/assets/operon-flooring-sydney-brand-logo.png" alt="Operon Flooring Sydney logo" width="240" height="51" />
+            <img src="/assets/operon-flooring-sydney-brand-logo.webp" alt="Operon Flooring Sydney logo" width="240" height="51" />
           </a>
           <nav className="nav-links site-nav" aria-label="Primary">
             {navItems.map((item) => (

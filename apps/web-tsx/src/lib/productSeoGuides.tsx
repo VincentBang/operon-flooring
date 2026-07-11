@@ -464,7 +464,7 @@ function productGuideJsonLd(guide: ProductGuide) {
       publisher: {
         "@type": "Organization",
         name: "Operon Flooring",
-        logo: { "@type": "ImageObject", url: `${site}/assets/operon-flooring-sydney-brand-logo.png` }
+        logo: { "@type": "ImageObject", url: `${site}/assets/operon-flooring-sydney-brand-logo.webp` }
       }
     },
     {
@@ -514,7 +514,7 @@ export function ProductGuidePage({ slug }: { slug: string }) {
               <nav className="breadcrumbs" aria-label="Breadcrumb">
                 <Link href="/">Home</Link>
                 <span>/</span>
-                <Link href={routes.blog}>Guides</Link>
+                <a href={routes.blog}>Guides</a>
                 <span>/</span>
                 <span>{guide.h1}</span>
               </nav>

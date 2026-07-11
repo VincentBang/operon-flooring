@@ -136,6 +136,7 @@ export default function EngineeredTimberFlooringSydneyPage() {
             <div className="hero-actions">
               <a className="button button-primary" href={`${routes.quote}?from=category&category=engineered#quoteForm`} data-track-cta="engineered_category_quote_click">Start engineered timber quote</a>
               <a className="button button-secondary" href={`${routes.products}?category=engineered`} data-track-cta="engineered_category_products_click">Browse engineered timber</a>
+              <a className="button button-secondary" href={routes.roomVisualiser} data-track-cta="engineered_category_visualiser_click">Preview timber look</a>
               <a className="button button-secondary" href={routes.quoteReview} data-track-cta="engineered_category_review_click">Review a timber quote</a>
             </div>
           </article>
@@ -211,6 +212,7 @@ export default function EngineeredTimberFlooringSydneyPage() {
             <div className="link-grid">
               <a className="link-card" href={routes.recentProjects}><strong>Recent flooring projects</strong><span>View real finished examples where available.</span></a>
               <a className="link-card" href="/blog/flooring-stairs-and-stair-nosing.html"><strong>Stairs and stair nosing</strong><span>Understand why stairs need written detail.</span></a>
+              <a className="link-card" href={routes.roomVisualiser}><strong>Engineered timber visualiser</strong><span>Preview a warm timber direction before quoting.</span></a>
             </div>
           </article>
         </div>

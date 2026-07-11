@@ -1,0 +1,84 @@
+schema_version: 1
+
+project:
+  name: Operon Flooring
+  code: flooring
+  business_identity: Flooring Quote OS
+  purpose: Quote-led flooring authority and operating platform
+
+repository:
+  isolated: true
+  root: "/Users/daibang/Documents/New project"
+  branch_inspected: codex/room-visualiser-local-inference-spike
+  primary_application: apps/web-tsx
+  legacy_application: apps/web
+
+forbidden_projects:
+  - operon-kitchens
+  - operon-bathrooms
+  - oz-timber
+
+governance:
+  standard: Operon AI Development System
+  version: 1.0.0
+  source: /Users/daibang/Documents/operon-development-system
+  installed: "2026-07-11"
+  last_reviewed: "2026-07-11"
+  local_deviations:
+    - id: FLR-DEV-001
+      description: Existing internal-docs/apps-web/AGENTS.md is retained as subordinate historical and domain guidance.
+      reason: Preserve useful product-specific rules while the root approval gate supersedes conflicting unattended execution provisions.
+    - id: FLR-DEV-002
+      description: Lint command is declared but is not currently a non-interactive validation gate.
+      reason: next lint prompts for ESLint setup because the app has no ESLint configuration.
+
+authority:
+  task_queue: docs/NEXT_TASK.md
+  decisions: docs/DECISIONS.md
+  current_state: docs/CURRENT_STATE.md
+  master_plan: docs/MASTER_PLAN.md
+
+runtime:
+  package_manager: npm
+  frontend:
+    framework: Next.js 15
+    language: TypeScript
+    ui: React 19
+    output: static export
+  server:
+    platform: Netlify Functions
+  data:
+    platform: Supabase
+
+tooling:
+  framework: Next.js 15 static export with React 19 and TypeScript
+  package_manager: npm
+  build: npm --prefix apps/web-tsx run build
+  lint: npm --prefix apps/web-tsx run lint
+  typecheck: npm --prefix apps/web-tsx run typecheck
+  test: npm run test:local-gates
+
+commands:
+  install: npm --prefix apps/web-tsx ci
+  development: npm --prefix apps/web-tsx run dev
+  build: npm --prefix apps/web-tsx run build
+  netlify_build: npm --prefix apps/web-tsx ci && npm --prefix apps/web-tsx run build
+  lint: npm --prefix apps/web-tsx run lint
+  typecheck: npm --prefix apps/web-tsx run typecheck
+  test_static_output: npm run test:static-output
+  test_conversion: npm run test:conversion
+  test_public_leaks: npm run check:public-leaks
+  test_floorplan: npm run test:floorplan-full
+  test_local_gates: npm run test:local-gates
+
+deployment:
+  provider: Netlify
+  publish_directory: apps/web-tsx/out
+  automatic: false
+  push_to_main: false
+  production_changes: false
+
+isolation_risks:
+  - path: operon-bathrooms
+    status: untracked_cache_out_of_scope
+    instruction: Leave untouched unless a separately approved cleanup task names it.

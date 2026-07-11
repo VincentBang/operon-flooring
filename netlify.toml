@@ -62,6 +62,49 @@
   status = 404
   force = true
 
+# Keep the blog hub and approved quote guides on one canonical URL each.
+[[redirects]]
+  from = "/blog"
+  to = "/blog/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/flooring-quote-review-sydney"
+  to = "/blog/flooring-quote-review-sydney.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/flooring-quote-checklist"
+  to = "/blog/flooring-quote-checklist.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/how-to-compare-flooring-quotes"
+  to = "/blog/how-to-compare-flooring-quotes.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/what-should-be-included-in-flooring-quote"
+  to = "/blog/what-should-be-included-in-flooring-quote.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/common-flooring-quote-exclusions"
+  to = "/blog/common-flooring-quote-exclusions.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/questions-to-ask-before-accepting-flooring-quote"
+  to = "/blog/questions-to-ask-before-accepting-flooring-quote.html"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/supabase-audit-exports/*"
   to = "/404.html"
@@ -426,6 +469,12 @@
 [[redirects]]
   from = "/quote-review"
   to = "/quote-review.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/room-visualiser"
+  to = "/room-visualiser.html"
   status = 301
   force = true
 

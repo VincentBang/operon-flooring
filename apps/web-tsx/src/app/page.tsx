@@ -60,6 +60,14 @@ const intentPaths = [
     intent: "products"
   },
   {
+    href: routes.roomVisualiser,
+    label: "Preview flooring",
+    text: "Compare flooring looks in a sample room.",
+    link: "Try visualiser",
+    track: "path_room_visualiser_click",
+    intent: "visualiser"
+  },
+  {
     href: routes.floorplan,
     label: "Use a floor plan",
     text: "Trace rooms and send area to quote.",
@@ -140,6 +148,7 @@ const seoLinks = [
   ["Laminate Flooring Sydney", routes.laminate],
   ["Engineered Timber Flooring Sydney", routes.engineered],
   ["Flooring Products", routes.products],
+  ["Flooring Room Visualiser", routes.roomVisualiser],
   ["Start Quote", routes.quote],
   ["Check Existing Quote", routes.quoteReview],
   ["Floor Plan Tool", routes.floorplan],
@@ -323,7 +332,10 @@ export default function HomePage() {
           <h2 id="floorplanTitle">Have a floor plan?</h2>
           <p>Upload a floor plan, trace rooms receiving flooring and send the measured area into your quote without retyping it.</p>
         </div>
-        <a className="button button-primary" data-track-cta="floorplan_cta_click" href={routes.floorplan}>Use floor plan tool</a>
+        <div className="home-actions">
+          <a className="button button-primary" data-track-cta="floorplan_cta_click" href={routes.floorplan}>Use floor plan tool</a>
+          <a className="button button-secondary" data-track-cta="room_visualiser_home_cta_click" href={routes.roomVisualiser}>Preview flooring looks</a>
+        </div>
       </section>
 
       <section className="section home-project-fit" aria-labelledby="projectFitTitle">

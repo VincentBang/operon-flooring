@@ -67,6 +67,48 @@ const productCluster = [
     body: "Compare practical tradeoffs before choosing a product path."
   }
 ];
+const practicalGuideCluster = [
+  {
+    href: "/blog/how-to-measure-floor-area.html",
+    title: "How to measure floor area",
+    body: "Prepare room measurements or a floor plan before starting an estimate."
+  },
+  {
+    href: "/blog/do-you-need-floor-preparation.html",
+    title: "Do you need floor preparation?",
+    body: "Understand why preparation may stay subject to review until site conditions are visible."
+  },
+  {
+    href: "/blog/flooring-maintenance-checklist.html",
+    title: "Flooring maintenance checklist",
+    body: "Plan routine care around the selected flooring type and manufacturer guidance."
+  },
+  {
+    href: "/blog/how-to-clean-hybrid-flooring.html",
+    title: "How to clean hybrid flooring",
+    body: "Use a practical cleaning routine without over-wetting or abrasive products."
+  },
+  {
+    href: "/blog/how-to-clean-laminate-flooring.html",
+    title: "How to clean laminate flooring",
+    body: "Protect laminate joins and finish with a low-moisture maintenance routine."
+  },
+  {
+    href: "/blog/engineered-timber-floor-maintenance.html",
+    title: "Engineered timber maintenance",
+    body: "Keep the timber surface, finish and indoor conditions in mind after installation."
+  },
+  {
+    href: "/blog/floor-repair-or-replace.html",
+    title: "Repair or replace flooring?",
+    body: "Use the condition, affected area and product type to frame the next inspection question."
+  },
+  {
+    href: "/blog/best-flooring-for-pets-sydney.html",
+    title: "Flooring for homes with pets",
+    body: "Compare maintenance, moisture and surface-wear considerations before choosing a category."
+  }
+];
 const localSearchCluster = [
   {
     href: "/flooring-miranda.html",
@@ -175,6 +217,26 @@ export default function BlogIndexPage() {
             </p>
             <div className="link-grid" style={{ marginTop: 22 }}>
               {productCluster.map((guide) => (
+                <Link className="link-card" href={guide.href} key={guide.href}>
+                  <strong>{guide.title}</strong>
+                  <span>{guide.body}</span>
+                </Link>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+      <section className="section" aria-label="Flooring planning and maintenance guides">
+        <div className="shell">
+          <article className="section-card">
+            <span className="eyebrow">Practical flooring guides</span>
+            <h2 style={{ marginTop: 18 }}>Measure, maintain and diagnose before choosing the next step</h2>
+            <p>
+              Use these guides for practical questions that sit around the quote: measuring the area, identifying preparation uncertainty,
+              maintaining the selected floor and deciding when an inspection may be useful.
+            </p>
+            <div className="link-grid" style={{ marginTop: 22 }}>
+              {practicalGuideCluster.map((guide) => (
                 <Link className="link-card" href={guide.href} key={guide.href}>
                   <strong>{guide.title}</strong>
                   <span>{guide.body}</span>

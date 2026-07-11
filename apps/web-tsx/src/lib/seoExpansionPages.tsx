@@ -766,7 +766,7 @@ function jsonLd(page: SeoPage) {
       publisher: {
         "@type": "Organization",
         name: "Operon Flooring",
-        logo: { "@type": "ImageObject", url: `${site}/assets/operon-flooring-sydney-brand-logo.png` }
+        logo: { "@type": "ImageObject", url: `${site}/assets/operon-flooring-sydney-brand-logo.webp` }
       }
     },
     {

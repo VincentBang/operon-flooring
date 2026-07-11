@@ -4,6 +4,7 @@ export const routes = {
   products: "/products.html",
   quoteReview: "/quote-review.html",
   floorplan: "/floorplan.html",
+  roomVisualiser: "/room-visualiser.html",
   recentProjects: "/recent-flooring-projects.html",
   contact: "/contact.html",
   contactThankYou: "/contact-thank-you.html",

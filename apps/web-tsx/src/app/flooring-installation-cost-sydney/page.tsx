@@ -90,6 +90,33 @@ export default function Page() {
       <section className="section">
         <div className="shell">
           <article className="section-card">
+            <span className="eyebrow">Scope comparison</span>
+            <h2 style={{ marginTop: 18 }}>Separate included work from items that need site review</h2>
+            <p>
+              A useful installation-cost comparison shows what is included now, what is excluded, and what cannot be confirmed until the existing
+              floor or subfloor can be checked. This keeps different quote totals connected to the work each contractor has actually described.
+            </p>
+            <div className="grid-3" style={{ marginTop: 22 }}>
+              <div className="mini-card">
+                <h3>Usually itemised</h3>
+                <p>Flooring category or range, measured area, supply or installation mode, underlay, basic trims and the rooms included.</p>
+              </div>
+              <div className="mini-card">
+                <h3>Often left unclear</h3>
+                <p>Removal versus disposal, furniture handling, door trimming, stair details, access assumptions and transitions between surfaces.</p>
+              </div>
+              <div className="mini-card">
+                <h3>May require site review</h3>
+                <p>Subfloor condition, levelling extent, moisture-related work and changes discovered after the existing floor is removed.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="shell">
+          <article className="section-card">
             <span className="eyebrow">Cost guide FAQs</span>
             <h2 style={{ marginTop: 18 }}>Flooring installation cost questions</h2>
             <div className="faq" style={{ marginTop: 22 }}>

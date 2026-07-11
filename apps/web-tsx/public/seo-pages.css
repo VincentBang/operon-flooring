@@ -231,7 +231,7 @@ textarea {
   align-items: center;
   width: clamp(232px, 22vw, 300px);
   min-height: 63px;
-  background: left center / 100% auto no-repeat url("assets/operon-flooring-sydney-brand-logo.png");
+  background: left center / 100% auto no-repeat url("assets/operon-flooring-sydney-brand-logo.webp");
   color: transparent;
   font-size: 0;
   letter-spacing: 0;

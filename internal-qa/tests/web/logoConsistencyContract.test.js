@@ -4,7 +4,7 @@ const path = require("path");
 
 const repoRoot = path.resolve(__dirname, "..", "..", "..");
 const outRoot = path.join(repoRoot, "apps", "web-tsx", "out");
-const logoFileName = "operon-flooring-sydney-brand-logo.png";
+const logoFileName = "operon-flooring-sydney-brand-logo.webp";
 const logoPath = "/assets/" + logoFileName;
 const logoAlt = "Operon Flooring Sydney logo";
 
@@ -26,6 +26,10 @@ function main() {
   assert.ok(
     fs.existsSync(path.join(repoRoot, "apps", "web-tsx", "public", logoPath)),
     "Canonical TSX logo asset is missing: " + logoPath
+  );
+  assert.ok(
+    fs.existsSync(path.join(repoRoot, "apps", "web-tsx", "public", "assets", "operon-flooring-sydney-brand-logo.png")),
+    "Original PNG logo source should remain available for future asset work."
   );
 
   const checkedPages = [];
